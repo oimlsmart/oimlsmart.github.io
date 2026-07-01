@@ -1,0 +1,105 @@
+# Getting Started
+
+<div class="page-hero">
+  <span class="eyebrow">Guide · 01 of 13</span>
+  <h1>Build your first SMART Standard</h1>
+  <p class="lede">
+    A complete walkthrough — from an empty directory to a fully modelled OIML
+    Recommendation. No application code required, only YAML data.
+  </p>
+</div>
+
+## What is a SMART Standard?
+
+A SMART Standard is a **machine-readable digital artifact**, not a PDF. It encodes the complete content of an OIML Recommendation — requirements, test procedures, test report forms, terminology, and evaluation workflow — as structured YAML data that drives a web application directly.
+
+Every requirement has an identifier, every test links to the requirements it verifies, every form field declares which calculation applies and which acceptance criterion governs it. This enables automatic form generation, calculation of results, pass/fail determination, and certificate issuance — all from data declarations.
+
+<div class="callout">
+  <strong>Key principle:</strong>
+  <p>Adding a new standard requires only YAML data files and (optionally) an ontology TTL file. No application code changes are needed — the build pipeline auto-discovers new standards from the file system.</p>
+</div>
+
+## Prerequisites
+
+- The OIML Recommendation document (PDF or printed) — you'll extract requirements and test procedures from it.
+- Understanding of the instrument's dimension system (accuracy classes, technology types, etc.).
+- Familiarity with YAML syntax.
+- A running development environment (Node.js for the browser app).
+
+## Quick start in 5 steps
+
+### 1. Create the directory
+
+Create a new directory under `data/{standard-id}/` with a `standard.yaml` file.
+
+```
+data/oiml-r76/
+└── standard.yaml
+```
+
+### 2. Declare identity and enums
+
+Fill in `standard.yaml` with the standard's identity, dimension enums, and navigation items.
+
+```yaml
+id: oiml-r76
+shortName: "R 76"
+fullName: "Nonautomatic Weighing Instruments"
+year: 2024
+doctype: international-recommendation
+enums:
+  accuracy_class:
+    type: string
+    label: "Accuracy Class"
+    values: [I, II, III, IIII]
+```
+
+See [Identity & Dimensions](/docs/guides/identity-dimensions.html) for all fields.
+
+### 3. Add requirements
+
+Create YAML files in `requirements/` — one file per logical group (metrological, technical, etc.).
+
+```yaml
+# requirements/metrological.yaml
+scope: metrological
+requirements:
+- identifier: mpe
+  name: "Maximum permissible errors"
+  statement: "The error of the instrument shall not exceed the MPE..."
+  dimensions: [I, II, III, IIII]
+  acceptance_criteria:
+    type: tiered
+    variable: load
+    tiers:
+    - range: { min: 0, max: 500 }
+      limit: { factor: 0.5 }
+```
+
+See [Requirements Model](/docs/guides/requirements.html) for all acceptance criteria types.
+
+### 4. Add conformance tests and forms
+
+Create matching test procedures in `conformance/`, form schemas in `forms/`, and wire them together with `cross-refs.yaml`.
+
+### 5. Build and verify
+
+Run the build pipeline. It discovers the new `standard.yaml`, validates all YAML, generates runtime data modules, and the standard appears in the application automatically.
+
+## What's next?
+
+The following guides cover each layer in depth. Read them in order, or jump to any topic:
+
+- [Platform Architecture](/docs/guides/architecture.html)
+- [Directory Structure](/docs/guides/directory-structure.html)
+- [Identity & Dimensions](/docs/guides/identity-dimensions.html)
+- [Provision Data Model](/docs/guides/provision-data-model.html)
+- [Specialization](/docs/guides/specialization.html)
+- [Requirements](/docs/guides/requirements.html)
+- [Conformance Tests](/docs/guides/conformance-tests.html)
+- [Test Report Forms](/docs/guides/test-report-forms.html)
+- [Calculation Engine](/docs/guides/calculation-engine.html)
+- [Terminology](/docs/guides/terminology.html)
+- [Evaluation Workflow](/docs/guides/evaluation-workflow.html)
+- [Ontology](/docs/guides/ontology.html)

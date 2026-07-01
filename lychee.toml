@@ -1,0 +1,32 @@
+# Lychee link checker configuration
+# https://lychee.link.cli.rs/
+
+# Accept 200..399 status codes as valid
+accept = ["200", "201", "202", "203", "204", "206", "207"]
+
+# Exclude these patterns from checking (no noise from internal links)
+exclude = [
+  "localhost",
+  "127.0.0.1",
+]
+
+# Don't check mailto links
+include_mail = false
+
+# Maximum number of retries before a link is reported as failed
+max_retries = 2
+
+# Number of threads to use
+max_concurrency = 16
+
+# Request timeout (seconds)
+timeout = 20
+
+# User agent to send
+user_agent = "oimlsmart-link-checker"
+
+# Cache results
+cache = true
+
+# Max cache age (days)
+max_cache_age = "1d"

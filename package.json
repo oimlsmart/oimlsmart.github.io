@@ -1,0 +1,16 @@
+{
+  "name": "oimlsmart.github.io",
+  "version": "1.0.0",
+  "description": "OIML SMART — Machine-Actionable Recommendations",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.13"
+  }
+}

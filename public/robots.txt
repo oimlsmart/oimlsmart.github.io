@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# This is a DRAFT pilot site — internal use only, not for indexing.
+# See the persistent DRAFT banner on every page for context.
