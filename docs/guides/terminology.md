@@ -1,9 +1,10 @@
+---
+title: 'Terminology & cross-references'
+description: 'Defined terms and an explicit cross-reference graph tie the natural-language prose of the Recommendation to the structured data model. Every term resolves, every reference is grounded.'
+eyebrow: 'Guide · 11 of 13'
+---
 
-<PageHero
-  eyebrow="Guide · 11 of 13"
-  title="Terminology & cross-references"
-  lede="Defined terms and an explicit cross-reference graph tie the natural-language prose of the Recommendation to the structured data model. Every term resolves, every reference is grounded."
-/>
+<PageHero />
 
 ## Terminology
 

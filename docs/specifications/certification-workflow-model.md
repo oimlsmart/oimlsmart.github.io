@@ -1,9 +1,10 @@
+---
+title: Certification Workflow Model
+description: 'Workflow entities, state machines, and the certification pipeline.'
+eyebrow: 'Formal Specification · SMART_REQS 10'
+---
 
-<PageHero
-  eyebrow="Formal Specification · SMART_REQS 10"
-  title="Certification Workflow Model"
-  lede="Workflow entities, state machines, and the certification pipeline."
-/>
+<PageHero />
 
 
 <DraftCallout />

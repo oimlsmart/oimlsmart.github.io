@@ -1,9 +1,10 @@
+---
+title: Calculation engine
+description: 'The Calculation primitive: a typed, reusable, named computation. Defined once, referenced everywhere — the DRY mechanism for arithmetic in SMART forms.'
+eyebrow: 'Guide · 10 of 13'
+---
 
-<PageHero
-  eyebrow="Guide · 10 of 13"
-  title="Calculation engine"
-  lede="The Calculation primitive: a typed, reusable, named computation. Defined once, referenced everywhere — the DRY mechanism for arithmetic in SMART forms."
-/>
+<PageHero />
 
 ## Why a primitive?
 

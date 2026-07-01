@@ -1,9 +1,10 @@
+---
+title: 'Form & Measurement Model'
+description: 'Form schemas, fields, and measurement kinds.'
+eyebrow: 'Formal Specification · SMART_REQS 03'
+---
 
-<PageHero
-  eyebrow="Formal Specification · SMART_REQS 03"
-  title="Form & Measurement Model"
-  lede="Form schemas, fields, and measurement kinds."
-/>
+<PageHero />
 
 
 <DraftCallout variant="specs" />

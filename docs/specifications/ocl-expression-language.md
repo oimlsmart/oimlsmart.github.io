@@ -1,9 +1,10 @@
+---
+title: OCL Expression Language
+description: OCL constraint language reference for the SMART platform.
+eyebrow: 'Formal Specification · SMART_REQS 04'
+---
 
-<PageHero
-  eyebrow="Formal Specification · SMART_REQS 04"
-  title="OCL Expression Language"
-  lede="OCL constraint language reference for the SMART platform."
-/>
+<PageHero />
 
 
 <DraftCallout />

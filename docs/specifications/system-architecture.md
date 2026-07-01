@@ -1,8 +1,10 @@
-<PageHero
-  eyebrow="Formal Specification · SMART_REQS 01"
-  title="System Architecture"
-  lede="The top-level architecture of the SMART platform — entities, layers, and the build pipeline."
-/>
+---
+title: System Architecture
+description: 'The top-level architecture of the SMART platform — entities, layers, and the build pipeline.'
+eyebrow: 'Formal Specification · SMART_REQS 01'
+---
+
+<PageHero />
 
 
 <DraftCallout />

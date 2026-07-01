@@ -1,5 +1,5 @@
 ---
-title: OIML SMART pilot — launch
+title: 'OIML SMART pilot — launch'
 date: 2026-07-01
 author: OIML SMART team
 summary: The OIML SMART pilot programme is live. Three Recommendations are in scope — R 60, R 129, R 144 — with structured requirements, conformance tests, forms, and ontology entities modelled end-to-end.

@@ -1,9 +1,10 @@
+---
+title: The OIML Certification System
+description: 'The OIML-CS is the system for issuing, registering, and using OIML type examination certificates and associated type evaluation reports for measuring instruments, based on OIML International Recommendations. Defined by OIML B 18 (2025 edition).'
+eyebrow: 'Certification system · B 18:2025'
+---
 
-<PageHero
-  eyebrow="Certification system · B 18:2025"
-  title="The OIML Certification System"
-  lede="The OIML-CS is the system for issuing, registering, and using OIML type examination certificates and associated type evaluation reports for measuring instruments, based on OIML International Recommendations. Defined by OIML B 18 (2025 edition)."
-/>
+<PageHero />
 
 
 

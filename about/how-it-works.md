@@ -1,9 +1,10 @@
+---
+title: How it works
+description: 'OIML SMART uses a layered architecture: a shared core ontology provides the foundation, domain ontologies extend it per Recommendation, and structured requirements and conformance tests build on top.'
+eyebrow: 'About · 03'
+---
 
-<PageHero
-  eyebrow="About · 03"
-  title="How it works"
-  lede="OIML SMART uses a layered architecture: a shared core ontology provides the foundation, domain ontologies extend it per Recommendation, and structured requirements and conformance tests build on top."
-/>
+<PageHero />
 
 
 

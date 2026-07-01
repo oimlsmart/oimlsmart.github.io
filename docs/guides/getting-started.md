@@ -1,9 +1,10 @@
+---
+title: Build your first SMART Standard
+description: 'A complete walkthrough — from an empty directory to a fully modelled OIML Recommendation. No application code required, only YAML data.'
+eyebrow: 'Guide · 01 of 13'
+---
 
-<PageHero
-  eyebrow="Guide · 01 of 13"
-  title="Build your first SMART Standard"
-  lede="A complete walkthrough — from an empty directory to a fully modelled OIML Recommendation. No application code required, only YAML data."
-/>
+<PageHero />
 
 ## What is a SMART Standard?
 

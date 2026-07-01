@@ -2,20 +2,17 @@
 /**
  * LoginCard — the GitHub OAuth launcher card on /app/.
  *
- * Reads APP_URL from window.__APP_URL__ (set in theme/index.ts from
- * the APP_URL env var at build time). Defaults to localhost:5190
- * (the smart app's Vite dev port).
+ * The OAuth URL is built from `useAppUrl()` — Vite statically injects
+ * `APP_URL` at build time (see `composables/useAppUrl.ts`).
  *
  * Dark-mode logo swap is delegated to the useTheme composable.
  */
 import { computed } from 'vue'
 import { useTheme } from '../composables/useTheme'
+import { useAppUrl } from '../composables/useAppUrl'
 
-const APP_URL = (typeof window !== 'undefined')
-  ? ((window as any).__APP_URL__ || 'http://localhost:5190')
-  : 'http://localhost:5190'
-
-const oauthUrl = computed(() => `${APP_URL}/api/auth/signin/github`)
+const appUrl = useAppUrl()
+const oauthUrl = computed(() => `${appUrl.value}/api/auth/signin/github`)
 const { isDark } = useTheme()
 const logoSrc = computed(() =>
   isDark.value ? '/smart-logo-dark.svg' : '/smart-logo-light.svg'

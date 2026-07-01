@@ -1,9 +1,10 @@
+---
+title: 'Identity & Dimensions'
+description: 'Two foundational files — `standard.yaml` and `dimensions.yaml` — tell the platform what the standard is and how the instrument varies. Everything else builds on these.'
+eyebrow: 'Guide · 04 of 13'
+---
 
-<PageHero
-  eyebrow="Guide · 04 of 13"
-  title="Identity & Dimensions"
-  lede="Two foundational files — `standard.yaml` and `dimensions.yaml` — tell the platform what the standard is and how the instrument varies. Everything else builds on these."
-/>
+<PageHero />
 
 ## `standard.yaml` — identity
 

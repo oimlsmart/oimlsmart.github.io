@@ -1,9 +1,10 @@
+---
+title: 'Specialization & parameterization'
+description: 'The same requirement template produces different acceptance criteria for different dimensional contexts — accuracy class, load range, temperature class. This is the mechanism that keeps the model DRY and the data small.'
+eyebrow: 'Guide · 06 of 13'
+---
 
-<PageHero
-  eyebrow="Guide · 06 of 13"
-  title="Specialization & parameterization"
-  lede="The same requirement template produces different acceptance criteria for different dimensional contexts — accuracy class, load range, temperature class. This is the mechanism that keeps the model DRY and the data small."
-/>
+<PageHero />
 
 ## Why specialize?
 

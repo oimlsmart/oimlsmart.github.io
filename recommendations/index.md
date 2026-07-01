@@ -1,9 +1,10 @@
+---
+title: Recommendations already modelled
+description: 'Each OIML International Recommendation listed here has been fully decomposed into machine-readable requirements, conformance tests, calculation-powered forms, and terminology. The structured data drives the interactive application — these pages summarize what each Recommendation covers.'
+eyebrow: 'Catalogue · SMART International Recommendations'
+---
 
-<PageHero
-  eyebrow="Catalogue · SMART International Recommendations"
-  title="Recommendations already modelled"
-  lede="Each OIML International Recommendation listed here has been fully decomposed into machine-readable requirements, conformance tests, calculation-powered forms, and terminology. The structured data drives the interactive application — these pages summarize what each Recommendation covers."
-/>
+<PageHero />
 
 
 

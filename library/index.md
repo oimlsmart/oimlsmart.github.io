@@ -1,9 +1,10 @@
+---
+title: The OIML document library
+description: 'Every OIML document relevant to the SMART programme, in one place — the International Recommendations themselves (with structured extracts), the OIML-CS framework documents (B 18, B 20), and the operational documents (OD, PD, D series) that govern day-to-day certification.'
+eyebrow: 'Library · OIML documents'
+---
 
-<PageHero
-  eyebrow="Library · OIML documents"
-  title="The OIML document library"
-  lede="Every OIML document relevant to the SMART programme, in one place — the International Recommendations themselves (with structured extracts), the OIML-CS framework documents (B 18, B 20), and the operational documents (OD, PD, D series) that govern day-to-day certification."
-/>
+<PageHero />
 
 
 

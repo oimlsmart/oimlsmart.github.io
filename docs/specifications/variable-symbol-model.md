@@ -1,9 +1,10 @@
+---
+title: 'Variable & Symbol Model'
+description: 'Variables, symbols, scope, and binding semantics.'
+eyebrow: 'Formal Specification · SMART_REQS 11'
+---
 
-<PageHero
-  eyebrow="Formal Specification · SMART_REQS 11"
-  title="Variable & Symbol Model"
-  lede="Variables, symbols, scope, and binding semantics."
-/>
+<PageHero />
 
 
 <DraftCallout />

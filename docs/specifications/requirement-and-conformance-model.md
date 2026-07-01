@@ -1,9 +1,10 @@
+---
+title: 'Requirement & Conformance Model'
+description: 'Formal model for requirements and conformance tests — the core provision entities.'
+eyebrow: 'Formal Specification · SMART_REQS 02'
+---
 
-<PageHero
-  eyebrow="Formal Specification · SMART_REQS 02"
-  title="Requirement & Conformance Model"
-  lede="Formal model for requirements and conformance tests — the core provision entities."
-/>
+<PageHero />
 
 
 <DraftCallout />

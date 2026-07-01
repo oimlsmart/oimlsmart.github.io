@@ -1,9 +1,10 @@
+---
+title: Provision data model
+description: 'The provision data model is the heart of a SMART Recommendation. Three entity types — requirements, conformance tests, and forms — together describe everything the Recommendation normatively requires.'
+eyebrow: 'Guide · 05 of 13'
+---
 
-<PageHero
-  eyebrow="Guide · 05 of 13"
-  title="Provision data model"
-  lede="The provision data model is the heart of a SMART Recommendation. Three entity types — requirements, conformance tests, and forms — together describe everything the Recommendation normatively requires."
-/>
+<PageHero />
 
 ## The three entity types
 

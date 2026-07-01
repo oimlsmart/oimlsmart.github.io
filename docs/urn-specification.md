@@ -1,9 +1,10 @@
+---
+title: OIML URN specification
+description: 'OIML SMART uses Uniform Resource Names (URNs) as persistent, location- independent identifiers for every entity — Recommendations, requirements, tests, forms, terms, certificates.'
+eyebrow: 'Reference · Identifiers'
+---
 
-<PageHero
-  eyebrow="Reference · Identifiers"
-  title="OIML URN specification"
-  lede="OIML SMART uses Uniform Resource Names (URNs) as persistent, location- independent identifiers for every entity — Recommendations, requirements, tests, forms, terms, certificates."
-/>
+<PageHero />
 
 
 

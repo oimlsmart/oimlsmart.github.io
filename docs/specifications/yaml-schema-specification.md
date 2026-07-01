@@ -1,9 +1,10 @@
+---
+title: YAML Schema Specification
+description: Formal YAML schemas for all entity types in the SMART platform.
+eyebrow: 'Formal Specification · SMART_REQS 06'
+---
 
-<PageHero
-  eyebrow="Formal Specification · SMART_REQS 06"
-  title="YAML Schema Specification"
-  lede="Formal YAML schemas for all entity types in the SMART platform."
-/>
+<PageHero />
 
 
 <DraftCallout />

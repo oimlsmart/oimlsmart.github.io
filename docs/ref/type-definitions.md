@@ -1,9 +1,10 @@
+---
+title: Generated TypeScript types
+description: 'Type-safe interfaces that the runtime application uses to consume SMART Recommendation data. Generated from the YAML schemas by the build pipeline; mirror the source-of-truth at smart/browser/src/data/types/.'
+eyebrow: 'Reference · TypeScript types'
+---
 
-<PageHero
-  eyebrow="Reference · TypeScript types"
-  title="Generated TypeScript types"
-  lede="Type-safe interfaces that the runtime application uses to consume SMART Recommendation data. Generated from the YAML schemas by the build pipeline; mirror the source-of-truth at smart/browser/src/data/types/."
-/>
+<PageHero />
 
 
 <DraftCallout />

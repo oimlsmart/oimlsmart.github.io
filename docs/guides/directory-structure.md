@@ -1,9 +1,10 @@
+---
+title: Directory structure
+description: Every SMART Recommendation follows the same directory layout. Knowing where each artifact lives makes authoring fast and review tractable.
+eyebrow: 'Guide · 03 of 13'
+---
 
-<PageHero
-  eyebrow="Guide · 03 of 13"
-  title="Directory structure"
-  lede="Every SMART Recommendation follows the same directory layout. Knowing where each artifact lives makes authoring fast and review tractable."
-/>
+<PageHero />
 
 ## Per-standard layout
 

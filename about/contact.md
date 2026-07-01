@@ -1,9 +1,10 @@
+---
+title: Contact
+description: Get in touch with the OIML SMART programme team.
+eyebrow: 'About · 05'
+---
 
-<PageHero
-  eyebrow="About · 05"
-  title="Contact"
-  lede="Get in touch with the OIML SMART programme team."
-/>
+<PageHero />
 
 
 

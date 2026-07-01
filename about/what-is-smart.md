@@ -1,9 +1,10 @@
+---
+title: 'What is OIML SMART?'
+description: The OIML SMART programme transforms International Recommendations from static PDF documents into functional digital artifacts that work directly in software applications.
+eyebrow: 'About · 01'
+---
 
-<PageHero
-  eyebrow="About · 01"
-  title="What is OIML SMART?"
-  lede="The OIML SMART programme transforms International Recommendations from static PDF documents into functional digital artifacts that work directly in software applications."
-/>
+<PageHero />
 
 
 

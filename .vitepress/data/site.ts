@@ -12,7 +12,6 @@ import type {
   AudiencePath,
   DraftNotice,
   Feature,
-  OAuthConfig,
   Recommendation,
   Stat,
 } from '../types'
@@ -121,21 +120,6 @@ export const audiencePaths: readonly AudiencePath[] = [
 ] as const
 
 /**
- * Default OAuth configuration for the /app/ page.
- *
- * The client secret is intentionally absent — it lives only in the
- * smart app's server env (`GITHUB_CLIENT_SECRET`). The public site
- * exposes only the client ID, which is safe to publish.
- */
-export const oauthConfig: OAuthConfig = {
-  clientId: 'Ov23li14hMhdjgtfWKBA',
-  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
-  tokenEndpoint: 'https://github.com/login/oauth/access_token',
-  scopes: ['read:user', 'user:email'],
-  devRedirectUri: 'http://localhost:5190/api/auth/callback/github',
-} as const
-
-/**
  * Canonical DRAFT notice text — referenced by every page that needs
  * to display it. Keeping this in one place means a wording change
  * is a one-line edit, not a 34-file find-and-replace.
@@ -149,26 +133,6 @@ export const draftNotice: DraftNotice = {
     'States and Corresponding Members seeking engagement should contact ' +
     'OIML through official channels. Not for external distribution.',
 } as const
-
-/**
- * Demo accounts surfaced on the /app/ page.
- *
- * These mirror the seed data in the smart app's
- * `browser/scripts/reset-db.ts`. The source of truth remains the smart
- * app; this array is mirrored here for documentation. If they drift,
- * the /app/ page is the consumer that needs updating.
- */
-export const demoAccounts: readonly {
-  readonly email: string
-  readonly role: string
-  readonly password: string
-}[] = [
-  { email: 'admin@oiml.org', role: 'Admin', password: 'demo2026' },
-  { email: 'ia@oiml.org', role: 'Issuing Authority', password: 'demo2026' },
-  { email: 'tl@oiml.org', role: 'Test Laboratory', password: 'demo2026' },
-  { email: 'viewer@oiml.org', role: 'Viewer', password: 'demo2026' },
-  { email: 'developer@ribose.com', role: 'Developer / Admin', password: 'demo2026' },
-] as const
 
 /** Convenience: the canonical Recommendations import (re-exported). */
 export type { Recommendation } from '../types'

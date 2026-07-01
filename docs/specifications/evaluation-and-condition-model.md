@@ -1,9 +1,10 @@
+---
+title: 'Evaluation & Condition Model'
+description: 'Evaluation pipeline, condition tracking, and verdict aggregation.'
+eyebrow: 'Formal Specification · SMART_REQS 05'
+---
 
-<PageHero
-  eyebrow="Formal Specification · SMART_REQS 05"
-  title="Evaluation & Condition Model"
-  lede="Evaluation pipeline, condition tracking, and verdict aggregation."
-/>
+<PageHero />
 
 
 <DraftCallout />

@@ -70,15 +70,6 @@ export interface RecommendationStats {
   readonly forms: number
 }
 
-/** GitHub OAuth app configuration surfaced on the /app/ page. */
-export interface OAuthConfig {
-  readonly clientId: string
-  readonly authorizationEndpoint: string
-  readonly tokenEndpoint: string
-  readonly scopes: readonly string[]
-  readonly devRedirectUri: string
-}
-
 /** A document library entry — Recommendation, B/OD/PD/D document. */
 export interface LibraryDocument {
   readonly code: string

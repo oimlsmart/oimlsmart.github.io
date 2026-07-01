@@ -1,9 +1,10 @@
+---
+title: YAML schema reference
+description: Reference documentation for every YAML file type in a SMART Recommendation. Use this when authoring new Recommendations or building tooling that consumes SMART data.
+eyebrow: 'Reference · YAML schemas'
+---
 
-<PageHero
-  eyebrow="Reference · YAML schemas"
-  title="YAML schema reference"
-  lede="Reference documentation for every YAML file type in a SMART Recommendation. Use this when authoring new Recommendations or building tooling that consumes SMART data."
-/>
+<PageHero />
 
 
 <DraftCallout />

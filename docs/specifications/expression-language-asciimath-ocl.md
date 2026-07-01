@@ -1,9 +1,10 @@
+---
+title: 'Expression Language — AsciiMath + OCL'
+description: 'The two expression languages used in SMART — AsciiMath for arithmetic, OCL for booleans.'
+eyebrow: 'Formal Specification · SMART_REQS 08'
+---
 
-<PageHero
-  eyebrow="Formal Specification · SMART_REQS 08"
-  title="Expression Language — AsciiMath + OCL"
-  lede="The two expression languages used in SMART — AsciiMath for arithmetic, OCL for booleans."
-/>
+<PageHero />
 
 
 <DraftCallout variant="specs" />

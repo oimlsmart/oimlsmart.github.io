@@ -2,24 +2,39 @@
 /**
  * PageHero — the consistent hero band at the top of every major page.
  *
- * Encapsulates the eyebrow / title / lede pattern that was previously
- * inlined as `<div class="page-hero">` in 25+ markdown files.
+ * Primary input: frontmatter. Every page that wants a hero adds
+ * `title:` (required), and optionally `description:` and `eyebrow:`
+ * to its YAML frontmatter, then writes `<PageHero />` in the body.
  *
- * Usage in markdown:
- *   <PageHero eyebrow="About · 01" title="What is OIML SMART?" lede="..." />
+ * Props (optional overrides):
+ *   - `eyebrow`, `title`, `lede` — use these when the hero text needs
+ *     to differ from the page's frontmatter title/description (rare).
  *
- * Slot fallback allows plain HTML children when a richer hero is needed.
+ * Why frontmatter is canonical:
+ *   - VitePress uses frontmatter.title to set <title> in <head> —
+ *     every browser tab gets the right label.
+ *   - Search engines, RSS, sitemap, og:tags all read frontmatter.
+ *   - One source per page; not duplicated between frontmatter and prop.
  */
-defineProps<{
-  eyebrow: string
-  title: string
+import { useData } from 'vitepress'
+import { computed } from 'vue'
+
+const { frontmatter } = useData()
+
+const props = withDefaults(defineProps<{
+  eyebrow?: string
+  title?: string
   lede?: string
-}>()
+}>(), {})
+
+const eyebrow = computed(() => props.eyebrow ?? frontmatter.value.eyebrow)
+const title = computed(() => props.title ?? frontmatter.value.title)
+const lede = computed(() => props.lede ?? frontmatter.value.description)
 </script>
 
 <template>
-  <div class="page-hero">
-    <span class="eyebrow">{{ eyebrow }}</span>
+  <div v-if="title" class="page-hero">
+    <span v-if="eyebrow" class="eyebrow">{{ eyebrow }}</span>
     <h1>{{ title }}</h1>
     <p v-if="lede" class="lede">{{ lede }}</p>
     <slot />

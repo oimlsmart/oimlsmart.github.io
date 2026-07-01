@@ -1,9 +1,10 @@
+---
+title: Test report forms
+description: 'Forms are executable schemas. They declare fields (direct, calculated, metadata, verdict) and a pass/fail expression that the engine evaluates to produce a verdict — automatically, no spreadsheet formulas.'
+eyebrow: 'Guide · 09 of 13'
+---
 
-<PageHero
-  eyebrow="Guide · 09 of 13"
-  title="Test report forms"
-  lede="Forms are executable schemas. They declare fields (direct, calculated, metadata, verdict) and a pass/fail expression that the engine evaluates to produce a verdict — automatically, no spreadsheet formulas."
-/>
+<PageHero />
 
 ## Form anatomy
 

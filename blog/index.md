@@ -1,3 +1,9 @@
+---
+title: 'OIML SMART pilot — updates'
+description: Working notes and milestone snapshots from the OIML SMART pilot programme. Draft content for the OIML SMART team and OIML Member State reviewers.
+eyebrow: 'Blog · Internal pilot feed'
+---
+
 <script setup lang="ts">
 import { data } from './posts.data'
 
@@ -11,11 +17,7 @@ function formatDate(iso: string): string {
 }
 </script>
 
-<PageHero
-  eyebrow="Blog · Internal pilot feed"
-  title="OIML SMART pilot — updates"
-  lede="Working notes and milestone snapshots from the OIML SMART pilot programme. Draft content for the OIML SMART team and OIML Member State reviewers."
-/>
+<PageHero />
 
 <DraftCallout />
 

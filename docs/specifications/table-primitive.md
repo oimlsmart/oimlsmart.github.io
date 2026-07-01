@@ -1,8 +1,10 @@
-<PageHero
-  eyebrow="Formal Specification · SMART_REQS 09"
-  title="Table Definition and Lookup Primitive"
-  lede="The Table primitive — tiered, scalar, and range lookups with interpolation."
-/>
+---
+title: Table Definition and Lookup Primitive
+description: 'The Table primitive — tiered, scalar, and range lookups with interpolation.'
+eyebrow: 'Formal Specification · SMART_REQS 09'
+---
+
+<PageHero />
 
 
 <DraftCallout />

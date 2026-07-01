@@ -3,11 +3,12 @@ import { docsSidebar } from './data/docs-sidebar'
 import { navItems } from './data/nav'
 import { generateRssFeed } from './rss'
 import { FONT_PRELOAD_URL } from './data/fonts'
+import { SITE } from './data/site-meta'
 
 export default defineConfig({
-  title: 'OIML SMART',
-  description: 'Standards that are Machine-Actionable, Readable and Transferrable.',
-  lang: 'en-US',
+  title: SITE.title,
+  description: SITE.description,
+  lang: SITE.lang,
   lastUpdated: true,
 
   srcExclude: ['README.md', 'CLAUDE.md', 'TODO.site/**/*.md'],

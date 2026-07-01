@@ -1,9 +1,10 @@
+---
+title: OIML SMART brand resources
+description: "The visual identity assets for the OIML SMART pilot programme. All assets are drafts subject to change as the pilot evolves. The mark is a globe with a horizontal transit — referencing the international scope of OIML's work and the motion of instruments under test."
+eyebrow: 'Identity · DRAFT · pilot'
+---
 
-<PageHero
-  eyebrow="Identity · DRAFT · pilot"
-  title="OIML SMART brand resources"
-  lede="The visual identity assets for the OIML SMART pilot programme. All assets are drafts subject to change as the pilot evolves. The mark is a globe with a horizontal transit — referencing the international scope of OIML's work and the motion of instruments under test."
-/>
+<PageHero />
 
 ## Primary logo
 

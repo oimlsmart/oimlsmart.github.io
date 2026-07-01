@@ -1,9 +1,10 @@
+---
+title: Build SMART Recommendations
+description: 'Everything a standards developer, software engineer, or technical evaluator needs to author, deploy, or integrate OIML SMART Recommendations — narrative guides, formal specifications, and reference material.'
+eyebrow: Documentation hub
+---
 
-<PageHero
-  eyebrow="Documentation hub"
-  title="Build SMART Recommendations"
-  lede="Everything a standards developer, software engineer, or technical evaluator needs to author, deploy, or integrate OIML SMART Recommendations — narrative guides, formal specifications, and reference material."
-/>
+<PageHero />
 
 
 

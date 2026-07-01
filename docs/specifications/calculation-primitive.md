@@ -1,9 +1,10 @@
+---
+title: Calculation Primitive
+description: 'The Calculation primitive — typed, reusable, named computations.'
+eyebrow: 'Formal Specification · SMART_REQS 07'
+---
 
-<PageHero
-  eyebrow="Formal Specification · SMART_REQS 07"
-  title="Calculation Primitive"
-  lede="The Calculation primitive — typed, reusable, named computations."
-/>
+<PageHero />
 
 
 <DraftCallout variant="specs" />

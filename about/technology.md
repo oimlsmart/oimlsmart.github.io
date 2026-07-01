@@ -1,9 +1,10 @@
+---
+title: Technology stack
+description: 'OIML SMART builds on a mature open-source toolchain. Every layer is auditable, version-controlled, and built on open standards.'
+eyebrow: 'About · 04'
+---
 
-<PageHero
-  eyebrow="About · 04"
-  title="Technology stack"
-  lede="OIML SMART builds on a mature open-source toolchain. Every layer is auditable, version-controlled, and built on open standards."
-/>
+<PageHero />
 
 
 

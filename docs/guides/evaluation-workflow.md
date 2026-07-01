@@ -1,9 +1,10 @@
+---
+title: Evaluation workflow
+description: 'The end-to-end flow that takes a populated FormInstance, runs it through the calculation engine, evaluates the pass/fail expression, and produces a traceable verdict — and ultimately a certificate.'
+eyebrow: 'Guide · 12 of 13'
+---
 
-<PageHero
-  eyebrow="Guide · 12 of 13"
-  title="Evaluation workflow"
-  lede="The end-to-end flow that takes a populated FormInstance, runs it through the calculation engine, evaluates the pass/fail expression, and produces a traceable verdict — and ultimately a certificate."
-/>
+<PageHero />
 
 ## The 7-stage evaluation pipeline
 
