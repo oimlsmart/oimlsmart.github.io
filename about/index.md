@@ -1,4 +1,3 @@
-# About
 
 <script setup>
 // Page hero
@@ -16,17 +15,7 @@
 
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This page documents the OIML SMART pilot programme. Every requirement,
-test, form, ontology entity, and specification described here is a
-<strong>draft</strong> and may change without notice as the pilot
-evolves. OIML Member States and Corresponding Members seeking engagement
-should contact OIML through official channels. Not for external
-distribution.
-</p>
-</div>
+<DraftCallout />
 ## What is OIML?
 
 The **International Organization of Legal Metrology** (OIML) is an intergovernmental organization established in 1955, headquartered in Paris, France. Its 60+ member states and 60+ corresponding members collaborate to develop model regulations — called **International Recommendations** — for measuring instruments used in legal metrology. These recommendations form the basis for national legal metrology regulations worldwide.

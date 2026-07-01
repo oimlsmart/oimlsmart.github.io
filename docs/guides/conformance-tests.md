@@ -1,4 +1,3 @@
-# Conformance Tests
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 08 of 13</span>

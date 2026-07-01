@@ -1,3 +1,4 @@
+
 <div class="page-hero">
   <span class="eyebrow">Formal Specification · SMART_REQS 10</span>
   <h1>Certification Workflow Model</h1>
@@ -5,15 +6,7 @@
 </div>
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This document is part of the SMART_REQS specification set for the OIML SMART
-pilot. It is a <strong>draft</strong> and may change without notice as the
-pilot evolves. The current version is published from the OIML SMART
-specification repository.
-</p>
-</div>
+<DraftCallout />
 
 
 ## Purpose
@@ -102,7 +95,6 @@ A manufacturer's product family. Contains one or more ClassificationGroups diffe
 by metrological classification parameters.
 
 ```yaml
-# data/{standard}/dimensions.yaml declares what fields mean
 # Here is the runtime entity stored in IndexedDB:
 
 instrumentModelFamily:

@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress'
 import { docsSidebar } from './data/docs-sidebar'
+import { navItems } from './data/nav'
 
 export default defineConfig({
   title: 'OIML SMART',
@@ -20,9 +21,11 @@ export default defineConfig({
   head: [
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
+    // font-display:swap is appended via &display=swap — fonts load async
     ['link', {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap',
+      rel: 'preload stylesheet',
+      as: 'style',
+      href: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap',
     }],
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/smart-logo-light.svg' }],
     ['link', { rel: 'icon', type: 'image/png', href: '/smart-logo-light.png', sizes: '512x512' }],
@@ -41,25 +44,7 @@ export default defineConfig({
     },
     siteTitle: 'OIML SMART',
 
-    nav: [
-      { text: 'Recommendations', link: '/recommendations/' },
-      { text: 'Documents', link: '/library/' },
-      { text: 'Developers', link: '/docs/' },
-      { text: 'OIML-CS', link: '/oiml-cs' },
-      {
-        text: 'About',
-        items: [
-          { text: 'What is OIML SMART?', link: '/about/what-is-smart' },
-          { text: 'Why SMART', link: '/about/why-smart' },
-          { text: 'How It Works', link: '/about/how-it-works' },
-          { text: 'Technology', link: '/about/technology' },
-          { text: '—', link: '/about/contact' },
-          { text: 'Contact', link: '/about/contact' },
-          { text: 'Branding', link: '/about/branding' },
-        ],
-      },
-      { text: 'Enter App ↗', link: '/app/' },
-    ],
+    nav: navItems,
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/oimlsmart' },

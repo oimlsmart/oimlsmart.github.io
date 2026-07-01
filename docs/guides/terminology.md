@@ -1,4 +1,3 @@
-# Terminology & Cross-References
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 11 of 13</span>

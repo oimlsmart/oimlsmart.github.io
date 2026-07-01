@@ -1,4 +1,3 @@
-# Library
 
 <div class="page-hero">
   <span class="eyebrow">Library · OIML documents</span>
@@ -13,17 +12,7 @@
 
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This page documents the OIML SMART pilot programme. Every requirement,
-test, form, ontology entity, and specification described here is a
-<strong>draft</strong> and may change without notice as the pilot
-evolves. OIML Member States and Corresponding Members seeking engagement
-should contact OIML through official channels. Not for external
-distribution.
-</p>
-</div>
+<DraftCallout />
 ## Recommendations (modelled)
 
 These three Recommendations have been fully modelled in the SMART platform.
@@ -70,7 +59,7 @@ The library is the canonical reference for **normative OIML documents** — the
 authoritative sources that govern the SMART programme and the OIML-CS.
 
 For **structured access** to the modelled Recommendations (browse individual
-requirements, run conformance tests, fill forms), use the [SMART application ↗](https://app.oimlsmart.org).
+requirements, run conformance tests, fill forms), use the [SMART application ↗](/app/).
 
 For **developer documentation** about how SMART Recommendations are structured
 and authored, see the [Developer guides](/docs/guides/getting-started.html).

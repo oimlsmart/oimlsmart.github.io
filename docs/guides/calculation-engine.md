@@ -1,4 +1,3 @@
-# Calculation Engine
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 10 of 13</span>

@@ -1,4 +1,3 @@
-# Provision Data Model
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 05 of 13</span>

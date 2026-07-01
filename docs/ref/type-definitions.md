@@ -1,4 +1,3 @@
-# Type Definitions
 
 <div class="page-hero">
   <span class="eyebrow">Reference · TypeScript types</span>
@@ -12,13 +11,7 @@
 </div>
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-Generated types evolve with the YAML schemas. The canonical source lives in
-the smart application repository.
-</p>
-</div>
+<DraftCallout />
 
 ## Top-level types
 

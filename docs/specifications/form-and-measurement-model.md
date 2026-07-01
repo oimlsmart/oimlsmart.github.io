@@ -1,3 +1,4 @@
+
 <div class="page-hero">
   <span class="eyebrow">Formal Specification · SMART_REQS 03</span>
   <h1>Form & Measurement Model</h1>
@@ -5,15 +6,7 @@
 </div>
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This document is part of the SMART_REQS specification set for the OIML SMART
-pilot. It is a <strong>draft</strong> and may change without notice as the
-pilot evolves. The current version is published from the OIML SMART
-specification repository.
-</p>
-</div>
+<DraftCallout variant="specs" />
 
 
 ## Purpose
@@ -28,7 +21,6 @@ derivation expression.
 A form is a structured data capture template linked to one or more conformance tests.
 
 ```yaml
-# forms/creep-dr.yaml
 form_schema:
   name: CreepDR
   identifier: "r60-3/sec-2.1.5"

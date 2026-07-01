@@ -1,4 +1,3 @@
-# How It Works
 
 <div class="page-hero">
   <span class="eyebrow">About · 03</span>
@@ -13,17 +12,7 @@
 
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This page documents the OIML SMART pilot programme. Every requirement,
-test, form, ontology entity, and specification described here is a
-<strong>draft</strong> and may change without notice as the pilot
-evolves. OIML Member States and Corresponding Members seeking engagement
-should contact OIML through official channels. Not for external
-distribution.
-</p>
-</div>
+<DraftCallout />
 ## Layered Architecture
 
 Each layer builds on the one below it. The core ontology defines shared concepts, domain ontologies add Recommendation-specific classes, and requirements and tests add concrete verifiable provisions.

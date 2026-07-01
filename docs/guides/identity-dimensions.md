@@ -1,4 +1,3 @@
-# Identity & Dimensions
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 04 of 13</span>

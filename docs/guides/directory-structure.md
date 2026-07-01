@@ -1,4 +1,3 @@
-# Directory Structure
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 03 of 13</span>

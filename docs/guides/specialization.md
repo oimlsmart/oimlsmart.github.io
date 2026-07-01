@@ -1,4 +1,3 @@
-# Specialization & Parameterization
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 06 of 13</span>

@@ -1,3 +1,4 @@
+
 <div class="page-hero">
   <span class="eyebrow">Formal Specification · SMART_REQS 11</span>
   <h1>Variable & Symbol Model</h1>
@@ -5,15 +6,7 @@
 </div>
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This document is part of the SMART_REQS specification set for the OIML SMART
-pilot. It is a <strong>draft</strong> and may change without notice as the
-pilot evolves. The current version is published from the OIML SMART
-specification repository.
-</p>
-</div>
+<DraftCallout />
 
 
 ## Purpose
@@ -203,7 +196,6 @@ Measured (no dependency ordering needed):
 The form field references a named Calculation and provides bindings:
 
 ```yaml
-# In forms/load-cell-errors.yaml
 - name: error_EL
   label: "Error (E_L)"
   symbol: EL                          # ← links to symbol registry

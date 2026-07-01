@@ -1,3 +1,4 @@
+
 <div class="page-hero">
   <span class="eyebrow">Formal Specification · SMART_REQS 07</span>
   <h1>Calculation Primitive</h1>
@@ -5,15 +6,7 @@
 </div>
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This document is part of the SMART_REQS specification set for the OIML SMART
-pilot. It is a <strong>draft</strong> and may change without notice as the
-pilot evolves. The current version is published from the OIML SMART
-specification repository.
-</p>
-</div>
+<DraftCallout variant="specs" />
 
 
 ## Purpose
@@ -175,7 +168,6 @@ Form fields reference calculations by name and provide bindings from their local
 field names to the calculation's input parameter names:
 
 ```yaml
-# In a form field
 - name: error_EL
   label: "Load cell error (v)"
   type: number

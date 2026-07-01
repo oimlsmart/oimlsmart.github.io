@@ -1,118 +1,52 @@
 <script setup lang="ts">
-interface AcronymItem {
-  letter: string
-  word: string
-  description: string
-}
+/**
+ * HomePage — composes the home page from typed data + reusable components.
+ *
+ * No inline literals. No inline styles beyond the hero-specific layout.
+ * The hero globe uses a Vue-rendered img with a useDark ref to swap
+ * the SVG between light and dark variants at runtime.
+ */
 
-const acronym: AcronymItem[] = [
-  { letter: 'S', word: 'Standards', description: 'International metrology recommendations as structured digital artifacts.' },
-  { letter: 'M', word: 'Machine-Actionable', description: 'Embedded computation engines perform metrological calculations directly.' },
-  { letter: 'A', word: 'Accessible', description: 'Instant search, cross-references, and real-time calculation in the browser.' },
-  { letter: 'R', word: 'Readable', description: 'Machine-readable requirements, tests, and terminology in open formats.' },
-  { letter: 'T', word: 'Transferrable', description: 'A shared ontology layer enables cross-Recommendation interoperability.' },
-]
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import HomeSection from './HomeSection.vue'
+import AcronymStrip from './AcronymStrip.vue'
+import StatRow from './StatRow.vue'
+import FeatureGrid from './FeatureGrid.vue'
+import AudienceGrid from './AudienceGrid.vue'
+import RecCard from './RecCard.vue'
+import {
+  acronym,
+  pilotStats,
+  platformFeatures,
+  audiencePaths,
+  draftNotice,
+} from '../../data/site'
+import { recommendations } from '../../data/recommendations'
 
-const stats = [
-  { label: 'Recommendations', value: '3' },
-  { label: 'Requirements', value: '180+' },
-  { label: 'Conformance Tests', value: '60+' },
-  { label: 'Forms', value: '40+' },
-]
+// VitePress toggles the `dark` class on <html>; observe and react.
+const isDark = ref(false)
+const heroGlobeSrc = computed(() =>
+  isDark.value ? '/smart-logo-dark.svg' : '/smart-logo-light.svg'
+)
 
-interface Recommendation {
-  number: string
-  title: string
-  scope: string
-  year: string
-  requirements: number
-  tests: number
-  forms: number
-}
+let observer: MutationObserver | null = null
 
-const recommendations: Recommendation[] = [
-  {
-    number: 'R 60',
-    title: 'Load Cells',
-    scope: 'Metrological regulation for load cells used in nonautomatic weighing instruments. The pilot SMART Recommendation.',
-    year: '2021',
-    requirements: 42,
-    tests: 18,
-    forms: 12,
-  },
-  {
-    number: 'R 129',
-    title: 'Mass Road Vehicles',
-    scope: 'Dynamic measuring instruments for the determination of mass of road vehicles in motion.',
-    year: '2000',
-    requirements: 35,
-    tests: 14,
-    forms: 9,
-  },
-  {
-    number: 'R 144',
-    title: 'Gas Meters',
-    scope: 'Gas meters — diaphragm gas meters deployed for custody transfer and billing.',
-    year: '2006',
-    requirements: 28,
-    tests: 11,
-    forms: 8,
-  },
-]
+onMounted(() => {
+  const html = document.documentElement
+  isDark.value = html.classList.contains('dark')
+  observer = new MutationObserver(() => {
+    isDark.value = html.classList.contains('dark')
+  })
+  observer.observe(html, { attributes: true, attributeFilter: ['class'] })
+})
 
-interface Feature {
-  num: string
-  title: string
-  description: string
-}
-
-const features: Feature[] = [
-  { num: '01', title: 'Structured Requirements', description: 'Machine-readable requirements with explicit acceptance criteria and applicability filters.' },
-  { num: '02', title: 'Conformance Testing', description: 'Structured test procedures linked to requirements via explicit dependency chains.' },
-  { num: '03', title: 'Smart Forms', description: 'Calculation-powered forms that auto-compute field values based on instrument classification.' },
-  { num: '04', title: 'Certification Workflow', description: 'End-to-end digital certification: application → test report → evaluation → certificate.' },
-  { num: '05', title: 'Semantic Ontology', description: 'OWL-based ontology for cross-Recommendation interoperability and semantic queries.' },
-  { num: '06', title: 'Document Library', description: 'Browse all OIML documents in structured, searchable format with instant full-text search.' },
-]
-
-interface AudiencePath {
-  num: string
-  title: string
-  description: string
-  link: { label: string; href: string }
-}
-
-const audiencePaths: AudiencePath[] = [
-  {
-    num: 'i',
-    title: 'For OIML Member States',
-    description: 'Understand what SMART means for national legal metrology programmes and how to participate in the technical committees shaping the SMART agenda.',
-    link: { label: 'About →', href: '/about/what-is-smart.html' },
-  },
-  {
-    num: 'ii',
-    title: 'For Standards Developers',
-    description: 'Author new SMART International Recommendations in YAML using the developer guides, schemas, and the Primmel modelling language.',
-    link: { label: 'Guides →', href: '/docs/guides/getting-started.html' },
-  },
-  {
-    num: 'iii',
-    title: 'For OIML-CS Participants',
-    description: 'Issuing Authorities, Test Laboratories, and Manufacturers use the digital certification tools for end-to-end OIML-CS workflows.',
-    link: { label: 'OIML-CS →', href: '/oiml-cs.html' },
-  },
-  {
-    num: 'iv',
-    title: 'For Metrology Professionals',
-    description: 'Browse the structured library of OIML documents, requirements, and ontology terms across all modelled Recommendations.',
-    link: { label: 'Library →', href: '/library/' },
-  },
-]
+onBeforeUnmount(() => {
+  observer?.disconnect()
+})
 </script>
 
 <template>
   <div class="oiml-home">
-    <!-- Hero -->
     <section class="home-hero">
       <div class="home-hero-content">
         <div class="eyebrow">
@@ -133,175 +67,248 @@ const audiencePaths: AudiencePath[] = [
             Explore Recommendations
             <span class="arrow">→</span>
           </a>
-          <a class="btn btn-ghost" href="/about/what-is-smart">What is SMART?</a>
+          <a class="btn btn-ghost" href="/about/what-is-smart.html">What is SMART?</a>
         </div>
       </div>
 
       <div class="home-globe">
         <img
-          src="/smart-logo-light.svg"
+          :src="heroGlobeSrc"
           alt="OIML SMART globe mark"
           class="globe-static"
         />
       </div>
     </section>
 
-    <!-- S.M.A.R.T. Acronym -->
-    <section class="home-section">
-      <div class="home-section-head">
-        <span class="num">— 01 / Acronym</span>
-        <h2>What "SMART" stands for</h2>
-        <p>
-          Five properties that distinguish a SMART Recommendation from a traditional PDF.
-          Together, they make the Recommendation a functional digital artifact —
-          not just a document.
-        </p>
-      </div>
-      <div class="acronym-strip">
-        <div
-          v-for="item in acronym"
-          :key="item.letter"
-          class="cell"
-        >
-          <div class="letter">{{ item.letter }}</div>
-          <div class="word">{{ item.word }}</div>
-          <div class="desc">{{ item.description }}</div>
-        </div>
-      </div>
-    </section>
+    <HomeSection
+      num="— 01 / Acronym"
+      title='What "SMART" stands for'
+      lede="Five properties that distinguish a SMART Recommendation from a traditional PDF. Together, they make the Recommendation a functional digital artifact — not just a document."
+    >
+      <AcronymStrip :items="acronym" />
+    </HomeSection>
 
-    <!-- Recommendations -->
-    <section class="home-section">
-      <div class="home-section-head">
-        <span class="num">— 02 / Catalogue</span>
-        <h2>Recommendations in the pilot</h2>
-        <p>
-          Each Recommendation below is at a different point in the modelling
-          pilot. Numbers reflect the working model and may change as the
-          pilot evolves.
-        </p>
-      </div>
+    <HomeSection
+      num="— 02 / Catalogue"
+      title="Recommendations in the pilot"
+      lede="Each Recommendation below is at a different point in the modelling pilot. Numbers reflect the working model and may change as the pilot evolves."
+    >
       <div class="rec-grid">
-        <a
-          v-for="r in recommendations"
-          :key="r.number"
-          class="rec-card"
-          :href="`/recommendations/${r.number.toLowerCase().replace(' ', '')}.html`"
-        >
-          <div class="rec-num">{{ r.number }} · {{ r.year }} · DRAFT</div>
-          <h3>{{ r.title }}</h3>
-          <p class="scope">{{ r.scope }}</p>
-          <div class="meta">
-            <span><strong>{{ r.requirements }}</strong> reqs</span>
-            <span><strong>{{ r.tests }}</strong> tests</span>
-            <span><strong>{{ r.forms }}</strong> forms</span>
-          </div>
-        </a>
+        <RecCard v-for="r in recommendations" :key="r.number" :rec="r" />
       </div>
-    </section>
+    </HomeSection>
 
-    <!-- Stats -->
-    <section class="home-section">
-      <div class="home-section-head">
-        <span class="num">— 03 / Pilot scope</span>
-        <h2>What the pilot currently covers</h2>
-        <p>
-          Working figures as of the current pilot snapshot. Will grow as more
-          Recommendations and features are added.
-        </p>
-      </div>
-      <div class="stat-row">
-        <div
-          v-for="s in stats"
-          :key="s.label"
-          class="stat"
-        >
-          <div class="value">{{ s.value }}</div>
-          <span class="label">{{ s.label }}</span>
-        </div>
-      </div>
-    </section>
+    <HomeSection
+      num="— 03 / Pilot scope"
+      title="What the pilot currently covers"
+      lede="Working figures as of the current pilot snapshot. Will grow as more Recommendations and features are added."
+    >
+      <StatRow :stats="pilotStats" />
+    </HomeSection>
 
-    <!-- Features -->
-    <section class="home-section">
-      <div class="home-section-head">
-        <span class="num">— 04 / What works today</span>
-        <h2>Capabilities delivered in the pilot</h2>
-        <p>
-          These are the working capabilities in the current build. They are
-          subject to change — the pilot is intentionally exploratory.
-        </p>
-      </div>
-      <div class="feature-grid">
-        <div
-          v-for="f in features"
-          :key="f.num"
-          class="feature"
-        >
-          <span class="icon">{{ f.num }}</span>
-          <h3>{{ f.title }}</h3>
-          <p>{{ f.description }}</p>
-        </div>
-      </div>
-    </section>
+    <HomeSection
+      num="— 04 / What works today"
+      title="Capabilities delivered in the pilot"
+      lede="These are the working capabilities in the current build. They are subject to change — the pilot is intentionally exploratory."
+    >
+      <FeatureGrid :features="platformFeatures" />
+    </HomeSection>
 
-    <!-- Audience paths -->
-    <section class="home-section">
-      <div class="home-section-head">
-        <span class="num">— 05 / How the pilot is reviewed</span>
-        <h2>Internal review paths</h2>
-        <p>
-          This site supports ongoing internal review of the OIML SMART pilot.
-          OIML Member States and Corresponding Members are invited to contact
-          OIML directly for engagement.
-        </p>
-      </div>
-      <div class="audience-grid">
-        <div
-          v-for="path in audiencePaths"
-          :key="path.num"
-          class="path"
-        >
-          <div class="num">{{ path.num }}</div>
-          <div>
-            <h3>{{ path.title }}</h3>
-            <p>
-              {{ path.description }}
-              <a :href="path.link.href">{{ path.link.label }}</a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <HomeSection
+      num="— 05 / How the pilot is reviewed"
+      title="Internal review paths"
+      lede="This site supports ongoing internal review of the OIML SMART pilot. OIML Member States and Corresponding Members are invited to contact OIML directly for engagement."
+    >
+      <AudienceGrid :paths="audiencePaths" />
+    </HomeSection>
 
-    <!-- Disclaimer -->
-    <section class="home-section">
-      <div class="home-section-head">
-        <span class="num">— 06 / Important</span>
-        <h2>This is a DRAFT pilot site</h2>
-        <p>
-          Every page on this site is part of an ongoing pilot programme. All
-          Recommendations, requirements, tests, forms, ontology entities, and
-          specifications are <strong>drafts</strong>. Counts, terminology, and
-          structure are all subject to change.
-        </p>
-        <p>
-          This site is intended <strong>for the internal use of the OIML SMART
-          team</strong>. It is not suitable for public consumption. OIML
-          Member States and Corresponding Members seeking engagement should
-          contact OIML through official channels.
-        </p>
-      </div>
-    </section>
+    <HomeSection
+      num="— 06 / Important"
+      title="This is a DRAFT pilot site"
+    >
+      <p>
+        Every page on this site is part of an ongoing pilot programme. All
+        Recommendations, requirements, tests, forms, ontology entities, and
+        specifications are <strong>drafts</strong>. Counts, terminology, and
+        structure are all subject to change.
+      </p>
+      <p>
+        This site is intended <strong>for the internal use of the OIML SMART
+        team</strong>. It is not suitable for public consumption. OIML
+        Member States and Corresponding Members seeking engagement should
+        contact OIML through official channels.
+      </p>
+      <p class="draft-tag">{{ draftNotice.title }}</p>
+    </HomeSection>
   </div>
 </template>
 
 <style scoped>
-.home-hero-content {
-  max-width: 36rem;
+.home-hero {
+  position: relative;
+  min-height: min(92vh, 800px);
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  padding: 4rem 0;
+}
+
+@media (max-width: 960px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2rem 0 3rem;
+    min-height: auto;
+    text-align: center;
+  }
+}
+
+.home-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center center;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 75%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.home-hero > * { position: relative; z-index: 1; }
+.home-hero-content { max-width: 36rem; }
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vp-c-brand-1);
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--vp-c-brand-1);
+  box-shadow: 0 0 0 4px var(--vp-c-brand-soft);
+}
+
+@media (max-width: 960px) {
+  .home-hero-content,
+  .eyebrow,
+  .ctas { margin-left: auto; margin-right: auto; }
+  .eyebrow { justify-content: center; }
+  .ctas { justify-content: center; }
+}
+
+h1 {
+  font-family: var(--vp-font-family-serif);
+  font-size: clamp(2.5rem, 6.5vw, 4.75rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  margin: 0 0 1.5rem;
+  color: var(--vp-c-text-1);
+}
+
+h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--vp-c-brand-1);
+}
+
+.tagline {
+  font-size: 1.1875rem;
+  line-height: 1.55;
+  color: var(--vp-c-text-2);
+  max-width: 32rem;
+  margin: 0 0 2.5rem;
+}
+
+.tagline strong {
+  color: var(--vp-c-text-1);
+  font-weight: 600;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  font-family: var(--vp-font-family-base);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--vp-c-text-1);
+  color: var(--vp-c-bg);
+}
+
+.btn-primary:hover {
+  background-color: var(--vp-c-brand-1);
+  color: #ffffff;
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--vp-c-text-1);
+  border-color: var(--vp-c-divider);
+}
+
+.btn-ghost:hover {
+  border-color: var(--vp-c-text-1);
+  background-color: var(--vp-c-bg-soft-up);
+}
+
+.btn .arrow { transition: transform 0.15s; }
+.btn:hover .arrow { transform: translateX(2px); }
+
+.home-globe {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.home-globe::before {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%,
+    var(--vp-c-brand-soft) 0%,
+    transparent 60%);
+  filter: blur(40px);
 }
 
 .globe-static {
+  position: relative;
   width: 100%;
   max-width: 420px;
   height: auto;
@@ -315,8 +322,29 @@ const audiencePaths: AudiencePath[] = [
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .globe-static {
-    animation: none;
-  }
+  .globe-static { animation: none; }
 }
+
+.rec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 960px) {
+  .rec-grid { grid-template-columns: 1fr; }
+}
+
+.draft-tag {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--vp-c-divider);
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d97706;
+}
+
+.dark .draft-tag { color: #fbbf24; }
 </style>

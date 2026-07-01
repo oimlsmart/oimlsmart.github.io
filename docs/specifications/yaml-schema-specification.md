@@ -1,3 +1,4 @@
+
 <div class="page-hero">
   <span class="eyebrow">Formal Specification · SMART_REQS 06</span>
   <h1>YAML Schema Specification</h1>
@@ -5,15 +6,7 @@
 </div>
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This document is part of the SMART_REQS specification set for the OIML SMART
-pilot. It is a <strong>draft</strong> and may change without notice as the
-pilot evolves. The current version is published from the OIML SMART
-specification repository.
-</p>
-</div>
+<DraftCallout />
 
 
 ## Purpose
@@ -37,7 +30,6 @@ the new `variables`, `steps`, and `acceptance_criteria` on conformance tests, th
 ### New Definitions
 
 ```yaml
-# In cc.yaml $defs
 
 testVariable:
   type: object

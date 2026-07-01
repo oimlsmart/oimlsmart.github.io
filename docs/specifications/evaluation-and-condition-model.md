@@ -1,3 +1,4 @@
+
 <div class="page-hero">
   <span class="eyebrow">Formal Specification · SMART_REQS 05</span>
   <h1>Evaluation & Condition Model</h1>
@@ -5,15 +6,7 @@
 </div>
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This document is part of the SMART_REQS specification set for the OIML SMART
-pilot. It is a <strong>draft</strong> and may change without notice as the
-pilot evolves. The current version is published from the OIML SMART
-specification repository.
-</p>
-</div>
+<DraftCallout />
 
 
 ## Purpose
@@ -47,7 +40,6 @@ The complete pipeline from form instance to requirement compliance:
 A FormInstance is a filled form containing actual measurement values.
 
 ```yaml
-# Stored in IndexedDB as a runtime entity
 form_instance:
   id: "fi-001"
   standard_id: "oiml-r60"

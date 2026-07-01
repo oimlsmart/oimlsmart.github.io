@@ -1,4 +1,3 @@
-# SMART_REQS Index
 
 <div class="page-hero">
   <span class="eyebrow">Reference · Specifications index</span>

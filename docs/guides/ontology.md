@@ -1,4 +1,3 @@
-# Ontology Architecture
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 13 of 13</span>
@@ -121,4 +120,4 @@ You've completed all 13 guides. Where to go from here:
 - Read the [Architecture](/docs/arch/overview.html) pages for deeper technical detail.
 - Read the [Formal Specifications](/docs/specifications/system-architecture.html) for the normative SMART_REQS documents.
 - Browse the [Library](/library/) for source OIML documents.
-- Try the [SMART app ↗](https://app.oimlsmart.org) for interactive exploration.
+- Try the [SMART app ↗](/app/) for interactive exploration.

@@ -1,4 +1,3 @@
-# Getting Started
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 01 of 13</span>

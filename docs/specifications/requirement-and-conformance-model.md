@@ -1,3 +1,4 @@
+
 <div class="page-hero">
   <span class="eyebrow">Formal Specification · SMART_REQS 02</span>
   <h1>Requirement & Conformance Model</h1>
@@ -5,15 +6,7 @@
 </div>
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This document is part of the SMART_REQS specification set for the OIML SMART
-pilot. It is a <strong>draft</strong> and may change without notice as the
-pilot evolves. The current version is published from the OIML SMART
-specification repository.
-</p>
-</div>
+<DraftCallout />
 
 
 ## Purpose
@@ -29,7 +22,6 @@ method, and criterion must be explicitly declared.
 A named scope that groups requirements applicable to a common subject.
 
 ```yaml
-# In requirements/metrological.yaml
 groups:
 - scopes:
   - title: "Metrological requirements for load cells"

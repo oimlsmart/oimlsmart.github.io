@@ -1,4 +1,3 @@
-# YAML Schema Reference
 
 <div class="page-hero">
   <span class="eyebrow">Reference · YAML schemas</span>
@@ -11,14 +10,7 @@
 </div>
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-These schemas are part of the OIML SMART pilot and are subject to change.
-For the normative specification, see the
-[YAML Schema Specification (SMART_REQS 06)](/docs/specifications/yaml-schema-specification.html).
-</p>
-</div>
+<DraftCallout />
 
 ## Where schemas live
 

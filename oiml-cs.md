@@ -1,4 +1,3 @@
-# The OIML Certification System
 
 <div class="page-hero">
   <span class="eyebrow">Certification system · B 18:2025</span>
@@ -13,17 +12,7 @@
 
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This page documents the OIML SMART pilot programme. Every requirement,
-test, form, ontology entity, and specification described here is a
-<strong>draft</strong> and may change without notice as the pilot
-evolves. OIML Member States and Corresponding Members seeking engagement
-should contact OIML through official channels. Not for external
-distribution.
-</p>
-</div>
+<DraftCallout />
 <p>
   <img src="/oiml-logo-cs-light.svg" alt="OIML-CS" style="height: 2.5rem;" />
 </p>

@@ -1,4 +1,3 @@
-# Requirements Model
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 07 of 13</span>

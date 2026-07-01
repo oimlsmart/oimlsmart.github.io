@@ -1,4 +1,3 @@
-# Branding
 
 <div class="page-hero">
   <span class="eyebrow">Identity · DRAFT · pilot</span>

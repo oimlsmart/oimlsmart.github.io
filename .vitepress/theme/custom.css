@@ -1077,32 +1077,61 @@ body {
    VitePress component overrides
    ============================================================ */
 
-/* Top nav */
-.VPNav {
-  background-color: rgba(250, 246, 238, 0.85) !important;
+/* Top nav — opaque, theme-aware. Use semantic tokens (not hardcoded
+   rgba) so dark mode contrast is guaranteed. */
+.VPNavBar {
+  background-color: var(--vp-c-bg-soft-up) !important;
+  border-bottom: 1px solid var(--vp-c-divider);
   backdrop-filter: saturate(180%) blur(12px);
   -webkit-backdrop-filter: saturate(180%) blur(12px);
 }
 
-.dark .VPNav {
-  background-color: rgba(10, 22, 40, 0.85) !important;
+.dark .VPNavBar {
+  background-color: var(--vp-c-bg) !important;
 }
 
-.VPNav .VPNavBar .title {
-  font-family: var(--vp-font-family-serif);
-  font-weight: 500;
-}
-
-.VPNav .VPNavBarMenuLink {
+/* Nav menu links — visible on either theme */
+.VPNavBarMenuLink {
+  color: var(--vp-c-text-1) !important;
   font-family: var(--vp-font-family-base);
   font-weight: 500;
   font-size: 0.9375rem;
 }
 
-/* Sidebar items */
+.VPNavBarMenuLink:hover {
+  color: var(--vp-c-brand-1) !important;
+}
+
+/* Search box — match theme, never white-on-white */
+.DocSearch-Button,
+.VPNavBarSearch search {
+  background-color: var(--vp-c-bg-soft) !important;
+  color: var(--vp-c-text-2) !important;
+  border: 1px solid var(--vp-c-divider);
+}
+
+.DocSearch-Button:hover {
+  border-color: var(--vp-c-brand-1);
+}
+
+.DocSearch-Button-Placeholder {
+  color: var(--vp-c-text-2) !important;
+}
+
+/* Sidebar — adapt to dark mode */
+.VPSidebar {
+  background-color: var(--vp-c-bg-soft-up) !important;
+  border-right-color: var(--vp-c-divider);
+}
+
+.dark .VPSidebar {
+  background-color: var(--vp-c-bg) !important;
+}
+
 .VPSidebar .VPSidebarItem .text {
   font-family: var(--vp-font-family-base);
   font-weight: 500;
+  color: var(--vp-c-text-1);
 }
 
 .VPSidebar .VPSidebarItem.level-0 .text {
@@ -1111,7 +1140,13 @@ body {
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: var(--vp-c-text-3);
+}
+
+/* Footer */
+.VPFooter {
+  background-color: var(--vp-c-bg-soft) !important;
+  border-top: 1px solid var(--vp-c-divider);
 }
 
 /* Edit-on-github link */

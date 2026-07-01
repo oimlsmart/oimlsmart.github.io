@@ -1,4 +1,3 @@
-# Evaluation Workflow
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 12 of 13</span>

@@ -1,4 +1,3 @@
-# Platform Architecture
 
 <div class="page-hero">
   <span class="eyebrow">Guide · 02 of 13</span>

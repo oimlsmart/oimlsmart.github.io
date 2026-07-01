@@ -1,4 +1,3 @@
-# Ontology
 
 <div class="page-hero">
   <span class="eyebrow">Semantic layer</span>
@@ -12,17 +11,7 @@
 
 
 
-<div class="callout draft-notice">
-<strong>DRAFT — Pilot programme</strong>
-<p>
-This page documents the OIML SMART pilot programme. Every requirement,
-test, form, ontology entity, and specification described here is a
-<strong>draft</strong> and may change without notice as the pilot
-evolves. OIML Member States and Corresponding Members seeking engagement
-should contact OIML through official channels. Not for external
-distribution.
-</p>
-</div>
+<DraftCallout />
 ## Three layers
 
 ```
@@ -48,7 +37,7 @@ SMART Core ontology
 The SMART application includes an interactive ontology browser that
 visualizes the class hierarchy, shows instances, and lets users run
 semantic queries. The browser is available at
-[app.oimlsmart.org](https://app.oimlsmart.org) under the
+[the app sign-in](/app/) under the
 "Ontology" navigation entry.
 
 Each entity has a dedicated detail page (e.g. `/docs/ontology/<slug>.html`)
