@@ -1,11 +1,11 @@
 ---
 title: Sign in to OIML SMART
+layout: page
 ---
 
 <script setup>
 import { onMounted, ref } from 'vue'
 
-const OAUTH_CLIENT_ID = 'Ov23li14hMhdjgtfWKBA'
 const APP_URL = (typeof window !== 'undefined')
   ? (window.__APP_URL__ || 'http://localhost:5190')
   : 'http://localhost:5190'
@@ -31,7 +31,6 @@ onMounted(() => {
 <h1 class="login-title">Sign in</h1>
 <p class="login-lede">
 Authenticate via GitHub OAuth to continue into the OIML SMART application.
-The smart app must be running locally at <code>{{ APP_URL }}</code> for sign-in to succeed.
 </p>
 
 <a class="login-btn primary" :href="oauthUrl">
@@ -39,31 +38,21 @@ The smart app must be running locally at <code>{{ APP_URL }}</code> for sign-in 
 <span>Continue with GitHub</span>
 </a>
 
-<div class="login-meta">
-<div class="meta-row">
-<span class="meta-label">OAuth App</span>
-<code>{{ OAUTH_CLIENT_ID }}</code>
-</div>
-<div class="meta-row">
-<span class="meta-label">Target</span>
-<code>{{ APP_URL }}</code>
-</div>
-</div>
-
 <p class="login-foot">
-The smart app must be running locally. Start it with
-<code>cd smart/browser &amp;&amp; npm run dev</code>.
+Requires the smart app running locally. From the
+<code>smart</code> repo, run <code>bin/dev</code>.
 </p>
 </div>
 </div>
 
 <style scoped>
 .login-shell {
-  min-height: 70vh;
+  min-height: calc(100vh - 64px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 3rem 1rem;
+  width: 100%;
 }
 
 .login-card {
@@ -74,6 +63,7 @@ The smart app must be running locally. Start it with
   width: 100%;
   max-width: 420px;
   text-align: center;
+  box-shadow: 0 16px 48px -24px rgba(10, 22, 40, 0.18);
 }
 
 .login-mark {
@@ -140,37 +130,10 @@ The smart app must be running locally. Start it with
   font-family: var(--vp-font-family-mono);
 }
 
-.login-meta {
+.login-foot {
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 1px dashed var(--vp-c-divider);
-  text-align: left;
-}
-
-.meta-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 0.375rem 0;
-  font-size: 0.8125rem;
-}
-
-.meta-label {
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--vp-c-text-3);
-}
-
-.meta-row code {
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.8125rem;
-  color: var(--vp-c-text-1);
-}
-
-.login-foot {
-  margin-top: 1.5rem;
   font-size: 0.75rem;
   line-height: 1.6;
   color: var(--vp-c-text-3);
@@ -179,5 +142,8 @@ The smart app must be running locally. Start it with
 .login-foot code {
   font-family: var(--vp-font-family-mono);
   font-size: 0.6875rem;
+  background: var(--vp-c-bg-soft);
+  padding: 0.0625rem 0.375rem;
+  border-radius: 2px;
 }
 </style>
