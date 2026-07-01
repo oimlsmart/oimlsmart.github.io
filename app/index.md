@@ -6,12 +6,10 @@ title: Sign in to OIML SMART
 import { onMounted, ref } from 'vue'
 
 const OAUTH_CLIENT_ID = 'Ov23li14hMhdjgtfWKBA'
-const appUrl = (typeof window !== 'undefined')
+const APP_URL = (typeof window !== 'undefined')
   ? (window.__APP_URL__ || 'http://localhost:5190')
   : 'http://localhost:5190'
-
-const oauthUrl = `${appUrl}/api/auth/signin/github`
-const demoLoginUrl = `${appUrl}/app/login`
+const oauthUrl = `${APP_URL}/api/auth/signin/github`
 const isDark = ref(false)
 
 onMounted(() => {
@@ -25,49 +23,38 @@ onMounted(() => {
 </script>
 
 <div class="login-shell">
-  <div class="login-card">
-    <div class="login-mark">
-      <img :src="isDark ? '/smart-logo-dark.svg' : '/smart-logo-light.svg'" alt="OIML SMART" />
-    </div>
+<div class="login-card">
+<div class="login-mark">
+<img :src="isDark ? '/smart-logo-dark.svg' : '/smart-logo-light.svg'" alt="OIML SMART" />
+</div>
 
-    <h1 class="login-title">Sign in</h1>
-    <p class="login-lede">
-      Authenticate with GitHub OAuth to continue into the OIML SMART
-      application. The app will open at the configured URL.
-    </p>
+<h1 class="login-title">Sign in</h1>
+<p class="login-lede">
+Authenticate via GitHub OAuth to continue into the OIML SMART application.
+The smart app must be running locally at <code>{{ APP_URL }}</code> for sign-in to succeed.
+</p>
 
-    <a class="login-btn primary" :href="oauthUrl">
-      <span class="icon">↗</span>
-      <span>Continue with GitHub</span>
-    </a>
+<a class="login-btn primary" :href="oauthUrl">
+<span class="icon">↗</span>
+<span>Continue with GitHub</span>
+</a>
 
-    <a class="login-btn ghost" :href="demoLoginUrl">
-      <span class="icon">⌂</span>
-      <span>Use a demo account</span>
-    </a>
+<div class="login-meta">
+<div class="meta-row">
+<span class="meta-label">OAuth App</span>
+<code>{{ OAUTH_CLIENT_ID }}</code>
+</div>
+<div class="meta-row">
+<span class="meta-label">Target</span>
+<code>{{ APP_URL }}</code>
+</div>
+</div>
 
-    <div class="login-meta">
-      <div class="meta-row">
-        <span class="meta-label">OAuth App</span>
-        <code>{{ OAUTH_CLIENT_ID }}</code>
-      </div>
-      <div class="meta-row">
-        <span class="meta-label">Dev URL</span>
-        <code>{{ appUrl }}</code>
-      </div>
-      <div class="meta-row">
-        <span class="meta-label">Demo password</span>
-        <code>demo2026</code>
-      </div>
-    </div>
-
-    <p class="login-foot">
-      Demo accounts (password <code>demo2026</code>):
-      <code>admin@oiml.org</code> · <code>ia@oiml.org</code> ·
-      <code>tl@oiml.org</code> · <code>viewer@oiml.org</code> ·
-      <code>developer@ribose.com</code>
-    </p>
-  </div>
+<p class="login-foot">
+The smart app must be running locally. Start it with
+<code>cd smart/browser &amp;&amp; npm run dev</code>.
+</p>
+</div>
 </div>
 
 <style scoped>
@@ -87,16 +74,12 @@ onMounted(() => {
   width: 100%;
   max-width: 420px;
   text-align: center;
-  position: relative;
 }
 
 .login-mark {
   width: 96px;
   height: 96px;
   margin: 0 auto 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .login-mark img {
@@ -136,35 +119,21 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1rem;
   border-radius: 4px;
   font-family: var(--vp-font-family-base);
   font-size: 0.9375rem;
   font-weight: 500;
   text-decoration: none;
   transition: all 0.15s ease;
-  margin-bottom: 0.625rem;
-}
-
-.login-btn.primary {
   background-color: var(--vp-c-brand-1);
   color: #ffffff;
   border: 1px solid var(--vp-c-brand-1);
 }
 
-.login-btn.primary:hover {
+.login-btn:hover {
   background-color: var(--vp-c-brand-3);
   border-color: var(--vp-c-brand-3);
-}
-
-.login-btn.ghost {
-  background-color: transparent;
-  color: var(--vp-c-text-1);
-  border: 1px solid var(--vp-c-divider);
-}
-
-.login-btn.ghost:hover {
-  border-color: var(--vp-c-text-1);
 }
 
 .login-btn .icon {
