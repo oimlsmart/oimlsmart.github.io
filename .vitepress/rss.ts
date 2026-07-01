@@ -1,31 +1,22 @@
 /**
  * RSS 2.0 feed generator.
  *
- * Reads the same posts as posts.data.ts and emits /feed.xml into the
- * VitePress dist directory at build time. Mounted as a build plugin
- * via `buildEnd` in the site config.
+ * Reads posts via the canonical loader in `blog/posts.ts`. Mounted via
+ * `buildEnd` in `.vitepress/config.ts` — the generated /feed.xml is
+ * emitted alongside the VitePress build.
  *
- * Single source of truth: this loader reuses the blog markdown loader
- * — no duplicate post list.
+ * Single source of truth for the post list lives in `blog/posts.ts`.
  */
 import type { Plugin } from 'vite'
 import { writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { createContentLoader, type SiteConfig } from 'vitepress'
+import { transformPosts, type Post } from '../blog/posts'
 
 const SITE_URL = 'https://www.oimlsmart.org'
 const SITE_TITLE = 'OIML SMART pilot updates'
 const SITE_DESC =
   'Working notes and milestone snapshots from the OIML SMART pilot programme.'
-
-interface Post {
-  title: string
-  date: string
-  author: string
-  summary: string
-  url: string
-  html?: string
-}
 
 function escapeXml(s: string): string {
   return s
@@ -50,7 +41,7 @@ function renderFeed(posts: readonly Post[]): string {
       <pubDate>${toRfc822(p.date)}</pubDate>
       <dc:creator>${escapeXml(p.author)}</dc:creator>
       <description>${escapeXml(p.summary)}</description>
-    </item>`
+    </item>`,
     )
     .join('\n')
 
@@ -79,16 +70,7 @@ export async function generateRssFeed(siteConfig: SiteConfig): Promise<void> {
     includeSrc: false,
   })
   const raw = await loader.load()
-  const posts: Post[] = raw
-    .filter((p) => p.frontmatter.title && p.url !== '/blog/')
-    .map((p) => ({
-      title: String(p.frontmatter.title),
-      date: String(p.frontmatter.date),
-      author: String(p.frontmatter.author || 'OIML SMART team'),
-      summary: String(p.frontmatter.summary || ''),
-      url: p.url,
-    }))
-    .sort((a, b) => +new Date(b.date) - +new Date(a.date))
+  const posts = transformPosts(raw as any)
 
   const xml = renderFeed(posts)
   const outDir = siteConfig.outDir || resolve(process.cwd(), '.vitepress/dist')

@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 import { docsSidebar } from './data/docs-sidebar'
 import { navItems } from './data/nav'
 import { generateRssFeed } from './rss'
+import { FONT_PRELOAD_URL } from './data/fonts'
 
 export default defineConfig({
   title: 'OIML SMART',
@@ -22,11 +23,13 @@ export default defineConfig({
   head: [
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
-    // font-display:swap is appended via &display=swap — fonts load async
+    // Font URL constructed from data/fonts.ts — single source of truth.
+    // &display=swap appended so fonts load async; `preload stylesheet`
+    // starts the fetch in the head, before the body renders.
     ['link', {
       rel: 'preload stylesheet',
       as: 'style',
-      href: 'https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap',
+      href: FONT_PRELOAD_URL,
     }],
     ['link', { rel: 'icon', type: 'image/svg+xml', href: '/smart-logo-light.svg' }],
     ['link', { rel: 'icon', type: 'image/png', href: '/smart-logo-light.png', sizes: '512x512' }],

@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 11 of 13</span>
-  <h1>Terminology & cross-references</h1>
-  <p class="lede">
-    Defined terms and an explicit cross-reference graph tie the natural-language
-    prose of the Recommendation to the structured data model. Every term
-    resolves, every reference is grounded.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 11 of 13"
+  title="Terminology & cross-references"
+  lede="Defined terms and an explicit cross-reference graph tie the natural-language prose of the Recommendation to the structured data model. Every term resolves, every reference is grounded."
+/>
 
 ## Terminology
 

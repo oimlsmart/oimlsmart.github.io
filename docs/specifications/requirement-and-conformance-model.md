@@ -1,9 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Formal Specification · SMART_REQS 02</span>
-  <h1>Requirement & Conformance Model</h1>
-  <p class="lede">Formal model for requirements and conformance tests — the core provision entities.</p>
-</div>
+<PageHero
+  eyebrow="Formal Specification · SMART_REQS 02"
+  title="Requirement & Conformance Model"
+  lede="Formal model for requirements and conformance tests — the core provision entities."
+/>
 
 
 <DraftCallout />

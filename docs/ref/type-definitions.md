@@ -1,14 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Reference · TypeScript types</span>
-  <h1>Generated TypeScript types</h1>
-  <p class="lede">
-    Type-safe interfaces that the runtime application uses to consume SMART
-    Recommendation data. Generated from the YAML schemas by the build
-    pipeline; mirror the source-of-truth at
-    <code>smart/browser/src/data/types/</code>.
-  </p>
-</div>
+<PageHero
+  eyebrow="Reference · TypeScript types"
+  title="Generated TypeScript types"
+  lede="Type-safe interfaces that the runtime application uses to consume SMART Recommendation data. Generated from the YAML schemas by the build pipeline; mirror the source-of-truth at smart/browser/src/data/types/."
+/>
 
 
 <DraftCallout />

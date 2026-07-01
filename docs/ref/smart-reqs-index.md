@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Reference · Specifications index</span>
-  <h1>The 11 SMART_REQS documents</h1>
-  <p class="lede">
-    The normative specifications of the SMART platform itself — what OIML B/D
-    documents are to legal metrology, the SMART_REQS set is to the SMART
-    engine.
-  </p>
-</div>
+<PageHero
+  eyebrow="Reference · Specifications index"
+  title="The 11 SMART_REQS documents"
+  lede="The normative specifications of the SMART platform itself — what OIML B/D documents are to legal metrology, the SMART_REQS set is to the SMART engine."
+/>
 
 ## The 11 specifications
 

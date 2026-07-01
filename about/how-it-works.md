@@ -1,14 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">About · 03</span>
-  <h1>How it works</h1>
-  <p class="lede">
-    OIML SMART uses a layered architecture: a shared core ontology
-    provides the foundation, domain ontologies extend it per
-    Recommendation, and structured requirements and conformance tests
-    build on top.
-  </p>
-</div>
+<PageHero
+  eyebrow="About · 03"
+  title="How it works"
+  lede="OIML SMART uses a layered architecture: a shared core ontology provides the foundation, domain ontologies extend it per Recommendation, and structured requirements and conformance tests build on top."
+/>
 
 
 

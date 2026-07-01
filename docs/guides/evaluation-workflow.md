@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 12 of 13</span>
-  <h1>Evaluation workflow</h1>
-  <p class="lede">
-    The end-to-end flow that takes a populated FormInstance, runs it through
-    the calculation engine, evaluates the pass/fail expression, and produces
-    a traceable verdict — and ultimately a certificate.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 12 of 13"
+  title="Evaluation workflow"
+  lede="The end-to-end flow that takes a populated FormInstance, runs it through the calculation engine, evaluates the pass/fail expression, and produces a traceable verdict — and ultimately a certificate."
+/>
 
 ## The 7-stage evaluation pipeline
 

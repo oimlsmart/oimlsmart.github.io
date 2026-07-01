@@ -1,12 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 03 of 13</span>
-  <h1>Directory structure</h1>
-  <p class="lede">
-    Every SMART Recommendation follows the same directory layout. Knowing
-    where each artifact lives makes authoring fast and review tractable.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 03 of 13"
+  title="Directory structure"
+  lede="Every SMART Recommendation follows the same directory layout. Knowing where each artifact lives makes authoring fast and review tractable."
+/>
 
 ## Per-standard layout
 

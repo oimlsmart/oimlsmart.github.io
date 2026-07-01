@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Semantic layer</span>
-  <h1>The OIML SMART ontology</h1>
-  <p class="lede">
-    The OWL ontology layer is what makes SMART Recommendations
-    interoperable — across Recommendations, across national boundaries,
-    and across the broader standards-development ecosystem.
-  </p>
-</div>
+<PageHero
+  eyebrow="Semantic layer"
+  title="The OIML SMART ontology"
+  lede="The OWL ontology layer is what makes SMART Recommendations interoperable — across Recommendations, across national boundaries, and across the broader standards-development ecosystem."
+/>
 
 
 

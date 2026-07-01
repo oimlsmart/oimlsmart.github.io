@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 09 of 13</span>
-  <h1>Test report forms</h1>
-  <p class="lede">
-    Forms are executable schemas. They declare fields (direct, calculated,
-    metadata, verdict) and a pass/fail expression that the engine evaluates
-    to produce a verdict — automatically, no spreadsheet formulas.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 09 of 13"
+  title="Test report forms"
+  lede="Forms are executable schemas. They declare fields (direct, calculated, metadata, verdict) and a pass/fail expression that the engine evaluates to produce a verdict — automatically, no spreadsheet formulas."
+/>
 
 ## Form anatomy
 

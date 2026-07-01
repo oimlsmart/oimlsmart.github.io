@@ -1,14 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">About · 02</span>
-  <h1>Why SMART?</h1>
-  <p class="lede">
-    For decades, International Recommendations have been published as PDF
-    documents. While these documents are authoritative and carefully
-    crafted, they present several practical challenges. SMART transforms
-    them from static documents into functional digital tools.
-  </p>
-</div>
+<PageHero
+  eyebrow="About · 02"
+  title="Why SMART?"
+  lede="For decades, International Recommendations have been published as PDF documents. While these documents are authoritative and carefully crafted, they present several practical challenges. SMART transforms them from static documents into functional digital tools."
+/>
 
 
 

@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 05 of 13</span>
-  <h1>Provision data model</h1>
-  <p class="lede">
-    The provision data model is the heart of a SMART Recommendation. Three
-    entity types — requirements, conformance tests, and forms — together
-    describe everything the Recommendation normatively requires.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 05 of 13"
+  title="Provision data model"
+  lede="The provision data model is the heart of a SMART Recommendation. Three entity types — requirements, conformance tests, and forms — together describe everything the Recommendation normatively requires."
+/>
 
 ## The three entity types
 

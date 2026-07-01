@@ -1,9 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Formal Specification · SMART_REQS 05</span>
-  <h1>Evaluation & Condition Model</h1>
-  <p class="lede">Evaluation pipeline, condition tracking, and verdict aggregation.</p>
-</div>
+<PageHero
+  eyebrow="Formal Specification · SMART_REQS 05"
+  title="Evaluation & Condition Model"
+  lede="Evaluation pipeline, condition tracking, and verdict aggregation."
+/>
 
 
 <DraftCallout />

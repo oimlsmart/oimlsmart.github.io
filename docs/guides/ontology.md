@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 13 of 13</span>
-  <h1>Ontology architecture</h1>
-  <p class="lede">
-    The SMART platform ships a three-layer OWL ontology: SMART Core at the
-    bottom, OIML Core in the middle, and a domain ontology per
-    Recommendation on top. This is the interoperability substrate.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 13 of 13"
+  title="Ontology architecture"
+  lede="The SMART platform ships a three-layer OWL ontology: SMART Core at the bottom, OIML Core in the middle, and a domain ontology per Recommendation on top. This is the interoperability substrate."
+/>
 
 ## The three layers
 

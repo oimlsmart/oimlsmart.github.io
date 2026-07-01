@@ -1,8 +1,8 @@
-<div class="page-hero">
-  <span class="eyebrow">Formal Specification · SMART_REQS 01</span>
-  <h1>System Architecture</h1>
-  <p class="lede">The top-level architecture of the SMART platform — entities, layers, and the build pipeline.</p>
-</div>
+<PageHero
+  eyebrow="Formal Specification · SMART_REQS 01"
+  title="System Architecture"
+  lede="The top-level architecture of the SMART platform — entities, layers, and the build pipeline."
+/>
 
 
 <DraftCallout />

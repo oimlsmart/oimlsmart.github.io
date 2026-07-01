@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 07 of 13</span>
-  <h1>Requirements model</h1>
-  <p class="lede">
-    Machine-readable requirements with structured acceptance criteria. The
-    three criteria types — tiered, threshold, qualitative — together express
-    every normative provision found in OIML Recommendations.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 07 of 13"
+  title="Requirements model"
+  lede="Machine-readable requirements with structured acceptance criteria. The three criteria types — tiered, threshold, qualitative — together express every normative provision found in OIML Recommendations."
+/>
 
 ## Requirement anatomy
 

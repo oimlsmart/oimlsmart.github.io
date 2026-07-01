@@ -3,15 +3,11 @@
 // Page hero
 </script>
 
-<div class="page-hero">
-  <span class="eyebrow">Programme</span>
-  <h1>About OIML SMART</h1>
-  <p class="lede">
-    OIML SMART is the International Organization of Legal Metrology's programme
-    to transform its International Recommendations from static PDF documents into
-    structured digital artifacts that work directly in software applications.
-  </p>
-</div>
+<PageHero
+  eyebrow="Programme"
+  title="About OIML SMART"
+  lede="OIML SMART is the International Organization of Legal Metrology's programme to transform its International Recommendations from static PDF documents into structured digital artifacts that work directly in software applications."
+/>
 
 
 

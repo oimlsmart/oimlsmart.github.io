@@ -1,15 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Identity · DRAFT · pilot</span>
-  <h1>OIML SMART brand resources</h1>
-  <p class="lede">
-    The visual identity assets for the OIML SMART pilot programme. All
-    assets are <strong>drafts</strong> subject to change as the pilot
-    evolves. The mark is a globe with a horizontal transit — referencing
-    the international scope of OIML's work and the motion of instruments
-    under test.
-  </p>
-</div>
+<PageHero
+  eyebrow="Identity · DRAFT · pilot"
+  title="OIML SMART brand resources"
+  lede="The visual identity assets for the OIML SMART pilot programme. All assets are drafts subject to change as the pilot evolves. The mark is a globe with a horizontal transit — referencing the international scope of OIML's work and the motion of instruments under test."
+/>
 
 ## Primary logo
 

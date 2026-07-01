@@ -1,8 +1,8 @@
-<div class="page-hero">
-  <span class="eyebrow">Formal Specification · SMART_REQS 09</span>
-  <h1>Table Definition and Lookup Primitive</h1>
-  <p class="lede">The Table primitive — tiered, scalar, and range lookups with interpolation.</p>
-</div>
+<PageHero
+  eyebrow="Formal Specification · SMART_REQS 09"
+  title="Table Definition and Lookup Primitive"
+  lede="The Table primitive — tiered, scalar, and range lookups with interpolation."
+/>
 
 
 <DraftCallout />

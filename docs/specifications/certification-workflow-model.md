@@ -1,9 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Formal Specification · SMART_REQS 10</span>
-  <h1>Certification Workflow Model</h1>
-  <p class="lede">Workflow entities, state machines, and the certification pipeline.</p>
-</div>
+<PageHero
+  eyebrow="Formal Specification · SMART_REQS 10"
+  title="Certification Workflow Model"
+  lede="Workflow entities, state machines, and the certification pipeline."
+/>
 
 
 <DraftCallout />

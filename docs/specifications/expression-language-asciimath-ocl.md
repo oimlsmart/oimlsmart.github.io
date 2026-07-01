@@ -1,9 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Formal Specification · SMART_REQS 08</span>
-  <h1>Expression Language — AsciiMath + OCL</h1>
-  <p class="lede">The two expression languages used in SMART — AsciiMath for arithmetic, OCL for booleans.</p>
-</div>
+<PageHero
+  eyebrow="Formal Specification · SMART_REQS 08"
+  title="Expression Language — AsciiMath + OCL"
+  lede="The two expression languages used in SMART — AsciiMath for arithmetic, OCL for booleans."
+/>
 
 
 <DraftCallout variant="specs" />

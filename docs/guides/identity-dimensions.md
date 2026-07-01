@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 04 of 13</span>
-  <h1>Identity & Dimensions</h1>
-  <p class="lede">
-    Two foundational files — `standard.yaml` and `dimensions.yaml` — tell the
-    platform what the standard is and how the instrument varies. Everything
-    else builds on these.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 04 of 13"
+  title="Identity & Dimensions"
+  lede="Two foundational files — `standard.yaml` and `dimensions.yaml` — tell the platform what the standard is and how the instrument varies. Everything else builds on these."
+/>
 
 ## `standard.yaml` — identity
 

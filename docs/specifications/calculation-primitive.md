@@ -1,9 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Formal Specification · SMART_REQS 07</span>
-  <h1>Calculation Primitive</h1>
-  <p class="lede">The Calculation primitive — typed, reusable, named computations.</p>
-</div>
+<PageHero
+  eyebrow="Formal Specification · SMART_REQS 07"
+  title="Calculation Primitive"
+  lede="The Calculation primitive — typed, reusable, named computations."
+/>
 
 
 <DraftCallout variant="specs" />

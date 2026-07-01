@@ -1,14 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Catalogue · SMART International Recommendations</span>
-  <h1>Recommendations already modelled</h1>
-  <p class="lede">
-    Each OIML International Recommendation listed here has been fully decomposed
-    into machine-readable requirements, conformance tests, calculation-powered
-    forms, and terminology. The structured data drives the interactive
-    application — these pages summarize what each Recommendation covers.
-  </p>
-</div>
+<PageHero
+  eyebrow="Catalogue · SMART International Recommendations"
+  title="Recommendations already modelled"
+  lede="Each OIML International Recommendation listed here has been fully decomposed into machine-readable requirements, conformance tests, calculation-powered forms, and terminology. The structured data drives the interactive application — these pages summarize what each Recommendation covers."
+/>
 
 
 

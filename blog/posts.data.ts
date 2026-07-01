@@ -1,31 +1,19 @@
 /**
  * Build-time data loader for the blog index.
  *
- * VitePress calls this at build time. It reads every `blog/*.md` file
- * (except this one), extracts frontmatter, and exposes the result to
- * the blog index page as `data.posts`.
- *
- * Adding a new post = adding a new `.md` file in `blog/`. No other
- * edits required.
+ * Delegates the canonical transform to `./posts.ts > transformPosts`.
+ * Adding a new frontmatter field: edit `posts.ts` once — both the
+ * blog index and the RSS feed (see `.vitepress/rss.ts`) pick it up.
  */
 import { createContentLoader } from 'vitepress'
+import { transformPosts } from './posts'
 
 export default createContentLoader('blog/*.md', {
   excerpt: true,
   includeSrc: false,
   transform(raw) {
     return {
-      posts: raw
-        .filter((p) => p.frontmatter.title && p.url !== '/blog/')
-        .map((p) => ({
-          title: p.frontmatter.title as string,
-          date: p.frontmatter.date as string,
-          author: (p.frontmatter.author as string) || 'OIML SMART team',
-          summary: (p.frontmatter.summary as string) || '',
-          url: p.url,
-          excerpt: p.excerpt || '',
-        }))
-        .sort((a, b) => +new Date(b.date) - +new Date(a.date)),
+      posts: transformPosts(raw as any),
     }
   },
 })

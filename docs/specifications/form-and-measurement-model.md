@@ -1,9 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Formal Specification · SMART_REQS 03</span>
-  <h1>Form & Measurement Model</h1>
-  <p class="lede">Form schemas, fields, and measurement kinds.</p>
-</div>
+<PageHero
+  eyebrow="Formal Specification · SMART_REQS 03"
+  title="Form & Measurement Model"
+  lede="Form schemas, fields, and measurement kinds."
+/>
 
 
 <DraftCallout variant="specs" />

@@ -1,9 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Formal Specification · SMART_REQS 11</span>
-  <h1>Variable & Symbol Model</h1>
-  <p class="lede">Variables, symbols, scope, and binding semantics.</p>
-</div>
+<PageHero
+  eyebrow="Formal Specification · SMART_REQS 11"
+  title="Variable & Symbol Model"
+  lede="Variables, symbols, scope, and binding semantics."
+/>
 
 
 <DraftCallout />

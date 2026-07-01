@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 10 of 13</span>
-  <h1>Calculation engine</h1>
-  <p class="lede">
-    The Calculation primitive: a typed, reusable, named computation. Defined
-    once, referenced everywhere — the DRY mechanism for arithmetic in SMART
-    forms.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 10 of 13"
+  title="Calculation engine"
+  lede="The Calculation primitive: a typed, reusable, named computation. Defined once, referenced everywhere — the DRY mechanism for arithmetic in SMART forms."
+/>
 
 ## Why a primitive?
 

@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Reference · Identifiers</span>
-  <h1>OIML URN specification</h1>
-  <p class="lede">
-    OIML SMART uses Uniform Resource Names (URNs) as persistent, location-
-    independent identifiers for every entity — Recommendations, requirements,
-    tests, forms, terms, certificates.
-  </p>
-</div>
+<PageHero
+  eyebrow="Reference · Identifiers"
+  title="OIML URN specification"
+  lede="OIML SMART uses Uniform Resource Names (URNs) as persistent, location- independent identifiers for every entity — Recommendations, requirements, tests, forms, terms, certificates."
+/>
 
 
 

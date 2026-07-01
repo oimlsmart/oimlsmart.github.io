@@ -1,12 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 01 of 13</span>
-  <h1>Build your first SMART Standard</h1>
-  <p class="lede">
-    A complete walkthrough — from an empty directory to a fully modelled OIML
-    Recommendation. No application code required, only YAML data.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 01 of 13"
+  title="Build your first SMART Standard"
+  lede="A complete walkthrough — from an empty directory to a fully modelled OIML Recommendation. No application code required, only YAML data."
+/>
 
 ## What is a SMART Standard?
 

@@ -1,9 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Formal Specification · SMART_REQS 06</span>
-  <h1>YAML Schema Specification</h1>
-  <p class="lede">Formal YAML schemas for all entity types in the SMART platform.</p>
-</div>
+<PageHero
+  eyebrow="Formal Specification · SMART_REQS 06"
+  title="YAML Schema Specification"
+  lede="Formal YAML schemas for all entity types in the SMART platform."
+/>
 
 
 <DraftCallout />

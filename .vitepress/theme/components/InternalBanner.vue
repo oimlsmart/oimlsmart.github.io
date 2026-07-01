@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useRoute } from 'vitepress'
-import { computed } from 'vue'
-
-const route = useRoute()
-const isHome = computed(() => route.path === '/')
+// Static banner — no script logic. The DRAFT/Pilot/external-use wording
+// lives in `.vitepress/data/site.ts > draftNotice` if you want to reuse
+// the text elsewhere; this component is intentionally inline because it
+// has its own visual treatment (warning stripes) that differs from
+// DraftCallout.
 </script>
 
 <template>

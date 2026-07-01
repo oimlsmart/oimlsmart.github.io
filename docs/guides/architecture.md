@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 02 of 13</span>
-  <h1>Platform Architecture</h1>
-  <p class="lede">
-    The OIML SMART platform is a three-layer pipeline: source YAML → generated
-    TypeScript → runtime evaluation. Each layer has well-defined boundaries,
-    validated inputs, and clear responsibilities.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 02 of 13"
+  title="Platform Architecture"
+  lede="The OIML SMART platform is a three-layer pipeline: source YAML → generated TypeScript → runtime evaluation. Each layer has well-defined boundaries, validated inputs, and clear responsibilities."
+/>
 
 ## The three layers
 

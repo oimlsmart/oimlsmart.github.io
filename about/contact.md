@@ -1,11 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">About · 05</span>
-  <h1>Contact</h1>
-  <p class="lede">
-    Get in touch with the OIML SMART programme team.
-  </p>
-</div>
+<PageHero
+  eyebrow="About · 05"
+  title="Contact"
+  lede="Get in touch with the OIML SMART programme team."
+/>
 
 
 

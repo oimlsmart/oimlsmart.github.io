@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">About · 01</span>
-  <h1>What is OIML SMART?</h1>
-  <p class="lede">
-    The OIML SMART programme transforms International Recommendations from
-    static PDF documents into functional digital artifacts that work
-    directly in software applications.
-  </p>
-</div>
+<PageHero
+  eyebrow="About · 01"
+  title="What is OIML SMART?"
+  lede="The OIML SMART programme transforms International Recommendations from static PDF documents into functional digital artifacts that work directly in software applications."
+/>
 
 
 

@@ -11,15 +11,11 @@ function formatDate(iso: string): string {
 }
 </script>
 
-<div class="page-hero">
-  <span class="eyebrow">Blog · Internal pilot feed</span>
-  <h1>OIML SMART pilot — updates</h1>
-  <p class="lede">
-    Working notes and milestone snapshots from the OIML SMART pilot
-    programme. Draft content for the OIML SMART team and OIML Member
-    State reviewers.
-  </p>
-</div>
+<PageHero
+  eyebrow="Blog · Internal pilot feed"
+  title="OIML SMART pilot — updates"
+  lede="Working notes and milestone snapshots from the OIML SMART pilot programme. Draft content for the OIML SMART team and OIML Member State reviewers."
+/>
 
 <DraftCallout />
 

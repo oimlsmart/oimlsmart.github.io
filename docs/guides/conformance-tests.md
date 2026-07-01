@@ -1,13 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Guide · 08 of 13</span>
-  <h1>Conformance tests</h1>
-  <p class="lede">
-    Conformance tests are the procedures that verify requirements. Each test
-    declares its variables, procedure steps, and result forms. The cross-
-    reference graph links tests back to the requirements they verify.
-  </p>
-</div>
+<PageHero
+  eyebrow="Guide · 08 of 13"
+  title="Conformance tests"
+  lede="Conformance tests are the procedures that verify requirements. Each test declares its variables, procedure steps, and result forms. The cross- reference graph links tests back to the requirements they verify."
+/>
 
 ## Test anatomy
 

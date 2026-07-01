@@ -11,6 +11,7 @@ import FeatureGrid from './components/FeatureGrid.vue'
 import AcronymStrip from './components/AcronymStrip.vue'
 import AudienceGrid from './components/AudienceGrid.vue'
 import HomeSection from './components/HomeSection.vue'
+import LoginCard from './components/LoginCard.vue'
 import './custom.css'
 
 const theme: Theme = {
@@ -32,6 +33,7 @@ const theme: Theme = {
     app.component('AcronymStrip', AcronymStrip)
     app.component('AudienceGrid', AudienceGrid)
     app.component('HomeSection', HomeSection)
+    app.component('LoginCard', LoginCard)
 
     if (typeof window !== 'undefined') {
       const cfg = (import.meta as any).env || {}

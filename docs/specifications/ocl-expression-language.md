@@ -1,9 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Formal Specification · SMART_REQS 04</span>
-  <h1>OCL Expression Language</h1>
-  <p class="lede">OCL constraint language reference for the SMART platform.</p>
-</div>
+<PageHero
+  eyebrow="Formal Specification · SMART_REQS 04"
+  title="OCL Expression Language"
+  lede="OCL constraint language reference for the SMART platform."
+/>
 
 
 <DraftCallout />

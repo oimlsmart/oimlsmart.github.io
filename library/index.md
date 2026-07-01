@@ -1,14 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">Library · OIML documents</span>
-  <h1>The OIML document library</h1>
-  <p class="lede">
-    Every OIML document relevant to the SMART programme, in one place — the
-    International Recommendations themselves (with structured extracts), the
-    OIML-CS framework documents (B 18, B 20), and the operational documents
-    (OD, PD, D series) that govern day-to-day certification.
-  </p>
-</div>
+<PageHero
+  eyebrow="Library · OIML documents"
+  title="The OIML document library"
+  lede="Every OIML document relevant to the SMART programme, in one place — the International Recommendations themselves (with structured extracts), the OIML-CS framework documents (B 18, B 20), and the operational documents (OD, PD, D series) that govern day-to-day certification."
+/>
 
 
 

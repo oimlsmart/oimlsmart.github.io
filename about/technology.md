@@ -1,12 +1,9 @@
 
-<div class="page-hero">
-  <span class="eyebrow">About · 04</span>
-  <h1>Technology stack</h1>
-  <p class="lede">
-    OIML SMART builds on a mature open-source toolchain. Every layer is
-    auditable, version-controlled, and built on open standards.
-  </p>
-</div>
+<PageHero
+  eyebrow="About · 04"
+  title="Technology stack"
+  lede="OIML SMART builds on a mature open-source toolchain. Every layer is auditable, version-controlled, and built on open standards."
+/>
 
 
 

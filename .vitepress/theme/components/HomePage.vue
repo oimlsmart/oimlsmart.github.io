@@ -7,13 +7,14 @@
  * the SVG between light and dark variants at runtime.
  */
 
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { computed } from 'vue'
 import HomeSection from './HomeSection.vue'
 import AcronymStrip from './AcronymStrip.vue'
 import StatRow from './StatRow.vue'
 import FeatureGrid from './FeatureGrid.vue'
 import AudienceGrid from './AudienceGrid.vue'
 import RecCard from './RecCard.vue'
+import { useTheme } from '../composables/useTheme'
 import {
   acronym,
   pilotStats,
@@ -23,26 +24,10 @@ import {
 } from '../../data/site'
 import { recommendations } from '../../data/recommendations'
 
-// VitePress toggles the `dark` class on <html>; observe and react.
-const isDark = ref(false)
+const { isDark } = useTheme()
 const heroGlobeSrc = computed(() =>
   isDark.value ? '/smart-logo-dark.svg' : '/smart-logo-light.svg'
 )
-
-let observer: MutationObserver | null = null
-
-onMounted(() => {
-  const html = document.documentElement
-  isDark.value = html.classList.contains('dark')
-  observer = new MutationObserver(() => {
-    isDark.value = html.classList.contains('dark')
-  })
-  observer.observe(html, { attributes: true, attributeFilter: ['class'] })
-})
-
-onBeforeUnmount(() => {
-  observer?.disconnect()
-})
 </script>
 
 <template>

@@ -1,0 +1,81 @@
+/* ============================================================
+   Base typography — applied to .vp-doc content area.
+   Page-specific styles live in the component's <style scoped>.
+   ============================================================ */
+
+body {
+  font-feature-settings: 'kern', 'liga', 'calt', 'ss01';
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* Headings use Fraunces (display serif) */
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4 {
+  font-family: var(--vp-font-family-serif);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  font-feature-settings: 'kern', 'liga', 'ss01';
+}
+
+.vp-doc h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.5rem;
+}
+
+.vp-doc h2 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.vp-doc h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Body text */
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.7;
+}
+
+.vp-doc a {
+  text-decoration: underline;
+  text-decoration-color: var(--accent-soft);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.15s;
+}
+
+.vp-doc a:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* Code */
+.vp-doc code {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.875em;
+  background-color: var(--accent-soft);
+  padding: 0.125em 0.375em;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.vp-doc pre code {
+  background-color: transparent;
+  padding: 0;
+  font-weight: 400;
+}
