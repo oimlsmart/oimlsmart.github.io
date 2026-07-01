@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 import { docsSidebar } from './data/docs-sidebar'
 import { navItems } from './data/nav'
+import { generateRssFeed } from './rss'
 
 export default defineConfig({
   title: 'OIML SMART',
@@ -32,6 +33,7 @@ export default defineConfig({
     ['link', { rel: 'shortcut icon', href: '/favicon.ico' }],
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' }],
     ['link', { rel: 'manifest', href: '/site.webmanifest' }],
+    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'OIML SMART pilot updates', href: '/feed.xml' }],
     ['meta', { name: 'theme-color', content: '#004996' }],
     ['meta', { name: 'color-scheme', content: 'light dark' }],
     ['meta', { name: 'robots', content: 'noindex, nofollow' }],
@@ -88,5 +90,10 @@ export default defineConfig({
     darkModeSwitchLabel: 'Theme',
     sidebarMenuLabel: 'Menu',
     returnToTopLabel: 'Back to top',
+  },
+
+  // Build hook — emit /feed.xml after VitePress produces its output.
+  async buildEnd(siteConfig) {
+    await generateRssFeed(siteConfig)
   },
 })

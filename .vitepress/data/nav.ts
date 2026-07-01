@@ -13,6 +13,7 @@ export const navItems: readonly NavItem[] = [
   { text: 'Documents', link: '/library/' },
   { text: 'Developers', link: '/docs/' },
   { text: 'OIML-CS', link: '/oiml-cs' },
+  { text: 'Blog', link: '/blog/' },
   {
     text: 'About',
     items: [
