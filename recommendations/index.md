@@ -12,7 +12,7 @@ eyebrow: 'Catalogue · SMART International Recommendations'
 ## In the catalogue
 
 <div class="rec-grid">
-  <a class="rec-card" href="/recommendations/r60/">
+  <a class="rec-card" href="/recommendations/r60.html">
     <div class="rec-num">R 60 · 2021</div>
     <h3>Load cells</h3>
     <p class="scope">
@@ -25,7 +25,7 @@ eyebrow: 'Catalogue · SMART International Recommendations'
       <span><strong>12</strong> forms</span>
     </div>
   </a>
-  <a class="rec-card" href="/recommendations/r129/">
+  <a class="rec-card" href="/recommendations/r129.html">
     <div class="rec-num">R 129 · 2000</div>
     <h3>Mass of road vehicles</h3>
     <p class="scope">
@@ -38,7 +38,7 @@ eyebrow: 'Catalogue · SMART International Recommendations'
       <span><strong>9</strong> forms</span>
     </div>
   </a>
-  <a class="rec-card" href="/recommendations/r144/">
+  <a class="rec-card" href="/recommendations/r144.html">
     <div class="rec-num">R 144 · 2006</div>
     <h3>Gas meters</h3>
     <p class="scope">
