@@ -4,10 +4,12 @@
 # Accept 200..399 status codes as valid (including redirects)
 accept = ["100", "200", "201", "202", "203", "204", "206", "207", "301", "302", "303", "304", "307", "308"]
 
-# Exclude these patterns from checking (no noise from internal links)
+# Exclude these patterns from checking (no noise from internal links
+# or known-good external URLs with aggressive redirect chains)
 exclude = [
   "localhost",
   "127.0.0.1",
+  "https://www.oiml.org",
 ]
 
 # Don't check mailto links

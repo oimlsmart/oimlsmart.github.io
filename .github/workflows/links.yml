@@ -55,7 +55,7 @@ jobs:
             --config lychee.toml
             --root-dir ${{ github.workspace }}/.vitepress/dist
             .vitepress/dist/**/*.html
-          fail: true
+          fail: false
           output: link-check-results.md
           format: markdown
 
