@@ -5,7 +5,7 @@ author: OIML SMART team
 summary: The OIML SMART pilot programme is live. Three Recommendations are in scope — R 60, R 129, R 144 — with structured requirements, conformance tests, forms, and ontology entities modelled end-to-end.
 ---
 
-<DraftCallout variant="compact" />
+<DraftCallout />
 
 The OIML SMART pilot programme is now live in development. This site is the
 working draft of the public-facing documentation, deployed for the internal

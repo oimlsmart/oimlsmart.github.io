@@ -5,7 +5,7 @@ author: OIML SMART team
 summary: OIML SMART has adopted Primmel — Ribose's successor to MMEL — as its information modelling language. Primmel was released as a public language for standards organizations in 2026.
 ---
 
-<DraftCallout variant="compact" />
+<DraftCallout />
 
 The OIML SMART information model is now authored in
 **[Primmel](https://www.primmel.org/)**, Ribose's next-generation executable

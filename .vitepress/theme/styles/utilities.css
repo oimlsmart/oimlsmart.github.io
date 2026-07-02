@@ -144,58 +144,9 @@
   text-decoration: underline;
 }
 
-/* Inline callout — generic, not the DRAFT notice */
-.callout {
-  margin: 1.75rem 0;
-  padding: 1.25rem 1.5rem;
-  border-left: 3px solid var(--accent);
-  background-color: var(--accent-soft);
-  border-radius: 0 4px 4px 0;
-}
-
-.callout strong {
-  color: var(--accent);
-  font-family: var(--vp-font-family-serif);
-  font-weight: 600;
-}
-
-.callout p {
-  margin: 0.5rem 0 0;
-}
-
-/* DRAFT notice — the warning callout used on all major pages.
-   (DraftCallout.vue renders this markup programmatically now, but the
-   global rule is kept for the in-markdown <DraftCallout variant="..." /> case
-   and any stray <div class="callout draft-notice"> not yet migrated.) */
-.callout.draft-notice {
-  border-left: 4px solid #d97706;
-  background: #fef3c7;
-  color: #78350f;
-  border-radius: 4px;
-}
-
-.dark .callout.draft-notice {
-  background: rgba(120, 53, 15, 0.18);
-  color: #fde68a;
-}
-
-.callout.draft-notice strong {
-  color: #92400e;
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.8125rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.dark .callout.draft-notice strong {
-  color: #fbbf24;
-}
-
-.callout.draft-notice p {
-  margin: 0.75rem 0 0;
-  font-size: 0.9375rem;
-  line-height: 1.6;
-}
+/* Inline callout + DRAFT notice styles live in
+   DraftCallout.vue (scoped). No global rule needed; markdown uses
+   <DraftCallout /> exclusively. */
 
 /* Document table (library) */
 .doc-table {
@@ -267,4 +218,54 @@
     linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 32px 32px;
+}
+
+/* ── Buttons ────────────────────────────────────────────────
+   The "primary action button" pattern is used by HomePage's hero
+   CTAs and LoginCard's OAuth button. Promoted here so a visual
+   change is one edit, not two scoped-style rewrites.
+   ─────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  font-family: var(--vp-font-family-base);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--vp-c-text-1);
+  color: var(--vp-c-bg);
+}
+
+.btn-primary:hover {
+  background-color: var(--vp-c-brand-1);
+  color: #ffffff;
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--vp-c-text-1);
+  border-color: var(--vp-c-divider);
+}
+
+.btn-ghost:hover {
+  border-color: var(--vp-c-text-1);
+  background-color: var(--vp-c-bg-soft-up);
+}
+
+.btn .arrow {
+  transition: transform 0.15s;
+}
+
+.btn:hover .arrow {
+  transform: translateX(2px);
 }

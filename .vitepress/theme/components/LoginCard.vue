@@ -31,7 +31,7 @@ const logoSrc = computed(() =>
         Authenticate via GitHub OAuth to continue into the OIML SMART application.
       </p>
 
-      <a class="login-btn primary" :href="oauthUrl">
+      <a class="btn btn-primary login-btn" :href="oauthUrl">
         <span class="icon">↗</span>
         <span>Continue with GitHub</span>
       </a>
@@ -103,26 +103,12 @@ const logoSrc = computed(() =>
   margin: 0 0 2rem;
 }
 
+/* Login-specific overrides on .btn — slightly larger padding and
+   full-width inside the card. The base button styles come from
+   utilities.css (.btn / .btn-primary). */
 .login-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  width: 100%;
   padding: 0.875rem 1rem;
-  border-radius: 4px;
-  font-family: var(--vp-font-family-base);
-  font-size: 0.9375rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.15s ease;
-  background-color: var(--vp-c-brand-1);
-  color: #ffffff;
-  border: 1px solid var(--vp-c-brand-1);
-}
-
-.login-btn:hover {
-  background-color: var(--vp-c-brand-3);
-  border-color: var(--vp-c-brand-3);
 }
 
 .login-btn .icon {

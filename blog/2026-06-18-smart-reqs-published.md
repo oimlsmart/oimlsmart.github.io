@@ -5,7 +5,7 @@ author: OIML SMART team
 summary: The 11-document SMART_REQS specification set is published in draft form. Together they define the SMART platform — what OIML B/D/R documents are to legal metrology, the SMART_REQS set is to the SMART engine.
 ---
 
-<DraftCallout variant="compact" />
+<DraftCallout />
 
 The 11-document **SMART_REQS** specification set is now available on this
 site in draft form. Each document defines one aspect of the SMART platform:

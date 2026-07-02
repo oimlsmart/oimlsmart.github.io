@@ -1,21 +1,19 @@
 /**
  * Docs sidebar — derived from the filesystem + per-page frontmatter.
  *
- * Previously this module hand-listed every docs page with its title,
- * shortTitle, and description. That duplicated what was already in
- * each page's frontmatter and required manual sync when pages moved.
+ * Pages are grouped by top-level directory under `docs/`. Section
+ * labels and ordering come from SECTION_LABELS / SECTION_ORDER;
+ * per-page text comes from frontmatter `shortTitle:` (fallback
+ * `title:`). Pages can opt out via `sidebar: false` in frontmatter.
  *
- * Now: read the filesystem at config time. Pages are grouped by
- * top-level directory under `docs/`. Section labels and ordering
- * come from the SECTION_LABELS map below; everything else comes
- * from each page's `title:` and `shortTitle:` frontmatter.
- *
- * Pages can opt out of the sidebar by setting `sidebar: false` in
- * their frontmatter.
+ * Frontmatter is parsed with `js-yaml` (canonical YAML parser).
+ * The previous hand-rolled regex parser was replaced in v3 — it
+ * couldn't handle multi-line values, nested keys, or arrays.
  */
 
 import { readdirSync, readFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
+import { load as yamlLoad } from 'js-yaml'
 
 interface PageFrontmatter {
   title?: string
@@ -44,25 +42,22 @@ const SECTION_ORDER: readonly string[] = [
 /** Pages to skip even if their file exists. */
 const SKIP_FILES: ReadonlySet<string> = new Set(['index.md'])
 
-/** Parse a minimal subset of YAML frontmatter. */
+/** Parse YAML frontmatter using js-yaml. Returns {} if no frontmatter. */
 function parseFrontmatter(content: string): PageFrontmatter {
   const match = content.match(/^---\n([\s\S]*?)\n---/)
   if (!match) return {}
-  const fm: PageFrontmatter = {}
-  for (const line of match[1].split('\n')) {
-    const kv = line.match(/^([a-zA-Z]+):\s*(.*)$/)
-    if (!kv) continue
-    const [, key, rawValue] = kv
-    let value = rawValue.trim()
-    if ((value.startsWith("'") && value.endsWith("'")) ||
-        (value.startsWith('"') && value.endsWith('"'))) {
-      value = value.slice(1, -1).replace(/''/g, "'")
+  try {
+    const parsed = yamlLoad(match[1]) as Record<string, unknown> | null
+    if (!parsed || typeof parsed !== 'object') return {}
+    return {
+      title: typeof parsed.title === 'string' ? parsed.title : undefined,
+      shortTitle: typeof parsed.shortTitle === 'string' ? parsed.shortTitle : undefined,
+      sidebar: typeof parsed.sidebar === 'boolean' ? parsed.sidebar : undefined,
     }
-    if (key === 'title') fm.title = value
-    else if (key === 'shortTitle') fm.shortTitle = value
-    else if (key === 'sidebar') fm.sidebar = value !== 'false'
+  } catch {
+    // Malformed YAML — return empty so the page falls back to slug.
+    return {}
   }
-  return fm
 }
 
 interface SidebarItem {
