@@ -32,7 +32,7 @@ SMART Core ontology
 The SMART application includes an interactive ontology browser that
 visualizes the class hierarchy, shows instances, and lets users run
 semantic queries. The browser is available at
-[the app sign-in](/app/) under the
+[the app sign-in](/login/) under the
 "Ontology" navigation entry.
 
 Each entity has a dedicated detail page (e.g. `/docs/ontology/<slug>.html`)

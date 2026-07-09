@@ -116,4 +116,4 @@ You've completed all 13 guides. Where to go from here:
 - Read the [Architecture](/docs/arch/overview) pages for deeper technical detail.
 - Read the [Formal Specifications](/docs/specifications/system-architecture) for the normative SMART_REQS documents.
 - Browse the [Library](/library/) for source OIML documents.
-- Try the [SMART app ↗](/app/) for interactive exploration.
+- Try the [SMART app ↗](/login/) for interactive exploration.

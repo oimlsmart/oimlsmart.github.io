@@ -1,51 +1,48 @@
 ---
 import Base from '../layouts/Base.astro'
 const APP_URL = import.meta.env.APP_URL || 'http://localhost:5190'
+const title = 'Opening OIML SMART…'
+const description = `Launcher for the OIML SMART application at ${APP_URL}.`
 ---
 
-<Base title="Sign in to OIML SMART" description="Authenticate via GitHub OAuth to continue into the OIML SMART application.">
-  <div class="login-shell">
-    <div class="login-card">
-      <div class="login-mark">
-        <img src="/smart-logo-light.svg" alt="OIML SMART" class="logo-light" />
-        <img src="/smart-logo-dark.svg" alt="OIML SMART" class="logo-dark" />
-      </div>
-      <h1>Sign in</h1>
-      <p>Authenticate via GitHub OAuth to continue into the OIML SMART application.</p>
-      <a class="btn btn-primary login-btn" href={`${APP_URL}/api/auth/signin/github`}>
-        <span>↗</span> Continue with GitHub
-      </a>
-      <p class="login-foot">
+<Base title={title} description={description}>
+  <meta slot="head" http-equiv="refresh" content={`0;url=${APP_URL}`} />
+  <script is:inline define:vars={{ APP_URL }}>
+    // Immediate redirect; meta refresh is the backup for no-JS clients.
+    window.location.replace(APP_URL)
+  </script>
+  <div class="launcher-shell">
+    <div class="launcher-card">
+      <h1>Opening the OIML SMART app…</h1>
+      <p>If you are not redirected automatically, <a href={APP_URL}>open {APP_URL}</a> manually.</p>
+      <p class="launcher-foot">
         Requires the smart app running locally. From the <code>smart</code> repo, run <code>bin/dev</code>.
+        Not signed in yet? <a href="/login/">Sign in</a>.
       </p>
     </div>
   </div>
 </Base>
 
 <style>
-.login-shell {
+.launcher-shell {
   min-height: calc(100vh - 64px);
   display: flex; align-items: center; justify-content: center;
   padding: 3rem 1rem;
 }
-.login-card {
+.launcher-card {
   background: var(--vp-c-bg-soft-up); border: 1px solid var(--vp-c-divider);
-  border-radius: 8px; padding: 2.5rem; max-width: 420px; width: 100%;
-  text-align: center; box-shadow: 0 16px 48px -24px rgba(0,0,0,0.18);
+  border-radius: 8px; padding: 2rem; max-width: 480px; width: 100%;
+  text-align: center;
 }
-.login-mark { width: 96px; height: 96px; margin: 0 auto 1.5rem; }
-.login-mark img { width: 100%; height: 100%; animation: globe-rotate 90s linear infinite; }
-.logo-dark { display: none; }
-:global(.dark) .logo-light { display: none; }
-:global(.dark) .logo-dark { display: inline-block; }
-.login-card h1 { font-family: var(--vp-font-family-serif); font-size: 1.75rem; margin: 0 0 0.5rem; }
-.login-card p { font-size: 0.9375rem; color: var(--vp-c-text-2); margin: 0 0 2rem; }
-.login-btn { width: 100%; padding: 0.875rem 1rem; justify-content: center; }
-.login-foot {
-  margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--vp-c-divider);
+.launcher-card h1 {
+  font-family: var(--vp-font-family-serif);
+  font-size: 1.5rem; margin: 0 0 1rem;
+}
+.launcher-card p { font-size: 0.9375rem; color: var(--vp-c-text-2); margin: 0 0 0.75rem; }
+.launcher-card a { color: var(--vp-c-brand); text-decoration: underline; }
+.launcher-foot {
+  margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px dashed var(--vp-c-divider);
   font-size: 0.75rem; color: var(--vp-c-text-3);
 }
-.login-foot code { font-family: monospace; font-size: 0.6875rem; }
-@keyframes globe-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .login-mark img { animation: none; } }
+.launcher-foot code { font-family: monospace; font-size: 0.6875rem; }
 </style>

@@ -53,7 +53,7 @@ The library is the canonical reference for **normative OIML documents** — the
 authoritative sources that govern the SMART programme and the OIML-CS.
 
 For **structured access** to the modelled Recommendations (browse individual
-requirements, run conformance tests, fill forms), use the [SMART application ↗](/app/).
+requirements, run conformance tests, fill forms), use the [SMART application ↗](/login/).
 
 For **developer documentation** about how SMART Recommendations are structured
 and authored, see the [Developer guides](/docs/guides/getting-started).
