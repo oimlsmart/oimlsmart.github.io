@@ -23,3 +23,4 @@ tmp/
 artifacts/
 .lycheecache
 link-check-results.md
+.astro/
