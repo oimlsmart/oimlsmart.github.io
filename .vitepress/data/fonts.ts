@@ -7,28 +7,42 @@
  *
  * To add a weight or family: edit here, rebuild. Nothing else.
  *
- * Light mode hero/italic uses Fraunces 400+500.
- * Headings use 500/600. Body 400. Mono 400/500.
- * No 300 or 700 weights are used.
+ * Each family maps to a list of axis-tuples. For variable fonts with
+ * multiple axes (e.g. Fraunces has opsz + wght), each tuple carries
+ * values for BOTH axes — Google Fonts requires `opsz,wght@9,400;9,500;9,600`,
+ * not `opsz,wght@9,400;500;600`.
  */
 
-const FAMILIES = {
-  'Fraunces:opsz,wght': [9, [400, 500, 600]],
-  'IBM+Plex+Sans:wght': [[400, 500, 600]],
-  'IBM+Plex+Mono:wght': [[400, 500]],
-} as const
+type AxisTuple = readonly number[]
 
-function encodeFamily(family: string, axes: readonly (number | readonly number[])[]): string {
-  const parts = axes.map((axis) =>
-    Array.isArray(axis) ? axis.join(';') : String(axis)
-  )
-  return `${family}@${parts.join(',')}`
+const FAMILIES: Readonly<Record<string, readonly AxisTuple[]>> = {
+  // Fraunces: optical-size axis (opsz) pinned to 9 (display range),
+  // three weights for headings + hero italic.
+  'Fraunces:opsz,wght': [
+    [9, 400],
+    [9, 500],
+    [9, 600],
+  ],
+  'IBM+Plex+Sans:wght': [
+    [400],
+    [500],
+    [600],
+  ],
+  'IBM+Plex+Mono:wght': [
+    [400],
+    [500],
+  ],
+}
+
+function encodeFamily(family: string, tuples: readonly AxisTuple[]): string {
+  const parts = tuples.map((t) => t.join(','))
+  return `${family}@${parts.join(';')}`
 }
 
 export const FONT_URL: string =
   'https://fonts.googleapis.com/css2?' +
   Object.entries(FAMILIES)
-    .map(([family, axes]) => `family=${encodeFamily(family, axes as readonly (number | readonly number[])[])}`)
+    .map(([family, tuples]) => `family=${encodeFamily(family, tuples)}`)
     .join('&') +
   '&display=swap'
 

@@ -15,7 +15,7 @@
  */
 import { draftNotice } from '../../data/site'
 import { computed } from 'vue'
-import { useData } from 'vitepress'
+import { useRoute } from 'vitepress'
 
 type Variant = 'default' | 'compact' | 'specs'
 
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<{
   variant?: Variant
 }>(), {})
 
-const { page } = useData()
+const route = useRoute()
 
 function detectVariant(path: string | undefined): Variant {
   if (!path) return 'default'
@@ -33,7 +33,7 @@ function detectVariant(path: string | undefined): Variant {
 }
 
 const activeVariant = computed<Variant>(
-  () => props.variant ?? detectVariant(page.value?.path)
+  () => props.variant ?? detectVariant(route.path)
 )
 
 const body = computed(() => {
