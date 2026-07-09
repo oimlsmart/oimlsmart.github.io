@@ -34,4 +34,4 @@ OCL was chosen because:
 
 ## Quick reference
 
-For the complete OCL syntax cheat sheet, see the [OCL Reference](/docs/ref/ocl-reference.html).
+For the complete OCL syntax cheat sheet, see the [OCL Reference](/docs/ref/ocl-reference).

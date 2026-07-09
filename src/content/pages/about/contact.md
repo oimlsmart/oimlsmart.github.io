@@ -29,4 +29,4 @@ For technical questions about the SMART platform, the Primmel model, or the publ
 
 ## Branding and press
 
-If you need OIML SMART logo assets for an article, presentation, or product integration, see the [branding page](/about/branding.html). For press enquiries, contact BIML directly via [www.oiml.org](https://www.oiml.org).
+If you need OIML SMART logo assets for an article, presentation, or product integration, see the [branding page](/about/branding). For press enquiries, contact BIML directly via [www.oiml.org](https://www.oiml.org).

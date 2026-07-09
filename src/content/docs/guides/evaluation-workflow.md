@@ -122,8 +122,8 @@ Transitions enforce guards and emit side effects:
 - **EvaluationReport**: `draft → consolidated → reviewed → decided`.
 - **Certificate**: `issued → registered → active → expired / superseded / suspended / withdrawn`.
 
-See the [State Machines reference](/docs/workflow/state-machines.html) for the full diagrams.
+See the [State Machines reference](/docs/workflow/state-machines) for the full diagrams.
 
 ## Next
 
-[Ontology Architecture](/docs/guides/ontology.html) covers the semantic layer — OWL classes, properties, and how the SMART model interoperates across Recommendations.
+[Ontology Architecture](/docs/guides/ontology) covers the semantic layer — OWL classes, properties, and how the SMART model interoperates across Recommendations.

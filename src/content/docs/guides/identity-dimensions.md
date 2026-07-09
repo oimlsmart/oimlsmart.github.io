@@ -100,4 +100,4 @@ declares when a dimension is in scope:
 
 ## Next
 
-With identity and dimensions in place, the [Provision Data Model](/docs/guides/provision-data-model.html) guide shows how requirements, tests, and forms fit together.
+With identity and dimensions in place, the [Provision Data Model](/docs/guides/provision-data-model) guide shows how requirements, tests, and forms fit together.

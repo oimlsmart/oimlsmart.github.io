@@ -31,4 +31,4 @@ A physical instance of a model, identified by serial number. Samples are the uni
 - **Classification-driven evaluation** — the dimension context for a sample is computed by walking up to its classification group, which selects the applicable requirement criteria.
 - **Multi-sample aggregation** — test reports aggregate evidence across all samples of a model.
 
-See also: [Dimension Schemas](/docs/workflow/dimension-schemas.html).
+See also: [Dimension Schemas](/docs/workflow/dimension-schemas).

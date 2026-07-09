@@ -15,15 +15,15 @@ model.
 
 | Code | Title | Year | Status |
 |---|---|---|---|
-| [**R 60**](/library/r60.html) | Metrological regulation for load cells | 2021 | Fully modelled |
-| [**R 129**](/library/r129.html) | Dynamic measurement of road vehicle mass | 2000 | Fully modelled |
-| [**R 144**](/library/r144.html) | Diaphragm gas meters | 2006 | Fully modelled |
+| [**R 60**](/library/r60) | Metrological regulation for load cells | 2021 | Fully modelled |
+| [**R 129**](/library/r129) | Dynamic measurement of road vehicle mass | 2000 | Fully modelled |
+| [**R 144**](/library/r144) | Diaphragm gas meters | 2006 | Fully modelled |
 
 ## OIML-CS framework
 
 | Code | Title | Year |
 |---|---|---|
-| [**B 18**](/library/b018.html) | Framework for the OIML Certification System | 2025 |
+| [**B 18**](/library/b018) | Framework for the OIML Certification System | 2025 |
 | B 20 | Rules for use of the OIML-CS logo | (in library) |
 
 ## OIML-CS operational
@@ -56,4 +56,4 @@ For **structured access** to the modelled Recommendations (browse individual
 requirements, run conformance tests, fill forms), use the [SMART application ↗](/app/).
 
 For **developer documentation** about how SMART Recommendations are structured
-and authored, see the [Developer guides](/docs/guides/getting-started.html).
+and authored, see the [Developer guides](/docs/guides/getting-started).

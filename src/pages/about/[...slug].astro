@@ -5,11 +5,11 @@ import ContentPage from '../../layouts/ContentPage.astro'
 export async function getStaticPaths() {
   const pages = await getCollection('pages')
   return pages
-    .filter(p => p.id.startsWith('about/'))
-    .map(entry => ({
-      params: { slug: entry.id.replace('about/', '').replace(/\.md$/, '') },
-      props: { entry },
-    }))
+    .filter(p => p.id === 'about' || p.id.startsWith('about/'))
+    .map(entry => {
+      const slug = entry.id === 'about' ? undefined : entry.id.replace('about/', '')
+      return { params: { slug }, props: { entry } }
+    })
 }
 
 const { entry } = Astro.props

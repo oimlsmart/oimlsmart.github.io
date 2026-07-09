@@ -9,17 +9,17 @@ summary: The 11-document SMART_REQS specification set is published in draft form
 The 11-document **SMART_REQS** specification set is now available on this
 site in draft form. Each document defines one aspect of the SMART platform:
 
-1. [System Architecture](/docs/specifications/system-architecture.html)
-2. [Requirement & Conformance Model](/docs/specifications/requirement-and-conformance-model.html)
-3. [Form & Measurement Model](/docs/specifications/form-and-measurement-model.html)
-4. [OCL Expression Language](/docs/specifications/ocl-expression-language.html)
-5. [Evaluation & Condition Model](/docs/specifications/evaluation-and-condition-model.html)
-6. [YAML Schema Specification](/docs/specifications/yaml-schema-specification.html)
-7. [Calculation Primitive](/docs/specifications/calculation-primitive.html)
-8. [Expression Language (AsciiMath + OCL)](/docs/specifications/expression-language-asciimath-ocl.html)
-9. [Table Primitive](/docs/specifications/table-primitive.html)
-10. [Certification Workflow Model](/docs/specifications/certification-workflow-model.html)
-11. [Variable & Symbol Model](/docs/specifications/variable-symbol-model.html)
+1. [System Architecture](/docs/specifications/system-architecture)
+2. [Requirement & Conformance Model](/docs/specifications/requirement-and-conformance-model)
+3. [Form & Measurement Model](/docs/specifications/form-and-measurement-model)
+4. [OCL Expression Language](/docs/specifications/ocl-expression-language)
+5. [Evaluation & Condition Model](/docs/specifications/evaluation-and-condition-model)
+6. [YAML Schema Specification](/docs/specifications/yaml-schema-specification)
+7. [Calculation Primitive](/docs/specifications/calculation-primitive)
+8. [Expression Language (AsciiMath + OCL)](/docs/specifications/expression-language-asciimath-ocl)
+9. [Table Primitive](/docs/specifications/table-primitive)
+10. [Certification Workflow Model](/docs/specifications/certification-workflow-model)
+11. [Variable & Symbol Model](/docs/specifications/variable-symbol-model)
 
 ## How to read them
 
@@ -30,4 +30,4 @@ If you're new to the formal specs:
 3. Skim **06 (YAML Schema)** and **07–09 (Calculation, Expressions, Table primitives)** for the declaration language.
 4. Read **10 (Certification Workflow)** if you're integrating with OIML-CS.
 
-For the narrative version, see the [Developer Guides](/docs/guides/getting-started.html).
+For the narrative version, see the [Developer Guides](/docs/guides/getting-started).

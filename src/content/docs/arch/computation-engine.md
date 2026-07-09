@@ -1,13 +1,13 @@
 # Computation Engine
 
-The Computation Engine is the runtime that evaluates calculation declarations embedded in form fields. It is one of the two cross-cutting primitives (along with [Tables](/docs/arch/tables-lookups.html)) that enforce MECE — calculations are defined once and referenced everywhere.
+The Computation Engine is the runtime that evaluates calculation declarations embedded in form fields. It is one of the two cross-cutting primitives (along with [Tables](/docs/arch/tables-lookups)) that enforce MECE — calculations are defined once and referenced everywhere.
 
 ## Calculation primitive
 
 A **Calculation** is a typed, named, reusable computation. It declares:
 
 - **Inputs** — typed references to other fields, constants, or context values.
-- **Expression** — an [AsciiMath](/docs/arch/expression-language.html) arithmetic expression over the inputs.
+- **Expression** — an [AsciiMath](/docs/arch/expression-language) arithmetic expression over the inputs.
 - **Output type** — the quantity and unit the result is expressed in.
 - **Rounding rules** — significant digits, decimal places, or explicit OIML rounding conventions.
 
@@ -21,7 +21,7 @@ Calculations are evaluated in topological order — if Calculation B depends on 
 
 The engine:
 
-- Tracks units through every operation (via [UnitsML](/about/technology.html#unitsml)).
+- Tracks units through every operation (via [UnitsML](/about/technology#unitsml)).
 - Validates dimension compatibility before evaluation.
 - Reports unit mismatches at build time, not runtime.
 - Applies rounding only at the field boundary, not intermediate computations.

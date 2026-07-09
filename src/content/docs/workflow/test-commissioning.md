@@ -25,4 +25,4 @@ A single application may be split across multiple TLs (e.g. one for environmenta
 
 ## What happens next
 
-The TL performs the tests according to the [Test Report](/docs/workflow/test-report.html) workflow.
+The TL performs the tests according to the [Test Report](/docs/workflow/test-report) workflow.

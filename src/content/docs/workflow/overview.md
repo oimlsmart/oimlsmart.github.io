@@ -48,4 +48,4 @@ Each stage produces a distinct data entity — `Application`, `TestRequest`, `Te
 
 Each step's outputs become the next step's inputs. Every artifact carries structured references to its predecessors, so the full evidence chain is always traceable.
 
-Continue with the [instrument model](/docs/workflow/instrument-model.html).
+Continue with the [instrument model](/docs/workflow/instrument-model).

@@ -60,18 +60,18 @@ that's easy to read and write:
 
 The engine parses AsciiMath into an AST, validates it against the declared
 input types, and evaluates it numerically at runtime. See the
-[Expression Language reference](/docs/arch/expression-language.html) for the
+[Expression Language reference](/docs/arch/expression-language) for the
 full grammar.
 
 For boolean conditions (in form `pass_if` expressions, applicability
 filters, state machine guards), SMART uses **OCL** (Object Constraint
-Language) instead — see the [OCL reference](/docs/ref/ocl-reference.html).
+Language) instead — see the [OCL reference](/docs/ref/ocl-reference).
 
 ## Numeric safety
 
 The engine:
 
-- Tracks units through every operation (via [UnitsML](/about/technology.html)).
+- Tracks units through every operation (via [UnitsML](/about/technology)).
 - Validates dimension compatibility before evaluation.
 - Reports unit mismatches at build time, not runtime.
 - Applies rounding only at the field boundary, not in intermediate computations.
@@ -109,7 +109,7 @@ A calculation can declare branches:
       values: [A, B, C, D]
 ```
 
-For more complex branching, prefer a [Table lookup](/docs/guides/test-report-forms.html#calculated-engine-computed) — tables are more declarative and easier to audit.
+For more complex branching, prefer a [Table lookup](/docs/guides/test-report-forms#calculated-engine-computed) — tables are more declarative and easier to audit.
 
 ## Reusing calculations across forms
 
@@ -147,6 +147,6 @@ are valid; the choice depends on which reads better.
 
 ## Next
 
-[Terminology & Cross-References](/docs/guides/terminology.html) covers the
+[Terminology & Cross-References](/docs/guides/terminology) covers the
 defined-term system that links natural-language statements to structured
 entities.

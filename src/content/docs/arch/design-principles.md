@@ -28,6 +28,6 @@ No orphan results — every pass/fail determination is grounded in a normative r
 
 ## 6. MMEL-Compatible (via Primmel)
 
-YAML structures map 1:1 to Primmel (and through Primmel, to MMEL — the Multi-Modal Modelling Language developed jointly by Ribose and BSI). This ensures the digital specifications are semantically equivalent to their paper counterparts, enabling future interoperability and exchange between national metrology bodies. See [About → Technology](/about/technology.html) for context.
+YAML structures map 1:1 to Primmel (and through Primmel, to MMEL — the Multi-Modal Modelling Language developed jointly by Ribose and BSI). This ensures the digital specifications are semantically equivalent to their paper counterparts, enabling future interoperability and exchange between national metrology bodies. See [About → Technology](/about/technology) for context.
 
-Next: [supported standards](/docs/arch/standards.html).
+Next: [supported standards](/docs/arch/standards).

@@ -51,7 +51,7 @@ enums:
     values: [I, II, III, IIII]
 ```
 
-See [Identity & Dimensions](/docs/guides/identity-dimensions.html) for all fields.
+See [Identity & Dimensions](/docs/guides/identity-dimensions) for all fields.
 
 ### 3. Add requirements
 
@@ -73,7 +73,7 @@ requirements:
       limit: { factor: 0.5 }
 ```
 
-See [Requirements Model](/docs/guides/requirements.html) for all acceptance criteria types.
+See [Requirements Model](/docs/guides/requirements) for all acceptance criteria types.
 
 ### 4. Add conformance tests and forms
 
@@ -87,15 +87,15 @@ Run the build pipeline. It discovers the new `standard.yaml`, validates all YAML
 
 The following guides cover each layer in depth. Read them in order, or jump to any topic:
 
-- [Platform Architecture](/docs/guides/architecture.html)
-- [Directory Structure](/docs/guides/directory-structure.html)
-- [Identity & Dimensions](/docs/guides/identity-dimensions.html)
-- [Provision Data Model](/docs/guides/provision-data-model.html)
-- [Specialization](/docs/guides/specialization.html)
-- [Requirements](/docs/guides/requirements.html)
-- [Conformance Tests](/docs/guides/conformance-tests.html)
-- [Test Report Forms](/docs/guides/test-report-forms.html)
-- [Calculation Engine](/docs/guides/calculation-engine.html)
-- [Terminology](/docs/guides/terminology.html)
-- [Evaluation Workflow](/docs/guides/evaluation-workflow.html)
-- [Ontology](/docs/guides/ontology.html)
+- [Platform Architecture](/docs/guides/architecture)
+- [Directory Structure](/docs/guides/directory-structure)
+- [Identity & Dimensions](/docs/guides/identity-dimensions)
+- [Provision Data Model](/docs/guides/provision-data-model)
+- [Specialization](/docs/guides/specialization)
+- [Requirements](/docs/guides/requirements)
+- [Conformance Tests](/docs/guides/conformance-tests)
+- [Test Report Forms](/docs/guides/test-report-forms)
+- [Calculation Engine](/docs/guides/calculation-engine)
+- [Terminology](/docs/guides/terminology)
+- [Evaluation Workflow](/docs/guides/evaluation-workflow)
+- [Ontology](/docs/guides/ontology)

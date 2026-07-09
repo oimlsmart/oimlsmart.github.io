@@ -37,4 +37,4 @@ The acronym **SMART** captures what the programme delivers:
 
 The result: a Recommendation that is not just *read* but *executed*.
 
-Read the [architecture overview](/docs/arch/overview.html) for the technical details.
+Read the [architecture overview](/docs/arch/overview) for the technical details.

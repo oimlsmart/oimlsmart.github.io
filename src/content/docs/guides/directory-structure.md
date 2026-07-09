@@ -90,4 +90,4 @@ of YAML in production — everything is pre-validated TypeScript.
 
 ## Next
 
-[Identity & Dimensions](/docs/guides/identity-dimensions.html) walks through what goes in `standard.yaml` and `dimensions.yaml`.
+[Identity & Dimensions](/docs/guides/identity-dimensions) walks through what goes in `standard.yaml` and `dimensions.yaml`.

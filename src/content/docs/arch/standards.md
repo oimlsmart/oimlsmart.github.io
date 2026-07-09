@@ -14,7 +14,7 @@ Additional Recommendations are queued for modelling. The priority order is set b
 
 ## Adding a new standard
 
-The process for adding a new Recommendation is described in [Adding a Standard](/docs/workflow/adding-a-standard.html). In short:
+The process for adding a new Recommendation is described in [Adding a Standard](/docs/workflow/adding-a-standard). In short:
 
 1. Create a `data/<recommendation>/` directory.
 2. Author `standard.yaml` (value model) and `dimensions.yaml` (classification axes).

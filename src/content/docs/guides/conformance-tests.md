@@ -105,7 +105,7 @@ result_forms:
   - urn:oiml:form:r60:measurement-error-mdlo
 ```
 
-See the [Test Report Forms guide](/docs/guides/test-report-forms.html) for
+See the [Test Report Forms guide](/docs/guides/test-report-forms) for
 the form schema.
 
 ## Test class grouping
@@ -128,4 +128,4 @@ tests:
 
 ## Next
 
-[Test Report Forms](/docs/guides/test-report-forms.html) shows how test variables become structured form fields with embedded calculations.
+[Test Report Forms](/docs/guides/test-report-forms) shows how test variables become structured form fields with embedded calculations.

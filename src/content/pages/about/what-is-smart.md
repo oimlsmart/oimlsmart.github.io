@@ -38,4 +38,4 @@ The **OIML Certification System** (OIML-CS) is the framework through which OIML 
 
 With SMART Recommendations, the entire certification workflow — applications, test reports, type evaluations, and certificates — becomes a structured, machine-actionable pipeline. This reduces manual data entry, eliminates transcription errors, and enables automated verification of compliance.
 
-Read the [OIML-CS overview](/oiml-cs.html) for details.
+Read the [OIML-CS overview](/oiml-cs) for details.

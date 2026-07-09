@@ -42,7 +42,7 @@ Test report forms contain embedded **calculation declarations** — instructions
 - **Numeric expressions** — arithmetic expressions that reference other form fields, constants, and computed values. Supports conditional logic and rounding rules.
 - **Pass/fail logic** — compare measured values against computed limits and produce explicit pass/fail verdicts with traceability to the originating requirement.
 
-Calculations are written in the embedded expression language (AsciiMath for arithmetic, OCL for boolean conditions) — see the [expression language reference](/docs/arch/expression-language.html).
+Calculations are written in the embedded expression language (AsciiMath for arithmetic, OCL for boolean conditions) — see the [expression language reference](/docs/arch/expression-language).
 
 ## Certification Workflow
 
@@ -54,4 +54,4 @@ The platform supports the full OIML-CS lifecycle:
 4. Forms auto-calculate via embedded computations.
 5. IA consolidates results → issues certificate.
 
-Every step is captured as structured data with full traceability from certificate back to the originating requirement. Read the [workflow overview](/docs/workflow/overview.html) for the end-to-end picture.
+Every step is captured as structured data with full traceability from certificate back to the originating requirement. Read the [workflow overview](/docs/workflow/overview) for the end-to-end picture.

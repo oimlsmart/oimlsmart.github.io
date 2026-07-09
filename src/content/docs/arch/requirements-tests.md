@@ -22,6 +22,6 @@ A **ConformanceTestClass** defines a category of test (e.g. "measurement error",
 - The **acceptance criteria** (typically referencing a Requirement).
 - The **result forms** that capture the measurements.
 
-The link from `ConformanceTest` to `Requirement` is many-to-many: a single test may verify several requirements, and a single requirement may be verified by several tests. This explicit dependency graph is what enables full [traceability](/docs/arch/design-principles.html#_5-traceability).
+The link from `ConformanceTest` to `Requirement` is many-to-many: a single test may verify several requirements, and a single requirement may be verified by several tests. This explicit dependency graph is what enables full [traceability](/docs/arch/design-principles#_5-traceability).
 
-See the [workflow → form data binding](/docs/workflow/form-data-binding.html) page for how fields in a form resolve to test variables and ultimately to requirement criteria.
+See the [workflow → form data binding](/docs/workflow/form-data-binding) page for how fields in a form resolve to test variables and ultimately to requirement criteria.

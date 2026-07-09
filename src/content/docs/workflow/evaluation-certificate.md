@@ -29,4 +29,4 @@ A copy is sent to BIML for registration in the OIML database.
 
 Once registered, the certificate and its EvaluationReport can be used by OIML-CS Utilizers and Associates in support of national or regional type approvals, per their Declaration scope.
 
-See the [OIML-CS page](/oiml-cs.html) for the certification system context.
+See the [OIML-CS page](/oiml-cs) for the certification system context.

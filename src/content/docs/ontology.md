@@ -50,11 +50,11 @@ format). The build pipeline validates the syntax, imports upper layers,
 extracts terminology into `terminology.yaml`, and generates TypeScript
 modules for runtime use.
 
-See the developer guide on [Ontology Architecture](/docs/guides/ontology.html)
+See the developer guide on [Ontology Architecture](/docs/guides/ontology)
 for the authoring workflow.
 
 ## Cross-references
 
-- [Technology overview](/about/technology.html) — Primmel, Metanorma, Relaton, LutaML.
-- [Architecture overview](/docs/arch/overview.html) — how the ontology fits in the six-layer model.
-- [Terminology guide](/docs/guides/terminology.html) — terms and cross-refs.
+- [Technology overview](/about/technology) — Primmel, Metanorma, Relaton, LutaML.
+- [Architecture overview](/docs/arch/overview) — how the ontology fits in the six-layer model.
+- [Terminology guide](/docs/guides/terminology) — terms and cross-refs.

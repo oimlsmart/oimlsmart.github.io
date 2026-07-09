@@ -20,8 +20,8 @@ The IA reviews the application for:
 - **Eligibility** — does the manufacturer meet the OIML-CS participation requirements?
 - **Sample adequacy** — are the samples representative of production?
 
-The IA may accept the application, return it for clarification, or reject it. Once accepted, the workflow moves to [Test Commissioning](/docs/workflow/test-commissioning.html).
+The IA may accept the application, return it for clarification, or reject it. Once accepted, the workflow moves to [Test Commissioning](/docs/workflow/test-commissioning).
 
 ## State machine
 
-An application moves through states: `draft → submitted → under_review → accepted → in_test → evaluated → certified` (or `rejected`, `withdrawn` at appropriate points). The full state machine is documented in [State Machines](/docs/workflow/state-machines.html).
+An application moves through states: `draft → submitted → under_review → accepted → in_test → evaluated → certified` (or `rejected`, `withdrawn` at appropriate points). The full state machine is documented in [State Machines](/docs/workflow/state-machines).

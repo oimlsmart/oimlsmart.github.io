@@ -36,5 +36,5 @@ for SMART data — they map 1:1 to Primmel constructs. The Primmel model is
 the canonical source; the YAML files are its concrete serialization for a
 specific Recommendation.
 
-Read the [Technology page](/about/technology.html) for the full Primmel /
+Read the [Technology page](/about/technology) for the full Primmel /
 Metanorma / Relaton / LutaML stack.

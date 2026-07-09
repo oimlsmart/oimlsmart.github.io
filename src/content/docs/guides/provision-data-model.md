@@ -145,4 +145,4 @@ This is useful when a test targets many requirements, or when requirements are s
 
 ## Next
 
-The [Specialization & Parameterization](/docs/guides/specialization.html) guide shows how the same requirement template produces different criteria for different dimension values.
+The [Specialization & Parameterization](/docs/guides/specialization) guide shows how the same requirement template produces different criteria for different dimension values.

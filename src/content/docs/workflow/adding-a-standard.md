@@ -28,5 +28,5 @@ Adding a new OIML Recommendation to the SMART platform is a data-only task. No e
 
 ## Reference
 
-- [YAML Schema](/docs/ref/yaml-schema.html) — formal schemas for each file type.
-- [Type Definitions](/docs/ref/type-definitions.html) — TypeScript types generated from the schemas.
+- [YAML Schema](/docs/ref/yaml-schema) — formal schemas for each file type.
+- [Type Definitions](/docs/ref/type-definitions) — TypeScript types generated from the schemas.

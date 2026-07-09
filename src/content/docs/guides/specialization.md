@@ -105,4 +105,4 @@ The engine resolves the dimension context (e.g. `context.classification.accuracy
 
 ## Next
 
-[Requirements Model](/docs/guides/requirements.html) walks through all three acceptance criteria types in detail.
+[Requirements Model](/docs/guides/requirements) walks through all three acceptance criteria types in detail.

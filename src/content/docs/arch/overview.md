@@ -86,4 +86,4 @@ The information model that defines these layers is authored in [Primmel](https:/
 
 The Primmel model is the canonical source; the YAML files above are its concrete serialization for a specific Recommendation.
 
-Continue with the [design principles](/docs/arch/design-principles.html) that shape every decision in the model.
+Continue with the [design principles](/docs/arch/design-principles) that shape every decision in the model.

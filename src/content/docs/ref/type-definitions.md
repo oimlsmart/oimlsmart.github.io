@@ -187,6 +187,6 @@ The types support several extension patterns:
 
 ## Where to read more
 
-- [YAML Schema Reference](/docs/ref/yaml-schema.html) — the schemas these types are generated from.
-- [Developer guide — Provision Data Model](/docs/guides/provision-data-model.html).
-- [Formal spec — System Architecture](/docs/specifications/system-architecture.html).
+- [YAML Schema Reference](/docs/ref/yaml-schema) — the schemas these types are generated from.
+- [Developer guide — Provision Data Model](/docs/guides/provision-data-model).
+- [Formal spec — System Architecture](/docs/specifications/system-architecture).

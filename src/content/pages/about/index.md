@@ -26,9 +26,9 @@ In the SMART model, an International Recommendation is no longer just a document
 
 ## About this section
 
-- [What is OIML SMART?](/about/what-is-smart.html) — the programme in detail
-- [Why SMART?](/about/why-smart.html) — the case for machine-actionable standards
-- [How it works](/about/how-it-works.html) — the layered architecture
-- [Technology](/about/technology.html) — Primmel, Metanorma, Relaton, LutaML
-- [Contact](/about/contact.html) — get in touch
-- [Branding](/about/branding.html) — logo and color resources
+- [What is OIML SMART?](/about/what-is-smart) — the programme in detail
+- [Why SMART?](/about/why-smart) — the case for machine-actionable standards
+- [How it works](/about/how-it-works) — the layered architecture
+- [Technology](/about/technology) — Primmel, Metanorma, Relaton, LutaML
+- [Contact](/about/contact) — get in touch
+- [Branding](/about/branding) — logo and color resources

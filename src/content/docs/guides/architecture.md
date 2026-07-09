@@ -34,7 +34,7 @@ eyebrow: 'Guide · 02 of 13'
 
 ## Why this split?
 
-The split enforces the platform's [design principles](/docs/arch/design-principles.html):
+The split enforces the platform's [design principles](/docs/arch/design-principles):
 
 - **Code has no data.** Layer 1 holds all domain knowledge.
 - **Declarative.** Adding a standard touches only Layer 1.
@@ -71,8 +71,8 @@ The runtime engine is deliberately small (~3,000 lines). It:
 
 - Loads generated modules.
 - Resolves Form schema + ConformanceTest context for a FormInstance.
-- Evaluates [Calculations](/docs/arch/computation-engine.html) in topological order.
-- Evaluates [Tables](/docs/arch/tables-lookups.html) with interpolation.
+- Evaluates [Calculations](/docs/arch/computation-engine) in topological order.
+- Evaluates [Tables](/docs/arch/tables-lookups) with interpolation.
 - Applies the `pass_if` OCL expression to produce a verdict.
 - Records traceability links back to originating requirements.
 
@@ -80,4 +80,4 @@ The engine has zero knowledge of any specific Recommendation. Adding R 76 or any
 
 ## Next
 
-Continue with the [Directory Structure](/docs/guides/directory-structure.html) guide to see how files are organized inside `data/<standard>/`.
+Continue with the [Directory Structure](/docs/guides/directory-structure) guide to see how files are organized inside `data/<standard>/`.

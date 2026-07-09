@@ -99,9 +99,9 @@ Terminology terms are mirrored in the standard's domain ontology as OWL
 classes/properties. This enables semantic queries: "show me every
 requirement that references a term subclass of `force-measurement`".
 
-See the [Ontology guide](/docs/guides/ontology.html) for the full OWL layer.
+See the [Ontology guide](/docs/guides/ontology) for the full OWL layer.
 
 ## Next
 
-[Evaluation Workflow](/docs/guides/evaluation-workflow.html) covers the
+[Evaluation Workflow](/docs/guides/evaluation-workflow) covers the
 runtime pipeline that takes a populated FormInstance and produces a verdict.

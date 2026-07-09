@@ -97,7 +97,7 @@ pass_if: |
   and abs(error_increasing - error_decreasing) <= repeatability_limit
 ```
 
-See the [OCL Reference](/docs/ref/ocl-reference.html) for the syntax.
+See the [OCL Reference](/docs/ref/ocl-reference) for the syntax.
 
 ## Multi-row tables
 
@@ -172,4 +172,4 @@ The result is a fully auditable, machine-readable test report.
 
 ## Next
 
-The [Calculation Engine](/docs/guides/calculation-engine.html) guide covers the Calculation primitive in depth.
+The [Calculation Engine](/docs/guides/calculation-engine) guide covers the Calculation primitive in depth.

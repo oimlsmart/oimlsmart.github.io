@@ -15,12 +15,12 @@ The Test Laboratory captures test results as a structured **TestReport**, popula
 
 For each ConformanceTest in the TestRequest, the TL instantiates the corresponding **Form schema**. The form's fields guide the TL through the measurements and observations required. Where the field is calculated, the engine fills it in automatically.
 
-See [Forms](/docs/arch/forms.html) for the form lifecycle and [Form Data Binding](/docs/workflow/form-data-binding.html) for how fields resolve their values.
+See [Forms](/docs/arch/forms) for the form lifecycle and [Form Data Binding](/docs/workflow/form-data-binding) for how fields resolve their values.
 
 ## Pass/fail computation
 
-Each FormInstance is evaluated against its `pass_if` expression (in [OCL](/docs/arch/expression-language.html)) to produce a pass / fail / conditional verdict. The verdict is computed by the engine — not entered by the TL — to eliminate transcription errors.
+Each FormInstance is evaluated against its `pass_if` expression (in [OCL](/docs/arch/expression-language)) to produce a pass / fail / conditional verdict. The verdict is computed by the engine — not entered by the TL — to eliminate transcription errors.
 
 ## Submission
 
-When all FormInstances are populated and the TL signs off, the TestReport is submitted to the IA. The IA then begins [Evaluation & Certificate](/docs/workflow/evaluation-certificate.html).
+When all FormInstances are populated and the TL signs off, the TestReport is submitted to the IA. The IA then begins [Evaluation & Certificate](/docs/workflow/evaluation-certificate).

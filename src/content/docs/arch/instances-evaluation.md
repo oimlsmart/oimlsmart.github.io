@@ -15,7 +15,7 @@ Form instances live in IndexedDB in the browser (or in a server-side store for n
 
 ## Layer 5 — Evaluation Results
 
-The evaluation pipeline (described in the [architecture overview](/docs/arch/overview.html#data-flow)) processes a populated FormInstance against its schema and produces:
+The evaluation pipeline (described in the [architecture overview](/docs/arch/overview#data-flow)) processes a populated FormInstance against its schema and produces:
 
 - A **FormDetermination** for each criterion — pass / fail / conditional, with computed evidence.
 - An **EvaluationResult** aggregating all FormDeterminations for the form.

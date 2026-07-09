@@ -14,8 +14,8 @@ under `data/`. They are the authoritative declarations of every entity type
 in a SMART Recommendation.
 
 For the typescript types generated from these schemas, see the [Type
-Definitions](/docs/ref/type-definitions.html) page. For the formal
-specification, see [YAML Schema Specification](/docs/specifications/yaml-schema-specification.html).
+Definitions](/docs/ref/type-definitions) page. For the formal
+specification, see [YAML Schema Specification](/docs/specifications/yaml-schema-specification).
 
 ## Per-schema documentation
 
@@ -93,7 +93,7 @@ terminology) and is the entry point for the entire Recommendation.
 
 ## Where to read more
 
-- [Developer guide — Identity & Dimensions](/docs/guides/identity-dimensions.html)
-- [Developer guide — Provision Data Model](/docs/guides/provision-data-model.html)
-- [Formal spec — YAML Schema Specification](/docs/specifications/yaml-schema-specification.html)
-- [Adding a Standard](/docs/workflow/adding-a-standard.html)
+- [Developer guide — Identity & Dimensions](/docs/guides/identity-dimensions)
+- [Developer guide — Provision Data Model](/docs/guides/provision-data-model)
+- [Formal spec — YAML Schema Specification](/docs/specifications/yaml-schema-specification)
+- [Adding a Standard](/docs/workflow/adding-a-standard)

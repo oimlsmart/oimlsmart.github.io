@@ -8,8 +8,8 @@ Traditional OIML test report forms are PDFs or spreadsheets. SMART forms are exe
 
 - Each **field** is typed (numeric, enumeration, boolean, calculated).
 - Each field declares its **measurement kind** — the quantity, unit, and dimension context it captures.
-- **Calculated fields** carry embedded computation declarations (see [Computation Engine](/docs/arch/computation-engine.html)) that the platform evaluates automatically.
-- Each form declares a **`pass_if`** expression (in [OCL](/docs/arch/expression-language.html)) that aggregates field-level pass/fail into an overall form verdict.
+- **Calculated fields** carry embedded computation declarations (see [Computation Engine](/docs/arch/computation-engine)) that the platform evaluates automatically.
+- Each form declares a **`pass_if`** expression (in [OCL](/docs/arch/expression-language)) that aggregates field-level pass/fail into an overall form verdict.
 
 ## Field kinds
 

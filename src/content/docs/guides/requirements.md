@@ -101,7 +101,7 @@ Each checklist item gets its own pass/fail in the form.
 Every criterion can declare which dimensions it varies by. The build pipeline
 verifies that any dimension referenced in `acceptance_criteria` is also
 listed in `dimensions`. See the
-[Specialization guide](/docs/guides/specialization.html) for the full
+[Specialization guide](/docs/guides/specialization) for the full
 mechanism.
 
 ## Applicability filters
@@ -137,4 +137,4 @@ The form aggregates per-criterion verdicts into a single requirement verdict.
 
 ## Next
 
-[Conformance Tests](/docs/guides/conformance-tests.html) shows how requirements become testable procedures.
+[Conformance Tests](/docs/guides/conformance-tests) shows how requirements become testable procedures.
