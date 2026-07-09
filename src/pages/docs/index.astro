@@ -1,109 +1,73 @@
 ---
 import { getCollection } from 'astro:content'
-import Base from '../../layouts/Base.astro'
+import DocsLayout from '../../layouts/DocsLayout.astro'
 import DraftCallout from '../../components/DraftCallout.astro'
-import DocsSidebar from '../../components/DocsSidebar.astro'
 
 const sections = [
-  { key: 'guides', label: 'Developer Guides', desc: 'Narrative, learn-by-doing walkthroughs for authoring a SMART Recommendation.' },
-  { key: 'arch', label: 'Architecture', desc: 'How the system is built — the six-layer entity model, design principles, and cross-cutting primitives.' },
-  { key: 'workflow', label: 'Workflow', desc: 'How certification works — the end-to-end process from application to certificate.' },
-  { key: 'specifications', label: 'Formal Specifications', desc: 'The SMART_REQS documents — the normative specification set for the SMART platform.' },
-  { key: 'ref', label: 'Reference', desc: 'Quick-reference material — schemas, types, syntax, identifiers.' },
+  { key: 'guides', label: 'Developer Guides', desc: 'Narrative walkthroughs for authoring a SMART Recommendation.' },
+  { key: 'arch', label: 'Architecture', desc: 'The six-layer entity model, design principles, and primitives.' },
+  { key: 'workflow', label: 'Workflow', desc: 'The end-to-end certification process from application to certificate.' },
+  { key: 'specifications', label: 'Formal Specifications', desc: 'The 11-document SMART_REQS normative specification set.' },
+  { key: 'ref', label: 'Reference', desc: 'Schemas, types, syntax, and identifiers.' },
 ]
 
-const pageCounts = await Promise.all(
-  sections.map(async s => {
-    const pages = (await getCollection('docs'))
-      .filter(d => d.id.startsWith(s.key + '/'))
-    return pages.length
-  })
-)
+const allDocs = await getCollection('docs')
+const counts = sections.map(s => allDocs.filter(d => d.id.startsWith(s.key + '/')).length)
 ---
 
-<Base title="Developer documentation" description="Architecture, workflow, and reference materials for the OIML SMART platform.">
-  <div class="docs-layout">
-    <aside class="docs-aside">
-      <DocsSidebar />
-    </aside>
-    <article class="docs-main">
-      <div class="docs-intro">
-        <h1>Developer documentation</h1>
-        <p class="intro-lede">
-          Everything a standards developer, software engineer, or technical evaluator
-          needs to author, deploy, or integrate OIML SMART Recommendations.
-        </p>
-      </div>
-      <DraftCallout />
-      <div class="section-list">
-        {sections.map((s, i) => (
-          <a class="section-card" href={`/docs/${s.key}/`}>
-            <div class="section-head">
-              <h2>{s.label}</h2>
-              <span class="section-count">{pageCounts[i]} pages</span>
-            </div>
-            <p>{s.desc}</p>
-          </a>
-        ))}
-      </div>
-    </article>
+<DocsLayout title="Developer documentation">
+  <div class="hub-intro">
+    <h1>Developer documentation</h1>
+    <p>Everything a standards developer, software engineer, or technical evaluator needs to author, deploy, or integrate OIML SMART Recommendations.</p>
   </div>
-</Base>
+  <DraftCallout />
+  <div class="hub-grid">
+    {sections.map((s, i) => (
+      <a class="hub-card" href={`/docs/${s.key}/`}>
+        <div class="hub-card-head">
+          <h2>{s.label}</h2>
+          <span class="hub-count">{counts[i]}</span>
+        </div>
+        <p>{s.desc}</p>
+      </a>
+    ))}
+  </div>
+</DocsLayout>
 
 <style>
-.docs-layout {
-  display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
-  gap: 2.5rem;
-  max-width: 72rem;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-.docs-aside {
-  position: sticky; top: 64px; max-height: calc(100vh - 64px);
-  overflow-y: auto; align-self: start;
-}
-.docs-main { padding: 1.5rem 0 4rem; max-width: 44rem; min-width: 0; }
-.docs-intro { margin-bottom: 1rem; }
-.docs-intro h1 {
+.hub-intro { margin-bottom: 1rem; }
+.hub-intro h1 {
   font-family: var(--vp-font-family-serif);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 600; letter-spacing: -0.025em; margin: 0;
 }
-.intro-lede {
+.hub-intro p {
   font-size: 1.0625rem; line-height: 1.6;
-  color: var(--ink-soft); max-width: 42rem; margin-top: 0.75rem;
+  color: var(--ink-soft); max-width: 36rem; margin-top: 0.75rem;
 }
-.section-list { margin-top: 2rem; }
-.section-card {
-  display: block; padding: 1.5rem 0;
+.hub-grid { margin-top: 2rem; display: flex; flex-direction: column; }
+.hub-card {
+  display: block; padding: 1.25rem 0;
   border-bottom: 1px solid var(--rule);
   text-decoration: none; color: inherit;
   transition: padding-left 0.15s;
 }
-.section-card:hover { padding-left: 0.5rem; }
-.section-card:hover h2 { color: var(--accent); }
-.section-head {
+.hub-card:hover { padding-left: 0.5rem; }
+.hub-card-head {
   display: flex; align-items: baseline; justify-content: space-between;
-  gap: 1rem;
 }
-.section-head h2 {
+.hub-card-head h2 {
   font-family: var(--vp-font-family-serif);
-  font-size: 1.1875rem; font-weight: 600; margin: 0;
+  font-size: 1.125rem; font-weight: 600; margin: 0;
   transition: color 0.15s;
 }
-.section-count {
+.hub-card:hover h2 { color: var(--accent); }
+.hub-count {
   font-family: var(--vp-font-family-mono);
   font-size: 0.6875rem; color: var(--ink-muted);
-  white-space: nowrap;
 }
-.section-card p {
-  font-size: 0.875rem; line-height: 1.5;
-  color: var(--ink-soft); margin: 0.375rem 0 0;
-}
-
-@media (max-width: 960px) {
-  .docs-layout { grid-template-columns: 1fr; }
-  .docs-aside { display: none; }
+.hub-card p {
+  font-size: 0.875rem; color: var(--ink-soft);
+  margin: 0.25rem 0 0;
 }
 </style>

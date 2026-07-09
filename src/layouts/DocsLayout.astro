@@ -1,0 +1,56 @@
+---
+// DocsLayout — single source of truth for all docs pages.
+// Provides the sidebar grid + sticky positioning + shared CSS.
+// Content goes in the default slot.
+import Base from './Base.astro'
+import DocsSidebar from '../components/DocsSidebar.astro'
+
+const { title, description } = Astro.props
+---
+
+<Base title={title} description={description}>
+  <div class="docs-layout">
+    <aside class="docs-aside">
+      <DocsSidebar />
+    </aside>
+    <div class="docs-main">
+      <slot />
+    </div>
+  </div>
+</Base>
+
+<style>
+.docs-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 3rem;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.docs-aside {
+  position: sticky;
+  top: 64px;
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
+  align-self: start;
+  padding-top: 1.5rem;
+  border-right: 1px solid var(--rule);
+}
+
+.docs-main {
+  min-width: 0;
+  padding: 1.5rem 0 4rem;
+}
+
+@media (max-width: 960px) {
+  .docs-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .docs-aside {
+    display: none;
+  }
+}
+</style>
