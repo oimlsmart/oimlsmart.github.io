@@ -1,5 +1,6 @@
 ---
 title: 'Identity & Dimensions'
+shortTitle: 'Identity'
 description: 'Two foundational files — `standard.yaml` and `dimensions.yaml` — tell the platform what the standard is and how the instrument varies. Everything else builds on these.'
 eyebrow: 'Guide · 04 of 13'
 ---

@@ -1,5 +1,6 @@
 ---
-title: Conformance tests
+title: 'Conformance Tests'
+shortTitle: 'Conformance'
 description: 'Conformance tests are the procedures that verify requirements. Each test declares its variables, procedure steps, and result forms. The cross- reference graph links tests back to the requirements they verify.'
 eyebrow: 'Guide · 08 of 13'
 ---

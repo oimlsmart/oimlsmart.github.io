@@ -1,5 +1,6 @@
 ---
-title: 'Terminology & cross-references'
+title: 'Terminology & Cross-References'
+shortTitle: 'Terminology'
 description: 'Defined terms and an explicit cross-reference graph tie the natural-language prose of the Recommendation to the structured data model. Every term resolves, every reference is grounded.'
 eyebrow: 'Guide · 11 of 13'
 ---

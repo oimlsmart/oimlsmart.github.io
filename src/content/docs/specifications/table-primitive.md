@@ -1,5 +1,7 @@
 ---
-title: Table Definition and Lookup Primitive
+title: 'Table Primitive'
+order: 9
+shortTitle: '09 Tables'
 description: 'The Table primitive — tiered, scalar, and range lookups with interpolation.'
 eyebrow: 'Formal Specification · SMART_REQS 09'
 ---

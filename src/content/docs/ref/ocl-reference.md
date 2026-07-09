@@ -1,4 +1,7 @@
-# OCL Reference
+---
+title: 'OCL Reference'
+shortTitle: 'OCL'
+---
 
 A quick reference for the Object Constraint Language (OCL) expressions used in SMART form `pass_if` declarations and Requirement applicability filters. OCL is also the constraint language used by Primmel and MMEL.
 

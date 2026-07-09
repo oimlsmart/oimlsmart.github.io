@@ -1,4 +1,7 @@
-# Supported Standards
+---
+title: 'Supported Standards'
+shortTitle: 'Standards'
+---
 
 The OIML SMART platform is designed so that adding a new International Recommendation is a data-only task — no engine code changes. Each Recommendation lives in its own directory under `data/` and follows the same structure.
 

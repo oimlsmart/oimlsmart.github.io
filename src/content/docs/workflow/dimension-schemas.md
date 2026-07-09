@@ -1,4 +1,7 @@
-# Dimension Schemas
+---
+title: 'Dimension Schemas'
+shortTitle: 'Dimensions'
+---
 
 Each Recommendation defines its own classification dimensions in a `dimensions.yaml` file. This is what makes the SMART workflow general — the engine code is dimension-agnostic; only the data changes.
 

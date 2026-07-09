@@ -1,4 +1,7 @@
-# Design Principles
+---
+title: 'Design Principles'
+shortTitle: 'Principles'
+---
 
 Six principles shape every decision in the OIML SMART information model.
 

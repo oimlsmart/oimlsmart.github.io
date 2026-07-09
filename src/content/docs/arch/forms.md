@@ -1,4 +1,7 @@
-# Forms
+---
+title: 'Forms'
+shortTitle: 'Forms'
+---
 
 Forms are Layer 3 of the SMART entity model. A **Form** is a structured data capture template linked to one or more ConformanceTests; a **Field** is the smallest unit of data the form captures.
 

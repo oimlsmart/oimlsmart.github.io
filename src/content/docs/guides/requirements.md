@@ -1,5 +1,6 @@
 ---
-title: Requirements model
+title: 'Requirements Model'
+shortTitle: 'Requirements'
 description: 'Machine-readable requirements with structured acceptance criteria. The three criteria types — tiered, threshold, qualitative — together express every normative provision found in OIML Recommendations.'
 eyebrow: 'Guide · 07 of 13'
 ---

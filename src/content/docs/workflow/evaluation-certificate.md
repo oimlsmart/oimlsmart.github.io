@@ -1,4 +1,7 @@
-# Evaluation & Certificate
+---
+title: 'Evaluation & Certificate'
+shortTitle: 'Certificate'
+---
 
 After TestReports are submitted, the Issuing Authority consolidates them into a Type Evaluation Report and — if the type conforms — issues an OIML Certificate.
 

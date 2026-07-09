@@ -1,4 +1,7 @@
-# Architecture Overview
+---
+title: 'Architecture Overview'
+shortTitle: 'Overview'
+---
 
 The OIML SMART platform is built around a six-layer entity model. Each layer has well-defined entity types, a clear purpose, and a specific stage in the lifecycle of a SMART Recommendation.
 

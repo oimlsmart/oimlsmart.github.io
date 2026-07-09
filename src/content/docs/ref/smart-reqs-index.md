@@ -1,5 +1,6 @@
 ---
-title: The 11 SMART_REQS documents
+title: 'SMART_REQS Index'
+shortTitle: 'Specs Index'
 description: 'The normative specifications of the SMART platform itself — what OIML B/D documents are to legal metrology, the SMART_REQS set is to the SMART engine.'
 eyebrow: 'Reference · Specifications index'
 ---

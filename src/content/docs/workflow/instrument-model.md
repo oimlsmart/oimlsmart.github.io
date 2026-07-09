@@ -1,4 +1,7 @@
-# Instrument Model
+---
+title: 'Instrument Model'
+shortTitle: 'Instruments'
+---
 
 The Instrument Model is the data hierarchy used to describe what is being certified. It runs from a broad family down to individual physical samples.
 

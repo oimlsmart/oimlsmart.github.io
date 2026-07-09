@@ -1,4 +1,7 @@
-# Application
+---
+title: 'Application'
+shortTitle: 'Application'
+---
 
 The application is the first step of the certification workflow. It is the manufacturer's formal request to an Issuing Authority to evaluate an instrument type.
 

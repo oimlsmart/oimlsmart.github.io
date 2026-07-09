@@ -1,5 +1,7 @@
 ---
 title: 'Evaluation & Condition Model'
+order: 5
+shortTitle: '05 Evaluation'
 description: 'Evaluation pipeline, condition tracking, and verdict aggregation.'
 eyebrow: 'Formal Specification · SMART_REQS 05'
 ---

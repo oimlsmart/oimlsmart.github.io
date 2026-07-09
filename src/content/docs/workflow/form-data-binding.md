@@ -1,4 +1,7 @@
-# Form Data Binding
+---
+title: 'Form Data Binding'
+shortTitle: 'Data Binding'
+---
 
 A form's fields don't exist in isolation — they bind to a context made up of the Form schema, the ConformanceTest, the InstrumentSample, and the TestReport. Resolving these bindings is what lets the engine evaluate calculations and pass/fail verdicts.
 

@@ -1,5 +1,7 @@
 ---
 title: 'Requirement & Conformance Model'
+order: 2
+shortTitle: '02 Req & Conf'
 description: 'Formal model for requirements and conformance tests — the core provision entities.'
 eyebrow: 'Formal Specification · SMART_REQS 02'
 ---

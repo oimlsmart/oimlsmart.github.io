@@ -1,5 +1,6 @@
 ---
-title: YAML schema reference
+title: 'YAML Schema'
+shortTitle: 'YAML Schema'
 description: Reference documentation for every YAML file type in a SMART Recommendation. Use this when authoring new Recommendations or building tooling that consumes SMART data.
 eyebrow: 'Reference · YAML schemas'
 ---
