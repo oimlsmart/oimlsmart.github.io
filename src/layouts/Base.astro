@@ -100,12 +100,15 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
     }
     applyTheme()
   </script>
-  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
   <script is:inline>
     var searchLoaded = false
     function loadSearch() {
       if (searchLoaded) return
       searchLoaded = true
+      var l = document.createElement('link')
+      l.rel = 'stylesheet'
+      l.href = '/pagefind/pagefind-ui.css'
+      document.head.appendChild(l)
       var s = document.createElement('script')
       s.src = '/pagefind/pagefind-ui.js'
       s.onload = function() {
