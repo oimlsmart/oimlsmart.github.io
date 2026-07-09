@@ -58,7 +58,7 @@ A value the engine computes from other fields, constants, or table lookups.
   lookup:
     table: r60_mpe_table
     inputs:
-      accuracy_class: "${context.classification.accuracy_class}"
+      accuracy_class: "<accuracy_class>"
       load: load
 ```
 
@@ -138,7 +138,7 @@ fields:
         lookup:
           table: r60_mpe_table
           inputs:
-            accuracy_class: "${context.classification.accuracy_class}"
+            accuracy_class: "<accuracy_class>"
             load: load
 
 pass_if: |

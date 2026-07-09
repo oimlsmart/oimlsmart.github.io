@@ -4,93 +4,114 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-The public website for **[www.oimlsmart.org](https://www.oimlsmart.org)** — the marketing, about, and documentation pages for the **OIML SMART** pilot programme.
+The public website for **[www.oimlsmart.org](https://www.oimlsmart.org)** — the marketing,
+about, and documentation pages for the **OIML SMART** pilot programme.
 
-This repo contains **only the public, non-logged-in** content. The interactive application lives in the **separate [`smart` repository](https://github.com/oimlsmart/smart)** under `browser/`. The application's routes under `/app/*` require authentication and are **never deployed from here**. This static site is the front door — not the app.
+Built with **[Astro](https://astro.build/)** — static HTML output, zero client-side JS
+by default. The only inline scripts are the dark-mode toggle and the globe animation.
+
+This repo contains **only the public, non-logged-in** content. The interactive application
+lives in the **separate [`smart` repository](https://github.com/oimlsmart/smart)** under
+`browser/`. The application's routes under `/app/*` require authentication and are
+**never deployed from here**.
 
 ## Build / develop
 
 ```bash
-npm install      # install dependencies
-npm run dev      # http://localhost:5173
-npm run build    # output to .vitepress/dist
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # output to dist/
 npm run preview  # preview the production build
-npm test         # run vitest unit tests
 ```
 
 ## Architecture
 
-### Data layer (`.vitepress/data/`)
+### Static Site Generator
 
-All site content lives in typed TypeScript modules. Components import these; they never inline data.
+[Astro v7](https://astro.build/) with Content Collections.
 
-| Module | Purpose |
+- `astro.config.mjs` — site config, sitemap integration, Shiki markdown highlighting.
+- `src/layouts/Base.astro` — the global layout (nav, footer, dark-mode script, font loading).
+- `src/layouts/DocsPage.astro` — docs pages with sidebar + prev/next navigation.
+- `src/layouts/MarkdownPage.astro` — generic markdown page wrapper (unused by current routes).
+
+### Content Collections
+
+Content lives in `src/content/`, managed by `src/content.config.ts`:
+
+| Collection | Location | Schema |
+|---|---|---|
+| `blog` | `src/content/blog/*.md` | title, date, author, summary, draft |
+| `docs` | `src/content/docs/**/*.md` | title, description, eyebrow, shortTitle, sidebar |
+| `pages` | `src/content/pages/**/*.md` | title, description, eyebrow |
+
+Adding a new docs page = adding a `.md` file under `src/content/docs/{section}/`. The sidebar
+auto-generates from the collection.
+
+### Routing
+
+File-based routing in `src/pages/`:
+
+| Route | Source |
 |---|---|
-| `site-meta.ts` | `SITE` constant (url, title, description, lang, feedTitle, feedDescription) — single source of truth consumed by `config.ts` and `rss.ts` |
-| `site.ts` | Content data: `acronym`, `pilotStats`, `platformFeatures`, `audiencePaths`, `draftNotice` |
-| `nav.ts` | Top-level nav items |
-| `recommendations.ts` | R 60/R 129/R 144 metadata + `findRecommendation` helper |
-| `fonts.ts` | `FONT_URL` builder (typed, single source for Google Fonts URL) |
-| `docs-sidebar.ts` | Filesystem-derived sidebar generator (reads `docs/{section}/*.md` at config time using `js-yaml`) |
+| `/` | `src/pages/index.astro` |
+| `/app/` | `src/pages/app.astro` |
+| `/oiml-cs` | `src/pages/oiml-cs.astro` |
+| `/404` | `src/pages/404.astro` |
+| `/docs/` | `src/pages/docs/index.astro` |
+| `/docs/[...slug]` | `src/pages/docs/[...slug].astro` (catch-all) |
+| `/blog/` | `src/pages/blog/index.astro` |
+| `/blog/[...slug]` | `src/pages/blog/[...slug].astro` |
+| `/about/[...slug]` | `src/pages/about/[...slug].astro` |
+| `/recommendations/[...slug]` | `src/pages/recommendations/[...slug].astro` |
+| `/library/[...slug]` | `src/pages/library/[...slug].astro` |
+| `/feed.xml` | `src/pages/feed.xml.js` (RSS) |
 
-### Type definitions (`.vitepress/types.ts`)
+### Components
 
-9 TypeScript interfaces covering every shared concept: `AcronymItem`, `Stat`, `Feature`, `AudiencePath`, `Recommendation`, `RecommendationStats`, `LibraryDocument`, `NavItem`, `DraftNotice`.
+All components are in `src/components/`:
 
-### Theme (`.vitepress/theme/`)
+- `InternalBanner.astro` — persistent DRAFT/pilot notice at the top of every page.
+- `PageHero.astro` — hero band with eyebrow, title, lede.
+- `DraftCallout.astro` — DRAFT notice (auto-detects variant from URL path).
+- `DocsSidebar.astro` — filesystem-derived sidebar for docs section.
 
-**Entry**: `index.ts` — extends DefaultTheme, registers 4 globally-available components for markdown use (`PageHero`, `DraftCallout`, `LoginCard`, `BlogList`). All other components are imported explicitly by their parent `.vue` files.
+### Design System
 
-**Styles**: `custom.css` is a 20-line pointer to `styles/index.css` which imports `tokens.css` (CSS variables), `base.css` (typography), `overrides.css` (VitePress component overrides), and `utilities.css` (steps, swatch-grid, logo-grid, doc-table, buttons, utilities).
+CSS files in `src/styles/`:
 
-**Composables**: `composables/useTheme.ts` (reactive dark-mode detection), `composables/useAppUrl.ts` (reads `import.meta.env.APP_URL` — Vite statically injects at build time).
+- `tokens.css` — CSS variables (brand colors, semantic tokens, fonts).
+- `base.css` — typography (headings, body, code, links).
+- `overrides.css` — no longer needed (was for VitePress component overrides).
+- `utilities.css` — button styles, swatch grid, logo grid, doc table.
+- `global.css` — entry point that imports all of the above + site nav/footer styles.
 
-**Components**: 14 Vue SFCs. Markdown-consumed (globally registered): `PageHero` (reads frontmatter `title`/`description`/`eyebrow`), `DraftCallout` (auto-detects variant from URL), `LoginCard`, `BlogList`. Composition components (locally imported): `HomePage`, `HomeHero`, `HomeSection`, `AcronymStrip`, `StatRow`, `FeatureGrid`, `AudienceGrid`, `RecCard`, `InternalBanner`.
+### Data
 
-### Build-time (`.vitepress/rss.ts`)
+- `src/data/site-meta.ts` — site URL, title, description, lang, feed metadata.
 
-RSS 2.0 feed generator. Called via `buildEnd` in `config.ts`. Consumes `blog/posts.ts` (canonical post transform) and `data/site-meta.ts` (SITE constant).
+### Fonts
 
-### Blog (`blog/`)
-
-`posts.ts` — pure `transformPosts` function (typed, tested). `posts.data.ts` — VitePress data loader (delegates to `posts.ts`). Blog posts are `*.md` files with frontmatter `title`/`date`/`author`/`summary`.
-
-### Markdown conventions
-
-Every page with a hero uses frontmatter:
-```yaml
----
-title: Page Title
-description: Short description (becomes PageHero lede + meta description)
-eyebrow: Section · Number
----
-```
-
-Then in the body:
-```markdown
-<PageHero />
-<DraftCallout />
-```
-
-No props needed — `PageHero` reads frontmatter; `DraftCallout` auto-detects variant from the page URL. Adding a new page = add frontmatter + `<PageHero />` + content.
-
-### Tests (`tests/`)
-
-Vitest unit tests for pure functions: `transformPosts`, `FONT_URL`, `recommendations`. Run with `npm test`.
+Font URL is hardcoded in `src/layouts/Base.astro` frontmatter. The full set:
+Fraunces (opsz 9..144, weights 300-700), IBM Plex Sans/Mono, Source Serif 4.
 
 ## Deployment
 
-`.github/workflows/build.yml` runs `npm run build` on push to `main`, uploads `.vitepress/dist/` as a GitHub Pages artifact, and deploys it. `.github/workflows/links.yml` runs the lychee link checker.
+`.github/workflows/build.yml` runs `npx astro build` on push to `main`,
+uploads `dist/` as a GitHub Pages artifact, and deploys.
 
-`public/CNAME` contains `www.oimlsmart.org`. `public/robots.txt` blocks all crawlers (`noindex, nofollow` meta tag also on every page).
+`.github/workflows/links.yml` runs the lychee link checker.
+
+`public/CNAME` contains `www.oimlsmart.org`. `public/robots.txt` blocks crawlers.
 
 ## Things future agents trip on
 
-- `package-lock.json` **is** committed. The workflows use `npm ci`, which requires it.
-- **Never add `/app/*` content here.** This site is the public front door only.
-- **Markdown `{{ }}` is interpreted by Vue.** Use `${ }` placeholder syntax in YAML code blocks, or `:v-pre` fence modifier.
-- **OCL language alias is not registered with Shiki.** Use ` ```txt ` for OCL snippets.
-- **Font URL** is built in `data/fonts.ts` and consumed via `config.ts` `<link>`. No `@import` in CSS.
-- **APP_URL** is read via `composables/useAppUrl.ts` (Vite statically injects `import.meta.env.APP_URL`). No `window.__APP_URL__` global.
-- **`DraftCallout` variant** is auto-detected from the page URL. `/docs/specifications/*` gets `specs`, `/blog/*` gets `compact`, everything else gets `default`. Override via `<DraftCallout variant="..." />` prop if needed.
-- **`docs-sidebar.ts`** reads the filesystem at config time. Adding a new page = adding a `.md` file under `docs/{section}/`. No manual sidebar edit needed.
+- **No VitePress.** The site was migrated from VitePress to Astro. Don't add `.vitepress/` config or Vue SFC patterns.
+- **No Vue.** All components are `.astro` files. No `<script setup>`, no Vue composables, no hydration.
+- **Dark mode** is handled by an inline `<script>` in `Base.astro` — not by a composable or component lifecycle.
+- **`APP_URL`** is read via `import.meta.env.APP_URL` in `app.astro` (Vite statically replaces it at build time).
+- **Content Collections** — adding a new page means adding a `.md` file under `src/content/` with the right frontmatter schema. The routing page automatically picks it up.
+- **Docs sidebar** is generated from the `docs` content collection at build time — no manual sidebar config.
+- **OCL code blocks** — use ` ```txt ` not ` ```ocl ` (Shiki doesn't have an OCL grammar).
+- **`package-lock.json`** IS committed. The GHA workflow uses `npm ci`.
+- **DRAFT / pilot** notices are everywhere. The site is internal-only. All content is draft.

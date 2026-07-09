@@ -4,6 +4,27 @@
 @import './utilities.css';
 
 /* ============================================================
+   Theme toggle
+   ============================================================ */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9375rem;
+  transition: border-color 0.15s;
+}
+.theme-toggle:hover { border-color: var(--vp-c-brand-1); }
+.icon-moon { display: none; }
+:global(.dark) .icon-sun { display: none; }
+:global(.dark) .icon-moon { display: inline; }
+
+/* ============================================================
    Site nav + footer (Astro-specific — replaces VitePress VPNav)
    ============================================================ */
 

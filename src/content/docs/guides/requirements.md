@@ -77,7 +77,7 @@ acceptance_criteria:
   limit:
     calc: r60_repeatability_limit   # a Calculation primitive
     inputs:
-      accuracy_class: "${context.classification.accuracy_class}"
+      accuracy_class: "<accuracy_class>"
       load: load
 ```
 

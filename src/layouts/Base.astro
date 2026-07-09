@@ -58,6 +58,10 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
           </div>
         </details>
         <a href="/blog/">Blog</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="icon-sun">☀</span>
+          <span class="icon-moon">☾</span>
+        </button>
         <a href="/app/" class="nav-cta">Enter App ↗</a>
       </nav>
     </div>
@@ -72,9 +76,20 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
     </div>
   </footer>
   <script is:inline>
-    const dark = localStorage.getItem('oiml-theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-    if (dark === 'dark') document.documentElement.classList.add('dark')
+    function getTheme() {
+      return localStorage.getItem('oiml-theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    }
+    function applyTheme() {
+      if (getTheme() === 'dark') document.documentElement.classList.add('dark')
+      else document.documentElement.classList.remove('dark')
+    }
+    function toggleTheme() {
+      const next = getTheme() === 'dark' ? 'light' : 'dark'
+      localStorage.setItem('oiml-theme', next)
+      applyTheme()
+    }
+    applyTheme()
   </script>
 </body>
 </html>

@@ -42,8 +42,8 @@ verifies the term exists, and the rendered UI shows the definition on hover:
 ```yaml
 - identifier: mpe
   statement: |
-    The error of the ${term:load-cell} shall not exceed the
-    ${term:mpe} given in Table 3.
+    The error of the load cell shall not exceed the
+    MPE given in Table 3.
 ```
 
 This ensures every term in the natural-language prose resolves to a

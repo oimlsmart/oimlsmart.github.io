@@ -24,7 +24,7 @@ fields:
     lookup:
       table: r60_mpe_table
       inputs:
-        accuracy_class: "${context.classification.accuracy_class}"
+        accuracy_class: "<accuracy_class>"
         load: load
 ```
 
@@ -73,9 +73,9 @@ Even the natural-language statement can be parameterized, so the human-readable 
 ```yaml
 - identifier: mpe
   statement: |
-    For accuracy class ${accuracy_class}, the error shall not exceed
-    ${mpe_for_class(accuracy_class)} over the load range
-    [${load_min}, ${load_max}].
+    For accuracy class <accuracy_class>, the error shall not exceed
+    <MPE> over the load range
+    [<load_min>, <load_max>].
 ```
 
 The rendered form shows the actual values for the instrument under test, not the template placeholders.

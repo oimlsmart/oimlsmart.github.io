@@ -4,20 +4,13 @@
   "description": "OIML SMART — Machine-Actionable Recommendations",
   "type": "module",
   "scripts": {
-    "dev": "vitepress dev",
-    "build": "vitepress build",
-    "preview": "vitepress preview",
-    "test": "vitest run"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
   "devDependencies": {
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
-    "@types/js-yaml": "^4.0.9",
-    "astro": "^7.0.7",
-    "js-yaml": "^5.2.1",
-    "typescript": "^5.7.3",
-    "vitepress": "^1.6.4",
-    "vitest": "^4.1.9",
-    "vue": "^3.5.13"
+    "astro": "^7.0.7"
   }
 }

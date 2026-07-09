@@ -1,13 +1,22 @@
 ---
+import { getCollection } from 'astro:content'
 import Base from './Base.astro'
 import PageHero from '../components/PageHero.astro'
 import DraftCallout from '../components/DraftCallout.astro'
 import DocsSidebar from '../components/DocsSidebar.astro'
+import { render } from 'astro:content'
 
 const { entry } = Astro.props
-import { render } from "astro:content"
 const { Content } = await render(entry)
 const { title, description, eyebrow } = entry.data
+
+// Build prev/next from the sidebar ordering
+const allDocs = (await getCollection('docs')).sort((a, b) =>
+  a.id.localeCompare(b.id),
+)
+const currentIndex = allDocs.findIndex(d => d.id === entry.id)
+const prevDoc = currentIndex > 0 ? allDocs[currentIndex - 1] : null
+const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : null
 ---
 
 <Base title={title} description={description}>
@@ -19,6 +28,20 @@ const { title, description, eyebrow } = entry.data
       <div class="prose-body">
         <Content />
       </div>
+      <nav class="prev-next">
+        {prevDoc && (
+          <a class="prev" href={`/docs/${prevDoc.id.replace(/\.md$/, '')}`}>
+            <span class="label">← Previous</span>
+            <span class="title">{prevDoc.data.shortTitle || prevDoc.data.title || prevDoc.id}</span>
+          </a>
+        )}
+        {nextDoc && (
+          <a class="next" href={`/docs/${nextDoc.id.replace(/\.md$/, '')}`}>
+            <span class="label">Next →</span>
+            <span class="title">{nextDoc.data.shortTitle || nextDoc.data.title || nextDoc.id}</span>
+          </a>
+        )}
+      </nav>
     </article>
   </div>
 </Base>
@@ -43,4 +66,21 @@ const { title, description, eyebrow } = entry.data
   font-family: var(--vp-font-family-mono); font-size: 0.875em;
   background: var(--vp-c-brand-soft); padding: 0.125em 0.375em; border-radius: 3px;
 }
+.prose-body :global(table) { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+.prose-body :global(th), .prose-body :global(td) { padding: 0.75rem; border: 1px solid var(--vp-c-divider); text-align: left; }
+.prose-body :global(th) { background: var(--vp-c-bg-soft); font-weight: 600; }
+
+.prev-next {
+  display: flex; justify-content: space-between; gap: 1rem;
+  margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--vp-c-divider);
+}
+.prev-next a {
+  display: flex; flex-direction: column; gap: 0.25rem;
+  text-decoration: none; padding: 1rem; border: 1px solid var(--vp-c-divider);
+  border-radius: 6px; flex: 1; transition: border-color 0.15s;
+}
+.prev-next a:hover { border-color: var(--vp-c-brand-1); }
+.prev-next .label { font-family: var(--vp-font-family-mono); font-size: 0.75rem; color: var(--vp-c-text-3); }
+.prev-next .title { font-weight: 500; color: var(--vp-c-text-1); }
+.prev-next .next { text-align: right; }
 </style>
