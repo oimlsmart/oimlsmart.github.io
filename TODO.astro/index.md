@@ -1,57 +1,27 @@
-# Astro Migration Plan
+# Astro Migration — Complete
 
-Migrate the OIML SMART public site from VitePress to Astro.
-
-## Why
-
-VitePress's Vue SSR hydration model causes persistent console errors
-(hydration mismatches), component registration confusion, and font
-loading fragility. Astro ships zero JS by default — no hydration
-mismatches are possible. Interactive components (dark-mode toggle,
-spinning globe) become opt-in islands.
-
-## Scope
-
-- 77 markdown pages → Astro Content Collections
-- 14 Vue components → .astro components
-- 6 data modules → Astro frontmatter / content collections
-- 2 composables → eliminated (useTheme: CSS-only; useAppUrl: build-time env)
-- RSS, sitemap, search, dark mode, 404
-
-## What stays
-
-- All written content (markdown body text, frontmatter)
-- Brand assets (logos, favicons, spinning-globe JS)
-- GHA workflow structure (build → Pages deploy)
-- Domain (www.oimlsmart.org), CNAME, robots.txt, noindex meta
-
-## Task index
+All 15 tasks implemented. Site is live at **www.oimlsmart.org** on Astro.
 
 | # | Task | Status |
 |---|---|---|
-| 01 | Scaffold Astro project + integrations | pending |
-| 02 | Port design system (tokens, base CSS) | pending |
-| 03 | Port InternalBanner, PageHero, DraftCallout | pending |
-| 04 | Port home page components | pending |
-| 05 | Port LoginCard | pending |
-| 06 | Port BlogList + blog content collection | pending |
-| 07 | Set up docs content collection + sidebar | pending |
-| 08 | Migrate all markdown pages | pending |
-| 09 | RSS feed via @astrojs/rss | pending |
-| 10 | Sitemap via @astrojs/sitemap | pending |
-| 11 | Dark mode (CSS-only + toggle) | pending |
-| 12 | 404 page | pending |
-| 13 | GHA workflow for Astro → Pages | pending |
-| 14 | Remove VitePress files | pending |
-| 15 | Update CLAUDE.md | pending |
+| 01 | Scaffold Astro project + integrations | done |
+| 02 | Port design system (tokens, base CSS, utilities) | done |
+| 03 | Port InternalBanner, PageHero, DraftCallout | done |
+| 04 | Port home page | done |
+| 05 | Port LoginCard | done |
+| 06 | Port BlogList + blog content collection | done |
+| 07 | Set up docs content collection + sidebar + prev/next | done |
+| 08 | Migrate all markdown pages (71 files) | done |
+| 09 | RSS feed via @astrojs/rss | done |
+| 10 | Sitemap via @astrojs/sitemap | done |
+| 11 | Dark mode (CSS-only + toggle button) | done |
+| 12 | 404 page | done |
+| 13 | GHA workflow for Astro → Pages | done |
+| 14 | Remove VitePress files (all .vitepress/, tests/, old dirs) | done |
+| 15 | Update CLAUDE.md | done |
 
-## Key decisions
-
-- **Static output** — no SSR server needed; pure SSG.
-- **Content Collections** for blog and docs — type-safe, validated.
-- **File-based routing** — `src/pages/**` maps to URLs.
-- **Global CSS** for design tokens; scoped `<style>` in .astro files.
-- **pagefind** for search (built post-build, indexes static HTML).
-- **No Vue/React** — pure .astro components. The only JS is the
-  dark-mode toggle and the spinning-globe animation (both tiny
-  inline scripts).
+Additional features beyond the original plan:
+- **Pagefind search** — static site search, zero JS until first interaction
+- **Docs section index pages** — 5 section landing pages (/docs/guides/, /docs/arch/, etc.)
+- **Docs prev/next navigation** — at the bottom of every docs page
+- **Dark-mode toggle button** in nav (sun/moon, persists to localStorage)

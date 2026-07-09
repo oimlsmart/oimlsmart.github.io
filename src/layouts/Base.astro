@@ -58,6 +58,7 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
           </div>
         </details>
         <a href="/blog/">Blog</a>
+        <div id="search" class="search-mount"></div>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
           <span class="icon-sun">☀</span>
           <span class="icon-moon">☾</span>
@@ -90,6 +91,15 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
       applyTheme()
     }
     applyTheme()
+  </script>
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <script src="/pagefind/pagefind-ui.js" defer></script>
+  <script is:inline>
+    window.addEventListener('DOMContentLoaded', function() {
+      if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({ element: '#search', showImages: false, pageSize: 5 })
+      }
+    })
   </script>
 </body>
 </html>

@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content'
+import Base from '../../../layouts/Base.astro'
+import PageHero from '../../../components/PageHero.astro'
+import DraftCallout from '../../../components/DraftCallout.astro'
+import DocsSidebar from '../../../components/DocsSidebar.astro'
+
+const SECTION_INFO = {
+  guides: { label: 'Developer Guides', desc: 'Narrative, learn-by-doing walkthroughs for authoring a SMART Recommendation.' },
+  arch: { label: 'Architecture', desc: 'How the system is built — the six-layer entity model, design principles, and cross-cutting primitives.' },
+  workflow: { label: 'Workflow', desc: 'How certification works — the end-to-end process.' },
+  specifications: { label: 'Formal Specifications', desc: 'The SMART_REQS documents — the normative specification set for the SMART platform.' },
+  ref: { label: 'Reference', desc: 'Quick-reference material — schemas, types, syntax, identifiers.' },
+}
+
+const section = 'specifications'
+const info = SECTION_INFO[section]
+const pages = (await getCollection('docs'))
+  .filter(d => d.id.startsWith(section + '/') && !d.id.endsWith('index'))
+  .sort((a, b) => a.id.localeCompare(b.id))
+---
+
+<Base title={info.label} description={info.desc}>
+  <div class="docs-layout">
+    <DocsSidebar />
+    <article class="docs-content">
+      <PageHero eyebrow={`Docs · ${info.label}`} title={info.label} lede={info.desc} />
+      <DraftCallout />
+      <div class="section-list">
+        {pages.map(page => (
+          <a class="section-item" href={`/docs/${page.id.replace(/\.md$/, '')}`}>
+            <h3>{page.data.shortTitle || page.data.title || page.id.replace(section + '/', '').replace(/\.md$/, '').replace(/-/g, ' ')}</h3>
+            {page.data.description && <p>{page.data.description}</p>}
+          </a>
+        ))}
+      </div>
+    </article>
+  </div>
+</Base>
+
+<style>
+.section-list { display: flex; flex-direction: column; gap: 0; }
+.section-item {
+  display: block; padding: 1.25rem 0; border-bottom: 1px solid var(--vp-c-divider);
+  text-decoration: none; color: inherit; transition: padding-left 0.15s;
+}
+.section-item:hover { padding-left: 0.5rem; }
+.section-item h3 { font-family: var(--vp-font-family-serif); font-size: 1.125rem; margin: 0 0 0.25rem; color: var(--vp-c-brand-1); }
+.section-item p { font-size: 0.875rem; color: var(--vp-c-text-2); margin: 0; }
+</style>
