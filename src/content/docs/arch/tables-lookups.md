@@ -1,4 +1,7 @@
-# Tables & Lookups
+---
+title: 'Tables & Lookups'
+shortTitle: 'Tables'
+---
 
 The Table primitive is the second cross-cutting primitive (along with [Calculations](/docs/arch/computation-engine)). It encodes the multi-dimensional lookup tables that pervade OIML Recommendations — most notably the Maximum Permissible Error (MPE) tables.
 

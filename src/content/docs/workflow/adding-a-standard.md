@@ -1,4 +1,7 @@
-# Adding a Standard
+---
+title: 'Adding a Standard'
+shortTitle: 'Add Standard'
+---
 
 Adding a new OIML Recommendation to the SMART platform is a data-only task. No engine code changes.
 

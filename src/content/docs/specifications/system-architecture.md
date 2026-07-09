@@ -1,5 +1,7 @@
 ---
-title: System Architecture
+title: 'System Architecture'
+order: 1
+shortTitle: '01 Architecture'
 description: 'The top-level architecture of the SMART platform — entities, layers, and the build pipeline.'
 eyebrow: 'Formal Specification · SMART_REQS 01'
 ---

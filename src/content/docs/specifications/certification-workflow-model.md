@@ -1,5 +1,7 @@
 ---
-title: Certification Workflow Model
+title: 'Certification Workflow Model'
+order: 10
+shortTitle: '10 Workflow'
 description: 'Workflow entities, state machines, and the certification pipeline.'
 eyebrow: 'Formal Specification · SMART_REQS 10'
 ---

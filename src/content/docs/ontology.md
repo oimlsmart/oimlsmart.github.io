@@ -1,5 +1,6 @@
 ---
-title: The OIML SMART ontology
+title: 'Ontology Browser'
+shortTitle: 'Ontology'
 description: 'The OWL ontology layer is what makes SMART Recommendations interoperable — across Recommendations, across national boundaries, and across the broader standards-development ecosystem.'
 eyebrow: Semantic layer
 ---

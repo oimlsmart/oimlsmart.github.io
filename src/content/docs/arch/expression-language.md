@@ -1,4 +1,7 @@
-# Expression Language
+---
+title: 'Expression Language'
+shortTitle: 'Expressions'
+---
 
 SMART forms use two complementary expression languages: **AsciiMath** for arithmetic and **OCL** (Object Constraint Language) for boolean conditions.
 

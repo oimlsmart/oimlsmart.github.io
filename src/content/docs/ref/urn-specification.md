@@ -1,4 +1,7 @@
-# URN Specification
+---
+title: 'URN Specification'
+shortTitle: 'URN'
+---
 
 OIML SMART uses Uniform Resource Names (URNs) as persistent identifiers for OIML entities — Recommendations, requirements, tests, forms, terms, and certificates.
 

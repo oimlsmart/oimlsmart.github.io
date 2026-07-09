@@ -18,7 +18,12 @@ const sections = SECTION_ORDER
   .map(s => {
     const pages = allDocs
       .filter(d => d.id.startsWith(s + '/'))
-      .sort((a, b) => a.id.localeCompare(b.id))
+      .sort((a, b) => {
+        const ao = a.data.order ?? 999
+        const bo = b.data.order ?? 999
+        if (ao !== bo) return ao - bo
+        return a.id.localeCompare(b.id)
+      })
     return { key: s, label: SECTION_LABELS[s], pages }
   })
 ---

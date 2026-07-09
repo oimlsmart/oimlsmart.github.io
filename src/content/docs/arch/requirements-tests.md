@@ -1,4 +1,7 @@
-# Requirements & Conformance Tests
+---
+title: 'Requirements & Conformance Tests'
+shortTitle: 'Req & Tests'
+---
 
 The first two layers of the SMART entity model: the *normative provisions* a Recommendation makes, and the *test procedures* used to verify them.
 

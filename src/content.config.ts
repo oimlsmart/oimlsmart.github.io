@@ -20,6 +20,7 @@ const docs = defineCollection({
     eyebrow: z.string().optional(),
     shortTitle: z.string().optional(),
     sidebar: z.boolean().default(true),
+    order: z.number().optional(),
   }),
 })
 

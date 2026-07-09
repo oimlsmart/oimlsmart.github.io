@@ -1,5 +1,7 @@
 ---
 title: 'Variable & Symbol Model'
+order: 11
+shortTitle: '11 Variables'
 description: 'Variables, symbols, scope, and binding semantics.'
 eyebrow: 'Formal Specification · SMART_REQS 11'
 ---

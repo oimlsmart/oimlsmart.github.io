@@ -1,5 +1,6 @@
 ---
-title: Build your first SMART Standard
+title: 'Getting Started'
+shortTitle: 'Getting Started'
 description: 'A complete walkthrough — from an empty directory to a fully modelled OIML Recommendation. No application code required, only YAML data.'
 eyebrow: 'Guide · 01 of 13'
 ---

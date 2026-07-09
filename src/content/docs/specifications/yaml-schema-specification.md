@@ -1,5 +1,7 @@
 ---
-title: YAML Schema Specification
+title: 'YAML Schema Specification'
+order: 6
+shortTitle: '06 YAML Schema'
 description: Formal YAML schemas for all entity types in the SMART platform.
 eyebrow: 'Formal Specification · SMART_REQS 06'
 ---

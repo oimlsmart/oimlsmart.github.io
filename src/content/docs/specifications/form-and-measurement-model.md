@@ -1,5 +1,7 @@
 ---
 title: 'Form & Measurement Model'
+order: 3
+shortTitle: '03 Forms'
 description: 'Form schemas, fields, and measurement kinds.'
 eyebrow: 'Formal Specification · SMART_REQS 03'
 ---

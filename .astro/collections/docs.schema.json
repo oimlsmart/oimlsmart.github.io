@@ -18,6 +18,9 @@
       "default": true,
       "type": "boolean"
     },
+    "order": {
+      "type": "number"
+    },
     "$schema": {
       "type": "string"
     }

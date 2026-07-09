@@ -1,4 +1,7 @@
-# Test Report
+---
+title: 'Test Report'
+shortTitle: 'Test Report'
+---
 
 The Test Laboratory captures test results as a structured **TestReport**, populated with **FormInstances** for each ConformanceTest performed.
 

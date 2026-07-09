@@ -1,4 +1,7 @@
-# Computation Engine
+---
+title: 'Computation Engine'
+shortTitle: 'Computation'
+---
 
 The Computation Engine is the runtime that evaluates calculation declarations embedded in form fields. It is one of the two cross-cutting primitives (along with [Tables](/docs/arch/tables-lookups)) that enforce MECE — calculations are defined once and referenced everywhere.
 

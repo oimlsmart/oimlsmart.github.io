@@ -1,4 +1,7 @@
-# Instances & Evaluation
+---
+title: 'Instances & Evaluation'
+shortTitle: 'Evaluation'
+---
 
 Layers 4 and 5: runtime data and the evaluation pipeline that produces verdicts.
 

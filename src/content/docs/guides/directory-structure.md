@@ -1,5 +1,6 @@
 ---
-title: Directory structure
+title: 'Directory Structure'
+shortTitle: 'Directories'
 description: Every SMART Recommendation follows the same directory layout. Knowing where each artifact lives makes authoring fast and review tractable.
 eyebrow: 'Guide · 03 of 13'
 ---

@@ -47,7 +47,7 @@ const pages = (await getCollection('docs'))
   display: grid; grid-template-columns: 200px minmax(0, 1fr);
   gap: 2.5rem; max-width: 72rem; margin: 0 auto; padding: 0 1.5rem;
 }
-.docs-aside { position: sticky; top: 0; max-height: 100vh; overflow-y: auto; align-self: start; }
+.docs-aside { position: sticky; top: 64px; max-height: calc(100vh - 64px); overflow-y: auto; align-self: start; }
 .docs-main { padding: 1.5rem 0 4rem; max-width: 44rem; min-width: 0; }
 .docs-intro h1 {
   font-family: var(--vp-font-family-serif);

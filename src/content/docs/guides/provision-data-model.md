@@ -1,5 +1,6 @@
 ---
-title: Provision data model
+title: 'Provision Data Model'
+shortTitle: 'Provisions'
 description: 'The provision data model is the heart of a SMART Recommendation. Three entity types — requirements, conformance tests, and forms — together describe everything the Recommendation normatively requires.'
 eyebrow: 'Guide · 05 of 13'
 ---

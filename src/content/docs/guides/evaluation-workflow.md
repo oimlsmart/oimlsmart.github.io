@@ -1,5 +1,6 @@
 ---
-title: Evaluation workflow
+title: 'Evaluation Workflow'
+shortTitle: 'Evaluation'
 description: 'The end-to-end flow that takes a populated FormInstance, runs it through the calculation engine, evaluates the pass/fail expression, and produces a traceable verdict — and ultimately a certificate.'
 eyebrow: 'Guide · 12 of 13'
 ---

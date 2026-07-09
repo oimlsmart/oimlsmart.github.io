@@ -1,5 +1,7 @@
 ---
-title: OCL Expression Language
+title: 'OCL Expression Language'
+order: 4
+shortTitle: '04 OCL'
 description: OCL constraint language reference for the SMART platform.
 eyebrow: 'Formal Specification · SMART_REQS 04'
 ---

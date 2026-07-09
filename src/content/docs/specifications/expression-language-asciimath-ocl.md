@@ -1,5 +1,7 @@
 ---
-title: 'Expression Language — AsciiMath + OCL'
+title: 'Expression Language'
+order: 8
+shortTitle: '08 Expressions'
 description: 'The two expression languages used in SMART — AsciiMath for arithmetic, OCL for booleans.'
 eyebrow: 'Formal Specification · SMART_REQS 08'
 ---

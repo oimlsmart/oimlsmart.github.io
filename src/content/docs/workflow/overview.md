@@ -1,4 +1,7 @@
-# Workflow Overview
+---
+title: 'Workflow Overview'
+shortTitle: 'Overview'
+---
 
 The OIML SMART certification workflow moves a measuring instrument from initial application to issued certificate through eight major steps. Each step transitions the workflow from one state to the next, accumulating data and decisions along the way.
 

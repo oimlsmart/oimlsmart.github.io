@@ -1,5 +1,6 @@
 ---
-title: Calculation engine
+title: 'Calculation Engine'
+shortTitle: 'Calculations'
 description: 'The Calculation primitive: a typed, reusable, named computation. Defined once, referenced everywhere — the DRY mechanism for arithmetic in SMART forms.'
 eyebrow: 'Guide · 10 of 13'
 ---

@@ -1,4 +1,7 @@
-# State Machines
+---
+title: 'State Machines'
+shortTitle: 'States'
+---
 
 Every workflow entity has a lifecycle state machine. The transitions are declared (in Primmel), not coded — adding a new state or transition is a data-only change.
 

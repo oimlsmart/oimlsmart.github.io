@@ -1,5 +1,7 @@
 ---
-title: Calculation Primitive
+title: 'Calculation Primitive'
+order: 7
+shortTitle: '07 Calculation'
 description: 'The Calculation primitive — typed, reusable, named computations.'
 eyebrow: 'Formal Specification · SMART_REQS 07'
 ---
