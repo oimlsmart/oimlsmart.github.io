@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions'
 import SITE from '../data/site-meta'
 import InternalBanner from '../components/InternalBanner.astro'
 import '../styles/global.css'
@@ -20,6 +21,7 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <ClientRouter />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload stylesheet" as="style" href={FONT_URL} />
@@ -41,6 +43,9 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
         <img src="/smart-logo-light.svg" alt="OIML SMART" class="logo-light" />
         <img src="/smart-logo-dark.svg" alt="OIML SMART" class="logo-dark" />
       </a>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
       <nav class="nav-menu">
         <a href="/recommendations/">Recommendations</a>
         <a href="/library/">Documents</a>
@@ -90,16 +95,27 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
       localStorage.setItem('oiml-theme', next)
       applyTheme()
     }
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open')
+    }
     applyTheme()
   </script>
   <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
-  <script src="/pagefind/pagefind-ui.js" defer></script>
   <script is:inline>
-    window.addEventListener('DOMContentLoaded', function() {
-      if (typeof PagefindUI !== 'undefined') {
+    // Lazy-load pagefind: only fetch + init when user focuses the search input.
+    // Zero network requests until then.
+    var searchLoaded = false
+    function loadSearch() {
+      if (searchLoaded) return
+      searchLoaded = true
+      var s = document.createElement('script')
+      s.src = '/pagefind/pagefind-ui.js'
+      s.onload = function() {
         new PagefindUI({ element: '#search', showImages: false, pageSize: 5 })
       }
-    })
+      document.head.appendChild(s)
+    }
+    document.getElementById('search')?.addEventListener('focusin', loadSearch)
   </script>
 </body>
 </html>

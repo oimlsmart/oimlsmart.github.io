@@ -1,8 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
-import Base from '../../layouts/Base.astro'
-import PageHero from '../../components/PageHero.astro'
-import DraftCallout from '../../components/DraftCallout.astro'
+import ContentPage from '../../layouts/ContentPage.astro'
 
 export async function getStaticPaths() {
   const pages = await getCollection('pages')
@@ -15,15 +13,6 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props
-import { render } from "astro:content"
-const { Content } = await render(entry)
-const { title, description, eyebrow } = entry.data
 ---
 
-<Base title={title} description={description}>
-  <article class="prose">
-    <PageHero eyebrow={eyebrow} title={title} lede={description} />
-    <DraftCallout />
-    <Content />
-  </article>
-</Base>
+<ContentPage entry={entry} />
