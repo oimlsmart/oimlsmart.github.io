@@ -2,7 +2,7 @@
 import { ClientRouter } from 'astro:transitions'
 import SITE from '../data/site-meta'
 import InternalBanner from '../components/InternalBanner.astro'
-import '../styles/global.css'
+import '../styles/tokens.css'
 
 const FONT_URL =
   'https://fonts.googleapis.com/css2?' +
@@ -12,7 +12,7 @@ const FONT_URL =
   '&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700' +
   '&display=swap'
 
-const { title, description, eyebrow } = Astro.props
+const { title, description } = Astro.props
 const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
 ---
 
@@ -102,8 +102,6 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
   </script>
   <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
   <script is:inline>
-    // Lazy-load pagefind: only fetch + init when user focuses the search input.
-    // Zero network requests until then.
     var searchLoaded = false
     function loadSearch() {
       if (searchLoaded) return
@@ -119,3 +117,116 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
   </script>
 </body>
 </html>
+
+<style is:global>
+/* ── Reset ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+body { line-height: 1.5; -webkit-font-smoothing: antialiased; }
+img, picture, video, canvas, svg { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+
+/* ── Body ─────────────────────────────────────────── */
+body {
+  font-family: var(--vp-font-family-base);
+  font-feature-settings: 'kern', 'liga', 'calt', 'ss01';
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* ── Buttons ──────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.25rem; border-radius: 4px;
+  font-size: 0.9375rem; font-weight: 500; text-decoration: none;
+  transition: all 0.15s ease; border: 1px solid transparent; cursor: pointer;
+}
+.btn-primary { background-color: var(--ink); color: var(--paper); }
+.btn-primary:hover { background-color: var(--accent); color: #fff; }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+.btn-ghost:hover { border-color: var(--ink); background: var(--paper-soft); }
+.btn .arrow { transition: transform 0.15s; }
+.btn:hover .arrow { transform: translateX(2px); }
+
+/* ── Theme toggle ─────────────────────────────────── */
+.theme-toggle {
+  background: none; border: 1px solid var(--rule); border-radius: 4px;
+  width: 32px; height: 32px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9375rem; transition: border-color 0.15s;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+.icon-moon { display: none; }
+.dark .icon-sun { display: none; }
+.dark .icon-moon { display: inline; }
+
+/* ── Nav ──────────────────────────────────────────── */
+.site-nav {
+  position: sticky; top: 0; z-index: 50;
+  background-color: var(--paper-soft); border-bottom: 1px solid var(--rule);
+  backdrop-filter: saturate(180%) blur(12px);
+}
+.dark .site-nav { background-color: var(--paper-deep); }
+.nav-container {
+  max-width: 80rem; margin: 0 auto; padding: 0 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; height: 64px;
+}
+.nav-logo img { height: 32px; }
+.logo-dark { display: none; }
+.dark .logo-light { display: none; }
+.dark .logo-dark { display: inline-block; }
+.nav-menu { display: flex; align-items: center; gap: 1.5rem; }
+.nav-menu a { font-size: 0.9375rem; font-weight: 500; color: var(--ink); transition: color 0.15s; }
+.nav-menu a:hover { color: var(--accent); }
+.nav-cta { color: var(--accent) !important; font-weight: 600; }
+.nav-dropdown summary {
+  cursor: pointer; list-style: none; font-size: 0.9375rem; font-weight: 500; color: var(--ink);
+}
+.nav-dropdown summary::-webkit-details-marker { display: none; }
+.dropdown-menu {
+  position: absolute; top: 100%; right: 0; min-width: 200px;
+  background-color: var(--paper-soft); border: 1px solid var(--rule);
+  border-radius: 8px; padding: 0.5rem;
+  box-shadow: 0 8px 24px -8px rgba(0,0,0,0.15);
+  display: flex; flex-direction: column; gap: 0.125rem;
+}
+.dropdown-menu a { display: block; padding: 0.5rem 0.75rem; border-radius: 4px; }
+.dropdown-menu a:hover { background: var(--paper-raised); }
+
+/* ── Hamburger ────────────────────────────────────── */
+.nav-hamburger {
+  display: none; flex-direction: column; gap: 4px;
+  background: none; border: none; cursor: pointer; padding: 8px;
+}
+.nav-hamburger span {
+  display: block; width: 20px; height: 2px; background: var(--ink);
+  transition: transform 0.2s, opacity 0.2s;
+}
+@media (max-width: 768px) {
+  .nav-hamburger { display: flex; }
+  .nav-menu {
+    position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
+    background: var(--paper); flex-direction: column; padding: 2rem 1.5rem;
+    gap: 1.25rem; transform: translateX(100%); transition: transform 0.25s ease;
+    z-index: 40; overflow-y: auto;
+  }
+  .nav-open .nav-menu { transform: translateX(0); }
+  .nav-open .nav-hamburger span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-open .nav-hamburger span:nth-child(2) { opacity: 0; }
+  .nav-open .nav-hamburger span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .nav-dropdown .dropdown-menu { position: static; box-shadow: none; border: none; padding-left: 1rem; }
+  .search-mount { width: 100%; }
+}
+
+/* ── Footer ───────────────────────────────────────── */
+.site-footer { border-top: 1px solid var(--rule); background: var(--paper-raised); padding: 2rem 1.5rem; }
+.footer-inner { max-width: 80rem; margin: 0 auto; text-align: center; }
+.footer-inner p { font-size: 0.8125rem; color: var(--ink-muted); }
+.footer-inner a { color: var(--accent); }
+.footer-inner .copyright { margin-top: 0.25rem; }
+
+/* ── Main ─────────────────────────────────────────── */
+main { min-height: calc(100vh - 64px - 80px); }
+</style>
