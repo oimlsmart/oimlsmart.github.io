@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
 import Base from '../../../layouts/Base.astro'
-import PageHero from '../../../components/PageHero.astro'
 import DraftCallout from '../../../components/DraftCallout.astro'
 import DocsSidebar from '../../../components/DocsSidebar.astro'
 
@@ -16,21 +15,26 @@ const SECTION_INFO = {
 const section = 'specifications'
 const info = SECTION_INFO[section]
 const pages = (await getCollection('docs'))
-  .filter(d => d.id.startsWith(section + '/') && !d.id.endsWith('index'))
+  .filter(d => d.id.startsWith(section + '/'))
   .sort((a, b) => a.id.localeCompare(b.id))
 ---
 
 <Base title={info.label} description={info.desc}>
   <div class="docs-layout">
-    <DocsSidebar />
-    <article class="docs-content">
-      <PageHero eyebrow={`Docs · ${info.label}`} title={info.label} lede={info.desc} />
+    <aside class="docs-aside">
+      <DocsSidebar />
+    </aside>
+    <article class="docs-main">
+      <div class="docs-intro">
+        <h1>{info.label}</h1>
+        <p class="intro-lede">{info.desc}</p>
+      </div>
       <DraftCallout />
-      <div class="section-list">
+      <div class="page-list">
         {pages.map(page => (
-          <a class="section-item" href={`/docs/${page.id.replace(/\.md$/, '')}`}>
-            <h3>{page.data.shortTitle || page.data.title || page.id.replace(section + '/', '').replace(/\.md$/, '').replace(/-/g, ' ')}</h3>
-            {page.data.description && <p>{page.data.description}</p>}
+          <a class="page-link" href={'/docs/' + page.id}>
+            <span class="page-title">{page.data.shortTitle || page.data.title || page.id.split('/').pop()}</span>
+            {page.data.description && <span class="page-desc">{page.data.description}</span>}
           </a>
         ))}
       </div>
@@ -39,12 +43,34 @@ const pages = (await getCollection('docs'))
 </Base>
 
 <style>
-.section-list { display: flex; flex-direction: column; gap: 0; }
-.section-item {
-  display: block; padding: 1.25rem 0; border-bottom: 1px solid var(--vp-c-divider);
-  text-decoration: none; color: inherit; transition: padding-left 0.15s;
+.docs-layout {
+  display: grid; grid-template-columns: 200px minmax(0, 1fr);
+  gap: 2.5rem; max-width: 72rem; margin: 0 auto; padding: 0 1.5rem;
 }
-.section-item:hover { padding-left: 0.5rem; }
-.section-item h3 { font-family: var(--vp-font-family-serif); font-size: 1.125rem; margin: 0 0 0.25rem; color: var(--vp-c-brand-1); }
-.section-item p { font-size: 0.875rem; color: var(--vp-c-text-2); margin: 0; }
+.docs-aside { position: sticky; top: 0; max-height: 100vh; overflow-y: auto; align-self: start; }
+.docs-main { padding: 1.5rem 0 4rem; max-width: 44rem; min-width: 0; }
+.docs-intro h1 {
+  font-family: var(--vp-font-family-serif);
+  font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 600;
+  letter-spacing: -0.025em; margin: 0;
+}
+.intro-lede { font-size: 1.0625rem; line-height: 1.6; color: var(--ink-soft); margin-top: 0.75rem; }
+.page-list { margin-top: 2rem; }
+.page-link {
+  display: flex; flex-direction: column; gap: 0.125rem;
+  padding: 1rem 0; border-bottom: 1px solid var(--rule);
+  text-decoration: none; color: inherit;
+  transition: padding-left 0.15s;
+}
+.page-link:hover { padding-left: 0.5rem; }
+.page-title {
+  font-family: var(--vp-font-family-serif); font-size: 1rem; font-weight: 600;
+}
+.page-link:hover .page-title { color: var(--accent); }
+.page-desc { font-size: 0.8125rem; color: var(--ink-soft); }
+
+@media (max-width: 960px) {
+  .docs-layout { grid-template-columns: 1fr; }
+  .docs-aside { display: none; }
+}
 </style>

@@ -1,13 +1,12 @@
 ---
-// PageHero — the consistent hero band at the top of every major page.
-// Reads title/description/eyebrow from the page's frontmatter (passed as props).
-const { eyebrow, title, lede, description } = Astro.props
+// PageHero — the consistent hero band at the top of content pages.
+// Reads title/description from frontmatter. No eyebrow.
+const { title, lede, description } = Astro.props
 const displayLede = lede ?? description
 ---
 
 {title && (
   <div class="page-hero">
-    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
     <h1>{title}</h1>
     {displayLede && <p class="lede">{displayLede}</p>}
   </div>
@@ -15,46 +14,23 @@ const displayLede = lede ?? description
 
 <style>
 .page-hero {
-  position: relative;
-  padding: 3rem 0 2rem;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid var(--vp-c-divider);
-  background-image:
-    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--vp-c-brand-1);
-  margin-bottom: 0.75rem;
-}
-.eyebrow::before {
-  content: '';
-  display: inline-block;
-  width: 24px;
-  height: 1px;
-  background-color: var(--vp-c-brand-1);
+  padding: 2rem 0 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
 }
 .page-hero h1 {
   font-family: var(--vp-font-family-serif);
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 600;
   letter-spacing: -0.025em;
-  line-height: 1.1;
-  margin: 0 0 1rem;
+  line-height: 1.15;
+  margin: 0;
 }
 .lede {
-  font-size: 1.125rem;
+  font-size: 1.0625rem;
   line-height: 1.6;
-  color: var(--vp-c-text-2);
-  max-width: 48rem;
+  color: var(--ink-soft);
+  max-width: 42rem;
+  margin-top: 0.75rem;
 }
 </style>
