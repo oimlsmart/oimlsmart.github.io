@@ -10,7 +10,6 @@ const { entry } = Astro.props
 const { Content } = await render(entry)
 const { title, description, eyebrow } = entry.data
 
-// Build prev/next from the sidebar ordering
 const allDocs = (await getCollection('docs')).sort((a, b) =>
   a.id.localeCompare(b.id),
 )
@@ -25,20 +24,20 @@ const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : 
     <article class="docs-content">
       <PageHero eyebrow={eyebrow} title={title} lede={description} />
       <DraftCallout />
-      <div class="prose-body">
+      <div class="docs-body">
         <Content />
       </div>
       <nav class="prev-next">
         {prevDoc && (
-          <a class="prev" href={`/docs/${prevDoc.id.replace(/\.md$/, '')}`}>
-            <span class="label">← Previous</span>
-            <span class="title">{prevDoc.data.shortTitle || prevDoc.data.title || prevDoc.id}</span>
+          <a class="pn-link" href={`/docs/${prevDoc.id}`}>
+            <span class="pn-label">← Previous</span>
+            <span class="pn-title">{prevDoc.data.shortTitle || prevDoc.data.title || prevDoc.id}</span>
           </a>
         )}
         {nextDoc && (
-          <a class="next" href={`/docs/${nextDoc.id.replace(/\.md$/, '')}`}>
-            <span class="label">Next →</span>
-            <span class="title">{nextDoc.data.shortTitle || nextDoc.data.title || nextDoc.id}</span>
+          <a class="pn-link pn-right" href={`/docs/${nextDoc.id}`}>
+            <span class="pn-label">Next →</span>
+            <span class="pn-title">{nextDoc.data.shortTitle || nextDoc.data.title || nextDoc.id}</span>
           </a>
         )}
       </nav>
@@ -47,40 +46,68 @@ const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : 
 </Base>
 
 <style>
-.docs-layout { display: flex; max-width: 80rem; margin: 0 auto; padding: 0 1.5rem; gap: 2rem; }
-.docs-content { flex: 1; min-width: 0; padding: 2rem 0; max-width: 48rem; }
-.prose-body :global(h2) {
-  font-family: var(--vp-font-family-serif); font-size: 1.75rem;
-  font-weight: 500; margin-top: 3rem; padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--vp-c-divider);
+.docs-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  max-width: 72rem;
+  margin: 0 auto;
+  gap: 2rem;
+  padding: 0 1.5rem;
 }
-.prose-body :global(h3) {
-  font-family: var(--vp-font-family-serif); font-size: 1.25rem; margin-top: 2rem;
+
+@media (max-width: 960px) {
+  .docs-layout { grid-template-columns: 1fr; }
 }
-.prose-body :global(p), .prose-body :global(li) { line-height: 1.7; }
-.prose-body :global(pre) {
-  background: var(--vp-c-bg-soft); border-radius: 6px; padding: 1rem;
-  overflow-x: auto; font-family: var(--vp-font-family-mono); font-size: 0.875rem;
+
+.docs-content {
+  padding: 2rem 0;
+  max-width: 48rem;
 }
-.prose-body :global(code) {
+
+.docs-body :global(h2) {
+  font-family: var(--vp-font-family-serif);
+  font-size: 1.75rem; font-weight: 500;
+  margin-top: 3rem; margin-bottom: 1rem; padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.docs-body :global(h3) {
+  font-family: var(--vp-font-family-serif);
+  font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem;
+}
+.docs-body :global(p) { line-height: 1.7; margin-bottom: 1rem; }
+.docs-body :global(li) { line-height: 1.7; margin-bottom: 0.5rem; }
+.docs-body :global(ul), .docs-body :global(ol) { padding-left: 1.5rem; margin-bottom: 1rem; }
+.docs-body :global(ul) { list-style: disc; }
+.docs-body :global(ol) { list-style: decimal; }
+.docs-body :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.docs-body :global(code) {
   font-family: var(--vp-font-family-mono); font-size: 0.875em;
-  background: var(--vp-c-brand-soft); padding: 0.125em 0.375em; border-radius: 3px;
+  background: var(--accent-soft); padding: 0.125em 0.375em; border-radius: 3px;
 }
-.prose-body :global(table) { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
-.prose-body :global(th), .prose-body :global(td) { padding: 0.75rem; border: 1px solid var(--vp-c-divider); text-align: left; }
-.prose-body :global(th) { background: var(--vp-c-bg-soft); font-weight: 600; }
+.docs-body :global(pre) {
+  background: var(--paper-raised); border: 1px solid var(--rule);
+  border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;
+}
+.docs-body :global(pre code) { background: transparent; padding: 0; font-size: 0.875rem; }
+.docs-body :global(table) { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+.docs-body :global(th), .docs-body :global(td) { padding: 0.75rem; border: 1px solid var(--rule); text-align: left; }
+.docs-body :global(th) { background: var(--paper-raised); font-weight: 600; }
+.docs-body :global(blockquote) {
+  border-left: 3px solid var(--accent); padding-left: 1rem;
+  margin: 1.5rem 0; color: var(--ink-soft); font-style: italic;
+}
 
 .prev-next {
   display: flex; justify-content: space-between; gap: 1rem;
-  margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--vp-c-divider);
+  margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--rule);
 }
-.prev-next a {
+.pn-link {
   display: flex; flex-direction: column; gap: 0.25rem;
-  text-decoration: none; padding: 1rem; border: 1px solid var(--vp-c-divider);
+  text-decoration: none; padding: 1rem; border: 1px solid var(--rule);
   border-radius: 6px; flex: 1; transition: border-color 0.15s;
 }
-.prev-next a:hover { border-color: var(--vp-c-brand-1); }
-.prev-next .label { font-family: var(--vp-font-family-mono); font-size: 0.75rem; color: var(--vp-c-text-3); }
-.prev-next .title { font-weight: 500; color: var(--vp-c-text-1); }
-.prev-next .next { text-align: right; }
+.pn-link:hover { border-color: var(--accent); }
+.pn-right { text-align: right; }
+.pn-label { font-family: var(--vp-font-family-mono); font-size: 0.75rem; color: var(--ink-muted); }
+.pn-title { font-weight: 500; color: var(--ink); }
 </style>

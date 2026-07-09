@@ -14,6 +14,7 @@ const FONT_URL =
 
 const { title, description } = Astro.props
 const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
+const path = Astro.url.pathname
 ---
 
 <!DOCTYPE html>
@@ -39,21 +40,24 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
   <InternalBanner />
   <header class="site-nav">
     <div class="nav-container">
-      <a href="/" class="nav-logo">
-        <img src="/smart-logo-light.svg" alt="OIML SMART" class="logo-light" />
-        <img src="/smart-logo-dark.svg" alt="OIML SMART" class="logo-dark" />
+      <a href="/" class="nav-brand">
+        <img src="/smart-logo-light.svg" alt="" class="logo-light" />
+        <img src="/smart-logo-dark.svg" alt="" class="logo-dark" />
+        <span class="nav-title">OIML SMART</span>
       </a>
       <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
-      <nav class="nav-menu">
-        <a href="/recommendations/">Recommendations</a>
-        <a href="/library/">Documents</a>
-        <a href="/docs/">Developers</a>
-        <a href="/oiml-cs">OIML-CS</a>
-        <details class="nav-dropdown">
-          <summary>About</summary>
-          <div class="dropdown-menu">
+      <nav class="nav-menu" id="nav-menu">
+        <a href="/recommendations/" class={path.startsWith('/recommendations') ? 'active' : ''}>Recommendations</a>
+        <a href="/library/" class={path.startsWith('/library') ? 'active' : ''}>Documents</a>
+        <a href="/docs/" class={path.startsWith('/docs') ? 'active' : ''}>Developers</a>
+        <a href="/oiml-cs" class={path === '/oiml-cs' ? 'active' : ''}>OIML-CS</a>
+        <div class="nav-dropdown" id="about-dropdown">
+          <button class="dropdown-trigger" onclick="toggleDropdown(event)">
+            About <span class="caret">▾</span>
+          </button>
+          <div class="dropdown-panel" id="about-panel">
             <a href="/about/what-is-smart">What is OIML SMART?</a>
             <a href="/about/why-smart">Why SMART</a>
             <a href="/about/how-it-works">How It Works</a>
@@ -61,10 +65,10 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
             <a href="/about/contact">Contact</a>
             <a href="/about/branding">Branding</a>
           </div>
-        </details>
-        <a href="/blog/">Blog</a>
+        </div>
+        <a href="/blog/" class={path.startsWith('/blog') ? 'active' : ''}>Blog</a>
         <div id="search" class="search-mount"></div>
-        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
           <span class="icon-sun">☀</span>
           <span class="icon-moon">☾</span>
         </button>
@@ -81,7 +85,9 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
       <p class="copyright">Content © OIML · Code © Ribose</p>
     </div>
   </footer>
+
   <script is:inline>
+    // ── Theme management ─────────────────────────────
     function getTheme() {
       return localStorage.getItem('oiml-theme') ||
         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
@@ -91,21 +97,51 @@ const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title
       else document.documentElement.classList.remove('dark')
     }
     function toggleTheme() {
-      const next = getTheme() === 'dark' ? 'light' : 'dark'
+      var next = getTheme() === 'dark' ? 'light' : 'dark'
       localStorage.setItem('oiml-theme', next)
       applyTheme()
     }
     function toggleMenu() {
       document.body.classList.toggle('nav-open')
     }
+    function toggleDropdown(e) {
+      e.stopPropagation()
+      var panel = document.getElementById('about-panel')
+      panel.classList.toggle('open')
+    }
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      var dd = document.getElementById('about-dropdown')
+      var panel = document.getElementById('about-panel')
+      if (panel && dd && !dd.contains(e.target)) {
+        panel.classList.remove('open')
+      }
+    })
+
+    // ── Astro View Transitions support ───────────────
+    // Carry the dark class to the new document before swap.
+    document.addEventListener('astro:before-swap', function(e) {
+      if (document.documentElement.classList.contains('dark')) {
+        e.newDocument.documentElement.classList.add('dark')
+      }
+    })
+    // Re-apply theme after every page navigation.
+    document.addEventListener('astro:page-load', applyTheme)
+
+    // Initial apply
     applyTheme()
   </script>
-  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+
   <script is:inline>
+    // ── Lazy pagefind search ─────────────────────────
     var searchLoaded = false
     function loadSearch() {
       if (searchLoaded) return
       searchLoaded = true
+      var l = document.createElement('link')
+      l.rel = 'stylesheet'
+      l.href = '/pagefind/pagefind-ui.css'
+      document.head.appendChild(l)
       var s = document.createElement('script')
       s.src = '/pagefind/pagefind-ui.js'
       s.onload = function() {
@@ -150,52 +186,82 @@ body {
 .btn .arrow { transition: transform 0.15s; }
 .btn:hover .arrow { transform: translateX(2px); }
 
-/* ── Theme toggle ─────────────────────────────────── */
-.theme-toggle {
-  background: none; border: 1px solid var(--rule); border-radius: 4px;
-  width: 32px; height: 32px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.9375rem; transition: border-color 0.15s;
-}
-.theme-toggle:hover { border-color: var(--accent); }
-.icon-moon { display: none; }
-.dark .icon-sun { display: none; }
-.dark .icon-moon { display: inline; }
-
 /* ── Nav ──────────────────────────────────────────── */
 .site-nav {
-  position: sticky; top: 0; z-index: 50;
+  position: sticky; top: 0; z-index: 100;
   background-color: var(--paper-soft); border-bottom: 1px solid var(--rule);
   backdrop-filter: saturate(180%) blur(12px);
 }
 .dark .site-nav { background-color: var(--paper-deep); }
 .nav-container {
   max-width: 80rem; margin: 0 auto; padding: 0 1.5rem;
-  display: flex; align-items: center; justify-content: space-between; height: 64px;
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
 }
-.nav-logo img { height: 32px; }
+
+/* Brand (logo + title) */
+.nav-brand {
+  display: flex; align-items: center; gap: 0.5rem;
+  text-decoration: none; color: var(--ink);
+}
+.nav-brand img { height: 28px; width: auto; }
 .logo-dark { display: none; }
 .dark .logo-light { display: none; }
 .dark .logo-dark { display: inline-block; }
-.nav-menu { display: flex; align-items: center; gap: 1.5rem; }
-.nav-menu a { font-size: 0.9375rem; font-weight: 500; color: var(--ink); transition: color 0.15s; }
-.nav-menu a:hover { color: var(--accent); }
-.nav-cta { color: var(--accent) !important; font-weight: 600; }
-.nav-dropdown summary {
-  cursor: pointer; list-style: none; font-size: 0.9375rem; font-weight: 500; color: var(--ink);
+.nav-title {
+  font-family: var(--vp-font-family-serif);
+  font-size: 1rem; font-weight: 600; letter-spacing: -0.01em;
 }
-.nav-dropdown summary::-webkit-details-marker { display: none; }
-.dropdown-menu {
-  position: absolute; top: 100%; right: 0; min-width: 200px;
-  background-color: var(--paper-soft); border: 1px solid var(--rule);
-  border-radius: 8px; padding: 0.5rem;
-  box-shadow: 0 8px 24px -8px rgba(0,0,0,0.15);
-  display: flex; flex-direction: column; gap: 0.125rem;
-}
-.dropdown-menu a { display: block; padding: 0.5rem 0.75rem; border-radius: 4px; }
-.dropdown-menu a:hover { background: var(--paper-raised); }
 
-/* ── Hamburger ────────────────────────────────────── */
+/* Nav menu */
+.nav-menu { display: flex; align-items: center; gap: 1.25rem; }
+.nav-menu > a {
+  font-size: 0.875rem; font-weight: 500; color: var(--ink-soft);
+  transition: color 0.15s; text-decoration: none; white-space: nowrap;
+}
+.nav-menu > a:hover { color: var(--accent); }
+.nav-menu > a.active { color: var(--accent); font-weight: 600; }
+.nav-cta { color: var(--accent) !important; font-weight: 600; }
+
+/* Dropdown */
+.nav-dropdown { position: relative; }
+.dropdown-trigger {
+  background: none; border: none; cursor: pointer;
+  font-size: 0.875rem; font-weight: 500; color: var(--ink-soft);
+  display: flex; align-items: center; gap: 0.25rem; white-space: nowrap;
+  transition: color 0.15s;
+}
+.dropdown-trigger:hover { color: var(--accent); }
+.dropdown-trigger .caret { font-size: 0.625rem; }
+.dropdown-panel {
+  position: absolute; top: 100%; left: 0; margin-top: 0.5rem;
+  min-width: 220px; background-color: var(--paper-soft);
+  border: 1px solid var(--rule); border-radius: 8px; padding: 0.375rem;
+  box-shadow: 0 12px 32px -8px rgba(0,0,0,0.15);
+  display: flex; flex-direction: column; gap: 0.125rem;
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+  z-index: 200;
+}
+.dropdown-panel.open { opacity: 1; visibility: visible; transform: translateY(0); }
+.dropdown-panel a {
+  display: block; padding: 0.5rem 0.75rem; border-radius: 4px;
+  font-size: 0.875rem; color: var(--ink-soft); text-decoration: none;
+}
+.dropdown-panel a:hover { background: var(--paper-raised); color: var(--accent); }
+
+/* Theme toggle */
+.theme-toggle {
+  background: none; border: 1px solid var(--rule); border-radius: 4px;
+  width: 32px; height: 32px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.875rem; transition: border-color 0.15s, background 0.15s;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+.icon-moon { display: none; }
+.dark .icon-sun { display: none; }
+.dark .icon-moon { display: inline; }
+
+/* Hamburger */
 .nav-hamburger {
   display: none; flex-direction: column; gap: 4px;
   background: none; border: none; cursor: pointer; padding: 8px;
@@ -204,19 +270,24 @@ body {
   display: block; width: 20px; height: 2px; background: var(--ink);
   transition: transform 0.2s, opacity 0.2s;
 }
+
 @media (max-width: 768px) {
   .nav-hamburger { display: flex; }
   .nav-menu {
-    position: fixed; top: 64px; left: 0; right: 0; bottom: 0;
+    position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
     background: var(--paper); flex-direction: column; padding: 2rem 1.5rem;
     gap: 1.25rem; transform: translateX(100%); transition: transform 0.25s ease;
-    z-index: 40; overflow-y: auto;
+    z-index: 90; overflow-y: auto;
   }
   .nav-open .nav-menu { transform: translateX(0); }
   .nav-open .nav-hamburger span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .nav-open .nav-hamburger span:nth-child(2) { opacity: 0; }
   .nav-open .nav-hamburger span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-  .nav-dropdown .dropdown-menu { position: static; box-shadow: none; border: none; padding-left: 1rem; }
+  .dropdown-panel {
+    position: static; box-shadow: none; border: none; opacity: 1;
+    visibility: visible; transform: none; padding-left: 1rem;
+  }
+  .dropdown-trigger .caret { display: none; }
   .search-mount { width: 100%; }
 }
 
@@ -228,5 +299,46 @@ body {
 .footer-inner .copyright { margin-top: 0.25rem; }
 
 /* ── Main ─────────────────────────────────────────── */
-main { min-height: calc(100vh - 64px - 80px); }
+main { min-height: calc(100vh - 56px - 80px); }
+
+/* ── Prose typography ─────────────────────────────── */
+.prose { max-width: 48rem; margin: 0 auto; padding: 2rem 1.5rem; }
+.prose h1 {
+  font-family: var(--vp-font-family-serif);
+  font-size: 2.5rem; font-weight: 600; line-height: 1.1;
+  letter-spacing: -0.025em; margin-bottom: 1.5rem; color: var(--ink);
+}
+.prose h2 {
+  font-family: var(--vp-font-family-serif);
+  font-size: 1.75rem; font-weight: 500; line-height: 1.2;
+  margin-top: 3rem; margin-bottom: 1rem; padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule); color: var(--ink);
+}
+.prose h3 {
+  font-family: var(--vp-font-family-serif);
+  font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem;
+}
+.prose p { font-family: var(--vp-font-family-base); line-height: 1.7; margin-bottom: 1rem; }
+.prose ul, .prose ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li { line-height: 1.7; margin-bottom: 0.5rem; }
+.prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.prose code {
+  font-family: var(--vp-font-family-mono); font-size: 0.875em;
+  background: var(--accent-soft); padding: 0.125em 0.375em; border-radius: 3px;
+}
+.prose pre {
+  background: var(--paper-raised); border: 1px solid var(--rule);
+  border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;
+}
+.prose pre code { background: transparent; padding: 0; font-size: 0.875rem; }
+.prose blockquote {
+  border-left: 3px solid var(--accent); padding-left: 1rem;
+  margin: 1.5rem 0; color: var(--ink-soft); font-style: italic;
+}
+.prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+.prose th, .prose td { padding: 0.75rem; border: 1px solid var(--rule); text-align: left; }
+.prose th { background: var(--paper-raised); font-weight: 600; }
+.prose img { max-width: 100%; height: auto; margin: 1.5rem 0; }
 </style>
