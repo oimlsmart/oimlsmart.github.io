@@ -1,16 +1,18 @@
 ---
 import { getCollection } from 'astro:content'
 
-const SECTION_ORDER = ['guides', 'arch', 'workflow', 'specifications', 'ref']
+const SECTION_ORDER = ['guides', 'arch', 'workflow', 'specifications', 'ref'] as const
 const SECTION_LABELS: Record<string, string> = {
-  guides: 'Developer Guides',
+  guides: 'Guides',
   arch: 'Architecture',
   workflow: 'Workflow',
-  specifications: 'Formal Specifications',
+  specifications: 'Specifications',
   ref: 'Reference',
 }
 
 const allDocs = await getCollection('docs')
+const currentPath = Astro.url.pathname
+
 const sections = SECTION_ORDER
   .filter(s => allDocs.some(d => d.id.startsWith(s + '/')))
   .map(s => {
@@ -20,39 +22,62 @@ const sections = SECTION_ORDER
     return { key: s, label: SECTION_LABELS[s], pages }
   })
 ---
-<aside class="docs-sidebar">
+
+<nav class="docs-nav">
   {sections.map(section => (
-    <div class="sidebar-section">
-      <h3>{section.label}</h3>
-      <ul>
-        {section.pages.map(page => (
-          <li><a href={`/docs/${page.id.replace('.md', '')}`}>{page.data.shortTitle || page.data.title}</a></li>
-        ))}
+    <div class="nav-group">
+      <h3 class="nav-heading">{section.label}</h3>
+      <ul class="nav-list">
+        {section.pages.map(page => {
+          const href = `/docs/${page.id}`
+          const isActive = currentPath === href + '/' || currentPath === href + '.html'
+          return (
+            <li>
+              <a href={href} class={isActive ? 'nav-link active' : 'nav-link'}>
+                {page.data.shortTitle || page.data.title || page.id.split('/').pop()}
+              </a>
+            </li>
+          )
+        })}
       </ul>
     </div>
   ))}
-</aside>
+</nav>
 
 <style>
-.docs-sidebar {
-  position: sticky; top: 56px; max-height: calc(100vh - 56px);
-  overflow-y: auto; padding: 2rem 0; font-size: 0.8125rem;
+.docs-nav {
+  padding: 1.5rem 0;
+  font-size: 0.8125rem;
 }
-.sidebar-section { margin-bottom: 1.5rem; }
-.sidebar-section h3 {
-  font-family: var(--vp-font-family-mono); font-size: 0.6875rem;
-  font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-muted); margin: 0 0 0.5rem;
+.nav-group { margin-bottom: 1.75rem; }
+.nav-heading {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 0.5rem;
+  padding: 0 0.5rem;
 }
-.sidebar-section ul { list-style: none; padding: 0; margin: 0; }
-.sidebar-section li { margin: 0.125rem 0; }
-.sidebar-section a {
-  display: block; padding: 0.25rem 0.5rem; border-radius: 4px;
-  color: var(--vp-c-text-2); text-decoration: none; font-size: 0.8125rem;
+.nav-list { list-style: none; padding: 0; margin: 0; }
+.nav-link {
+  display: block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  transition: color 0.1s, background 0.1s;
 }
-.sidebar-section a:hover { color: var(--vp-c-brand-1); background: var(--vp-c-bg-soft); }
-
-@media (max-width: 960px) {
-  .docs-sidebar { display: none; }
+.nav-link:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.nav-link.active {
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--accent-soft);
 }
 </style>

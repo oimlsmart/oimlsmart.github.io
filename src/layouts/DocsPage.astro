@@ -8,7 +8,7 @@ import { render } from 'astro:content'
 
 const { entry } = Astro.props
 const { Content } = await render(entry)
-const { title, description, eyebrow } = entry.data
+const { title, description } = entry.data
 
 const allDocs = (await getCollection('docs')).sort((a, b) =>
   a.id.localeCompare(b.id),
@@ -20,9 +20,11 @@ const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : 
 
 <Base title={title} description={description}>
   <div class="docs-layout">
-    <DocsSidebar />
-    <article class="docs-content">
-      <PageHero eyebrow={eyebrow} title={title} lede={description} />
+    <aside class="docs-aside">
+      <DocsSidebar />
+    </aside>
+    <article class="docs-main">
+      <PageHero title={title} lede={description} />
       <DraftCallout />
       <div class="docs-body">
         <Content />
@@ -31,13 +33,13 @@ const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : 
         {prevDoc && (
           <a class="pn-link" href={`/docs/${prevDoc.id}`}>
             <span class="pn-label">← Previous</span>
-            <span class="pn-title">{prevDoc.data.shortTitle || prevDoc.data.title || prevDoc.id}</span>
+            <span class="pn-title">{prevDoc.data.shortTitle || prevDoc.data.title || prevDoc.id.split('/').pop()}</span>
           </a>
         )}
         {nextDoc && (
           <a class="pn-link pn-right" href={`/docs/${nextDoc.id}`}>
             <span class="pn-label">Next →</span>
-            <span class="pn-title">{nextDoc.data.shortTitle || nextDoc.data.title || nextDoc.id}</span>
+            <span class="pn-title">{nextDoc.data.shortTitle || nextDoc.data.title || nextDoc.id.split('/').pop()}</span>
           </a>
         )}
       </nav>
@@ -48,66 +50,93 @@ const nextDoc = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : 
 <style>
 .docs-layout {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 2.5rem;
   max-width: 72rem;
   margin: 0 auto;
-  gap: 2rem;
   padding: 0 1.5rem;
 }
 
 @media (max-width: 960px) {
-  .docs-layout { grid-template-columns: 1fr; }
+  .docs-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
 }
 
-.docs-content {
-  padding: 2rem 0;
-  max-width: 48rem;
+.docs-aside {
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  overflow-y: auto;
+  align-self: start;
 }
 
+@media (max-width: 960px) {
+  .docs-aside { display: none; }
+}
+
+.docs-main {
+  padding: 1.5rem 0 4rem;
+  max-width: 44rem;
+  min-width: 0;
+}
+
+/* Markdown content rendered by <Content /> */
 .docs-body :global(h2) {
   font-family: var(--vp-font-family-serif);
-  font-size: 1.75rem; font-weight: 500;
-  margin-top: 3rem; margin-bottom: 1rem; padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--rule);
+  font-size: 1.5rem; font-weight: 600;
+  margin-top: 2.5rem; margin-bottom: 0.75rem;
 }
 .docs-body :global(h3) {
   font-family: var(--vp-font-family-serif);
-  font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem;
+  font-size: 1.1875rem; font-weight: 600;
+  margin-top: 1.75rem; margin-bottom: 0.5rem;
 }
 .docs-body :global(p) { line-height: 1.7; margin-bottom: 1rem; }
-.docs-body :global(li) { line-height: 1.7; margin-bottom: 0.5rem; }
+.docs-body :global(li) { line-height: 1.7; margin-bottom: 0.375rem; }
 .docs-body :global(ul), .docs-body :global(ol) { padding-left: 1.5rem; margin-bottom: 1rem; }
 .docs-body :global(ul) { list-style: disc; }
 .docs-body :global(ol) { list-style: decimal; }
-.docs-body :global(a) { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.docs-body :global(a) {
+  color: var(--accent); text-decoration: underline;
+  text-underline-offset: 2px; text-decoration-thickness: 1px;
+}
 .docs-body :global(code) {
-  font-family: var(--vp-font-family-mono); font-size: 0.875em;
-  background: var(--accent-soft); padding: 0.125em 0.375em; border-radius: 3px;
+  font-family: var(--vp-font-family-mono); font-size: 0.85em;
+  background: var(--accent-soft); padding: 0.1em 0.3em; border-radius: 3px;
 }
 .docs-body :global(pre) {
   background: var(--paper-raised); border: 1px solid var(--rule);
-  border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;
+  border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.25rem;
 }
-.docs-body :global(pre code) { background: transparent; padding: 0; font-size: 0.875rem; }
-.docs-body :global(table) { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
-.docs-body :global(th), .docs-body :global(td) { padding: 0.75rem; border: 1px solid var(--rule); text-align: left; }
+.docs-body :global(pre code) { background: transparent; padding: 0; font-size: 0.8125rem; }
+.docs-body :global(table) { width: 100%; border-collapse: collapse; margin: 1.25rem 0; }
+.docs-body :global(th), .docs-body :global(td) { padding: 0.5rem 0.75rem; border: 1px solid var(--rule); text-align: left; font-size: 0.875rem; }
 .docs-body :global(th) { background: var(--paper-raised); font-weight: 600; }
 .docs-body :global(blockquote) {
   border-left: 3px solid var(--accent); padding-left: 1rem;
-  margin: 1.5rem 0; color: var(--ink-soft); font-style: italic;
+  margin: 1.25rem 0; color: var(--ink-soft); font-style: italic;
 }
+.docs-body :global(img) { max-width: 100%; height: auto; margin: 1.25rem 0; }
 
+/* Prev / Next navigation */
 .prev-next {
   display: flex; justify-content: space-between; gap: 1rem;
-  margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--rule);
+  margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--rule);
 }
 .pn-link {
-  display: flex; flex-direction: column; gap: 0.25rem;
-  text-decoration: none; padding: 1rem; border: 1px solid var(--rule);
-  border-radius: 6px; flex: 1; transition: border-color 0.15s;
+  display: flex; flex-direction: column; gap: 0.125rem;
+  text-decoration: none; padding: 0.875rem 1rem;
+  border: 1px solid var(--rule); border-radius: 6px;
+  flex: 1; transition: border-color 0.15s;
 }
 .pn-link:hover { border-color: var(--accent); }
 .pn-right { text-align: right; }
-.pn-label { font-family: var(--vp-font-family-mono); font-size: 0.75rem; color: var(--ink-muted); }
-.pn-title { font-weight: 500; color: var(--ink); }
+.pn-label {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.6875rem; color: var(--ink-muted);
+  letter-spacing: 0.05em;
+}
+.pn-title { font-weight: 500; color: var(--ink); font-size: 0.875rem; }
 </style>
