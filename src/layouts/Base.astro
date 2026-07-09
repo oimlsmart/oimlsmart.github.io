@@ -229,4 +229,145 @@ body {
 
 /* ── Main ─────────────────────────────────────────── */
 main { min-height: calc(100vh - 64px - 80px); }
+
+/* ── Prose typography (shared by all content pages) ─ */
+.prose {
+  max-width: 48rem; margin: 0 auto; padding: 2rem 1.5rem;
+}
+.prose h1 {
+  font-family: var(--vp-font-family-serif);
+  font-size: 2.5rem; font-weight: 600; line-height: 1.1;
+  letter-spacing: -0.025em; margin-bottom: 1.5rem; color: var(--ink);
+}
+.prose h2 {
+  font-family: var(--vp-font-family-serif);
+  font-size: 1.75rem; font-weight: 500; line-height: 1.2;
+  margin-top: 3rem; margin-bottom: 1rem; padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule); color: var(--ink);
+}
+.prose h3 {
+  font-family: var(--vp-font-family-serif);
+  font-size: 1.25rem; font-weight: 600;
+  margin-top: 2rem; margin-bottom: 0.75rem;
+}
+.prose p { font-family: var(--vp-font-family-base); line-height: 1.7; margin-bottom: 1rem; }
+.prose ul, .prose ol { margin-bottom: 1rem; padding-left: 1.5rem; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li { line-height: 1.7; margin-bottom: 0.5rem; }
+.prose a {
+  color: var(--accent); text-decoration: underline;
+  text-underline-offset: 3px; text-decoration-thickness: 1px;
+}
+.prose a:hover { text-decoration-color: var(--accent); }
+.prose code {
+  font-family: var(--vp-font-family-mono); font-size: 0.875em;
+  background: var(--accent-soft); padding: 0.125em 0.375em;
+  border-radius: 3px; font-weight: 500;
+}
+.prose pre {
+  background: var(--paper-raised); border: 1px solid var(--rule);
+  border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;
+}
+.prose pre code {
+  background: transparent; padding: 0; font-weight: 400; font-size: 0.875rem;
+}
+.prose blockquote {
+  border-left: 3px solid var(--accent); padding-left: 1rem;
+  margin: 1.5rem 0; color: var(--ink-soft); font-style: italic;
+}
+.prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+.prose th, .prose td { padding: 0.75rem; border: 1px solid var(--rule); text-align: left; }
+.prose th { background: var(--paper-raised); font-weight: 600; }
+.prose img { max-width: 100%; height: auto; margin: 1.5rem 0; }
+
+/* Steps list (used in guides) */
+.prose .steps { counter-reset: step; list-style: none; padding: 0; margin: 1.5rem 0; }
+.prose .steps li {
+  counter-increment: step; display: grid; grid-template-columns: 3rem 1fr;
+  gap: 1rem; margin-bottom: 1.25rem; align-items: start; list-style: none;
+}
+.prose .steps li::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--vp-font-family-mono); font-size: 0.875rem; font-weight: 500;
+  color: var(--accent); border-top: 1px solid var(--accent); padding-top: 0.125rem;
+}
+
+/* Swatch + logo grids (branding page) */
+.prose .swatch-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem; margin: 1.5rem 0;
+}
+.prose .swatch-grid .swatch {
+  border-radius: 4px; overflow: hidden; border: 1px solid var(--rule);
+  background: var(--paper-soft);
+}
+.prose .swatch-grid .swatch .chip { height: 4.5rem; border-bottom: 1px solid var(--rule); }
+.prose .swatch-grid .swatch .meta { padding: 0.625rem 0.75rem; }
+.prose .swatch-grid .swatch .meta .name { font-size: 0.8125rem; font-weight: 600; }
+.prose .swatch-grid .swatch .meta .hex {
+  display: block; font-family: var(--vp-font-family-mono);
+  font-size: 0.6875rem; color: var(--ink-muted); margin-top: 0.125rem;
+}
+.prose .logo-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem; margin: 1.5rem 0;
+}
+.prose .logo-grid .card {
+  background: var(--paper-soft); border: 1px solid var(--rule);
+  border-radius: 6px; padding: 1.75rem; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+.prose .logo-grid .card .preview { height: 80px; display: flex; align-items: center; justify-content: center; }
+.prose .logo-grid .card .preview.dark-bg { background: var(--paper-deep); border-radius: 4px; width: 100%; }
+.prose .logo-grid .card .preview img { max-height: 64px; max-width: 80%; }
+.prose .logo-grid .card .label {
+  font-family: var(--vp-font-family-mono); font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted);
+}
+.prose .logo-grid .card .download { font-size: 0.8125rem; color: var(--accent); font-weight: 500; }
+
+/* Recommendation cards (recommendations index) */
+.prose .rec-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0;
+}
+@media (max-width: 768px) { .prose .rec-grid { grid-template-columns: 1fr; } }
+.prose .rec-card {
+  display: block; padding: 1.75rem; background: var(--paper-soft);
+  border: 1px solid var(--rule); border-radius: 6px; text-decoration: none;
+  color: inherit; transition: all 0.2s ease;
+}
+.prose .rec-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.prose .rec-card .rec-num {
+  font-family: var(--vp-font-family-mono); font-size: 0.75rem;
+  font-weight: 500; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.5rem;
+}
+.prose .rec-card h3 { font-family: var(--vp-font-family-serif); font-size: 1.375rem; margin: 0 0 0.5rem; }
+.prose .rec-card .scope { font-size: 0.9375rem; color: var(--ink-soft); margin: 0 0 1rem; }
+.prose .rec-card .meta {
+  display: flex; gap: 1rem; font-family: var(--vp-font-family-mono);
+  font-size: 0.75rem; color: var(--ink-muted); padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+}
+
+/* Library doc table */
+.prose .doc-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9375rem; }
+.prose .doc-table thead { background: var(--paper-raised); }
+.prose .doc-table th {
+  padding: 0.75rem 1rem; font-family: var(--vp-font-family-mono);
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-muted); border-bottom: 1px solid var(--rule);
+}
+.prose .doc-table td { padding: 0.875rem 1rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.prose .doc-table .code { font-family: var(--vp-font-family-mono); font-weight: 500; color: var(--accent); }
+
+/* Utility classes */
+.text-mono { font-family: var(--vp-font-family-mono); }
+.text-serif { font-family: var(--vp-font-family-serif); }
+.bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
 </style>
