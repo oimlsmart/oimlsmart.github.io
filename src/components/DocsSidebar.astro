@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content'
+
+const SECTION_ORDER = ['guides', 'arch', 'workflow', 'specifications', 'ref']
+const SECTION_LABELS: Record<string, string> = {
+  guides: 'Developer Guides',
+  arch: 'Architecture',
+  workflow: 'Workflow',
+  specifications: 'Formal Specifications',
+  ref: 'Reference',
+}
+
+const allDocs = await getCollection('docs')
+const sections = SECTION_ORDER
+  .filter(s => allDocs.some(d => d.id.startsWith(s + '/')))
+  .map(s => {
+    const pages = allDocs
+      .filter(d => d.id.startsWith(s + '/'))
+      .sort((a, b) => a.id.localeCompare(b.id))
+    return { key: s, label: SECTION_LABELS[s], pages }
+  })
+---
+<aside class="docs-sidebar">
+  {sections.map(section => (
+    <div class="sidebar-section">
+      <h3>{section.label}</h3>
+      <ul>
+        {section.pages.map(page => (
+          <li><a href={`/docs/${page.id.replace('.md', '')}`}>{page.data.shortTitle || page.data.title}</a></li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</aside>
+
+<style>
+.docs-sidebar {
+  position: sticky; top: 80px; width: 240px; flex-shrink: 0;
+  padding: 2rem 1rem; font-size: 0.875rem;
+}
+.sidebar-section { margin-bottom: 1.5rem; }
+.sidebar-section h3 {
+  font-family: var(--vp-font-family-mono); font-size: 0.75rem;
+  font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--vp-c-text-3); margin: 0 0 0.5rem;
+}
+.sidebar-section ul { list-style: none; padding: 0; margin: 0; }
+.sidebar-section li { margin: 0.125rem 0; }
+.sidebar-section a {
+  display: block; padding: 0.25rem 0.5rem; border-radius: 4px;
+  color: var(--vp-c-text-2); text-decoration: none; font-size: 0.8125rem;
+}
+.sidebar-section a:hover { color: var(--vp-c-brand-1); background: var(--vp-c-bg-soft); }
+
+@media (max-width: 960px) {
+  .docs-sidebar { display: none; }
+}
+</style>

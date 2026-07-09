@@ -1,0 +1,100 @@
+/* ============================================================
+   VitePress component overrides — make VP components theme-aware.
+
+   These target `.VPNavBar`, `.VPSidebar`, etc. — VitePress's
+   built-in classes. We can't make these scoped, so they live
+   here as global overrides.
+   ============================================================ */
+
+/* Top nav — opaque, theme-aware. Use semantic tokens (not hardcoded
+   rgba) so dark mode contrast is guaranteed. */
+.VPNavBar {
+  background-color: var(--vp-c-bg-soft-up) !important;
+  border-bottom: 1px solid var(--vp-c-divider);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+}
+
+.dark .VPNavBar {
+  background-color: var(--vp-c-bg) !important;
+}
+
+/* Nav menu links — visible on either theme */
+.VPNavBarMenuLink {
+  color: var(--vp-c-text-1) !important;
+  font-family: var(--vp-font-family-base);
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+.VPNavBarMenuLink:hover {
+  color: var(--vp-c-brand-1) !important;
+}
+
+/* Search box — match theme, never white-on-white */
+.DocSearch-Button,
+.VPNavBarSearch search {
+  background-color: var(--vp-c-bg-soft) !important;
+  color: var(--vp-c-text-2) !important;
+  border: 1px solid var(--vp-c-divider);
+}
+
+.DocSearch-Button:hover {
+  border-color: var(--vp-c-brand-1);
+}
+
+.DocSearch-Button-Placeholder {
+  color: var(--vp-c-text-2) !important;
+}
+
+/* Sidebar — adapt to dark mode */
+.VPSidebar {
+  background-color: var(--vp-c-bg-soft-up) !important;
+  border-right-color: var(--vp-c-divider);
+}
+
+.dark .VPSidebar {
+  background-color: var(--vp-c-bg) !important;
+}
+
+.VPSidebar .VPSidebarItem .text {
+  font-family: var(--vp-font-family-base);
+  font-weight: 500;
+  color: var(--vp-c-text-1);
+}
+
+.VPSidebar .VPSidebarItem.level-0 .text {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vp-c-text-3);
+}
+
+/* Footer */
+.VPFooter {
+  background-color: var(--vp-c-bg-soft) !important;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+/* Edit-on-github link */
+.VPDocFooter .edit-info {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.8125rem;
+}
+
+/* Hero band on inner pages: add top spacing */
+.main .vp-doc:first-child > h1:first-child {
+  margin-top: 0;
+}
+
+/* Container width tuning */
+.VPDoc.has-aside .content-container {
+  max-width: 720px;
+}
+
+/* Asides — VitePress right-side TOC */
+.VPDocAsideOutline {
+  font-family: var(--vp-font-family-base);
+}

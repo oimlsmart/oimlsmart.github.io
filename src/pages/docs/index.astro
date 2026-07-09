@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content'
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import DraftCallout from '../../components/DraftCallout.astro'
+import DocsSidebar from '../../components/DocsSidebar.astro'
+
+const guides = (await getCollection('docs'))
+  .filter(d => d.id.startsWith('guides/'))
+  .sort((a, b) => a.id.localeCompare(b.id))
+
+const SECTION_INFO = {
+  guides: { label: 'Developer Guides', desc: 'Narrative, learn-by-doing walkthroughs for authoring a SMART Recommendation.' },
+  arch: { label: 'Architecture', desc: 'How the system is built — the six-layer entity model, design principles, and cross-cutting primitives.' },
+  workflow: { label: 'Workflow', desc: 'How certification works — the end-to-end process.' },
+  specifications: { label: 'Formal Specifications', desc: 'The SMART_REQS documents — the normative specification set for the SMART platform.' },
+  ref: { label: 'Reference', desc: 'Quick-reference material — schemas, types, syntax, identifiers.' },
+}
+
+const sections = Object.entries(SECTION_INFO)
+---
+
+<Base title="Developer documentation" description="Architecture, workflow, and reference materials for the OIML SMART platform.">
+  <div class="docs-layout">
+    <DocsSidebar />
+    <article class="docs-content">
+      <PageHero eyebrow="Documentation hub" title="Build SMART Recommendations" lede="Everything a standards developer, software engineer, or technical evaluator needs to author, deploy, or integrate OIML SMART Recommendations." />
+      <DraftCallout />
+      <h2>Five sections</h2>
+      {sections.map(([key, info]) => (
+        <div class="section-card">
+          <h3><a href={`/docs/${key}/`}>{info.label}</a></h3>
+          <p>{info.desc}</p>
+        </div>
+      ))}
+    </article>
+  </div>
+</Base>
+
+<style>
+.section-card { padding: 1.5rem 0; border-bottom: 1px solid var(--vp-c-divider); }
+.section-card h3 a { color: var(--vp-c-brand-1); text-decoration: none; }
+.section-card h3 a:hover { text-decoration: underline; }
+</style>

@@ -1,0 +1,50 @@
+---
+// DraftCallout — DRAFT/pilot notice. Variant auto-detected from URL path.
+const path = Astro.url.pathname
+let variant = 'default'
+if (path.startsWith('/docs/specifications/')) variant = 'specs'
+else if (path.startsWith('/blog/')) variant = 'compact'
+
+const title = 'DRAFT — Pilot programme'
+const body = variant === 'compact'
+  ? 'This page is part of the OIML SMART pilot. Content is a draft and may change without notice.'
+  : variant === 'specs'
+    ? 'This document is part of the SMART_REQS specification set for the OIML SMART pilot. It is a draft and may change without notice as the pilot evolves.'
+    : 'This page documents the OIML SMART pilot programme. Every requirement, test, form, ontology entity, and specification described here is a draft and may change without notice as the pilot evolves. OIML Member States and Corresponding Members seeking engagement should contact OIML through official channels. Not for external distribution.'
+---
+
+<div class="callout draft-notice">
+  <strong>{title}</strong>
+  <p>{body}</p>
+</div>
+
+<style>
+.callout.draft-notice {
+  border-left: 4px solid #d97706;
+  background: #fef3c7;
+  color: #78350f;
+  border-radius: 4px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.75rem 0;
+}
+:global(.dark) .callout.draft-notice {
+  background: rgba(120, 53, 15, 0.18);
+  color: #fde68a;
+}
+.callout.draft-notice strong {
+  color: #92400e;
+  font-family: monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: block;
+}
+:global(.dark) .callout.draft-notice strong {
+  color: #fbbf24;
+}
+.callout.draft-notice p {
+  margin: 0.75rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+</style>

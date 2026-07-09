@@ -1,0 +1,116 @@
+/* ============================================================
+   Design tokens — colors, fonts, spacing.
+
+   Everything else in the theme references these via var(...).
+   Adding a brand color or font: edit here, nothing else.
+   ============================================================ */
+
+:root {
+  /* ── Brand palette (from smart app's Tailwind config) ────── */
+  --oiml-brand-50:  #f0f6ff;
+  --oiml-brand-100: #dde9fc;
+  --oiml-brand-200: #bcd3f8;
+  --oiml-brand-300: #89b4ef;
+  --oiml-brand-400: #4d8fe0;
+  --oiml-brand-500: #1a6fc2;
+  --oiml-brand-600: #004996;  /* primary brand */
+  --oiml-brand-700: #003a78;
+  --oiml-brand-800: #002b5a;
+  --oiml-brand-900: #001e41;
+  --oiml-brand-950: #001230;
+
+  --oiml-teal:       #024873;
+  --oiml-teal-light: #035a8f;
+  --oiml-teal-dark:  #013a5e;
+
+  --oiml-cream:      #faf6ee;
+  --oiml-cream-soft: #f5ede0;
+  --oiml-cream-deep: #e8dec8;
+
+  --oiml-amber:      #d97706;
+  --oiml-amber-soft: #f59e0b;
+  --oiml-amber-deep: #92400e;
+
+  /* ── Semantic tokens (light mode) ────────────────────────── */
+  --paper:           var(--oiml-cream);        /* page background */
+  --paper-soft:      #ffffff;                  /* card surface */
+  --paper-raised:    var(--oiml-cream-soft);   /* subtle raised */
+  --paper-deep:      var(--oiml-cream-deep);   /* deeper accent */
+
+  --ink:             #0a1628;                  /* primary text */
+  --ink-soft:        #3a4a63;                  /* secondary text */
+  --ink-muted:       #6b7a92;                  /* tertiary text */
+
+  --rule:            #ddd2bd;                  /* dividers, warm */
+  --rule-soft:       #ebe3d2;
+
+  --accent:          var(--oiml-brand-600);    /* primary accent */
+  --accent-hover:    var(--oiml-brand-700);
+  --accent-soft:     rgba(0, 73, 150, 0.08);
+  --accent-2:        var(--oiml-teal);         /* secondary accent */
+  --accent-3:        var(--oiml-amber);        /* tertiary accent */
+
+  /* ── VitePress token bindings ────────────────────────────── */
+  --vp-c-brand-1: var(--oiml-brand-600);
+  --vp-c-brand-2: var(--oiml-brand-500);
+  --vp-c-brand-3: var(--oiml-brand-700);
+  --vp-c-brand-soft: var(--accent-soft);
+
+  --vp-c-bg:               var(--paper);
+  --vp-c-bg-soft:          var(--paper-raised);
+  --vp-c-bg-soft-up:       var(--paper-soft);
+  --vp-c-bg-alt:           #ffffff;
+  --vp-c-bg-elv:           #ffffff;
+
+  --vp-c-text:             var(--ink);
+  --vp-c-text-1:           var(--ink);
+  --vp-c-text-2:           var(--ink-soft);
+  --vp-c-text-3:           var(--ink-muted);
+
+  --vp-c-divider:          var(--rule);
+  --vp-c-divider-light:    var(--rule-soft);
+  --vp-c-divider-lighter:  var(--rule-soft);
+
+  --vp-c-gutter:           var(--rule);
+
+  /* ── Fonts ───────────────────────────────────────────────── */
+  --vp-font-family-base:    'IBM Plex Sans', ui-sans-serif, system-ui,
+                            -apple-system, 'Segoe UI', sans-serif;
+  --vp-font-family-serif:   'Fraunces', 'Source Serif 4', ui-serif,
+                            Georgia, 'Times New Roman', serif;
+  --vp-font-family-mono:    'IBM Plex Mono', ui-monospace,
+                            'SF Mono', Menlo, Consolas, monospace;
+
+  /* Custom: coordinate grid line color, very subtle */
+  --grid-line:        rgba(10, 22, 40, 0.04);
+  --grid-line-strong: rgba(10, 22, 40, 0.07);
+}
+
+.dark {
+  /* ── Semantic tokens (dark mode) ─────────────────────────── */
+  --paper:           #0a1628;                  /* deep navy */
+  --paper-soft:      #13233d;                  /* lifted card */
+  --paper-raised:    #18294a;
+  --paper-deep:      #060e1c;
+
+  --ink:             #f5efe4;                  /* warm cream text */
+  --ink-soft:        #c2cad8;
+  --ink-muted:       #8d9bb4;
+
+  --rule:            #1f3357;
+  --rule-soft:       #152543;
+
+  --accent:          var(--oiml-brand-300);    /* bright sky */
+  --accent-hover:    var(--oiml-brand-200);
+  --accent-soft:     rgba(137, 180, 239, 0.12);
+  --accent-2:        #5ba3cc;                  /* light teal */
+  --accent-3:        #fbbf24;                  /* bright amber */
+
+  --vp-c-brand-1: var(--oiml-brand-300);
+  --vp-c-brand-2: var(--oiml-brand-200);
+  --vp-c-brand-3: var(--oiml-brand-400);
+  --vp-c-brand-soft: var(--accent-soft);
+
+  --grid-line:        rgba(245, 239, 228, 0.04);
+  --grid-line-strong: rgba(245, 239, 228, 0.08);
+}
