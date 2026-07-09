@@ -13,14 +13,6 @@ export default defineConfig({
 
   srcExclude: ['README.md', 'CLAUDE.md', 'TODO.site/**/*.md'],
 
-  // Build-time configuration: the URL of the running OIML SMART app.
-  // The /app/ page redirects here for OAuth sign-in.
-  // Default: localhost:5190 (development). Override per build:
-  //   APP_URL=https://app.oimlsmart.org npm run build
-  env: {
-    APP_URL: process.env.APP_URL || 'http://localhost:5190',
-  },
-
   head: [
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],

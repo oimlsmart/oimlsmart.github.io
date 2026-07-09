@@ -44,11 +44,13 @@ const heroGlobeSrc = computed(() =>
     </div>
 
     <div class="home-globe">
-      <img
-        :src="heroGlobeSrc"
-        alt="OIML SMART globe mark"
-        class="globe-static"
-      />
+      <ClientOnly>
+        <img
+          :src="heroGlobeSrc"
+          alt="OIML SMART globe mark"
+          class="globe-static"
+        />
+      </ClientOnly>
     </div>
   </section>
 </template>

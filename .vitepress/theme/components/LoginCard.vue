@@ -23,7 +23,9 @@ const logoSrc = computed(() =>
   <div class="login-shell">
     <div class="login-card">
       <div class="login-mark">
-        <img :src="logoSrc" alt="OIML SMART" />
+        <ClientOnly>
+          <img :src="logoSrc" alt="OIML SMART" />
+        </ClientOnly>
       </div>
 
       <h1 class="login-title">Sign in</h1>

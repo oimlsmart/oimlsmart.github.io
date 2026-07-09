@@ -11,18 +11,18 @@ describe('FONT_URL', () => {
     expect(FONT_URL.startsWith('https://fonts.googleapis.com/css2?')).toBe(true)
   })
 
-  it('includes all three font families', () => {
+  it('includes all four font families', () => {
     expect(FONT_URL).toContain('Fraunces')
     expect(FONT_URL).toContain('IBM+Plex+Sans')
     expect(FONT_URL).toContain('IBM+Plex+Mono')
+    expect(FONT_URL).toContain('Source+Serif+4')
   })
 
   it('ends with display=swap', () => {
     expect(FONT_URL.endsWith('&display=swap')).toBe(true)
   })
 
-  it('does not include weights we do not use (300, 700)', () => {
-    expect(FONT_URL).not.toContain(';700')
-    expect(FONT_URL).not.toContain(';300')
+  it('uses the full Fraunces optical-size range (9..144)', () => {
+    expect(FONT_URL).toContain('9..144')
   })
 })
