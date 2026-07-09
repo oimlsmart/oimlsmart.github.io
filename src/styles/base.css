@@ -1,19 +1,34 @@
 /* ============================================================
-   Base typography — applied to .vp-doc content area.
-   Page-specific styles live in the component's <style scoped>.
+   CSS Reset + Base typography
    ============================================================ */
 
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+body { line-height: 1.5; -webkit-font-smoothing: antialiased; }
+img, picture, video, canvas, svg { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; }
+p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+
+/* Body */
 body {
+  font-family: var(--vp-font-family-base);
   font-feature-settings: 'kern', 'liga', 'calt', 'ss01';
   background-color: var(--paper);
   color: var(--ink);
 }
 
-/* Headings use Fraunces (display serif) */
-.vp-doc h1,
-.vp-doc h2,
-.vp-doc h3,
-.vp-doc h4 {
+/* ============================================================
+   Typography — applies to ALL content areas (article wrapper).
+   Component-specific overrides use scoped <style> in .astro files.
+   ============================================================ */
+
+article h1,
+article h2,
+article h3,
+article h4 {
   font-family: var(--vp-font-family-serif);
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -21,7 +36,7 @@ body {
   font-feature-settings: 'kern', 'liga', 'ss01';
 }
 
-.vp-doc h1 {
+article h1 {
   font-size: 2.5rem;
   font-weight: 600;
   line-height: 1.1;
@@ -29,7 +44,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.vp-doc h2 {
+article h2 {
   font-size: 1.75rem;
   font-weight: 500;
   line-height: 1.2;
@@ -39,20 +54,31 @@ body {
   border-bottom: 1px solid var(--rule);
 }
 
-.vp-doc h3 {
+article h3 {
   font-size: 1.25rem;
   font-weight: 600;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
 }
 
-/* Body text */
-.vp-doc p,
-.vp-doc li {
+article p,
+article li {
+  font-family: var(--vp-font-family-base);
   line-height: 1.7;
+  margin-bottom: 1rem;
 }
 
-.vp-doc a {
+article ul,
+article ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+article ul { list-style: disc; }
+article ol { list-style: decimal; }
+
+article a {
+  color: var(--accent);
   text-decoration: underline;
   text-decoration-color: var(--accent-soft);
   text-underline-offset: 3px;
@@ -60,12 +86,11 @@ body {
   transition: text-decoration-color 0.15s;
 }
 
-.vp-doc a:hover {
+article a:hover {
   text-decoration-color: var(--accent);
 }
 
-/* Code */
-.vp-doc code {
+article code {
   font-family: var(--vp-font-family-mono);
   font-size: 0.875em;
   background-color: var(--accent-soft);
@@ -74,8 +99,61 @@ body {
   font-weight: 500;
 }
 
-.vp-doc pre code {
+article pre {
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+article pre code {
   background-color: transparent;
   padding: 0;
   font-weight: 400;
+  font-size: 0.875rem;
+}
+
+article blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+article th,
+article td {
+  padding: 0.75rem;
+  border: 1px solid var(--rule);
+  text-align: left;
+}
+
+article th {
+  background: var(--paper-raised);
+  font-weight: 600;
+}
+
+article img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem 0;
+}
+
+/* Prose container width */
+.prose {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.prose-wide {
+  max-width: 64rem;
 }
