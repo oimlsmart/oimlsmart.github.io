@@ -7,7 +7,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
 <Base title="Sign in to OIML SMART" description="Authenticate via GitHub OAuth to continue into the OIML SMART application.">
   <div class="entry">
     {/* ── Left margin: specimen panel ─────────────────────────── */}
-    <aside class="specimen" aria-hidden="true">
+    <aside class="specimen relative border-r border-rule pt-16 pb-8 px-8 bg-paper-soft dark:bg-paper-deep overflow-hidden" aria-hidden="true">
       <div class="specimen-grid" />
       <div class="specimen-meta">
         <span class="specimen-tag">OIML SMART</span>
@@ -74,15 +74,6 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
 }
 
 /* ── Left specimen panel ─────────────────────────────────────── */
-.specimen {
-  position: relative;
-  border-right: 1px solid var(--rule);
-  padding: 4rem 2rem 2rem;
-  background: var(--paper-soft);
-  overflow: hidden;
-}
-:global(.dark) .specimen { background: var(--paper-deep); }
-
 .specimen-grid {
   position: absolute; inset: 0;
   background-image:
@@ -102,7 +93,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
 .specimen-meta {
   position: relative;
   display: flex; flex-direction: column;
-  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
   letter-spacing: 0.04em;
   color: var(--ink);
@@ -128,7 +119,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
   position: absolute;
   left: 2rem; right: 2rem; bottom: 2rem;
   display: flex; justify-content: space-between;
-  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.625rem;
   color: color-mix(in srgb, var(--ink) 40%, transparent);
   font-feature-settings: 'tnum';
@@ -157,7 +148,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
 
 .gate-eyebrow {
   display: inline-block;
-  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -168,7 +159,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
 }
 
 .gate-title {
-  font-family: var(--vp-font-family-serif, 'Fraunces', serif);
+  font-family: var(--font-serif);
   font-variation-settings: 'opsz' 96, 'wght' 400;
   font-size: clamp(2.25rem, 4.5vw, 3.25rem);
   line-height: 1.05;
@@ -210,7 +201,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
   color: var(--paper);
   text-decoration: none;
   border-radius: 2px;
-  font-family: var(--vp-font-family-base, 'IBM Plex Sans', sans-serif);
+  font-family: var(--font-sans);
   transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
               background 220ms ease,
               color 220ms ease;
@@ -231,7 +222,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
 }
 .enter-arrow {
   grid-column: 2; grid-row: 1 / span 2;
-  font-family: var(--vp-font-family-serif, 'Fraunces', serif);
+  font-family: var(--font-serif);
   font-size: 1.5rem;
   font-weight: 300;
   transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -239,7 +230,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
 .enter:hover .enter-arrow { transform: translateX(4px); }
 .enter-meta {
   grid-column: 1; grid-row: 2;
-  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.625rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -261,7 +252,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
   animation: rise 600ms cubic-bezier(0.16, 1, 0.3, 1) 420ms forwards;
 }
 .note-key {
-  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.625rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -269,7 +260,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
   padding-top: 0.125rem;
 }
 .note-val code {
-  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   background: color-mix(in srgb, var(--rule) 50%, transparent);
   padding: 1px 5px;
@@ -289,7 +280,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
   margin-top: 3rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--rule);
-  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
   letter-spacing: 0.04em;
   color: color-mix(in srgb, var(--ink) 55%, transparent);

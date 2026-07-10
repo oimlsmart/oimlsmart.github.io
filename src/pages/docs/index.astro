@@ -16,58 +16,20 @@ const counts = sections.map(s => allDocs.filter(d => d.id.startsWith(s.key + '/'
 ---
 
 <DocsLayout title="Developer documentation">
-  <div class="hub-intro">
-    <h1>Developer documentation</h1>
-    <p>Everything a standards developer, software engineer, or technical evaluator needs to author, deploy, or integrate OIML SMART Recommendations.</p>
+  <div class="mb-4">
+    <h1 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.025em]">Developer documentation</h1>
+    <p class="text-[1.0625rem] leading-[1.6] text-ink-soft max-w-2xl mt-3">Everything a standards developer, software engineer, or technical evaluator needs to author, deploy, or integrate OIML SMART Recommendations.</p>
   </div>
   <DraftCallout />
-  <div class="hub-grid">
+  <div class="mt-8 flex flex-col">
     {sections.map((s, i) => (
-      <a class="hub-card" href={`/docs/${s.key}/`}>
-        <div class="hub-card-head">
-          <h2>{s.label}</h2>
-          <span class="hub-count">{counts[i]}</span>
+      <a class="group block py-5 border-b border-rule no-underline text-inherit transition-[padding] duration-150 hover:pl-2" href={`/docs/${s.key}/`}>
+        <div class="flex items-baseline justify-between">
+          <h2 class="font-serif text-lg font-semibold transition-colors group-hover:text-accent">{s.label}</h2>
+          <span class="font-mono text-[0.6875rem] text-ink-muted">{counts[i]}</span>
         </div>
-        <p>{s.desc}</p>
+        <p class="text-sm text-ink-soft mt-1">{s.desc}</p>
       </a>
     ))}
   </div>
 </DocsLayout>
-
-<style>
-.hub-intro { margin-bottom: 1rem; }
-.hub-intro h1 {
-  font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 600; letter-spacing: -0.025em; margin: 0;
-}
-.hub-intro p {
-  font-size: 1.0625rem; line-height: 1.6;
-  color: var(--ink-soft); max-width: 36rem; margin-top: 0.75rem;
-}
-.hub-grid { margin-top: 2rem; display: flex; flex-direction: column; }
-.hub-card {
-  display: block; padding: 1.25rem 0;
-  border-bottom: 1px solid var(--rule);
-  text-decoration: none; color: inherit;
-  transition: padding-left 0.15s;
-}
-.hub-card:hover { padding-left: 0.5rem; }
-.hub-card-head {
-  display: flex; align-items: baseline; justify-content: space-between;
-}
-.hub-card-head h2 {
-  font-family: var(--font-serif);
-  font-size: 1.125rem; font-weight: 600; margin: 0;
-  transition: color 0.15s;
-}
-.hub-card:hover h2 { color: var(--accent); }
-.hub-count {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem; color: var(--ink-muted);
-}
-.hub-card p {
-  font-size: 0.875rem; color: var(--ink-soft);
-  margin: 0.25rem 0 0;
-}
-</style>

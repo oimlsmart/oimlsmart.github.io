@@ -28,17 +28,20 @@ const sections = SECTION_ORDER
   })
 ---
 
-<nav class="sb">
+<nav class="text-[0.8125rem] pb-8">
   {sections.map(section => (
-    <div class="sb-group">
-      <h3 class="sb-heading">{section.label}</h3>
-      <ul class="sb-list">
+    <div class="mb-6">
+      <h3 class="font-mono text-[0.6875rem] font-semibold tracking-[0.1em] uppercase text-ink-muted m-0 mb-1.5 pl-2.5">{section.label}</h3>
+      <ul class="list-none p-0 m-0">
         {section.pages.map(page => {
           const href = `/docs/${page.id}`
           const active = currentPath === href + '/' || currentPath === href
           return (
             <li>
-              <a href={href} class={active ? 'sb-link sb-active' : 'sb-link'}>
+              <a
+                href={href}
+                class={`block py-1 px-2.5 rounded no-underline text-[0.8125rem] leading-[1.35] transition-colors ${active ? 'text-accent font-semibold bg-accent-soft' : 'text-ink-soft hover:text-accent hover:bg-accent-soft'}`}
+              >
                 {page.data.shortTitle || page.data.title || page.id.split('/').pop()}
               </a>
             </li>
@@ -48,41 +51,3 @@ const sections = SECTION_ORDER
     </div>
   ))}
 </nav>
-
-<style>
-.sb {
-  font-size: 0.8125rem;
-  padding-bottom: 2rem;
-}
-.sb-group { margin-bottom: 1.5rem; }
-.sb-heading {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  margin: 0 0 0.375rem;
-  padding-left: 0.625rem;
-}
-.sb-list { list-style: none; padding: 0; margin: 0; }
-.sb-link {
-  display: block;
-  padding: 0.25rem 0.625rem;
-  border-radius: 4px;
-  color: var(--ink-soft);
-  text-decoration: none;
-  font-size: 0.8125rem;
-  line-height: 1.35;
-  transition: color 0.1s, background 0.1s;
-}
-.sb-link:hover {
-  color: var(--accent);
-  background: var(--accent-soft);
-}
-.sb-active {
-  color: var(--accent);
-  font-weight: 600;
-  background: var(--accent-soft);
-}
-</style>

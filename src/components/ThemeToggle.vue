@@ -5,7 +5,7 @@ const { isDark, toggle } = useTheme()
 
 <template>
   <button
-    class="theme-toggle"
+    class="bg-transparent border border-rule rounded w-8 h-8 cursor-pointer flex items-center justify-center text-sm text-inherit transition-[border-color] duration-150 hover:border-accent"
     @click="toggle" data-testid="theme-toggle"
     :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
   >
@@ -13,23 +13,3 @@ const { isDark, toggle } = useTheme()
     <span v-show="isDark" class="icon-moon">☾</span>
   </button>
 </template>
-
-<style scoped>
-.theme-toggle {
-  background: none;
-  border: 1px solid var(--rule);
-  border-radius: 4px;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9375rem;
-  color: inherit;
-  transition: border-color 0.15s;
-}
-.theme-toggle:hover {
-  border-color: var(--accent);
-}
-</style>
