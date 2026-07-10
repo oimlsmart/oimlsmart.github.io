@@ -1,6 +1,6 @@
 # 27 — Audit: type-safe criteria loading (drop `loadedStandards` magic)
 
-**Status:** proposal
+**Status:** ✓ implemented
 **Type:** architectural improvement
 **Audit finding:** the original `getLabSelectionCriteria(standardId)` casts `loadedStandards` through `unknown` to read `lab_selection_criteria`
 

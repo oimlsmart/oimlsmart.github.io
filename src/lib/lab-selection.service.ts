@@ -1,29 +1,18 @@
 // ─────────────────────────────────────────────────────────────────────
 // Lab Selection Service — generic criterion evaluator.
 //
-// Migrated from smart/browser/src/services/lab-selection.service.ts.
-// The original depended on the deep TestLaboratory type and the
-// loadedStandards singleton. Both dependencies are removed here:
+// Operators are registered in lab-selection-operators.ts via an
+// operator registry (true OCP — adding an operator = registering a
+// handler, not editing this file). evaluateMatch looks up the
+// operator by name and falls back to pass for unknown operators.
 //
-// - Lab is now a structural type: any object with `capabilities: string[]`
-//   qualifies. This decouples the service from the persistence layer.
-//
-// - rankLabs() already accepted criteria as a parameter, so no behavior
-//   change. getLabSelectionCriteria(standardId) is dropped — callers
-//   source the criteria themselves (from a registry, YAML, or test
-//   fixture). Keeps the service pure.
-//
-// The service supports these operators (declared in criteria data):
-//   has_capability       — lab.capabilities includes required_capability
-//   capability_from_field — lab has "prefix" + model_field value
-//   capability_covers_value — lab has "prefix" + a tier >= model value
-//   capability_prefix_match — lab has "prefix" + accuracy class
-//   always_pass          — soft preferred, always passes
-//
-// Adding a new criterion = adding a YAML entry with one of these
-// operators. Adding a new operator = adding one case to the switch.
+// Adding a new criterion = adding a YAML entry with one of the
+// registered operators. Adding a new operator = calling
+// registerMatchOperator in lab-selection-operators.ts.
 // The service never references R 60 domain concepts directly.
 // ─────────────────────────────────────────────────────────────────────
+
+import { getMatchOperator } from './lab-selection-operators'
 
 export type CriterionWeight = 'required' | 'preferred'
 export type ParameterType = 'dimension' | 'parameter' | 'operational'
@@ -143,58 +132,9 @@ function evaluateMatch(
   lab: Lab,
   context: LabRankingContext,
 ): boolean {
-  const capabilities = getLabCapabilities(lab)
-
-  switch (match.operator) {
-    case 'always_pass':
-      return true
-
-    case 'has_capability':
-      if (!match.required_capability) return true
-      return capabilities.has(match.required_capability)
-
-    case 'capability_from_field': {
-      if (!match.required_capability_prefix || !match.model_field) return true
-      const fieldValue = String(context.modelParams[match.model_field] ?? '')
-      if (!fieldValue) return true
-      return capabilities.has(match.required_capability_prefix + fieldValue)
-    }
-
-    case 'capability_covers_value': {
-      if (!match.required_capability_prefix || !match.model_field) return true
-      const modelValue = Number(context.modelParams[match.model_field])
-      if (!modelValue || modelValue <= 0) return true
-      return [...capabilities].some(cap => {
-        if (!cap.startsWith(match.required_capability_prefix!)) return false
-        const tierStr = cap.slice(match.required_capability_prefix!.length)
-        const tier = parseTier(tierStr)
-        return tier != null && tier >= modelValue
-      })
-    }
-
-    case 'capability_prefix_match':
-      if (!match.lab_capability_prefix) return true
-      return [...capabilities].some(c => c.startsWith(match.lab_capability_prefix))
-
-    default:
-      // Unknown operator — forward-compatible, pass by default
-      return true
-  }
-}
-
-function getLabCapabilities(lab: Lab): Set<string> {
-  return new Set(lab.capabilities ?? [])
-}
-
-/** Parse "500kg" / "50t" / "500000g" / "500" into kilograms. */
-function parseTier(s: string): number | null {
-  const m = /^([\d.]+)(kg|t|g)?$/.exec(s.trim())
-  if (!m) return null
-  const value = parseFloat(m[1])
-  const unit = m[2]
-  if (unit === 't') return value * 1000
-  if (unit === 'g') return value / 1000
-  return value
+  const op = getMatchOperator(match.operator)
+  if (!op) return true
+  return op(match, lab, context)
 }
 
 function compareLabScores(a: LabScore, b: LabScore): number {

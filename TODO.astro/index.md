@@ -66,8 +66,8 @@ These are NOT blockers for the migration but improve code quality. Each can be p
 | 24 | Data-driven standard metadata (no hardcoded OIML-R-60) | [24-audit-data-driven-standards.md](24-audit-data-driven-standards.md) | model-driven | ✓ implemented |
 | 25 | Visual regression baseline via Playwright snapshots | [25-audit-visual-regression.md](25-audit-visual-regression.md) | test infra | proposal |
 | 26 | Structural Lab type instead of importing TestLaboratory | [26-audit-structural-types.md](26-audit-structural-types.md) | architecture | ✓ implemented |
-| 27 | Type-safe criteria loader (drop `loadedStandards` magic) | [27-audit-criteria-loader.md](27-audit-criteria-loader.md) | architecture | proposal |
-| 28 | Criterion operator registry (true OCP) | [28-audit-operator-registry.md](28-audit-operator-registry.md) | architecture | proposal |
+| 27 | Type-safe criteria loader (drop `loadedStandards` magic) | [27-audit-criteria-loader.md](27-audit-criteria-loader.md) | architecture | ✓ implemented |
+| 28 | Criterion operator registry (true OCP) | [28-audit-operator-registry.md](28-audit-operator-registry.md) | architecture | ✓ implemented |
 | 29 | Extract inline constants (stats, durations) | [29-audit-extract-constants.md](29-audit-extract-constants.md) | DRY | ✓ implemented |
 | 30 | Page-render contract test (STANDARDS ↔ pages) | [30-audit-page-contract-test.md](30-audit-page-contract-test.md) | test infra | ✓ implemented |
 
