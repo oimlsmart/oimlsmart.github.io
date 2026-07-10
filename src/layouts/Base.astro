@@ -42,34 +42,34 @@ const path = Astro.url.pathname
 </head>
 <body>
   <InternalBanner />
-  <header class="site-nav">
-    <div class="nav-container">
-      <a href="/" class="nav-brand">
-        <img src="/smart-logo-light.svg" alt="" class="logo-light" />
-        <img src="/smart-logo-dark.svg" alt="" class="logo-dark" />
-        <span class="nav-title">OIML SMART</span>
+  <header class="site-nav sticky top-0 z-[100] bg-paper-soft dark:bg-paper-deep border-b border-rule backdrop-saturate-[1.8] backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-14">
+      <a href="/" class="nav-brand flex items-center gap-2 no-underline text-ink">
+        <img src="/smart-logo-light.svg" alt="" class="logo-light h-7 w-auto" />
+        <img src="/smart-logo-dark.svg" alt="" class="logo-dark h-7 w-auto" />
+        <span class="font-serif text-base font-semibold tracking-tight">OIML SMART</span>
       </a>
       <MobileNav client:load />
-      <nav class="nav-menu" id="nav-menu">
-        <a href="/recommendations/" class={path.startsWith('/recommendations') ? 'active' : ''}>Recommendations</a>
-        <a href="/library/" class={path.startsWith('/library') ? 'active' : ''}>Documents</a>
-        <a href="/docs/" class={path.startsWith('/docs') ? 'active' : ''}>Developers</a>
-        <a href="/oiml-cs" class={path === '/oiml-cs' ? 'active' : ''}>OIML-CS</a>
+      <nav class="nav-menu flex items-center gap-5" id="nav-menu">
+        <a href="/recommendations/" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path.startsWith('/recommendations') ? 'text-accent font-semibold' : ''}`}>Recommendations</a>
+        <a href="/library/" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path.startsWith('/library') ? 'text-accent font-semibold' : ''}`}>Documents</a>
+        <a href="/docs/" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path.startsWith('/docs') ? 'text-accent font-semibold' : ''}`}>Developers</a>
+        <a href="/oiml-cs" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path === '/oiml-cs' ? 'text-accent font-semibold' : ''}`}>OIML-CS</a>
         <AboutDropdown client:load />
-        <a href="/blog/" class={path.startsWith('/blog') ? 'active' : ''}>Blog</a>
+        <a href="/blog/" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path.startsWith('/blog') ? 'text-accent font-semibold' : ''}`}>Blog</a>
         <SearchBox client:idle />
         <ThemeToggle client:load />
-        <a href="/login/" class="nav-cta">Sign in ↗</a>
+        <a href="/login/" class="text-sm font-semibold text-accent whitespace-nowrap">Sign in ↗</a>
       </nav>
     </div>
   </header>
-  <main>
+  <main class="min-h-[calc(100vh-3.5rem-5rem)]">
     <slot />
   </main>
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p>A programme of the <a href="https://www.oiml.org">International Organization of Legal Metrology</a>, delivered by <a href="https://www.ribose.com">Ribose</a></p>
-      <p class="copyright">Content © OIML · Code © Ribose</p>
+  <footer class="site-footer border-t border-rule bg-paper-raised py-8 px-6">
+    <div class="max-w-7xl mx-auto text-center">
+      <p class="text-[0.8125rem] text-ink-muted">A programme of the <a href="https://www.oiml.org" class="text-accent">International Organization of Legal Metrology</a>, delivered by <a href="https://www.ribose.com" class="text-accent">Ribose</a></p>
+      <p class="copyright text-[0.8125rem] text-ink-muted mt-1">Content © OIML · Code © Ribose</p>
     </div>
   </footer>
 
@@ -92,202 +92,19 @@ const path = Astro.url.pathname
 </html>
 
 <style is:global>
-/* ── Reset ────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; }
-* { margin: 0; padding: 0; }
-body { line-height: 1.5; -webkit-font-smoothing: antialiased; }
-
-/* ── UX polish ────────────────────────────────────── */
-html { scroll-behavior: smooth; }
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-::selection {
-  background: var(--accent);
-  color: var(--paper);
-}
-img, picture, video, canvas, svg { display: block; max-width: 100%; }
-input, button, textarea, select { font: inherit; color: inherit; }
-a { color: inherit; text-decoration: none; }
-ul, ol { list-style: none; }
-
-/* ── Body ─────────────────────────────────────────── */
-body {
-  font-family: var(--font-sans);
-  font-feature-settings: 'kern', 'liga', 'calt', 'ss01';
-  background-color: var(--paper);
-  color: var(--ink);
-}
-
-/* ── Buttons ──────────────────────────────────────── */
-.btn {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.75rem 1.25rem; border-radius: 4px;
-  font-size: 0.9375rem; font-weight: 500; text-decoration: none;
-  transition: all 0.15s ease; border: 1px solid transparent; cursor: pointer;
-}
-.btn-primary { background-color: var(--ink); color: var(--paper); }
-.btn-primary:hover { background-color: var(--accent); color: #fff; }
-.btn-ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
-.btn-ghost:hover { border-color: var(--ink); background: var(--paper-soft); }
-.btn .arrow { transition: transform 0.15s; }
-.btn:hover .arrow { transform: translateX(2px); }
-
-/* ── Nav ──────────────────────────────────────────── */
-.site-nav {
-  position: sticky; top: 0; z-index: 100;
-  background-color: var(--paper-soft); border-bottom: 1px solid var(--rule);
-  backdrop-filter: saturate(180%) blur(12px);
-}
-.dark .site-nav { background-color: var(--paper-deep); }
-.nav-container {
-  max-width: 80rem; margin: 0 auto; padding: 0 1.5rem;
-  display: flex; align-items: center; justify-content: space-between; height: 56px;
-}
-
-/* Brand (logo + title) */
-.nav-brand {
-  display: flex; align-items: center; gap: 0.5rem;
-  text-decoration: none; color: var(--ink);
-}
-.nav-brand img { height: 28px; width: auto; }
+/* Dark-mode logo switching (light logo by default, dark logo when .dark) */
 .logo-dark { display: none; }
 .dark .logo-light { display: none; }
 .dark .logo-dark { display: inline-block; }
-.nav-title {
-  font-family: var(--font-serif);
-  font-size: 1rem; font-weight: 600; letter-spacing: -0.01em;
-}
 
-/* Nav menu */
-.nav-menu { display: flex; align-items: center; gap: 1.25rem; }
-.nav-menu > a {
-  font-size: 0.875rem; font-weight: 500; color: var(--ink-soft);
-  transition: color 0.15s; text-decoration: none; white-space: nowrap;
-}
-.nav-menu > a:hover { color: var(--accent); }
-.nav-menu > a.active { color: var(--accent); font-weight: 600; }
-.nav-cta { color: var(--accent) !important; font-weight: 600; }
-
-/* Dropdown */
-.nav-dropdown { position: relative; }
-.dropdown-trigger {
-  background: none; border: none; cursor: pointer;
-  font-size: 0.875rem; font-weight: 500; color: var(--ink-soft);
-  display: flex; align-items: center; gap: 0.25rem; white-space: nowrap;
-  transition: color 0.15s;
-}
-.dropdown-trigger:hover { color: var(--accent); }
-.dropdown-trigger .caret { font-size: 0.625rem; }
-.dropdown-panel {
-  position: absolute; top: 100%; left: 0; margin-top: 0.5rem;
-  min-width: 220px; background-color: var(--paper-soft);
-  border: 1px solid var(--rule); border-radius: 8px; padding: 0.375rem;
-  box-shadow: 0 12px 32px -8px rgba(0,0,0,0.15);
-  display: flex; flex-direction: column; gap: 0.125rem;
-  opacity: 0; visibility: hidden; transform: translateY(-4px);
-  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
-  z-index: 200;
-}
-.dropdown-panel.open { opacity: 1; visibility: visible; transform: translateY(0); }
-.dropdown-panel a {
-  display: block; padding: 0.5rem 0.75rem; border-radius: 4px;
-  font-size: 0.875rem; color: var(--ink-soft); text-decoration: none;
-}
-.dropdown-panel a:hover { background: var(--paper-raised); color: var(--accent); }
-
-/* Theme toggle */
-.theme-toggle {
-  background: none; border: 1px solid var(--rule); border-radius: 4px;
-  width: 32px; height: 32px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.875rem; transition: border-color 0.15s, background 0.15s;
-}
-.theme-toggle:hover { border-color: var(--accent); }
-.icon-moon { display: none; }
-.dark .icon-sun { display: none; }
-.dark .icon-moon { display: inline; }
-
-/* Hamburger */
-.nav-hamburger {
-  display: none; flex-direction: column; gap: 4px;
-  background: none; border: none; cursor: pointer; padding: 8px;
-}
-.nav-hamburger span {
-  display: block; width: 20px; height: 2px; background: var(--ink);
-  transition: transform 0.2s, opacity 0.2s;
-}
-
+/* Mobile nav: slide-in panel toggled by body.nav-open (set by MobileNav.vue) */
 @media (max-width: 768px) {
-  .nav-hamburger { display: flex; }
   .nav-menu {
-    position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+    position: fixed; top: 3.5rem; left: 0; right: 0; bottom: 0;
     background: var(--paper); flex-direction: column; padding: 2rem 1.5rem;
     gap: 1.25rem; transform: translateX(100%); transition: transform 0.25s ease;
     z-index: 90; overflow-y: auto;
   }
   .nav-open .nav-menu { transform: translateX(0); }
-  .nav-open .nav-hamburger span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  .nav-open .nav-hamburger span:nth-child(2) { opacity: 0; }
-  .nav-open .nav-hamburger span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-  .dropdown-panel {
-    position: static; box-shadow: none; border: none; opacity: 1;
-    visibility: visible; transform: none; padding-left: 1rem;
-  }
-  .dropdown-trigger .caret { display: none; }
-  .search-mount { width: 100%; }
 }
-
-/* ── Footer ───────────────────────────────────────── */
-.site-footer { border-top: 1px solid var(--rule); background: var(--paper-raised); padding: 2rem 1.5rem; }
-.footer-inner { max-width: 80rem; margin: 0 auto; text-align: center; }
-.footer-inner p { font-size: 0.8125rem; color: var(--ink-muted); }
-.footer-inner a { color: var(--accent); }
-.footer-inner .copyright { margin-top: 0.25rem; }
-
-/* ── Main ─────────────────────────────────────────── */
-main { min-height: calc(100vh - 56px - 80px); }
-
-/* ── Prose typography ─────────────────────────────── */
-.prose { max-width: 48rem; margin: 0 auto; padding: 2rem 1.5rem; }
-.prose h1 {
-  font-family: var(--font-serif);
-  font-size: 2.5rem; font-weight: 600; line-height: 1.1;
-  letter-spacing: -0.025em; margin-bottom: 1.5rem; color: var(--ink);
-}
-.prose h2 {
-  font-family: var(--font-serif);
-  font-size: 1.75rem; font-weight: 500; line-height: 1.2;
-  margin-top: 3rem; margin-bottom: 1rem; padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--rule); color: var(--ink);
-}
-.prose h3 {
-  font-family: var(--font-serif);
-  font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem;
-}
-.prose p { font-family: var(--font-sans); line-height: 1.7; margin-bottom: 1rem; }
-.prose ul, .prose ol { margin-bottom: 1rem; padding-left: 1.5rem; }
-.prose ul { list-style: disc; }
-.prose ol { list-style: decimal; }
-.prose li { line-height: 1.7; margin-bottom: 0.5rem; }
-.prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-.prose code {
-  font-family: var(--font-mono); font-size: 0.875em;
-  background: var(--accent-soft); padding: 0.125em 0.375em; border-radius: 3px;
-}
-.prose pre {
-  background: var(--paper-raised); border: 1px solid var(--rule);
-  border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;
-}
-.prose pre code { background: transparent; padding: 0; font-size: 0.875rem; }
-.prose blockquote {
-  border-left: 3px solid var(--accent); padding-left: 1rem;
-  margin: 1.5rem 0; color: var(--ink-soft); font-style: italic;
-}
-.prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
-.prose th, .prose td { padding: 0.75rem; border: 1px solid var(--rule); text-align: left; }
-.prose th { background: var(--paper-raised); font-weight: 600; }
-.prose img { max-width: 100%; height: auto; margin: 1.5rem 0; }
 </style>
