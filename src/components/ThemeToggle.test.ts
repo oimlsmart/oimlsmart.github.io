@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { describe, it, expect, beforeEach } from 'vitest'
+import { mount, flushPromises } from '@vue/test-utils'
 import ThemeToggle from './ThemeToggle.vue'
 
 // ─────────────────────────────────────────────────────────────────────
@@ -41,10 +41,10 @@ describe('ThemeToggle', () => {
   it('reads stored dark preference on mount', async () => {
     localStorage.setItem('oiml-theme', 'dark')
     const wrapper = mount(ThemeToggle)
-    // Wait for onMounted to fire
-    await wrapper.vm.$nextTick()
+    await flushPromises()
     // applyTheme should have added the dark class
     expect(document.documentElement.classList.contains('dark')).toBe(true)
+    wrapper.unmount()
   })
 
   it('toggles theme on click and persists', async () => {

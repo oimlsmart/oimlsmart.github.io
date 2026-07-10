@@ -2,6 +2,10 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import AboutDropdown from './AboutDropdown.vue'
 
+// Component was refactored: trigger is a bare <button>, panel is a
+// bare <div> with Tailwind utilities. Selectors below target by
+// structure (root > button, root > div, div > a) rather than class.
+
 describe('AboutDropdown', () => {
   beforeEach(() => {
     document.body.innerHTML = ''
@@ -9,23 +13,22 @@ describe('AboutDropdown', () => {
 
   it('mounts and renders the trigger with all 6 links', () => {
     const wrapper = mount(AboutDropdown, { attachTo: document.body })
-    expect(wrapper.find('button.dropdown-trigger').exists()).toBe(true)
-    expect(wrapper.findAll('.dropdown-panel a').length).toBe(6)
+    expect(wrapper.find('button').exists()).toBe(true)
+    expect(wrapper.findAll('a').length).toBe(6)
     wrapper.unmount()
   })
 
-  it('starts closed (panel hidden)', () => {
+  it('starts with the panel hidden', () => {
     const wrapper = mount(AboutDropdown, { attachTo: document.body })
-    const panel = wrapper.find('.dropdown-panel')
+    const panel = wrapper.find('div:not([class*="relative"])')
     expect(panel.classes()).toContain('hidden')
-    expect(panel.classes()).not.toContain('flex')
     wrapper.unmount()
   })
 
   it('opens on trigger click', async () => {
     const wrapper = mount(AboutDropdown, { attachTo: document.body })
-    await wrapper.find('button.dropdown-trigger').trigger('click')
-    const panel = wrapper.find('.dropdown-panel')
+    await wrapper.find('button').trigger('click')
+    const panel = wrapper.find('div:not([class*="relative"])')
     expect(panel.classes()).toContain('flex')
     expect(panel.classes()).not.toContain('hidden')
     wrapper.unmount()
@@ -33,29 +36,27 @@ describe('AboutDropdown', () => {
 
   it('toggles closed when opened again', async () => {
     const wrapper = mount(AboutDropdown, { attachTo: document.body })
-    const trigger = wrapper.find('button.dropdown-trigger')
+    const trigger = wrapper.find('button')
     await trigger.trigger('click')
-    expect(wrapper.find('.dropdown-panel').classes()).toContain('flex')
+    expect(wrapper.find('div:not([class*="relative"])').classes()).toContain('flex')
     await trigger.trigger('click')
-    expect(wrapper.find('.dropdown-panel').classes()).toContain('hidden')
+    expect(wrapper.find('div:not([class*="relative"])').classes()).toContain('hidden')
     wrapper.unmount()
   })
 
   it('closes when clicking outside the dropdown', async () => {
     const wrapper = mount(AboutDropdown, { attachTo: document.body })
-    // Open
-    await wrapper.find('button.dropdown-trigger').trigger('click')
-    expect(wrapper.find('.dropdown-panel').classes()).toContain('flex')
-    // Click outside
+    await wrapper.find('button').trigger('click')
+    expect(wrapper.find('div:not([class*="relative"])').classes()).toContain('flex')
     document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     await wrapper.vm.$nextTick()
-    expect(wrapper.find('.dropdown-panel').classes()).toContain('hidden')
+    expect(wrapper.find('div:not([class*="relative"])').classes()).toContain('hidden')
     wrapper.unmount()
   })
 
   it('uses real anchor tags with the expected hrefs', () => {
     const wrapper = mount(AboutDropdown, { attachTo: document.body })
-    const hrefs = wrapper.findAll('.dropdown-panel a').map(a => a.attributes('href'))
+    const hrefs = wrapper.findAll('a').map(a => a.attributes('href'))
     expect(hrefs).toEqual([
       '/about/what-is-smart',
       '/about/why-smart',

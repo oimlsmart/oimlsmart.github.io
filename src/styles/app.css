@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode: dark:bg-*, dark:text-* */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ── Design system tokens (Tailwind @theme) ──────────
    These become both CSS variables AND Tailwind utilities.
    e.g. --color-brand-600 → bg-brand-600, text-brand-600
@@ -111,4 +114,30 @@
 
   --grid-line:        rgba(245, 239, 228, 0.04);
   --grid-line-strong: rgba(245, 239, 228, 0.08);
+}
+
+/* ── Component classes via @layer + @apply ───────────
+   These use Tailwind utilities under the hood. Override
+   by adding more specific utilities on the element.
+   ──────────────────────────────────────────────────── */
+@layer components {
+  .btn {
+    @apply inline-flex items-center gap-2 px-5 py-3 rounded text-sm font-medium transition-all cursor-pointer border border-transparent no-underline;
+  }
+  .btn-primary {
+    @apply text-white;
+    background-color: var(--ink);
+  }
+  .btn-primary:hover {
+    background-color: var(--accent);
+  }
+  .btn-ghost {
+    @apply bg-transparent;
+    color: var(--ink);
+    border-color: var(--rule);
+  }
+  .btn-ghost:hover {
+    background-color: var(--paper-soft);
+    border-color: var(--ink);
+  }
 }

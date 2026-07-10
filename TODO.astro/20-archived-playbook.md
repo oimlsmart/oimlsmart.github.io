@@ -1,37 +1,74 @@
-# 20 — Document the migration-from-smart-browser playbook
+# 20 — Document smart/browser archive playbook
 
-**Status:** pending
-**Depends on:** 09, 10-15 (composable + page migration done)
-
-## Why
-
-Future contributors (including future me) will look at `smart/browser/` and wonder: "is this used, or is it archived?". Without explicit guidance they might:
-- Re-introduce dependencies that we worked to remove
-- Re-deploy the local-server workflow
-- Re-split the codebase into static-site + browser-app
+**Status:** ready to write (documentation only)
+**Depends on:** nothing — can land independently of code migration
 
 ## What to do
 
-Create `smart/browser/ARCHIVED.md` (or whatever doesn't collide with existing docs) that explains:
-- The smart browser app was the *original* implementation
-- It has been (is being) migrated into `oimlsmart.github.io` (Astro)
-- For [period X], `bin/dev` in the smart repo will continue to work as a fallback
-- After production cutover (TODO.astro/17), this repo becomes "the legacy implementation"
-- Reference back to the new live deployment
+Once the migration to oimlsmart.github.io is partially complete (composables + services + first page live), add explicit "this is the legacy implementation" documentation to `smart/browser/`:
 
-## Open question
+### `smart/browser/ARCHIVED.md`
 
-Should we:
-- (A) Keep `smart/browser/` untouched as reference. Mark with ARCHIVED.md.
-- (B) Move all useful code into oimlsmart.github.io, then `rm -rf smart/browser/` (but per global rule: NEVER DELETE source).
-- (C) Hybrid: move code, leave a tagged final commit and ARCHIVED.md.
+```markdown
+# smart/browser — Legacy Reference Implementation
 
-Per the never-delete-source rule, option (B) is out. The choice is between A and C.
+**Status:** Reference only. Active development has moved to
+[oimlsmart/oimlsmart.github.io](https://github.com/oimlsmart/oimlsmart.github.io).
 
-For the initial migration, (A) is correct: keep the legacy code, mark it clearly. (C) can come later when we're confident the migration is stable.
+This directory holds the original Vue + Vite implementation of the
+OIML SMART browser app. It is preserved as a reference for the
+behavior that the new Astro-based site must replicate.
+
+## What's still here
+
+- IndexedDB schema + 6 entity stores
+- ~30 Vue workflow pages (cs/*, application_detail, etc.)
+- 1501 vitest tests (the canonical behavior spec)
+- The Hono server with OAuth routes
+- demo data seeding (useSampleData.ts, useUpgradeSampleData.ts)
+
+## What's migrated
+
+See [TODO.astro/index.md](https://github.com/oimlsmart/oimlsmart.github.io/blob/main/TODO.astro/index.md)
+for the live migration status. As each phase completes:
+- The corresponding code in smart/browser/ stays UNCHANGED
+- New code lands in oimlsmart.github.io/src/lib/
+- Tests get ported and run in both places until cutover
+
+## When this directory goes away
+
+Per global rule "never delete source", this directory will NOT be
+deleted. After production cutover (TODO.astro/17), it will be marked
+as `@deprecated` in package.json and a banner will appear in the README.
+
+## If you need to run the legacy app
+
+```sh
+cd smart/browser
+bin/dev
+```
+
+Visit http://localhost:5190 — same as during the pilot programme.
+```
+
+### Update `smart/browser/README.md` (or create)
+
+Add a banner at the top:
+```
+> ⚠️  **Legacy implementation.** Active development is at
+> [oimlsmart/oimlsmart.github.io](https://github.com/oimlsmart/oimlsmart.github.io).
+> See ARCHIVED.md for the migration plan.
+```
+
+### Why not delete?
+
+Per the project's hard rule (CLAUDE.md global rule, "ABSOLUTE RULE: NEVER DELETE SOURCE FILES"):
+the smart/browser/ directory contains the original implementation
+including its 1501-test behavior spec. Deleting it would lose that
+reference. Migration is additive; legacy stays.
 
 ## Acceptance criteria
 
-- [ ] ARCHIVED.md created in smart/browser
-- [ ] README at the smart repo root mentions the migration target
+- [ ] `smart/browser/ARCHIVED.md` exists with the content above
+- [ ] `smart/browser/README.md` has the legacy banner
 - [ ] No code dependencies break
