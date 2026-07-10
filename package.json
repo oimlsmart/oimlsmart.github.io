@@ -18,12 +18,14 @@
     "@vitest/coverage-v8": "^4.1.10",
     "@vue/test-utils": "^2.4.11",
     "astro": "^7.0.7",
+    "fake-indexeddb": "^6.2.5",
     "jsdom": "^29.1.1",
     "vitest": "^4.1.10"
   },
   "dependencies": {
     "@astrojs/vue": "^7.0.1",
     "@tailwindcss/vite": "^4.3.2",
+    "idb": "^8.0.3",
     "pagefind": "^1.5.2",
     "tailwindcss": "^4.3.2",
     "vue": "^3.5.39"
