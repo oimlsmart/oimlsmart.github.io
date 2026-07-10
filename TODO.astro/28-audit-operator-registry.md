@@ -1,6 +1,6 @@
 # 28 — Audit: criterion operator registry (true OCP)
 
-**Status:** proposal
+**Status:** ✓ implemented
 **Type:** architectural improvement
 **Audit finding:** `evaluateMatch()` uses a `switch` statement over operator strings
 
