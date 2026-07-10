@@ -1,6 +1,6 @@
 # 30 — Audit: page-render contract test (every STANDARDS entry has a page)
 
-**Status:** proposal
+**Status:** ✓ implemented
 **Type:** test infrastructure / model-driven enforcement
 **Audit finding:** there's no automated check that every standard in the STANDARDS registry has a corresponding `/library/<slug>/` and `/recommendations/<slug>/` page
 

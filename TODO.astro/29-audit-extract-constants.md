@@ -1,6 +1,6 @@
 # 29 — Audit: constants extracted from inline literals
 
-**Status:** proposal
+**Status:** ✓ implemented
 **Type:** architectural improvement / DRY
 **Audit finding:** magic numbers and strings scattered across pages
 

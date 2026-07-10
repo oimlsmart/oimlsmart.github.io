@@ -95,3 +95,17 @@ export function getStandardBySlug(slug: string): StandardRef | undefined {
 export function getStandardByNumber(number: string): StandardRef | undefined {
   return STANDARDS.find(s => s.recommendationNumber === number)
 }
+
+/** Aggregate counts derived from STANDARDS — single source for home-page stats. */
+export const STANDARDS_STATS = {
+  total: STANDARDS.length,
+  totalRequirements: STANDARDS.reduce((sum, s) => sum + s.counts.requirements, 0),
+  totalTests: STANDARDS.reduce((sum, s) => sum + s.counts.tests, 0),
+  totalForms: STANDARDS.reduce((sum, s) => sum + s.counts.forms, 0),
+} as const
+
+/** Display helper: round up to nearest 10 and append '+' for large counts. */
+export function approximate(n: number): string {
+  if (n >= 100) return `${Math.ceil(n / 10) * 10}+`
+  return String(n)
+}
