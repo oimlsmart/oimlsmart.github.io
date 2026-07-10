@@ -1,31 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-
-const isDark = ref(false)
-
-onMounted(() => {
-  const stored = localStorage.getItem('oiml-theme')
-  isDark.value = stored
-    ? stored === 'dark'
-    : window.matchMedia('(prefers-color-scheme: dark)').matches
-  applyTheme()
-})
-
-function applyTheme() {
-  document.documentElement.classList.toggle('dark', isDark.value)
-}
-
-function toggle() {
-  isDark.value = !isDark.value
-  localStorage.setItem('oiml-theme', isDark.value ? 'dark' : 'light')
-  applyTheme()
-}
+import { useTheme } from '../composables/useTheme'
+const { isDark, toggle } = useTheme()
 </script>
 
 <template>
   <button
     class="theme-toggle"
-    @click="toggle"
+    @click="toggle" data-testid="theme-toggle"
     :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
   >
     <span v-show="!isDark" class="icon-sun">☀</span>
