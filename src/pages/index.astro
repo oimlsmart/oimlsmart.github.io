@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro'
 import SITE from '../data/site-meta'
-import { STANDARDS } from '../data/standards'
+import { STANDARDS, STANDARDS_STATS, approximate } from '../data/standards'
 
 const acronym = [
   { letter: 'S', word: 'Standards', description: 'International metrology recommendations as structured digital artifacts.' },
@@ -12,10 +12,10 @@ const acronym = [
 ]
 
 const stats = [
-  { label: 'Recommendations', value: '3' },
-  { label: 'Requirements', value: '180+' },
-  { label: 'Conformance Tests', value: '60+' },
-  { label: 'Forms', value: '40+' },
+  { label: 'Recommendations', value: String(STANDARDS_STATS.total) },
+  { label: 'Requirements', value: approximate(STANDARDS_STATS.totalRequirements) },
+  { label: 'Conformance Tests', value: approximate(STANDARDS_STATS.totalTests) },
+  { label: 'Forms', value: approximate(STANDARDS_STATS.totalForms) },
 ]
 
 const recommendations = STANDARDS.map(s => ({

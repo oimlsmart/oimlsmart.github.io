@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { STANDARDS, getStandardById, getStandardBySlug, getStandardByNumber } from './standards'
+import { STANDARDS, getStandardById, getStandardBySlug, getStandardByNumber, STANDARDS_STATS, approximate } from './standards'
 
 describe('standards registry', () => {
   describe('STANDARDS shape', () => {
@@ -64,6 +64,42 @@ describe('standards registry', () => {
 
     it('getStandardByNumber returns the matching standard', () => {
       expect(getStandardByNumber('R 60')?.slug).toBe('r60')
+    })
+  })
+
+  describe('STANDARDS_STATS', () => {
+    it('total matches STANDARDS.length', () => {
+      expect(STANDARDS_STATS.total).toBe(STANDARDS.length)
+    })
+
+    it('totalRequirements is the sum of all standards', () => {
+      const manual = STANDARDS.reduce((sum, s) => sum + s.counts.requirements, 0)
+      expect(STANDARDS_STATS.totalRequirements).toBe(manual)
+    })
+
+    it('totalTests is the sum of all standards', () => {
+      const manual = STANDARDS.reduce((sum, s) => sum + s.counts.tests, 0)
+      expect(STANDARDS_STATS.totalTests).toBe(manual)
+    })
+
+    it('totalForms is the sum of all standards', () => {
+      const manual = STANDARDS.reduce((sum, s) => sum + s.counts.forms, 0)
+      expect(STANDARDS_STATS.totalForms).toBe(manual)
+    })
+  })
+
+  describe('approximate', () => {
+    it('returns the number as-is for values under 100', () => {
+      expect(approximate(42)).toBe('42')
+      expect(approximate(99)).toBe('99')
+      expect(approximate(0)).toBe('0')
+    })
+
+    it('rounds up to nearest 10 and appends + for values >= 100', () => {
+      expect(approximate(100)).toBe('100+')
+      expect(approximate(101)).toBe('110+')
+      expect(approximate(105)).toBe('110+')
+      expect(approximate(195)).toBe('200+')
     })
   })
 })
