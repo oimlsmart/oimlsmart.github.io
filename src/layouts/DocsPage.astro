@@ -21,74 +21,19 @@ const next = idx < all.length - 1 ? all[idx + 1] : null
     <Content />
   </div>
   {(prev || next) && (
-    <nav class="pn">
+    <nav class="flex justify-between gap-4 mt-12 pt-8 border-t border-rule">
       {prev && (
-        <a class="pn-link" href={`/docs/${prev.id}`}>
-          <span class="pn-dir">← Previous</span>
-          <span class="pn-name">{prev.data.shortTitle || prev.data.title}</span>
+        <a class="flex flex-col gap-0.5 no-underline py-3.5 px-4 border border-rule rounded-md flex-1 transition-colors hover:border-accent" href={`/docs/${prev.id}`}>
+          <span class="font-mono text-[0.6875rem] text-ink-muted">← Previous</span>
+          <span class="font-medium text-ink text-sm">{prev.data.shortTitle || prev.data.title}</span>
         </a>
       )}
       {next && (
-        <a class="pn-link pn-right" href={`/docs/${next.id}`}>
-          <span class="pn-dir">Next →</span>
-          <span class="pn-name">{next.data.shortTitle || next.data.title}</span>
+        <a class="flex flex-col gap-0.5 no-underline py-3.5 px-4 border border-rule rounded-md flex-1 text-right transition-colors hover:border-accent" href={`/docs/${next.id}`}>
+          <span class="font-mono text-[0.6875rem] text-ink-muted">Next →</span>
+          <span class="font-medium text-ink text-sm">{next.data.shortTitle || next.data.title}</span>
         </a>
       )}
     </nav>
   )}
 </DocsLayout>
-
-<style is:global>
-.docs-body h2 {
-  font-family: var(--font-serif);
-  font-size: 1.5rem; font-weight: 600;
-  margin-top: 2.5rem; margin-bottom: 0.75rem;
-}
-.docs-body h3 {
-  font-family: var(--font-serif);
-  font-size: 1.1875rem; font-weight: 600;
-  margin-top: 1.75rem; margin-bottom: 0.5rem;
-}
-.docs-body p { line-height: 1.7; margin-bottom: 1rem; }
-.docs-body ul, .docs-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
-.docs-body ul { list-style: disc; }
-.docs-body ol { list-style: decimal; }
-.docs-body li { line-height: 1.7; margin-bottom: 0.375rem; }
-.docs-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
-.docs-body code {
-  font-family: var(--font-mono); font-size: 0.85em;
-  background: var(--accent-soft); padding: 0.1em 0.3em; border-radius: 3px;
-}
-.docs-body pre {
-  background: var(--paper-raised); border: 1px solid var(--rule);
-  border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.25rem;
-}
-.docs-body pre code { background: transparent; padding: 0; font-size: 0.8125rem; }
-.docs-body table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; }
-.docs-body th, .docs-body td { padding: 0.5rem 0.75rem; border: 1px solid var(--rule); text-align: left; font-size: 0.875rem; }
-.docs-body th { background: var(--paper-raised); font-weight: 600; }
-.docs-body blockquote {
-  border-left: 3px solid var(--accent); padding-left: 1rem;
-  margin: 1.25rem 0; color: var(--ink-soft); font-style: italic;
-}
-</style>
-
-<style>
-.pn {
-  display: flex; justify-content: space-between; gap: 1rem;
-  margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--rule);
-}
-.pn-link {
-  display: flex; flex-direction: column; gap: 0.125rem;
-  text-decoration: none; padding: 0.875rem 1rem;
-  border: 1px solid var(--rule); border-radius: 6px;
-  flex: 1; transition: border-color 0.15s;
-}
-.pn-link:hover { border-color: var(--accent); }
-.pn-right { text-align: right; }
-.pn-dir {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem; color: var(--ink-muted);
-}
-.pn-name { font-weight: 500; color: var(--ink); font-size: 0.875rem; }
-</style>

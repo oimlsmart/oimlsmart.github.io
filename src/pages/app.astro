@@ -8,41 +8,16 @@ const description = `Launcher for the OIML SMART application at ${APP_URL}.`
 <Base title={title} description={description}>
   <meta slot="head" http-equiv="refresh" content={`0;url=${APP_URL}`} />
   <script is:inline define:vars={{ APP_URL }}>
-    // Immediate redirect; meta refresh is the backup for no-JS clients.
     window.location.replace(APP_URL)
   </script>
-  <div class="launcher-shell">
-    <div class="launcher-card">
-      <h1>Opening the OIML SMART app…</h1>
-      <p>If you are not redirected automatically, <a href={APP_URL}>open {APP_URL}</a> manually.</p>
-      <p class="launcher-foot">
+  <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center p-12 px-4">
+    <div class="bg-paper-soft border border-rule rounded-lg p-8 max-w-[480px] w-full text-center">
+      <h1 class="font-serif text-2xl mb-4">Opening the OIML SMART app…</h1>
+      <p class="text-[0.9375rem] text-ink-soft mb-3">If you are not redirected automatically, <a href={APP_URL} class="text-accent underline">open {APP_URL}</a> manually.</p>
+      <p class="mt-6 pt-5 border-t border-dashed border-rule text-xs text-ink-muted">
         Requires the smart app running locally. From the <code>smart</code> repo, run <code>bin/dev</code>.
-        Not signed in yet? <a href="/login/">Sign in</a>.
+        Not signed in yet? <a href="/login/" class="text-accent underline">Sign in</a>.
       </p>
     </div>
   </div>
 </Base>
-
-<style>
-.launcher-shell {
-  min-height: calc(100vh - 64px);
-  display: flex; align-items: center; justify-content: center;
-  padding: 3rem 1rem;
-}
-.launcher-card {
-  background: var(--paper-soft); border: 1px solid var(--rule);
-  border-radius: 8px; padding: 2rem; max-width: 480px; width: 100%;
-  text-align: center;
-}
-.launcher-card h1 {
-  font-family: var(--font-serif);
-  font-size: 1.5rem; margin: 0 0 1rem;
-}
-.launcher-card p { font-size: 0.9375rem; color: var(--ink-soft); margin: 0 0 0.75rem; }
-.launcher-card a { color: var(--accent); text-decoration: underline; }
-.launcher-foot {
-  margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px dashed var(--rule);
-  font-size: 0.75rem; color: var(--ink-muted);
-}
-.launcher-foot code { font-family: monospace; font-size: 0.6875rem; }
-</style>

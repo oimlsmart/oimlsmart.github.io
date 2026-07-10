@@ -11,34 +11,18 @@ function toggle() {
 
 <template>
   <button
-    class="nav-hamburger"
+    class="nav-hamburger flex md:hidden flex-col gap-1 bg-transparent border-none cursor-pointer p-2"
     @click="toggle"
     aria-label="Menu"
     :class="{ 'is-open': isOpen }"
   >
-    <span></span>
-    <span></span>
-    <span></span>
+    <span class="block w-5 h-0.5 bg-ink transition-[transform,opacity] duration-200"></span>
+    <span class="block w-5 h-0.5 bg-ink transition-[transform,opacity] duration-200"></span>
+    <span class="block w-5 h-0.5 bg-ink transition-[transform,opacity] duration-200"></span>
   </button>
 </template>
 
 <style scoped>
-.nav-hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-}
-.nav-hamburger span {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background: var(--ink);
-  transition: transform 0.2s, opacity 0.2s;
-}
 .nav-hamburger.is-open span:nth-child(1) {
   transform: translateY(6px) rotate(45deg);
 }
@@ -47,11 +31,5 @@ function toggle() {
 }
 .nav-hamburger.is-open span:nth-child(3) {
   transform: translateY(-6px) rotate(-45deg);
-}
-
-@media (max-width: 768px) {
-  .nav-hamburger {
-    display: flex;
-  }
 }
 </style>

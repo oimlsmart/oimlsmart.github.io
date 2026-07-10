@@ -24,42 +24,17 @@ const pages = (await getCollection('docs'))
 ---
 
 <DocsLayout title={info.label} description={info.desc}>
-  <div class="sec-intro">
-    <h1>{info.label}</h1>
-    <p>{info.desc}</p>
+  <div class="mb-4">
+    <h1 class="font-serif text-[clamp(1.5rem,3.5vw,2rem)] font-semibold tracking-[-0.025em]">{info.label}</h1>
+    <p class="text-base leading-[1.5] text-ink-soft mt-2">{info.desc}</p>
   </div>
   <DraftCallout />
-  <div class="sec-list">
+  <div class="mt-6">
     {pages.map(p => (
-      <a class="sec-item" href={'/docs/' + p.id}>
-        <span class="sec-item-title">{p.data.shortTitle || p.data.title || p.id.split('/').pop()}</span>
-        {p.data.description && <span class="sec-item-desc">{p.data.description}</span>}
+      <a class="group flex flex-col gap-0.5 py-3 border-b border-rule no-underline text-inherit transition-[padding] duration-150 hover:pl-2" href={'/docs/' + p.id}>
+        <span class="font-serif text-[0.9375rem] font-semibold group-hover:text-accent">{p.data.shortTitle || p.data.title || p.id.split('/').pop()}</span>
+        {p.data.description && <span class="text-[0.8125rem] text-ink-soft">{p.data.description}</span>}
       </a>
     ))}
   </div>
 </DocsLayout>
-
-<style>
-.sec-intro { margin-bottom: 1rem; }
-.sec-intro h1 {
-  font-family: var(--font-serif);
-  font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 600;
-  letter-spacing: -0.025em; margin: 0;
-}
-.sec-intro p {
-  font-size: 1rem; line-height: 1.5; color: var(--ink-soft); margin-top: 0.5rem;
-}
-.sec-list { margin-top: 1.5rem; }
-.sec-item {
-  display: flex; flex-direction: column; gap: 0.125rem;
-  padding: 0.75rem 0; border-bottom: 1px solid var(--rule);
-  text-decoration: none; color: inherit;
-  transition: padding-left 0.15s;
-}
-.sec-item:hover { padding-left: 0.5rem; }
-.sec-item-title {
-  font-family: var(--font-serif); font-size: 0.9375rem; font-weight: 600;
-}
-.sec-item:hover .sec-item-title { color: var(--accent); }
-.sec-item-desc { font-size: 0.8125rem; color: var(--ink-soft); }
-</style>

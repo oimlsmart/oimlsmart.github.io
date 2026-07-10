@@ -1,36 +1,11 @@
 ---
-// PageHero — the consistent hero band at the top of content pages.
-// Reads title/description from frontmatter. No eyebrow.
 const { title, lede, description } = Astro.props
 const displayLede = lede ?? description
 ---
 
 {title && (
-  <div class="page-hero">
-    <h1>{title}</h1>
-    {displayLede && <p class="lede">{displayLede}</p>}
+  <div class="pt-8 pb-6 mb-6 border-b border-rule">
+    <h1 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.025em] leading-[1.15]">{title}</h1>
+    {displayLede && <p class="text-[1.0625rem] leading-[1.6] text-ink-soft max-w-2xl mt-3">{displayLede}</p>}
   </div>
 )}
-
-<style>
-.page-hero {
-  padding: 2rem 0 1.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--rule);
-}
-.page-hero h1 {
-  font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-  margin: 0;
-}
-.lede {
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  color: var(--ink-soft);
-  max-width: 42rem;
-  margin-top: 0.75rem;
-}
-</style>

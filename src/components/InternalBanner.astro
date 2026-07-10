@@ -1,48 +1,11 @@
 ---
-// InternalBanner — persistent DRAFT/pilot notice at the top of every page.
-// Pure HTML/CSS — no JS needed.
 ---
 
-<div class="internal-banner">
-  <div class="internal-banner-inner">
-    <span class="badge">DRAFT</span>
-    <span class="text">
+<div class="bg-[repeating-linear-gradient(45deg,#fffbeb,#fffbeb_10px,#fef3c7_10px,#fef3c7_20px)] dark:bg-[repeating-linear-gradient(45deg,#1f2937,#1f2937_10px,#111827_10px,#111827_20px)] border-b border-[#d97706] py-2.5 px-4 text-xs leading-[1.4] text-[#78350f] dark:text-[#fde68a] text-center">
+  <div class="max-w-7xl mx-auto flex items-center gap-3 justify-center">
+    <span class="shrink-0 bg-[#d97706] text-white font-mono text-[0.6875rem] font-semibold tracking-[0.08em] px-2 py-0.5 rounded-sm">DRAFT</span>
+    <span>
       OIML SMART pilot programme · internal use only · all documents and specifications are drafts and may change without notice
     </span>
   </div>
 </div>
-
-<style>
-.internal-banner {
-  background: repeating-linear-gradient(45deg, #fffbeb, #fffbeb 10px, #fef3c7 10px, #fef3c7 20px);
-  border-bottom: 1px solid #d97706;
-  padding: 0.625rem 1rem;
-  font-size: 0.75rem;
-  line-height: 1.4;
-  color: #78350f;
-  text-align: center;
-}
-:global(.dark) .internal-banner {
-  background: repeating-linear-gradient(45deg, #1f2937, #1f2937 10px, #111827 10px, #111827 20px);
-  color: #fde68a;
-}
-.internal-banner-inner {
-  max-width: 80rem;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  justify-content: center;
-}
-.badge {
-  flex-shrink: 0;
-  background: #d97706;
-  color: white;
-  font-family: monospace;
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  padding: 0.125rem 0.5rem;
-  border-radius: 2px;
-}
-</style>

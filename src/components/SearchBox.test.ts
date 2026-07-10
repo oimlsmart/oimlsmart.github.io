@@ -14,7 +14,7 @@ describe('SearchBox', () => {
   it('mounts and renders the search container', () => {
     const wrapper = mount(SearchBox)
     expect(wrapper.find('#pagefind-search').exists()).toBe(true)
-    expect(wrapper.find('.search-wrapper').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="search-box"]').exists()).toBe(true)
   })
 
   it('does NOT eagerly load pagefind script', () => {
@@ -31,7 +31,7 @@ describe('SearchBox', () => {
     ;(window as { PagefindUI: unknown }).PagefindUI = fakeUi
     document.getElementById = vi.fn().mockReturnValue(document.createElement('div'))
 
-    const focusTarget = wrapper.find('.search-wrapper')
+    const focusTarget = wrapper.find('[data-testid="search-box"]')
     await focusTarget.trigger('focusin')
 
     // Allow the dynamic script load (Promise) to settle
@@ -45,7 +45,7 @@ describe('SearchBox', () => {
   it('idempotent: re-firing focus does not duplicate scripts', async () => {
     const wrapper = mount(SearchBox)
 
-    const focusTarget = wrapper.find('.search-wrapper')
+    const focusTarget = wrapper.find('[data-testid="search-box"]')
     await focusTarget.trigger('focusin')
     await focusTarget.trigger('focusin')
 

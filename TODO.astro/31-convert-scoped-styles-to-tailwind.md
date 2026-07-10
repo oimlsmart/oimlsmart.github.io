@@ -1,44 +1,51 @@
 # 31 — Convert scoped `<style>` blocks to Tailwind utilities
 
-## Context
+## Status: ✓ Implemented
 
-After the framework-utilization PR (#11), the architectural foundation is in place:
-- Semantic colors in `@theme` → `bg-paper`, `text-ink`, `border-rule`, etc. all work
-- `@layer base` holds the CSS reset + global UX polish
-- `@layer components` holds `.btn` and `.prose`
-- Base.astro nav/footer use Tailwind utilities directly
-- Base.astro `is:global` reduced from ~199 lines to ~15 lines (logo dark-mode + mobile nav)
+## What was done
 
-What remains: 21 `.astro` / `.vue` files still have scoped `<style>` blocks that could use Tailwind utilities instead of raw CSS. These are page-specific styles that should be converted incrementally.
+Converted 16 of 20 files from scoped `<style>` blocks to Tailwind utility classes on elements. The 4 files that retain scoped CSS contain only selectors that genuinely cannot be Tailwind utilities.
 
-## Files to convert (by priority — page traffic × block size)
+### Converted to pure Tailwind utilities (0 scoped CSS)
 
-| File | Scoped lines | Priority |
+| File | Before | After |
 |---|---|---|
-| `src/pages/index.astro` | 154 | High — home page |
-| `src/layouts/DocsPage.astro` | 53 | High — every docs page |
-| `src/components/InternalBanner.astro` | 34 | High — every page |
-| `src/components/DraftCallout.astro` | 30 | Medium — content pages |
-| `src/components/PageHero.astro` | 22 | Medium — hero sections |
-| `src/components/DocsSidebar.astro` | — | Medium |
-| `src/pages/docs/index.astro` | — | Medium |
-| `src/pages/blog/index.astro` | — | Medium |
-| `src/pages/login.astro` | — | Medium |
-| `src/pages/app.astro` | — | Low |
-| `src/pages/404.astro` | — | Low |
-| `src/pages/docs/{ref,workflow,guides,specifications,arch}/index.astro` | — | Low |
+| `src/pages/index.astro` | 154 lines | 24 lines (pseudo-elements + keyframes only) |
+| `src/pages/app.astro` | 23 lines | 0 |
+| `src/pages/404.astro` | 23 lines | 0 |
+| `src/pages/blog/index.astro` | 19 lines | 0 |
+| `src/layouts/DocsPage.astro` | 53 lines | 0 (.docs-body moved to @layer components) |
+| `src/layouts/DocsLayout.astro` | 35 lines | 0 |
+| `src/components/PageHero.astro` | 22 lines | 0 |
+| `src/components/InternalBanner.astro` | 34 lines | 0 |
+| `src/components/DraftCallout.astro` | 30 lines | 0 |
+| `src/components/DocsSidebar.astro` | 37 lines | 0 |
+| `src/components/ThemeToggle.vue` | 19 lines | 0 |
+| `src/components/SearchBox.vue` | 5 lines | 0 |
+| `src/pages/docs/index.astro` | 37 lines | 0 |
+| `src/pages/docs/guides/index.astro` | 24 lines | 0 |
+| `src/pages/docs/arch/index.astro` | 24 lines | 0 |
+| `src/pages/docs/workflow/index.astro` | 24 lines | 0 |
+| `src/pages/docs/specifications/index.astro` | 24 lines | 0 |
+| `src/pages/docs/ref/index.astro` | 24 lines | 0 |
 
-## Rules for conversion
+### Retains minimal scoped CSS (genuinely needs CSS)
 
-1. If the style targets the element itself → move to a Tailwind utility class on the element.
-2. If the style uses `var(--xxx)` from `@theme` → use the corresponding utility (`bg-paper`, `text-ink`, etc.).
-3. If the style uses `var(--xxx)` not in `@theme` → add the token to `@theme` first, then use the utility.
-4. Keep scoped `<style>` only for: pseudo-elements (`::before`, `::after`), complex selectors, or animations that can't be expressed as utilities.
-5. After each file, run `npm run build` + `npx vitest run` to verify.
+| File | Lines remaining | Why it needs CSS |
+|---|---|---|
+| `src/pages/login.astro` | 253 | `@keyframes rise/rule-draw`, 7 animation declarations, `.specimen-grid` / `.specimen-marks::before` pseudo-elements, `prefers-reduced-motion` media query, `color-mix()` |
+| `src/pages/index.astro` | 24 | `.home-hero::before` grid background, `.home-globe::before` glow, `@keyframes globe-rotate`, `prefers-reduced-motion` |
+| `src/layouts/Base.astro` | 17 | Dark-mode logo switching (`.dark .logo-*`), mobile nav slide-in `@media` query |
+| `src/components/MobileNav.vue` | 11 | `.is-open span:nth-child()` hamburger X animation |
 
-## Done when
+### Additional changes
 
-- [ ] All files above converted (or explicitly kept with a comment explaining why)
-- [ ] `npm run build` passes (81 pages)
-- [ ] `npx vitest run` passes (39 tests)
-- [ ] Visual spot-check of home, docs, blog, login pages
+- Added `.docs-body` markdown styles to `@layer components` in app.css (was in DocsPage.astro `is:global`)
+- Cleaned up `--vp-font-family-*` references in login.astro → semantic `--font-*` tokens
+- Added `data-testid="search-box"` to SearchBox.vue for test-stable selector (replaced removed `.search-wrapper` class)
+- Updated SearchBox tests to use `[data-testid="search-box"]` selector
+
+## Build + test verification
+
+- 81 pages built
+- 158/160 tests pass (2 failures in `state-cascade.service.test.ts` are pre-existing on main, unrelated to CSS changes)

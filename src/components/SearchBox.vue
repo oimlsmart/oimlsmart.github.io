@@ -43,13 +43,7 @@ function onFocus() {
 </script>
 
 <template>
-  <div class="search-wrapper relative" @focusin="onFocus">
+  <div class="relative min-w-[120px]" data-testid="search-box" @focusin="onFocus">
     <div id="pagefind-search"></div>
   </div>
 </template>
-
-<style scoped>
-.search-wrapper {
-  min-width: 120px;
-}
-</style>
