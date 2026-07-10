@@ -1,51 +1,324 @@
 ---
 import Base from '../layouts/Base.astro'
 const APP_URL = import.meta.env.APP_URL || 'http://localhost:5190'
+const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
 ---
 
 <Base title="Sign in to OIML SMART" description="Authenticate via GitHub OAuth to continue into the OIML SMART application.">
-  <div class="login-shell">
-    <div class="login-card">
-      <div class="login-mark">
-        <img src="/smart-logo-light.svg" alt="OIML SMART" class="logo-light" />
-        <img src="/smart-logo-dark.svg" alt="OIML SMART" class="logo-dark" />
+  <div class="entry">
+    {/* ── Left margin: specimen panel ─────────────────────────── */}
+    <aside class="specimen" aria-hidden="true">
+      <div class="specimen-grid" />
+      <div class="specimen-meta">
+        <span class="specimen-tag">OIML SMART</span>
+        <span class="specimen-locus">Certification System</span>
+        <span class="specimen-edition">Edition · pilot</span>
+        <span class="specimen-date">{today}</span>
       </div>
-      <h1>Sign in</h1>
-      <p>Authenticate via GitHub OAuth to continue into the OIML SMART application.</p>
-      <a class="btn btn-primary login-btn" href={`${APP_URL}/api/auth/signin/github`}>
-        <span>↗</span> Continue with GitHub
+      <div class="specimen-rule" />
+      <div class="specimen-marks">
+        <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+      </div>
+    </aside>
+
+    {/* ── Right: the actual entry ─────────────────────────────── */}
+    <main class="gate">
+      <header class="gate-head">
+        <span class="gate-eyebrow">Access · restricted</span>
+        <h1 class="gate-title">Sign in to enter<br />the certification system.</h1>
+        <p class="gate-lede">
+          OIML SMART is currently operating as a closed pilot. Authentication
+          is brokered through your GitHub identity; no separate credentials
+          are issued.
+        </p>
+      </header>
+
+      <div class="gate-rule" />
+
+      <a class="enter" href={`${APP_URL}/api/auth/signin/github`}>
+        <span class="enter-label">Continue with GitHub</span>
+        <span class="enter-arrow">→</span>
+        <span class="enter-meta">oauth · web flow</span>
       </a>
-      <p class="login-foot">
-        Requires the smart app running locally. From the <code>smart</code> repo, run <code>bin/dev</code>.
+
+      <p class="gate-note">
+        <span class="note-key">Requires</span>
+        <span class="note-val">
+          the SMART application running on this machine. From a clone of the
+          <code>smart</code> repository, execute <code>bin/dev</code> in your
+          terminal. The local server listens on
+          <a href={APP_URL}>{APP_URL.replace(/^https?:\/\//, '')}</a>.
+        </span>
       </p>
-    </div>
+
+      <footer class="gate-foot">
+        <span>Pilot programme · internal use only</span>
+        <span aria-hidden="true">·</span>
+        <a href="/about/what-is-smart">What is OIML SMART?</a>
+      </footer>
+    </main>
   </div>
 </Base>
 
 <style>
-.login-shell {
+/* ── Layout: asymmetric two-column ───────────────────────────── */
+.entry {
   min-height: calc(100vh - 64px);
-  display: flex; align-items: center; justify-content: center;
-  padding: 3rem 1rem;
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(0, 2.2fr);
+  align-items: stretch;
 }
-.login-card {
-  background: var(--vp-c-bg-soft-up); border: 1px solid var(--vp-c-divider);
-  border-radius: 8px; padding: 2.5rem; max-width: 420px; width: 100%;
-  text-align: center; box-shadow: 0 16px 48px -24px rgba(0,0,0,0.18);
+@media (max-width: 800px) {
+  .entry { grid-template-columns: 1fr; }
+  .specimen { display: none; }
 }
-.login-mark { width: 96px; height: 96px; margin: 0 auto 1.5rem; }
-.login-mark img { width: 100%; height: 100%; animation: globe-rotate 90s linear infinite; }
-.logo-dark { display: none; }
-:global(.dark) .logo-light { display: none; }
-:global(.dark) .logo-dark { display: inline-block; }
-.login-card h1 { font-family: var(--vp-font-family-serif); font-size: 1.75rem; margin: 0 0 0.5rem; }
-.login-card p { font-size: 0.9375rem; color: var(--vp-c-text-2); margin: 0 0 2rem; }
-.login-btn { width: 100%; padding: 0.875rem 1rem; justify-content: center; }
-.login-foot {
-  margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed var(--vp-c-divider);
-  font-size: 0.75rem; color: var(--vp-c-text-3);
+
+/* ── Left specimen panel ─────────────────────────────────────── */
+.specimen {
+  position: relative;
+  border-right: 1px solid var(--rule);
+  padding: 4rem 2rem 2rem;
+  background: var(--paper-soft);
+  overflow: hidden;
 }
-.login-foot code { font-family: monospace; font-size: 0.6875rem; }
-@keyframes globe-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .login-mark img { animation: none; } }
+:global(.dark) .specimen { background: var(--paper-deep); }
+
+.specimen-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, transparent 0, transparent calc(100% - 1px), var(--rule) 100%),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 2rem,
+      color-mix(in srgb, var(--rule) 60%, transparent) 2rem,
+      color-mix(in srgb, var(--rule) 60%, transparent) calc(2rem + 1px)
+    );
+  background-size: 100% 100%, 100% 2rem;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.specimen-meta {
+  position: relative;
+  display: flex; flex-direction: column;
+  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  gap: 0.25rem;
+}
+.specimen-tag { font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; }
+.specimen-locus { color: var(--accent); }
+.specimen-edition, .specimen-date {
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
+  font-feature-settings: 'tnum';
+}
+
+.specimen-rule {
+  position: absolute;
+  left: 2rem; right: 2rem; bottom: 5rem;
+  height: 1px;
+  background: var(--rule);
+  transform-origin: left center;
+  animation: rule-draw 720ms cubic-bezier(0.16, 1, 0.3, 1) 80ms both;
+}
+
+.specimen-marks {
+  position: absolute;
+  left: 2rem; right: 2rem; bottom: 2rem;
+  display: flex; justify-content: space-between;
+  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.625rem;
+  color: color-mix(in srgb, var(--ink) 40%, transparent);
+  font-feature-settings: 'tnum';
+}
+.specimen-marks::before,
+.specimen-marks::after {
+  content: ''; position: absolute; top: -1rem; height: 0.5rem;
+  border-left: 1px solid var(--rule);
+}
+.specimen-marks span {
+  position: relative;
+}
+.specimen-marks span::before {
+  content: ''; position: absolute; top: -1rem; left: 50%;
+  width: 1px; height: 0.5rem; background: var(--rule);
+}
+
+/* ── Right entry panel ───────────────────────────────────────── */
+.gate {
+  padding: 5rem 4rem 3rem;
+  max-width: 36rem;
+  display: flex; flex-direction: column;
+  gap: 0;
+}
+@media (max-width: 1100px) { .gate { padding: 4rem 2.5rem 2.5rem; } }
+
+.gate-eyebrow {
+  display: inline-block;
+  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: rise 560ms cubic-bezier(0.16, 1, 0.3, 1) 0ms forwards;
+}
+
+.gate-title {
+  font-family: var(--vp-font-family-serif, 'Fraunces', serif);
+  font-variation-settings: 'opsz' 96, 'wght' 400;
+  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.5rem;
+  color: var(--ink);
+  opacity: 0;
+  animation: rise 640ms cubic-bezier(0.16, 1, 0.3, 1) 80ms forwards;
+}
+
+.gate-lede {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--ink) 75%, transparent);
+  max-width: 30rem;
+  margin: 0 0 2.5rem;
+  opacity: 0;
+  animation: rise 600ms cubic-bezier(0.16, 1, 0.3, 1) 160ms forwards;
+}
+
+.gate-rule {
+  height: 1px;
+  background: var(--rule);
+  margin: 0 0 2.5rem;
+  transform-origin: left center;
+  animation: rule-draw 640ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
+}
+
+/* ── The entry button ────────────────────────────────────────── */
+.enter {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  padding: 1.125rem 1.5rem;
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  border-radius: 2px;
+  font-family: var(--vp-font-family-base, 'IBM Plex Sans', sans-serif);
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              background 220ms ease,
+              color 220ms ease;
+  opacity: 0;
+  animation: rise 600ms cubic-bezier(0.16, 1, 0.3, 1) 320ms forwards;
+}
+.enter:hover {
+  background: var(--accent);
+  transform: translateY(-1px);
+}
+.enter:active { transform: translateY(0); }
+
+.enter-label {
+  grid-column: 1; grid-row: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+.enter-arrow {
+  grid-column: 2; grid-row: 1 / span 2;
+  font-family: var(--vp-font-family-serif, 'Fraunces', serif);
+  font-size: 1.5rem;
+  font-weight: 300;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.enter:hover .enter-arrow { transform: translateX(4px); }
+.enter-meta {
+  grid-column: 1; grid-row: 2;
+  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--paper) 65%, transparent);
+}
+
+/* ── Annotation block ────────────────────────────────────────── */
+.gate-note {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 1rem;
+  margin: 2rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--rule);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--ink) 70%, transparent);
+  opacity: 0;
+  animation: rise 600ms cubic-bezier(0.16, 1, 0.3, 1) 420ms forwards;
+}
+.note-key {
+  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 50%, transparent);
+  padding-top: 0.125rem;
+}
+.note-val code {
+  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.75rem;
+  background: color-mix(in srgb, var(--rule) 50%, transparent);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+.note-val a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  text-underline-offset: 2px;
+}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.gate-foot {
+  display: flex; flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--vp-font-family-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+  opacity: 0;
+  animation: rise 600ms cubic-bezier(0.16, 1, 0.3, 1) 520ms forwards;
+}
+.gate-foot a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  text-underline-offset: 2px;
+}
+
+/* ── Keyframes ───────────────────────────────────────────────── */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes rule-draw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter, .gate-eyebrow, .gate-title, .gate-lede,
+  .gate-note, .gate-foot, .specimen-rule, .gate-rule {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
 </style>
