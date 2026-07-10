@@ -37,7 +37,7 @@ const counts = sections.map(s => allDocs.filter(d => d.id.startsWith(s.key + '/'
 <style>
 .hub-intro { margin-bottom: 1rem; }
 .hub-intro h1 {
-  font-family: var(--vp-font-family-serif);
+  font-family: var(--font-serif);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 600; letter-spacing: -0.025em; margin: 0;
 }
@@ -57,13 +57,13 @@ const counts = sections.map(s => allDocs.filter(d => d.id.startsWith(s.key + '/'
   display: flex; align-items: baseline; justify-content: space-between;
 }
 .hub-card-head h2 {
-  font-family: var(--vp-font-family-serif);
+  font-family: var(--font-serif);
   font-size: 1.125rem; font-weight: 600; margin: 0;
   transition: color 0.15s;
 }
 .hub-card:hover h2 { color: var(--accent); }
 .hub-count {
-  font-family: var(--vp-font-family-mono);
+  font-family: var(--font-mono);
   font-size: 0.6875rem; color: var(--ink-muted);
 }
 .hub-card p {
