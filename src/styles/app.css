@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* ── Design system tokens (Tailwind @theme) ──────────
+   These become both CSS variables AND Tailwind utilities.
+   e.g. --color-brand-600 → bg-brand-600, text-brand-600
+        --font-serif → font-serif
+   ──────────────────────────────────────────────────── */
+@theme {
+  --color-brand-50:  #f0f6ff;
+  --color-brand-100: #dde9fc;
+  --color-brand-200: #bcd3f8;
+  --color-brand-300: #89b4ef;
+  --color-brand-400: #4d8fe0;
+  --color-brand-500: #1a6fc2;
+  --color-brand-600: #004996;
+  --color-brand-700: #003a78;
+  --color-brand-800: #002b5a;
+  --color-brand-900: #001e41;
+  --color-brand-950: #001230;
+
+  --color-teal:       #024873;
+  --color-teal-light: #035a8f;
+  --color-teal-dark:  #013a5e;
+
+  --color-cream:      #faf6ee;
+  --color-cream-soft: #f5ede0;
+  --color-cream-deep: #e8dec8;
+
+  --color-amber-warm:  #d97706;
+  --color-amber-bright: #f59e0b;
+  --color-amber-deep:   #92400e;
+
+  --font-sans:  'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Fraunces', 'Source Serif 4', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-mono:  'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* ── Semantic tokens (light mode) ────────────────────
+   Referenced via var(--ink), var(--paper), etc. throughout
+   the site's scoped styles. Not Tailwind utilities — just
+   plain CSS variables that flip with .dark.
+   ──────────────────────────────────────────────────── */
+:root {
+  --paper:        var(--color-cream);
+  --paper-soft:   #ffffff;
+  --paper-raised: var(--color-cream-soft);
+  --paper-deep:   var(--color-cream-deep);
+
+  --ink:        #0a1628;
+  --ink-soft:   #3a4a63;
+  --ink-muted:  #6b7a92;
+
+  --rule:       #ddd2bd;
+  --rule-soft:  #ebe3d2;
+
+  --accent:        var(--color-brand-600);
+  --accent-hover:  var(--color-brand-700);
+  --accent-soft:   rgba(0, 73, 150, 0.08);
+  --accent-2:      var(--color-teal);
+  --accent-3:      var(--color-amber-warm);
+
+  --grid-line:        rgba(10, 22, 40, 0.04);
+  --grid-line-strong: rgba(10, 22, 40, 0.07);
+
+  /* Legacy VitePress variable aliases (used by existing scoped styles) */
+  --vp-font-family-base:  var(--font-sans);
+  --vp-font-family-serif: var(--font-serif);
+  --vp-font-family-mono:  var(--font-mono);
+  --vp-c-brand-1:   var(--accent);
+  --vp-c-brand-2:   var(--color-brand-500);
+  --vp-c-brand-3:   var(--color-brand-700);
+  --vp-c-brand-soft: var(--accent-soft);
+  --vp-c-bg:          var(--paper);
+  --vp-c-bg-soft:     var(--paper-raised);
+  --vp-c-bg-soft-up:  var(--paper-soft);
+  --vp-c-bg-alt:      #ffffff;
+  --vp-c-bg-elv:      #ffffff;
+  --vp-c-text:        var(--ink);
+  --vp-c-text-1:      var(--ink);
+  --vp-c-text-2:      var(--ink-soft);
+  --vp-c-text-3:      var(--ink-muted);
+  --vp-c-divider:     var(--rule);
+  --vp-c-divider-light:   var(--rule-soft);
+  --vp-c-divider-lighter: var(--rule-soft);
+  --vp-c-gutter:      var(--rule);
+}
+
+.dark {
+  --paper:        #0a1628;
+  --paper-soft:   #13233d;
+  --paper-raised: #18294a;
+  --paper-deep:   #060e1c;
+
+  --ink:        #f5efe4;
+  --ink-soft:   #c2cad8;
+  --ink-muted:  #8d9bb4;
+
+  --rule:       #1f3357;
+  --rule-soft:  #152543;
+
+  --accent:        var(--color-brand-300);
+  --accent-hover:  var(--color-brand-200);
+  --accent-soft:   rgba(137, 180, 239, 0.12);
+  --accent-2:      #5ba3cc;
+  --accent-3:      #fbbf24;
+
+  --vp-c-brand-1: var(--color-brand-300);
+  --vp-c-brand-2: var(--color-brand-200);
+  --vp-c-brand-3: var(--color-brand-400);
+  --vp-c-brand-soft: var(--accent-soft);
+
+  --grid-line:        rgba(245, 239, 228, 0.04);
+  --grid-line-strong: rgba(245, 239, 228, 0.08);
+}

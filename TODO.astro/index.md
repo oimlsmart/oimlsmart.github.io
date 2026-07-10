@@ -1,27 +1,21 @@
-# Astro Migration — Complete
+# Astro 7 + Vite 8 + Tailwind 4 + Vue Migration
 
-All 15 tasks implemented. Site is live at **www.oimlsmart.org** on Astro.
+## Status
+
+- Astro 7.0.7 — already installed ✓
+- Vite 8.1.3 — bundled with Astro 7 ✓
+- Tailwind 4.3.2 + @tailwindcss/vite — install + configure
+- @astrojs/vue 7.0.1 + Vue 3.5.39 — install + configure
+
+## Tasks
 
 | # | Task | Status |
 |---|---|---|
-| 01 | Scaffold Astro project + integrations | done |
-| 02 | Port design system (tokens, base CSS, utilities) | done |
-| 03 | Port InternalBanner, PageHero, DraftCallout | done |
-| 04 | Port home page | done |
-| 05 | Port LoginCard | done |
-| 06 | Port BlogList + blog content collection | done |
-| 07 | Set up docs content collection + sidebar + prev/next | done |
-| 08 | Migrate all markdown pages (71 files) | done |
-| 09 | RSS feed via @astrojs/rss | done |
-| 10 | Sitemap via @astrojs/sitemap | done |
-| 11 | Dark mode (CSS-only + toggle button) | done |
-| 12 | 404 page | done |
-| 13 | GHA workflow for Astro → Pages | done |
-| 14 | Remove VitePress files (all .vitepress/, tests/, old dirs) | done |
-| 15 | Update CLAUDE.md | done |
-
-Additional features beyond the original plan:
-- **Pagefind search** — static site search, zero JS until first interaction
-- **Docs section index pages** — 5 section landing pages (/docs/guides/, /docs/arch/, etc.)
-- **Docs prev/next navigation** — at the bottom of every docs page
-- **Dark-mode toggle button** in nav (sun/moon, persists to localStorage)
+| 01 | Install Tailwind 4 + Vue deps | done |
+| 02 | Configure astro.config.mjs (Vue + Tailwind Vite plugin) | done |
+| 03 | Create Tailwind entry CSS with @theme from existing tokens | done |
+| 04 | Update Base.astro to import Tailwind CSS | done |
+| 05 | Create ThemeToggle.vue (replaces inline script) | done |
+| 06 | Create MobileNav.vue (replaces inline script) | done |
+| 07 | Update Base.astro to use Vue islands | done |
+| 08 | Verify build + all pages render | done |

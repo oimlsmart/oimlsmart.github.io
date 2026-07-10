@@ -2,7 +2,9 @@
 import { ClientRouter } from 'astro:transitions'
 import SITE from '../data/site-meta'
 import InternalBanner from '../components/InternalBanner.astro'
-import '../styles/tokens.css'
+import ThemeToggle from '../components/ThemeToggle.vue'
+import MobileNav from '../components/MobileNav.vue'
+import '../styles/app.css'
 
 const FONT_URL =
   'https://fonts.googleapis.com/css2?' +
@@ -45,9 +47,7 @@ const path = Astro.url.pathname
         <img src="/smart-logo-dark.svg" alt="" class="logo-dark" />
         <span class="nav-title">OIML SMART</span>
       </a>
-      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <MobileNav client:load />
       <nav class="nav-menu" id="nav-menu">
         <a href="/recommendations/" class={path.startsWith('/recommendations') ? 'active' : ''}>Recommendations</a>
         <a href="/library/" class={path.startsWith('/library') ? 'active' : ''}>Documents</a>
@@ -68,10 +68,7 @@ const path = Astro.url.pathname
         </div>
         <a href="/blog/" class={path.startsWith('/blog') ? 'active' : ''}>Blog</a>
         <div id="search" class="search-mount"></div>
-        <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
-          <span class="icon-sun">☀</span>
-          <span class="icon-moon">☾</span>
-        </button>
+        <ThemeToggle client:load />
         <a href="/login/" class="nav-cta">Sign in ↗</a>
       </nav>
     </div>
@@ -87,29 +84,18 @@ const path = Astro.url.pathname
   </footer>
 
   <script is:inline>
-    // ── Theme management ─────────────────────────────
-    function getTheme() {
-      return localStorage.getItem('oiml-theme') ||
-        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    // ── FOUC prevention: set dark class before any JS loads ──
+    var stored = localStorage.getItem('oiml-theme')
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    if (stored === 'dark' || (!stored && prefersDark)) {
+      document.documentElement.classList.add('dark')
     }
-    function applyTheme() {
-      if (getTheme() === 'dark') document.documentElement.classList.add('dark')
-      else document.documentElement.classList.remove('dark')
-    }
-    function toggleTheme() {
-      var next = getTheme() === 'dark' ? 'light' : 'dark'
-      localStorage.setItem('oiml-theme', next)
-      applyTheme()
-    }
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open')
-    }
+
+    // ── About dropdown (plain JS — no Vue needed for one menu) ──
     function toggleDropdown(e) {
       e.stopPropagation()
-      var panel = document.getElementById('about-panel')
-      panel.classList.toggle('open')
+      document.getElementById('about-panel').classList.toggle('open')
     }
-    // Close dropdown when clicking outside
     document.addEventListener('click', function(e) {
       var dd = document.getElementById('about-dropdown')
       var panel = document.getElementById('about-panel')
@@ -118,18 +104,12 @@ const path = Astro.url.pathname
       }
     })
 
-    // ── Astro View Transitions support ───────────────
-    // Carry the dark class to the new document before swap.
+    // ── Astro View Transitions: carry dark class to new page ──
     document.addEventListener('astro:before-swap', function(e) {
       if (document.documentElement.classList.contains('dark')) {
         e.newDocument.documentElement.classList.add('dark')
       }
     })
-    // Re-apply theme after every page navigation.
-    document.addEventListener('astro:page-load', applyTheme)
-
-    // Initial apply
-    applyTheme()
   </script>
 
   <script is:inline>
