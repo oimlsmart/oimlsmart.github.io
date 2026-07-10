@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro'
+import DispatchWizard from '../../components/dispatch/DispatchWizard.vue'
+
+const title = 'Dispatch Test Request'
+const description = 'IA dispatch wizard for outsourcing tests to labs.'
+---
+
+<Base title={title} description={description}>
+  <DispatchWizard client:load />
+</Base>
