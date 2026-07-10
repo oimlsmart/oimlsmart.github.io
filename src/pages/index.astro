@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro'
 import SITE from '../data/site-meta'
+import { STANDARDS } from '../data/standards'
 
 const acronym = [
   { letter: 'S', word: 'Standards', description: 'International metrology recommendations as structured digital artifacts.' },
@@ -17,11 +18,18 @@ const stats = [
   { label: 'Forms', value: '40+' },
 ]
 
-const recommendations = [
-  { number: 'R 60', title: 'Load Cells', scope: 'Metrological regulation for load cells used in nonautomatic weighing instruments. The pilot SMART Recommendation.', year: '2021', requirements: 42, tests: 18, forms: 12, href: '/recommendations/r60' },
-  { number: 'R 129', title: 'Mass Road Vehicles', scope: 'Dynamic measuring instruments for the determination of mass of road vehicles in motion.', year: '2000', requirements: 35, tests: 14, forms: 9, href: '/recommendations/r129' },
-  { number: 'R 144', title: 'Gas Meters', scope: 'Gas meters — diaphragm gas meters deployed for custody transfer and billing.', year: '2006', requirements: 28, tests: 11, forms: 8, href: '/recommendations/r144' },
-]
+// Drive the home page from the STANDARDS registry — single source of truth.
+// Adding a new Recommendation = appending to STANDARDS, not editing this page.
+const recommendations = STANDARDS.map(s => ({
+  number: s.recommendationNumber,
+  title: s.title,
+  scope: s.scope,
+  year: String(s.year),
+  requirements: s.counts.requirements,
+  tests: s.counts.tests,
+  forms: s.counts.forms,
+  href: s.recommendationsPath,
+}))
 
 const features = [
   { num: '01', title: 'Structured Requirements', description: 'Machine-readable requirements with explicit acceptance criteria and applicability filters.' },
