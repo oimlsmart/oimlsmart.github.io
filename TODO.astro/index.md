@@ -52,6 +52,7 @@ Unify the public site (`oimlsmart.github.io`) and the browser app (`smart/browse
 | 17 | Production deployment cutover (Cloudflare Pages + adapter) | [17-production-cutover.md](17-production-cutover.md) | 13, 16 |
 | 19 | Migrate edge validation scripts (validate-r60) into vitest | [19-migrate-edge-validation-tests.md](19-migrate-edge-validation-tests.md) | 09 |
 | 20 | Document migration playbook (archive smart/browser) | [20-archived-playbook.md](20-archived-playbook.md) | 10-15 |
+| 31 | Convert scoped `<style>` blocks to Tailwind utilities | [31-convert-scoped-styles-to-tailwind.md](31-convert-scoped-styles-to-tailwind.md) | — |
 
 ## Audit findings (architectural improvements)
 
