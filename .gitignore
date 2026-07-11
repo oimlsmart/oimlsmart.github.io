@@ -24,3 +24,11 @@ artifacts/
 .lycheecache
 link-check-results.md
 .astro/
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# Wrangler/Cloudflare local state
+.wrangler/

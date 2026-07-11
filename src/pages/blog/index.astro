@@ -27,10 +27,10 @@ function formatDate(iso: string): string {
             <span>{post.data.author}</span>
           </div>
           <h2 class="font-serif text-2xl mb-2">
-            <a href={`/blog/${post.id.replace('.md', '')}`} class="text-ink no-underline hover:text-accent">{post.data.title}</a>
+            <a href={`/blog/${post.id.replace('.mdx', '')}`} class="text-ink no-underline hover:text-accent">{post.data.title}</a>
           </h2>
           <p class="text-[0.9375rem] text-ink-soft mb-4">{post.data.summary}</p>
-          <a href={`/blog/${post.id.replace('.md', '')}`} class="font-mono text-[0.8125rem] text-accent no-underline hover:underline">Read →</a>
+          <a href={`/blog/${post.id.replace('.mdx', '')}`} class="font-mono text-[0.8125rem] text-accent no-underline hover:underline">Read →</a>
         </article>
       ))}
     </div>
