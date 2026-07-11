@@ -6,90 +6,42 @@ const description = 'The OIML SMART certification workflow application.'
 ---
 
 <Base title={title} description={description}>
-  <div class="app-home">
-    <h1>SMART Application</h1>
-    <p>The certification workflow application.</p>
+  <div class="max-w-[900px] mx-auto py-12 px-6">
+    <h1 class="font-serif text-3xl mb-2">SMART Application</h1>
+    <p class="text-ink-soft mb-8">The certification workflow application.</p>
 
-    <nav class="app-nav">
-      <a href="/app/dispatch" class="nav-item">
-        <span class="nav-num">01</span>
-        <span class="nav-title">Dispatch Test Request</span>
-        <span class="nav-desc">Outsource tests to labs with per-form granularity.</span>
+    <nav class="flex flex-col gap-3">
+      <a href="/app/dispatch" class="group grid grid-cols-[2rem_1fr] gap-4 p-4 px-5 border border-rule rounded no-underline text-inherit transition-colors hover:border-accent hover:bg-paper-soft">
+        <span class="font-mono text-xs text-ink-soft">01</span>
+        <span class="font-medium">Dispatch Test Request</span>
+        <span class="col-start-2 text-[0.8125rem] text-ink-soft">Outsource tests to labs with per-form granularity.</span>
       </a>
-      <a href="/login/" class="nav-item">
-        <span class="nav-num">↗</span>
-        <span class="nav-title">Sign in</span>
-        <span class="nav-desc">Authenticate via GitHub OAuth.</span>
+      <a href="/app/test-requests" class="group grid grid-cols-[2rem_1fr] gap-4 p-4 px-5 border border-rule rounded no-underline text-inherit transition-colors hover:border-accent hover:bg-paper-soft">
+        <span class="font-mono text-xs text-ink-soft">02</span>
+        <span class="font-medium">Test Requests</span>
+        <span class="col-start-2 text-[0.8125rem] text-ink-soft">View all dispatched test requests and their status.</span>
+      </a>
+      <a href="/app/lab-inbox" class="group grid grid-cols-[2rem_1fr] gap-4 p-4 px-5 border border-rule rounded no-underline text-inherit transition-colors hover:border-accent hover:bg-paper-soft">
+        <span class="font-mono text-xs text-ink-soft">03</span>
+        <span class="font-medium">Lab Inbox</span>
+        <span class="col-start-2 text-[0.8125rem] text-ink-soft">Test laboratory's incoming work queue.</span>
+      </a>
+      <a href="/app/evaluations" class="group grid grid-cols-[2rem_1fr] gap-4 p-4 px-5 border border-rule rounded no-underline text-inherit transition-colors hover:border-accent hover:bg-paper-soft">
+        <span class="font-mono text-xs text-ink-soft">04</span>
+        <span class="font-medium">Evaluations</span>
+        <span class="col-start-2 text-[0.8125rem] text-ink-soft">3-level synthesis: TestReport → Model → Family decisions.</span>
+      </a>
+      <a href="/login/" class="group grid grid-cols-[2rem_1fr] gap-4 p-4 px-5 border border-rule rounded no-underline text-inherit transition-colors hover:border-accent hover:bg-paper-soft">
+        <span class="font-mono text-xs text-ink-soft">↗</span>
+        <span class="font-medium">Sign in</span>
+        <span class="col-start-2 text-[0.8125rem] text-ink-soft">Authenticate via GitHub OAuth.</span>
       </a>
     </nav>
 
-    <p class="app-note">
+    <p class="mt-12 p-4 border-l-[3px] border-accent bg-paper-soft text-[0.8125rem]">
       <strong>Note:</strong> This is the unified Astro deployment of the SMART app.
       The legacy standalone app is at <code>smart/browser/</code> (see ARCHIVED.md).
       Workflow pages are being migrated incrementally per TODO.astro.
     </p>
   </div>
 </Base>
-
-<style>
-.app-home {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem;
-  font-family: var(--vp-font-family-base, system-ui, sans-serif);
-  color: var(--ink, #1a1a1a);
-}
-.app-home h1 {
-  font-family: var(--vp-font-family-serif, Georgia, serif);
-  font-size: 2rem;
-  margin: 0 0 0.5rem;
-}
-.app-home p {
-  color: var(--ink-soft, #666);
-  margin: 0 0 2rem;
-}
-.app-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-.nav-item {
-  display: grid;
-  grid-template-columns: 2rem 1fr;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
-  border: 1px solid var(--rule, #e0e0e0);
-  border-radius: 4px;
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 0.15s, background 0.15s;
-}
-.nav-item:hover {
-  border-color: var(--accent, #004996);
-  background: var(--paper-soft, #f8f8f8);
-}
-.nav-num {
-  font-family: var(--vp-font-family-mono, monospace);
-  font-size: 0.75rem;
-  color: var(--ink-soft, #999);
-}
-.nav-title {
-  font-weight: 500;
-}
-.nav-desc {
-  grid-column: 2;
-  font-size: 0.8125rem;
-  color: var(--ink-soft, #666);
-}
-.app-note {
-  margin-top: 3rem;
-  padding: 1rem;
-  border-left: 3px solid var(--accent, #004996);
-  background: var(--paper-soft, #f8f8f8);
-  font-size: 0.8125rem;
-}
-.app-note code {
-  font-family: var(--vp-font-family-mono, monospace);
-  font-size: 0.75rem;
-}
-</style>

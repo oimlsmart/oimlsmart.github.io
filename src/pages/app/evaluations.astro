@@ -1,0 +1,7 @@
+---
+import Base from '../../layouts/Base.astro'
+import EvaluationList from '../../components/workflow/EvaluationList.vue'
+---
+<Base title="Evaluations" description="Evaluation reports across all applications.">
+  <EvaluationList client:load />
+</Base>
