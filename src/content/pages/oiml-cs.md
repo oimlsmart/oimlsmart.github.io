@@ -8,7 +8,7 @@ eyebrow: 'Certification system · B 18:2025'
 
 
 <p>
-  <img src="/oiml-logo-cs-light.svg" alt="OIML-CS" style="height: 2.5rem;" />
+  <img src="/oiml-logo-cs-light.svg" alt="OIML-CS" class="h-10" />
 </p>
 
 ## What is the OIML-CS?
