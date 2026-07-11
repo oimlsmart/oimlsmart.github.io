@@ -8,8 +8,8 @@ const CONTENT_ROOT = join(import.meta.dirname, '..', 'content', 'pages')
 function collectSlugs(dir: string): string[] {
   try {
     return readdirSync(join(CONTENT_ROOT, dir))
-      .filter(f => f.endsWith('.md') && f !== 'index.md')
-      .map(f => f.replace(/\.md$/, ''))
+      .filter(f => f.endsWith('.mdx') && f !== 'index.mdx')
+      .map(f => f.replace(/\.mdx$/, ''))
   } catch {
     return []
   }

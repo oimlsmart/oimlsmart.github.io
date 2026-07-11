@@ -1,6 +1,6 @@
 # 22 — Audit: encapsulate module-scoped singletons behind Pinia stores
 
-**Status:** proposal
+**Status:** ✓ implemented
 **Type:** architectural improvement
 **Audit finding:** reactive state currently lives in module-scoped refs (e.g., `useNotification.notifications`)
 

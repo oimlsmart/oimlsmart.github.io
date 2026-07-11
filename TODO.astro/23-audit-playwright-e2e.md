@@ -1,6 +1,6 @@
 # 23 — Audit: Playwright E2E for the auth + workflow critical paths
 
-**Status:** proposal
+**Status:** ✓ implemented
 **Type:** test infrastructure
 **Audit finding:** existing 27 vitest tests cover component + service behavior, but the END-TO-END user flow (visit /login → auth → /app/dispatch → issue TestRequest) has no automation
 

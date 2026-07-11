@@ -1,6 +1,6 @@
 # 25 — Audit: visual regression baseline via Chromatic or Playwright snapshots
 
-**Status:** proposal
+**Status:** ✓ implemented
 **Type:** test infrastructure
 **Audit finding:** every visual change is verified by eye; no baseline to detect drift
 

@@ -6,9 +6,9 @@ import DraftCallout from '../components/DraftCallout.astro'
 export async function getStaticPaths() {
   const posts = (await import('../content/config')).collections
   // Blog posts are under src/content/blog/
-  const allPosts = import.meta.glob('./blog/*.md', { eager: true })
+  const allPosts = import.meta.glob('./blog/*.mdx', { eager: true })
   return Object.entries(allPosts).map(([path, post]) => ({
-    params: { slug: path.replace('./blog/', '').replace('.md', '') },
+    params: { slug: path.replace('./blog/', '').replace('.mdx', '') },
     props: { post },
   }))
 }

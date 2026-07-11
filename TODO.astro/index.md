@@ -64,10 +64,10 @@ These are NOT blockers for the migration but improve code quality. Each can be p
 | # | Finding | File | Type | Status |
 |---|---|---|---|---|
 | 21 | Result<T, E> wrapper for service return values | [21-audit-result-wrapper.md](21-audit-result-wrapper.md) | architecture | ✓ implemented |
-| 22 | Encapsulate module singletons behind Pinia stores | [22-audit-pinia-stores.md](22-audit-pinia-stores.md) | architecture | proposal |
-| 23 | Playwright E2E for auth + workflow critical paths | [23-audit-playwright-e2e.md](23-audit-playwright-e2e.md) | test infra | proposal |
+| 22 | Encapsulate module singletons behind Pinia stores | [22-audit-pinia-stores.md](22-audit-pinia-stores.md) | architecture | ✓ implemented |
+| 23 | Playwright E2E for auth + workflow critical paths | [23-audit-playwright-e2e.md](23-audit-playwright-e2e.md) | test infra | ✓ implemented |
 | 24 | Data-driven standard metadata (no hardcoded OIML-R-60) | [24-audit-data-driven-standards.md](24-audit-data-driven-standards.md) | model-driven | ✓ implemented |
-| 25 | Visual regression baseline via Playwright snapshots | [25-audit-visual-regression.md](25-audit-visual-regression.md) | test infra | proposal |
+| 25 | Visual regression baseline via Playwright snapshots | [25-audit-visual-regression.md](25-audit-visual-regression.md) | test infra | ✓ implemented |
 | 26 | Structural Lab type instead of importing TestLaboratory | [26-audit-structural-types.md](26-audit-structural-types.md) | architecture | ✓ implemented |
 | 27 | Type-safe criteria loader (drop `loadedStandards` magic) | [27-audit-criteria-loader.md](27-audit-criteria-loader.md) | architecture | ✓ implemented |
 | 28 | Criterion operator registry (true OCP) | [28-audit-operator-registry.md](28-audit-operator-registry.md) | architecture | ✓ implemented |

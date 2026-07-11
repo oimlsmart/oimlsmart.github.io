@@ -5,7 +5,7 @@ import DocsPage from '../../layouts/DocsPage.astro'
 export async function getStaticPaths() {
   const docs = await getCollection('docs')
   return docs.map(entry => ({
-    params: { slug: entry.id.replace(/\.md$/, '') },
+    params: { slug: entry.id.replace(/\.mdx$/, '') },
     props: { entry },
   }))
 }
