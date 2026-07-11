@@ -1,11 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro'
+import SampleDataSeeder from '../../components/workflow/SampleDataSeeder.vue'
 
 const title = 'OIML SMART Application'
 const description = 'The OIML SMART certification workflow application.'
 ---
 
 <Base title={title} description={description}>
+  <SampleDataSeeder client:load />
   <div class="max-w-[900px] mx-auto py-12 px-6">
     <h1 class="font-serif text-3xl mb-2">SMART Application</h1>
     <p class="text-ink-soft mb-8">The certification workflow application.</p>
