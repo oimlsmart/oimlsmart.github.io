@@ -23,6 +23,7 @@
     "vitest": "^4.1.10"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.1.2",
     "@astrojs/vue": "^7.0.1",
     "@tailwindcss/vite": "^4.3.2",
     "idb": "^8.0.3",

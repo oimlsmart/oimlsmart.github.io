@@ -1,0 +1,10 @@
+name = "oimlsmart-github-io"
+compatibility_date = "2024-12-01"
+pages_build_output_dir = "dist"
+
+# KV namespace for user role lookups.
+# Create with: npx wrangler kv namespace create USER_ROLES
+# Then paste the ID below.
+[[kv_namespaces]]
+binding = "USER_ROLES"
+id = "REPLACE_WITH_KV_ID"
