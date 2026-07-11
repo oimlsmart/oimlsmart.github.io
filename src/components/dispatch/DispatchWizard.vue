@@ -22,7 +22,7 @@
  */
 import { ref, computed, onMounted } from 'vue'
 import { useApplication, useModelFamily, useInstrumentSample, useTestRequest, useTestAssignment, useOrganization } from '../../lib/entity-composables'
-import { useNotification } from '../../lib/useNotification'
+import { useNotificationStore } from '../../stores/notifications'
 import { filterTestLaboratories } from '../../lib/lab-selection.service'
 import { groupAssignmentsByLab, countTuples, effectiveLab, isPlanComplete, type ModelPlan } from '../../lib/dispatch-planner.service'
 import { STANDARDS } from '../../data/standards'
@@ -35,7 +35,7 @@ const samples = ref<Array<{ id: string; modelId: string }>>([])
 const plans = ref<Map<string, ModelPlan>>(new Map())
 const labs = ref<Array<{ id: string; name: string; kind?: string }>>([])
 
-const notify = useNotification()
+const notify = useNotificationStore()
 const appApi = useApplication()
 const familyApi = useModelFamily()
 const sampleApi = useInstrumentSample()
