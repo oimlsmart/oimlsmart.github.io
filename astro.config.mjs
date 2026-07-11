@@ -10,7 +10,7 @@ export default defineConfig({
   adapter: cloudflare({
     platformProxy: { enabled: true },
   }),
-  integrations: [sitemap(), vue()],
+  integrations: [sitemap(), vue({ appEntrypoint: '/src/_app.ts' })],
   vite: {
     plugins: [tailwindcss()],
   },
