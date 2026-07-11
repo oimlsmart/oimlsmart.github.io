@@ -5,16 +5,16 @@ import vue from '@astrojs/vue'
 import tailwindcss from '@tailwindcss/vite'
 import cloudflare from '@astrojs/cloudflare'
 
-const skipAdapter = process.env.E2E_TESTING === 'true' || process.env.GITHUB_PAGES === 'true'
+const useCloudflareAdapter = process.env.CLOUDFLARE_DEPLOY === 'true'
 
 export default defineConfig({
   site: 'https://www.oimlsmart.org',
   output: 'static',
-  ...(skipAdapter ? {} : {
+  ...(useCloudflareAdapter ? {
     adapter: cloudflare({
       platformProxy: { enabled: true },
     }),
-  }),
+  } : {}),
   integrations: [sitemap(), mdx(), vue({ appEntrypoint: '/src/_app.ts' })],
   vite: {
     plugins: [tailwindcss()],
