@@ -5,12 +5,12 @@ import vue from '@astrojs/vue'
 import tailwindcss from '@tailwindcss/vite'
 import cloudflare from '@astrojs/cloudflare'
 
-const isE2E = process.env.E2E_TESTING === 'true'
+const skipAdapter = process.env.E2E_TESTING === 'true' || process.env.GITHUB_PAGES === 'true'
 
 export default defineConfig({
   site: 'https://www.oimlsmart.org',
   output: 'static',
-  ...(isE2E ? {} : {
+  ...(skipAdapter ? {} : {
     adapter: cloudflare({
       platformProxy: { enabled: true },
     }),
