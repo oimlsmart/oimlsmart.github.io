@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro'
-const APP_URL = import.meta.env.APP_URL || 'http://localhost:5190'
 const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
 ---
 
@@ -35,7 +34,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
 
       <div class="gate-rule" />
 
-      <a class="enter" href={`${APP_URL}/api/auth/signin/github`}>
+      <a class="enter" href="/api/auth/signin/github">
         <span class="enter-label">Continue with GitHub</span>
         <span class="enter-arrow">→</span>
         <span class="enter-meta">oauth · web flow</span>
@@ -47,7 +46,7 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
           the SMART application running on this machine. From a clone of the
           <code>smart</code> repository, execute <code>bin/dev</code> in your
           terminal. The local server listens on
-          <a href={APP_URL}>{APP_URL.replace(/^https?:\/\//, '')}</a>.
+          <a href="/app/">www.oimlsmart.org/app</a>.
         </span>
       </p>
 
