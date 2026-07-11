@@ -1,0 +1,7 @@
+---
+import Base from '../../layouts/Base.astro'
+import TestRequestList from '../../components/workflow/TestRequestList.vue'
+---
+<Base title="Test Requests" description="IA's view of all test requests.">
+  <TestRequestList client:load />
+</Base>
