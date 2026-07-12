@@ -1,8 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
-import Base from '../../layouts/Base.astro'
-import PageHero from '../../components/PageHero.astro'
-import DraftCallout from '../../components/DraftCallout.astro'
+import ContentPage from '../../layouts/ContentPage.astro'
 import SITE from '../../data/site-meta'
 
 const posts = (await getCollection('blog'))
@@ -15,24 +13,20 @@ function formatDate(iso: string): string {
 }
 ---
 
-<Base title="OIML SMART pilot — updates" description={SITE.feedDescription}>
-  <article class="prose">
-    <PageHero eyebrow="Blog · Internal pilot feed" title="OIML SMART pilot — updates" lede={SITE.feedDescription} />
-    <DraftCallout />
-    <div class="flex flex-col gap-6 my-8">
-      {posts.map(post => (
-        <article class="blog-entry p-7 bg-paper-raised border border-rule rounded-md transition-all duration-200 hover:border-accent hover:-translate-y-0.5">
-          <div class="flex gap-4 font-mono text-xs text-ink-muted mb-3">
-            <time>{formatDate(post.data.date)}</time>
-            <span>{post.data.author}</span>
-          </div>
-          <h2 class="font-serif text-2xl mb-2">
-            <a href={`/blog/${post.id.replace('.mdx', '')}`} class="text-ink no-underline hover:text-accent">{post.data.title}</a>
-          </h2>
-          <p class="text-[0.9375rem] text-ink-soft mb-4">{post.data.summary}</p>
-          <a href={`/blog/${post.id.replace('.mdx', '')}`} class="font-mono text-[0.8125rem] text-accent no-underline hover:underline">Read →</a>
-        </article>
-      ))}
-    </div>
-  </article>
-</Base>
+<ContentPage title="OIML SMART pilot — updates" description={SITE.feedDescription} eyebrow="Blog · Internal pilot feed">
+  <div class="flex flex-col gap-6 my-8">
+    {posts.map(post => (
+      <article class="blog-entry p-7 bg-paper-raised border border-rule rounded-md transition-all duration-200 hover:border-accent hover:-translate-y-0.5">
+        <div class="flex gap-4 font-mono text-xs text-ink-muted mb-3">
+          <time>{formatDate(post.data.date)}</time>
+          <span>{post.data.author}</span>
+        </div>
+        <h2 class="font-serif text-2xl mb-2">
+          <a href={`/blog/${post.id.replace('.mdx', '')}`} class="text-ink no-underline hover:text-accent">{post.data.title}</a>
+        </h2>
+        <p class="text-[0.9375rem] text-ink-soft mb-4">{post.data.summary}</p>
+        <a href={`/blog/${post.id.replace('.mdx', '')}`} class="font-mono text-[0.8125rem] text-accent no-underline hover:underline">Read →</a>
+      </article>
+    ))}
+  </div>
+</ContentPage>

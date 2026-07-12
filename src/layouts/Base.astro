@@ -3,6 +3,7 @@ import { ClientRouter } from 'astro:transitions'
 import SITE from '../data/site-meta'
 import { NAV_DROPDOWNS, NAV_STANDALONE, isLinkActive } from '../data/nav-config'
 import InternalBanner from '../components/InternalBanner.astro'
+import SiteFooter from '../components/SiteFooter.astro'
 import ThemeToggle from '../components/ThemeToggle.vue'
 import MobileNav from '../components/MobileNav.vue'
 import NavDropdown from '../components/NavDropdown.vue'
@@ -71,12 +72,7 @@ const path = Astro.url.pathname
   <main class="min-h-[calc(100vh-3.5rem-5rem)]">
     <slot />
   </main>
-  <footer class="site-footer border-t border-rule bg-paper-raised py-8 px-6">
-    <div class="max-w-7xl mx-auto text-center">
-      <p class="text-[0.8125rem] text-ink-muted">A programme of the <a href="https://www.oiml.org" class="text-accent">International Organization of Legal Metrology</a>, delivered by <a href="https://www.ribose.com" class="text-accent">Ribose</a></p>
-      <p class="copyright text-[0.8125rem] text-ink-muted mt-1">Content © OIML · Code © Ribose</p>
-    </div>
-  </footer>
+  <SiteFooter />
 
   <script is:inline>
     // ── FOUC prevention: set dark class before any JS loads ──
@@ -111,5 +107,16 @@ const path = Astro.url.pathname
     z-index: 90; overflow-y: auto;
   }
   .nav-open .nav-menu { transform: translateX(0); }
+
+  /* Dropdown panels expand inline instead of floating in mobile vertical nav */
+  .nav-menu [data-testid^="nav-dropdown-"] + div {
+    position: static !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding-left: 1rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    min-width: 0 !important;
+  }
 }
 </style>
