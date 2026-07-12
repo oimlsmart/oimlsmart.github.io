@@ -93,39 +93,7 @@ const path = Astro.url.pathname
 </html>
 
 <style is:global>
-/* Dark-mode logo switching (light logo by default, dark logo when .dark) */
 .logo-dark { display: none; }
 .dark .logo-light { display: none; }
 .dark .logo-dark { display: inline-block; }
-
-/* Mobile nav: slide-in panel toggled by body.nav-open (set by MobileNav.vue) */
-@media (max-width: 768px) {
-  .nav-menu {
-    position: fixed; top: 3.5rem; left: 0; right: 0; bottom: 0;
-    background: var(--paper); flex-direction: column; padding: 2rem 1.5rem;
-    gap: 1.25rem; transform: translateX(100%); transition: transform 0.25s ease;
-    z-index: 90; overflow-y: auto;
-  }
-  .nav-open .nav-menu { transform: translateX(0); }
-
-  /* Stack dropdown vertically: trigger on top, panel below */
-  .nav-menu .nav-dropdown {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    width: 100%;
-  }
-
-  /* Dropdown panels expand inline below trigger, not floating right */
-  .nav-menu .nav-dropdown > div:last-child {
-    position: static !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding-left: 1rem !important;
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    width: 100% !important;
-  }
-}
 </style>

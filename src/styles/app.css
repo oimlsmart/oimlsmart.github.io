@@ -203,7 +203,7 @@
     @apply inline-flex items-center gap-2 px-5 py-3 rounded text-sm font-medium transition-all cursor-pointer border border-transparent no-underline;
   }
   .btn-primary {
-    @apply text-white;
+    color: var(--paper);
     background-color: var(--ink);
   }
   .btn-primary:hover {
