@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { aggregateEvaluation, type FormInstance } from './evaluation-aggregator.service'
+import { aggregateEvaluation, synthesizeEvaluation, synthesizeAll, type FormInstance } from './evaluation-aggregator.service'
 import type { TestReportDetermination } from './evaluation-domain'
+import type { EvaluationReport, FormInstance as EntityFormInstance, TestReportDetermination as EntityDetermination } from './entity-types'
+import { InMemoryRepository } from './in-memory-repository'
+import type { EntityApi } from './entity-composable'
 
 // ─────────────────────────────────────────────────────────────────────
 // Aggregator integration tests — verify the 3-level pipeline composes
@@ -198,5 +201,133 @@ describe('aggregateEvaluation — per-form aggregation', () => {
 
     const agg = r.perForm.find(f => f.formId === 'shared-form')!
     expect(agg.aggregateResult).toBe('FAIL')
+  })
+})
+
+// ── synthesizeEvaluation / synthesizeAll ─────────────────────────────
+
+function makeDeps(
+  reports: EvaluationReport[],
+  determinations: EntityDetermination[],
+  formInstances: EntityFormInstance[],
+) {
+  const reportRepo = new InMemoryRepository<EvaluationReport>('evaluationReports')
+  const detRepo = new InMemoryRepository<EntityDetermination>('testReportDeterminations')
+  const fiRepo = new InMemoryRepository<EntityFormInstance>('formInstances')
+  for (const r of reports) reportRepo.persist(r)
+  for (const d of determinations) detRepo.persist(d)
+  for (const f of formInstances) fiRepo.persist(f)
+  return {
+    reportApi: wrapRepo(reportRepo),
+    determinationApi: wrapRepo(detRepo),
+    formInstanceApi: wrapRepo(fiRepo),
+  }
+}
+
+function wrapRepo<T extends { id: string }>(repo: InMemoryRepository<T>): EntityApi<T> {
+  return {
+    list: () => repo.list(),
+    get: (id: string) => repo.get(id),
+    async create(item: Partial<T> & { id?: string }) {
+      const record = { ...item, id: item.id ?? crypto.randomUUID() } as T
+      await repo.persist(record)
+      return record
+    },
+    update: (item: T) => repo.persist(item),
+    remove: (id: string) => repo.remove(id),
+    filter: (fn: (item: T) => boolean) => repo.filter(fn),
+    findFirst: (fn: (item: T) => boolean) => repo.findFirst(fn),
+    onChange: (fn: (id: string) => void) => repo.onChange(fn),
+  } as EntityApi<T>
+}
+
+describe('synthesizeEvaluation', () => {
+  it('returns null when report not found', () => {
+    const deps = makeDeps([], [], [])
+    expect(synthesizeEvaluation('nonexistent', deps)).toBeNull()
+  })
+
+  it('derives APPROVED when TR accepted + model PASS with formProgram override', () => {
+    const report: EvaluationReport = { id: 'er-1', testReportIds: ['tr-1'] }
+    const det: EntityDetermination = {
+      id: 'd-1', testReportId: 'tr-1', decision: 'ACCEPTED', evaluationReportId: 'er-1',
+    }
+    const fi: EntityFormInstance = {
+      id: 'fi-1', formId: 'load-cell-errors', testReportId: 'tr-1', modelId: 'model-a', result: 'PASS',
+    }
+    const deps = makeDeps([report], [det], [fi])
+
+    const result = synthesizeEvaluation('er-1', deps, {
+      formProgram: { 'model-a': ['load-cell-errors'] },
+    })!
+    expect(result.overallDecision).toBe('APPROVED')
+    expect(result.canFinalize).toBe(true)
+    expect(result.modelEvaluations).toHaveLength(1)
+    expect(result.modelEvaluations[0].decision).toBe('PASS')
+  })
+
+  it('returns PENDING when formProgram is empty (no required forms defined)', () => {
+    const report: EvaluationReport = { id: 'er-1', testReportIds: ['tr-1'] }
+    const det: EntityDetermination = {
+      id: 'd-1', testReportId: 'tr-1', decision: 'ACCEPTED', evaluationReportId: 'er-1',
+    }
+    const deps = makeDeps([report], [det], [])
+
+    const result = synthesizeEvaluation('er-1', deps)!
+    expect(result.overallDecision).toBe('PENDING')
+    expect(result.canFinalize).toBe(false)
+  })
+
+  it('attributes labs to model evaluations via labsByTestReport override', () => {
+    const report: EvaluationReport = { id: 'er-1', testReportIds: ['tr-1'] }
+    const det: EntityDetermination = {
+      id: 'd-1', testReportId: 'tr-1', decision: 'ACCEPTED', evaluationReportId: 'er-1',
+    }
+    const fi: EntityFormInstance = {
+      id: 'fi-1', formId: 'f-1', testReportId: 'tr-1', modelId: 'model-a', result: 'PASS',
+    }
+    const deps = makeDeps([report], [det], [fi])
+    const labs = new Map([['tr-1', 'lab-x']])
+
+    const result = synthesizeEvaluation('er-1', deps, {
+      formProgram: { 'model-a': ['f-1'] },
+      labsByTestReport: labs,
+    })!
+    expect(result.modelEvaluations[0].contributorLabIds).toContain('lab-x')
+  })
+})
+
+describe('synthesizeAll', () => {
+  it('returns empty map for empty input', () => {
+    const deps = makeDeps([], [], [])
+    expect(synthesizeAll([], deps).size).toBe(0)
+  })
+
+  it('skips nonexistent reports', () => {
+    const deps = makeDeps([], [], [])
+    const results = synthesizeAll(['nonexistent'], deps)
+    expect(results.size).toBe(0)
+  })
+
+  it('synthesizes multiple reports in one pass', () => {
+    const reports: EvaluationReport[] = [
+      { id: 'er-1', testReportIds: ['tr-1'] },
+      { id: 'er-2', testReportIds: ['tr-2'] },
+    ]
+    const dets: EntityDetermination[] = [
+      { id: 'd-1', testReportId: 'tr-1', decision: 'ACCEPTED', evaluationReportId: 'er-1' },
+      { id: 'd-2', testReportId: 'tr-2', decision: 'REJECTED', evaluationReportId: 'er-2' },
+    ]
+    const fi: EntityFormInstance = {
+      id: 'fi-1', formId: 'f-1', testReportId: 'tr-1', modelId: 'model-a', result: 'PASS',
+    }
+    const deps = makeDeps(reports, dets, [fi])
+
+    const results = synthesizeAll(['er-1', 'er-2'], deps, {
+      formProgram: { 'model-a': ['f-1'] },
+    })
+    expect(results.size).toBe(2)
+    expect(results.get('er-1')!.overallDecision).toBe('APPROVED')
+    expect(results.get('er-2')!.overallDecision).toBe('PENDING')
   })
 })
