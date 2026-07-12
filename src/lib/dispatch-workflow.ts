@@ -152,10 +152,15 @@ export function createDispatchWorkflow(deps: DispatchWorkflowDeps) {
     return trCount
   }
 
+  function setStep(step: 1 | 2 | 3 | 4): void {
+    state.step = step
+  }
+
   return {
     state,
     getAcceptedApplications,
     selectApplication,
+    setStep,
     sampleFor,
     setLabForModel,
     toggleForm,

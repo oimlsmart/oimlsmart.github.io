@@ -83,7 +83,7 @@ onMounted(() => {})
     <section v-else-if="step === 2" class="panel">
       <header class="panel-header">
         <h2>In-scope models ({{ wf.state.models.length }})</h2>
-        <button class="btn-primary" @click="wf.state.step = 3">Continue →</button>
+        <button class="btn-primary" @click="wf.setStep(3)">Continue →</button>
       </header>
       <table class="model-table">
         <thead><tr><th>Model</th><th>Emax</th><th>Class</th><th>Sample</th></tr></thead>
@@ -102,8 +102,8 @@ onMounted(() => {})
       <header class="panel-header">
         <h2>Assign labs &amp; forms per model</h2>
         <div class="actions">
-          <button class="btn-ghost" @click="wf.state.step = 2">← Back</button>
-          <button class="btn-primary" :disabled="configuredCount === 0" @click="wf.state.step = 4">
+          <button class="btn-ghost" @click="wf.setStep(2)">← Back</button>
+          <button class="btn-primary" :disabled="configuredCount === 0" @click="wf.setStep(4)">
             Review ({{ totalTuples }} tuples) →
           </button>
         </div>
@@ -147,7 +147,7 @@ onMounted(() => {})
       <header class="panel-header">
         <h2>Review &amp; issue</h2>
         <div class="actions">
-          <button class="btn-ghost" @click="wf.state.step = 3">← Back</button>
+          <button class="btn-ghost" @click="wf.setStep(3)">← Back</button>
           <button class="btn-primary" :disabled="issuing" @click="issue">
             {{ issuing ? 'Issuing…' : `Issue ${trsByLab.size} request(s)` }}
           </button>
