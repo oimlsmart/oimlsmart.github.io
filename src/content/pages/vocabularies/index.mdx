@@ -1,30 +1,61 @@
 ---
 title: OIML Vocabularies
-description: 'The International Vocabulary of Legal Metrology (OIML V 1:2022) — browse OIML terminology, definitions, and concept relationships in the online vocabulary browser.'
-eyebrow: 'Reference · OIML V 1:2022'
+description: 'Browse OIML terminology datasets — the International Vocabulary of Metrology (VIM), the International Vocabulary of Legal Metrology (VIML), and the G 18 term-usage registry.'
+eyebrow: 'Reference · VIM · VIML · G 18'
 ---
 import ActionBox from '../../../components/ActionBox.astro'
 
 <ActionBox
   href="/vocab/"
   label="Access the OIML Vocabularies site"
-  description="Search 135 concepts with full definitions, cross-references, and bilingual (EN/FR) content."
+  description="12 datasets spanning VIM (6 editions), VIML (4 editions), and the G 18 term-usage registry (2,125+ terms)."
 />
 
-## What are OIML Vocabularies?
+## What's available
 
-The **International Vocabulary of Legal Metrology (VIML)**, published by OIML as **OIML V 1:2022**, defines the standardized terminology used across all OIML International Recommendations and Documents. It is the authoritative reference for terms in the field of legal metrology.
+The OIML Vocabularies site hosts **12 terminology datasets** covering the full historical range of OIML vocabulary publications:
 
-The VIML aligns with the **International Vocabulary of Metrology (VIM)** — the broader vocabulary for measurement science — extending it with concepts specific to legal metrology such as legal control, type approval, verification, and statutory responsibilities.
+### VIM — International Vocabulary of Metrology (OIML V 2 series)
+
+The foundational vocabulary for measurement science, jointly maintained with BIPM, IEC, IFCC, ILAC, ISO, IUPAC, and UIPAP.
+
+| Edition | Reference | Concepts |
+|---------|-----------|----------|
+| 1984 | OIML V 2:1984 | 138 |
+| 1984 (corrigendum) | OIML V 2:1984/Cor.1:1987 | 138 |
+| 1993 | OIML V 2:1993 | 120 |
+| 2007 | OIML V 2-200:2007 | 144 |
+| 2010 | OIML V 2-200:2010 | 144 |
+| 2012 | OIML V 2-200:2012 | 144 |
+
+### VIML — International Vocabulary of Legal Metrology (OIML V 1 series)
+
+The OIML-specific vocabulary extending VIM with legal metrology concepts: legal control, type approval, verification, statutory responsibilities.
+
+| Edition | Reference | Concepts |
+|---------|-----------|----------|
+| 1968 | OIML V 1:1968 | 276 |
+| 2000 | OIML V 1:2000 | 44 |
+| 2013 | OIML V 1:2013 | 135 |
+| 2022 (current) | OIML V 1:2022 | 135 |
+
+### G 18 — Term-Usage Registry
+
+A usage registry (not a vocabulary) collating every instance where a term is used across OIML Recommendations and Documents, with each instance's definition and a consistency check against the VIM/VIML definition.
+
+| Edition | Reference | Terms |
+|---------|-----------|-------|
+| 2010 (published) | OIML G 18:2010 | 2,125 |
+| 202X (draft) | OIML G 18 Edition 202X | 2,814 |
 
 ## What the browser offers
 
-The OIML Vocabularies site is a statically-deployable terminology browser built with the [Glossarist Concept Browser](https://github.com/glossarist/concept-browser). It provides:
+Built with the [Glossarist Concept Browser](https://github.com/glossarist/concept-browser), the site provides:
 
-- **Full-text search** across all 135 concepts and their definitions
+- **Cross-edition browsing** — compare how a concept's definition evolved across editions
+- **Full-text search** within each dataset
 - **Cross-reference navigation** — follow term relationships between concepts
 - **Bilingual content** — English and French terminology side-by-side
-- **Authoritative definitions** sourced from OIML V 1:2022
 
 ## Relationship to SMART
 
