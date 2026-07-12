@@ -69,5 +69,6 @@ export default new Map([
 ["src/content/pages/recommendations/index.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpages%2Frecommendations%2Findex.mdx&astroContentModuleFlag=true")],
 ["src/content/pages/recommendations/r129.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpages%2Frecommendations%2Fr129.mdx&astroContentModuleFlag=true")],
 ["src/content/pages/recommendations/r144.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpages%2Frecommendations%2Fr144.mdx&astroContentModuleFlag=true")],
-["src/content/pages/recommendations/r60.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpages%2Frecommendations%2Fr60.mdx&astroContentModuleFlag=true")]]);
+["src/content/pages/recommendations/r60.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpages%2Frecommendations%2Fr60.mdx&astroContentModuleFlag=true")],
+["src/content/pages/vocabularies/index.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fpages%2Fvocabularies%2Findex.mdx&astroContentModuleFlag=true")]]);
 		

@@ -1,31 +1,17 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { useEvaluationReport, useTestReportDetermination, useFormInstance, useTestReport } from '../../lib/entity-composables'
-import { aggregateEvaluation } from '../../lib/evaluation-aggregator.service'
+import { computed } from 'vue'
+import { useEvaluationReport, useTestReportDetermination, useFormInstance } from '../../lib/entity-composables'
+import { useRouteEntity } from '../../lib/use-route-entity'
+import { synthesizeEvaluation } from '../../lib/evaluation-aggregator.service'
+
 const erApi = useEvaluationReport()
-const detApi = useTestReportDetermination()
-const fiApi = useFormInstance()
-const trApi = useTestReport()
-const loading = ref(true)
-const id = ref<string | null>(null)
-const report = computed(() => erApi.get(id.value ?? '') as Record<string, unknown> | undefined)
-const synthesis = computed(() => {
-  if (!report.value) return null
-  const trIds = (report.value.testReportIds as string[]) ?? []
-  const dets = detApi.list() as Array<Record<string, string>>
-  const fis = fiApi.list() as Array<Record<string, unknown>>
-  return aggregateEvaluation({
-    testReportIds: trIds,
-    determinations: dets.filter(d => d.evaluationReportId === id.value),
-    formInstances: fis,
-    formProgram: {},
-    labsByTestReport: new Map(),
-  })
-})
-onMounted(() => {
-  id.value = new URLSearchParams(window.location.search).get('id')
-  loading.value = false
-})
+const { id, loading } = useRouteEntity(erApi)
+const synthesis = computed(() => id.value ? synthesizeEvaluation(id.value, {
+  reportApi: erApi,
+  determinationApi: useTestReportDetermination(),
+  formInstanceApi: useFormInstance(),
+}) : null)
+const report = computed(() => erApi.get(id.value ?? ''))
 </script>
 <template>
   <div class="page">

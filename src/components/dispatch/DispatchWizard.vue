@@ -1,179 +1,52 @@
 <script setup lang="ts">
-/**
- * DispatchWizard — IA's test-request dispatch flow.
- *
- * Migrated from smart/browser/src/pages/cs/test-request-dispatch.vue (845 lines).
- * Simplified to demonstrate the unified-site pattern: a Vue island that
- * uses migrated services + composables + IndexedDB persistence under Astro.
- *
- * The full wizard (with per-form lab splitting, ModelFamilyMatrix, etc.)
- * is TODO 15. This version proves:
- * - Vue island renders under Astro with client:load
- * - Composables (useApplication, useTestRequest, etc.) work via factory
- * - Services (dispatch-planner, lab-selection) integrate cleanly
- * - IndexedDB writes succeed in the browser
- * - Navigation between steps is client-side (no full page reload)
- *
- * Architectural notes:
- * - MECE: each step is a separate function/computed, not tangled
- * - OCP: adding a new step = adding a new case to the step switch
- * - DRY: all entity access goes through defineEntityComposable
- * - Model-driven: form lists derived from program.service, not hardcoded
- */
 import { ref, computed, onMounted } from 'vue'
-import { useApplication, useModelFamily, useInstrumentSample, useTestRequest, useTestAssignment, useOrganization } from '../../lib/entity-composables'
+import {
+  useApplication, useMeasuringInstrument, useInstrumentSample,
+  useTestRequest, useTestAssignment, useOrganization,
+} from '../../lib/entity-composables'
 import { useNotificationStore } from '../../stores/notifications'
-import { filterTestLaboratories } from '../../lib/lab-selection.service'
-import { groupAssignmentsByLab, countTuples, effectiveLab, isPlanComplete, type ModelPlan } from '../../lib/dispatch-planner.service'
+import { createDispatchWorkflow } from '../../lib/dispatch-workflow'
 import { STANDARDS } from '../../data/standards'
 
-// ── State ───────────────────────────────────────────────────────────
-const step = ref<1 | 2 | 3 | 4>(1)
-const selectedAppId = ref<string | null>(null)
-const familyModels = ref<Array<{ id: string; model: string; emax?: number; accuracyClass?: string }>>([])
-const samples = ref<Array<{ id: string; modelId: string }>>([])
-const plans = ref<Map<string, ModelPlan>>(new Map())
-const labs = ref<Array<{ id: string; name: string; kind?: string }>>([])
-
 const notify = useNotificationStore()
-const appApi = useApplication()
-const familyApi = useModelFamily()
-const sampleApi = useInstrumentSample()
-const trApi = useTestRequest()
-const taApi = useTestAssignment()
-const orgApi = useOrganization()
+const wf = createDispatchWorkflow({
+  appApi: useApplication(),
+  familyApi: useMeasuringInstrument(),
+  sampleApi: useInstrumentSample(),
+  trApi: useTestRequest(),
+  taApi: useTestAssignment(),
+  orgApi: useOrganization(),
+})
 
 const standard = STANDARDS[0]
 const issuing = ref(false)
+const step = computed(() => wf.state.step)
 
-// ── Step 1: pick application ────────────────────────────────────────
-const acceptedApps = computed(() =>
-  (appApi.list() as Array<{ id: string; status: string; applicationNumber?: string; dateOfApplication?: string }>)
-    .filter(a => a.status === 'ACCEPTED'),
-)
+const acceptedApps = computed(() => wf.getAcceptedApplications())
 
-function selectApplication(appId: string) {
-  selectedAppId.value = appId
-  const app = appApi.get(appId) as { modelFamilyId?: string; instrumentModelFamilyId?: string } | undefined
-  if (!app) return
-  const familyId = app.modelFamilyId ?? app.instrumentModelFamilyId
-  if (!familyId) {
-    notify.error('Application has no model family')
-    return
-  }
-
-  // Load models from family
-  const models = familyApi.filter(() => true) as unknown as Array<{ id: string; model: string; emax?: number; accuracyClass?: string; modelFamilyId?: string }>
-  familyModels.value = models.filter(m => m.modelFamilyId === familyId)
-
-  // Load samples for this application
-  const allSamples = sampleApi.list() as unknown as Array<{ id: string; modelId: string; applicationId?: string }>
-  samples.value = allSamples.filter(s => s.applicationId === appId)
-
-  // Load labs
-  const orgs = orgApi.list() as unknown as Array<{ id: string; name: string; kind?: string }>
-  labs.value = filterTestLaboratories(orgs)
-
-  // Initialize plans
-  plans.value = new Map()
-  for (const m of familyModels.value) {
-    plans.value.set(m.id, {
-      modelId: m.id,
-      selectedLabId: null,
-      selectedForms: new Set<string>(),
-      formLabOverrides: new Map<string, string>(),
-    })
-  }
-
-  step.value = 2
-}
-
-// ── Step 2: see models ──────────────────────────────────────────────
-function sampleFor(modelId: string): { id: string; modelId: string } | undefined {
-  return samples.value.find(s => s.modelId === modelId)
-}
-
-// ── Step 3: assign labs ─────────────────────────────────────────────
-function setLabForModel(modelId: string, labId: string) {
-  const plan = plans.value.get(modelId)
-  if (!plan) return
-  plan.selectedLabId = labId
-  if (plan.selectedForms.size === 0) {
-    // Default to baseline forms
-    plan.selectedForms = new Set(['load-cell-errors', 'repeatability', 'humidity-ch'])
-  }
-}
-
-function toggleForm(modelId: string, formId: string) {
-  const plan = plans.value.get(modelId)
-  if (!plan) return
-  if (plan.selectedForms.has(formId)) {
-    plan.selectedForms.delete(formId)
-    plan.formLabOverrides.delete(formId)
-  } else {
-    plan.selectedForms.add(formId)
-  }
-}
-
-function isFormSelected(modelId: string, formId: string): boolean {
-  return plans.value.get(modelId)?.selectedForms.has(formId) ?? false
-}
-
-function isModelConfigured(modelId: string): boolean {
-  const p = plans.value.get(modelId)
-  if (!p || !sampleFor(modelId)) return false
-  return isPlanComplete(p)
+function selectApp(appId: string) {
+  const result = wf.selectApplication(appId)
+  if (!result.ok) notify.error(result.error)
 }
 
 const configuredCount = computed(() =>
-  familyModels.value.filter(m => isModelConfigured(m.id)).length,
+  wf.state.models.filter(m => wf.isModelConfigured(m.id)).length,
 )
+const totalTuples = computed(() => wf.getTupleCount())
+const trsByLab = computed(() => wf.getTrsByLab())
+const DEFAULT_FORMS = ['load-cell-errors', 'repeatability', 'humidity-ch']
 
-const totalTuples = computed(() => countTuples(plans.value))
+function isFormSelected(modelId: string, formId: string): boolean {
+  return wf.state.plans.get(modelId)?.selectedForms.has(formId) ?? false
+}
 
-// ── Step 4: review ─────────────────────────────────────────────────
-const trsByLab = computed(() => groupAssignmentsByLab(plans.value))
-
-// ── Issue ───────────────────────────────────────────────────────────
 async function issue() {
-  if (!selectedAppId.value) return
   issuing.value = true
-
   try {
-    let trCount = 0
-    for (const [labId] of trsByLab.value.entries()) {
-      trCount++
-      const tr = await trApi.create({
-        standardId: standard.id,
-        requestNumber: `TR-${Date.now()}-${trCount}`,
-        applicationId: selectedAppId.value,
-        assignedLaboratoryId: labId,
-        status: 'ISSUED',
-        scheme: 'B',
-        issuedBy: 'ia-staff',
-      })
-
-      for (const [modelId, plan] of plans.value.entries()) {
-        const sample = sampleFor(modelId)
-        if (!sample) continue
-        for (const formId of plan.selectedForms) {
-          const effectiveLabId = effectiveLab(plan, formId)
-          if (effectiveLabId !== labId) continue
-          await taApi.create({
-            testRequestId: (tr as { id: string }).id,
-            applicationId: selectedAppId.value,
-            formId,
-            sampleId: sample.id,
-            modelId,
-            laboratoryId: effectiveLabId,
-            status: 'PENDING',
-          })
-        }
-      }
-    }
-
-    notify.success(`Issued ${trCount} test request(s)`)
-    // Navigate to the app home (Astro routing)
+    await wf.issue(standard.id, 'ia-staff', (type, msg) => {
+      if (type === 'success') notify.success(msg)
+      else notify.error(msg)
+    })
     window.location.href = '/app/'
   } catch (e) {
     notify.error('Failed to issue', (e as Error).message)
@@ -182,27 +55,22 @@ async function issue() {
   }
 }
 
-onMounted(() => {
-  // In production, this preloads data via IndexedDB
-  // For demo, the sample-data composable would seed it
-})
+onMounted(() => {})
 </script>
 
 <template>
   <div class="dispatch-wizard">
-    <!-- Step indicator -->
     <ol class="steps">
       <li :data-active="step === 1" :data-done="step > 1"><span>1</span> Application</li>
-      <li :data-active="step === 2" :data-done="step > 2" :data-disabled="!selectedAppId"><span>2</span> Models</li>
-      <li :data-active="step === 3" :data-done="step > 3" :data-disabled="!selectedAppId"><span>3</span> Assign</li>
+      <li :data-active="step === 2" :data-done="step > 2" :data-disabled="!wf.state.selectedAppId"><span>2</span> Models</li>
+      <li :data-active="step === 3" :data-done="step > 3" :data-disabled="!wf.state.selectedAppId"><span>3</span> Assign</li>
       <li :data-active="step === 4" :data-done="false" :data-disabled="configuredCount === 0"><span>4</span> Review</li>
     </ol>
 
-    <!-- Step 1: Pick application -->
     <section v-if="step === 1" class="panel">
       <h2>Choose an accepted application</h2>
       <ul v-if="acceptedApps.length > 0" class="app-list">
-        <li v-for="app in acceptedApps" :key="app.id" @click="selectApplication(app.id)">
+        <li v-for="app in acceptedApps" :key="app.id" @click="selectApp(app.id)">
           <code>{{ app.applicationNumber ?? app.id.slice(0, 8) }}</code>
           <span>{{ app.status }}</span>
         </li>
@@ -210,62 +78,60 @@ onMounted(() => {
       <p v-else class="empty">No accepted applications. Submit and accept one first.</p>
     </section>
 
-    <!-- Step 2: See models -->
     <section v-else-if="step === 2" class="panel">
       <header class="panel-header">
-        <h2>In-scope models ({{ familyModels.length }})</h2>
-        <button class="btn-primary" @click="step = 3">Continue →</button>
+        <h2>In-scope models ({{ wf.state.models.length }})</h2>
+        <button class="btn-primary" @click="wf.state.step = 3">Continue →</button>
       </header>
       <table class="model-table">
         <thead><tr><th>Model</th><th>Emax</th><th>Class</th><th>Sample</th></tr></thead>
         <tbody>
-          <tr v-for="m in familyModels" :key="m.id">
+          <tr v-for="m in wf.state.models" :key="m.id">
             <td><code>{{ m.model }}</code></td>
             <td>{{ m.emax ? (m.emax >= 1000 ? `${m.emax / 1000} t` : `${m.emax} kg`) : '—' }}</td>
             <td>{{ m.accuracyClass ?? '—' }}</td>
-            <td>{{ sampleFor(m.id) ? '✓' : 'no sample' }}</td>
+            <td>{{ wf.sampleFor(m.id) ? '✓' : 'no sample' }}</td>
           </tr>
         </tbody>
       </table>
     </section>
 
-    <!-- Step 3: Assign labs -->
     <section v-else-if="step === 3" class="panel">
       <header class="panel-header">
         <h2>Assign labs &amp; forms per model</h2>
         <div class="actions">
-          <button class="btn-ghost" @click="step = 2">← Back</button>
-          <button class="btn-primary" :disabled="configuredCount === 0" @click="step = 4">
+          <button class="btn-ghost" @click="wf.state.step = 2">← Back</button>
+          <button class="btn-primary" :disabled="configuredCount === 0" @click="wf.state.step = 4">
             Review ({{ totalTuples }} tuples) →
           </button>
         </div>
       </header>
 
-      <div v-for="m in familyModels" :key="m.id" class="model-plan" :data-ready="isModelConfigured(m.id)">
+      <div v-for="m in wf.state.models" :key="m.id" class="model-plan" :data-ready="wf.isModelConfigured(m.id)">
         <div class="model-plan-header">
           <code>{{ m.model }}</code>
-          <span v-if="!sampleFor(m.id)" class="warn">no sample</span>
+          <span v-if="!wf.sampleFor(m.id)" class="warn">no sample</span>
         </div>
         <div class="model-plan-body">
           <label class="field">
             <span class="field-label">Laboratory</span>
             <select
-              :value="plans.get(m.id)?.selectedLabId ?? ''"
-              :disabled="!sampleFor(m.id)"
-              @change="setLabForModel(m.id, ($event.target as HTMLSelectElement).value)"
+              :value="wf.state.plans.get(m.id)?.selectedLabId ?? ''"
+              :disabled="!wf.sampleFor(m.id)"
+              @change="wf.setLabForModel(m.id, ($event.target as HTMLSelectElement).value)"
             >
               <option value="">— select —</option>
-              <option v-for="l in labs" :key="l.id" :value="l.id">{{ l.name }}</option>
+              <option v-for="l in wf.state.labs" :key="l.id" :value="l.id">{{ l.name }}</option>
             </select>
           </label>
           <div class="forms">
             <span class="field-label">Forms</span>
             <ul class="form-list">
-              <li v-for="f in ['load-cell-errors', 'repeatability', 'humidity-ch']" :key="f">
+              <li v-for="f in DEFAULT_FORMS" :key="f">
                 <label class="form-check">
                   <input type="checkbox" :checked="isFormSelected(m.id, f)"
-                    :disabled="!plans.get(m.id)?.selectedLabId"
-                    @change="toggleForm(m.id, f)" />
+                    :disabled="!wf.state.plans.get(m.id)?.selectedLabId"
+                    @change="wf.toggleForm(m.id, f)" />
                   <code>{{ f }}</code>
                 </label>
               </li>
@@ -275,22 +141,19 @@ onMounted(() => {
       </div>
     </section>
 
-    <!-- Step 4: Review + Issue -->
     <section v-else-if="step === 4" class="panel">
       <header class="panel-header">
         <h2>Review &amp; issue</h2>
         <div class="actions">
-          <button class="btn-ghost" @click="step = 3">← Back</button>
+          <button class="btn-ghost" @click="wf.state.step = 3">← Back</button>
           <button class="btn-primary" :disabled="issuing" @click="issue">
             {{ issuing ? 'Issuing…' : `Issue ${trsByLab.size} request(s)` }}
           </button>
         </div>
       </header>
-
       <p class="hint">One TestRequest will be created per lab. Each carries the explicit (form × sample × model) tuples.</p>
-
       <section v-for="[labId] in trsByLab" :key="labId" class="tr-preview">
-        <h3>{{ labs.find(l => l.id === labId)?.name ?? labId }}</h3>
+        <h3>{{ wf.state.labs.find(l => l.id === labId)?.name ?? labId }}</h3>
       </section>
     </section>
   </div>

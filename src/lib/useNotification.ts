@@ -1,5 +1,11 @@
 // ─────────────────────────────────────────────────────────────────────
-// useNotification — global toast notification store.
+// useNotification — DEPRECATED. Use Pinia store instead.
+//
+// This module-scoped singleton is preserved for backward compatibility.
+// New code should import from '../stores/notifications' (Pinia store).
+//
+// The Pinia store provides: lazy state, test isolation (setActivePinia),
+// Vue devtools integration, and SSR-safe scoping.
 //
 // Migrated from smart/browser/src/composables/useNotification.ts.
 // Pure: depends only on vue's reactivity. No IndexedDB, no auth, no fetch.

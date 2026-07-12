@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useEvaluationReport, useTestReportDetermination, useFormInstance } from '../../lib/entity-composables'
-import { aggregateEvaluation } from '../../lib/evaluation-aggregator.service'
+import { synthesizeAll } from '../../lib/evaluation-aggregator.service'
 
 const erApi = useEvaluationReport()
-const detApi = useTestReportDetermination()
-const fiApi = useFormInstance()
 const loading = ref(true)
-const reports = ref<Array<Record<string, unknown>>>([])
+const reports = ref<ReturnType<typeof erApi.list>>([])
 
 async function load() {
   loading.value = true
@@ -15,20 +13,10 @@ async function load() {
   loading.value = false
 }
 
-function getSynthesis(report: Record<string, unknown>) {
-  const testReportIds = (report.testReportIds as string[]) ?? []
-  const determinations = detApi.list() as Array<{ testReportId: string; decision: string; evaluationReportId: string }>
-  const formInstances = fiApi.list() as Array<{ formId: string; testReportId?: string; modelId?: string; result?: string }>
-  const labsByTestReport = new Map<string, string>()
-
-  return aggregateEvaluation({
-    testReportIds,
-    determinations: determinations.filter(d => d.evaluationReportId === report.id),
-    formInstances,
-    formProgram: {},
-    labsByTestReport,
-  })
-}
+const synthesisById = computed(() => synthesizeAll(
+  reports.value.map(r => r.id as string),
+  { reportApi: erApi, determinationApi: useTestReportDetermination(), formInstanceApi: useFormInstance() },
+))
 
 onMounted(load)
 </script>
@@ -45,14 +33,14 @@ onMounted(load)
       <li v-for="r in reports" :key="r.id as string" class="card">
         <div class="card-header">
           <code class="num">{{ r.reportNumber ?? (r.id as string).slice(0, 8) }}</code>
-          <span class="decision" :data-decision="getSynthesis(r).overallDecision">
-            {{ getSynthesis(r).overallDecision }}
+          <span class="decision" :data-decision="synthesisById.get(r.id as string)?.overallDecision">
+            {{ synthesisById.get(r.id as string)?.overallDecision }}
           </span>
         </div>
         <div class="card-body">
           <span>Test Reports: {{ (r.testReportIds as string[])?.length ?? 0 }}</span>
-          <span>Can finalize: {{ getSynthesis(r).canFinalize ? '✓' : '✗' }}</span>
-          <span>Pending: {{ getSynthesis(r).pendingReportIds.length }}</span>
+          <span>Can finalize: {{ synthesisById.get(r.id as string)?.canFinalize ? '✓' : '✗' }}</span>
+          <span>Pending: {{ synthesisById.get(r.id as string)?.pendingReportIds.length }}</span>
         </div>
       </li>
     </ul>

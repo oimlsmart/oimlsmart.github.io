@@ -224,3 +224,59 @@ function deriveFormAggregate(
   if (results.has('FAIL')) return 'FAIL'
   return 'MIXED'
 }
+
+// ── Synthesize: convenience that owns data loading ──────────────────
+// Callers pass entity APIs + report ID; this function loads everything
+// and delegates to aggregateEvaluation. Deepens the module: callers no
+// longer need to manually assemble AggregationInput from 3 collections.
+
+import type { EvaluationReport, TestReportDetermination as EntityDetermination } from './entity-types'
+import type { EntityApi } from './entity-composable'
+
+export interface SynthesizeDeps {
+  reportApi: EntityApi<EvaluationReport>
+  determinationApi: EntityApi<EntityDetermination>
+  formInstanceApi: EntityApi<FormInstance>
+}
+
+export function synthesizeEvaluation(
+  reportId: string,
+  deps: SynthesizeDeps,
+): AggregationResult | null {
+  const report = deps.reportApi.get(reportId)
+  if (!report) return null
+
+  const testReportIds = report.testReportIds ?? []
+  const determinations = deps.determinationApi.list().filter(d => d.evaluationReportId === reportId)
+  const formInstances = deps.formInstanceApi.list()
+
+  return aggregateEvaluation({
+    testReportIds,
+    determinations,
+    formInstances,
+    formProgram: {},
+    labsByTestReport: new Map(),
+  })
+}
+
+export function synthesizeAll(
+  reportIds: string[],
+  deps: SynthesizeDeps,
+): Map<string, AggregationResult> {
+  const allDeterminations = deps.determinationApi.list()
+  const allFormInstances = deps.formInstanceApi.list()
+
+  const results = new Map<string, AggregationResult>()
+  for (const id of reportIds) {
+    const report = deps.reportApi.get(id)
+    if (!report) continue
+    results.set(id, aggregateEvaluation({
+      testReportIds: report.testReportIds ?? [],
+      determinations: allDeterminations.filter(d => d.evaluationReportId === id),
+      formInstances: allFormInstances,
+      formProgram: {},
+      labsByTestReport: new Map(),
+    }))
+  }
+  return results
+}

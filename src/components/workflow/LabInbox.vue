@@ -2,41 +2,25 @@
 import { ref, computed, onMounted } from 'vue'
 import { useTestRequest } from '../../lib/entity-composables'
 import { useAuth } from '../../lib/useAuth'
+import { bucketByStatus, countOpen, formatAssignments, type TestRequestLike } from '../../lib/test-request-lifecycle'
 
 const trApi = useTestRequest()
 const { user } = useAuth()
 const loading = ref(true)
-const allRequests = ref<Array<Record<string, unknown>>>([])
+const allRequests = ref<TestRequestLike[]>([])
 
 const labId = computed(() => {
   const u = user.value as { labId?: string } | null
   return u?.labId ?? 'sample-lab-a'
 })
 
-const buckets = computed(() => {
-  const myTRs = allRequests.value.filter(r => r.assignedLaboratoryId === labId.value)
-  return {
-    incoming: myTRs.filter(r => r.status === 'ISSUED'),
-    accepted: myTRs.filter(r => r.status === 'ACCEPTED_BY_LAB'),
-    inProgress: myTRs.filter(r => r.status === 'IN_PROGRESS'),
-    completed: myTRs.filter(r => r.status === 'COMPLETED'),
-  }
-})
-
-const totalOpen = computed(() =>
-  buckets.value.incoming.length + buckets.value.accepted.length + buckets.value.inProgress.length,
-)
+const buckets = computed(() => bucketByStatus(allRequests.value, labId.value))
+const totalOpen = computed(() => countOpen(buckets.value))
 
 async function load() {
   loading.value = true
-  allRequests.value = trApi.list()
+  allRequests.value = trApi.list() as TestRequestLike[]
   loading.value = false
-}
-
-function formatAssignments(r: Record<string, unknown>): string {
-  const n = (r.assignments as unknown[] | undefined)?.length ?? 0
-  const forms = new Set((r.assignments as Array<{ formId?: string }> | undefined ?? []).map(a => a.formId))
-  return `${n} tuples · ${forms.size} forms`
 }
 
 onMounted(load)
