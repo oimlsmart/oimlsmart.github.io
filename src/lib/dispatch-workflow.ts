@@ -9,7 +9,6 @@ import type {
 import type { EntityApi } from './entity-composable'
 import type { ModelPlan } from './dispatch-planner.service'
 import { groupAssignmentsByLab, countTuples, effectiveLab, isPlanComplete } from './dispatch-planner.service'
-import { filterTestLaboratories } from './lab-selection.service'
 import { DEFAULT_DISPATCH_FORMS } from '../data/forms'
 
 export interface DispatchWorkflowDeps {
@@ -54,7 +53,7 @@ export function createDispatchWorkflow(deps: DispatchWorkflowDeps) {
 
     state.models = deps.familyApi.filter(m => m.modelFamilyId === familyId)
     state.samples = deps.sampleApi.list().filter(s => s.applicationId === appId)
-    state.labs = filterTestLaboratories(deps.orgApi.list())
+    state.labs = deps.orgApi.list().filter(o => o.kind === 'test-laboratory')
 
     state.plans = new Map()
     for (const m of state.models) {
