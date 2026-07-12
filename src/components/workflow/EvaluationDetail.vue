@@ -12,72 +12,61 @@ const synthesis = computed(() => id.value ? synthesizeEvaluation(id.value, {
   formInstanceApi: useFormInstance(),
 }) : null)
 const report = computed(() => erApi.get(id.value ?? ''))
+
+function decisionClass(d: string | undefined): string {
+  if (d === 'APPROVED') return 'bg-[#10b981] text-white'
+  if (d === 'REJECTED') return 'bg-[#ef4444] text-white'
+  if (d === 'CONDITIONALLY_APPROVED') return 'bg-[#f59e0b] text-white'
+  return 'bg-rule text-ink-soft'
+}
+
+function miniClass(d: string | undefined): string {
+  if (d === 'PASS') return 'bg-[#dcfce7] text-[#166534]'
+  if (d === 'FAIL') return 'bg-[#fee2e2] text-[#991b1b]'
+  if (d === 'INCOMPLETE') return 'bg-[#fef3c7] text-[#92400e]'
+  return 'bg-paper-raised text-ink-soft'
+}
 </script>
 <template>
-  <div class="page">
+  <div class="max-w-[900px] mx-auto py-8 px-6 font-sans text-ink">
     <header>
-      <h1>{{ report?.reportNumber ?? id }}</h1>
-      <span v-if="synthesis" class="decision" :data-decision="synthesis.overallDecision">{{ synthesis.overallDecision }}</span>
+      <h1 class="text-2xl mb-2 inline">{{ report?.reportNumber ?? id }}</h1>
+      <span v-if="synthesis" class="text-xs px-2.5 py-0.5 rounded-sm font-medium uppercase ml-2" :class="decisionClass(synthesis.overallDecision)">{{ synthesis.overallDecision }}</span>
     </header>
-    <p v-if="loading">Loading…</p>
+    <p v-if="loading" class="text-center py-8 text-ink-muted italic">Loading…</p>
     <template v-else-if="report && synthesis">
-      <section class="status-grid">
-        <div class="stat"><span class="label">Can finalize</span><span class="value">{{ synthesis.canFinalize ? '✓' : '✗' }}</span></div>
-        <div class="stat"><span class="label">Test reports</span><span class="value">{{ (report.testReportIds as string[])?.length ?? 0 }}</span></div>
-        <div class="stat"><span class="label">Pending TRs</span><span class="value">{{ synthesis.pendingReportIds.length }}</span></div>
-        <div class="stat"><span class="label">Incomplete models</span><span class="value">{{ synthesis.incompleteModelIds.length }}</span></div>
+      <section class="grid grid-cols-4 gap-2 mb-6">
+        <div class="border border-rule rounded p-3 text-center"><span class="block text-[0.6rem] uppercase text-ink-muted mb-1">Can finalize</span><span class="text-xl font-medium">{{ synthesis.canFinalize ? '✓' : '✗' }}</span></div>
+        <div class="border border-rule rounded p-3 text-center"><span class="block text-[0.6rem] uppercase text-ink-muted mb-1">Test reports</span><span class="text-xl font-medium">{{ report.testReportIds?.length ?? 0 }}</span></div>
+        <div class="border border-rule rounded p-3 text-center"><span class="block text-[0.6rem] uppercase text-ink-muted mb-1">Pending TRs</span><span class="text-xl font-medium">{{ synthesis.pendingReportIds.length }}</span></div>
+        <div class="border border-rule rounded p-3 text-center"><span class="block text-[0.6rem] uppercase text-ink-muted mb-1">Incomplete models</span><span class="text-xl font-medium">{{ synthesis.incompleteModelIds.length }}</span></div>
       </section>
-      <section class="card" v-if="synthesis.modelEvaluations.length">
-        <h2>Model Evaluations ({{ synthesis.modelEvaluations.length }})</h2>
-        <table class="table">
-          <thead><tr><th>Model</th><th>Decision</th><th>Covered</th><th>Missing</th><th>Contributors</th></tr></thead>
+      <section v-if="synthesis.modelEvaluations.length" class="border border-rule rounded p-4 mb-4">
+        <h2 class="text-base mb-3">Model Evaluations ({{ synthesis.modelEvaluations.length }})</h2>
+        <table class="w-full border-collapse">
+          <thead><tr><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Model</th><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Decision</th><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Covered</th><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Missing</th><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Contributors</th></tr></thead>
           <tbody>
             <tr v-for="me in synthesis.modelEvaluations" :key="me.modelId">
-              <td><code>{{ me.modelId.slice(0,12) }}</code></td>
-              <td><span class="mini" :data-decision="me.decision">{{ me.decision }}</span></td>
-              <td>{{ me.coveredFormIds.length }}</td>
-              <td>{{ me.missingFormIds.length }}</td>
-              <td>{{ me.contributorTestReportIds.length }} TRs · {{ me.contributorLabIds.length }} labs</td>
+              <td class="py-2 border-b border-rule-soft text-xs"><code>{{ me.modelId.slice(0,12) }}</code></td>
+              <td class="py-2 border-b border-rule-soft text-xs"><span class="text-[0.6rem] px-1 py-px rounded-sm" :class="miniClass(me.decision)">{{ me.decision }}</span></td>
+              <td class="py-2 border-b border-rule-soft text-xs">{{ me.coveredFormIds.length }}</td>
+              <td class="py-2 border-b border-rule-soft text-xs">{{ me.missingFormIds.length }}</td>
+              <td class="py-2 border-b border-rule-soft text-xs">{{ me.contributorTestReportIds.length }} TRs · {{ me.contributorLabIds.length }} labs</td>
             </tr>
           </tbody>
         </table>
       </section>
-      <section class="card" v-if="synthesis.perForm.length">
-        <h2>Per-Form Aggregate</h2>
-        <table class="table">
-          <thead><tr><th>Form</th><th>Instances</th><th>Result</th></tr></thead>
+      <section v-if="synthesis.perForm.length" class="border border-rule rounded p-4 mb-4">
+        <h2 class="text-base mb-3">Per-Form Aggregate</h2>
+        <table class="w-full border-collapse">
+          <thead><tr><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Form</th><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Instances</th><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Result</th></tr></thead>
           <tbody>
-            <tr v-for="f in synthesis.perForm" :key="f.formId"><td><code>{{ f.formId }}</code></td><td>{{ f.instances.length }}</td><td><span class="mini">{{ f.aggregateResult }}</span></td></tr>
+            <tr v-for="f in synthesis.perForm" :key="f.formId"><td class="py-2 border-b border-rule-soft text-xs"><code>{{ f.formId }}</code></td><td class="py-2 border-b border-rule-soft text-xs">{{ f.instances.length }}</td><td class="py-2 border-b border-rule-soft text-xs"><span class="text-[0.6rem] px-1 py-px rounded-sm bg-paper-raised">{{ f.aggregateResult }}</span></td></tr>
           </tbody>
         </table>
       </section>
     </template>
-    <p v-else class="empty">Evaluation report not found.</p>
-    <nav class="back"><a href="/app/evaluations">← All evaluations</a></nav>
+    <p v-else class="text-center py-12 text-ink-muted italic">Evaluation report not found.</p>
+    <nav class="mt-8 pt-4 border-t border-rule"><a href="/app/evaluations" class="text-sm text-accent no-underline">← All evaluations</a></nav>
   </div>
 </template>
-<style scoped>
-.page{max-width:900px;margin:0 auto;padding:2rem 1.5rem;font-family:system-ui,sans-serif;color:#1a1a1a}
-h1{font-size:1.5rem;margin:0 0 .5rem;display:inline}
-.decision{font-size:.7rem;padding:3px 10px;border-radius:2px;font-weight:500;text-transform:uppercase;margin-left:.5rem;color:#fff}
-.decision[data-decision="APPROVED"]{background:#10b981}
-.decision[data-decision="REJECTED"]{background:#ef4444}
-.decision[data-decision="CONDITIONALLY_APPROVED"]{background:#f59e0b}
-.decision[data-decision="PENDING"]{background:#e2e8f0;color:#475569}
-.status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:1.5rem}
-.stat{border:1px solid #e0e0e0;border-radius:4px;padding:.75rem;text-align:center}
-.label{display:block;font-size:.6rem;text-transform:uppercase;color:#999;margin-bottom:.25rem}
-.value{font-size:1.25rem;font-weight:500}
-.card{border:1px solid #e0e0e0;border-radius:4px;padding:1rem;margin-bottom:1rem}
-.card h2{font-size:1rem;margin:0 0 .75rem}
-.table{width:100%;border-collapse:collapse}
-th{text-align:left;font-size:.65rem;text-transform:uppercase;padding:.4rem;border-bottom:1px solid #e0e0e0;color:#666}
-td{padding:.5rem .4rem;border-bottom:1px solid #f0f0f0;font-size:.75rem}
-.mini{font-size:.6rem;padding:1px 5px;border-radius:2px;background:#f0f0f0}
-.mini[data-decision="PASS"]{background:#dcfce7;color:#166534}
-.mini[data-decision="FAIL"]{background:#fee2e2;color:#991b1b}
-.mini[data-decision="INCOMPLETE"]{background:#fef3c7;color:#92400e}
-.empty{text-align:center;padding:3rem;color:#999}
-.back{margin-top:2rem;padding-top:1rem;border-top:1px solid #e0e0e0}
-a{color:#004996;text-decoration:none}
-</style>

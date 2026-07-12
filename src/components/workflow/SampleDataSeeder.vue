@@ -34,44 +34,16 @@ async function handleReseed() {
 </script>
 
 <template>
-  <div v-if="seeding" class="seeder-status">
+  <div v-if="seeding" class="fixed top-0 left-0 right-0 bg-accent/95 text-white py-2 px-4 text-xs text-center z-[999] font-mono">
     Loading demo data…
   </div>
-  <div v-else-if="error" class="seeder-error">
+  <div v-else-if="error" class="fixed top-0 left-0 right-0 bg-[#ef4444]/95 text-white py-2 px-4 text-xs flex justify-center items-center gap-2 z-[999]">
     Demo data error: {{ error }}
-    <button @click="handleReseed" class="reseed-btn">Retry</button>
+    <button @click="handleReseed" class="text-[0.6875rem] py-0.5 px-2 bg-white/20 text-inherit border border-white/30 rounded-sm cursor-pointer hover:bg-white/30">Retry</button>
   </div>
-  <div v-else-if="seeded" class="seeder-done">
-    <button @click="handleReseed" class="reseed-btn" title="Reset all demo data">
+  <div v-else-if="seeded" class="fixed bottom-4 right-4 z-[100]">
+    <button @click="handleReseed" class="text-[0.6875rem] py-0.5 px-2 bg-white/20 text-ink border border-rule rounded-sm cursor-pointer hover:bg-paper-raised" title="Reset all demo data">
       ↻ Reset demo data
     </button>
   </div>
 </template>
-
-<style scoped>
-.seeder-status {
-  position: fixed; top: 0; left: 0; right: 0;
-  background: rgb(0 73 150 / 0.95); color: #fff;
-  padding: 0.5rem 1rem; font-size: 0.75rem;
-  text-align: center; z-index: 999;
-  font-family: var(--vp-font-family-mono, monospace);
-}
-.seeder-error {
-  position: fixed; top: 0; left: 0; right: 0;
-  background: rgb(239 68 68 / 0.95); color: #fff;
-  padding: 0.5rem 1rem; font-size: 0.75rem;
-  display: flex; justify-content: center; align-items: center; gap: 0.5rem;
-  z-index: 999;
-}
-.seeder-done {
-  position: fixed; bottom: 1rem; right: 1rem;
-  z-index: 100;
-}
-.reseed-btn {
-  font-size: 0.6875rem; padding: 2px 8px;
-  background: rgb(255 255 255 / 0.2); color: inherit;
-  border: 1px solid rgb(255 255 255 / 0.3); border-radius: 2px;
-  cursor: pointer;
-}
-.reseed-btn:hover { background: rgb(255 255 255 / 0.3); }
-</style>

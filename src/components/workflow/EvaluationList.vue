@@ -14,61 +14,38 @@ async function load() {
 }
 
 const synthesisById = computed(() => synthesizeAll(
-  reports.value.map(r => r.id as string),
+  reports.value.map(r => r.id),
   { reportApi: erApi, determinationApi: useTestReportDetermination(), formInstanceApi: useFormInstance() },
 ))
+
+function decisionClass(d: string | undefined): string {
+  if (d === 'APPROVED') return 'bg-[#10b981] text-white'
+  if (d === 'REJECTED') return 'bg-[#ef4444] text-white'
+  if (d === 'CONDITIONALLY_APPROVED') return 'bg-[#f59e0b] text-white'
+  return 'bg-rule text-ink-soft'
+}
 
 onMounted(load)
 </script>
 
 <template>
-  <div class="eval-list">
-    <header class="header">
-      <h1>Evaluation Reports</h1>
-    </header>
-
-    <p v-if="loading" class="loading">Loading…</p>
-
-    <ul v-else-if="reports.length > 0" class="list">
-      <li v-for="r in reports" :key="r.id as string" class="card">
-        <div class="card-header">
-          <code class="num">{{ r.reportNumber ?? (r.id as string).slice(0, 8) }}</code>
-          <span class="decision" :data-decision="synthesisById.get(r.id as string)?.overallDecision">
-            {{ synthesisById.get(r.id as string)?.overallDecision }}
-          </span>
+  <div class="max-w-[900px] mx-auto py-8 px-6 font-sans text-ink">
+    <div class="mb-8"><h1 class="text-[1.75rem] m-0">Evaluation Reports</h1></div>
+    <p v-if="loading" class="text-center py-16 text-ink-soft">Loading…</p>
+    <ul v-else-if="reports.length > 0" class="list-none p-0 flex flex-col gap-3">
+      <li v-for="r in reports" :key="r.id" class="border border-rule rounded p-4 transition-colors hover:border-accent">
+        <div class="flex justify-between items-center mb-2">
+          <code class="font-mono text-sm">{{ r.reportNumber ?? r.id.slice(0, 8) }}</code>
+          <span class="text-xs px-2.5 py-0.5 rounded-sm font-medium uppercase tracking-wider" :class="decisionClass(synthesisById.get(r.id)?.overallDecision)">{{ synthesisById.get(r.id)?.overallDecision }}</span>
         </div>
-        <div class="card-body">
-          <span>Test Reports: {{ (r.testReportIds as string[])?.length ?? 0 }}</span>
-          <span>Can finalize: {{ synthesisById.get(r.id as string)?.canFinalize ? '✓' : '✗' }}</span>
-          <span>Pending: {{ synthesisById.get(r.id as string)?.pendingReportIds.length }}</span>
+        <div class="flex gap-6 text-[0.8125rem] text-ink-soft font-mono">
+          <span>Test Reports: {{ r.testReportIds?.length ?? 0 }}</span>
+          <span>Can finalize: {{ synthesisById.get(r.id)?.canFinalize ? '✓' : '✗' }}</span>
+          <span>Pending: {{ synthesisById.get(r.id)?.pendingReportIds.length }}</span>
         </div>
       </li>
     </ul>
-
-    <p v-else class="empty">No evaluation reports yet.</p>
-
-    <nav class="back-nav">
-      <a href="/app/">← Back to app home</a>
-    </nav>
+    <p v-else class="text-center py-16 text-ink-soft">No evaluation reports yet.</p>
+    <nav class="mt-12 pt-6 border-t border-rule"><a href="/app/" class="text-sm text-accent no-underline">← Back to app home</a></nav>
   </div>
 </template>
-
-<style scoped>
-.eval-list { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; font-family: var(--font-sans); color: var(--ink); }
-.header { margin-bottom: 2rem; }
-.header h1 { font-size: 1.75rem; margin: 0; }
-.loading, .empty { text-align: center; padding: 4rem; color: var(--ink-soft); }
-.list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
-.card { border: 1px solid var(--rule); border-radius: 4px; padding: 1rem; transition: border-color 0.15s; }
-.card:hover { border-color: var(--accent); }
-.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-.num { font-family: var(--font-mono); font-size: 0.875rem; }
-.decision { font-size: 0.75rem; padding: 2px 10px; border-radius: 2px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
-.decision[data-decision="APPROVED"] { background: rgb(16 185 129); color: #fff; }
-.decision[data-decision="REJECTED"] { background: rgb(239 68 68); color: #fff; }
-.decision[data-decision="CONDITIONALLY_APPROVED"] { background: rgb(245 158 11); color: #fff; }
-.decision[data-decision="PENDING"] { background: rgb(226 232 240); color: rgb(71 85 105); }
-.card-body { display: flex; gap: 1.5rem; font-size: 0.8125rem; color: var(--ink-soft); font-family: var(--font-mono); }
-.back-nav { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
-.back-nav a { font-size: 0.875rem; color: var(--accent); text-decoration: none; }
-</style>
