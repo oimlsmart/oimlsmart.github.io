@@ -29,7 +29,7 @@ function activeClass(href: string): string {
 </script>
 
 <template>
-  <div ref="root" class="relative flex items-center">
+  <div ref="root" class="nav-dropdown relative flex items-center">
     <div v-if="isInternal" class="hidden sm:block w-px h-5 bg-rule mr-3" aria-hidden="true" />
     <button
       class="inline-flex items-center gap-1.5 text-sm font-medium transition-colors whitespace-nowrap"

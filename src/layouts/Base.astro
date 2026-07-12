@@ -108,8 +108,15 @@ const path = Astro.url.pathname
   }
   .nav-open .nav-menu { transform: translateX(0); }
 
-  /* Dropdown panels expand inline instead of floating in mobile vertical nav */
-  .nav-menu [data-testid^="nav-dropdown-"] + div {
+  /* Stack dropdown vertically: trigger on top, panel below */
+  .nav-menu .nav-dropdown {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100%;
+  }
+
+  /* Dropdown panels expand inline below trigger, not floating right */
+  .nav-menu .nav-dropdown > div:last-child {
     position: static !important;
     box-shadow: none !important;
     border: none !important;
@@ -117,6 +124,8 @@ const path = Astro.url.pathname
     padding-top: 0.5rem !important;
     padding-bottom: 0.5rem !important;
     min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
   }
 }
 </style>
