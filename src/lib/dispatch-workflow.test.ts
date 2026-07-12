@@ -109,3 +109,79 @@ describe('createDispatchWorkflow', () => {
     expect(wf.isModelConfigured('m2')).toBe(false) // m2 has no sample
   })
 })
+
+describe('createDispatchWorkflow — issue()', () => {
+  function setupWithApis() {
+    const apps: Application[] = [
+      { id: 'a1', status: 'ACCEPTED', applicationNumber: 'APP-1', modelFamilyId: 'f1' },
+    ]
+    const models: MeasuringInstrument[] = [
+      { id: 'm1', model: 'LC-100', modelFamilyId: 'f1', emax: 500 },
+      { id: 'm2', model: 'LC-200', modelFamilyId: 'f1', emax: 1000 },
+    ]
+    const samples: InstrumentSample[] = [
+      { id: 's1', modelId: 'm1', applicationId: 'a1' },
+      { id: 's2', modelId: 'm2', applicationId: 'a1' },
+    ]
+    const orgs: Organization[] = [
+      { id: 'lab-a', name: 'Lab A', kind: 'test-laboratory' },
+      { id: 'lab-b', name: 'Lab B', kind: 'test-laboratory' },
+    ]
+    const trApi = mockApi<TestRequest>([])
+    const taApi = mockApi<TestAssignment>([])
+
+    const wf = createDispatchWorkflow({
+      appApi: mockApi(apps),
+      familyApi: mockApi(models),
+      sampleApi: mockApi(samples),
+      trApi,
+      taApi,
+      orgApi: mockApi(orgs),
+    })
+    return { wf, trApi, taApi }
+  }
+
+  it('creates one TestRequest per lab and correct TestAssignments', async () => {
+    const { wf, trApi, taApi } = setupWithApis()
+    wf.selectApplication('a1')
+    wf.setLabForModel('m1', 'lab-a')
+    wf.setLabForModel('m2', 'lab-b')
+
+    const notify = vi.fn()
+    const count = await wf.issue('OIML-R-60', 'ia-staff', notify)
+
+    expect(count).toBe(2)
+    const trs = trApi.list()
+    expect(trs.length).toBe(2)
+    expect(trs.every(tr => tr.status === 'ISSUED')).toBe(true)
+    expect(trs.every(tr => tr.standardId === 'OIML-R-60')).toBe(true)
+
+    const tas = taApi.list()
+    const DEFAULT_FORM_COUNT = 3
+    expect(tas.length).toBe(2 * DEFAULT_FORM_COUNT)
+    const taForLabA = tas.filter(ta => ta.laboratoryId === 'lab-a')
+    expect(taForLabA.every(ta => ta.modelId === 'm1' && ta.sampleId === 's1')).toBe(true)
+    const taForLabB = tas.filter(ta => ta.laboratoryId === 'lab-b')
+    expect(taForLabB.every(ta => ta.modelId === 'm2')).toBe(true)
+
+    expect(notify).toHaveBeenCalledWith('success', expect.stringContaining('2'))
+  })
+
+  it('skips models without lab assignment', async () => {
+    const { wf, trApi, taApi } = setupWithApis()
+    wf.selectApplication('a1')
+    wf.setLabForModel('m1', 'lab-a')
+
+    const count = await wf.issue('OIML-R-60', 'ia-staff', vi.fn())
+    expect(count).toBe(1)
+    expect(trApi.list().length).toBe(1)
+    expect(taApi.list().length).toBe(3) // 3 default forms for m1
+  })
+
+  it('returns 0 when no application selected', async () => {
+    const { wf, trApi } = setupWithApis()
+    const count = await wf.issue('OIML-R-60', 'ia-staff', vi.fn())
+    expect(count).toBe(0)
+    expect(trApi.list().length).toBe(0)
+  })
+})
