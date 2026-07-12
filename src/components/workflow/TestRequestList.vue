@@ -1,14 +1,9 @@
 <script setup lang="ts">
 import { useTestRequest } from '../../lib/entity-composables'
 import { useEntityList } from '../../lib/use-entity-list'
+import { testRequestStatusBadgeClass } from '../../lib/badge-styles'
 
 const { items: requests, loading } = useEntityList(useTestRequest())
-
-function statusClass(status: string): string {
-  if (status === 'ISSUED') return 'bg-[#fef3c7] text-[#92400e]'
-  if (status === 'COMPLETED') return 'bg-[#dcfce7] text-[#166534]'
-  return 'bg-paper-soft text-ink-soft'
-}
 </script>
 <template>
   <div class="max-w-[900px] mx-auto py-8 px-6 font-sans text-ink">
@@ -23,7 +18,7 @@ function statusClass(status: string): string {
         <tr v-for="r in requests" :key="r.id">
           <td class="py-3 px-2 border-b border-rule text-sm"><code>{{ r.requestNumber ?? r.id.slice(0, 8) }}</code></td>
           <td class="py-3 px-2 border-b border-rule text-sm">{{ r.assignedLaboratoryId ?? '—' }}</td>
-          <td class="py-3 px-2 border-b border-rule text-sm"><span class="text-xs px-2 py-0.5 rounded-sm" :class="statusClass(r.status)">{{ r.status }}</span></td>
+          <td class="py-3 px-2 border-b border-rule text-sm"><span class="text-xs px-2 py-0.5 rounded-sm" :class="testRequestStatusBadgeClass(r.status)">{{ r.status }}</span></td>
           <td class="py-3 px-2 border-b border-rule text-sm">{{ r.standardId ?? '—' }}</td>
         </tr>
       </tbody>

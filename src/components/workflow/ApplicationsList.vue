@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import { useApplication } from '../../lib/entity-composables'
 import { useEntityList } from '../../lib/use-entity-list'
+import { applicationStatusBadgeClass } from '../../lib/badge-styles'
 const { items: apps, loading } = useEntityList(useApplication())
-
-function badgeClass(status: string): string {
-  if (status === 'ACCEPTED') return 'bg-[#dcfce7] text-[#166534]'
-  if (status === 'SUBMITTED') return 'bg-[#fef3c7] text-[#92400e]'
-  return 'bg-paper-raised text-ink-soft'
-}
 </script>
 <template>
   <div class="max-w-[900px] mx-auto py-8 px-6 font-sans text-ink">
@@ -18,7 +13,7 @@ function badgeClass(status: string): string {
       <tbody>
         <tr v-for="a in apps" :key="a.id">
           <td class="py-3 px-2 border-b border-rule text-sm"><a :href="`/app/application-detail?id=${a.id}`" class="text-accent no-underline hover:underline"><code>{{ a.applicationNumber ?? a.id.slice(0,8) }}</code></a></td>
-          <td class="py-3 px-2 border-b border-rule text-sm"><span class="text-[0.7rem] px-2 py-0.5 rounded-sm" :class="badgeClass(a.status)">{{ a.status }}</span></td>
+          <td class="py-3 px-2 border-b border-rule text-sm"><span class="text-[0.7rem] px-2 py-0.5 rounded-sm" :class="applicationStatusBadgeClass(a.status)">{{ a.status }}</span></td>
           <td class="py-3 px-2 border-b border-rule text-sm">{{ a.standardId }}</td>
           <td class="py-3 px-2 border-b border-rule text-sm">{{ (a.modelFamilyId ?? a.instrumentModelFamilyId) ?? '—' }}</td>
         </tr>
