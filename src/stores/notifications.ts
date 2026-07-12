@@ -1,6 +1,20 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { NOTIFICATION_DURATION, type NotificationType, type Notification } from '../lib/useNotification'
+
+export type NotificationType = 'success' | 'error' | 'warning' | 'info'
+
+export const NOTIFICATION_DURATION = {
+  default: 3000,
+  error: 6000,
+} as const
+
+export interface Notification {
+  id: string
+  type: NotificationType
+  title: string
+  message?: string
+  duration?: number
+}
 
 export const useNotificationStore = defineStore('notifications', () => {
   const notifications = ref<Notification[]>([])
