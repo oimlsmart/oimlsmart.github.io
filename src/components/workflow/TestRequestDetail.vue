@@ -4,10 +4,13 @@ import { useTestRequest, useTestAssignment } from '../../lib/entity-composables'
 const trApi = useTestRequest()
 const taApi = useTestAssignment()
 const loading = ref(true)
-const id = new URLSearchParams(window.location.search).get('id')
-const tr = computed(() => trApi.get(id ?? '') as Record<string, unknown> | undefined)
-const assignments = computed(() => taApi.filter(() => true).filter((a: Record<string, unknown>) => a.testRequestId === id))
-onMounted(() => { loading.value = false })
+const id = ref<string | null>(null)
+const tr = computed(() => trApi.get(id.value ?? '') as Record<string, unknown> | undefined)
+const assignments = computed(() => taApi.filter(() => true).filter((a: Record<string, unknown>) => a.testRequestId === id.value))
+onMounted(() => {
+  id.value = new URLSearchParams(window.location.search).get('id')
+  loading.value = false
+})
 </script>
 <template>
   <div class="page">

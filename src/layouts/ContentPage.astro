@@ -2,7 +2,7 @@
 import Base from './Base.astro'
 import PageHero from '../components/PageHero.astro'
 import DraftCallout from '../components/DraftCallout.astro'
-import { render, type CollectionEntry } from 'astro:content'
+import { render, type CollectionEntry, type ComponentRenderer } from 'astro:content'
 
 interface Props {
   entry?: CollectionEntry<'pages'>
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const props = Astro.props
-let Content: any = null
+let Content: ComponentRenderer | null = null
 let title: string | undefined
 let description: string | undefined
 let eyebrow: string | undefined

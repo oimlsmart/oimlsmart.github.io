@@ -7,8 +7,8 @@ const detApi = useTestReportDetermination()
 const fiApi = useFormInstance()
 const trApi = useTestReport()
 const loading = ref(true)
-const id = new URLSearchParams(window.location.search).get('id')
-const report = computed(() => erApi.get(id ?? '') as Record<string, unknown> | undefined)
+const id = ref<string | null>(null)
+const report = computed(() => erApi.get(id.value ?? '') as Record<string, unknown> | undefined)
 const synthesis = computed(() => {
   if (!report.value) return null
   const trIds = (report.value.testReportIds as string[]) ?? []
@@ -16,13 +16,16 @@ const synthesis = computed(() => {
   const fis = fiApi.list() as Array<Record<string, unknown>>
   return aggregateEvaluation({
     testReportIds: trIds,
-    determinations: dets.filter(d => d.evaluationReportId === id) as any,
-    formInstances: fis as any,
+    determinations: dets.filter(d => d.evaluationReportId === id.value),
+    formInstances: fis,
     formProgram: {},
     labsByTestReport: new Map(),
   })
 })
-onMounted(() => { loading.value = false })
+onMounted(() => {
+  id.value = new URLSearchParams(window.location.search).get('id')
+  loading.value = false
+})
 </script>
 <template>
   <div class="page">

@@ -41,9 +41,17 @@ Redesign the site IA with a data-driven nav system: generic NavDropdown componen
 | 14 | Content schema: title required | ✓ done |
 | 15 | Audit findings document | ✓ done |
 
-## Future work (identified in audit)
+## Phase 3 — Additional cleanup (TODO 16-20)
 
-1. Workflow page SSR `window is not defined` errors — guard with `onMounted` or `typeof window` checks
-2. Cloudflare adapter deployment cutover (TODO 17 in TODO.astro)
-3. Visual regression Linux baselines for CI
-4. `[slug].astro` catch-all filter simplification
+| # | Task | Status |
+|---|---|---|
+| 16 | SSR window guards for workflow components | ✓ done |
+| 17 | [slug].astro filter simplification | ✓ done |
+| 18 | `any` type cleanup | ✓ done |
+| 19 | Docs sort helper extraction (DRY) | ✓ done |
+| 20 | Audit document update | ✓ done |
+
+## Future work
+
+1. Cloudflare adapter deployment cutover (TODO 17 in TODO.astro) — requires user decision on hosting
+2. Visual regression Linux baselines for CI — needs snapshot generation on Linux runner

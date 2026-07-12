@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content'
 import DocsLayout from '../../../layouts/DocsLayout.astro'
 import DraftCallout from '../../../components/DraftCallout.astro'
-
+import { byDocsOrder } from '../../../lib/docs-sort'
 const META: Record<string, {label:string,desc:string}> = {
   guides: { label: 'Developer Guides', desc: 'Narrative walkthroughs for authoring a SMART Recommendation.' },
   arch: { label: 'Architecture', desc: 'The six-layer entity model, design principles, and primitives.' },
@@ -15,12 +15,7 @@ const section = 'ref'
 const info = META[section]
 const pages = (await getCollection('docs'))
   .filter(d => d.id.startsWith(section + '/'))
-  .sort((a, b) => {
-    const ao = (a.data as any).order ?? 999
-    const bo = (b.data as any).order ?? 999
-    if (ao !== bo) return ao - bo
-    return a.id.localeCompare(b.id)
-  })
+  .sort(byDocsOrder)
 ---
 
 <DocsLayout title={info.label} description={info.desc}>

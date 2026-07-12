@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
+import { byDocsOrder } from '../lib/docs-sort'
 
 const SECTION_ORDER = ['guides', 'arch', 'workflow', 'specifications', 'ref'] as const
 const SECTION_LABELS: Record<string, string> = {
@@ -18,12 +19,7 @@ const sections = SECTION_ORDER
   .map(s => {
     const pages = allDocs
       .filter(d => d.id.startsWith(s + '/'))
-      .sort((a, b) => {
-        const ao = (a.data as any).order ?? 999
-        const bo = (b.data as any).order ?? 999
-        if (ao !== bo) return ao - bo
-        return a.id.localeCompare(b.id)
-      })
+      .sort(byDocsOrder)
     return { key: s, label: SECTION_LABELS[s], pages }
   })
 ---

@@ -5,13 +5,7 @@ import ContentPage from '../layouts/ContentPage.astro'
 export async function getStaticPaths() {
   const pages = await getCollection('pages')
   return pages
-    .filter(p =>
-      !p.id.startsWith('about/') &&
-      !p.id.startsWith('recommendations/') &&
-      !p.id.startsWith('library/') &&
-      !p.id.startsWith('docs/') &&
-      !p.id.startsWith('vocabularies/')
-    )
+    .filter(p => !p.id.includes('/'))
     .map(entry => ({ params: { slug: entry.id.replace(/\.mdx$/, '') }, props: { entry } }))
 }
 
