@@ -3,25 +3,41 @@
 // Adding a new entity = adding one file here.
 
 import { defineEntityComposable } from './entity-composable'
-import type { StoreName } from './repository'
+import type {
+  Application,
+  InstrumentModelFamily,
+  InstrumentModelGroup,
+  MeasuringInstrument,
+  InstrumentSample,
+  TestRequest,
+  TestAssignment,
+  TestReport,
+  EvaluationReport,
+  ModelEvaluation,
+  TestReportDetermination,
+  FormInstance,
+  Organization,
+  CustodyEvent,
+  AuditEvent,
+} from './entity-types'
 
-// ── Structural types (only fields the API surface needs) ────────────
-
-export interface Application extends Record<string, unknown> { id: string }
-export interface InstrumentModelFamily extends Record<string, unknown> { id: string }
-export interface InstrumentModelGroup extends Record<string, unknown> { id: string }
-export interface MeasuringInstrument extends Record<string, unknown> { id: string }
-export interface InstrumentSample extends Record<string, unknown> { id: string }
-export interface TestRequest extends Record<string, unknown> { id: string }
-export interface TestAssignment extends Record<string, unknown> { id: string }
-export interface TestReport extends Record<string, unknown> { id: string }
-export interface EvaluationReport extends Record<string, unknown> { id: string }
-export interface ModelEvaluation extends Record<string, unknown> { id: string }
-export interface TestReportDetermination extends Record<string, unknown> { id: string }
-export interface FormInstance extends Record<string, unknown> { id: string }
-export interface Organization extends Record<string, unknown> { id: string }
-export interface CustodyEvent extends Record<string, unknown> { id: string }
-export interface AuditEvent extends Record<string, unknown> { id: string }
+export type {
+  Application,
+  InstrumentModelFamily,
+  InstrumentModelGroup,
+  MeasuringInstrument,
+  InstrumentSample,
+  TestRequest,
+  TestAssignment,
+  TestReport,
+  EvaluationReport,
+  ModelEvaluation,
+  TestReportDetermination,
+  FormInstance,
+  Organization,
+  CustodyEvent,
+  AuditEvent,
+} from './entity-types'
 
 // ── Composable functions (call these in Vue components) ─────────────
 
