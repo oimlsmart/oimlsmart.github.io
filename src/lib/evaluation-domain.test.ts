@@ -1,38 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import {
-  deriveOverallDecision,
   isEvaluationComplete,
   deriveModelDecision,
   deriveFamilyDecision,
   type TestReportDetermination,
   type ModelDecision,
 } from './evaluation-domain'
-
-describe('deriveOverallDecision (Level 1)', () => {
-  function det(decision: TestReportDetermination['decision']): Pick<TestReportDetermination, 'decision'> {
-    return { decision }
-  }
-
-  it('returns PENDING when no determinations', () => {
-    expect(deriveOverallDecision([])).toBe('PENDING')
-  })
-
-  it('returns APPROVED when all ACCEPTED', () => {
-    expect(deriveOverallDecision([det('ACCEPTED'), det('ACCEPTED')])).toBe('APPROVED')
-  })
-
-  it('returns REJECTED when any REJECTED', () => {
-    expect(deriveOverallDecision([det('ACCEPTED'), det('REJECTED')])).toBe('REJECTED')
-  })
-
-  it('returns CONDITIONALLY_APPROVED for ACCEPTED + CONDITIONALLY_ACCEPTED mix', () => {
-    expect(deriveOverallDecision([det('ACCEPTED'), det('CONDITIONALLY_ACCEPTED')])).toBe('CONDITIONALLY_APPROVED')
-  })
-
-  it('REJECTED dominates over CONDITIONAL', () => {
-    expect(deriveOverallDecision([det('CONDITIONALLY_ACCEPTED'), det('REJECTED')])).toBe('REJECTED')
-  })
-})
 
 describe('isEvaluationComplete', () => {
   it('returns false when no test reports', () => {

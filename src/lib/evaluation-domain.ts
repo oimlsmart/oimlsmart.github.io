@@ -34,24 +34,6 @@ export type OverallDecision =
   | 'PENDING'
 
 /**
- * Derive the overall EvaluationReport decision from per-TR determinations:
- *   - Empty → PENDING
- *   - Any REJECTED → REJECTED
- *   - Any CONDITIONALLY_ACCEPTED (no REJECTED) → CONDITIONALLY_APPROVED
- *   - Otherwise → APPROVED
- */
-export function deriveOverallDecision(
-  determinations: ReadonlyArray<Pick<TestReportDetermination, 'decision'>>,
-): OverallDecision {
-  if (determinations.length === 0) return 'PENDING'
-  if (determinations.some(d => d.decision === 'REJECTED')) return 'REJECTED'
-  if (determinations.some(d => d.decision === 'CONDITIONALLY_ACCEPTED')) {
-    return 'CONDITIONALLY_APPROVED'
-  }
-  return 'APPROVED'
-}
-
-/**
  * Whether every TestReport has a determination — the admissibility gate.
  */
 export function isEvaluationComplete(
