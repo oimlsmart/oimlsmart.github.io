@@ -1,0 +1,13 @@
+---
+const { href, label, description } = Astro.props
+---
+
+<a href={href} class="group block border border-rule rounded-lg p-6 mb-8 no-underline text-inherit transition-all hover:border-accent hover:shadow-md">
+  <div class="flex items-center justify-between gap-4">
+    <div class="flex-1 min-w-0">
+      <div class="font-serif text-lg font-semibold text-ink group-hover:text-accent transition-colors">{label}</div>
+      {description && <p class="text-sm text-ink-soft mt-1">{description}</p>}
+    </div>
+    <span class="shrink-0 text-accent text-lg transition-transform group-hover:translate-x-1">→</span>
+  </div>
+</a>

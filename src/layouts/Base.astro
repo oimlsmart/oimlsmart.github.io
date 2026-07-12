@@ -1,11 +1,11 @@
 ---
 import { ClientRouter } from 'astro:transitions'
 import SITE from '../data/site-meta'
+import { NAV_DROPDOWNS, NAV_STANDALONE, isLinkActive } from '../data/nav-config'
 import InternalBanner from '../components/InternalBanner.astro'
 import ThemeToggle from '../components/ThemeToggle.vue'
 import MobileNav from '../components/MobileNav.vue'
-import AboutDropdown from '../components/AboutDropdown.vue'
-import InternalToolsDropdown from '../components/InternalToolsDropdown.vue'
+import NavDropdown from '../components/NavDropdown.vue'
 import SearchBox from '../components/SearchBox.vue'
 import '../styles/app.css'
 
@@ -52,14 +52,16 @@ const path = Astro.url.pathname
       </a>
       <MobileNav client:load />
       <nav class="nav-menu flex items-center gap-5" id="nav-menu">
-        <a href="/recommendations/" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path.startsWith('/recommendations') ? 'text-accent font-semibold' : ''}`}>Recommendations</a>
-        <a href="/library/" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path.startsWith('/library') ? 'text-accent font-semibold' : ''}`}>Documents</a>
-        <a href="/vocab/" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path.startsWith('/vocab') ? 'text-accent font-semibold' : ''}`}>Vocabularies</a>
-        <a href="/docs/" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path.startsWith('/docs') ? 'text-accent font-semibold' : ''}`}>Developers</a>
-        <a href="/oiml-cs" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path === '/oiml-cs' ? 'text-accent font-semibold' : ''}`}>OIML-CS</a>
-        <AboutDropdown client:load />
+        {NAV_DROPDOWNS.map(dropdown => (
+          <NavDropdown client:load config={dropdown} currentPath={path} />
+        ))}
+        {NAV_STANDALONE.map(link => (
+          <a
+            href={link.href}
+            class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${isLinkActive(link.matchPrefix, path) ? 'text-accent font-semibold' : ''}`}
+          >{link.label}</a>
+        ))}
         <a href="/blog/" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path.startsWith('/blog') ? 'text-accent font-semibold' : ''}`}>Blog</a>
-        <InternalToolsDropdown client:load />
         <SearchBox client:idle />
         <ThemeToggle client:load />
         <a href="/login/" class="text-sm font-semibold text-accent whitespace-nowrap">Sign in ↗</a>
