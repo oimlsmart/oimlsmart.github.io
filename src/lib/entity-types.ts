@@ -22,6 +22,10 @@ export interface Application {
   [key: string]: unknown
 }
 
+export function getFamilyId(app: Pick<Application, 'modelFamilyId' | 'instrumentModelFamilyId'>): string | undefined {
+  return app.modelFamilyId ?? app.instrumentModelFamilyId
+}
+
 export interface InstrumentModelFamily {
   id: string
   name?: string
