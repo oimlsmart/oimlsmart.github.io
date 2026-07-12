@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import { useApplication } from '../../lib/entity-composables'
-const api = useApplication()
-const loading = ref(true)
-const apps = ref<Array<Record<string, unknown>>>([])
-onMounted(async () => { apps.value = api.list(); loading.value = false })
+import { useEntityList } from '../../lib/use-entity-list'
+const { items: apps, loading } = useEntityList(useApplication())
 </script>
 <template>
   <div class="page">
@@ -13,8 +10,8 @@ onMounted(async () => { apps.value = api.list(); loading.value = false })
     <table v-else-if="apps.length" class="table">
       <thead><tr><th>Number</th><th>Status</th><th>Standard</th><th>Family</th></tr></thead>
       <tbody>
-        <tr v-for="a in apps" :key="a.id as string">
-          <td><a :href="`/app/application-detail?id=${a.id}`"><code>{{ a.applicationNumber ?? (a.id as string).slice(0,8) }}</code></a></td>
+        <tr v-for="a in apps" :key="a.id">
+          <td><a :href="`/app/application-detail?id=${a.id}`"><code>{{ a.applicationNumber ?? a.id.slice(0,8) }}</code></a></td>
           <td><span class="badge" :data-status="a.status">{{ a.status }}</span></td>
           <td>{{ a.standardId }}</td>
           <td>{{ (a.modelFamilyId ?? a.instrumentModelFamilyId) ?? '—' }}</td>
