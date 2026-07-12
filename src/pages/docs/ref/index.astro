@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
 import DocsLayout from '../../../layouts/DocsLayout.astro'
-import DraftCallout from '../../../components/DraftCallout.astro'
 import { byDocsOrder } from '../../../lib/docs-sort'
 const META: Record<string, {label:string,desc:string}> = {
   guides: { label: 'Developer Guides', desc: 'Narrative walkthroughs for authoring a SMART Recommendation.' },
@@ -23,7 +22,6 @@ const pages = (await getCollection('docs'))
     <h1 class="font-serif text-[clamp(1.5rem,3.5vw,2rem)] font-semibold tracking-[-0.025em]">{info.label}</h1>
     <p class="text-base leading-[1.5] text-ink-soft mt-2">{info.desc}</p>
   </div>
-  <DraftCallout />
   <div class="mt-6">
     {pages.map(p => (
       <a class="group flex flex-col gap-0.5 py-3 border-b border-rule no-underline text-inherit transition-[padding] duration-150 hover:pl-2" href={'/docs/' + p.id}>

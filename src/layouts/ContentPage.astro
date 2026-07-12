@@ -1,7 +1,6 @@
 ---
 import Base from './Base.astro'
 import PageHero from '../components/PageHero.astro'
-import DraftCallout from '../components/DraftCallout.astro'
 import { render, type CollectionEntry, type ComponentRenderer } from 'astro:content'
 
 interface Props {
@@ -36,7 +35,6 @@ const displayLede = props.lede ?? description
 <Base title={title} description={description}>
   <article class="prose">
     {title && <PageHero title={title} lede={displayLede} eyebrow={eyebrow} />}
-    <DraftCallout />
     {Content ? <Content /> : <slot />}
   </article>
 </Base>

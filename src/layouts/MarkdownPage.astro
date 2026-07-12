@@ -1,7 +1,6 @@
 ---
 import Base from './Base.astro'
 import PageHero from '../components/PageHero.astro'
-import DraftCallout from '../components/DraftCallout.astro'
 
 const { title, description, eyebrow } = Astro.props
 const { Content } = await Astro.props.render(Astro.props)
@@ -10,7 +9,6 @@ const { Content } = await Astro.props.render(Astro.props)
 <Base title={title} description={description}>
   <article class="prose">
     <PageHero eyebrow={eyebrow} title={title} lede={description} />
-    <DraftCallout />
     <Content />
   </article>
 </Base>
