@@ -4,32 +4,21 @@ import { useEntityList } from '../../lib/use-entity-list'
 const { items: samples, loading } = useEntityList(useInstrumentSample())
 </script>
 <template>
-  <div class="page">
-    <header><h1>Sample Inventory</h1></header>
-    <p v-if="loading" class="loading">Loading…</p>
-    <table v-else-if="samples.length" class="table">
-      <thead><tr><th>Serial</th><th>Model</th><th>Status</th><th>Family</th></tr></thead>
+  <div class="max-w-[900px] mx-auto py-8 px-6 font-sans text-ink">
+    <h1 class="text-[1.75rem] mb-6">Sample Inventory</h1>
+    <p v-if="loading" class="text-center py-12 text-ink-muted italic">Loading…</p>
+    <table v-else-if="samples.length" class="w-full border-collapse">
+      <thead><tr><th class="text-left text-xs uppercase tracking-wider py-2 border-b border-rule text-ink-soft">Serial</th><th class="text-left text-xs uppercase tracking-wider py-2 border-b border-rule text-ink-soft">Model</th><th class="text-left text-xs uppercase tracking-wider py-2 border-b border-rule text-ink-soft">Status</th><th class="text-left text-xs uppercase tracking-wider py-2 border-b border-rule text-ink-soft">Family</th></tr></thead>
       <tbody>
-        <tr v-for="s in samples" :key="s.id as string">
-          <td><code>{{ s.serialNumber ?? s.id }}</code></td>
-          <td>{{ (s.modelId as string)?.slice(0,16) }}</td>
-          <td><span class="badge">{{ s.status }}</span></td>
-          <td>{{ (s.familyId as string)?.slice(0,12) }}</td>
+        <tr v-for="s in samples" :key="s.id">
+          <td class="py-2.5 border-b border-rule-soft text-[0.8rem]"><code>{{ s.serialNumber ?? s.id }}</code></td>
+          <td class="py-2.5 border-b border-rule-soft text-[0.8rem]">{{ s.modelId?.slice(0,16) }}</td>
+          <td class="py-2.5 border-b border-rule-soft text-[0.8rem]"><span class="text-[0.65rem] px-1.5 py-px rounded-sm bg-paper-raised">{{ s.status }}</span></td>
+          <td class="py-2.5 border-b border-rule-soft text-[0.8rem]">{{ s.familyId?.slice(0,12) }}</td>
         </tr>
       </tbody>
     </table>
-    <p v-else class="empty">No samples.</p>
-    <nav class="back"><a href="/app/">← Back</a></nav>
+    <p v-else class="text-center py-12 text-ink-muted italic">No samples.</p>
+    <nav class="mt-8 pt-4 border-t border-rule"><a href="/app/" class="text-sm text-accent">← Back</a></nav>
   </div>
 </template>
-<style scoped>
-.page{max-width:900px;margin:0 auto;padding:2rem 1.5rem;font-family:system-ui,sans-serif;color:#1a1a1a}
-h1{font-size:1.75rem;margin:0 0 1.5rem}
-.loading,.empty{text-align:center;padding:3rem;color:#999;font-style:italic}
-.table{width:100%;border-collapse:collapse}
-th{text-align:left;font-size:.7rem;text-transform:uppercase;padding:.5rem;border-bottom:1px solid #e0e0e0;color:#666}
-td{padding:.6rem;border-bottom:1px solid #f0f0f0;font-size:.8rem}
-.badge{font-size:.65rem;padding:1px 6px;border-radius:2px;background:#f0f0f0}
-a{color:#004996}
-.back{margin-top:2rem;padding-top:1rem;border-top:1px solid #e0e0e0}
-</style>

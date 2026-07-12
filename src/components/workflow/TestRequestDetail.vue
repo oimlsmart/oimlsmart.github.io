@@ -9,52 +9,34 @@ const tr = computed(() => trApi.get(id.value ?? ''))
 const assignments = computed(() => taApi.filter(a => a.testRequestId === id.value))
 </script>
 <template>
-  <div class="page">
-    <header><h1>{{ tr?.requestNumber ?? id }}</h1><span class="badge">{{ tr?.status }}</span></header>
-    <p v-if="loading" class="loading">Loading…</p>
+  <div class="max-w-[900px] mx-auto py-8 px-6 font-sans text-ink">
+    <header><h1 class="text-2xl mb-2 inline">{{ tr?.requestNumber ?? id }}</h1><span class="text-xs px-2 py-0.5 rounded-sm bg-paper-raised ml-2">{{ tr?.status }}</span></header>
+    <p v-if="loading" class="text-center py-8 text-ink-muted italic">Loading…</p>
     <template v-else-if="tr">
-      <section class="meta">
-        <div><span>Lab</span><code>{{ tr.assignedLaboratoryId }}</code></div>
-        <div><span>Standard</span><code>{{ tr.standardId }}</code></div>
-        <div><span>Scheme</span><code>{{ tr.scheme }}</code></div>
-        <div><span>Issued</span><code>{{ tr.issuedDate ?? '—' }}</code></div>
+      <section class="grid gap-3 mb-6 grid-cols-[repeat(auto-fill,minmax(180px,1fr))]">
+        <div class="flex flex-col gap-0.5"><span class="text-[0.65rem] uppercase tracking-wider text-ink-muted">Lab</span><code class="font-mono text-sm">{{ tr.assignedLaboratoryId }}</code></div>
+        <div class="flex flex-col gap-0.5"><span class="text-[0.65rem] uppercase tracking-wider text-ink-muted">Standard</span><code class="font-mono text-sm">{{ tr.standardId }}</code></div>
+        <div class="flex flex-col gap-0.5"><span class="text-[0.65rem] uppercase tracking-wider text-ink-muted">Scheme</span><code class="font-mono text-sm">{{ tr.scheme }}</code></div>
+        <div class="flex flex-col gap-0.5"><span class="text-[0.65rem] uppercase tracking-wider text-ink-muted">Issued</span><code class="font-mono text-sm">{{ tr.issuedDate ?? '—' }}</code></div>
       </section>
-      <section class="card">
-        <h2>Assignments ({{ assignments.length }})</h2>
-        <table class="table">
-          <thead><tr><th>Form</th><th>Model</th><th>Sample</th><th>Lab</th><th>Status</th></tr></thead>
+      <section class="border border-rule rounded p-4 mb-4">
+        <h2 class="text-base mb-3">Assignments ({{ assignments.length }})</h2>
+        <table class="w-full border-collapse">
+          <thead><tr><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Form</th><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Model</th><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Sample</th><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Lab</th><th class="text-left text-[0.65rem] uppercase py-1.5 border-b border-rule text-ink-soft">Status</th></tr></thead>
           <tbody>
-            <tr v-for="a in assignments" :key="a.id as string">
-              <td><code>{{ a.formId }}</code></td>
-              <td>{{ (a.modelId as string)?.slice(0,12) }}</td>
-              <td>{{ (a.sampleId as string)?.slice(0,12) }}</td>
-              <td>{{ (a.laboratoryId as string)?.slice(0,12) }}</td>
-              <td><span class="mini-badge">{{ a.status }}</span></td>
+            <tr v-for="a in assignments" :key="a.id">
+              <td class="py-2 border-b border-rule-soft text-xs"><code>{{ a.formId }}</code></td>
+              <td class="py-2 border-b border-rule-soft text-xs">{{ a.modelId?.slice(0,12) }}</td>
+              <td class="py-2 border-b border-rule-soft text-xs">{{ a.sampleId?.slice(0,12) }}</td>
+              <td class="py-2 border-b border-rule-soft text-xs">{{ a.laboratoryId?.slice(0,12) }}</td>
+              <td class="py-2 border-b border-rule-soft text-xs"><span class="text-[0.6rem] px-1 py-px rounded-sm bg-paper-raised">{{ a.status }}</span></td>
             </tr>
           </tbody>
         </table>
-        <p v-if="!assignments.length" class="muted">No assignments yet.</p>
+        <p v-if="!assignments.length" class="text-center py-8 text-ink-muted italic">No assignments yet.</p>
       </section>
     </template>
-    <p v-else class="empty">Test request not found.</p>
-    <nav class="back"><a href="/app/test-requests">← All requests</a></nav>
+    <p v-else class="text-center py-8 text-ink-muted italic">Test request not found.</p>
+    <nav class="mt-8 pt-4 border-t border-rule"><a href="/app/test-requests" class="text-sm text-accent no-underline">← All requests</a></nav>
   </div>
 </template>
-<style scoped>
-.page{max-width:900px;margin:0 auto;padding:2rem 1.5rem;font-family:system-ui,sans-serif;color:#1a1a1a}
-h1{font-size:1.5rem;margin:0 0 .5rem;display:inline}
-.badge{font-size:.7rem;padding:2px 8px;border-radius:2px;background:#f0f0f0;margin-left:.5rem}
-.meta{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.75rem;margin-bottom:1.5rem}
-.meta div{display:flex;flex-direction:column;gap:.15rem}
-.meta span{font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:#999}
-.meta code{font-family:monospace;font-size:.8rem}
-.loading,.empty,.muted{text-align:center;padding:2rem;color:#999;font-style:italic}
-.card{border:1px solid #e0e0e0;border-radius:4px;padding:1rem;margin-bottom:1rem}
-.card h2{font-size:1rem;margin:0 0 .75rem}
-.table{width:100%;border-collapse:collapse}
-th{text-align:left;font-size:.65rem;text-transform:uppercase;padding:.4rem;border-bottom:1px solid #e0e0e0;color:#666}
-td{padding:.5rem .4rem;border-bottom:1px solid #f0f0f0;font-size:.75rem}
-.mini-badge{font-size:.6rem;padding:1px 5px;border-radius:2px;background:#f0f0f0}
-.back{margin-top:2rem;padding-top:1rem;border-top:1px solid #e0e0e0}
-a{color:#004996;text-decoration:none}
-</style>
