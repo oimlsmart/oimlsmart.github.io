@@ -8,33 +8,48 @@ test.describe('Public site — critical paths', () => {
     await expect(page.getByText('Recommendations in the pilot')).toBeVisible()
   })
 
-  test('nav links navigate to correct pages', async ({ page }) => {
+  test('resources dropdown contains grouped nav items', async ({ page }) => {
     await page.goto('/')
+    const trigger = page.getByTestId('nav-dropdown-resources')
+    await expect(trigger).toBeVisible()
+    await expect(trigger).toContainText('Resources')
 
-    await page.getByRole('link', { name: 'Developers' }).click()
-    await expect(page).toHaveURL(/\/docs\//)
-    await expect(page.locator('h1')).toBeVisible()
-
-    await page.getByRole('link', { name: 'Documents' }).click()
-    await expect(page).toHaveURL(/\/library\//)
-
-    await page.getByRole('link', { name: 'Recommendations' }).click()
-    await expect(page).toHaveURL(/\/recommendations\//)
+    const dropdownContainer = trigger.locator('xpath=..')
+    await expect(dropdownContainer.locator('a[href="/recommendations/"]')).toHaveCount(1)
+    await expect(dropdownContainer.locator('a[href="/library/"]')).toHaveCount(1)
+    await expect(dropdownContainer.locator('a[href="/vocabularies/"]')).toHaveCount(1)
+    await expect(dropdownContainer.locator('a[href="/docs/"]')).toHaveCount(1)
   })
 
-  test('vocabularies nav link is present', async ({ page }) => {
-    await page.goto('/')
-    const link = page.getByRole('link', { name: 'Vocabularies' })
-    await expect(link).toBeVisible()
-    await expect(link).toHaveAttribute('href', '/vocab/')
-  })
-
-  test('internal tools dropdown shows internal-only indicator', async ({ page }) => {
+  test('about dropdown trigger is present', async ({ page }) => {
     await page.goto('/')
     await page.waitForLoadState('networkidle')
-    const trigger = page.getByTestId('internal-dropdown-trigger')
+    const trigger = page.getByTestId('nav-dropdown-about')
+    await expect(trigger).toBeVisible()
+    await expect(trigger).toContainText('About')
+  })
+
+  test('internal dropdown shows internal-only indicator', async ({ page }) => {
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+    const trigger = page.getByTestId('nav-dropdown-internal')
     await expect(trigger).toBeVisible()
     await expect(trigger).toContainText('Internal')
+  })
+
+  test('OIML-CS is a standalone top-level nav link', async ({ page }) => {
+    await page.goto('/')
+    const link = page.getByRole('link', { name: 'OIML-CS' })
+    await expect(link).toBeVisible()
+    await expect(link).toHaveAttribute('href', '/oiml-cs')
+  })
+
+  test('vocabularies page renders with action box', async ({ page }) => {
+    await page.goto('/vocabularies/')
+    await expect(page.locator('h1')).toContainText('Vocabularies')
+    const actionLink = page.getByRole('link', { name: /Access the OIML Vocabularies/ })
+    await expect(actionLink).toBeVisible()
+    await expect(actionLink).toHaveAttribute('href', '/vocab/')
   })
 
   test('docs page loads with sidebar and content', async ({ page }) => {
@@ -42,14 +57,6 @@ test.describe('Public site — critical paths', () => {
     await expect(page.locator('h1')).toBeVisible()
     const headings = page.locator('h2')
     await expect(headings.first()).toBeVisible()
-  })
-
-  test('about dropdown trigger is present and interactive', async ({ page }) => {
-    await page.goto('/')
-    await page.waitForLoadState('networkidle')
-    const trigger = page.getByTestId('dropdown-trigger')
-    await expect(trigger).toBeVisible()
-    await expect(trigger).toContainText('About')
   })
 
   test('theme toggle switches dark mode', async ({ page }) => {

@@ -1,0 +1,37 @@
+---
+title: OIML Vocabularies
+description: 'The International Vocabulary of Legal Metrology (OIML V 1:2022) — browse OIML terminology, definitions, and concept relationships in the online vocabulary browser.'
+eyebrow: 'Reference · OIML V 1:2022'
+---
+import ActionBox from '../../../components/ActionBox.astro'
+
+<ActionBox
+  href="/vocab/"
+  label="Access the OIML Vocabularies site"
+  description="Search 135 concepts with full definitions, cross-references, and bilingual (EN/FR) content."
+/>
+
+## What are OIML Vocabularies?
+
+The **International Vocabulary of Legal Metrology (VIML)**, published by OIML as **OIML V 1:2022**, defines the standardized terminology used across all OIML International Recommendations and Documents. It is the authoritative reference for terms in the field of legal metrology.
+
+The VIML aligns with the **International Vocabulary of Metrology (VIM)** — the broader vocabulary for measurement science — extending it with concepts specific to legal metrology such as legal control, type approval, verification, and statutory responsibilities.
+
+## What the browser offers
+
+The OIML Vocabularies site is a statically-deployable terminology browser built with the [Glossarist Concept Browser](https://github.com/glossarist/concept-browser). It provides:
+
+- **Full-text search** across all 135 concepts and their definitions
+- **Cross-reference navigation** — follow term relationships between concepts
+- **Bilingual content** — English and French terminology side-by-side
+- **Authoritative definitions** sourced from OIML V 1:2022
+
+## Relationship to SMART
+
+In the OIML SMART pilot, the vocabulary provides the semantic foundation for machine-readable Recommendations:
+
+- **Consistent terminology** across all modeled Recommendations
+- **Concept identifiers** that can be referenced from structured requirements
+- **Definition provenance** linking terms back to the authoritative source
+
+The vocabulary data is maintained in [Glossarist](https://github.com/glossarist) YAML format in the [oimlsmart/vocab](https://github.com/oimlsmart/vocab) repository.
