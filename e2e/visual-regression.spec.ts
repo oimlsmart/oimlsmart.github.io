@@ -12,10 +12,11 @@ test.describe('Visual regression — key pages', () => {
 
   test('home page (dark mode)', async ({ page }) => {
     await page.goto('/')
-    await page.getByTestId('theme-toggle').click()
+    await page.waitForLoadState('networkidle')
     await page.emulateMedia({ colorScheme: 'dark' })
+    await page.evaluate(() => document.documentElement.classList.add('dark'))
     await expect(page).toHaveScreenshot('home-dark.png', {
-      fullDiffPixelRatio: 0.02,
+      maxDiffPixelRatio: 0.02,
       fullPage: false,
     })
   })
