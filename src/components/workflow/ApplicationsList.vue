@@ -2,6 +2,7 @@
 import { useApplication } from '../../lib/entity-composables'
 import { useEntityList } from '../../lib/use-entity-list'
 import { applicationStatusBadgeClass } from '../../lib/badge-styles'
+import { getFamilyId } from '../../lib/entity-types'
 const { items: apps, loading } = useEntityList(useApplication())
 </script>
 <template>
@@ -15,7 +16,7 @@ const { items: apps, loading } = useEntityList(useApplication())
           <td class="py-3 px-2 border-b border-rule text-sm"><a :href="`/app/application-detail?id=${a.id}`" class="text-accent no-underline hover:underline"><code>{{ a.applicationNumber ?? a.id.slice(0,8) }}</code></a></td>
           <td class="py-3 px-2 border-b border-rule text-sm"><span class="text-[0.7rem] px-2 py-0.5 rounded-sm" :class="applicationStatusBadgeClass(a.status)">{{ a.status }}</span></td>
           <td class="py-3 px-2 border-b border-rule text-sm">{{ a.standardId }}</td>
-          <td class="py-3 px-2 border-b border-rule text-sm">{{ (a.modelFamilyId ?? a.instrumentModelFamilyId) ?? '—' }}</td>
+          <td class="py-3 px-2 border-b border-rule text-sm">{{ getFamilyId(a) ?? '—' }}</td>
         </tr>
       </tbody>
     </table>

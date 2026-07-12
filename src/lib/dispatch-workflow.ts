@@ -1,10 +1,11 @@
-import type {
-  Application,
-  MeasuringInstrument,
-  InstrumentSample,
-  Organization,
-  TestRequest,
-  TestAssignment,
+import {
+  type Application,
+  type MeasuringInstrument,
+  type InstrumentSample,
+  type Organization,
+  type TestRequest,
+  type TestAssignment,
+  getFamilyId,
 } from './entity-types'
 import type { EntityApi } from './entity-composable'
 import type { ModelPlan } from './dispatch-planner.service'
@@ -48,7 +49,7 @@ export function createDispatchWorkflow(deps: DispatchWorkflowDeps) {
     const app = deps.appApi.get(appId)
     if (!app) return { ok: false, error: 'Application not found' }
 
-    const familyId = app.modelFamilyId ?? app.instrumentModelFamilyId
+    const familyId = getFamilyId(app)
     if (!familyId) return { ok: false, error: 'Application has no model family' }
 
     state.models = deps.familyApi.filter(m => m.modelFamilyId === familyId)

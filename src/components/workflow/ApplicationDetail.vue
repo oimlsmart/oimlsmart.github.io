@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useRouteEntity } from '../../lib/use-route-entity'
 import { useApplication, useMeasuringInstrument, useTestRequest } from '../../lib/entity-composables'
+import { getFamilyId } from '../../lib/entity-types'
 import { formatEmax } from '../../lib/format'
 
 const appApi = useApplication()
@@ -12,7 +13,7 @@ const { id, loading } = useRouteEntity(appApi)
 const app = computed(() => appApi.get(id.value ?? ''))
 const models = computed(() => {
   if (!app.value) return []
-  const fid = app.value.modelFamilyId ?? app.value.instrumentModelFamilyId
+  const fid = app.value ? getFamilyId(app.value) : undefined
   if (!fid) return []
   return modelApi.filter(m => m.modelFamilyId === fid)
 })
