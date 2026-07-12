@@ -17,5 +17,8 @@
     "$schema": {
       "type": "string"
     }
-  }
+  },
+  "required": [
+    "title"
+  ]
 }

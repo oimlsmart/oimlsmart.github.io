@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useTestRequest, useTestAssignment } from '../../lib/entity-composables'
+import { useRouteEntity } from '../../lib/use-route-entity'
 const trApi = useTestRequest()
 const taApi = useTestAssignment()
-const loading = ref(true)
-const id = ref<string | null>(null)
-const tr = computed(() => trApi.get(id.value ?? '') as Record<string, unknown> | undefined)
-const assignments = computed(() => taApi.filter(() => true).filter((a: Record<string, unknown>) => a.testRequestId === id.value))
-onMounted(() => {
-  id.value = new URLSearchParams(window.location.search).get('id')
-  loading.value = false
-})
+const { id, loading } = useRouteEntity(trApi)
+const tr = computed(() => trApi.get(id.value ?? ''))
+const assignments = computed(() => taApi.filter(a => a.testRequestId === id.value))
 </script>
 <template>
   <div class="page">

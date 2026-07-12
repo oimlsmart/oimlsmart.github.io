@@ -51,6 +51,16 @@ Redesign the site IA with a data-driven nav system: generic NavDropdown componen
 | 19 | Docs sort helper extraction (DRY) | ✓ done |
 | 20 | Audit document update | ✓ done |
 
+## Phase 4 — Architecture deepening (TODO 21-25)
+
+| # | Task | Status |
+|---|---|---|
+| 21 | Entity type safety: real interfaces instead of `Record<string, unknown>` | ✓ done |
+| 22 | DispatchWorkflow module: domain logic extracted from Vue component | ✓ done |
+| 23 | Evaluation synthesis deepening: `synthesizeEvaluation(reportId)` owns data loading | ✓ done |
+| 24 | `useRouteEntity` composable: DRY the URL-param → entity pattern | ✓ done |
+| 25 | Notification deprecation: mark module-scoped version deprecated | ✓ done |
+
 ## Future work
 
 1. Cloudflare adapter deployment cutover (TODO 17 in TODO.astro) — requires user decision on hosting
