@@ -13,6 +13,7 @@
 // ─────────────────────────────────────────────────────────────────────
 
 import { STORE_SCHEMA, DB_NAME, DB_VERSION, type StoreName } from './db-schema'
+import { BaseRepository } from './base-repository'
 
 let dbInstance: IDBDatabase | null = null
 
@@ -104,28 +105,13 @@ async function dbGetAllFromIndex<T>(
 
 // ── Repository<T> ───────────────────────────────────────────────────
 
-type ChangeListener = (id: string) => void
-
-export class Repository<T extends { id: string }> {
-  private cache = new Map<string, T>()
-  private listeners = new Set<ChangeListener>()
-
-  constructor(private readonly store: StoreName) {}
-
-  get(id: string): T | undefined { return this.cache.get(id) }
-  list(): T[] { return Array.from(this.cache.values()) }
-
-  async persist(item: T): Promise<void> {
-    this.cache.set(item.id, item)
-    await dbPut(this.store, item)
-    this.notify(item.id)
+export class Repository<T extends { id: string }> extends BaseRepository<T> {
+  constructor(private readonly store: StoreName) {
+    super()
   }
 
-  async remove(id: string): Promise<void> {
-    this.cache.delete(id)
-    await dbDelete(this.store, id)
-    this.notify(id)
-  }
+  protected writeToBackend(item: T): Promise<void> { return dbPut(this.store, item) }
+  protected deleteFromBackend(id: string): Promise<void> { return dbDelete(this.store, id) }
 
   async preload(): Promise<void> {
     const all = await dbGetAll<T>(this.store)
@@ -135,21 +121,6 @@ export class Repository<T extends { id: string }> {
 
   async getByIndex<K extends keyof T & string>(indexName: K, value: T[K]): Promise<T[]> {
     return dbGetAllFromIndex<T>(this.store, indexName, value as unknown as IDBValidKey)
-  }
-
-  filter(predicate: (item: T) => boolean): T[] { return this.list().filter(predicate) }
-  findFirst(predicate: (item: T) => boolean): T | undefined {
-    for (const item of this.cache.values()) { if (predicate(item)) return item }
-    return undefined
-  }
-
-  onChange(listener: ChangeListener): () => void {
-    this.listeners.add(listener)
-    return () => this.listeners.delete(listener)
-  }
-
-  private notify(id: string): void {
-    for (const l of this.listeners) l(id)
   }
 }
 
