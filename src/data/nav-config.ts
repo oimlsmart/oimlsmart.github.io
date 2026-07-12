@@ -57,6 +57,18 @@ export const NAV_DROPDOWNS: readonly NavDropdownConfig[] = [
   },
 ] as const
 
+export type NavItem =
+  | { type: 'dropdown'; config: NavDropdownConfig }
+  | { type: 'link'; label: string; href: string; matchPrefix: string }
+
+export const NAV_ITEMS: readonly NavItem[] = [
+  { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'resources')! },
+  { type: 'link', label: 'Blog', href: '/blog/', matchPrefix: '/blog' },
+  { type: 'link', label: 'OIML-CS', href: '/oiml-cs', matchPrefix: '/oiml-cs' },
+  { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'about')! },
+  { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'internal')! },
+]
+
 export const NAV_STANDALONE: readonly NavStandaloneLink[] = [
   { label: 'OIML-CS', href: '/oiml-cs', matchPrefix: '/oiml-cs' },
 ] as const
