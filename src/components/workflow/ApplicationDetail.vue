@@ -6,15 +6,18 @@ const familyApi = useModelFamily()
 const modelApi = useMeasuringInstrument()
 const trApi = useTestRequest()
 const loading = ref(true)
-const id = new URLSearchParams(window.location.search).get('id')
-const app = computed(() => appApi.get(id ?? '') as Record<string, unknown> | undefined)
+const id = ref<string | null>(null)
+const app = computed(() => appApi.get(id.value ?? '') as Record<string, unknown> | undefined)
 const models = computed(() => {
   if (!app.value) return []
   const fid = app.value.modelFamilyId ?? app.value.instrumentModelFamilyId
   return modelApi.filter(() => true).filter((m: Record<string, unknown>) => m.modelFamilyId === fid)
 })
-const trs = computed(() => trApi.filter(() => true).filter((t: Record<string, unknown>) => t.applicationId === id))
-onMounted(() => { loading.value = false })
+const trs = computed(() => trApi.filter(() => true).filter((t: Record<string, unknown>) => t.applicationId === id.value))
+onMounted(() => {
+  id.value = new URLSearchParams(window.location.search).get('id')
+  loading.value = false
+})
 </script>
 <template>
   <div class="page">

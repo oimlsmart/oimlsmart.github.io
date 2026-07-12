@@ -35,7 +35,17 @@ Full codebase audit for: OOP, MECE, model-driven design, OCP, DRY, performance, 
 
 ## Remaining items for future consideration
 
-1. **Workflow page SSR errors** — `application-detail` and `evaluation-detail` Vue components access `window` during SSR. Build completes but with warnings. Fix: wrap `window` access in `onMounted` or `typeof window !== 'undefined'` guards.
+1. ~~Workflow page SSR errors~~ — **FIXED (TODO 16)**: Guarded `window` access in `onMounted` for ApplicationDetail, EvaluationDetail, TestRequestDetail.
 2. **Cloudflare adapter deployment** — Adapter is opt-in (`CLOUDFLARE_DEPLOY=true`). Production cutover requires choosing hosting and DNS.
 3. **Visual regression on CI** — Needs Linux baseline snapshots. Currently visual regression runs only locally.
-4. **`[slug].astro` catch-all complexity** — The filter logic for excluding subdirectories could be simplified if content collections were reorganized.
+4. ~~`[slug].astro` catch-all complexity~~ — **FIXED (TODO 17)**: Simplified to `!p.id.includes('/')`.
+
+## Phase 3 — Additional cleanup (TODO 16-20)
+
+| # | Finding | Principle | Resolution |
+|---|---|---|---|
+| 16 | SSR `window is not defined` in 3 workflow components | SSR safety | Moved `window.location.search` into `onMounted`; made `id` a `ref` |
+| 17 | `[slug].astro` exclusion list grows with each section | OCP, simplicity | Replaced with `!p.id.includes('/')` — top-level filter |
+| 18 | `any` types in ContentPage + EvaluationDetail | Type safety | Proper typing: `ComponentRenderer`, removed `as any` casts |
+| 19 | Duplicated docs sort logic (12 lines across 6 files) | DRY | Extracted `byDocsOrder()` in `src/lib/docs-sort.ts`; 4 tests |
+| 20 | Audit document update | Documentation | Updated remaining items status |
