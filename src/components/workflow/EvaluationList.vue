@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useEvaluationReport, useTestReportDetermination, useFormInstance } from '../../lib/entity-composables'
+import { useEntityList } from '../../lib/use-entity-list'
 import { synthesizeAll } from '../../lib/evaluation-aggregator.service'
 
 const erApi = useEvaluationReport()
-const loading = ref(true)
-const reports = ref<ReturnType<typeof erApi.list>>([])
-
-async function load() {
-  loading.value = true
-  reports.value = erApi.list()
-  loading.value = false
-}
+const { items: reports, loading } = useEntityList(erApi)
 
 const synthesisById = computed(() => synthesizeAll(
   reports.value.map(r => r.id),
@@ -24,8 +18,6 @@ function decisionClass(d: string | undefined): string {
   if (d === 'CONDITIONALLY_APPROVED') return 'bg-[#f59e0b] text-white'
   return 'bg-rule text-ink-soft'
 }
-
-onMounted(load)
 </script>
 
 <template>

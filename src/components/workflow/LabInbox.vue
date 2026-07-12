@@ -1,29 +1,21 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useTestRequest } from '../../lib/entity-composables'
+import { useEntityList } from '../../lib/use-entity-list'
 import { useAuth } from '../../lib/useAuth'
 import { bucketByStatus, countOpen, formatAssignments, type TestRequestLike } from '../../lib/test-request-lifecycle'
 
 const trApi = useTestRequest()
 const { user } = useAuth()
-const loading = ref(true)
-const allRequests = ref<TestRequestLike[]>([])
+const { items: allRequests, loading } = useEntityList(useTestRequest())
 
 const labId = computed(() => {
   const u = user.value as { labId?: string } | null
   return u?.labId ?? 'sample-lab-a'
 })
 
-const buckets = computed(() => bucketByStatus(allRequests.value, labId.value))
+const buckets = computed(() => bucketByStatus(allRequests.value as TestRequestLike[], labId.value))
 const totalOpen = computed(() => countOpen(buckets.value))
-
-async function load() {
-  loading.value = true
-  allRequests.value = trApi.list() as TestRequestLike[]
-  loading.value = false
-}
-
-onMounted(load)
 </script>
 
 <template>
