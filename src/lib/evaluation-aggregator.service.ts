@@ -242,6 +242,7 @@ export interface SynthesizeDeps {
 export function synthesizeEvaluation(
   reportId: string,
   deps: SynthesizeDeps,
+  overrides?: { formProgram?: FormProgram; labsByTestReport?: Map<string, string> },
 ): AggregationResult | null {
   const report = deps.reportApi.get(reportId)
   if (!report) return null
@@ -254,17 +255,20 @@ export function synthesizeEvaluation(
     testReportIds,
     determinations,
     formInstances,
-    formProgram: {},
-    labsByTestReport: new Map(),
+    formProgram: overrides?.formProgram ?? {},
+    labsByTestReport: overrides?.labsByTestReport ?? new Map(),
   })
 }
 
 export function synthesizeAll(
   reportIds: string[],
   deps: SynthesizeDeps,
+  overrides?: { formProgram?: FormProgram; labsByTestReport?: Map<string, string> },
 ): Map<string, AggregationResult> {
   const allDeterminations = deps.determinationApi.list()
   const allFormInstances = deps.formInstanceApi.list()
+  const formProgram = overrides?.formProgram ?? {}
+  const labsByTestReport = overrides?.labsByTestReport ?? new Map<string, string>()
 
   const results = new Map<string, AggregationResult>()
   for (const id of reportIds) {
@@ -274,8 +278,8 @@ export function synthesizeAll(
       testReportIds: report.testReportIds ?? [],
       determinations: allDeterminations.filter(d => d.evaluationReportId === id),
       formInstances: allFormInstances,
-      formProgram: {},
-      labsByTestReport: new Map(),
+      formProgram,
+      labsByTestReport,
     }))
   }
   return results
