@@ -100,7 +100,7 @@ export function createDispatchWorkflow(deps: DispatchWorkflowDeps) {
     return isPlanComplete(p)
   }
 
-  function getTrsByLab(): Map<string, unknown> {
+  function getTrsByLab(): Map<string, FormLabAssignment[]> {
     return groupAssignmentsByLab(state.plans)
   }
 
