@@ -1,25 +1,21 @@
 ---
 import { getCollection } from 'astro:content'
-import Base from '../layouts/Base.astro'
-import PageHero from '../components/PageHero.astro'
-import DraftCallout from '../components/DraftCallout.astro'
+import ContentPage from '../layouts/ContentPage.astro'
 
 export async function getStaticPaths() {
   const pages = await getCollection('pages')
   return pages
-    .filter(p => p.id.includes('index') && !p.id.startsWith('about/') && !p.id.startsWith('recommendations/') && !p.id.startsWith('library/') && !p.id.startsWith('docs/'))
+    .filter(p =>
+      !p.id.startsWith('about/') &&
+      !p.id.startsWith('recommendations/') &&
+      !p.id.startsWith('library/') &&
+      !p.id.startsWith('docs/') &&
+      !p.id.startsWith('vocabularies/')
+    )
     .map(entry => ({ params: { slug: entry.id.replace(/\.mdx$/, '') }, props: { entry } }))
 }
 
 const { entry } = Astro.props
-import { render } from "astro:content"
-const { Content } = await render(entry)
 ---
 
-<Base title={entry.data.title} description={entry.data.description}>
-  <article class="prose">
-    <PageHero title={entry.data.title} lede={entry.data.description} />
-    <DraftCallout />
-    <Content />
-  </article>
-</Base>
+<ContentPage entry={entry} />

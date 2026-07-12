@@ -2,21 +2,16 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import InternalToolsDropdown from './InternalToolsDropdown.vue'
 
-describe('InternalToolsDropdown', () => {
+describe('InternalToolsDropdown (deprecated facade → NavDropdown)', () => {
   beforeEach(() => {
     document.body.innerHTML = ''
   })
 
   it('mounts and renders the Internal trigger button', () => {
     const wrapper = mount(InternalToolsDropdown)
-    const trigger = wrapper.find('[data-testid="internal-dropdown-trigger"]')
+    const trigger = wrapper.find('[data-testid="nav-dropdown-internal"]')
     expect(trigger.exists()).toBe(true)
     expect(trigger.text()).toContain('Internal')
-  })
-
-  it('has data-testid on trigger for stable test selectors', () => {
-    const wrapper = mount(InternalToolsDropdown)
-    expect(wrapper.find('[data-testid="internal-dropdown-trigger"]').exists()).toBe(true)
   })
 
   it('shows the internal-only header in the dropdown panel', () => {
@@ -40,7 +35,7 @@ describe('InternalToolsDropdown', () => {
 
   it('trigger has aria-expanded attribute', () => {
     const wrapper = mount(InternalToolsDropdown)
-    const trigger = wrapper.find('[data-testid="internal-dropdown-trigger"]')
+    const trigger = wrapper.find('[data-testid="nav-dropdown-internal"]')
     expect(trigger.attributes('aria-expanded')).toBeDefined()
   })
 })

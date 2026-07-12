@@ -2,17 +2,41 @@
 import Base from './Base.astro'
 import PageHero from '../components/PageHero.astro'
 import DraftCallout from '../components/DraftCallout.astro'
-import { render } from 'astro:content'
+import { render, type CollectionEntry } from 'astro:content'
 
-const { entry } = Astro.props
-const { Content } = await render(entry)
-const { title, description } = entry.data
+interface Props {
+  entry?: CollectionEntry<'pages'>
+  title?: string
+  description?: string
+  eyebrow?: string
+  lede?: string
+}
+
+const props = Astro.props
+let Content: any = null
+let title: string | undefined
+let description: string | undefined
+let eyebrow: string | undefined
+
+if (props.entry) {
+  const rendered = await render(props.entry)
+  Content = rendered.Content
+  title = props.entry.data.title
+  description = props.entry.data.description
+  eyebrow = props.entry.data.eyebrow
+} else {
+  title = props.title
+  description = props.description
+  eyebrow = props.eyebrow
+}
+
+const displayLede = props.lede ?? description
 ---
 
 <Base title={title} description={description}>
   <article class="prose">
-    <PageHero title={title} lede={description} />
+    {title && <PageHero title={title} lede={displayLede} eyebrow={eyebrow} />}
     <DraftCallout />
-    <Content />
+    {Content ? <Content /> : <slot />}
   </article>
 </Base>
