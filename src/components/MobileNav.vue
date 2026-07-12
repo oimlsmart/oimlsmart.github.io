@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { NAV_DROPDOWNS, NAV_STANDALONE } from '../data/nav-config'
+import { NAV_ITEMS } from '../data/nav-config'
 
 const isOpen = ref(false)
 const expandedSection = ref<string | null>(null)
+const isDark = ref(false)
+
+function syncDark() {
+  isDark.value = document.documentElement.classList.contains('dark')
+}
 
 function toggleMenu() {
   isOpen.value = !isOpen.value
@@ -15,13 +20,16 @@ function toggleSection(id: string) {
 }
 
 function toggleTheme() {
-  const isDark = document.documentElement.classList.toggle('dark')
-  localStorage.setItem('oiml-theme', isDark ? 'dark' : 'light')
+  const dark = document.documentElement.classList.toggle('dark')
+  localStorage.setItem('oiml-theme', dark ? 'dark' : 'light')
+  isDark.value = dark
 }
+
+syncDark()
 </script>
 
 <template>
-  <!-- Hamburger trigger button (in header) -->
+  <!-- Hamburger trigger button -->
   <button
     class="md:hidden flex flex-col items-center justify-center gap-[5px] w-11 h-11 rounded-lg border border-rule cursor-pointer shrink-0 transition-colors hover:border-accent bg-transparent"
     @click="toggleMenu"
@@ -34,91 +42,82 @@ function toggleTheme() {
 
   <!-- Full-screen mobile nav overlay -->
   <Transition name="mobile-nav">
-      <div v-if="isOpen" class="fixed inset-0 z-[300] bg-paper flex flex-col md:hidden">
-        <!-- Panel header -->
-        <div class="flex items-center justify-between h-14 px-6 border-b border-rule shrink-0">
-          <a href="/" class="font-serif text-base font-semibold tracking-tight text-ink" @click="toggleMenu">OIML SMART</a>
-          <button
-            class="flex items-center justify-center w-11 h-11 rounded-lg border border-rule cursor-pointer shrink-0 transition-colors hover:border-accent bg-transparent"
-            @click="toggleMenu"
-            aria-label="Close menu"
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="text-ink">
-              <path d="M5 5 L15 15 M15 5 L5 15" />
-            </svg>
-          </button>
-        </div>
+    <div v-if="isOpen" class="fixed inset-0 z-[300] bg-paper flex flex-col md:hidden">
+      <!-- Panel header with logo + close -->
+      <div class="flex items-center justify-between h-14 px-6 border-b border-rule shrink-0">
+        <a href="/" class="flex items-center gap-2 no-underline text-ink" @click="toggleMenu">
+          <img src="/smart-logo-light.svg" alt="" class="logo-light h-7 w-auto shrink-0" />
+          <img src="/smart-logo-dark.svg" alt="" class="logo-dark h-7 w-auto shrink-0" />
+          <span class="font-serif text-base font-semibold tracking-tight">OIML SMART</span>
+        </a>
+        <button
+          class="flex items-center justify-center w-11 h-11 rounded-lg border border-rule cursor-pointer shrink-0 transition-colors hover:border-accent bg-transparent"
+          @click="toggleMenu"
+          aria-label="Close menu"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="text-ink">
+            <path d="M5 5 L15 15 M15 5 L5 15" />
+          </svg>
+        </button>
+      </div>
 
-        <!-- Nav items -->
-        <div class="flex-1 overflow-y-auto px-6 py-4 flex flex-col gap-1">
-          <!-- Dropdown sections (expandable) -->
-          <div v-for="dropdown in NAV_DROPDOWNS" :key="dropdown.id">
-            <!-- Section header (internal gets amber accent) -->
+      <!-- Nav items in NAV_ITEMS order -->
+      <div class="flex-1 overflow-y-auto px-6 py-4 flex flex-col gap-1">
+        <template v-for="(item, i) in NAV_ITEMS" :key="i">
+          <!-- Dropdown section -->
+          <div v-if="item.type === 'dropdown'">
             <button
-              v-if="dropdown.variant === 'internal'"
-              class="w-full flex items-center gap-2 py-3 px-3 text-sm font-medium text-ink-soft hover:text-accent transition-colors text-left rounded"
-              @click="toggleSection(dropdown.id)"
-            >
-              <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-warm shrink-0"></span>
-              <span class="flex-1">{{ dropdown.label }}</span>
-              <span class="text-xs text-ink-muted transition-transform" :class="{ 'rotate-180': expandedSection === dropdown.id }">▾</span>
-            </button>
-            <button
-              v-else
               class="w-full flex items-center justify-between py-3 px-3 text-sm font-medium text-ink-soft hover:text-accent transition-colors text-left rounded"
-              @click="toggleSection(dropdown.id)"
+              @click="toggleSection(item.config.id)"
             >
-              <span>{{ dropdown.label }}</span>
-              <span class="text-xs text-ink-muted transition-transform" :class="{ 'rotate-180': expandedSection === dropdown.id }">▾</span>
+              <span class="flex items-center gap-2">
+                <span v-if="item.config.variant === 'internal'" class="inline-block w-1.5 h-1.5 rounded-full bg-amber-warm shrink-0"></span>
+                {{ item.config.label }}
+              </span>
+              <span class="text-xs text-ink-muted transition-transform" :class="{ 'rotate-180': expandedSection === item.config.id }">▾</span>
             </button>
-
-            <!-- Expandable links -->
             <Transition name="expand">
-              <div v-if="expandedSection === dropdown.id" class="flex flex-col gap-0 pb-2">
-                <!-- Section header for internal -->
-                <div v-if="dropdown.sectionHeader" class="px-3 py-2 text-[0.625rem] font-mono uppercase tracking-wider text-amber-deep">
-                  {{ dropdown.sectionHeader }}
+              <div v-if="expandedSection === item.config.id" class="flex flex-col gap-0 pb-2">
+                <div v-if="item.config.sectionHeader" class="px-3 py-2 text-[0.625rem] font-mono uppercase tracking-wider text-amber-deep">
+                  {{ item.config.sectionHeader }}
                 </div>
                 <a
-                  v-for="link in dropdown.links"
+                  v-for="link in item.config.links"
                   :key="link.href"
                   :href="link.href"
-                  class="py-2.5 px-6 text-sm text-ink-soft hover:text-accent transition-colors rounded no-decoration"
+                  class="py-2.5 px-6 text-sm text-ink-soft hover:text-accent transition-colors rounded"
                 >
                   {{ link.label }}
                   <span v-if="link.badge === 'internal'" class="ml-2 text-[0.5625rem] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded-sm bg-amber-warm/10 text-amber-deep border border-amber-warm/20">internal</span>
                 </a>
               </div>
             </Transition>
+            <div v-if="item.config.id === 'about'" class="h-px bg-rule my-2"></div>
           </div>
 
-          <!-- Horizontal divider before standalone links -->
-          <div class="h-px bg-rule my-2"></div>
-
-          <!-- Standalone links -->
+          <!-- Standalone link -->
           <a
-            v-for="link in NAV_STANDALONE"
-            :key="link.href"
-            :href="link.href"
+            v-else
+            :href="item.href"
             class="py-3 px-3 text-sm font-medium text-ink-soft hover:text-accent transition-colors rounded"
-          >{{ link.label }}</a>
+          >{{ item.label }}</a>
+        </template>
 
-          <!-- Blog -->
-          <a href="/blog/" class="py-3 px-3 text-sm font-medium text-ink-soft hover:text-accent transition-colors rounded">Blog</a>
-
-          <!-- Bottom: theme toggle + sign in -->
-          <div class="mt-auto pt-4 border-t border-rule flex items-center justify-between">
-            <button
-              class="flex items-center gap-2 py-2 px-3 text-sm font-medium text-ink-soft hover:text-accent transition-colors rounded"
-              @click="toggleTheme"
-            >
-              <span>Toggle theme</span>
-            </button>
-            <a href="/login/" class="text-sm font-semibold text-accent">Sign in ↗</a>
-          </div>
+        <!-- Bottom: theme toggle icon + sign in -->
+        <div class="mt-auto pt-4 border-t border-rule flex items-center justify-between">
+          <button
+            class="flex items-center justify-center w-11 h-11 rounded-lg border border-rule cursor-pointer text-lg transition-colors hover:border-accent bg-transparent"
+            @click="toggleTheme"
+            :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+          >
+            <span v-if="!isDark">☀</span>
+            <span v-else>☾</span>
+          </button>
+          <a href="/login/" class="text-sm font-semibold text-accent">Sign in ↗</a>
         </div>
       </div>
-    </Transition>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>

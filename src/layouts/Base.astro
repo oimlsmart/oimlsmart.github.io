@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions'
 import SITE from '../data/site-meta'
-import { NAV_DROPDOWNS, NAV_STANDALONE, isLinkActive } from '../data/nav-config'
+import { NAV_ITEMS, isLinkActive } from '../data/nav-config'
 import InternalBanner from '../components/InternalBanner.astro'
 import SiteFooter from '../components/SiteFooter.astro'
 import ThemeToggle from '../components/ThemeToggle.vue'
@@ -52,17 +52,17 @@ const path = Astro.url.pathname
         <span class="font-serif text-base font-semibold tracking-tight truncate">OIML SMART</span>
       </a>
       <MobileNav client:load />
-      <nav class="nav-menu flex items-center gap-5" id="nav-menu">
-        {NAV_DROPDOWNS.map(dropdown => (
-          <NavDropdown client:load config={dropdown} currentPath={path} />
+      <nav class="nav-menu hidden md:flex items-center gap-5" id="nav-menu">
+        {NAV_ITEMS.map(item => (
+          item.type === 'dropdown' ? (
+            <NavDropdown client:load config={item.config} currentPath={path} />
+          ) : (
+            <a
+              href={item.href}
+              class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${isLinkActive(item.matchPrefix, path) ? 'text-accent font-semibold' : ''}`}
+            >{item.label}</a>
+          )
         ))}
-        {NAV_STANDALONE.map(link => (
-          <a
-            href={link.href}
-            class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${isLinkActive(link.matchPrefix, path) ? 'text-accent font-semibold' : ''}`}
-          >{link.label}</a>
-        ))}
-        <a href="/blog/" class={`text-sm font-medium text-ink-soft hover:text-accent transition-colors whitespace-nowrap ${path.startsWith('/blog') ? 'text-accent font-semibold' : ''}`}>Blog</a>
         <SearchBox client:idle />
         <ThemeToggle client:load />
         <a href="/login/" class="text-sm font-semibold text-accent whitespace-nowrap">Sign in ↗</a>
