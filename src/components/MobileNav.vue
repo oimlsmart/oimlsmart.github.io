@@ -11,7 +11,7 @@ function toggle() {
 
 <template>
   <button
-    class="nav-hamburger flex md:hidden flex-col gap-1 bg-transparent border-none cursor-pointer p-2"
+    class="nav-hamburger flex md:hidden flex-col gap-1 bg-transparent border-none cursor-pointer p-2 shrink-0"
     @click="toggle"
     aria-label="Menu"
     :class="{ 'is-open': isOpen }"
