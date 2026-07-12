@@ -1,7 +1,6 @@
 ---
 import DocsLayout from './DocsLayout.astro'
 import PageHero from '../components/PageHero.astro'
-import DraftCallout from '../components/DraftCallout.astro'
 import { getCollection, render } from 'astro:content'
 
 const { entry } = Astro.props
@@ -16,7 +15,6 @@ const next = idx < all.length - 1 ? all[idx + 1] : null
 
 <DocsLayout title={title} description={description}>
   <PageHero title={title} lede={description} />
-  <DraftCallout />
   <div class="docs-body">
     <Content />
   </div>

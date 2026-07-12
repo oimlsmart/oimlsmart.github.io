@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
 import DocsLayout from '../../layouts/DocsLayout.astro'
-import DraftCallout from '../../components/DraftCallout.astro'
 
 const sections = [
   { key: 'guides', label: 'Developer Guides', desc: 'Narrative walkthroughs for authoring a SMART Recommendation.' },
@@ -20,7 +19,6 @@ const counts = sections.map(s => allDocs.filter(d => d.id.startsWith(s.key + '/'
     <h1 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.025em]">Developer documentation</h1>
     <p class="text-[1.0625rem] leading-[1.6] text-ink-soft max-w-2xl mt-3">Everything a standards developer, software engineer, or technical evaluator needs to author, deploy, or integrate OIML SMART Recommendations.</p>
   </div>
-  <DraftCallout />
   <div class="mt-8 flex flex-col">
     {sections.map((s, i) => (
       <a class="group block py-5 border-b border-rule no-underline text-inherit transition-[padding] duration-150 hover:pl-2" href={`/docs/${s.key}/`}>

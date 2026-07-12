@@ -1,0 +1,52 @@
+---
+title: OIML SMART Pilot Programme
+description: 'The OIML SMART pilot is an ongoing exploration. All content on this site is draft and subject to change without notice.'
+eyebrow: 'About the pilot'
+---
+import ActionBox from '../../../components/ActionBox.astro'
+
+<ActionBox
+  href="/about/what-is-smart"
+  label="Learn what OIML SMART is"
+  description="The five properties that distinguish a SMART Recommendation from a traditional PDF."
+/>
+
+## What this means
+
+Everything on this site — every requirement, test, form, ontology entity, and specification — is part of the **OIML SMART pilot programme** and is a **DRAFT**.
+
+This means:
+
+- **Content may change without notice.** As the pilot evolves, requirements may be added, removed, or restructured. Test procedures may be updated. Form schemas may be modified. Do not rely on any specific detail remaining stable.
+- **Not for external distribution.** The pilot is shared with OIML Member States and Corresponding Members for internal review. It has not been formally adopted or published by OIML.
+- **Models are working drafts.** The SMART models of R 60, R 129, and R 144 demonstrate the approach but are not the authoritative versions of these Recommendations. The authoritative source remains the published OIML PDF documents.
+
+## What the pilot is exploring
+
+The pilot tests whether OIML Recommendations can be expressed as **machine-actionable** structured artifacts rather than static PDFs. Key questions:
+
+- Can requirements, tests, and forms be modeled with enough precision that compliance can be computed, not just read?
+- Can the structured data drive an interactive application for OIML-CS participants (Issuing Authorities, Test Laboratories, Manufacturers)?
+- Can a shared terminology (VIM/VIML) provide semantic consistency across Recommendations?
+- Is the YAML-based authoring workflow practical for OIML Technical Committees?
+
+## Timeline and scope
+
+The pilot began in 2024 and is ongoing. Three Recommendations are currently modelled:
+
+| Recommendation | Scope | Status |
+|---|---|---|
+| OIML R 60 (Load cells) | Most complete model — requirements, tests, forms, calculations | Active development |
+| OIML R 129 (Mass of road vehicles) | Partial model — requirements and tests | In progress |
+| OIML R 144 (Gas meters) | Partial model — requirements | In progress |
+
+The pilot also includes:
+- A [terminology browser](/vocabularies/) covering 12 VIM/VIML/G 18 datasets
+- An [interactive application](/app/) demonstrating the dispatch, evaluation, and certification workflow
+- A [developer documentation](/docs/) suite covering the architecture, guides, and formal specifications
+
+## Engagement
+
+OIML Member States and Corresponding Members seeking engagement should contact OIML through official channels.
+
+For technical contributions, bug reports, or feature requests, see [Getting Involved](/about/contact) or open an issue in the [smart application repository](https://github.com/oimlsmart/smart).

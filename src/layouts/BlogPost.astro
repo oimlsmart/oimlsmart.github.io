@@ -1,7 +1,6 @@
 ---
 import Base from './Base.astro'
 import PageHero from '../components/PageHero.astro'
-import DraftCallout from '../components/DraftCallout.astro'
 
 export async function getStaticPaths() {
   const posts = (await import('../content/config')).collections
@@ -20,7 +19,6 @@ const { Content, frontmatter } = post
 <Base title={frontmatter.title} description={frontmatter.summary}>
   <article class="prose">
     <PageHero eyebrow="Blog" title={frontmatter.title} lede={frontmatter.summary} />
-    <DraftCallout />
     <Content />
   </article>
 </Base>
