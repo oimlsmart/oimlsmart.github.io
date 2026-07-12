@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useEvaluationReport, useTestReportDetermination, useFormInstance } from '../../lib/entity-composables'
 import { useEntityList } from '../../lib/use-entity-list'
 import { synthesizeAll } from '../../lib/evaluation-aggregator.service'
+import { overallDecisionBadgeClass } from '../../lib/badge-styles'
 
 const erApi = useEvaluationReport()
 const { items: reports, loading } = useEntityList(erApi)
@@ -11,13 +12,6 @@ const synthesisById = computed(() => synthesizeAll(
   reports.value.map(r => r.id),
   { reportApi: erApi, determinationApi: useTestReportDetermination(), formInstanceApi: useFormInstance() },
 ))
-
-function decisionClass(d: string | undefined): string {
-  if (d === 'APPROVED') return 'bg-[#10b981] text-white'
-  if (d === 'REJECTED') return 'bg-[#ef4444] text-white'
-  if (d === 'CONDITIONALLY_APPROVED') return 'bg-[#f59e0b] text-white'
-  return 'bg-rule text-ink-soft'
-}
 </script>
 
 <template>
@@ -28,7 +22,7 @@ function decisionClass(d: string | undefined): string {
       <li v-for="r in reports" :key="r.id" class="border border-rule rounded p-4 transition-colors hover:border-accent">
         <div class="flex justify-between items-center mb-2">
           <code class="font-mono text-sm">{{ r.reportNumber ?? r.id.slice(0, 8) }}</code>
-          <span class="text-xs px-2.5 py-0.5 rounded-sm font-medium uppercase tracking-wider" :class="decisionClass(synthesisById.get(r.id)?.overallDecision)">{{ synthesisById.get(r.id)?.overallDecision }}</span>
+          <span class="text-xs px-2.5 py-0.5 rounded-sm font-medium uppercase tracking-wider" :class="overallDecisionBadgeClass(synthesisById.get(r.id)?.overallDecision)">{{ synthesisById.get(r.id)?.overallDecision }}</span>
         </div>
         <div class="flex gap-6 text-[0.8125rem] text-ink-soft font-mono">
           <span>Test Reports: {{ r.testReportIds?.length ?? 0 }}</span>

@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useEvaluationReport, useTestReportDetermination, useFormInstance } from '../../lib/entity-composables'
 import { useRouteEntity } from '../../lib/use-route-entity'
 import { synthesizeEvaluation } from '../../lib/evaluation-aggregator.service'
+import { overallDecisionBadgeClass, modelDecisionBadgeClass } from '../../lib/badge-styles'
 
 const erApi = useEvaluationReport()
 const { id, loading } = useRouteEntity(erApi)
@@ -12,26 +13,12 @@ const synthesis = computed(() => id.value ? synthesizeEvaluation(id.value, {
   formInstanceApi: useFormInstance(),
 }) : null)
 const report = computed(() => erApi.get(id.value ?? ''))
-
-function decisionClass(d: string | undefined): string {
-  if (d === 'APPROVED') return 'bg-[#10b981] text-white'
-  if (d === 'REJECTED') return 'bg-[#ef4444] text-white'
-  if (d === 'CONDITIONALLY_APPROVED') return 'bg-[#f59e0b] text-white'
-  return 'bg-rule text-ink-soft'
-}
-
-function miniClass(d: string | undefined): string {
-  if (d === 'PASS') return 'bg-[#dcfce7] text-[#166534]'
-  if (d === 'FAIL') return 'bg-[#fee2e2] text-[#991b1b]'
-  if (d === 'INCOMPLETE') return 'bg-[#fef3c7] text-[#92400e]'
-  return 'bg-paper-raised text-ink-soft'
-}
 </script>
 <template>
   <div class="max-w-[900px] mx-auto py-8 px-6 font-sans text-ink">
     <header>
       <h1 class="text-2xl mb-2 inline">{{ report?.reportNumber ?? id }}</h1>
-      <span v-if="synthesis" class="text-xs px-2.5 py-0.5 rounded-sm font-medium uppercase ml-2" :class="decisionClass(synthesis.overallDecision)">{{ synthesis.overallDecision }}</span>
+      <span v-if="synthesis" class="text-xs px-2.5 py-0.5 rounded-sm font-medium uppercase ml-2" :class="overallDecisionBadgeClass(synthesis.overallDecision)">{{ synthesis.overallDecision }}</span>
     </header>
     <p v-if="loading" class="text-center py-8 text-ink-muted italic">Loading…</p>
     <template v-else-if="report && synthesis">
@@ -48,7 +35,7 @@ function miniClass(d: string | undefined): string {
           <tbody>
             <tr v-for="me in synthesis.modelEvaluations" :key="me.modelId">
               <td class="py-2 border-b border-rule-soft text-xs"><code>{{ me.modelId.slice(0,12) }}</code></td>
-              <td class="py-2 border-b border-rule-soft text-xs"><span class="text-[0.6rem] px-1 py-px rounded-sm" :class="miniClass(me.decision)">{{ me.decision }}</span></td>
+              <td class="py-2 border-b border-rule-soft text-xs"><span class="text-[0.6rem] px-1 py-px rounded-sm" :class="modelDecisionBadgeClass(me.decision)">{{ me.decision }}</span></td>
               <td class="py-2 border-b border-rule-soft text-xs">{{ me.coveredFormIds.length }}</td>
               <td class="py-2 border-b border-rule-soft text-xs">{{ me.missingFormIds.length }}</td>
               <td class="py-2 border-b border-rule-soft text-xs">{{ me.contributorTestReportIds.length }} TRs · {{ me.contributorLabIds.length }} labs</td>
