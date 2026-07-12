@@ -22,6 +22,21 @@ test.describe('Public site — critical paths', () => {
     await expect(page).toHaveURL(/\/recommendations\//)
   })
 
+  test('vocabularies nav link is present', async ({ page }) => {
+    await page.goto('/')
+    const link = page.getByRole('link', { name: 'Vocabularies' })
+    await expect(link).toBeVisible()
+    await expect(link).toHaveAttribute('href', '/vocab/')
+  })
+
+  test('internal tools dropdown shows internal-only indicator', async ({ page }) => {
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+    const trigger = page.getByTestId('internal-dropdown-trigger')
+    await expect(trigger).toBeVisible()
+    await expect(trigger).toContainText('Internal')
+  })
+
   test('docs page loads with sidebar and content', async ({ page }) => {
     await page.goto('/docs/')
     await expect(page.locator('h1')).toBeVisible()
