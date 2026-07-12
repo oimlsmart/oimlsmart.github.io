@@ -6,6 +6,7 @@ import {
 } from '../../lib/entity-composables'
 import { useNotificationStore } from '../../stores/notifications'
 import { createDispatchWorkflow } from '../../lib/dispatch-workflow'
+import { formatEmax } from '../../lib/format'
 import { STANDARDS } from '../../data/standards'
 import { DEFAULT_DISPATCH_FORMS } from '../../data/forms'
 
@@ -89,7 +90,7 @@ onMounted(() => {})
         <tbody>
           <tr v-for="m in wf.state.models" :key="m.id">
             <td><code>{{ m.model }}</code></td>
-            <td>{{ m.emax ? (m.emax >= 1000 ? `${m.emax / 1000} t` : `${m.emax} kg`) : '—' }}</td>
+            <td>{{ formatEmax(m.emax) }}</td>
             <td>{{ m.accuracyClass ?? '—' }}</td>
             <td>{{ wf.sampleFor(m.id) ? '✓' : 'no sample' }}</td>
           </tr>

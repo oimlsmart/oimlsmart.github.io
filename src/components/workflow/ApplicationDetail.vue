@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useRouteEntity } from '../../lib/use-route-entity'
 import { useApplication, useMeasuringInstrument, useTestRequest } from '../../lib/entity-composables'
+import { formatEmax } from '../../lib/format'
 
 const appApi = useApplication()
 const modelApi = useMeasuringInstrument()
@@ -29,7 +30,7 @@ const trs = computed(() => trApi.filter(t => t.applicationId === id.value))
           <tbody>
             <tr v-for="m in models" :key="m.id">
               <td class="py-2 border-b border-rule-soft text-sm"><code>{{ m.model }}</code></td>
-              <td class="py-2 border-b border-rule-soft text-sm">{{ m.emax ? (m.emax >= 1000 ? `${m.emax/1000}t` : `${m.emax}kg`) : '—' }}</td>
+              <td class="py-2 border-b border-rule-soft text-sm">{{ formatEmax(m.emax) }}</td>
               <td class="py-2 border-b border-rule-soft text-sm">{{ m.accuracyClass ?? '—' }}</td>
             </tr>
           </tbody>
