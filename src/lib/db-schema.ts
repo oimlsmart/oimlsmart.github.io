@@ -19,10 +19,7 @@ export const STORE_SCHEMA = {
     key: 'id',
     indexes: { formId: 'formId', standardId: 'standardId', testReportId: 'testReportId', sampleId: 'sampleId', laboratoryId: 'laboratoryId', modelId: 'modelId' },
   },
-  certificates: { key: 'id', indexes: { standardId: 'standardId' } },
-  certificateAnnexes: { key: 'id', indexes: { certificateId: 'certificateId' } },
   organizations: { key: 'id', indexes: { kind: 'kind', oimlCode: 'oimlCode', oimlId: 'oimlId' } },
-  manufacturers: { key: 'id', indexes: { company: 'company' } },
   instrumentModelFamilies: { key: 'id', indexes: { manufacturerId: 'manufacturerId', standardId: 'standardId' } },
   instrumentModelGroups: { key: 'id', indexes: { familyId: 'familyId', manufacturerId: 'manufacturerId', standardId: 'standardId' } },
   measuringInstruments: { key: 'id', indexes: { modelFamilyId: 'modelFamilyId', modelGroupId: 'modelGroupId', manufacturerId: 'manufacturerId', standardId: 'standardId' } },
@@ -36,7 +33,6 @@ export const STORE_SCHEMA = {
   modelEvaluations: { key: 'id', indexes: { evaluationReportId: 'evaluationReportId', modelId: 'modelId', decision: 'decision' } },
   applications: { key: 'id', indexes: { manufacturerId: 'manufacturerId', status: 'status', standardId: 'standardId', instrumentModelFamilyId: 'instrumentModelFamilyId', modelFamilyId: 'modelFamilyId' } },
   auditEvents: { key: 'id', indexes: { entityType: 'entityType', timestamp: 'timestamp', standardId: 'standardId' } },
-  experts: { key: 'id', indexes: { kind: 'kind' } },
 } as const satisfies Record<string, StoreMeta>
 
 export type StoreName = keyof typeof STORE_SCHEMA

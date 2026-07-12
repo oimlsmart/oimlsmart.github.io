@@ -32,8 +32,8 @@ afterEach(async () => {
 // ── Schema tests ────────────────────────────────────────────────────
 
 describe('STORE_SCHEMA', () => {
-  it('has 19 stores', () => {
-    expect(ALL_STORE_NAMES.length).toBe(19)
+  it('has 15 stores', () => {
+    expect(ALL_STORE_NAMES.length).toBe(15)
   })
 
   it('every store uses "id" as keyPath', () => {
