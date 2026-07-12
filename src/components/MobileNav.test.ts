@@ -4,36 +4,42 @@ import MobileNav from './MobileNav.vue'
 
 describe('MobileNav', () => {
   beforeEach(() => {
-    document.body.classList.remove('nav-open')
+    document.body.style.overflow = ''
   })
 
-  it('mounts and renders a hamburger button', () => {
+  it('renders hamburger trigger button', () => {
     const wrapper = mount(MobileNav)
-    expect(wrapper.find('button.nav-hamburger').exists()).toBe(true)
-    expect(wrapper.findAll('button span').length).toBe(3)
+    expect(wrapper.find('button[aria-label="Open menu"]').exists()).toBe(true)
   })
 
-  it('starts closed', () => {
+  it('overlay hidden initially', () => {
     const wrapper = mount(MobileNav)
-    expect(wrapper.find('button').classes()).not.toContain('is-open')
-    expect(document.body.classList.contains('nav-open')).toBe(false)
+    expect(wrapper.find('[aria-label="Close menu"]').exists()).toBe(false)
   })
 
-  it('toggles open state and applies body class on click', async () => {
+  it('opens overlay on hamburger click and locks body scroll', async () => {
     const wrapper = mount(MobileNav)
-    const button = wrapper.find('button')
-
-    await button.trigger('click')
-    expect(wrapper.find('button').classes()).toContain('is-open')
-    expect(document.body.classList.contains('nav-open')).toBe(true)
-
-    await button.trigger('click')
-    expect(wrapper.find('button').classes()).not.toContain('is-open')
-    expect(document.body.classList.contains('nav-open')).toBe(false)
+    await wrapper.find('button[aria-label="Open menu"]').trigger('click')
+    expect(wrapper.find('[aria-label="Close menu"]').exists()).toBe(true)
+    expect(document.body.style.overflow).toBe('hidden')
   })
 
-  it('has accessible label', () => {
+  it('closes overlay on close button click', async () => {
     const wrapper = mount(MobileNav)
-    expect(wrapper.find('button').attributes('aria-label')).toBe('Menu')
+    await wrapper.find('button[aria-label="Open menu"]').trigger('click')
+    await wrapper.find('button[aria-label="Close menu"]').trigger('click')
+    expect(document.body.style.overflow).toBe('')
+  })
+
+  it('shows all nav items when open', async () => {
+    const wrapper = mount(MobileNav)
+    await wrapper.find('button[aria-label="Open menu"]').trigger('click')
+    const text = wrapper.text()
+    expect(text).toContain('Resources')
+    expect(text).toContain('About')
+    expect(text).toContain('OIML-CS')
+    expect(text).toContain('Blog')
+    expect(text).toContain('Sign in')
+    expect(text).toContain('Toggle theme')
   })
 })
