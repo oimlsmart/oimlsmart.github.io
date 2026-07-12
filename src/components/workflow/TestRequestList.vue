@@ -1,18 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import { useTestRequest } from '../../lib/entity-composables'
+import { useEntityList } from '../../lib/use-entity-list'
 
-const trApi = useTestRequest()
-const loading = ref(true)
-const requests = ref<Array<Record<string, unknown>>>([])
-
-async function load() {
-  loading.value = true
-  requests.value = trApi.list()
-  loading.value = false
-}
-
-onMounted(load)
+const { items: requests, loading, reload } = useEntityList(useTestRequest())
 </script>
 
 <template>

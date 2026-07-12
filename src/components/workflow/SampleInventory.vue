@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import { useInstrumentSample } from '../../lib/entity-composables'
-const api = useInstrumentSample()
-const loading = ref(true)
-const samples = ref<Array<Record<string, unknown>>>([])
-onMounted(async () => { samples.value = api.list(); loading.value = false })
+import { useEntityList } from '../../lib/use-entity-list'
+const { items: samples, loading } = useEntityList(useInstrumentSample())
 </script>
 <template>
   <div class="page">

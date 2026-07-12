@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 import { useModelFamily, useModelGroup, useMeasuringInstrument } from '../../lib/entity-composables'
+import { useEntityList } from '../../lib/use-entity-list'
 const famApi = useModelFamily()
 const grpApi = useModelGroup()
 const mdlApi = useMeasuringInstrument()
-const loading = ref(true)
-const families = ref<Array<Record<string, unknown>>>([])
-onMounted(async () => { families.value = famApi.list(); loading.value = false })
-function groupCount(fid: string) { return grpApi.filter((g: Record<string, unknown>) => g.familyId === fid).length }
-function modelCount(fid: string) { return mdlApi.filter((m: Record<string, unknown>) => m.modelFamilyId === fid).length }
+const { items: families, loading } = useEntityList(famApi)
+function groupCount(fid: string) { return grpApi.filter(g => g.familyId === fid).length }
+function modelCount(fid: string) { return mdlApi.filter(m => m.modelFamilyId === fid).length }
 </script>
 <template>
   <div class="page">

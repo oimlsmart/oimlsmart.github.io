@@ -7,6 +7,7 @@ import {
 import { useNotificationStore } from '../../stores/notifications'
 import { createDispatchWorkflow } from '../../lib/dispatch-workflow'
 import { STANDARDS } from '../../data/standards'
+import { DEFAULT_DISPATCH_FORMS } from '../../data/forms'
 
 const notify = useNotificationStore()
 const wf = createDispatchWorkflow({
@@ -34,7 +35,7 @@ const configuredCount = computed(() =>
 )
 const totalTuples = computed(() => wf.getTupleCount())
 const trsByLab = computed(() => wf.getTrsByLab())
-const DEFAULT_FORMS = ['load-cell-errors', 'repeatability', 'humidity-ch']
+const DEFAULT_FORMS = DEFAULT_DISPATCH_FORMS
 
 function isFormSelected(modelId: string, formId: string): boolean {
   return wf.state.plans.get(modelId)?.selectedForms.has(formId) ?? false

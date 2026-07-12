@@ -10,6 +10,7 @@ import type { EntityApi } from './entity-composable'
 import type { ModelPlan } from './dispatch-planner.service'
 import { groupAssignmentsByLab, countTuples, effectiveLab, isPlanComplete } from './dispatch-planner.service'
 import { filterTestLaboratories } from './lab-selection.service'
+import { DEFAULT_DISPATCH_FORMS } from '../data/forms'
 
 export interface DispatchWorkflowDeps {
   appApi: EntityApi<Application>
@@ -78,7 +79,7 @@ export function createDispatchWorkflow(deps: DispatchWorkflowDeps) {
     if (!plan) return
     plan.selectedLabId = labId
     if (plan.selectedForms.size === 0) {
-      plan.selectedForms = new Set(['load-cell-errors', 'repeatability', 'humidity-ch'])
+      plan.selectedForms = new Set(DEFAULT_DISPATCH_FORMS)
     }
   }
 
