@@ -23,13 +23,24 @@ const { root, isOpen, toggle } = useClickOutside()
 const isInternal = computed(() => props.config.variant === 'internal')
 const isActive = computed(() => isDropdownActive(props.config, props.currentPath))
 
+let closeTimer: ReturnType<typeof setTimeout> | null = null
+
+function onEnter() {
+  if (closeTimer) { clearTimeout(closeTimer); closeTimer = null }
+  isOpen.value = true
+}
+
+function onLeave() {
+  closeTimer = setTimeout(() => { isOpen.value = false }, 150)
+}
+
 function activeClass(href: string): string {
   return isLinkActive(href, props.currentPath) ? 'text-accent font-semibold' : ''
 }
 </script>
 
 <template>
-  <div ref="root" class="nav-dropdown relative flex items-center" @mouseenter="isOpen = true" @mouseleave="isOpen = false">
+  <div ref="root" class="nav-dropdown relative flex items-center" @mouseenter="onEnter" @mouseleave="onLeave">
     <div v-if="isInternal" class="hidden sm:block w-px h-5 bg-rule mr-3" aria-hidden="true" />
     <button
       class="inline-flex items-center gap-1.5 text-sm font-medium transition-colors whitespace-nowrap"
