@@ -38,9 +38,8 @@ onMounted(() => {
     <span class="block w-5 h-0.5 rounded-full bg-ink transition-all duration-200" :class="{ '-translate-y-[7px] -rotate-45': isOpen }"></span>
   </button>
 
-  <!-- Full-screen mobile nav overlay (teleported to body to escape header's backdrop-blur containing block) -->
-  <Teleport to="body">
-    <Transition name="mobile-nav">
+  <!-- Full-screen mobile nav overlay -->
+  <Transition name="mobile-nav">
       <div v-if="isOpen" class="fixed inset-0 z-[300] bg-paper flex flex-col md:hidden">
       <!-- Panel header with logo + close -->
       <div class="flex items-center justify-between h-14 px-6 border-b border-rule shrink-0">
@@ -116,8 +115,7 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    </Transition>
-  </Teleport>
+  </Transition>
 </template>
 
 <style scoped>
