@@ -1,14 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { NAV_ITEMS } from '../data/nav-config'
 
 const isOpen = ref(false)
 const expandedSection = ref<string | null>(null)
 const isDark = ref(false)
-
-function syncDark() {
-  isDark.value = document.documentElement.classList.contains('dark')
-}
 
 function toggleMenu() {
   isOpen.value = !isOpen.value
@@ -25,7 +21,9 @@ function toggleTheme() {
   isDark.value = dark
 }
 
-syncDark()
+onMounted(() => {
+  isDark.value = document.documentElement.classList.contains('dark')
+})
 </script>
 
 <template>
