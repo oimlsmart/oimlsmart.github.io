@@ -2,7 +2,7 @@
 const path = Astro.url.pathname
 let variant = 'default'
 if (path.startsWith('/docs/specifications/')) variant = 'specs'
-else if (path.startsWith('/blog/')) variant = 'compact'
+else if (path.startsWith('/news/')) variant = 'compact'
 
 const title = 'DRAFT — Pilot programme'
 const body = variant === 'compact'

@@ -36,7 +36,7 @@ describe('MobileNav', () => {
     await wrapper.find('button[aria-label="Open menu"]').trigger('click')
     const text = wrapper.text()
     expect(text).toContain('Resources')
-    expect(text).toContain('Blog')
+    expect(text).toContain('News')
     expect(text).toContain('OIML-CS')
     expect(text).toContain('About')
     expect(text).toContain('Sign in')

@@ -13,7 +13,7 @@ function formatDate(iso: string): string {
 }
 ---
 
-<ContentPage title="OIML SMART pilot — updates" description={SITE.feedDescription} eyebrow="Blog · Internal pilot feed">
+<ContentPage title="OIML SMART pilot — news" description={SITE.feedDescription} eyebrow="News · Internal pilot feed">
   <div class="flex flex-col gap-6 my-8">
     {posts.map(post => (
       <article class="blog-entry p-7 bg-paper-raised border border-rule rounded-md transition-all duration-200 hover:border-accent hover:-translate-y-0.5">
@@ -22,10 +22,10 @@ function formatDate(iso: string): string {
           <span>{post.data.author}</span>
         </div>
         <h2 class="font-serif text-2xl mb-2">
-          <a href={`/blog/${post.id.replace('.mdx', '')}`} class="text-ink no-underline hover:text-accent">{post.data.title}</a>
+          <a href={`/news/${post.id.replace('.mdx', '')}`} class="text-ink no-underline hover:text-accent">{post.data.title}</a>
         </h2>
         <p class="text-[0.9375rem] text-ink-soft mb-4">{post.data.summary}</p>
-        <a href={`/blog/${post.id.replace('.mdx', '')}`} class="font-mono text-[0.8125rem] text-accent no-underline hover:underline">Read →</a>
+        <a href={`/news/${post.id.replace('.mdx', '')}`} class="font-mono text-[0.8125rem] text-accent no-underline hover:underline">Read →</a>
       </article>
     ))}
   </div>

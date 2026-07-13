@@ -63,7 +63,7 @@ export type NavItem =
 
 export const NAV_ITEMS: readonly NavItem[] = [
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'resources')! },
-  { type: 'link', label: 'Blog', href: '/blog/', matchPrefix: '/blog' },
+  { type: 'link', label: 'News', href: '/news/', matchPrefix: '/news' },
   { type: 'link', label: 'OIML-CS', href: '/oiml-cs', matchPrefix: '/oiml-cs' },
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'about')! },
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'internal')! },
