@@ -65,6 +65,7 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'resources')! },
   { type: 'link', label: 'News', href: '/news/', matchPrefix: '/news' },
   { type: 'link', label: 'OIML-CS', href: '/oiml-cs', matchPrefix: '/oiml-cs' },
+  { type: 'link', label: 'Resolutions', href: '/resolutions/', matchPrefix: '/resolutions' },
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'about')! },
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'internal')! },
 ]
