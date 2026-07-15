@@ -83,11 +83,15 @@ function activeClass(href: string): string {
               v-if="link.badge === 'internal'"
               class="shrink-0 inline-flex items-center text-[0.5625rem] font-mono font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-sm bg-amber-warm/10 text-amber-deep border border-amber-warm/20"
             >internal</span>
+            <svg v-if="link.external" class="shrink-0 w-3 h-3 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
           </div>
           <span class="text-xs text-ink-muted">{{ link.desc }}</span>
         </div>
         <template v-else>
-          <span>{{ link.label }}</span>
+          <span class="flex items-center gap-1.5">
+            {{ link.label }}
+            <svg v-if="link.external" class="shrink-0 w-3 h-3 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+          </span>
         </template>
       </a>
     </div>

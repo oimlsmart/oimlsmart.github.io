@@ -83,10 +83,11 @@ onMounted(() => {
                   v-for="link in item.config.links"
                   :key="link.href"
                   :href="link.href"
-                  class="py-2.5 px-6 text-sm text-ink-soft hover:text-accent transition-colors rounded"
+                  class="py-2.5 px-6 text-sm text-ink-soft hover:text-accent transition-colors rounded flex items-center gap-1.5"
                 >
                   {{ link.label }}
-                  <span v-if="link.badge === 'internal'" class="ml-2 text-[0.5625rem] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded-sm bg-amber-warm/10 text-amber-deep border border-amber-warm/20">internal</span>
+                  <span v-if="link.badge === 'internal'" class="text-[0.5625rem] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded-sm bg-amber-warm/10 text-amber-deep border border-amber-warm/20">internal</span>
+                  <svg v-if="link.external" class="w-3 h-3 text-ink-muted shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
                 </a>
               </div>
             </Transition>
