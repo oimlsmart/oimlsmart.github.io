@@ -5,6 +5,7 @@ export interface NavLink {
   readonly href: string
   readonly desc?: string
   readonly badge?: NavBadge
+  readonly external?: boolean
 }
 
 export interface NavDropdownConfig {
@@ -29,7 +30,8 @@ export const NAV_DROPDOWNS: readonly NavDropdownConfig[] = [
     links: [
       { label: 'Recommendations', href: '/recommendations/', desc: 'SMART-modeled OIML Recommendations' },
       { label: 'Library', href: '/library/', desc: 'Structured OIML document library' },
-      { label: 'Vocabularies', href: '/vocabularies/', desc: 'OIML terminology and concept browser' },
+      { label: 'Vocabularies', href: '/vocab/', desc: 'OIML terminology and concept browser', external: true },
+      { label: 'Resolutions', href: '/resolutions/', desc: 'OIML resolutions database', external: true },
       { label: 'Developer Docs', href: '/docs/', desc: 'Guides, architecture, specifications' },
     ],
   },
@@ -65,7 +67,6 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'resources')! },
   { type: 'link', label: 'News', href: '/news/', matchPrefix: '/news' },
   { type: 'link', label: 'OIML-CS', href: '/oiml-cs', matchPrefix: '/oiml-cs' },
-  { type: 'link', label: 'Resolutions', href: '/resolutions/', matchPrefix: '/resolutions' },
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'about')! },
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'internal')! },
 ]

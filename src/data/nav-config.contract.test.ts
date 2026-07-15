@@ -7,7 +7,7 @@ const ROOT = join(import.meta.dirname, '..', '..')
 const PAGES_DIR = join(ROOT, 'src', 'pages')
 const CONTENT_PAGES_DIR = join(ROOT, 'src', 'content', 'pages')
 
-const EXTERNAL_HREFS = new Set(['/vocab/', '/concepts-management/', '/login/'])
+const EXTERNAL_HREFS = new Set(['/vocab/', '/resolutions/', '/concepts-management/', '/login/', '/vocabularies/'])
 
 function collectRoutes(dir: string, base = ''): Set<string> {
   const routes = new Set<string>()

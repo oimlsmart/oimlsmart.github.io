@@ -13,7 +13,7 @@ describe('nav-config', () => {
     it('resources dropdown contains recommendations, library, vocabularies, docs', () => {
       const resources = NAV_DROPDOWNS.find(d => d.id === 'resources')!
       const labels = resources.links.map(l => l.label)
-      expect(labels).toEqual(['Recommendations', 'Library', 'Vocabularies', 'Developer Docs'])
+      expect(labels).toEqual(['Recommendations', 'Library', 'Vocabularies', 'Resolutions', 'Developer Docs'])
     })
 
     it('internal dropdown has variant "internal"', () => {
