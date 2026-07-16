@@ -3,6 +3,9 @@
 /* Enable class-based dark mode: dark:bg-*, dark:text-* */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Metrological Blueprint design system — engineering-drawing aesthetic */
+@import "./blueprint.css";
+
 /* ── Design system tokens (Tailwind @theme) ──────────
    These become both CSS variables AND Tailwind utilities.
    e.g. --color-brand-600 → bg-brand-600, text-brand-600
@@ -24,6 +27,21 @@
   --color-teal:       #024873;
   --color-teal-light: #035a8f;
   --color-teal-dark:  #013a5e;
+
+  /* Full teal palette aligned with the site's --color-teal (#024873 = teal-600).
+     Replaces Tailwind's default greenish teal so bg-teal-100/bg-teal-700/etc.
+     match the --accent-2 identity. */
+  --color-teal-50:  #f0f7fc;
+  --color-teal-100: #dbeaf3;
+  --color-teal-200: #b3d5e6;
+  --color-teal-300: #82bad5;
+  --color-teal-400: #4d9ac0;
+  --color-teal-500: #1a7aa3;
+  --color-teal-600: #024873;
+  --color-teal-700: #023d62;
+  --color-teal-800: #013150;
+  --color-teal-900: #00243d;
+  --color-teal-950: #001629;
 
   --color-cream:      #faf6ee;
   --color-cream-soft: #f5ede0;
