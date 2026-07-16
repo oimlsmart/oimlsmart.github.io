@@ -3,6 +3,43 @@ import Base from '../../layouts/Base.astro'
 import OntologyBrowser from '../../components/ontology/OntologyBrowser.vue'
 ---
 
-<Base title="Ontology" description="Browse the OIML semantic ontology — classes, properties, individuals, and concept schemes.">
-  <OntologyBrowser client:load />
+<Base
+  title="Ontology"
+  description="Browse the OIML semantic ontology — classes, properties, individuals, and concept schemes."
+>
+  <div class="relative bp-noise">
+    <section class="relative px-8 pt-14 pb-10 border-b border-rule bp-grid bp-grid--major">
+      <div class="max-w-6xl mx-auto relative z-10">
+        <div class="bp-section-anchor mb-5">
+          <span class="bp-section-anchor__num">§ O</span>
+          <span>Resources · Ontology</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-coord">OWL · SKOS · RDF</span>
+        </div>
+        <div class="grid md:grid-cols-[1.4fr_1fr] gap-8 items-end">
+          <div>
+            <h1 class="font-serif text-[clamp(2.25rem,5.5vw,3.5rem)] font-medium leading-[1.05] tracking-[-0.025em] mb-4 bp-reveal">
+              Semantic <em class="italic font-normal text-accent">Ontology</em>
+            </h1>
+            <p class="text-[1.125rem] leading-[1.6] text-ink-soft max-w-2xl bp-reveal" style="--reveal-delay:80ms;">
+              Browse the OIML semantic ontology — classes, properties, individuals, and concept schemes that underpin cross-Recommendation interoperability and semantic queries.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 bp-reveal" style="--reveal-delay:160ms;">
+            <span class="bp-chip">OWL</span>
+            <span class="bp-chip">RDF / Turtle</span>
+            <span class="bp-chip">SKOS</span>
+            <span class="bp-chip">JSON-LD</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="relative px-8 py-10 bp-grid">
+      <div class="max-w-6xl mx-auto relative z-10 bp-reveal">
+        <OntologyBrowser client:load />
+      </div>
+    </section>
+  </div>
 </Base>

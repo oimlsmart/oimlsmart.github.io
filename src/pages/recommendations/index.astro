@@ -1,91 +1,163 @@
 ---
 import Base from '../../layouts/Base.astro'
-import PageHero from '../../components/PageHero.astro'
-import { STANDARDS } from '../../data/standards'
+import { STANDARDS, STANDARDS_STATS } from '../../data/standards'
+
+const heroStats = [
+  { label: 'Recommendations', value: STANDARDS_STATS.total, format: 'int' },
+  { label: 'Requirements', value: STANDARDS_STATS.totalRequirements, format: 'comma' },
+  { label: 'Conformance Tests', value: STANDARDS_STATS.totalTests, format: 'comma' },
+  { label: 'Smart Forms', value: STANDARDS_STATS.totalForms, format: 'comma' },
+]
+
+const structure = [
+  { file: 'standard.yaml', desc: 'Identity, value model, terminology' },
+  { file: 'dimensions.yaml', desc: 'Classification axes (accuracy class, load range, etc.)' },
+  { file: 'requirements/', desc: 'Requirement classes with structured acceptance criteria' },
+  { file: 'conformance/', desc: 'Conformance test procedures' },
+  { file: 'forms/', desc: 'Test report form schemas with embedded calculations' },
+]
 ---
 
-<Base title="Recommendations" description="OIML International Recommendations modelled in the SMART pilot — structured requirements, conformance tests, and calculation-powered forms.">
-  <div class="max-w-[48rem] mx-auto px-6">
-    <PageHero
-      title="Recommendations"
-      lede="Each OIML International Recommendation listed here has been fully decomposed into machine-readable requirements, conformance tests, calculation-powered forms, and terminology. The structured data drives the interactive application — these pages summarize what each Recommendation covers."
-    />
-  </div>
-
-  <!-- Recommendation cards -->
-  <div class="max-w-[48rem] mx-auto px-6 pb-12">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {STANDARDS.map(r => (
-        <a
-          href={r.recommendationsPath}
-          class="group block p-6 bg-paper-soft border border-rule rounded-lg no-underline text-inherit transition-all duration-200 hover:border-accent hover:-translate-y-0.5 hover:shadow-md"
-        >
-          <div class="flex items-center gap-2 mb-3">
-            <span class="font-mono text-xs font-medium tracking-wider text-accent">{r.recommendationNumber}</span>
-            <span class="font-mono text-xs text-ink-muted">· {r.year}</span>
-            <span class="ml-auto text-[0.5625rem] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded-sm bg-amber-warm/10 text-amber-deep border border-amber-warm/20">DRAFT</span>
+<Base
+  title="Recommendations"
+  description="OIML International Recommendations modelled in the SMART pilot — structured requirements, conformance tests, and calculation-powered forms."
+>
+  <div class="relative bp-noise">
+    {/* ─── Hero ─────────────────────────────────────────── */}
+    <section class="relative px-8 pt-16 pb-12 border-b border-rule bp-grid bp-grid--major">
+      <div class="max-w-6xl mx-auto relative z-10">
+        <div class="bp-section-anchor mb-5">
+          <span class="bp-section-anchor__num">§ R</span>
+          <span>Resources · Recommendations</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-coord">Pilot Snapshot</span>
+        </div>
+        <div class="grid md:grid-cols-[1.4fr_1fr] gap-10 items-end">
+          <div>
+            <h1 class="font-serif text-[clamp(2.25rem,5.5vw,3.75rem)] font-medium leading-[1.02] tracking-[-0.025em] mb-5 bp-reveal">
+              Modelled <em class="italic font-normal text-accent">Recommendations</em>
+            </h1>
+            <p class="text-[1.125rem] leading-[1.6] text-ink-soft max-w-2xl bp-reveal" style="--reveal-delay:80ms;">
+              Each OIML International Recommendation listed here has been fully decomposed into machine-readable requirements, conformance tests, calculation-powered forms, and terminology. The structured data drives the interactive application — these pages summarize what each Recommendation covers.
+            </p>
           </div>
-
-          <h3 class="font-serif text-lg font-semibold mb-2 group-hover:text-accent transition-colors">{r.title}</h3>
-
-          <p class="text-sm text-ink-soft mb-4 leading-relaxed">{r.scope}</p>
-
-          <div class="flex gap-4 pt-4 border-t border-rule">
-            <div class="flex flex-col">
-              <span class="font-serif text-xl font-medium leading-none">{r.counts.requirements}</span>
-              <span class="font-mono text-[0.625rem] uppercase tracking-wider text-ink-muted mt-1">reqs</span>
-            </div>
-            <div class="flex flex-col">
-              <span class="font-serif text-xl font-medium leading-none">{r.counts.tests}</span>
-              <span class="font-mono text-[0.625rem] uppercase tracking-wider text-ink-muted mt-1">tests</span>
-            </div>
-            <div class="flex flex-col">
-              <span class="font-serif text-xl font-medium leading-none">{r.counts.forms}</span>
-              <span class="font-mono text-[0.625rem] uppercase tracking-wider text-ink-muted mt-1">forms</span>
-            </div>
+          <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden bp-reveal" style="--reveal-delay:160ms;">
+            {heroStats.map(s => (
+              <div class="bg-paper-soft p-4 text-center">
+                <div class="bp-metric">
+                  <span class="bp-metric__value bp-counter" data-target={s.value} data-format={s.format}>{s.value}</span>
+                  <span class="bp-metric__label">{s.label}</span>
+                </div>
+              </div>
+            ))}
           </div>
-        </a>
-      ))}
-    </div>
-  </div>
-
-  <!-- In progress -->
-  <div class="max-w-[48rem] mx-auto px-6 pb-12">
-    <section class="border-t border-rule pt-8">
-      <h2 class="font-serif text-xl font-semibold mb-3">In progress</h2>
-      <p class="text-[1.0625rem] leading-[1.6] text-ink-soft">
-        The catalogue grows as OIML Technical Committees prioritize and resource
-        new SMART modelling work. Priority is set by member-state demand and
-        OIML-CS coverage.
-      </p>
-      <p class="text-[1.0625rem] leading-[1.6] text-ink-soft mt-4">
-        To request a new Recommendation or contribute to an in-progress one, see
-        <a href="/about/contact" class="text-accent underline">Getting Involved</a> or open an issue in the
-        <a href="https://github.com/oimlsmart/smart" class="text-accent underline">smart application repository</a>.
-      </p>
+        </div>
+      </div>
     </section>
 
-    <!-- How it's structured -->
-    <section class="border-t border-rule pt-8 mt-8">
-      <h2 class="font-serif text-xl font-semibold mb-3">How a SMART Recommendation is structured</h2>
-      <p class="text-[1.0625rem] leading-[1.6] text-ink-soft mb-4">
-        Each modelled Recommendation is organized as a directory under
-        <code class="font-mono text-sm bg-accent-soft px-1.5 py-0.5 rounded">data/&lt;recommendation&gt;/</code>
-        containing:
-      </p>
-      <ul class="space-y-2 text-[1.0625rem] text-ink-soft">
-        <li class="flex gap-2"><code class="font-mono text-sm bg-accent-soft px-1.5 py-0.5 rounded shrink-0">standard.yaml</code> — identity, value model, terminology</li>
-        <li class="flex gap-2"><code class="font-mono text-sm bg-accent-soft px-1.5 py-0.5 rounded shrink-0">dimensions.yaml</code> — classification axes (accuracy class, load range, etc.)</li>
-        <li class="flex gap-2"><code class="font-mono text-sm bg-accent-soft px-1.5 py-0.5 rounded shrink-0">requirements/</code> — requirements classes with structured acceptance criteria</li>
-        <li class="flex gap-2"><code class="font-mono text-sm bg-accent-soft px-1.5 py-0.5 rounded shrink-0">conformance/</code> — conformance test procedures</li>
-        <li class="flex gap-2"><code class="font-mono text-sm bg-accent-soft px-1.5 py-0.5 rounded shrink-0">forms/</code> — test report form schemas with embedded calculations</li>
-      </ul>
-      <p class="text-[1.0625rem] leading-[1.6] text-ink-soft mt-4">
-        The build pipeline validates every cross-reference, generates TypeScript
-        modules, and the interactive application loads them at runtime. Adding a new
-        Recommendation is a YAML-only task — see the
-        <a href="/docs/workflow/adding-a-standard" class="text-accent underline">Adding a Standard</a> guide.
-      </p>
+    {/* ─── Cards ────────────────────────────────────────── */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="relative px-8 py-16 bp-grid bp-grid--major">
+      <div class="max-w-6xl mx-auto relative z-10">
+        <div class="bp-section-anchor mb-6 bp-reveal">
+          <span class="bp-section-anchor__num">§ 01</span>
+          <span>Catalogue</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-coord">{STANDARDS.length} modelled</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {STANDARDS.map((r, i) => (
+            <a
+              href={r.recommendationsPath}
+              class="rec-card block p-7 bg-paper-soft border border-rule rounded-md no-underline text-inherit relative bp-card-hover bp-reveal group bp-crosshair overflow-hidden"
+              style={`--reveal-delay: ${i * 70}ms;`}
+            >
+              <div class="flex items-center justify-between mb-3 font-mono text-xs">
+                <span class="font-medium tracking-[0.1em] text-accent">{r.recommendationNumber} · {r.year}</span>
+                <span class="bp-chip">Draft</span>
+              </div>
+              <h3 class="font-serif text-[1.25rem] font-semibold mb-2 leading-tight group-hover:text-accent transition-colors">{r.title}</h3>
+              <p class="text-[0.9375rem] text-ink-soft mb-5 leading-relaxed">{r.scope}</p>
+              <div class="grid grid-cols-3 gap-2 pt-4 border-t border-rule">
+                <div>
+                  <div class="font-serif text-[1.25rem] font-medium leading-none text-ink">{r.counts.requirements}</div>
+                  <div class="font-mono text-[0.625rem] uppercase tracking-[0.1em] text-ink-muted mt-1">reqs</div>
+                </div>
+                <div>
+                  <div class="font-serif text-[1.25rem] font-medium leading-none text-ink">{r.counts.tests}</div>
+                  <div class="font-mono text-[0.625rem] uppercase tracking-[0.1em] text-ink-muted mt-1">tests</div>
+                </div>
+                <div>
+                  <div class="font-serif text-[1.25rem] font-medium leading-none text-ink">{r.counts.forms}</div>
+                  <div class="font-mono text-[0.625rem] uppercase tracking-[0.1em] text-ink-muted mt-1">forms</div>
+                </div>
+              </div>
+              <div class="absolute bottom-0 right-0 px-3 py-1 bg-accent text-paper font-mono text-[0.625rem] tracking-[0.1em] uppercase opacity-0 group-hover:opacity-100 transition-opacity translate-y-full group-hover:translate-y-0 origin-top-left">
+                View →
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
     </section>
+
+    {/* ─── In Progress ─────────────────────────────────── */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="relative px-8 py-16 bp-grid">
+      <div class="max-w-3xl mx-auto relative z-10">
+        <div class="bp-section-anchor mb-4 bp-reveal">
+          <span class="bp-section-anchor__num">§ 02</span>
+          <span>Roadmap</span>
+          <span class="bp-section-anchor__line"></span>
+        </div>
+        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4 bp-reveal">
+          In progress
+        </h2>
+        <div class="space-y-4 text-[1.0625rem] leading-[1.7] text-ink-soft bp-reveal">
+          <p>
+            The catalogue grows as OIML Technical Committees prioritize and resource new SMART modelling work. Priority is set by member-state demand and OIML-CS coverage.
+          </p>
+          <p>
+            To request a new Recommendation or contribute to an in-progress one, see
+            <a href="/about/contact" class="text-accent underline">Getting Involved</a> or open an issue in the
+            <a href="https://github.com/oimlsmart/smart" class="text-accent underline">smart application repository</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* ─── Structure ───────────────────────────────────── */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="relative px-8 py-16 bp-grid bp-grid--major">
+      <div class="max-w-3xl mx-auto relative z-10">
+        <div class="bp-section-anchor mb-4 bp-reveal">
+          <span class="bp-section-anchor__num">§ 03</span>
+          <span>Structure</span>
+          <span class="bp-section-anchor__line"></span>
+        </div>
+        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4 bp-reveal">
+          How a SMART Recommendation is structured
+        </h2>
+        <p class="text-[1.0625rem] leading-[1.7] text-ink-soft mb-5 bp-reveal">
+          Each modelled Recommendation is organized as a directory under
+          <code class="font-mono text-sm bg-accent-soft px-1.5 py-0.5 rounded">data/&lt;recommendation&gt;/</code>
+          containing:
+        </p>
+        <ul class="border border-rule rounded-md overflow-hidden bp-reveal">
+          {structure.map((item, i) => (
+            <li class={`flex items-baseline gap-4 px-5 py-3 ${i !== structure.length - 1 ? 'border-b border-rule' : ''} bg-paper-soft`}>
+              <code class="font-mono text-[0.8125rem] text-accent w-44 shrink-0">{item.file}</code>
+              <span class="text-[0.9375rem] text-ink-soft">{item.desc}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="text-[1.0625rem] leading-[1.7] text-ink-soft mt-5 bp-reveal">
+          The build pipeline validates every cross-reference, generates TypeScript modules, and the interactive application loads them at runtime. Adding a new Recommendation is a YAML-only task — see the
+          <a href="/docs/workflow/adding-a-standard" class="text-accent underline">Adding a Standard</a> guide.
+        </p>
+      </div>
+    </section>
+
+    <div class="bp-ticks bp-ticks--dense" aria-hidden="true"></div>
   </div>
 </Base>

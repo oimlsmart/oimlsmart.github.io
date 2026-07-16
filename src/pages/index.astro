@@ -52,19 +52,23 @@ const audiencePaths = [
         HERO — calibration sheet header
         ═══════════════════════════════════════════════════════════════ */}
     <section class="home-hero relative min-h-[min(92vh,840px)] grid grid-cols-[1fr_1.1fr] gap-16 items-center px-8 py-20 max-[960px]:grid-cols-1 max-[960px]:text-center bp-grid bp-grid--major">
-      <span class="vf-corner vf-tl" aria-hidden="true"></span>
-      <span class="vf-corner vf-tr" aria-hidden="true"></span>
-      <span class="vf-corner vf-bl" aria-hidden="true"></span>
-      <span class="vf-corner vf-br" aria-hidden="true"></span>
-      <span class="vf-coord vf-coord-tl" aria-hidden="true">48.8566° N · 2.3522° E</span>
-      <span class="vf-coord vf-coord-tr" aria-hidden="true">OIML · BIML · PARIS</span>
-      <span class="vf-coord vf-coord-bl" aria-hidden="true">REV 0.1 · DRAFT</span>
-      <span class="vf-coord vf-coord-br" aria-hidden="true">2026 → ∞</span>
+      <div class="home-globe relative z-10 flex items-center justify-center min-[960px]:order-1" data-parallax-target>
+        <div class="globe-frame relative aspect-square w-full max-w-[540px] mx-auto">
+          <span class="vf-corner vf-tl" aria-hidden="true"></span>
+          <span class="vf-corner vf-tr" aria-hidden="true"></span>
+          <span class="vf-corner vf-bl" aria-hidden="true"></span>
+          <span class="vf-corner vf-br" aria-hidden="true"></span>
+          <span class="vf-coord vf-coord-tl" aria-hidden="true">48.8566° N · 2.3522° E</span>
+          <span class="vf-coord vf-coord-tr" aria-hidden="true">OIML · BIML · PARIS</span>
+          <span class="vf-coord vf-coord-bl" aria-hidden="true">REV 0.1 · DRAFT</span>
+          <span class="vf-coord vf-coord-br" aria-hidden="true">2026 → ∞</span>
 
-      <div class="home-globe relative z-10 flex items-center justify-center aspect-square max-w-[540px] mx-auto min-[960px]:order-1" data-parallax-target>
-        <div class="globe-rings" aria-hidden="true"></div>
-        <div id="hero-globe" class="relative w-full max-w-[440px] h-auto"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full pointer-events-none bp-scan opacity-30" aria-hidden="true"></div>
+          <div class="globe-rings" aria-hidden="true"></div>
+          <div id="hero-globe" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-[440px] flex items-center justify-center"></div>
+          <div class="globe-scan-wrap absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[78%] aspect-square rounded-full pointer-events-none overflow-hidden" aria-hidden="true">
+            <div class="bp-scan w-full h-full opacity-30"></div>
+          </div>
+        </div>
       </div>
 
       <div class="relative z-10 max-w-2xl max-[960px]:mx-auto min-[960px]:order-2">
@@ -323,30 +327,38 @@ const audiencePaths = [
     opacity: 0.5;
     z-index: 1;
   }
+  .home-globe {
+    perspective: 1000px;
+  }
   .home-globe::before {
     content: '';
     position: absolute;
-    inset: 8%;
+    inset: -10%;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, var(--accent-soft) 0%, transparent 60%);
-    filter: blur(40px);
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .globe-frame {
+    position: relative;
   }
   #hero-globe svg { display: block; width: 100%; height: auto; }
 
-  /* ── Viewfinder corner brackets ─────────────────────── */
+  /* ── Viewfinder corner brackets (frame the globe) ──── */
   .vf-corner {
     position: absolute;
     width: 26px;
     height: 26px;
     border: 0 solid var(--ink-muted);
-    opacity: 0.45;
+    opacity: 0.55;
     z-index: 4;
     pointer-events: none;
   }
-  .vf-tl { top: 22px; left: 22px; border-top-width: 1px; border-left-width: 1px; }
-  .vf-tr { top: 22px; right: 22px; border-top-width: 1px; border-right-width: 1px; }
-  .vf-bl { bottom: 22px; left: 22px; border-bottom-width: 1px; border-left-width: 1px; }
-  .vf-br { bottom: 22px; right: 22px; border-bottom-width: 1px; border-right-width: 1px; }
+  .vf-tl { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; }
+  .vf-tr { top: 0; right: 0; border-top-width: 1px; border-right-width: 1px; }
+  .vf-bl { bottom: 0; left: 0; border-bottom-width: 1px; border-left-width: 1px; }
+  .vf-br { bottom: 0; right: 0; border-bottom-width: 1px; border-right-width: 1px; }
 
   .vf-coord {
     position: absolute;
@@ -355,14 +367,16 @@ const audiencePaths = [
     letter-spacing: 0.14em;
     color: var(--ink-muted);
     text-transform: uppercase;
-    opacity: 0.65;
-    z-index: 4;
+    opacity: 0.85;
+    z-index: 5;
     pointer-events: none;
+    background: var(--paper);
+    padding: 0 0.5rem;
   }
-  .vf-coord-tl { top: 28px; left: 60px; }
-  .vf-coord-tr { top: 28px; right: 60px; }
-  .vf-coord-bl { bottom: 28px; left: 60px; }
-  .vf-coord-br { bottom: 28px; right: 60px; }
+  .vf-coord-tl { top: -0.45em; left: 14px; }
+  .vf-coord-tr { top: -0.45em; right: 14px; }
+  .vf-coord-bl { bottom: -0.45em; left: 14px; }
+  .vf-coord-br { bottom: -0.45em; right: 14px; }
 
   /* ── Eyebrow label (hero only — section anchors use bp-section-anchor) ─ */
   .eyebrow {
@@ -380,20 +394,19 @@ const audiencePaths = [
   }
 
   /* ── Rotating dashed rings around the globe ─────────── */
-  .home-globe { perspective: 1000px; }
   .globe-rings {
     position: absolute;
-    inset: -8%;
+    inset: 6%;
     border-radius: 50%;
     border: 1px dashed var(--accent);
-    opacity: 0.22;
+    opacity: 0.25;
     animation: ring-rotate 60s linear infinite;
     pointer-events: none;
   }
   .globe-rings::before {
     content: '';
     position: absolute;
-    inset: 6%;
+    inset: 8%;
     border-radius: 50%;
     border: 1px dashed var(--accent);
     opacity: 0.6;
@@ -401,7 +414,7 @@ const audiencePaths = [
   .globe-rings::after {
     content: '';
     position: absolute;
-    inset: 12%;
+    inset: 16%;
     border-radius: 50%;
     border: 1px dotted var(--accent);
     opacity: 0.7;
@@ -419,7 +432,7 @@ const audiencePaths = [
   .rec-card:hover .bp-chip { background: var(--accent); color: var(--paper); border-color: var(--accent); }
 
   @media (max-width: 960px) {
-    .vf-corner, .vf-coord { display: none; }
+    .vf-coord { font-size: 0.5625rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     .globe-rings, .globe-rings::after { animation: none !important; }
@@ -431,8 +444,6 @@ const audiencePaths = [
 <script is:inline src="/spinning-globe-3d.js"></script>
 <script is:inline>
   (function () {
-    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
     function initGlobe() {
       var isDark = document.documentElement.classList.contains('dark');
       var container = document.getElementById('hero-globe');
@@ -449,8 +460,6 @@ const audiencePaths = [
     }
 
     function initParallax() {
-      if (prefersReduced) return;
-      if (window.matchMedia('(pointer: coarse)').matches) return;
       var target = document.querySelector('[data-parallax-target]');
       var hero = document.querySelector('.home-hero');
       if (!target || !hero) return;
