@@ -1,11 +1,53 @@
 ---
-const { title, lede, description } = Astro.props
+interface Props {
+  title?: string
+  lede?: string
+  description?: string
+  eyebrow?: string
+  anchor?: string
+  align?: 'left' | 'center'
+}
+
+const { title, lede, description, eyebrow, anchor = '§', align = 'left' } = Astro.props
 const displayLede = lede ?? description
+const alignClass = align === 'center' ? 'text-center mx-auto items-center' : ''
 ---
 
 {title && (
-  <div class="pt-8 pb-6 mb-6 border-b border-rule">
-    <h1 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.025em] leading-[1.15]">{title}</h1>
-    {displayLede && <p class="text-[1.0625rem] leading-[1.6] text-ink-soft max-w-2xl mt-3">{displayLede}</p>}
-  </div>
+  <section class={`page-hero relative pt-14 pb-10 mb-10 border-b border-rule bp-grid bp-grid--major ${alignClass}`}>
+    <div class="px-2 relative z-10">
+      {eyebrow && (
+        <div class="bp-section-anchor mb-5 max-w-3xl">
+          <span class="bp-section-anchor__num">{anchor}</span>
+          <span>{eyebrow}</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-coord">OIML · SMART</span>
+        </div>
+      )}
+      <h1 class="page-hero__title font-serif text-[clamp(2rem,5vw,3.25rem)] font-medium tracking-[-0.025em] leading-[1.05] max-w-3xl bp-reveal">
+        {title}
+      </h1>
+      {displayLede && (
+        <p class="page-hero__lede text-[1.125rem] leading-[1.6] text-ink-soft max-w-2xl mt-5 bp-reveal" style="--reveal-delay: 100ms;">
+          {displayLede}
+        </p>
+      )}
+    </div>
+  </section>
 )}
+
+<style>
+  .page-hero {
+    position: relative;
+  }
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: linear-gradient(to right, var(--accent), transparent 70%);
+    opacity: 0.6;
+  }
+</style>

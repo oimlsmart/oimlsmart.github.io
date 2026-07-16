@@ -33,8 +33,36 @@ const displayLede = props.lede ?? description
 ---
 
 <Base title={title} description={description}>
-  <article class="prose">
+  <div class="relative bp-noise">
     {title && <PageHero title={title} lede={displayLede} eyebrow={eyebrow} />}
-    {Content ? <Content /> : <slot />}
-  </article>
+    <article class="prose prose-enhanced bp-reveal" style="--reveal-delay: 200ms;">
+      {Content ? <Content /> : <slot />}
+    </article>
+    <div class="bp-ticks bp-ticks--dense" aria-hidden="true"></div>
+  </div>
 </Base>
+
+<style is:global>
+  .prose-enhanced {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+  .prose-enhanced h2 {
+    position: relative;
+    padding-top: 2rem;
+    margin-top: 4rem;
+  }
+  .prose-enhanced h2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+  }
+  .prose-enhanced h3 {
+    scroll-margin-top: 5rem;
+  }
+</style>

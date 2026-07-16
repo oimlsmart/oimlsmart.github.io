@@ -1,8 +1,365 @@
 ---
-import { getEntry } from 'astro:content'
-import ContentPage from '../layouts/ContentPage.astro'
+import Base from '../layouts/Base.astro'
+import { STANDARDS } from '../data/standards'
 
-const entry = await getEntry('pages', 'oiml-cs')
+const roles = [
+  {
+    code: 'IA',
+    title: 'OIML Issuing Authority',
+    summary: 'A certification body approved by the Management Committee to issue OIML certificates and type evaluation reports.',
+    scheme: 'Scheme A (accreditation / peer assessment) or Scheme B (self-declaration).',
+    examples: ['PTB (DE1)', 'NMi (NL1)', 'METAS (CH1)', 'FORCE (DK2)', 'RISE (SE1)'],
+  },
+  {
+    code: 'TL',
+    title: 'Test Laboratory',
+    summary: 'A laboratory performing tests and examinations on measuring instrument samples during OIML type evaluation.',
+    scheme: 'Designated by an IA; approved by the Management Committee.',
+    examples: ['PTB Lab', 'NMi Lab', 'FORCE Technology', 'METTLER TOLEDO (mfr TL)'],
+  },
+  {
+    code: 'UT',
+    title: 'Utilizer',
+    summary: 'A national issuing authority from an OIML Member State that has signed the Declaration of acceptance.',
+    scheme: 'Specifies terms of acceptance; may add national requirements.',
+    examples: ['National bodies of OIML Member States'],
+  },
+  {
+    code: 'AS',
+    title: 'Associate',
+    summary: 'A national body from an OIML Corresponding Member that has signed the Declaration.',
+    scheme: 'Voice but no vote in the Management Committee.',
+    examples: ['National bodies of Corresponding Members'],
+  },
+  {
+    code: 'AP',
+    title: 'Applicant / Manufacturer',
+    summary: 'The manufacturer or authorised representative who applies for OIML type evaluation.',
+    scheme: 'Becomes the certificate owner upon issuance.',
+    examples: ['Instrument manufacturers worldwide'],
+  },
+]
+
+const lifecycle = [
+  {
+    step: '01',
+    title: 'Application',
+    actor: 'Manufacturer → IA',
+    detail: 'The manufacturer submits an application to an OIML Issuing Authority, including instrument description, technical documentation, and samples representative of production.',
+    ref: 'PD-05 §4.1 / §5.1',
+  },
+  {
+    step: '02',
+    title: 'Tests & Examinations',
+    actor: 'Test Laboratory',
+    detail: 'A TL listed in the IA\'s Declaration performs tests according to the relevant OIML Recommendation. Each TL issues an OIML Test Report with results.',
+    ref: 'PD-05 §4.3–4.4 / §5.3–5.4',
+  },
+  {
+    step: '03',
+    title: 'Type Evaluation Report',
+    actor: 'Issuing Authority',
+    detail: 'The IA prepares the OIML Type Evaluation Report, assessing conformity of the instrument type to the OIML Recommendation. Bears the OIML-CS logo.',
+    ref: 'PD-05 §4.5 / §5.5',
+  },
+  {
+    step: '04',
+    title: 'OIML Certificate',
+    actor: 'IA → BIML',
+    detail: 'If the type conforms, the IA issues an OIML Certificate bearing the OIML-CS logo and a unique certificate number (e.g. R60-A-DE1-2024-01). A copy goes to BIML for registration.',
+    ref: 'PD-05 §4.6 / §5.6',
+  },
+  {
+    step: '05',
+    title: 'Use & Acceptance',
+    actor: 'Utilizer / Associate',
+    detail: 'OIML certificates and type evaluation reports are used in support of national or regional type approval, accepted according to each Utilizer\'s Declaration scope.',
+    ref: 'PD-06 §4',
+  },
+]
+
+const smartFeatures = [
+  {
+    num: '01',
+    title: 'Computation-Powered Test Report Forms',
+    description: 'Test report forms contain embedded computation declarations — expressions, table lookups, and pass/fail logic — that auto-calculate field values from the instrument classification. Test Laboratories fill in measurements; the platform computes results.',
+    tag: 'CALC · FORM',
+  },
+  {
+    num: '02',
+    title: 'Classification-Driven Evaluation',
+    description: 'Requirements and acceptance criteria are parameterized by instrument classification (accuracy class, load range, etc.). The evaluation workflow automatically selects applicable criteria from the subject\'s classification context.',
+    tag: 'CLASSIFY',
+  },
+  {
+    num: '03',
+    title: 'Structured Type Evaluation',
+    description: 'Type evaluation reports are generated from structured data — each form receives a pass/fail/conditional determination, with conditions tracked separately. The overall evaluation decision is derived from individual form results.',
+    tag: 'EVAL · TRACE',
+  },
+  {
+    num: '04',
+    title: 'Certificate Lifecycle',
+    description: 'OIML certificates include structured classification data, revision tracking, and comply with PD-05 format requirements. The OIML-CS logo is affixed per B 20. Certificate numbers follow PD-05 Annex B.',
+    tag: 'LIFECYCLE',
+  },
+]
+
+const governingDocs = [
+  { id: 'B 18', title: 'Framework for the OIML Certification System', note: 'Foundational document' },
+  { id: 'B 20', title: 'Rules for use of the OIML-CS logo and certificate numbering', note: 'Visual identity + numbering' },
+  { id: 'OD-01', title: 'Management Committee Operations', note: 'Governance' },
+  { id: 'OD-02', title: 'Test Laboratories Forum', note: 'TL coordination' },
+  { id: 'PD-01 → PD-09', title: 'Operational procedures', note: 'Appeals, approvals, transitions, Declarations' },
+  { id: 'D 30', title: 'Application of ISO/IEC 17025', note: 'Testing Laboratories guide' },
+  { id: 'D 32', title: 'Application of ISO/IEC 17065', note: 'Issuing Authorities guide' },
+]
+
+const modelledRecs = STANDARDS.filter(s => s.counts.forms > 0)
 ---
 
-<ContentPage entry={entry} />
+<Base
+  title="The OIML Certification System"
+  description="The OIML-CS is the system for issuing, registering, and using OIML type examination certificates and associated type evaluation reports for measuring instruments. Defined by OIML B 18 (2025 edition)."
+>
+  <div class="relative bp-noise">
+    {/* ─── Hero ──────────────────────────────────────────── */}
+    <section class="relative px-8 pt-16 pb-12 border-b border-rule bp-grid bp-grid--major">
+      <div class="max-w-6xl mx-auto relative z-10">
+        <div class="bp-section-anchor mb-6">
+          <span class="bp-section-anchor__num">§ CS</span>
+          <span>Certification System · B 18:2025</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-coord">Voluntary · Global</span>
+        </div>
+        <div class="grid md:grid-cols-[1.4fr_1fr] gap-10 items-end">
+          <div>
+            <div class="flex items-center gap-4 mb-6 bp-reveal">
+              <img src="/oiml-logo-cs-light.svg" alt="OIML-CS" class="cs-logo-light h-12 w-auto" />
+              <img src="/oiml-logo-cs-dark.svg" alt="OIML-CS" class="cs-logo-dark h-12 w-auto" />
+            </div>
+            <h1 class="font-serif text-[clamp(2.25rem,5.5vw,3.75rem)] font-medium leading-[1.02] tracking-[-0.025em] mb-5 bp-reveal" style="--reveal-delay:80ms;">
+              The OIML<br /><em class="italic font-normal text-accent">Certification System</em>
+            </h1>
+            <p class="text-[1.125rem] leading-[1.6] text-ink-soft max-w-2xl bp-reveal" style="--reveal-delay:160ms;">
+              The framework for issuing, registering, and using OIML type examination certificates and associated type evaluation reports for measuring instruments — replacing the 1991 Basic Certificate System and the 2005 MAA.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-3 bp-reveal" style="--reveal-delay:240ms;">
+              <a href="#lifecycle" class="btn btn-primary bp-magnetic bp-focus-ring" data-magnetic-strength="0.2">
+                Certificate Lifecycle <span class="arrow">→</span>
+              </a>
+              <a href="/recommendations/" class="btn btn-ghost bp-magnetic bp-focus-ring" data-magnetic-strength="0.15">
+                Modelled Recommendations
+              </a>
+            </div>
+          </div>
+          <div class="bp-reveal" style="--reveal-delay:200ms;">
+            <div class="cs-stats relative border border-rule bg-paper-soft p-6 bp-crosshair">
+              <div class="bp-coord mb-3">System Snapshot</div>
+              <dl class="space-y-3 font-mono text-sm">
+                <div class="flex justify-between border-b border-rule pb-2">
+                  <dt class="text-ink-muted">Established</dt>
+                  <dd class="text-ink">2025 (B 18 ed.)</dd>
+                </div>
+                <div class="flex justify-between border-b border-rule pb-2">
+                  <dt class="text-ink-muted">Predecessors</dt>
+                  <dd class="text-ink">BCS 1991 / MAA 2005</dd>
+                </div>
+                <div class="flex justify-between border-b border-rule pb-2">
+                  <dt class="text-ink-muted">Participation</dt>
+                  <dd class="text-ink">Voluntary · Declaration</dd>
+                </div>
+                <div class="flex justify-between">
+                  <dt class="text-ink-muted">SMART coverage</dt>
+                  <dd class="text-accent">{modelledRecs.length} Recommendations</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ─── What is the OIML-CS ──────────────────────────── */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="relative px-8 py-16 bp-grid">
+      <div class="max-w-3xl mx-auto relative z-10">
+        <div class="bp-section-anchor mb-5 bp-reveal">
+          <span class="bp-section-anchor__num">§ 01</span>
+          <span>Overview</span>
+          <span class="bp-section-anchor__line"></span>
+        </div>
+        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-5 bp-reveal">
+          What is the OIML-CS?
+        </h2>
+        <div class="space-y-4 text-[1.0625rem] leading-[1.7] text-ink-soft bp-reveal" style="--reveal-delay:100ms;">
+          <p>
+            The OIML Certification System (OIML-CS) was established to promote global harmonisation of legal metrological requirements, avoid unnecessary re-testing, and foster mutual confidence among participating Member States.
+          </p>
+          <p>
+            It replaces the previous OIML Basic Certificate System (1991) and the OIML Mutual Acceptance Arrangement (MAA, 2005). Participation is voluntary — OIML Member States and Corresponding Members join by signing a <strong class="text-ink font-semibold">Declaration</strong> that commits them to abide by the rules of the OIML-CS and specifies their scope of acceptance.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* ─── Key Roles ────────────────────────────────────── */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="relative px-8 py-16 bp-grid bp-grid--major">
+      <div class="max-w-6xl mx-auto relative z-10">
+        <div class="max-w-3xl mb-10 bp-reveal">
+          <div class="bp-section-anchor mb-4">
+            <span class="bp-section-anchor__num">§ 02</span>
+            <span>Key Roles</span>
+            <span class="bp-section-anchor__line"></span>
+            <span class="bp-coord">{roles.length} actors</span>
+          </div>
+          <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-3">
+            Five roles, one pipeline
+          </h2>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+            Every OIML-CS interaction involves one or more of these actors. Hover a card for the scheme details.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-rule border border-rule rounded-md overflow-hidden">
+          {roles.map((r, i) => (
+            <article
+              class="relative bg-paper-soft p-6 bp-card-hover bp-reveal group bp-crosshair"
+              style={`--reveal-delay: ${i * 70}ms;`}
+            >
+              <div class="flex items-center justify-between mb-3">
+                <span class="inline-flex items-center justify-center w-11 h-11 border border-accent text-accent font-mono text-sm font-semibold rounded-sm bp-crosshair">{r.code}</span>
+                <span class="bp-chip">Role {String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <h3 class="font-serif text-[1.1875rem] mb-2 leading-tight">{r.title}</h3>
+              <p class="text-[0.9375rem] text-ink-soft leading-relaxed mb-3">{r.summary}</p>
+              <div class="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-ink-muted mb-2">Scheme</div>
+              <p class="text-[0.8125rem] text-ink-muted leading-relaxed mb-3">{r.scheme}</p>
+              <div class="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-ink-muted mb-1.5">Examples</div>
+              <ul class="text-[0.8125rem] text-ink-soft space-y-0.5">
+                {r.examples.map(ex => <li class="font-mono">{ex}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ─── Certificate Lifecycle ────────────────────────── */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section id="lifecycle" class="relative px-8 py-16 bp-grid scroll-mt-24">
+      <div class="max-w-6xl mx-auto relative z-10">
+        <div class="max-w-3xl mb-10 bp-reveal">
+          <div class="bp-section-anchor mb-4">
+            <span class="bp-section-anchor__num">§ 03</span>
+            <span>Certificate Lifecycle</span>
+            <span class="bp-section-anchor__line"></span>
+            <span class="bp-coord">{lifecycle.length} stages</span>
+          </div>
+          <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-3">
+            From application to acceptance
+          </h2>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+            The pipeline below is the end-to-end OIML-CS flow. Each stage links to the governing PD-05 / PD-06 clause.
+          </p>
+        </div>
+
+        <ol class="relative grid grid-cols-1 md:grid-cols-5 gap-px bg-rule border border-rule rounded-md overflow-hidden">
+          {lifecycle.map((s, i) => (
+            <li
+              class="relative bg-paper-soft p-5 bp-card-hover bp-reveal group bp-crosshair"
+              style={`--reveal-delay: ${i * 90}ms;`}
+            >
+              <div class="flex items-center justify-between mb-3">
+                <span class="font-serif text-[2rem] font-medium text-accent leading-none">{s.step}</span>
+                <span class="bp-tally">
+                  <span class="bp-tally__current">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="bp-tally__sep">/</span>
+                  <span>{String(lifecycle.length).padStart(2, '0')}</span>
+                </span>
+              </div>
+              <h3 class="font-serif text-[1.0625rem] font-semibold mb-1.5 leading-tight">{s.title}</h3>
+              <div class="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-accent mb-2">{s.actor}</div>
+              <p class="text-[0.8125rem] text-ink-soft leading-relaxed mb-3">{s.detail}</p>
+              <div class="font-mono text-[0.625rem] uppercase tracking-[0.1em] text-ink-muted border-t border-rule pt-2">
+                {s.ref}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    {/* ─── SMART Features ───────────────────────────────── */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="relative px-8 py-16 bp-grid bp-grid--major">
+      <div class="max-w-6xl mx-auto relative z-10">
+        <div class="max-w-3xl mb-10 bp-reveal">
+          <div class="bp-section-anchor mb-4">
+            <span class="bp-section-anchor__num">§ 04</span>
+            <span>SMART Features</span>
+            <span class="bp-section-anchor__line"></span>
+            <span class="bp-coord">Pilot Build</span>
+          </div>
+          <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-3">
+            What SMART adds to the OIML-CS
+          </h2>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+            SMART Recommendations turn the OIML-CS from a document-exchange system into a structured computation pipeline.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden">
+          {smartFeatures.map((f, i) => (
+            <article
+              class="bg-paper-soft p-7 bp-reveal bp-card-hover group relative bp-crosshair"
+              style={`--reveal-delay: ${i * 70}ms;`}
+            >
+              <div class="flex items-center justify-between mb-4">
+                <span class="inline-flex items-center justify-center w-9 h-9 border border-accent text-accent rounded-sm font-mono text-sm bp-crosshair">{f.num}</span>
+                <span class="bp-chip">{f.tag}</span>
+              </div>
+              <h3 class="font-serif text-[1.1875rem] mb-2 leading-tight">{f.title}</h3>
+              <p class="text-[0.9375rem] text-ink-soft leading-relaxed">{f.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ─── Governing Documents ──────────────────────────── */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="relative px-8 py-16 bp-grid">
+      <div class="max-w-4xl mx-auto relative z-10">
+        <div class="max-w-3xl mb-8 bp-reveal">
+          <div class="bp-section-anchor mb-4">
+            <span class="bp-section-anchor__num">§ 05</span>
+            <span>Governing Documents</span>
+            <span class="bp-section-anchor__line"></span>
+          </div>
+          <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-3">
+            The integrated document suite
+          </h2>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+            The OIML-CS is governed by an integrated suite of documents published by OIML. Available from the
+            <a href="https://www.oiml.org/en/publications" class="text-accent underline">OIML publications site</a>.
+          </p>
+        </div>
+        <ul class="border border-rule rounded-md overflow-hidden bp-reveal">
+          {governingDocs.map((d, i) => (
+            <li class={`flex items-baseline gap-4 px-5 py-4 ${i !== governingDocs.length - 1 ? 'border-b border-rule' : ''} bg-paper-soft hover:bg-paper-raised transition-colors`}>
+              <span class="font-mono text-[0.875rem] font-semibold text-accent w-28 shrink-0">{d.id}</span>
+              <span class="text-[0.9375rem] text-ink flex-1">{d.title}</span>
+              <span class="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-ink-muted">{d.note}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <div class="bp-ticks bp-ticks--dense" aria-hidden="true"></div>
+  </div>
+</Base>
+
+<style>
+  .cs-stats { border-radius: 4px; }
+</style>
