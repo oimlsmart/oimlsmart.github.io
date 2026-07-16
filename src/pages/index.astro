@@ -65,8 +65,7 @@ const audiencePaths = [
         </div>
       </div>
       <div class="home-globe relative z-10 flex items-center justify-center aspect-square max-w-[480px] mx-auto">
-        <img src="/smart-logo-light.svg" alt="OIML SMART globe mark" class="globe-static relative w-full max-w-[420px] h-auto dark:hidden" />
-        <img src="/smart-logo-dark.svg" alt="OIML SMART globe mark" class="globe-static relative w-full max-w-[420px] h-auto hidden dark:inline-block" />
+        <div id="hero-globe" class="relative w-full max-w-[420px] h-auto"></div>
       </div>
     </section>
 
@@ -176,14 +175,19 @@ const audiencePaths = [
   background: radial-gradient(circle at 35% 30%, var(--accent-soft) 0%, transparent 60%);
   filter: blur(40px);
 }
-.globe-static {
-  animation: globe-rotate 90s linear infinite;
-}
-@keyframes globe-rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .globe-static { animation: none; }
-}
 </style>
+
+<script is:inline src="/spinning-globe.js"></script>
+<script is:inline>
+  function initHeroGlobe() {
+    var isDark = document.documentElement.classList.contains('dark');
+    new SpinningGlobe('#hero-globe', {
+      theme: isDark ? 'dark' : 'light',
+      mode: 'forward',
+      duration: 5.6,
+      spinSpeed: 3.3,
+      delay: 500
+    });
+  }
+  initHeroGlobe();
+</script>
