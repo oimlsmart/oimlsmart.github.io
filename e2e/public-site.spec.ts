@@ -17,7 +17,7 @@ test.describe('Public site — critical paths', () => {
     const dropdownContainer = trigger.locator('xpath=..')
     await expect(dropdownContainer.locator('a[href="/recommendations/"]')).toHaveCount(1)
     await expect(dropdownContainer.locator('a[href="/library/"]')).toHaveCount(1)
-    await expect(dropdownContainer.locator('a[href="/vocabularies/"]')).toHaveCount(1)
+    await expect(dropdownContainer.locator('a[href="/ontology/"]')).toHaveCount(1)
     await expect(dropdownContainer.locator('a[href="/docs/"]')).toHaveCount(1)
   })
 
@@ -39,7 +39,8 @@ test.describe('Public site — critical paths', () => {
 
   test('OIML-CS is a standalone top-level nav link', async ({ page }) => {
     await page.goto('/')
-    const link = page.getByRole('link', { name: 'OIML-CS' })
+    // Scope to the site nav so we don't match footer or audience-card duplicates.
+    const link = page.locator('#nav-menu').getByRole('link', { name: 'OIML-CS' })
     await expect(link).toBeVisible()
     await expect(link).toHaveAttribute('href', '/oiml-cs')
   })
