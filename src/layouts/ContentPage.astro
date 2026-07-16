@@ -35,7 +35,7 @@ const displayLede = props.lede ?? description
 <Base title={title} description={description}>
   <div class="relative bp-noise">
     {title && <PageHero title={title} lede={displayLede} eyebrow={eyebrow} />}
-    <article class="prose prose-enhanced bp-reveal" style="--reveal-delay: 200ms;">
+    <article class="prose prose-enhanced">
       {Content ? <Content /> : <slot />}
     </article>
     <div class="bp-ticks bp-ticks--dense" aria-hidden="true"></div>
