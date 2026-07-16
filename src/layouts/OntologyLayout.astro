@@ -1,0 +1,212 @@
+---
+import Base from './Base.astro'
+import { ontologyEntities, ontologyTypeMeta } from '../data/generated/ontology'
+
+interface Entity {
+  uri: string
+  qname: string
+  slug: string
+  label: string
+  description: string
+  ontology: string
+  type: string
+}
+
+interface Props {
+  title: string
+  description?: string
+  activeSlug?: string
+  section?: 'overview' | 'classes' | 'properties' | 'individuals' | 'concepts' | 'shapes' | 'diagram' | 'statistics'
+  sidebar?: false
+}
+
+const { title, description, activeSlug, section, sidebar = true } = Astro.props
+
+const allEntities = ontologyEntities as readonly Entity[]
+const typeMeta = ontologyTypeMeta as Record<string, { label: string; color: string; colorDot: string }>
+
+const browseable = allEntities.filter((e) => e.ontology !== 'external')
+const sidebarEntities = browseable
+  .slice()
+  .sort((a, b) => {
+    const typeOrder = ['ontology', 'class', 'objectProperty', 'datatypeProperty', 'annotationProperty', 'shape', 'conceptScheme', 'concept', 'individual']
+    const ta = typeOrder.indexOf(a.type)
+    const tb = typeOrder.indexOf(b.type)
+    if (ta !== tb) return (ta === -1 ? 99 : ta) - (tb === -1 ? 99 : tb)
+    return a.label.localeCompare(b.label)
+  })
+
+const counts = {
+  class: browseable.filter((e) => e.type === 'class').length,
+  objectProperty: browseable.filter((e) => e.type === 'objectProperty').length,
+  datatypeProperty: browseable.filter((e) => e.type === 'datatypeProperty').length,
+  annotationProperty: browseable.filter((e) => e.type === 'annotationProperty').length,
+  individual: browseable.filter((e) => e.type === 'individual').length,
+  concept: browseable.filter((e) => e.type === 'concept').length,
+  conceptScheme: browseable.filter((e) => e.type === 'conceptScheme').length,
+  shape: browseable.filter((e) => e.type === 'shape').length,
+}
+
+const totalProps = counts.objectProperty + counts.datatypeProperty + counts.annotationProperty
+
+const navItems = [
+  { href: '/ontology', label: 'Overview', section: 'overview' as const, icon: '◉' },
+  { href: '/ontology/diagram', label: 'Classes', section: 'classes' as const, count: counts.class, icon: '▣' },
+  { href: '/ontology/properties', label: 'Properties', section: 'properties' as const, count: totalProps, icon: '→' },
+  { href: '/ontology/individuals', label: 'Individuals', section: 'individuals' as const, count: counts.individual, icon: '●' },
+  { href: '/ontology/concepts', label: 'Concepts', section: 'concepts' as const, count: counts.concept, icon: '◆' },
+  { href: '/ontology/shapes', label: 'Shapes', section: 'shapes' as const, count: counts.shape, icon: '◇' },
+  { href: '/ontology/diagram', label: 'Class Tree', section: 'diagram' as const, icon: '⌘' },
+  { href: '/ontology/statistics', label: 'Statistics', section: 'statistics' as const, icon: '∑' },
+]
+
+const ontologyChipClass: Record<string, string> = {
+  smart: 'bg-emerald-400',
+  oiml: 'bg-brand-400',
+  'oiml-r60': 'bg-teal-400',
+  'oiml-pubtype': 'bg-orange-400',
+  external: 'bg-slate-300',
+}
+---
+
+<Base title={title} description={description}>
+  <div class="max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class={`grid gap-6 ${sidebar ? 'lg:grid-cols-[18rem_minmax(0,1fr)]' : ''}`}>
+      {sidebar && (
+        <aside class="hidden lg:block">
+          <div class="sticky top-20 max-h-[calc(100vh-6rem)] flex flex-col">
+            <nav class="mb-4 border-b border-rule pb-4">
+              <h2 class="text-[10px] font-semibold uppercase tracking-wider text-ink-muted mb-2">Browse</h2>
+              <ul class="space-y-0.5 text-sm">
+                {navItems.map((item) => {
+                  const isActive = section === item.section || (item.section === 'overview' && section === undefined)
+                  return (
+                    <li>
+                      <a
+                        href={item.href}
+                        class={`flex items-center justify-between px-2 py-1.5 rounded text-sm transition-colors ${
+                          isActive ? 'bg-brand-50 text-brand-700 font-medium' : 'text-ink-soft hover:bg-paper-soft hover:text-ink'
+                        }`}
+                      >
+                        <span class="flex items-center gap-2">
+                          <span class="text-xs text-ink-muted w-3 inline-block">{item.icon}</span>
+                          {item.label}
+                        </span>
+                        {item.count !== undefined && (
+                          <span class="text-[10px] font-mono text-ink-muted tabular-nums">{item.count}</span>
+                        )}
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+            </nav>
+
+            <div class="mb-3">
+              <input
+                type="search"
+                id="ontology-sidebar-search"
+                placeholder="Search entities…"
+                class="w-full px-2.5 py-1.5 text-xs border border-rule rounded bg-paper-soft text-ink focus:outline-none focus:border-brand-400"
+                autocomplete="off"
+              />
+              <div class="flex flex-wrap gap-1 mt-2" id="ontology-sidebar-filters">
+                <button data-filter-type="" class="text-[10px] px-1.5 py-0.5 rounded border border-rule bg-paper-soft text-ink-soft hover:border-brand-400 hover:text-brand-600">All</button>
+                <button data-filter-type="class" class="text-[10px] px-1.5 py-0.5 rounded border border-rule bg-paper-soft text-ink-soft hover:border-brand-400 hover:text-brand-600">Classes</button>
+                <button data-filter-type="objectProperty" class="text-[10px] px-1.5 py-0.5 rounded border border-rule bg-paper-soft text-ink-soft hover:border-brand-400 hover:text-brand-600">Obj Prop</button>
+                <button data-filter-type="individual" class="text-[10px] px-1.5 py-0.5 rounded border border-rule bg-paper-soft text-ink-soft hover:border-brand-400 hover:text-brand-600">Indiv</button>
+                <button data-filter-type="concept" class="text-[10px] px-1.5 py-0.5 rounded border border-rule bg-paper-soft text-ink-soft hover:border-brand-400 hover:text-brand-600">Concepts</button>
+              </div>
+            </div>
+
+            <div class="overflow-y-auto flex-1 -mr-2 pr-2" id="ontology-sidebar-list">
+              <ul class="space-y-0.5 text-xs">
+                {sidebarEntities.map((e) => {
+                  const dotClass = ontologyChipClass[e.ontology] || ontologyChipClass.external
+                  const typeLabel = typeMeta[e.type]?.label || e.type
+                  return (
+                    <li
+                      class="sidebar-entity"
+                      data-qname={e.qname}
+                      data-label={e.label.toLowerCase()}
+                      data-type={e.type}
+                      data-description={(e.description || '').toLowerCase()}
+                    >
+                      <a
+                        href={`/ontology/${e.slug}`}
+                        class={`flex items-start gap-1.5 px-2 py-1 rounded transition-colors ${
+                          activeSlug === e.slug
+                            ? 'bg-brand-100 text-brand-700 font-medium'
+                            : 'text-ink-soft hover:bg-paper-soft hover:text-ink'
+                        }`}
+                        title={`${typeLabel} — ${e.qname}`}
+                      >
+                        <span class={`w-1.5 h-1.5 mt-1.5 rounded-full shrink-0 ${dotClass}`}></span>
+                        <span class="flex-1 min-w-0 truncate font-mono text-[11px]">{e.qname}</span>
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+              <p class="sidebar-empty text-xs text-ink-muted italic px-2 py-4 text-center hidden">No matches.</p>
+            </div>
+          </div>
+        </aside>
+      )}
+
+      <main class="min-w-0">
+        <slot />
+      </main>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      const input = document.getElementById('ontology-sidebar-search')
+      const list = document.getElementById('ontology-sidebar-list')
+      if (!input || !list) return
+      const items = Array.from(list.querySelectorAll('.sidebar-entity'))
+      const empty = list.querySelector('.sidebar-empty')
+      const filterBtns = document.querySelectorAll('[data-filter-type]')
+      let currentFilter = ''
+
+      function applyFilters() {
+        const q = (input.value || '').toLowerCase().trim()
+        let visible = 0
+        for (const item of items) {
+          const label = item.getAttribute('data-label') || ''
+          const qname = (item.getAttribute('data-qname') || '').toLowerCase()
+          const desc = item.getAttribute('data-description') || ''
+          const type = item.getAttribute('data-type') || ''
+          const matchesText = !q || label.includes(q) || qname.includes(q) || desc.includes(q)
+          const matchesType = !currentFilter || type === currentFilter
+          const show = matchesText && matchesType
+          item.style.display = show ? '' : 'none'
+          if (show) visible++
+        }
+        if (empty) empty.classList.toggle('hidden', visible > 0)
+      }
+
+      input.addEventListener('input', applyFilters)
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault()
+          currentFilter = btn.getAttribute('data-filter-type') || ''
+          filterBtns.forEach((b) => {
+            b.classList.remove('bg-brand-100', 'text-brand-700', 'border-brand-400')
+            b.classList.add('bg-paper-soft', 'text-ink-soft', 'border-rule')
+          })
+          btn.classList.add('bg-brand-100', 'text-brand-700', 'border-brand-400')
+          btn.classList.remove('bg-paper-soft', 'text-ink-soft', 'border-rule')
+          applyFilters()
+        })
+      })
+
+      const active = list.querySelector('.bg-brand-100')
+      if (active) {
+        const li = active.closest('.sidebar-entity')
+        if (li) li.scrollIntoView({ block: 'nearest' })
+      }
+    })()
+  </script>
+</Base>
