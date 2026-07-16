@@ -6,6 +6,9 @@ description: 'The top-level architecture of the SMART platform — entities, lay
 eyebrow: 'Formal Specification · SMART_REQS 01'
 ---
 
+import TreeDiagram from '../../../components/diagrams/TreeDiagram.astro'
+import LayerDiagram from '../../../components/diagrams/LayerDiagram.astro'
+
 
 
 
@@ -88,177 +91,220 @@ files. The catalog is exhaustive — if it's not listed here, it's not a SMART p
 
 ### Primitive Relationships (the data flow)
 
-```
-Specification time:
-  Symbol ──formula──→ Expression
-    │                    ↑
-    │ formula.inputs     │ expression references
-    ↓                    │
-  Symbol (dependency DAG) │
-    │                    │
-    └──calculation──→ Calculation ──expression──→ Expression
-                         │   ↑
-    ┌────────────────────┘   │
-    │ calculation_bindings   │ calculation
-    ↓                        │
-  FormField ──derivation──→ Expression
-    │
-    │ evaluation.rule
-    ↓
-  EvaluationResult (runtime: pass/fail)
+<TreeDiagram
+  caption="FIG. SPECIFICATION-TIME DATA FLOW"
+  accent="teal"
+  nodes={[
+    { label: 'Symbol', kind: 'root', type: 'SPEC', annotation: 'declaration', children: [
+      { label: 'formula', annotation: '→ Formula', accent: 'brand', children: [
+        { label: 'display', annotation: 'human-readable, from standard' },
+        { label: 'expression', annotation: 'machine-evaluable · AsciiMath/OCL', type: '→ Expression' },
+        { label: 'inputs', annotation: 'dependency DAG', type: '→ Symbol m:n' },
+      ]},
+      { label: 'formula.inputs', annotation: '→ Symbol (dependency DAG)' },
+      { label: 'calculation', annotation: '→ Calculation', type: '→ Primitive', accent: 'amber' },
+    ]},
+    { label: 'Calculation', kind: 'root', type: 'PRIMITIVE', accent: 'amber', annotation: 'reusable', children: [
+      { label: 'expression', annotation: '→ Expression (machine-evaluable)' },
+      { label: 'calculation_bindings', annotation: '↓ to FormField' },
+    ]},
+    { label: 'FormField', kind: 'root', type: 'LAYER 3', accent: 'brand', children: [
+      { label: 'derivation', annotation: '→ Expression' },
+      { label: 'evaluation.rule', annotation: '↓ evaluated at runtime' },
+    ]},
+    { label: 'EvaluationResult', kind: 'root', type: 'RUNTIME', accent: 'teal', annotation: 'pass/fail' },
+  ]}
+/>
 
-Runtime:
-  Form ──1:n──→ FormInstance
-                    ├── measurements (direct/declared fields)
-                    ├── computed_values (derived/computed fields via Expression)
-                    ├── evaluations (evaluated fields → pass/fail)
-                    └── overall_result (from PassFailDef.pass_if)
-
-  FormInstance ──→ EvaluationResult ──→ EvaluationReport ──→ Certificate
-```
+<TreeDiagram
+  caption="FIG. RUNTIME EVALUATION CHAIN"
+  accent="amber"
+  nodes={[
+    { label: 'Form', kind: 'root', type: 'SCHEMA', accent: 'teal', children: [
+      { label: 'FormInstance', type: '1:n', annotation: 'runtime', children: [
+        { label: 'measurements', annotation: 'direct/declared fields' },
+        { label: 'computed_values', annotation: 'derived via Expression' },
+        { label: 'evaluations', annotation: 'evaluated → pass/fail' },
+        { label: 'overall_result', annotation: 'from PassFailDef.pass_if' },
+      ]},
+    ]},
+    { label: 'Evaluation Chain', kind: 'root', type: '→', accent: 'brand', children: [
+      { label: 'FormInstance' },
+      { label: 'EvaluationResult' },
+      { label: 'EvaluationReport' },
+      { label: 'Certificate' },
+    ]},
+  ]}
+/>
 
 ---
 
 ## The Seven-Layer Entity Chain
 
-```
-Layer 0: SYMBOLS (domain variable ontology)
-  Symbol
-    ├── notation, type, unit, description
-    ├── source (declared|measured|derived|lookup)
-    ├── formula → Formula (computation rule)
-    │     ├── display (human-readable, from standard)
-    │     ├── expression (machine-evaluable, AsciiMath/OCL)
-    │     └── inputs → Symbol (m:n, dependency DAG)
-    └── calculation → Calculation (optional, implements formula)
-
-Layer 1: REQUIREMENTS
-  RequirementClass ─┬─ Requirement
-                    │   ├── obligation (shall/should/may)
-                    │   ├── parameters (typed variables with ranges)
-                    │   ├── acceptance_criteria (OCL conditions)
-                    │   └── applicability (classification dimensions)
-                    │
-Layer 2: CONFORMANCE TESTS        ← m:n link to Layer 1
-  ConformanceTestClass ─┬─ ConformanceTest
-                        │   ├── targets → Requirement (m:n)
-                        │   ├── test_steps (ordered actions)
-                        │   ├── test_variables (declared I/O)
-                        │   ├── acceptance_criteria (OCL conditions)
-                        │   ├── result_forms → Form (m:n)
-                        │   └── applicability (classification dimensions)
-                        │
-Layer 3: FORMS                   ← m:n link to Layer 2
-  Form
-    ├── fields (structured data capture)
-    │     ├── measurement_kind (NUMERIC|DATALIST|DERIVED|TRUE/FALSE|...)
-    │     ├── measurement_method (direct|derived|computed|lookup|evaluated|declared)
-    │     ├── derivation (OCL expression)
-    │     ├── evaluation (OCL rule + condition)
-    │     └── uncertainty (Type A/B/combined budget)
-    ├── computation_context (shared parameters: f, p_LC, n_LC, ...)
-    ├── pass_fail (pass_if expression, derivation rules)
-    └── references (URN links to specification clauses)
-    │
-Layer 4: FORM INSTANCES          ← 1:1 link to Layer 3 schema
-  FormInstance (runtime)
-    ├── form → Form (schema)
-    ├── conformance_test → ConformanceTest
-    ├── measurements (field name → observed/computed value)
-    ├── evaluations (field name → {result, evidence})
-    └── overall_result (PASS|FAIL|NA|PENDING)
-    │
-Layer 5: EVALUATION RESULTS      ← aggregates Layer 4
-  EvaluationResult (runtime)
-    ├── form_instance → FormInstance
-    ├── conformance_test → ConformanceTest
-    ├── requirement → Requirement
-    ├── result (PASS|FAIL|INCONCLUSIVE)
-    └── evidence_chain (traceable path to measurements)
-    │
-Layer 6: CERTIFICATION WORKFLOW  ← orchestrates Layers 1–5 (SMART_REQS 10)
-  InstrumentModelFamily → ClassificationGroup → InstrumentModel
-  InstrumentSample → Application → TestRequest → TestReport
-  EvaluationReport → Certificate
-  State machines govern entity lifecycles.
-  Dimension schemas configure standard-specific parameters.
-```
+<TreeDiagram
+  caption="FIG. SEVEN-LAYER ENTITY CHAIN"
+  accent="brand"
+  nodes={[
+    { label: 'Layer 0 · SYMBOLS', kind: 'root', type: 'DOMAIN VAR', accent: 'teal', children: [
+      { label: 'Symbol', children: [
+        { label: 'notation · type · unit · description' },
+        { label: 'source', annotation: 'declared|measured|derived|lookup' },
+        { label: 'formula → Formula', accent: 'brand', children: [
+          { label: 'display', annotation: 'human-readable' },
+          { label: 'expression', annotation: 'AsciiMath/OCL' },
+          { label: 'inputs → Symbol', annotation: 'm:n · dependency DAG' },
+        ]},
+        { label: 'calculation → Calculation', annotation: 'optional · implements formula' },
+      ]},
+    ]},
+    { label: 'Layer 1 · REQUIREMENTS', kind: 'root', type: 'PROVISIONS', accent: 'amber', children: [
+      { label: 'RequirementClass', type: '1:n', children: [
+        { label: 'Requirement', children: [
+          { label: 'obligation', annotation: 'shall|should|may' },
+          { label: 'parameters · typed with ranges' },
+          { label: 'acceptance_criteria · OCL' },
+          { label: 'applicability · classification dimensions' },
+        ]},
+      ]},
+    ]},
+    { label: 'Layer 2 · CONFORMANCE TESTS', kind: 'root', type: 'm:n → L1', accent: 'teal', children: [
+      { label: 'ConformanceTestClass', type: '1:n', children: [
+        { label: 'ConformanceTest', children: [
+          { label: 'targets → Requirement', type: 'm:n' },
+          { label: 'test_steps · ordered' },
+          { label: 'test_variables · declared I/O' },
+          { label: 'acceptance_criteria · OCL' },
+          { label: 'result_forms → Form', type: 'm:n' },
+          { label: 'applicability' },
+        ]},
+      ]},
+    ]},
+    { label: 'Layer 3 · FORMS', kind: 'root', type: 'm:n → L2', accent: 'brand', children: [
+      { label: 'Form', children: [
+        { label: 'fields', children: [
+          { label: 'measurement_kind', annotation: 'NUMERIC|DATALIST|DERIVED|TRUE/FALSE' },
+          { label: 'measurement_method', annotation: 'direct|derived|computed|lookup|evaluated|declared' },
+          { label: 'derivation · OCL' },
+          { label: 'evaluation · OCL rule' },
+          { label: 'uncertainty · Type A/B/combined' },
+        ]},
+        { label: 'computation_context', annotation: 'shared parameters' },
+        { label: 'pass_fail · pass_if expression' },
+        { label: 'references · URN to clauses' },
+      ]},
+    ]},
+    { label: 'Layer 4 · FORM INSTANCES', kind: 'root', type: '1:1 → L3', accent: 'amber', children: [
+      { label: 'FormInstance', annotation: 'runtime', children: [
+        { label: 'form → Form' },
+        { label: 'conformance_test → ConformanceTest' },
+        { label: 'measurements', annotation: 'field → value' },
+        { label: 'evaluations', annotation: 'field → {result, evidence}' },
+        { label: 'overall_result', annotation: 'PASS|FAIL|NA|PENDING' },
+      ]},
+    ]},
+    { label: 'Layer 5 · EVALUATION RESULTS', kind: 'root', type: 'aggregates L4', accent: 'teal', children: [
+      { label: 'EvaluationResult', children: [
+        { label: 'form_instance → FormInstance' },
+        { label: 'conformance_test → ConformanceTest' },
+        { label: 'requirement → Requirement' },
+        { label: 'result', annotation: 'PASS|FAIL|INCONCLUSIVE' },
+        { label: 'evidence_chain', annotation: 'traceable path' },
+      ]},
+    ]},
+    { label: 'Layer 6 · CERTIFICATION WORKFLOW', kind: 'root', type: 'SMART_REQS 10', accent: 'amber', children: [
+      { label: 'InstrumentModelFamily → ClassificationGroup → InstrumentModel' },
+      { label: 'InstrumentSample → Application → TestRequest → TestReport' },
+      { label: 'EvaluationReport → Certificate' },
+      { label: 'State machines · entity lifecycles', annotation: 'note' },
+    ]},
+  ]}
+/>
 
 ## Entity Relationship Summary
 
-```
-Standard
-  │
-  ├── Symbol (1:n, domain variable ontology)
-  │     ├── type, unit, description, notation
-  │     ├── source (declared|measured|derived|lookup)
-  │     ├── formula_inputs → Symbol (m:n, dependency DAG)
-  │     └── calculation → ComputationDef (0..1)
-  │
-  ├── RequirementClass (1:n)
-  │     └── Requirement (1:n)
-  │           ├── parameters (1:n Parameter)
-  │           ├── acceptance_criteria (1:1 AcceptanceCriteria)
-  │           └── verification (1:1 Verification)
-  │
-  ├── ConformanceTestClass (1:n)
-  │     └── ConformanceTest (1:n)
-  │           ├── targets ──→ Requirement (m:n)
-  │           ├── test_steps (1:n TestStep)
-  │           ├── test_variables (1:n TestVariable)
-  │           ├── acceptance_criteria (1:n TestCriterion)
-  │           └── result_forms ──→ Form (m:n)
-  │
-  ├── Form (1:n)
-  │     ├── fields (1:n FormField)
-  │     ├── computation_context (1:1 ComputationContext)
-  │     ├── pass_fail (1:1 PassFailDef)
-  │     └── references (1:n Reference)
-  │
-  ├── ComputationDef (1:n, registered)
-  ├── ValueModel (1:n, lookup tables)
-  ├── EnumDef (1:n)
-  └── TerminologyEntry (1:n)
+<TreeDiagram
+  caption="FIG. ENTITY RELATIONSHIP SUMMARY"
+  accent="teal"
+  nodes={[
+    { label: 'Standard', kind: 'root', type: 'BUILD', children: [
+      { label: 'Symbol', type: '1:n', annotation: 'domain variable ontology', children: [
+        { label: 'type · unit · description · notation' },
+        { label: 'source', annotation: 'declared|measured|derived|lookup' },
+        { label: 'formula_inputs → Symbol', type: 'm:n' },
+        { label: 'calculation → ComputationDef', type: '0..1' },
+      ]},
+      { label: 'RequirementClass', type: '1:n', children: [
+        { label: 'Requirement', type: '1:n', children: [
+          { label: 'parameters', type: '1:n Parameter' },
+          { label: 'acceptance_criteria', type: '1:1' },
+          { label: 'verification', type: '1:1' },
+        ]},
+      ]},
+      { label: 'ConformanceTestClass', type: '1:n', children: [
+        { label: 'ConformanceTest', type: '1:n', children: [
+          { label: 'targets → Requirement', type: 'm:n', accent: 'brand' },
+          { label: 'test_steps', type: '1:n' },
+          { label: 'test_variables', type: '1:n' },
+          { label: 'acceptance_criteria', type: '1:n' },
+          { label: 'result_forms → Form', type: 'm:n', accent: 'brand' },
+        ]},
+      ]},
+      { label: 'Form', type: '1:n', children: [
+        { label: 'fields', type: '1:n FormField' },
+        { label: 'computation_context', type: '1:1' },
+        { label: 'pass_fail', type: '1:1 PassFailDef' },
+        { label: 'references', type: '1:n Reference' },
+      ]},
+      { label: 'ComputationDef', type: '1:n registered' },
+      { label: 'ValueModel', type: '1:n lookup' },
+      { label: 'EnumDef', type: '1:n' },
+      { label: 'TerminologyEntry', type: '1:n' },
+    ]},
+    { label: 'Runtime', kind: 'root', type: 'IDB', accent: 'amber', children: [
+      { label: 'Application', children: [
+        { label: '→ Standard' },
+        { label: '→ InstrumentModelFamily', annotation: 'groups → models → samples' },
+      ]},
+      { label: 'TestRequest', annotation: 'IA → TL commissioning', children: [
+        { label: 'application → Application' },
+        { label: 'sampleIds → InstrumentSample[]' },
+        { label: 'testReportId → TestReport' },
+      ]},
+      { label: 'TestReport', children: [
+        { label: 'application → Application' },
+        { label: 'testRequest → TestRequest' },
+        { label: 'sample → InstrumentSample' },
+        { label: 'sharedContext', annotation: '{declared, equipment, computed}' },
+        { label: 'required_forms → Form', type: '1:n' },
+        { label: 'form_instances → FormInstance', type: '1:n', accent: 'teal', children: [
+          { label: 'form → Form' },
+          { label: 'measurements', annotation: 'field → value' },
+          { label: 'evaluations', annotation: 'field → EvalResult' },
+        ]},
+      ]},
+      { label: 'EvaluationReport', children: [
+        { label: 'testReportIds → TestReport[]', type: '1:n' },
+        { label: 'summary → EvaluationSummaryEntry[]' },
+        { label: 'synopsis', annotation: 'fulfilsAllRequirements' },
+        { label: 'form_determinations', type: '1:n', children: [
+          { label: 'form_instance → FormInstance' },
+          { label: 'conformance_test → ConformanceTest' },
+          { label: 'requirement → Requirement' },
+          { label: 'result', annotation: 'PASS|FAIL|CONDITIONAL' },
+        ]},
+        { label: 'overall_decision', annotation: 'APPROVED|REJECTED|CONDITIONAL' },
+      ]},
+      { label: 'Certificate', children: [
+        { label: 'instrumentModelFamily → InstrumentModelFamily' },
+        { label: 'classifications', annotation: 'derived from groups' },
+        { label: 'evaluation_report → EvaluationReport' },
+        { label: 'revisions → CertificateRevision[]' },
+      ]},
+    ]},
+  ]}
+/>
 
-Runtime:
-  Application ─┬─→ Standard
-               └─→ InstrumentModelFamily (with groups → models → samples)
-
-  TestRequest (IA → TL commissioning)
-    ├── application → Application
-    ├── sampleIds → InstrumentSample[]
-    └── testReportId → TestReport
-
-  TestReport
-    ├── application → Application
-    ├── testRequest → TestRequest
-    ├── sample → InstrumentSample
-    ├── sharedContext { declared, equipment, computed }
-    ├── required_forms → Form (1:n)
-    └── form_instances → FormInstance (1:n)
-          ├── form → Form
-          ├── measurements {field → value}
-          └── evaluations {field → EvalResult}
-
-  EvaluationReport
-    ├── testReportIds → TestReport[] (1:n)
-    ├── summary → EvaluationSummaryEntry[]
-    ├── synopsis → { fulfilsAllRequirements }
-    ├── form_determinations (1:n FormDetermination)
-    │     ├── form_instance → FormInstance
-    │     ├── conformance_test → ConformanceTest
-    │     ├── requirement → Requirement
-    │     └── result (PASS|FAIL|CONDITIONAL)
-    └── overall_decision (APPROVED|REJECTED|CONDITIONALLY_APPROVED)
-
-  Certificate
-    ├── instrumentModelFamily → InstrumentModelFamily
-    ├── classifications → CertificateClassification[] (derived from groups)
-    ├── evaluation_report → EvaluationReport
-    └── revisions → CertificateRevision[]
-
-  See SMART_REQS 10 for the full workflow model.
-```
+See SMART_REQS 10 for the full workflow model.
 
 ## MMEL Construct Mapping
 

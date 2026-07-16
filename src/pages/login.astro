@@ -302,13 +302,4 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .enter, .gate-eyebrow, .gate-title, .gate-lede,
-  .gate-note, .gate-foot, .specimen-rule, .gate-rule {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
 </style>

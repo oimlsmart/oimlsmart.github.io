@@ -6,6 +6,9 @@ description: 'Variables, symbols, scope, and binding semantics.'
 eyebrow: 'Formal Specification · SMART_REQS 11'
 ---
 
+import TreeDiagram from '../../../components/diagrams/TreeDiagram.astro'
+import LayerDiagram from '../../../components/diagrams/LayerDiagram.astro'
+
 
 
 
@@ -47,34 +50,39 @@ This violates MECE and DRY. A Symbol provides:
 
 ## Relationship to Other Primitives
 
-```
-Symbol (Layer 0: domain variable ontology)
-  │
-  ├── formula.display ──→ what the standard says (for reports/rendering)
-  ├── formula.expression ──→ how to compute it (for the engine)
-  ├── formula.inputs ──→ [Symbol] (dependency DAG for evaluation ordering)
-  └── calculation ──→ Calculation (reusable implementation with typed I/O)
+<TreeDiagram
+  caption="FIG. SYMBOL → CALCULATION → FORM CHAIN"
+  accent="brand"
+  nodes={[
+    { label: 'Symbol', kind: 'root', type: 'LAYER 0', annotation: 'domain variable ontology', children: [
+      { label: 'formula.display', annotation: 'what the standard says (reports/rendering)' },
+      { label: 'formula.expression', annotation: 'how to compute it (engine)' },
+      { label: 'formula.inputs', annotation: 'dependency DAG for evaluation ordering', type: '[Symbol]' },
+      { label: 'calculation', annotation: 'reusable implementation with typed I/O', type: '→ Calculation', accent: 'teal' },
+    ]},
+    { label: 'Calculation', kind: 'root', type: 'PRIMITIVE', accent: 'teal', annotation: 'SMART_REQS 07', children: [
+      { label: 'implements', annotation: 'Symbol.formula' },
+      { label: 'expression', annotation: 'typed, machine-evaluable' },
+      { label: 'inputs[]', annotation: 'typed parameters' },
+      { label: 'output', annotation: 'typed result' },
+    ]},
+    { label: 'Form', kind: 'root', type: 'LAYER 3', accent: 'amber', children: [
+      { label: "fields[].derivation", annotation: 'inline OCL or references calculation' },
+      { label: 'fields[].calculation', annotation: 'Calculation name' },
+      { label: 'fields[].calculation_bindings', annotation: 'maps form field names → calculation inputs' },
+    ]},
+  ]}
+/>
 
-Calculation (computation primitive, SMART_REQS 07)
-  ├── implements Symbol.formula
-  ├── expression (typed, machine-evaluable)
-  ├── inputs[] (typed parameters)
-  └── output (typed result)
-
-Form (Layer 3)
-  ├── fields[].derivation ──→ inline OCL expression (or references calculation)
-  ├── fields[].calculation ──→ Calculation name
-  └── fields[].calculation_bindings ──→ maps form field names → calculation inputs
-
-The chain:
-  Symbol.formula.expression  ← normative formula
-       ↓ implemented by
-  Calculation.expression     ← machine-evaluable with typed I/O
-       ↓ referenced by
-  FormField.calculation      ← with bindings mapping field names to inputs
-       ↓ produces at runtime
-  FormInstance.computed_values[ fieldName ] ← actual computed number
-```
+<LayerDiagram
+  layers={[
+    { index: '01', title: 'Symbol.formula.expression', lines: ['normative formula'], accent: 'teal' },
+    { index: '02', title: 'Calculation.expression', lines: ['machine-evaluable', 'typed I/O'], note: 'implemented by', accent: 'brand' },
+    { index: '03', title: 'FormField.calculation', lines: ['with bindings mapping field names to inputs'], note: 'referenced by', accent: 'amber' },
+    { index: '04', title: 'FormInstance.computed_values[fieldName]', lines: ['actual computed number'], note: 'produces at runtime', accent: 'slate' },
+  ]}
+  arrows={['implemented by', 'referenced by', 'produces at runtime']}
+/>
 
 ## Entity Definition
 
@@ -283,38 +291,56 @@ When a FormInstance is populated, the engine processes fields in this order:
 
 ### Complete Example: load-cell-errors Form
 
-```
-Symbol registry (symbols.yaml):
-  EL ──formula──→ expression: "(avg_test_indication - reference_indication) / f"
-       │              inputs: [f]
-       └──calculation──→ loadCellError
-
-Calculation (standard.yaml → evaluation.calculations):
-  loadCellError:
-    inputs: [avgIndication, referenceIndication, conversionFactor]
-    output: error_EL (v)
-    expression: "(avgIndication - referenceIndication) / conversionFactor"
-
-Form field (forms/load-cell-errors.yaml):
-  name: error_EL
-  symbol: EL                    # ← traceable to symbol
-  calculation: loadCellError    # ← traceable to calculation
-  calculation_bindings:
-    avgIndication: indication   # ← bound to this form's field
-    referenceIndication: reference_indication
-    conversionFactor: conversion_factor_f
-
-At runtime (FormInstance):
-  computed_values:
-    error_EL: 12.5              # = (10050 - 10000) / 4.0
-
-  evaluations:
-    within_mpe:
-      result: pass              # abs(12.5) <= abs(13.0)
-      rule: "ocl{abs(error_EL) <= abs(mpe)}"
-      computed_left: 12.5
-      computed_right: 13.0
-```
+<div class="my-6 bp-crosshair bg-paper-soft border border-rule rounded-md overflow-hidden">
+  <div class="bg-paper-raised px-4 py-2 border-b border-rule bp-coord">EXAMPLE · END-TO-END TRACEABILITY</div>
+  <div class="grid md:grid-cols-3 divide-x divide-rule">
+    <div class="p-4">
+      <div class="bp-coord text-brand-700 dark:text-brand-300 mb-2">SYMBOL · symbols.yaml</div>
+      <div class="font-mono text-xs space-y-1">
+        <div class="font-semibold">EL</div>
+        <div class="text-ink-muted">├── formula.expression:</div>
+        <div class="pl-3 text-teal-700 dark:text-teal-300">"(avg_test_indication − reference_indication) / f"</div>
+        <div class="text-ink-muted">├── inputs: [f]</div>
+        <div class="text-ink-muted">└── calculation →</div>
+        <div class="pl-3 text-amber-700 dark:text-amber-300">loadCellError</div>
+      </div>
+    </div>
+    <div class="p-4">
+      <div class="bp-coord text-teal-700 dark:text-teal-300 mb-2">CALCULATION · standard.yaml</div>
+      <div class="font-mono text-xs space-y-1">
+        <div class="font-semibold">loadCellError</div>
+        <div class="text-ink-muted">inputs:</div>
+        <div class="pl-3">[avgIndication, referenceIndication, conversionFactor]</div>
+        <div class="text-ink-muted">output: error_EL (v)</div>
+        <div class="text-ink-muted">expression:</div>
+        <div class="pl-3 text-amber-700 dark:text-amber-300">"(avgIndication − referenceIndication) / conversionFactor"</div>
+      </div>
+    </div>
+    <div class="p-4">
+      <div class="bp-coord text-amber-700 dark:text-amber-300 mb-2">FORM FIELD · forms/load-cell-errors.yaml</div>
+      <div class="font-mono text-xs space-y-1">
+        <div class="font-semibold">name: error_EL</div>
+        <div class="text-ink-muted">symbol: EL</div>
+        <div class="text-ink-muted">calculation: loadCellError</div>
+        <div class="text-ink-muted">bindings:</div>
+        <div class="pl-3">avgIndication → indication</div>
+        <div class="pl-3">referenceIndication → reference_indication</div>
+        <div class="pl-3">conversionFactor → conversion_factor_f</div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-brand-50 dark:bg-brand-900/30 border-t border-brand-200 dark:border-brand-800 px-4 py-3">
+    <div class="bp-coord text-brand-700 dark:text-brand-300 mb-1">RUNTIME · FormInstance</div>
+    <div class="font-mono text-xs space-y-1">
+      <div>computed_values:</div>
+      <div class="pl-3"><span class="text-brand-700 dark:text-brand-300 font-semibold">error_EL: 12.5</span> <span class="text-ink-muted">// = (10050 − 10000) / 4.0</span></div>
+      <div class="text-ink-muted mt-2">evaluations.within_mpe:</div>
+      <div class="pl-3 text-green-700 dark:text-green-400 font-semibold">result: pass</div>
+      <div class="pl-3 text-ink-muted">rule: ocl&#123;abs(error_EL) &lt;= abs(mpe)&#125;</div>
+      <div class="pl-3 text-ink-muted">computed_left: 12.5 · computed_right: 13.0</div>
+    </div>
+  </div>
+</div>
 
 ## YAML Schema Location
 

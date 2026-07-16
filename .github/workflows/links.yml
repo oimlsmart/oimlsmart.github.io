@@ -55,7 +55,7 @@ jobs:
             --config lychee.toml
             --root-dir ${{ github.workspace }}/dist
             dist/**/*.html
-          fail: false
+          fail: true
           output: link-check-results.md
           format: markdown
 

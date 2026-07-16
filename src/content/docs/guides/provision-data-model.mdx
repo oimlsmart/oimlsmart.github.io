@@ -5,15 +5,23 @@ description: 'The provision data model is the heart of a SMART Recommendation. T
 eyebrow: 'Guide · 05 of 13'
 ---
 
+import FlowDiagram from '../../../components/diagrams/FlowDiagram.astro'
+
 
 ## The three entity types
 
-```
-Requirement         Conformance Test          Form
-     │                     │                    │
-     └── targeted by ──────┘                    │
-                           └── result forms ───┘
-```
+<FlowDiagram
+  caption="FIG. PROVISION RELATIONSHIPS"
+  steps={[
+    { label: 'Requirement', sub: 'Normative provision', accent: 'brand' },
+    { label: 'Conformance Test', sub: 'Test procedure', accent: 'teal' },
+    { label: 'Form', sub: 'Structured capture', accent: 'amber' },
+  ]}
+  arrows={[
+    { label: 'targeted by', detail: 'tests → requirements', direction: 'back' },
+    { label: 'result forms', detail: 'tests → forms', direction: 'back' },
+  ]}
+/>
 
 - **Requirement** — a normative provision with an obligation level (shall/should/may) and structured acceptance criteria.
 - **Conformance Test** — a test procedure that targets one or more requirements, producing measured values and pass/fail verdicts.

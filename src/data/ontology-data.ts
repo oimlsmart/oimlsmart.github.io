@@ -133,7 +133,7 @@ export const ontologyEntities = [
     "qname": "oiml:",
     "slug": "oiml-",
     "label": "OIML Core Ontology",
-    "description": "Core ontology for OIML International Recommendations. Defines classes and properties shared across all OIML standards (R 60, R 76, R 111, etc.), including the standard structure (Requirements, Tests, Test Report, Forms) and certification lifecycle (Authority, Certificate, Audit, Calibration).",
+    "description": "Core ontology for OIML International Recommendations. Defines classes and properties shared across all OIML standards, including the standard structure (Requirements, Tests, Test Report, Forms) and certification lifecycle (Authority, Certificate, Audit, Calibration).",
     "ontology": "oiml",
     "type": "ontology",
     "version": "1.0.0",
@@ -2362,107 +2362,132 @@ export const ontologyEntities = [
     "uri": "https://w3id.org/standards/smart/ontologies/core/PublicationDocumentType",
     "qname": "smart:PublicationDocumentType",
     "slug": "smart-PublicationDocumentType",
-    "label": "PublicationDocumentType",
-    "description": "",
-    "ontology": "external",
-    "type": "external"
+    "label": "Publication Document Type",
+    "description": "The type of a publication document (e.g. International Recommendation, Guide, Vocabulary). Used as the value of publication-type taxonomies.",
+    "ontology": "smart",
+    "type": "external",
+    "parent": "smart:Entity"
   },
   {
     "uri": "https://w3id.org/standards/smart/ontologies/core/Entity",
     "qname": "smart:Entity",
     "slug": "smart-Entity",
     "label": "Entity",
-    "description": "",
-    "ontology": "external",
+    "description": "The root class of the SMART Core Ontology. Every domain object that can be identified, described, and referenced within a machine-actionable standard is an Entity.",
+    "ontology": "smart",
     "type": "external"
   },
   {
     "uri": "https://w3id.org/standards/smart/ontologies/core/PublicationDocument",
     "qname": "smart:PublicationDocument",
     "slug": "smart-PublicationDocument",
-    "label": "PublicationDocument",
-    "description": "",
-    "ontology": "external",
-    "type": "external"
+    "label": "Publication Document",
+    "description": "A document published by a standards body. International Recommendations, Guides, Vocabularies, and other publication types are subclasses.",
+    "ontology": "smart",
+    "type": "external",
+    "parent": "smart:Entity"
   },
   {
     "uri": "https://w3id.org/standards/smart/ontologies/core/ProvisionSet",
     "qname": "smart:ProvisionSet",
     "slug": "smart-ProvisionSet",
-    "label": "ProvisionSet",
-    "description": "",
-    "ontology": "external",
-    "type": "external"
+    "label": "Provision Set",
+    "description": "A named grouping of related provisions in a standard — e.g. a Requirements Class grouping related requirements, or a Conformance Class grouping related conformance tests.",
+    "ontology": "smart",
+    "type": "external",
+    "parent": "smart:Entity"
   },
   {
     "uri": "https://w3id.org/standards/smart/ontologies/core/Provision",
     "qname": "smart:Provision",
     "slug": "smart-Provision",
     "label": "Provision",
-    "description": "",
-    "ontology": "external",
-    "type": "external"
+    "description": "A single normative provision in a standard — a requirement, recommendation, permission, or statement, expressed in a machine-actionable form.",
+    "ontology": "smart",
+    "type": "external",
+    "parent": "smart:Entity"
   },
   {
     "uri": "https://w3id.org/standards/smart/ontologies/core/ExternalConstraint",
     "qname": "smart:ExternalConstraint",
     "slug": "smart-ExternalConstraint",
-    "label": "ExternalConstraint",
-    "description": "",
-    "ontology": "external",
-    "type": "external"
+    "label": "External Constraint",
+    "description": "A constraint that originates outside the provision itself — typically a classification-dimension applicability that restricts a provision to a subset of a device family (e.g. accuracy class, technology, humidity class).",
+    "ontology": "smart",
+    "type": "external",
+    "parent": "smart:Entity"
   },
   {
     "uri": "https://w3id.org/standards/smart/ontologies/core/Requirement",
     "qname": "smart:Requirement",
     "slug": "smart-Requirement",
     "label": "Requirement",
-    "description": "",
-    "ontology": "external",
-    "type": "external"
+    "description": "A provision that expresses an obligation: the agent subject to the requirement must perform (or refrain from) the action or satisfy the condition.",
+    "ontology": "smart",
+    "type": "external",
+    "parent": "smart:Provision"
   },
   {
     "uri": "https://w3id.org/standards/smart/ontologies/core/TermEntry",
     "qname": "smart:TermEntry",
     "slug": "smart-TermEntry",
-    "label": "TermEntry",
-    "description": "",
-    "ontology": "external",
-    "type": "external"
+    "label": "Term Entry",
+    "description": "A terminological entry grouping one or more designations (terms, symbols, abbreviations) for a single concept, together with its definition and grammatical/contextual metadata, in accordance with ISO 10241-1.",
+    "ontology": "smart",
+    "type": "external",
+    "parent": "smart:Entity"
   },
   {
     "uri": "https://w3id.org/standards/smart/ontologies/core/Organization",
     "qname": "smart:Organization",
     "slug": "smart-Organization",
     "label": "Organization",
-    "description": "",
-    "ontology": "external",
-    "type": "external"
+    "description": "An organization — a body such as a standards body, regulatory authority, conformity-assessment body, or manufacturer, that has a role in the publication, certification, or conformity-assessment lifecycle.",
+    "ontology": "smart",
+    "type": "external",
+    "parent": "smart:Entity"
   },
   {
     "uri": "https://w3id.org/standards/smart/ontologies/core/Activity",
     "qname": "smart:Activity",
     "slug": "smart-Activity",
     "label": "Activity",
-    "description": "",
-    "ontology": "external",
-    "type": "external"
+    "description": "An activity or process carried out by an Organization, such as certification, auditing, or testing.",
+    "ontology": "smart",
+    "type": "external",
+    "parent": "smart:Entity"
   }
 ] as const
 
 export const ontologyPrefixes = [{"prefix":"owl","uri":"http://www.w3.org/2002/07/owl#"},{"prefix":"rdf","uri":"http://www.w3.org/1999/02/22-rdf-syntax-ns#"},{"prefix":"rdfs","uri":"http://www.w3.org/2000/01/rdf-schema#"},{"prefix":"skos","uri":"http://www.w3.org/2004/02/skos/core#"},{"prefix":"dcterms","uri":"http://purl.org/dc/terms/"},{"prefix":"oiml","uri":"https://w3id.org/standards/oiml/ontologies/core/"},{"prefix":"oiml-pubtype","uri":"https://w3id.org/standards/oiml/taxonomies/publication-type/"},{"prefix":"smart","uri":"https://w3id.org/standards/smart/ontologies/core/"}] as const
 
-export const ontologyImportChain = {"oiml:":{"imports":["smart:"],"description":"Core ontology for OIML International Recommendations. Defines classes and properties shared across all OIML standards (R 60, R 76, R 111, etc.), including the standard structure (Requirements, Tests, Test Report, Forms) and certification lifecycle (Authority, Certificate, Audit, Calibration).","version":"1.0.0"}} as const
+export const ontologyImportChain = {"oiml:":{"imports":["smart:"],"description":"Core ontology for OIML International Recommendations. Defines classes and properties shared across all OIML standards, including the standard structure (Requirements, Tests, Test Report, Forms) and certification lifecycle (Authority, Certificate, Audit, Calibration).","version":"1.0.0"}} as const
 
-export const ontologyTypeMeta = {"conceptScheme":{"label":"Concept Scheme","color":"bg-cyan-100 text-cyan-800","colorDot":"bg-cyan-400"},"concept":{"label":"SKOS Concept","color":"bg-teal-100 text-teal-800","colorDot":"bg-teal-400"},"class":{"label":"Class","color":"bg-blue-100 text-blue-800","colorDot":"bg-blue-400"},"ontology":{"label":"Ontology","color":"bg-indigo-100 text-indigo-800","colorDot":"bg-indigo-400"},"objectProperty":{"label":"Object Property","color":"bg-green-100 text-green-800","colorDot":"bg-green-400"},"individual":{"label":"Named Individual","color":"bg-orange-100 text-orange-800","colorDot":"bg-orange-400"},"external":{"label":"external","color":"bg-slate-100 text-slate-600","colorDot":"bg-slate-400"}} as const
+export const ontologyTypeMeta = {"conceptScheme":{"label":"Concept Scheme","color":"bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300","colorDot":"bg-slate-500"},"concept":{"label":"Concept","color":"bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300","colorDot":"bg-slate-500"},"class":{"label":"Class","color":"bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300","colorDot":"bg-slate-500"},"ontology":{"label":"Ontology","color":"bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300","colorDot":"bg-slate-500"},"objectProperty":{"label":"Obj Prop","color":"bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300","colorDot":"bg-slate-500"},"datatypeProperty":{"label":"Datatype Prop","color":"bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300","colorDot":"bg-slate-500"},"annotationProperty":{"label":"Annot Prop","color":"bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300","colorDot":"bg-slate-500"},"shape":{"label":"Shape","color":"bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300","colorDot":"bg-slate-500"},"individual":{"label":"Individual","color":"bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300","colorDot":"bg-slate-500"},"external":{"label":"external","color":"bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400","colorDot":"bg-slate-400"}} as const
 
 export const ontologyNamespaces = [
+  {
+    "prefix": "smart",
+    "uri": "https://w3id.org/standards/smart/ontologies/core/",
+    "title": "IEC-ISO SMART Core Ontology",
+    "description": "Foundational ontology for representing machine-actionable standards content, as defined by the IEC/ISO SMART project. Provides the root Entity class and the Provision, PublicationDocument, and TermEntry models that OIML extends.",
+    "color": "teal",
+    "version": "2.0.0"
+  },
   {
     "prefix": "oiml",
     "uri": "https://w3id.org/standards/oiml/ontologies/core/",
     "title": "OIML Core Ontology",
-    "description": "Core ontology for OIML International Recommendations. Defines classes and properties shared across all OIML standards (R 60, R 76, R 111, etc.), including the standard structure (Requirements, Tests, Test Report, Forms) and certification lifecycle (Authority, Certificate, Audit, Calibration).",
-    "color": "emerald",
+    "description": "Core ontology for OIML International Recommendations. Defines classes and properties shared across all OIML standards, including the standard structure (Requirements, Tests, Test Report, Forms) and certification lifecycle (Authority, Certificate, Audit, Calibration).",
+    "color": "brand",
+    "version": "1.0.0"
+  },
+  {
+    "prefix": "oiml-pubtype",
+    "uri": "https://w3id.org/standards/oiml/taxonomies/publication-type/",
+    "title": "OIML Publication Type Taxonomy",
+    "description": "A SKOS concept scheme enumerating the kinds of publication documents issued by OIML: International Recommendation (R), International Document (D), Basic Publication (B), Guide (G), Vocabulary (V), Bulletin (BL), and Expert Report (E).",
+    "color": "amber",
     "version": "1.0.0"
   }
 ] as const

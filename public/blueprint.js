@@ -1,10 +1,7 @@
 // ── OIML SMART — global interactions ─────────────────────────────────
-// Progressive enhancement: must run AFTER DOMContentLoaded. No external
-// dependencies. Respects prefers-reduced-motion.
+// Progressive enhancement: must run AFTER DOMContentLoaded. No external dependencies.
 
 (function () {
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
   // ── Count-up animation ────────────────────────────────────────────
   // For each [data-target] element, animate from 0 → target when visible.
   function animateCounter(el) {
@@ -59,49 +56,34 @@
   function init() {
     // bp-reveal — fade-up on scroll
     document.querySelectorAll('.bp-reveal').forEach((el) => {
-      if (prefersReduced) {
-        el.classList.add('is-visible')
-      } else {
-        revealObserver.observe(el)
-      }
+      revealObserver.observe(el)
     })
 
     // bp-counter (with data-target)
     document.querySelectorAll('.bp-counter[data-target]').forEach((el) => {
-      if (prefersReduced) {
-        const target = parseFloat(el.dataset.target || '0')
-        const format = el.dataset.format || 'int'
-        el.textContent =
-          format === 'comma' ? Math.round(target).toLocaleString('en-US') :
-          format === 'decimal' ? target.toFixed(1) :
-          String(Math.round(target))
-      } else {
-        counterObserver.observe(el)
-      }
+      counterObserver.observe(el)
     })
 
     // bp-magnetic — translate the element toward the cursor on hover
-    if (!prefersReduced && !window.matchMedia('(pointer: coarse)').matches) {
-      document.querySelectorAll('.bp-magnetic').forEach((el) => {
-        const strength = parseFloat(el.dataset.magneticStrength || '0.25')
-        let raf = 0
-        el.addEventListener('mousemove', (e) => {
-          const rect = el.getBoundingClientRect()
-          const x = e.clientX - rect.left - rect.width / 2
-          const y = e.clientY - rect.top - rect.height / 2
-          cancelAnimationFrame(raf)
-          raf = requestAnimationFrame(() => {
-            el.style.setProperty('--mx', `${x * strength}px`)
-            el.style.setProperty('--my', `${y * strength}px`)
-          })
-        })
-        el.addEventListener('mouseleave', () => {
-          cancelAnimationFrame(raf)
-          el.style.setProperty('--mx', '0px')
-          el.style.setProperty('--my', '0px')
+    document.querySelectorAll('.bp-magnetic').forEach((el) => {
+      const strength = parseFloat(el.dataset.magneticStrength || '0.25')
+      let raf = 0
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect()
+        const x = e.clientX - rect.left - rect.width / 2
+        const y = e.clientY - rect.top - rect.height / 2
+        cancelAnimationFrame(raf)
+        raf = requestAnimationFrame(() => {
+          el.style.setProperty('--mx', `${x * strength}px`)
+          el.style.setProperty('--my', `${y * strength}px`)
         })
       })
-    }
+      el.addEventListener('mouseleave', () => {
+        cancelAnimationFrame(raf)
+        el.style.setProperty('--mx', '0px')
+        el.style.setProperty('--my', '0px')
+      })
+    })
 
     // Copy-to-clipboard for [data-copy]
     document.querySelectorAll('[data-copy]').forEach((el) => {
