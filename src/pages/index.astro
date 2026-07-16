@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro'
 import SITE from '../data/site-meta'
-import { STANDARDS, STANDARDS_STATS, approximate } from '../data/standards'
+import { STANDARDS, STANDARDS_STATS } from '../data/standards'
 
 const acronym = [
   { letter: 'S', word: 'Standards', description: 'International metrology recommendations as structured digital artifacts.' },
@@ -12,13 +12,13 @@ const acronym = [
 ]
 
 const stats = [
-  { label: 'Recommendations', value: String(STANDARDS_STATS.total) },
-  { label: 'Requirements', value: approximate(STANDARDS_STATS.totalRequirements) },
-  { label: 'Conformance Tests', value: approximate(STANDARDS_STATS.totalTests) },
-  { label: 'Forms', value: approximate(STANDARDS_STATS.totalForms) },
+  { label: 'Recommendations', value: STANDARDS_STATS.total, format: 'int' },
+  { label: 'Requirements', value: STANDARDS_STATS.totalRequirements, format: 'comma' },
+  { label: 'Conformance Tests', value: STANDARDS_STATS.totalTests, format: 'comma' },
+  { label: 'Smart Forms', value: STANDARDS_STATS.totalForms, format: 'comma' },
 ]
 
-const recommendations = STANDARDS.map(s => ({
+const recommendations = STANDARDS.map((s) => ({
   number: s.recommendationNumber,
   title: s.title,
   scope: s.scope,
@@ -30,12 +30,12 @@ const recommendations = STANDARDS.map(s => ({
 }))
 
 const features = [
-  { num: '01', title: 'Structured Requirements', description: 'Machine-readable requirements with explicit acceptance criteria and applicability filters.' },
-  { num: '02', title: 'Conformance Testing', description: 'Structured test procedures linked to requirements via explicit dependency chains.' },
-  { num: '03', title: 'Smart Forms', description: 'Calculation-powered forms that auto-compute field values based on instrument classification.' },
-  { num: '04', title: 'Certification Workflow', description: 'End-to-end digital certification: application → test report → evaluation → certificate.' },
-  { num: '05', title: 'Semantic Ontology', description: 'OWL-based ontology for cross-Recommendation interoperability and semantic queries.' },
-  { num: '06', title: 'Document Library', description: 'Browse all OIML documents in structured, searchable format with instant full-text search.' },
+  { num: '01', title: 'Structured Requirements', description: 'Machine-readable requirements with explicit acceptance criteria and applicability filters.', tag: 'OWL · RDF' },
+  { num: '02', title: 'Conformance Testing', description: 'Structured test procedures linked to requirements via explicit dependency chains.', tag: 'TESTS · SHACL' },
+  { num: '03', title: 'Smart Forms', description: 'Calculation-powered forms that auto-compute field values based on instrument classification.', tag: 'CALC · FORM' },
+  { num: '04', title: 'Certification Workflow', description: 'End-to-end digital certification: application → test report → evaluation → certificate.', tag: 'WORKFLOW' },
+  { num: '05', title: 'Semantic Ontology', description: 'OWL-based ontology for cross-Recommendation interoperability and semantic queries.', tag: 'OWL · SKOS' },
+  { num: '06', title: 'Document Library', description: 'Browse all OIML documents in structured, searchable format with instant full-text search.', tag: 'PAGEFIND' },
 ]
 
 const audiencePaths = [
@@ -47,145 +47,445 @@ const audiencePaths = [
 ---
 
 <Base>
-  <div class="relative overflow-hidden">
-    <section class="home-hero relative min-h-[min(92vh,800px)] grid grid-cols-[1.1fr_1fr] gap-16 items-center px-8 py-16 max-[960px]:grid-cols-1 max-[960px]:text-center">
-      <div class="relative z-10 max-w-2xl max-[960px]:mx-auto">
-        <h1 class="font-serif text-[clamp(2.5rem,6.5vw,4.75rem)] font-medium leading-[0.98] tracking-[-0.035em] mb-6">
-          Standards that are<br /><em class="italic font-normal text-accent">machine-actionable.</em>
+  <div class="relative overflow-hidden bp-noise">
+    {/* ═══════════════════════════════════════════════════════════════
+        HERO — calibration sheet header
+        ═══════════════════════════════════════════════════════════════ */}
+    <section class="home-hero relative min-h-[min(92vh,840px)] grid grid-cols-[1fr_1.1fr] gap-16 items-center px-8 py-20 max-[960px]:grid-cols-1 max-[960px]:text-center bp-grid bp-grid--major">
+      <span class="vf-corner vf-tl" aria-hidden="true"></span>
+      <span class="vf-corner vf-tr" aria-hidden="true"></span>
+      <span class="vf-corner vf-bl" aria-hidden="true"></span>
+      <span class="vf-corner vf-br" aria-hidden="true"></span>
+      <span class="vf-coord vf-coord-tl" aria-hidden="true">48.8566° N · 2.3522° E</span>
+      <span class="vf-coord vf-coord-tr" aria-hidden="true">OIML · BIML · PARIS</span>
+      <span class="vf-coord vf-coord-bl" aria-hidden="true">REV 0.1 · DRAFT</span>
+      <span class="vf-coord vf-coord-br" aria-hidden="true">2026 → ∞</span>
+
+      <div class="home-globe relative z-10 flex items-center justify-center aspect-square max-w-[540px] mx-auto min-[960px]:order-1" data-parallax-target>
+        <div class="globe-rings" aria-hidden="true"></div>
+        <div id="hero-globe" class="relative w-full max-w-[440px] h-auto"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full pointer-events-none bp-scan opacity-30" aria-hidden="true"></div>
+      </div>
+
+      <div class="relative z-10 max-w-2xl max-[960px]:mx-auto min-[960px]:order-2">
+        <div class="hero-stagger mb-5 flex items-center gap-3 max-[960px]:justify-center" style="--stagger-i:0">
+          <span class="bp-pulse" aria-hidden="true"></span>
+          <span class="eyebrow">Pilot Programme · v0.1 · 2026</span>
+        </div>
+        <h1 class="hero-stagger font-serif text-[clamp(2.5rem,6.5vw,4.75rem)] font-medium leading-[0.98] tracking-[-0.035em] mb-6" style="--stagger-i:1">
+          Standards that are<br />
+          <em class="italic font-normal text-accent">
+            machine-actionable
+            <svg class="bp-underline-draw" viewBox="0 0 240 12" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M2 8 Q 60 2, 120 6 T 238 5" />
+            </svg>.
+          </em>
         </h1>
-        <p class="text-[1.1875rem] leading-[1.55] text-ink-soft max-w-2xl mb-10">
+        <p class="hero-stagger text-[1.1875rem] leading-[1.55] text-ink-soft max-w-2xl mb-10" style="--stagger-i:2">
           <strong class="text-ink font-semibold">OIML SMART</strong> transforms International Recommendations from static PDF documents into structured digital artifacts — executable, traceable, and interoperable across the global metrology community.
         </p>
-        <div class="flex flex-wrap gap-3 items-center max-[960px]:justify-center">
-          <a class="btn btn-primary" href="/recommendations/">
+        <div class="hero-stagger flex flex-wrap gap-3 items-center max-[960px]:justify-center" style="--stagger-i:3">
+          <a class="btn btn-primary bp-magnetic bp-focus-ring" href="/recommendations/" data-magnetic-strength="0.2">
             Explore Recommendations <span class="arrow">→</span>
           </a>
-          <a class="btn btn-ghost" href="/about/what-is-smart">What is SMART?</a>
+          <a class="btn btn-ghost bp-magnetic bp-focus-ring" href="/about/what-is-smart" data-magnetic-strength="0.15">
+            What is SMART?
+          </a>
+          <a class="btn btn-ghost bp-magnetic bp-focus-ring" href="/ontology/" data-magnetic-strength="0.15">
+            Browse Ontology
+          </a>
         </div>
-      </div>
-      <div class="home-globe relative z-10 flex items-center justify-center aspect-square max-w-[480px] mx-auto">
-        <div id="hero-globe" class="relative w-full max-w-[420px] h-auto"></div>
+        <div class="hero-stagger mt-10 flex items-center gap-6 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-muted max-[960px]:justify-center flex-wrap" style="--stagger-i:4">
+          <span class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span>
+            OWL · RDF · SHACL
+          </span>
+          <span class="opacity-50">·</span>
+          <span class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+            Turtle · JSON-LD
+          </span>
+          <span class="opacity-50">·</span>
+          <span class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+            Open Standards
+          </span>
+        </div>
       </div>
     </section>
 
-    <section class="py-20 px-8 border-t border-rule">
-      <div class="max-w-3xl mb-12">
+    {/* ═══════════════════════════════════════════════════════════════
+        SMART ACRONYM — interactive grid
+        ═══════════════════════════════════════════════════════════════ */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="py-20 px-8 bp-grid">
+      <div class="max-w-3xl mb-12 bp-reveal">
+        <div class="bp-section-anchor mb-4">
+          <span class="bp-section-anchor__num">§ 01</span>
+          <span>S · M · A · R · T</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-tally">
+            <span class="bp-tally__current">001</span>
+            <span class="bp-tally__sep">/</span>
+            <span>005</span>
+          </span>
+        </div>
         <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">What "SMART" stands for</h2>
         <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Five properties that distinguish a SMART Recommendation from a traditional PDF. Together, they make the Recommendation a functional digital artifact — not just a document.</p>
       </div>
       <div class="grid grid-cols-[repeat(5,1fr)] gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-2">
-        {acronym.map(item => (
-          <div class="bg-paper-soft p-6 px-5">
-            <div class="font-serif text-[3.5rem] font-normal leading-none text-accent mb-2">{item.letter}</div>
+        {acronym.map((item, i) => (
+          <article
+            class="relative bg-paper-soft p-6 px-5 bp-card-hover bp-reveal group bp-crosshair"
+            style={`--reveal-delay: ${i * 80}ms; --cell-i:${i}`}
+          >
+            <div class="font-serif text-[3.5rem] font-normal leading-none text-accent mb-2 transition-transform group-hover:scale-105 origin-left" style="transition-timing-function: var(--bp-ease-bounce);">
+              {item.letter}
+            </div>
             <div class="text-[0.9375rem] font-semibold mb-1">{item.word}</div>
             <div class="text-[0.8125rem] leading-[1.45] text-ink-muted">{item.description}</div>
+            <div class="absolute top-3 right-3 bp-coord opacity-0 group-hover:opacity-100 transition-opacity">{String(i + 1).padStart(2, '0')}</div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {/* ═══════════════════════════════════════════════════════════════
+        STATS — count-up metrics
+        ═══════════════════════════════════════════════════════════════ */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="py-20 px-8 bp-grid bp-grid--major">
+      <div class="max-w-3xl mb-12 bp-reveal">
+        <div class="bp-section-anchor mb-4">
+          <span class="bp-section-anchor__num">§ 02</span>
+          <span>Pilot Coverage</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-coord">Working Snapshot</span>
+        </div>
+        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">What the pilot currently covers</h2>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Working figures as of the current pilot snapshot. Will grow as more Recommendations and features are added.</p>
+      </div>
+      <div class="grid grid-cols-4 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-2">
+        {stats.map((s, i) => (
+          <div
+            class="bg-paper-soft p-7 px-5 text-center relative bp-reveal bp-crosshair group bp-card-hover"
+            style={`--reveal-delay: ${i * 80}ms`}
+          >
+            <div class="bp-metric">
+              <span
+                class="bp-metric__value bp-counter"
+                data-target={s.value}
+                data-format={s.format}
+                aria-label={`${s.label}: ${s.value}`}
+              >0</span>
+              <span class="bp-metric__label">{s.label}</span>
+            </div>
           </div>
         ))}
       </div>
     </section>
 
-    <section class="py-20 px-8 border-t border-rule">
-      <div class="max-w-3xl mb-12">
+    {/* ═══════════════════════════════════════════════════════════════
+        RECOMMENDATIONS — hover-lift cards
+        ═══════════════════════════════════════════════════════════════ */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="py-20 px-8 bp-grid">
+      <div class="max-w-3xl mb-12 bp-reveal">
+        <div class="bp-section-anchor mb-4">
+          <span class="bp-section-anchor__num">§ 03</span>
+          <span>Recommendations</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-coord">{recommendations.length} modelled</span>
+        </div>
         <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Recommendations in the pilot</h2>
         <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Each Recommendation below is at a different point in the modelling pilot. Numbers reflect the working model and may change as the pilot evolves.</p>
       </div>
       <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
-        {recommendations.map(r => (
-          <a class="rec-card block p-7 bg-paper-soft border border-rule rounded-md no-underline text-inherit relative transition-all duration-200 overflow-hidden hover:border-accent hover:-translate-y-0.5" href={r.href}>
-            <div class="font-mono text-xs font-medium tracking-[0.1em] text-accent mb-2">{r.number} · {r.year} · DRAFT</div>
-            <h3 class="font-serif text-[1.375rem] mb-2">{r.title}</h3>
-            <p class="text-[0.9375rem] text-ink-soft mb-4">{r.scope}</p>
-            <div class="flex gap-4 font-mono text-xs text-ink-muted pt-4 border-t border-rule">
-              <span><strong>{r.requirements}</strong> reqs</span>
-              <span><strong>{r.tests}</strong> tests</span>
-              <span><strong>{r.forms}</strong> forms</span>
+        {recommendations.map((r, i) => (
+          <a
+            class="rec-card block p-7 bg-paper-soft border border-rule rounded-md no-underline text-inherit relative bp-card-hover bp-reveal group bp-crosshair"
+            style={`--reveal-delay: ${i * 60}ms`}
+            href={r.href}
+          >
+            <div class="flex items-center justify-between font-mono text-xs font-medium tracking-[0.1em] mb-3">
+              <span class="text-accent">{r.number} · {r.year}</span>
+              <span class="bp-chip">Draft</span>
+            </div>
+            <h3 class="font-serif text-[1.375rem] mb-2 leading-tight">{r.title}</h3>
+            <p class="text-[0.9375rem] text-ink-soft mb-5">{r.scope}</p>
+            <div class="flex gap-4 font-mono text-xs pt-4 border-t border-rule">
+              <span><strong class="text-ink">{r.requirements}</strong> <span class="text-ink-muted">reqs</span></span>
+              <span><strong class="text-ink">{r.tests}</strong> <span class="text-ink-muted">tests</span></span>
+              <span><strong class="text-ink">{r.forms}</strong> <span class="text-ink-muted">forms</span></span>
+            </div>
+            <div class="absolute bottom-0 right-0 px-3 py-1 bg-accent text-paper font-mono text-[0.625rem] tracking-[0.1em] uppercase opacity-0 group-hover:opacity-100 transition-opacity translate-y-full group-hover:translate-y-0 origin-top-left">
+              View →
             </div>
           </a>
         ))}
       </div>
     </section>
 
-    <section class="py-20 px-8 border-t border-rule">
-      <div class="max-w-3xl mb-12">
-        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">What the pilot currently covers</h2>
-        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Working figures as of the current pilot snapshot. Will grow as more Recommendations and features are added.</p>
-      </div>
-      <div class="grid grid-cols-4 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-2">
-        {stats.map(s => (
-          <div class="bg-paper-soft p-7 px-5 text-center">
-            <div class="font-serif text-[2.75rem] font-medium leading-none tracking-[-0.02em]">{s.value}</div>
-            <span class="block mt-2 font-mono text-[0.6875rem] font-medium tracking-[0.12em] uppercase text-ink-muted">{s.label}</span>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section class="py-20 px-8 border-t border-rule">
-      <div class="max-w-3xl mb-12">
+    {/* ═══════════════════════════════════════════════════════════════
+        FEATURES — numbered capability grid
+        ═══════════════════════════════════════════════════════════════ */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="py-20 px-8 bp-grid bp-grid--major">
+      <div class="max-w-3xl mb-12 bp-reveal">
+        <div class="bp-section-anchor mb-4">
+          <span class="bp-section-anchor__num">§ 04</span>
+          <span>Capabilities</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-coord">{features.length} subsystems</span>
+        </div>
         <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Capabilities delivered in the pilot</h2>
         <p class="text-[1.0625rem] leading-relaxed text-ink-soft">These are the working capabilities in the current build. They are subject to change — the pilot is intentionally exploratory.</p>
       </div>
       <div class="grid grid-cols-3 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
-        {features.map(f => (
-          <div class="bg-paper-soft p-7">
-            <span class="inline-flex items-center justify-center w-9 h-9 border border-accent text-accent rounded mb-4 font-mono text-sm">{f.num}</span>
-            <h3 class="font-serif text-[1.1875rem] mb-2">{f.title}</h3>
-            <p class="text-[0.9375rem] text-ink-soft">{f.description}</p>
-          </div>
+        {features.map((f, i) => (
+          <article
+            class="bg-paper-soft p-7 bp-reveal bp-card-hover group relative"
+            style={`--reveal-delay: ${i * 60}ms`}
+          >
+            <div class="flex items-center justify-between mb-4">
+              <span class="inline-flex items-center justify-center w-9 h-9 border border-accent text-accent rounded-sm font-mono text-sm bp-crosshair">{f.num}</span>
+              <span class="bp-chip">{f.tag}</span>
+            </div>
+            <h3 class="font-serif text-[1.1875rem] mb-2 leading-tight">{f.title}</h3>
+            <p class="text-[0.9375rem] text-ink-soft leading-relaxed">{f.description}</p>
+          </article>
         ))}
       </div>
     </section>
 
-    <section class="py-20 px-8 border-t border-rule">
-      <div class="max-w-3xl mb-12">
+    {/* ═══════════════════════════════════════════════════════════════
+        AUDIENCE PATHS — roman-numeral navigation
+        ═══════════════════════════════════════════════════════════════ */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="py-20 px-8 bp-grid">
+      <div class="max-w-3xl mb-12 bp-reveal">
+        <div class="bp-section-anchor mb-4">
+          <span class="bp-section-anchor__num">§ 05</span>
+          <span>Audience Paths</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-coord">Internal Review</span>
+        </div>
         <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Internal review paths</h2>
         <p class="text-[1.0625rem] leading-relaxed text-ink-soft">This site supports ongoing internal review of the OIML SMART pilot. OIML Member States and Corresponding Members are invited to contact OIML directly for engagement.</p>
       </div>
       <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
-        {audiencePaths.map(path => (
-          <div class="bg-paper-soft p-7 flex gap-5 items-start">
-            <div class="font-serif text-[2.25rem] font-normal text-accent italic">{path.num}</div>
-            <div>
-              <h3 class="font-serif text-[1.125rem] mb-1.5">{path.title}</h3>
-              <p class="text-sm text-ink-soft">{path.description} <a href={path.link} class="text-accent no-underline">→</a></p>
+        {audiencePaths.map((path, i) => (
+          <a
+            href={path.link}
+            class="bg-paper-soft p-7 flex gap-5 items-start bp-reveal bp-card-hover group no-underline text-inherit relative bp-crosshair"
+            style={`--reveal-delay: ${i * 60}ms`}
+          >
+            <div class="font-serif text-[2.25rem] font-normal text-accent italic leading-none">{path.num}</div>
+            <div class="flex-1">
+              <h3 class="font-serif text-[1.125rem] mb-1.5 flex items-center gap-2">
+                {path.title}
+                <span class="text-accent opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
+              </h3>
+              <p class="text-sm text-ink-soft leading-relaxed">{path.description}</p>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </section>
+
+    {/* Footer calibration ruler */}
+    <div class="bp-ticks bp-ticks--dense" aria-hidden="true"></div>
   </div>
 </Base>
 
 <style>
-.home-hero::before {
-  content: ''; position: absolute; inset: 0;
-  background-image:
-    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 64px 64px; pointer-events: none; z-index: 0;
-}
-.home-globe::before {
-  content: ''; position: absolute; inset: 8%; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, var(--accent-soft) 0%, transparent 60%);
-  filter: blur(40px);
-}
-#hero-globe svg { display: block; width: 100%; height: auto; }
+  .home-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 85%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 85%);
+  }
+  .home-hero::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent), transparent);
+    opacity: 0.5;
+    z-index: 1;
+  }
+  .home-globe::before {
+    content: '';
+    position: absolute;
+    inset: 8%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, var(--accent-soft) 0%, transparent 60%);
+    filter: blur(40px);
+  }
+  #hero-globe svg { display: block; width: 100%; height: auto; }
+
+  /* ── Viewfinder corner brackets ─────────────────────── */
+  .vf-corner {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 0 solid var(--ink-muted);
+    opacity: 0.45;
+    z-index: 4;
+    pointer-events: none;
+  }
+  .vf-tl { top: 22px; left: 22px; border-top-width: 1px; border-left-width: 1px; }
+  .vf-tr { top: 22px; right: 22px; border-top-width: 1px; border-right-width: 1px; }
+  .vf-bl { bottom: 22px; left: 22px; border-bottom-width: 1px; border-left-width: 1px; }
+  .vf-br { bottom: 22px; right: 22px; border-bottom-width: 1px; border-right-width: 1px; }
+
+  .vf-coord {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    opacity: 0.65;
+    z-index: 4;
+    pointer-events: none;
+  }
+  .vf-coord-tl { top: 28px; left: 60px; }
+  .vf-coord-tr { top: 28px; right: 60px; }
+  .vf-coord-bl { bottom: 28px; left: 60px; }
+  .vf-coord-br { bottom: 28px; right: 60px; }
+
+  /* ── Eyebrow label (hero only — section anchors use bp-section-anchor) ─ */
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 0.375em 0.75em;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    background: var(--accent-soft);
+  }
+
+  /* ── Rotating dashed rings around the globe ─────────── */
+  .home-globe { perspective: 1000px; }
+  .globe-rings {
+    position: absolute;
+    inset: -8%;
+    border-radius: 50%;
+    border: 1px dashed var(--accent);
+    opacity: 0.22;
+    animation: ring-rotate 60s linear infinite;
+    pointer-events: none;
+  }
+  .globe-rings::before {
+    content: '';
+    position: absolute;
+    inset: 6%;
+    border-radius: 50%;
+    border: 1px dashed var(--accent);
+    opacity: 0.6;
+  }
+  .globe-rings::after {
+    content: '';
+    position: absolute;
+    inset: 12%;
+    border-radius: 50%;
+    border: 1px dotted var(--accent);
+    opacity: 0.7;
+    animation: ring-rotate 90s linear infinite reverse;
+  }
+  @keyframes ring-rotate { to { transform: rotate(360deg); } }
+
+  [data-parallax-target] {
+    transform-style: preserve-3d;
+    transition: transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    will-change: transform;
+  }
+
+  .rec-card:hover { border-color: var(--accent); }
+  .rec-card:hover .bp-chip { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+  @media (max-width: 960px) {
+    .vf-corner, .vf-coord { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .globe-rings, .globe-rings::after { animation: none !important; }
+    [data-parallax-target] { transform: none !important; }
+    .home-hero::after { display: none; }
+  }
 </style>
 
 <script is:inline src="/spinning-globe-3d.js"></script>
 <script is:inline>
-  window.addEventListener('DOMContentLoaded', function() {
-    var isDark = document.documentElement.classList.contains('dark');
-    var container = document.getElementById('hero-globe');
-    if (container && typeof SpinningGlobe3D !== 'undefined') {
-      new SpinningGlobe3D('#hero-globe', {
-        theme: isDark ? 'dark' : 'light',
-        mode: 'forward',
-        duration: 5.6,
-        spinSpeed: 3.3,
-        delay: 500,
-        fillTime: 4.0
-      });
+  (function () {
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function initGlobe() {
+      var isDark = document.documentElement.classList.contains('dark');
+      var container = document.getElementById('hero-globe');
+      if (container && typeof SpinningGlobe3D !== 'undefined') {
+        new SpinningGlobe3D('#hero-globe', {
+          theme: isDark ? 'dark' : 'light',
+          mode: 'forward',
+          duration: 5.6,
+          spinSpeed: 3.3,
+          delay: 500,
+          fillTime: 4.0
+        });
+      }
     }
-  });
+
+    function initParallax() {
+      if (prefersReduced) return;
+      if (window.matchMedia('(pointer: coarse)').matches) return;
+      var target = document.querySelector('[data-parallax-target]');
+      var hero = document.querySelector('.home-hero');
+      if (!target || !hero) return;
+      var ticking = false;
+      function onMove(e) {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          var rect = hero.getBoundingClientRect();
+          var cx = rect.left + rect.width / 2;
+          var cy = rect.top + rect.height / 2;
+          var dx = (e.clientX - cx) / rect.width;
+          var dy = (e.clientY - cy) / rect.height;
+          target.style.transform =
+            'rotateY(' + (dx * 8).toFixed(2) + 'deg) rotateX(' + (-dy * 6).toFixed(2) + 'deg)';
+          ticking = false;
+        });
+      }
+      function onLeave() {
+        target.style.transform = 'rotateY(0deg) rotateX(0deg)';
+      }
+      window.addEventListener('mousemove', onMove, { passive: true });
+      hero.addEventListener('mouseleave', onLeave);
+    }
+
+    function initAll() {
+      initGlobe();
+      initParallax();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+      initAll();
+    }
+    document.addEventListener('astro:after-swap', initAll);
+  })();
 </script>
