@@ -32,6 +32,7 @@ export const NAV_DROPDOWNS: readonly NavDropdownConfig[] = [
       { label: 'Library', href: '/library/', desc: 'Structured OIML document library' },
       { label: 'Vocabularies', href: '/vocab/', desc: 'OIML terminology and concept browser', external: true },
       { label: 'Resolutions', href: '/resolutions/', desc: 'OIML resolutions database', external: true },
+      { label: 'Ontology', href: '/ontology/', desc: 'Semantic model: classes, properties, individuals' },
       { label: 'Developer Docs', href: '/docs/', desc: 'Guides, architecture, specifications' },
     ],
   },

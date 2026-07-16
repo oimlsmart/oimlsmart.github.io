@@ -1,0 +1,444 @@
+@prefix : <https://w3id.org/standards/oiml/r60/ontologies/core/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix oiml: <https://w3id.org/standards/oiml/ontologies/core/> .
+@prefix oiml-r60: <https://w3id.org/standards/oiml/r60/ontologies/core/> .
+@base <https://w3id.org/standards/oiml/r60/ontologies/core/> .
+
+<https://w3id.org/standards/oiml/r60/ontologies/core/> rdf:type owl:Ontology ;
+  dcterms:title "OIML R 60 Domain Ontology"@en ;
+  dcterms:description "Domain ontology for OIML R 60 (Metrological regulation for load cells). Defines R 60-specific classes (LoadCell, AccuracyClass, etc.) that inherit from OIML Core, and R 60 individuals (the standard, its parts, requirements classes, conformance classes, and test report forms)."@en ;
+  owl:imports <https://w3id.org/standards/oiml/ontologies/core/> ;
+  owl:versionInfo "1.0.0" .
+
+#################################################################
+#    R 60 Domain Classes (Layer 2)
+#################################################################
+
+oiml-r60:LoadCell rdf:type owl:Class ;
+  rdfs:subClassOf oiml:DeviceUnderTest ;
+  rdfs:label "Load Cell"@en ;
+  skos:definition "A load cell measuring transducer as defined in OIML R 60."@en .
+
+oiml-r60:LoadCellClassification rdf:type owl:Class ;
+  rdfs:subClassOf oiml:Classification ;
+  rdfs:label "Load Cell Classification"@en ;
+  skos:definition "Classification of a load cell under test by accuracy class, technology, and humidity class."@en .
+
+oiml-r60:AccuracyClass rdf:type owl:Class ;
+  rdfs:subClassOf oiml:Classification ;
+  rdfs:label "Accuracy Class"@en ;
+  skos:definition "OIML R 60 accuracy class (A, B, C, or D)."@en .
+
+oiml-r60:HumidityClass rdf:type owl:Class ;
+  rdfs:subClassOf oiml:Classification ;
+  rdfs:label "Humidity Class"@en ;
+  skos:definition "OIML R 60 humidity class (CH, NH, or SH)."@en .
+
+oiml-r60:Technology rdf:type owl:Class ;
+  rdfs:subClassOf oiml:Classification ;
+  rdfs:label "Technology"@en ;
+  skos:definition "Load cell technology type (analogue passive, analogue active, or digital)."@en .
+
+oiml-r60:MaximumPermissibleError rdf:type owl:Class ;
+  rdfs:subClassOf oiml:TestParameter ;
+  rdfs:label "Maximum Permissible Error"@en ;
+  skos:definition "MPE for load cell errors."@en .
+
+oiml-r60:Creep rdf:type owl:Class ;
+  rdfs:subClassOf oiml:TestParameter ;
+  rdfs:label "Creep"@en ;
+  skos:definition "Creep measurement parameter."@en .
+
+oiml-r60:RepeatabilityError rdf:type owl:Class ;
+  rdfs:subClassOf oiml:TestParameter ;
+  rdfs:label "Repeatability Error"@en ;
+  skos:definition "Repeatability error measurement."@en .
+
+oiml-r60:DeadLoadOutputReturn rdf:type owl:Class ;
+  rdfs:subClassOf oiml:TestParameter ;
+  rdfs:label "Dead Load Output Return"@en ;
+  skos:definition "DR (dead load output return) parameter."@en .
+
+oiml-r60:SpanStability rdf:type owl:Class ;
+  rdfs:subClassOf oiml:TestParameter ;
+  rdfs:label "Span Stability"@en ;
+  skos:definition "Span stability measurement."@en .
+
+oiml-r60:TemperatureEffect rdf:type owl:Class ;
+  rdfs:subClassOf oiml:TestParameter ;
+  rdfs:label "Temperature Effect on MDLO"@en ;
+  skos:definition "Temperature effect on minimum dead load output."@en .
+
+#################################################################
+#    R 60 Domain Properties
+#################################################################
+
+oiml-r60:hasAccuracyClass rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml-r60:LoadCellClassification ;
+  rdfs:range oiml-r60:AccuracyClass ;
+  rdfs:label "has accuracy class"@en .
+
+oiml-r60:hasTechnology rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml-r60:LoadCellClassification ;
+  rdfs:range oiml-r60:Technology ;
+  rdfs:label "has technology"@en .
+
+oiml-r60:hasHumidityClass rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml-r60:LoadCellClassification ;
+  rdfs:range oiml-r60:HumidityClass ;
+  rdfs:label "has humidity class"@en .
+
+#################################################################
+#    R 60 Individuals — Standard and Parts (Layer 3)
+#################################################################
+
+oiml-r60:R-60 rdf:type owl:NamedIndividual , oiml:Standard ;
+  rdfs:label "OIML R 60"@en ;
+  dcterms:title "OIML R 60:2021 Metrological regulation for load cells"@en .
+
+oiml-r60:part-1 rdf:type owl:NamedIndividual , oiml:RequirementsDocument ;
+  rdfs:label "R 60-1"@en ;
+  dcterms:title "OIML R 60-1: Metrological and technical requirements"@en .
+
+oiml-r60:part-2 rdf:type owl:NamedIndividual , oiml:TestProcedures ;
+  rdfs:label "R 60-2"@en ;
+  dcterms:title "OIML R 60-2: Test procedures"@en .
+
+oiml-r60:part-3 rdf:type owl:NamedIndividual , oiml:TestReportForms ;
+  rdfs:label "R 60-3"@en ;
+  dcterms:title "OIML R 60-3: Test report forms"@en .
+
+#################################################################
+#    R 60 Individuals — Requirements Classes
+#################################################################
+
+oiml-r60:classification-rc rdf:type owl:NamedIndividual , oiml:RequirementsClass ;
+  rdfs:label "Classification"@en .
+
+oiml-r60:metrological-rc rdf:type owl:NamedIndividual , oiml:RequirementsClass ;
+  rdfs:label "Metrological requirements"@en .
+
+oiml-r60:technical-rc rdf:type owl:NamedIndividual , oiml:RequirementsClass ;
+  rdfs:label "Technical requirements"@en .
+
+oiml-r60:class-a-rc rdf:type owl:NamedIndividual , oiml:RequirementsClass ;
+  rdfs:label "Class A load cell requirements"@en ;
+  oiml:hasApplicability oiml-r60:app-accuracy-a .
+
+oiml-r60:class-b-rc rdf:type owl:NamedIndividual , oiml:RequirementsClass ;
+  rdfs:label "Class B load cell requirements"@en ;
+  oiml:hasApplicability oiml-r60:app-accuracy-b .
+
+oiml-r60:class-c-rc rdf:type owl:NamedIndividual , oiml:RequirementsClass ;
+  rdfs:label "Class C load cell requirements"@en ;
+  oiml:hasApplicability oiml-r60:app-accuracy-c .
+
+oiml-r60:class-d-rc rdf:type owl:NamedIndividual , oiml:RequirementsClass ;
+  rdfs:label "Class D load cell requirements"@en ;
+  oiml:hasApplicability oiml-r60:app-accuracy-d .
+
+oiml-r60:electronic-rc rdf:type owl:NamedIndividual , oiml:RequirementsClass ;
+  rdfs:label "Electronic requirements"@en ;
+  oiml:hasApplicability oiml-r60:app-electronic-tech .
+
+#################################################################
+#    R 60 Individuals — Conformance Classes
+#################################################################
+
+oiml-r60:metrological-cc rdf:type owl:NamedIndividual , oiml:ConformanceClass ;
+  rdfs:label "Metrological tests"@en .
+
+oiml-r60:examination-cc rdf:type owl:NamedIndividual , oiml:ConformanceClass ;
+  rdfs:label "Examinations"@en .
+
+oiml-r60:class-a-cc rdf:type owl:NamedIndividual , oiml:ConformanceClass ;
+  rdfs:label "Class A conformance tests"@en ;
+  oiml:hasApplicability oiml-r60:app-accuracy-a .
+
+oiml-r60:class-b-cc rdf:type owl:NamedIndividual , oiml:ConformanceClass ;
+  rdfs:label "Class B conformance tests"@en ;
+  oiml:hasApplicability oiml-r60:app-accuracy-b .
+
+oiml-r60:class-c-cc rdf:type owl:NamedIndividual , oiml:ConformanceClass ;
+  rdfs:label "Class C conformance tests"@en ;
+  oiml:hasApplicability oiml-r60:app-accuracy-c .
+
+oiml-r60:class-d-cc rdf:type owl:NamedIndividual , oiml:ConformanceClass ;
+  rdfs:label "Class D conformance tests"@en ;
+  oiml:hasApplicability oiml-r60:app-accuracy-d .
+
+oiml-r60:electronic-cc rdf:type owl:NamedIndividual , oiml:ConformanceClass ;
+  rdfs:label "Electronic tests"@en ;
+  oiml:hasApplicability oiml-r60:app-electronic-tech .
+
+#################################################################
+#    R 60 Individuals — Test Report
+#################################################################
+
+oiml-r60:test-report rdf:type owl:NamedIndividual , oiml:TestReport ;
+  rdfs:label "R 60-3 Test Report"@en .
+
+oiml-r60:form-sec-4-1 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Authority information"@en .
+
+oiml-r60:form-sec-4-2 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Synopsis"@en .
+
+oiml-r60:form-sec-4-3 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Summary of results"@en .
+
+oiml-r60:form-sec-4-4 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Manufacturer information"@en .
+
+oiml-r60:form-sec-4-5 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Load cell information"@en .
+
+oiml-r60:form-sec-4-6 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Accessories"@en .
+
+oiml-r60:form-sec-4-7 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Sample selection"@en .
+
+oiml-r60:form-sec-4-8 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Adjustments"@en .
+
+oiml-r60:form-sec-4-9 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Additional information"@en .
+
+oiml-r60:form-sec-4-10 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Equipment"@en .
+
+oiml-r60:form-sec-4-11 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Test usage matrix"@en .
+
+oiml-r60:form-sec-5-1 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Marking examination"@en .
+
+oiml-r60:form-sec-5-2 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Suitability examination"@en .
+
+oiml-r60:form-sec-5-3 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Software examination"@en .
+
+oiml-r60:form-sec-5-4 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Documentation examination"@en .
+
+oiml-r60:form-table-6-3 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Load test (3 runs) — C/D"@en .
+
+oiml-r60:form-table-6-4 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Load test (5 runs) — A/B"@en .
+
+oiml-r60:form-table-6-5 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Load cell errors"@en .
+
+oiml-r60:form-table-6-6 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Repeatability"@en .
+
+oiml-r60:form-table-6-7 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Temperature effect on MDLO"@en .
+
+oiml-r60:form-table-6-8 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Creep / DR"@en .
+
+oiml-r60:form-table-6-9 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Barometric pressure"@en .
+
+oiml-r60:form-table-6-10-1a rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Humidity test — CH (conditions)"@en .
+
+oiml-r60:form-table-6-10-1b rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Humidity test — CH (C/D, run 1)"@en .
+
+oiml-r60:form-table-6-10-1c rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Humidity test — CH (C/D, run 2)"@en .
+
+oiml-r60:form-table-6-10-1d rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Humidity test — CH (A/B, run 1)"@en .
+
+oiml-r60:form-table-6-10-1e rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Humidity test — CH (A/B, run 2)"@en .
+
+oiml-r60:form-table-6-10-2 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Humidity test — SH"@en .
+
+oiml-r60:form-form-6-11 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Warm-up time"@en .
+
+oiml-r60:form-form-6-12 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Power voltage"@en .
+
+oiml-r60:form-form-6-13 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Short-time power reduction"@en .
+
+oiml-r60:form-form-6-14-1 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Bursts (electrical fast transients)"@en .
+
+oiml-r60:form-form-6-14-2 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Bursts (second part)"@en .
+
+oiml-r60:form-form-6-15 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Surge"@en .
+
+oiml-r60:form-form-6-16-1 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "ESD (contact discharge)"@en .
+
+oiml-r60:form-form-6-16-2-1 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "ESD (air discharge, part 1)"@en .
+
+oiml-r60:form-form-6-16-2-2 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "ESD (air discharge, part 2)"@en .
+
+oiml-r60:form-form-6-16-3 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "ESD (indirect discharge)"@en .
+
+oiml-r60:form-form-6-17-1 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "EMC susceptibility (radiated)"@en .
+
+oiml-r60:form-form-6-17-2 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "EMC susceptibility (conducted)"@en .
+
+oiml-r60:form-form-6-18 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Conducted EMC"@en .
+
+oiml-r60:form-form-6-19-1 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Span stability (C/D)"@en .
+
+oiml-r60:form-form-6-19-2 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Span stability (B)"@en .
+
+oiml-r60:form-table-6-19-3 rdf:type owl:NamedIndividual , oiml:TestReportForm ;
+  rdfs:label "Span stability summary"@en .
+
+#################################################################
+#    R 60 Property Assertions — Standard Structure
+#################################################################
+
+oiml-r60:R-60 oiml:hasPart oiml-r60:part-1 , oiml-r60:part-2 , oiml-r60:part-3 .
+
+oiml-r60:part-1 oiml:hasRequirementsClass
+  oiml-r60:classification-rc , oiml-r60:metrological-rc ,
+  oiml-r60:electronic-rc , oiml-r60:technical-rc ,
+  oiml-r60:class-a-rc , oiml-r60:class-b-rc ,
+  oiml-r60:class-c-rc , oiml-r60:class-d-rc .
+
+oiml-r60:part-2 oiml:hasConformanceClass
+  oiml-r60:metrological-cc , oiml-r60:electronic-cc , oiml-r60:examination-cc ,
+  oiml-r60:class-a-cc , oiml-r60:class-b-cc ,
+  oiml-r60:class-c-cc , oiml-r60:class-d-cc .
+
+oiml-r60:part-3 oiml:hasTestReport oiml-r60:test-report .
+
+oiml-r60:test-report oiml:hasTestReportForm
+  oiml-r60:form-sec-4-1 , oiml-r60:form-sec-4-2 , oiml-r60:form-sec-4-3 ,
+  oiml-r60:form-sec-4-4 , oiml-r60:form-sec-4-5 , oiml-r60:form-sec-4-6 ,
+  oiml-r60:form-sec-4-7 , oiml-r60:form-sec-4-8 , oiml-r60:form-sec-4-9 ,
+  oiml-r60:form-sec-4-10 , oiml-r60:form-sec-4-11 ,
+  oiml-r60:form-sec-5-1 , oiml-r60:form-sec-5-2 , oiml-r60:form-sec-5-3 ,
+  oiml-r60:form-sec-5-4 ,
+  oiml-r60:form-table-6-3 , oiml-r60:form-table-6-4 , oiml-r60:form-table-6-5 ,
+  oiml-r60:form-table-6-6 , oiml-r60:form-table-6-7 , oiml-r60:form-table-6-8 ,
+  oiml-r60:form-table-6-9 ,
+  oiml-r60:form-table-6-10-1a , oiml-r60:form-table-6-10-1b ,
+  oiml-r60:form-table-6-10-1c , oiml-r60:form-table-6-10-1d ,
+  oiml-r60:form-table-6-10-1e , oiml-r60:form-table-6-10-2 ,
+  oiml-r60:form-form-6-11 , oiml-r60:form-form-6-12 , oiml-r60:form-form-6-13 ,
+  oiml-r60:form-form-6-14-1 , oiml-r60:form-form-6-14-2 , oiml-r60:form-form-6-15 ,
+  oiml-r60:form-form-6-16-1 , oiml-r60:form-form-6-16-2-1 , oiml-r60:form-form-6-16-2-2 ,
+  oiml-r60:form-form-6-16-3 , oiml-r60:form-form-6-17-1 , oiml-r60:form-form-6-17-2 ,
+  oiml-r60:form-form-6-18 , oiml-r60:form-form-6-19-1 , oiml-r60:form-form-6-19-2 ,
+  oiml-r60:form-table-6-19-3 .
+
+#################################################################
+#    R 60 Individuals — Classification Values (SKOS)
+#################################################################
+
+oiml-r60:accuracy-A rdf:type owl:NamedIndividual , oiml-r60:AccuracyClass , skos:Concept ;
+  rdfs:label "Accuracy Class A"@en ;
+  skos:prefLabel "A"@en ;
+  skos:inScheme oiml-r60:accuracy-classes .
+
+oiml-r60:accuracy-B rdf:type owl:NamedIndividual , oiml-r60:AccuracyClass , skos:Concept ;
+  rdfs:label "Accuracy Class B"@en ;
+  skos:prefLabel "B"@en ;
+  skos:inScheme oiml-r60:accuracy-classes .
+
+oiml-r60:accuracy-C rdf:type owl:NamedIndividual , oiml-r60:AccuracyClass , skos:Concept ;
+  rdfs:label "Accuracy Class C"@en ;
+  skos:prefLabel "C"@en ;
+  skos:inScheme oiml-r60:accuracy-classes .
+
+oiml-r60:accuracy-D rdf:type owl:NamedIndividual , oiml-r60:AccuracyClass , skos:Concept ;
+  rdfs:label "Accuracy Class D"@en ;
+  skos:prefLabel "D"@en ;
+  skos:inScheme oiml-r60:accuracy-classes .
+
+oiml-r60:accuracy-classes rdf:type skos:ConceptScheme ;
+  rdfs:label "OIML R 60 Accuracy Classes"@en ;
+  skos:hasTopConcept oiml-r60:accuracy-A , oiml-r60:accuracy-B , oiml-r60:accuracy-C , oiml-r60:accuracy-D .
+
+oiml-r60:humidity-CH rdf:type owl:NamedIndividual , oiml-r60:HumidityClass , skos:Concept ;
+  rdfs:label "Humidity Class CH"@en ;
+  skos:prefLabel "CH"@en ;
+  skos:inScheme oiml-r60:humidity-classes .
+
+oiml-r60:humidity-NH rdf:type owl:NamedIndividual , oiml-r60:HumidityClass , skos:Concept ;
+  rdfs:label "Humidity Class NH"@en ;
+  skos:prefLabel "NH"@en ;
+  skos:inScheme oiml-r60:humidity-classes .
+
+oiml-r60:humidity-SH rdf:type owl:NamedIndividual , oiml-r60:HumidityClass , skos:Concept ;
+  rdfs:label "Humidity Class SH"@en ;
+  skos:prefLabel "SH"@en ;
+  skos:inScheme oiml-r60:humidity-classes .
+
+oiml-r60:humidity-classes rdf:type skos:ConceptScheme ;
+  rdfs:label "OIML R 60 Humidity Classes"@en ;
+  skos:hasTopConcept oiml-r60:humidity-CH , oiml-r60:humidity-NH , oiml-r60:humidity-SH .
+
+oiml-r60:tech-analogue-passive rdf:type owl:NamedIndividual , oiml-r60:Technology , skos:Concept ;
+  rdfs:label "Analogue Passive"@en ;
+  skos:prefLabel "analogue-passive"@en ;
+  skos:inScheme oiml-r60:technology-classes .
+
+oiml-r60:tech-analogue-active rdf:type owl:NamedIndividual , oiml-r60:Technology , skos:Concept ;
+  rdfs:label "Analogue Active"@en ;
+  skos:prefLabel "analogue-active"@en ;
+  skos:inScheme oiml-r60:technology-classes .
+
+oiml-r60:tech-digital rdf:type owl:NamedIndividual , oiml-r60:Technology , skos:Concept ;
+  rdfs:label "Digital"@en ;
+  skos:prefLabel "digital"@en ;
+  skos:inScheme oiml-r60:technology-classes .
+
+oiml-r60:technology-classes rdf:type skos:ConceptScheme ;
+  rdfs:label "OIML R 60 Technology Classes"@en ;
+  skos:hasTopConcept oiml-r60:tech-analogue-passive , oiml-r60:tech-analogue-active , oiml-r60:tech-digital .
+
+#################################################################
+#    R 60 Individuals — Applicability Constraints
+#################################################################
+
+oiml-r60:app-accuracy-a rdf:type owl:NamedIndividual , oiml:Applicability ;
+  rdfs:label "Accuracy class A only"@en ;
+  skos:definition "Applies only to accuracy class A load cells."@en .
+
+oiml-r60:app-accuracy-b rdf:type owl:NamedIndividual , oiml:Applicability ;
+  rdfs:label "Accuracy class B only"@en ;
+  skos:definition "Applies only to accuracy class B load cells."@en .
+
+oiml-r60:app-accuracy-c rdf:type owl:NamedIndividual , oiml:Applicability ;
+  rdfs:label "Accuracy class C only"@en ;
+  skos:definition "Applies only to accuracy class C load cells."@en .
+
+oiml-r60:app-accuracy-d rdf:type owl:NamedIndividual , oiml:Applicability ;
+  rdfs:label "Accuracy class D only"@en ;
+  skos:definition "Applies only to accuracy class D load cells."@en .
+
+oiml-r60:app-electronic-tech rdf:type owl:NamedIndividual , oiml:Applicability ;
+  rdfs:label "Electronic technology (analogue-active, digital)"@en ;
+  skos:definition "Applies to analogue-active and digital technology load cells."@en .
