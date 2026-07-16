@@ -282,6 +282,15 @@
     border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;
   }
   .prose pre code { background: transparent; padding: 0; font-size: 0.875rem; }
+  /* Shiki dual-theme: swap to dark variant under class-based dark mode. */
+  .dark .astro-code,
+  .dark .astro-code span {
+    background-color: var(--shiki-dark-bg, #24292e) !important;
+    color: var(--shiki-dark, #e1e4e8) !important;
+  }
+  .dark .astro-code {
+    border-color: var(--rule) !important;
+  }
   .prose blockquote {
     border-left: 3px solid var(--accent); padding-left: 1rem;
     margin: 1.5rem 0; color: var(--ink-soft); font-style: italic;
