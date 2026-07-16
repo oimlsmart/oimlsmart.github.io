@@ -172,18 +172,19 @@ const audiencePaths = [
 #hero-globe svg { display: block; width: 100%; height: auto; }
 </style>
 
-<script is:inline src="/spinning-globe.js"></script>
+<script is:inline src="/spinning-globe-3d.js"></script>
 <script is:inline>
   window.addEventListener('DOMContentLoaded', function() {
     var isDark = document.documentElement.classList.contains('dark');
     var container = document.getElementById('hero-globe');
-    if (container && typeof SpinningGlobe !== 'undefined') {
-      new SpinningGlobe('#hero-globe', {
+    if (container && typeof SpinningGlobe3D !== 'undefined') {
+      new SpinningGlobe3D('#hero-globe', {
         theme: isDark ? 'dark' : 'light',
         mode: 'forward',
         duration: 5.6,
         spinSpeed: 3.3,
-        delay: 500
+        delay: 500,
+        fillTime: 4.0
       });
     }
   });
