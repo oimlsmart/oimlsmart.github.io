@@ -1,0 +1,280 @@
+@prefix : <https://w3id.org/standards/oiml/ontologies/core/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix oiml: <https://w3id.org/standards/oiml/ontologies/core/> .
+@prefix smart: <https://w3id.org/standards/smart/ontologies/core/> .
+@base <https://w3id.org/standards/oiml/ontologies/core/> .
+
+<https://w3id.org/standards/oiml/ontologies/core/> rdf:type owl:Ontology ;
+  dcterms:title "OIML Core Ontology"@en ;
+  dcterms:description "Core ontology for OIML International Recommendations. Defines classes and properties shared across all OIML standards (R 60, R 76, R 111, etc.), including the standard structure (Requirements, Tests, Test Report, Forms) and certification lifecycle (Authority, Certificate, Audit, Calibration)."@en ;
+  owl:imports <https://w3id.org/standards/smart/ontologies/core/> ;
+  owl:versionInfo "1.0.0" .
+
+#################################################################
+#    Standard Structure Classes
+#################################################################
+
+oiml:Standard rdf:type owl:Class ;
+  rdfs:subClassOf smart:PublicationDocument ;
+  rdfs:label "Standard"@en ;
+  skos:definition "An OIML International Recommendation."@en .
+
+oiml:RequirementsDocument rdf:type owl:Class ;
+  rdfs:subClassOf smart:PublicationDocument ;
+  rdfs:label "Requirements Document"@en ;
+  skos:definition "Part 1 of an OIML Recommendation: metrological and technical requirements."@en .
+
+oiml:TestProcedures rdf:type owl:Class ;
+  rdfs:subClassOf smart:PublicationDocument ;
+  rdfs:label "Test Procedures"@en ;
+  skos:definition "Part 2 of an OIML Recommendation: test procedures."@en .
+
+oiml:TestReportForms rdf:type owl:Class ;
+  rdfs:subClassOf smart:PublicationDocument ;
+  rdfs:label "Test Report Forms"@en ;
+  skos:definition "Part 3 of an OIML Recommendation: test report forms."@en .
+
+oiml:RequirementsClass rdf:type owl:Class ;
+  rdfs:subClassOf smart:ProvisionSet ;
+  rdfs:label "Requirements Class"@en ;
+  skos:definition "A grouping of related requirements in an OIML standard."@en .
+
+oiml:Requirement rdf:type owl:Class ;
+  rdfs:subClassOf smart:Requirement ;
+  rdfs:label "Requirement"@en ;
+  skos:definition "A specific requirement in an OIML standard."@en .
+
+oiml:ConformanceClass rdf:type owl:Class ;
+  rdfs:subClassOf smart:ProvisionSet ;
+  rdfs:label "Conformance Class"@en ;
+  skos:definition "A grouping of related conformance tests in an OIML standard."@en .
+
+oiml:ConformanceTest rdf:type owl:Class ;
+  rdfs:subClassOf smart:Provision ;
+  rdfs:label "Conformance Test"@en ;
+  skos:definition "A test procedure for verifying conformance to requirements."@en .
+
+oiml:TestReport rdf:type owl:Class ;
+  rdfs:subClassOf oiml:Standard ;
+  rdfs:label "Test Report"@en ;
+  skos:definition "The evaluation report document containing all test report forms."@en .
+
+oiml:TestReportForm rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Test Report Form"@en ;
+  skos:definition "An individual form within a test report."@en .
+
+oiml:Term rdf:type owl:Class ;
+  rdfs:subClassOf smart:TermEntry ;
+  rdfs:label "Term"@en ;
+  skos:definition "A term defined in an OIML standard."@en .
+
+oiml:Applicability rdf:type owl:Class ;
+  rdfs:subClassOf smart:ExternalConstraint ;
+  rdfs:label "Applicability"@en ;
+  skos:definition "Classification dimension constraints on a provision. Each dimension key maps to an array of allowed classification values. Omitted dimensions mean all values (universal). Effective applicability is computed by merging scope and item applicability per-dimension, with item dimensions overriding scope dimensions."@en .
+
+#################################################################
+#    Certification Lifecycle Classes
+#################################################################
+
+oiml:IssuingAuthority rdf:type owl:Class ;
+  rdfs:subClassOf smart:Organization ;
+  rdfs:label "Issuing Authority"@en ;
+  skos:definition "An OIML member state body authorized to issue OIML certificates of conformity."@en .
+
+oiml:Certificate rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Certificate"@en ;
+  skos:definition "An OIML type approval or conformity certificate."@en .
+
+oiml:Certification rdf:type owl:Class ;
+  rdfs:subClassOf smart:Activity ;
+  rdfs:label "Certification"@en ;
+  skos:definition "The certification process and decision."@en .
+
+oiml:AuditReport rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Audit Report"@en ;
+  skos:definition "A complete audit and testing report for a device."@en .
+
+oiml:CalibrationRecord rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Calibration Record"@en ;
+  skos:definition "A calibration record for test equipment."@en .
+
+oiml:EvaluationResult rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Evaluation Result"@en ;
+  skos:definition "A pass/fail/NA evaluation result."@en .
+
+oiml:TestEquipment rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Test Equipment"@en ;
+  skos:definition "Equipment used in testing."@en .
+
+oiml:DeviceUnderTest rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Device Under Test"@en ;
+  skos:definition "The device being evaluated."@en .
+
+oiml:Classification rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Classification"@en ;
+  skos:definition "A classification scheme for a device."@en .
+
+oiml:TestParameter rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Test Parameter"@en ;
+  skos:definition "A parameter measured during testing."@en .
+
+oiml:MeasurementResult rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Measurement Result"@en ;
+  skos:definition "A measurement result from a test."@en .
+
+#################################################################
+#    Object Properties — Standard Structure
+#################################################################
+
+oiml:hasPart rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:Standard ;
+  rdfs:range oiml:Standard ;
+  rdfs:label "has part"@en ;
+  skos:definition "Relates a standard to its parts (requirements, test procedures, test report forms)."@en .
+
+oiml:hasRequirementsClass rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:RequirementsDocument ;
+  rdfs:range oiml:RequirementsClass ;
+  rdfs:label "has requirements class"@en .
+
+oiml:hasRequirement rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:RequirementsClass ;
+  rdfs:range oiml:Requirement ;
+  rdfs:label "has requirement"@en .
+
+oiml:hasConformanceClass rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:TestProcedures ;
+  rdfs:range oiml:ConformanceClass ;
+  rdfs:label "has conformance class"@en .
+
+oiml:hasConformanceTest rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:ConformanceClass ;
+  rdfs:range oiml:ConformanceTest ;
+  rdfs:label "has conformance test"@en .
+
+oiml:hasTestReport rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:TestReportForms ;
+  rdfs:range oiml:TestReport ;
+  rdfs:label "has test report"@en .
+
+oiml:hasTestReportForm rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:TestReport ;
+  rdfs:range oiml:TestReportForm ;
+  rdfs:label "has test report form"@en .
+
+oiml:verifiedBy rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:Requirement ;
+  rdfs:range oiml:ConformanceTest ;
+  rdfs:label "verified by"@en ;
+  skos:definition "A requirement is verified by a conformance test."@en .
+
+oiml:documentedBy rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:ConformanceTest ;
+  rdfs:range oiml:TestReportForm ;
+  rdfs:label "documented by"@en ;
+  skos:definition "A conformance test is documented by a test report form."@en .
+
+oiml:hasApplicability rdf:type owl:ObjectProperty ;
+  rdfs:domain smart:ProvisionSet , smart:Provision , oiml:TestReportForm ;
+  rdfs:range oiml:Applicability ;
+  rdfs:label "has applicability"@en ;
+  skos:definition "Relates a provision set, provision, or form to its applicability constraints. Inherited by child items unless overridden per-dimension. When absent, the provision is universal (applies to all classifications)."@en .
+
+oiml:hasTerm rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:Standard ;
+  rdfs:range oiml:Term ;
+  rdfs:label "has term"@en .
+
+#################################################################
+#    Object Properties — Certification Lifecycle
+#################################################################
+
+oiml:issuedBy rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:Certificate ;
+  rdfs:range oiml:IssuingAuthority ;
+  rdfs:label "issued by"@en .
+
+oiml:basedOn rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:Certificate ;
+  rdfs:range oiml:AuditReport ;
+  rdfs:label "based on"@en .
+
+oiml:certifiesCompliance rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:Certificate ;
+  rdfs:range oiml:Standard ;
+  rdfs:label "certifies compliance with"@en .
+
+oiml:conducts rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:IssuingAuthority ;
+  rdfs:range oiml:AuditReport ;
+  rdfs:label "conducts"@en .
+
+oiml:evaluates rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:AuditReport ;
+  rdfs:range oiml:DeviceUnderTest ;
+  rdfs:label "evaluates"@en .
+
+oiml:hasClassification rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:DeviceUnderTest ;
+  rdfs:range oiml:Classification ;
+  rdfs:label "has classification"@en .
+
+oiml:containsFormResult rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:AuditReport ;
+  rdfs:range oiml:TestReportForm ;
+  rdfs:label "contains form result"@en .
+
+oiml:produces rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:AuditReport ;
+  rdfs:range oiml:EvaluationResult ;
+  rdfs:label "produces"@en .
+
+oiml:usesEquipment rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:AuditReport ;
+  rdfs:range oiml:TestEquipment ;
+  rdfs:label "uses equipment"@en .
+
+oiml:hasCalibration rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:TestEquipment ;
+  rdfs:range oiml:CalibrationRecord ;
+  rdfs:label "has calibration"@en .
+
+oiml:measures rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:ConformanceTest ;
+  rdfs:range oiml:TestParameter ;
+  rdfs:label "measures"@en .
+
+oiml:hasMeasurementResult rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:TestReportForm ;
+  rdfs:range oiml:MeasurementResult ;
+  rdfs:label "has measurement result"@en .
+
+#################################################################
+#    OIML Publication Types
+#################################################################
+
+oiml:OIMLPublicationType rdf:type owl:Class ;
+  rdfs:subClassOf smart:PublicationDocumentType ;
+  rdfs:label "OIML Publication Type"@en ;
+  skos:definition "The type of an OIML publication document."@en .
+
+oiml:hasOIMLPublicationType rdf:type owl:ObjectProperty ;
+  rdfs:domain oiml:Standard ;
+  rdfs:range oiml:OIMLPublicationType ;
+  rdfs:label "has OIML publication type"@en ;
+  skos:definition "Relates an OIML standard to its publication type."@en .

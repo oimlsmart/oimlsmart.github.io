@@ -1,0 +1,76 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix oiml: <https://w3id.org/standards/oiml/ontologies/core/> .
+@prefix oiml-pubtype: <https://w3id.org/standards/oiml/taxonomies/publication-type/> .
+
+oiml-pubtype: rdf:type skos:ConceptScheme ;
+  dcterms:title "OIML Publication Type Taxonomy"@en ;
+  dcterms:description "Defines the categories of publication documents issued by the International Organization of Legal Metrology (OIML)."@en ;
+  dcterms:publisher <https://www.oiml.org> ;
+  owl:versionInfo "1.0.0" ;
+  skos:hasTopConcept oiml-pubtype:internationalRecommendation ,
+                     oiml-pubtype:internationalDocument ,
+                     oiml-pubtype:basicPublication ,
+                     oiml-pubtype:guide ,
+                     oiml-pubtype:vocabulary ,
+                     oiml-pubtype:bulletin ,
+                     oiml-pubtype:expertReport .
+
+oiml-pubtype:internationalRecommendation rdf:type oiml:OIMLPublicationType , skos:Concept ;
+  skos:topConceptOf oiml-pubtype: ;
+  skos:inScheme oiml-pubtype: ;
+  rdfs:label "International Recommendation"@en ;
+  skos:prefLabel "International Recommendation"@en ;
+  skos:altLabel "R"@en ;
+  skos:definition "A model regulation that establishes the metrological and technical requirements for measuring instruments subject to legal metrology control. Member States are obliged to implement Recommendations to the greatest possible extent."@en .
+
+oiml-pubtype:internationalDocument rdf:type oiml:OIMLPublicationType , skos:Concept ;
+  skos:topConceptOf oiml-pubtype: ;
+  skos:inScheme oiml-pubtype: ;
+  rdfs:label "International Document"@en ;
+  skos:prefLabel "International Document"@en ;
+  skos:altLabel "D"@en ;
+  skos:definition "An informative document providing guidance on specific aspects of legal metrology. International Documents are not subject to the same implementation obligations as Recommendations."@en .
+
+oiml-pubtype:basicPublication rdf:type oiml:OIMLPublicationType , skos:Concept ;
+  skos:topConceptOf oiml-pubtype: ;
+  skos:inScheme oiml-pubtype: ;
+  rdfs:label "Basic Publication"@en ;
+  skos:prefLabel "Basic Publication"@en ;
+  skos:altLabel "B"@en ;
+  skos:definition "A foundational publication providing general information on the activities, structure, and functioning of OIML."@en .
+
+oiml-pubtype:guide rdf:type oiml:OIMLPublicationType , skos:Concept ;
+  skos:topConceptOf oiml-pubtype: ;
+  skos:inScheme oiml-pubtype: ;
+  rdfs:label "OIML Guide"@en ;
+  skos:prefLabel "OIML Guide"@en ;
+  skos:altLabel "G"@en ;
+  skos:definition "A document providing guidance on the application of OIML Recommendations and related metrological topics."@en .
+
+oiml-pubtype:vocabulary rdf:type oiml:OIMLPublicationType , skos:Concept ;
+  skos:topConceptOf oiml-pubtype: ;
+  skos:inScheme oiml-pubtype: ;
+  rdfs:label "Vocabulary"@en ;
+  skos:prefLabel "Vocabulary"@en ;
+  skos:altLabel "V"@en ;
+  skos:definition "A standardised vocabulary of metrological terms used in OIML publications and legal metrology practice."@en .
+
+oiml-pubtype:bulletin rdf:type oiml:OIMLPublicationType , skos:Concept ;
+  skos:topConceptOf oiml-pubtype: ;
+  skos:inScheme oiml-pubtype: ;
+  rdfs:label "Bulletin"@en ;
+  skos:prefLabel "Bulletin"@en ;
+  skos:altLabel "BL"@en ;
+  skos:definition "The OIML Bulletin is a periodical publication containing articles on legal metrology developments, OIML activities, and related technical topics."@en .
+
+oiml-pubtype:expertReport rdf:type oiml:OIMLPublicationType , skos:Concept ;
+  skos:topConceptOf oiml-pubtype: ;
+  skos:inScheme oiml-pubtype: ;
+  rdfs:label "Expert Report"@en ;
+  skos:prefLabel "Expert Report"@en ;
+  skos:altLabel "E"@en ;
+  skos:definition "A report prepared by an OIML expert or group of experts on a specific metrological topic."@en .

@@ -1,0 +1,18 @@
+---
+import { ontologyEntities } from '../../data/ontology-data'
+import Base from '../../layouts/Base.astro'
+import OntologyDetail from '../../components/ontology/OntologyDetail.vue'
+
+export async function getStaticPaths() {
+  return ontologyEntities.map(entity => ({
+    params: { slug: entity.slug },
+    props: { slug: entity.slug },
+  }))
+}
+
+const { slug } = Astro.props
+---
+
+<Base title="Ontology" description="OIML semantic ontology entity detail.">
+  <OntologyDetail client:load slug={slug} />
+</Base>
