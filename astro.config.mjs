@@ -17,7 +17,9 @@ export default defineConfig({
   } : {}),
   integrations: [sitemap(), mdx(), vue({ appEntrypoint: '/src/_app.ts' })],
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+    ],
   },
   markdown: {
     shikiConfig: {

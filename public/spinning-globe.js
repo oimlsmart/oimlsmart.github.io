@@ -71,7 +71,7 @@
             smartP += '<path d="' + SMART_PATHS[i] + '" stroke-width="0"/>';
 
         this._container.innerHTML =
-            '<svg viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">' +
+            '<svg width="400" height="350" viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">' +
             '<defs>' +
                 '<clipPath id="' + id + 'c"><circle cx="' + CX + '" cy="' + CY + '" r="' + R + '"/></clipPath>' +
                 '<radialGradient id="' + id + 'g">' +
