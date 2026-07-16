@@ -3,29 +3,26 @@ title: 'Workflow Overview'
 shortTitle: 'Overview'
 ---
 
+import FlowDiagram from '../../../components/diagrams/FlowDiagram.astro'
+
 The OIML SMART certification workflow moves a measuring instrument from initial application to issued certificate through eight major steps. Each step transitions the workflow from one state to the next, accumulating data and decisions along the way.
 
 ## High-level flow
 
-```
-Manufacturer ──► Issuing Authority (IA) ──► Testing Laboratory (TL)
-    │                    │                          │
-    │  Application       │  Test Request            │  Test Execution
-    │  (family, groups,  │  (samples, scope,        │   (procedures,
-    │   models, samples) │   procedures)            │    measurements)
-    │                    │                          │
-    │                    ◄── Test Report ────────────┘
-    │                    │
-    │                    │  Evaluation & Consolidation
-    │                    │
-    │                    ▼
-    │              OIML BIML
-    │              (Certificate Registration)
-    │                    │
-    │                    ▼
-    │              Certificate Issued
-    └──────────────────┘
-```
+<FlowDiagram
+  caption="FIG. CERTIFICATION ACTOR FLOW"
+  steps={[
+    { label: 'Manufacturer', sub: 'Applicant for certification', accent: 'amber' },
+    { label: 'Issuing Authority', sub: 'Certification decision-maker', accent: 'brand' },
+    { label: 'Testing Laboratory', sub: 'Independent test execution', accent: 'teal' },
+  ]}
+  arrows={[
+    { label: 'Application', detail: 'family · groups · models · samples', direction: 'forward' },
+    { label: 'Test Request', detail: 'samples · scope · procedures', direction: 'forward' },
+  ]}
+/>
+
+After test execution, the Test Report flows back to the IA for evaluation and consolidation, then to OIML BIML for certificate registration.
 
 Each stage produces a distinct data entity — `Application`, `TestRequest`, `TestReport`, `EvaluationReport`, and `Certificate` — that flows through the pipeline carrying progressively richer information.
 

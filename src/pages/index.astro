@@ -78,11 +78,8 @@ const audiencePaths = [
         </div>
         <h1 class="hero-stagger font-serif text-[clamp(2.5rem,6.5vw,4.75rem)] font-medium leading-[0.98] tracking-[-0.035em] mb-6" style="--stagger-i:1">
           Standards that are<br />
-          <em class="italic font-normal text-accent">
-            machine-actionable
-            <svg class="bp-underline-draw" viewBox="0 0 240 12" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M2 8 Q 60 2, 120 6 T 238 5" />
-            </svg>.
+          <em class="italic font-normal text-accent whitespace-nowrap">
+            machine-actionable<svg class="bp-underline-draw" viewBox="0 0 240 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 Q 60 2, 120 6 T 238 5" /></svg>.
           </em>
         </h1>
         <p class="hero-stagger text-[1.1875rem] leading-[1.55] text-ink-soft max-w-2xl mb-10" style="--stagger-i:2">
@@ -444,19 +441,45 @@ const audiencePaths = [
 <script is:inline src="/spinning-globe-3d.js"></script>
 <script is:inline>
   (function () {
+    var GLOBE_OPTS = {
+      mode: 'forward',
+      duration: 5.6,
+      spinSpeed: 3.3,
+      delay: 500,
+      fillTime: 4.0
+    };
+
     function initGlobe() {
       var isDark = document.documentElement.classList.contains('dark');
       var container = document.getElementById('hero-globe');
-      if (container && typeof SpinningGlobe3D !== 'undefined') {
-        new SpinningGlobe3D('#hero-globe', {
-          theme: isDark ? 'dark' : 'light',
-          mode: 'forward',
-          duration: 5.6,
-          spinSpeed: 3.3,
-          delay: 500,
-          fillTime: 4.0
-        });
+      if (!container || typeof SpinningGlobe3D === 'undefined') return;
+      // Clear any prior instance so we get a clean rebuild on theme switch
+      container.innerHTML = '';
+      new SpinningGlobe3D('#hero-globe', Object.assign(
+        { theme: isDark ? 'dark' : 'light' },
+        GLOBE_OPTS
+      ));
+    }
+
+    // Re-init the globe whenever the `.dark` class flips on <html>.
+    // ThemeToggle.vue adds/removes it; we observe and swap the globe theme.
+    var themeObserver = new MutationObserver(function (mutations) {
+      for (var i = 0; i < mutations.length; i++) {
+        if (mutations[i].attributeName === 'class') {
+          initGlobe();
+          return;
+        }
       }
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initGlobe);
+    } else {
+      initGlobe();
     }
 
     function initParallax() {

@@ -40,29 +40,59 @@ different aspect of a SMART Recommendation:
 
 ## How schemas relate
 
-```
-standard.yaml
-  ├── identity (id, urn, year)
-  ├── enums (declared once, referenced everywhere)
-  ├── terminology (terms referenced by URN)
-  └── value-model (calculations + tables)
-
-dimensions.yaml
-  └── axes referenced by requirements, tests, forms
-
-rc.yaml
-  └── requirements (criterion types: tiered, threshold, qualitative)
-
-cc.yaml
-  └── tests (variables, steps, criteria, result_forms)
-
-form.yaml
-  ├── fields (direct, calculated, metadata, verdict)
-  └── pass_if (OCL expression)
-
-entities.yaml
-  └── runtime graph (Application → Certificate chain)
-```
+<div class="grid sm:grid-cols-2 gap-3 my-6">
+  <div class="bp-crosshair bg-paper-soft border border-rule rounded-md p-4">
+    <div class="bp-coord mb-2">YAML · identity & value model</div>
+    <div class="font-mono text-sm font-semibold text-brand-700 dark:text-brand-300 mb-2">standard.yaml</div>
+    <ul class="text-xs space-y-1 text-ink-soft font-mono">
+      <li>├── identity (id, urn, year)</li>
+      <li>├── enums (declared once, referenced everywhere)</li>
+      <li>├── terminology (terms referenced by URN)</li>
+      <li>└── value-model (calculations + tables)</li>
+    </ul>
+  </div>
+  <div class="bp-crosshair bg-paper-soft border border-rule rounded-md p-4">
+    <div class="bp-coord mb-2">YAML · classification</div>
+    <div class="font-mono text-sm font-semibold text-teal-700 dark:text-teal-300 mb-2">dimensions.yaml</div>
+    <ul class="text-xs space-y-1 text-ink-soft font-mono">
+      <li>└── axes referenced by</li>
+      <li class="pl-4">requirements · tests · forms</li>
+    </ul>
+  </div>
+  <div class="bp-crosshair bg-paper-soft border border-rule rounded-md p-4">
+    <div class="bp-coord mb-2">YAML · provisions</div>
+    <div class="font-mono text-sm font-semibold text-amber-700 dark:text-amber-300 mb-2">rc.yaml</div>
+    <ul class="text-xs space-y-1 text-ink-soft font-mono">
+      <li>└── requirements</li>
+      <li class="pl-4">criterion types: tiered · threshold · qualitative</li>
+    </ul>
+  </div>
+  <div class="bp-crosshair bg-paper-soft border border-rule rounded-md p-4">
+    <div class="bp-coord mb-2">YAML · tests</div>
+    <div class="font-mono text-sm font-semibold text-amber-700 dark:text-amber-300 mb-2">cc.yaml</div>
+    <ul class="text-xs space-y-1 text-ink-soft font-mono">
+      <li>└── tests</li>
+      <li class="pl-4">variables · steps · criteria</li>
+      <li class="pl-4">result_forms</li>
+    </ul>
+  </div>
+  <div class="bp-crosshair bg-paper-soft border border-rule rounded-md p-4">
+    <div class="bp-coord mb-2">YAML · capture schema</div>
+    <div class="font-mono text-sm font-semibold text-brand-700 dark:text-brand-300 mb-2">form.yaml</div>
+    <ul class="text-xs space-y-1 text-ink-soft font-mono">
+      <li>├── fields (direct · calculated · metadata · verdict)</li>
+      <li>└── pass_if (OCL expression)</li>
+    </ul>
+  </div>
+  <div class="bp-crosshair bg-paper-soft border border-rule rounded-md p-4">
+    <div class="bp-coord mb-2">YAML · runtime graph</div>
+    <div class="font-mono text-sm font-semibold text-teal-700 dark:text-teal-300 mb-2">entities.yaml</div>
+    <ul class="text-xs space-y-1 text-ink-soft font-mono">
+      <li>└── runtime graph</li>
+      <li class="pl-4">Application → Certificate chain</li>
+    </ul>
+  </div>
+</div>
 
 The build pipeline validates that every cross-reference resolves. Add a new
 requirement and the build tells you whether its `targets`, `applicability_filter`,

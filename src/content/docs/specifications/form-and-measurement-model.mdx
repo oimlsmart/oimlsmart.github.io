@@ -255,21 +255,30 @@ If a form field is declared but has no corresponding test variable, it must have
 `scope: administrative` (e.g., report metadata). If a test variable has no corresponding
 form field, it must be provided by the computation context.
 
-```
-ConformanceTest.variables        Form.fields
-─────────────────────        ────────────────
-D_max (declared)         ←→  [header form: D_max]
-conversion_factor_f      ←→  [header form: conversion_factor_f]
-creep_readings           ←→  creep_readings (DATALIST)
-max_creep_change_v       ←→  max_creep_change_v (DERIVED)
-creep_30min              ←→  creep_30min (DERIVED)
-creep_20min              ←→  creep_20min (DERIVED)
-dr_value                 ←→  dr_value (DERIVED)
-mpe_at_dmax              ←→  mpe_at_dmax (DERIVED)
-creep_30min_result       ←→  creep_30min_result (TRUE/FALSE, evaluated)
-creep_20_30_result       ←→  creep_20_30_result (TRUE/FALSE, evaluated)
-dr_half_v_result         ←→  dr_half_v_result (TRUE/FALSE, evaluated)
-```
+<div class="overflow-x-auto my-6 bp-crosshair border border-rule rounded-md">
+  <table class="w-full text-xs">
+    <thead class="bg-paper-raised border-b border-rule">
+      <tr>
+        <th class="text-left px-4 py-2 font-mono uppercase tracking-wider text-ink-muted">ConformanceTest.variables</th>
+        <th class="text-center px-2 py-2 font-mono text-ink-muted">↔</th>
+        <th class="text-left px-4 py-2 font-mono uppercase tracking-wider text-ink-muted">Form.fields</th>
+      </tr>
+    </thead>
+    <tbody class="font-mono">
+      <tr class="border-b border-rule"><td class="px-4 py-1.5 text-ink">D_max <span class="text-ink-muted">(declared)</span></td><td class="text-center text-ink-muted">←→</td><td class="px-4 py-1.5 text-ink-soft">[header form: D_max]</td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-1.5 text-ink">conversion_factor_f</td><td class="text-center text-ink-muted">←→</td><td class="px-4 py-1.5 text-ink-soft">[header form: conversion_factor_f]</td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-1.5 text-ink">creep_readings</td><td class="text-center text-ink-muted">←→</td><td class="px-4 py-1.5 text-ink-soft">creep_readings <span class="text-amber-700 dark:text-amber-300">(DATALIST)</span></td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-1.5 text-ink">max_creep_change_v</td><td class="text-center text-ink-muted">←→</td><td class="px-4 py-1.5 text-ink-soft">max_creep_change_v <span class="text-teal-700 dark:text-teal-300">(DERIVED)</span></td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-1.5 text-ink">creep_30min</td><td class="text-center text-ink-muted">←→</td><td class="px-4 py-1.5 text-ink-soft">creep_30min <span class="text-teal-700 dark:text-teal-300">(DERIVED)</span></td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-1.5 text-ink">creep_20min</td><td class="text-center text-ink-muted">←→</td><td class="px-4 py-1.5 text-ink-soft">creep_20min <span class="text-teal-700 dark:text-teal-300">(DERIVED)</span></td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-1.5 text-ink">dr_value</td><td class="text-center text-ink-muted">←→</td><td class="px-4 py-1.5 text-ink-soft">dr_value <span class="text-teal-700 dark:text-teal-300">(DERIVED)</span></td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-1.5 text-ink">mpe_at_dmax</td><td class="text-center text-ink-muted">←→</td><td class="px-4 py-1.5 text-ink-soft">mpe_at_dmax <span class="text-teal-700 dark:text-teal-300">(DERIVED)</span></td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-1.5 text-ink">creep_30min_result</td><td class="text-center text-ink-muted">←→</td><td class="px-4 py-1.5 text-ink-soft">creep_30min_result <span class="text-brand-700 dark:text-brand-300">(TRUE/FALSE)</span></td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-1.5 text-ink">creep_20_30_result</td><td class="text-center text-ink-muted">←→</td><td class="px-4 py-1.5 text-ink-soft">creep_20_30_result <span class="text-brand-700 dark:text-brand-300">(TRUE/FALSE)</span></td></tr>
+      <tr><td class="px-4 py-1.5 text-ink">dr_half_v_result</td><td class="text-center text-ink-muted">←→</td><td class="px-4 py-1.5 text-ink-soft">dr_half_v_result <span class="text-brand-700 dark:text-brand-300">(TRUE/FALSE)</span></td></tr>
+    </tbody>
+  </table>
+</div>
 
 ## Field Derivation Rules
 

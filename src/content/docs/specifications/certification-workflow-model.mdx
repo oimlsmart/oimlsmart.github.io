@@ -6,6 +6,9 @@ description: 'Workflow entities, state machines, and the certification pipeline.
 eyebrow: 'Formal Specification · SMART_REQS 10'
 ---
 
+import LayerDiagram from '../../../components/diagrams/LayerDiagram.astro'
+import TreeDiagram from '../../../components/diagrams/TreeDiagram.astro'
+
 
 
 
@@ -49,44 +52,45 @@ declared in `dimensions.yaml` per standard, not hardcoded in the workflow engine
    the InstrumentModelFamily's groups using the dimension schema's
    `certificate_classification` declarations.
 
-## The Workflow Layer in Context
+<LayerDiagram
+  layers={[
+    { index: '01-05', title: 'Layers 1–5 (SMART_REQS 01)', lines: ['Requirements → Tests → Forms → Instances → Results'], accent: 'teal' },
+    { index: '06', title: 'Layer 6 · Certification Workflow', lines: ['Manufacturer → InstrumentModelFamily', 'ClassificationGroup → InstrumentModel → InstrumentSample', 'Application → TestRequest → TestReport → FormInstance[]', 'EvaluationReport → Certificate'], note: 'This document.', accent: 'brand' },
+  ]}
+  arrows={['orchestrates']}
+/>
 
-```
-Layers 1–5 (SMART_REQS 01):  Requirements → Tests → Forms → Instances → Results
-                                               │
-                                               ▼
-Layer 6: CERTIFICATION WORKFLOW (this document)
-  ┌──────────────────────────────────────────────────────────────────┐
-  │                                                                  │
-  │  Manufacturer ──→ InstrumentModelFamily                         │
-  │                      │  (typeDesignation, construction, tech)   │
-  │                      │                                           │
-  │                      ├── ClassificationGroup[]                  │
-  │                      │     (accuracy_class, nLC, Y, Z, …)      │
-  │                      │     └── InstrumentModel[]                │
-  │                      │           (Emax, Emin, humidity, …)      │
-  │                      │                                           │
-  │                      └── Application                            │
-  │                            │                                     │
-  │                            ├── InstrumentSample[]                │
-  │                            │     (serialNumber, selectionType)   │
-  │                            │                                     │
-  │                            ├── TestRequest[] ──→ TL              │
-  │                            │     └── TestReport                  │
-  │                            │           ├── sharedContext         │
-  │                            │           └── FormInstance[] ← L3-5│
-  │                            │                                     │
-  │                            ├── EvaluationReport (IA)             │
-  │                            │     ├── testReportIds[]             │
-  │                            │     ├── summary[]                   │
-  │                            │     └── synopsis                    │
-  │                            │                                     │
-  │                            └── Certificate                      │
-  │                                  ├── classifications[]           │
-  │                                  └── revisions[]                 │
-  │                                                                  │
-  └──────────────────────────────────────────────────────────────────┘
-```
+<TreeDiagram
+  caption="FIG. CERTIFICATION WORKFLOW GRAPH"
+  accent="brand"
+  nodes={[
+    { label: 'Manufacturer', kind: 'root', type: 'ACTOR', accent: 'amber', children: [
+      { label: 'InstrumentModelFamily', annotation: 'typeDesignation, construction, tech', type: '→', accent: 'brand', children: [
+        { label: 'ClassificationGroup[]', annotation: 'accuracy_class, nLC, Y, Z, …', children: [
+          { label: 'InstrumentModel[]', annotation: 'Emax, Emin, humidity, …' },
+        ]},
+        { label: 'Application', type: 'ENTITY', accent: 'teal', children: [
+          { label: 'InstrumentSample[]', annotation: 'serialNumber, selectionType' },
+          { label: 'TestRequest[]', annotation: '→ TL', children: [
+            { label: 'TestReport', children: [
+              { label: 'sharedContext' },
+              { label: 'FormInstance[]', annotation: '← Layers 3–5', accent: 'teal' },
+            ]},
+          ]},
+          { label: 'EvaluationReport', annotation: 'IA', children: [
+            { label: 'testReportIds[]' },
+            { label: 'summary[]' },
+            { label: 'synopsis' },
+          ]},
+          { label: 'Certificate', accent: 'amber', children: [
+            { label: 'classifications[]' },
+            { label: 'revisions[]' },
+          ]},
+        ]},
+      ]},
+    ]},
+  ]}
+/>
 
 ## Entity Definitions
 
@@ -544,31 +548,42 @@ selection with capacity range rules). Other standards register their own.
 
 ## Entity-Form Integration Points
 
-```
-Workflow Entity          Form Integration
-──────────────          ────────────────
-Application             Application form (applicant info, documentation checklist)
-InstrumentModelFamily   Family editor (groups, models, computed parameters)
-InstrumentSample        Sample editor (serial numbers, selection justification)
-TestRequest             Request form (TL assignment, test procedures, instructions)
-TestReport              Form instance container + shared context
-EvaluationReport        Section 4 admin forms + Section 5 examination forms
-Certificate             Cover page + classification table (derived)
-```
+<div class="overflow-x-auto my-6 bp-crosshair border border-rule rounded-md">
+  <table class="w-full text-sm">
+    <thead class="bg-paper-raised border-b border-rule">
+      <tr>
+        <th class="text-left px-4 py-2 font-mono uppercase tracking-wider text-xs text-ink-muted">Workflow Entity</th>
+        <th class="text-left px-4 py-2 font-mono uppercase tracking-wider text-xs text-ink-muted">Form Integration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-b border-rule"><td class="px-4 py-2 font-mono text-brand-700 dark:text-brand-300">Application</td><td class="px-4 py-2 text-ink-soft">Application form (applicant info, documentation checklist)</td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-2 font-mono text-brand-700 dark:text-brand-300">InstrumentModelFamily</td><td class="px-4 py-2 text-ink-soft">Family editor (groups, models, computed parameters)</td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-2 font-mono text-brand-700 dark:text-brand-300">InstrumentSample</td><td class="px-4 py-2 text-ink-soft">Sample editor (serial numbers, selection justification)</td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-2 font-mono text-teal-700 dark:text-teal-300">TestRequest</td><td class="px-4 py-2 text-ink-soft">Request form (TL assignment, test procedures, instructions)</td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-2 font-mono text-teal-700 dark:text-teal-300">TestReport</td><td class="px-4 py-2 text-ink-soft">Form instance container + shared context</td></tr>
+      <tr class="border-b border-rule"><td class="px-4 py-2 font-mono text-amber-700 dark:text-amber-300">EvaluationReport</td><td class="px-4 py-2 text-ink-soft">Section 4 admin forms + Section 5 examination forms</td></tr>
+      <tr><td class="px-4 py-2 font-mono text-amber-700 dark:text-amber-300">Certificate</td><td class="px-4 py-2 text-ink-soft">Cover page + classification table (derived)</td></tr>
+    </tbody>
+  </table>
+</div>
 
 ## Traceability
 
 The full traceability chain from SMART_REQS 01 extends through the workflow:
 
-```
-Certificate
-  └→ EvaluationReport
-       └→ TestReport[]
-            └→ FormInstance[]
-                 └→ Form (schema)
-                      └→ ConformanceTest
-                           └→ Requirement
-```
+<LayerDiagram
+  layers={[
+    { index: '01', title: 'Certificate', lines: ['final issued artifact'], accent: 'amber' },
+    { index: '02', title: 'EvaluationReport', lines: ['consolidated by IA'], accent: 'brand' },
+    { index: '03', title: 'TestReport[]', lines: ['from one or more TLs'], accent: 'teal' },
+    { index: '04', title: 'FormInstance[]', lines: ['per Form schema, runtime'], accent: 'brand' },
+    { index: '05', title: 'Form (schema)', lines: ['build-time declaration'], accent: 'teal' },
+    { index: '06', title: 'ConformanceTest', lines: ['targeting Requirement(s)'], accent: 'brand' },
+    { index: '07', title: 'Requirement', lines: ['normative provision'], accent: 'amber' },
+  ]}
+  arrows={['produced from', 'based on', 'instantiates', 'declares', 'targets', 'verifies']}
+/>
 
 Every pass/fail determination in a Certificate traces through the evaluation to
 specific test results in specific forms, which trace to conformance tests and

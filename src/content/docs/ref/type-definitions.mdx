@@ -159,10 +159,13 @@ interface EvidenceChain {
 
 The generated types are produced by the build pipeline:
 
-```
-data/<standard>/  ─────────►  browser/src/data/types/
-   YAML source                TypeScript output
-```
+<div class="bp-crosshair my-4 px-5 py-3 bg-paper-soft border border-rule rounded-md font-mono text-sm flex items-center gap-4 flex-wrap">
+  <span class="text-brand-700 dark:text-brand-300">data/&lt;standard&gt;/</span>
+  <span class="text-ink-muted">YAML source</span>
+  <span class="text-accent">─────────►</span>
+  <span class="text-teal-700 dark:text-teal-300">browser/src/data/types/</span>
+  <span class="text-ink-muted">TypeScript output</span>
+</div>
 
 The build is incremental — only changed types are regenerated. Adding a field
 to `requirements/metrological.yaml` updates the corresponding `Requirement`

@@ -58,16 +58,43 @@ Every test declares which requirements it targets. This forms a
 many-to-many graph: a single test can verify multiple requirements, and a
 single requirement may be verified by multiple tests.
 
-```
-urn:oiml:test:r60:measurement-error-mdlo  ──→  urn:oiml:requirement:r60:mpe
-                                          ──→  urn:oiml:requirement:r60:repeatability
+<div class="my-6 bp-crosshair bg-paper-soft border border-rule rounded-md overflow-hidden">
+  <div class="bg-paper-raised px-4 py-2 border-b border-rule bp-coord">FIG. CROSS-REFERENCE GRAPH · m:n</div>
+  <div class="grid md:grid-cols-[1fr_auto_1fr] divide-x divide-rule">
+    <div class="p-4">
+      <div class="bp-coord text-teal-700 dark:text-teal-300 mb-2">CONFORMANCE TEST · URN</div>
+      <div class="font-mono text-xs space-y-3">
+        <div>
+          <div class="text-ink font-semibold">urn:oiml:test:r60:measurement-error-mdlo</div>
+        </div>
+        <div>
+          <div class="text-ink font-semibold">urn:oiml:test:r60:creep</div>
+        </div>
+      </div>
+    </div>
+    <div class="p-4 flex items-center justify-center min-w-[6rem]">
+      <div class="text-center">
+        <div class="text-accent text-2xl">──→</div>
+        <div class="bp-coord mt-1">targets</div>
+        <div class="bp-coord text-ink-muted mt-0.5">m : n</div>
+      </div>
+    </div>
+    <div class="p-4">
+      <div class="bp-coord text-amber-700 dark:text-amber-300 mb-2">REQUIREMENT · URN</div>
+      <div class="font-mono text-xs space-y-1">
+        <div class="text-ink">urn:oiml:requirement:r60:mpe</div>
+        <div class="text-ink">urn:oiml:requirement:r60:repeatability</div>
+        <div class="text-ink mt-3">urn:oiml:requirement:r60:creep</div>
+        <div class="text-ink">urn:oiml:requirement:r60:zero_return</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-urn:oiml:test:r60:creep                   ──→  urn:oiml:requirement:r60:creep
-                                          ──→  urn:oiml:requirement:r60:zero_return
-```
-
-The build pipeline validates that every `targets` reference resolves to a
-declared `Requirement` URN. No dangling references, no implicit knowledge.
+<div class="bp-annotation my-4">
+  <span class="bp-annotation__label">Note</span>
+  Each <code>targets</code> reference resolves to a declared <code>Requirement</code> URN — no dangling references, no implicit knowledge.
+</div>
 
 ## Variables
 

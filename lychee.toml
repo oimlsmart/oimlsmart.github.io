@@ -10,6 +10,17 @@ exclude = [
   "localhost",
   "127.0.0.1",
   "https://www.oiml.org",
+  # Cross-app nav targets — these routes are served by the smart repo's
+  # browser app, not this static marketing/docs site. They live behind
+  # authentication and are not deployable from here. See CLAUDE.md.
+  "/vocab",
+  "/vocab/",
+  "/resolutions",
+  "/resolutions/",
+  "/concepts-management",
+  "/concepts-management/",
+  # Source repo is private during the pilot — link is for reference, not public.
+  "https://github.com/oimlsmart/smart",
 ]
 
 # Don't check mailto links

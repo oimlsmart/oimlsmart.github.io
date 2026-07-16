@@ -5,33 +5,19 @@ description: 'The OIML SMART platform is a three-layer pipeline: source YAML →
 eyebrow: 'Guide · 02 of 13'
 ---
 
+import LayerDiagram from '../../../components/diagrams/LayerDiagram.astro'
+
 
 ## The three layers
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  Layer 1 — Source data (YAML)                                   │
-│  data/<standard>/{standard,dimensions}.yaml                      │
-│  data/<standard>/{requirements,conformance,forms}/*.yaml         │
-│  Authored by subject-matter experts in version control.          │
-└─────────────────────────────────────────────────────────────────┘
-                              ↓
-                       build pipeline
-                              ↓
-┌─────────────────────────────────────────────────────────────────┐
-│  Layer 2 — Generated modules (TypeScript)                        │
-│  browser/src/data/generated/*.ts                                 │
-│  Type-safe, validated, ready to import.                          │
-└─────────────────────────────────────────────────────────────────┘
-                              ↓
-                        app runtime
-                              ↓
-┌─────────────────────────────────────────────────────────────────┐
-│  Layer 3 — Runtime evaluation                                    │
-│  IndexedDB FormInstances · computation engine · pass/fail logic │
-│  Live in the browser.                                            │
-└─────────────────────────────────────────────────────────────────┘
-```
+<LayerDiagram
+  layers={[
+    { index: '01', title: 'Source data (YAML)', lines: ['data/<standard>/{standard,dimensions}.yaml', 'data/<standard>/{requirements,conformance,forms}/*.yaml'], note: 'Authored by subject-matter experts in version control.', accent: 'teal' },
+    { index: '02', title: 'Generated modules (TypeScript)', lines: ['browser/src/data/generated/*.ts'], note: 'Type-safe, validated, ready to import.', accent: 'brand' },
+    { index: '03', title: 'Runtime evaluation', lines: ['IndexedDB FormInstances · computation engine · pass/fail logic'], note: 'Live in the browser.', accent: 'amber' },
+  ]}
+  arrows={['build pipeline', 'app runtime']}
+/>
 
 ## Why this split?
 

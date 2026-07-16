@@ -5,28 +5,19 @@ description: 'The SMART platform ships a three-layer OWL ontology: SMART Core at
 eyebrow: 'Guide · 13 of 13'
 ---
 
+import LayerDiagram from '../../../components/diagrams/LayerDiagram.astro'
+
 
 ## The three layers
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  Domain Ontology (per Recommendation)                   │
-│  e.g. oiml-r60:  LoadCell, AccuracyClass, MpeTier       │
-│  e.g. oiml-r144: DiaphragmGasMeter, FlowRateClass       │
-└─────────────────────────────────────────────────────────┘
-                          ↓ extends
-┌─────────────────────────────────────────────────────────┐
-│  OIML Core Ontology                                     │
-│  Recommendation, Requirement, ConformanceTest, Form,    │
-│  Certificate, IssuingAuthority, TestLaboratory          │
-└─────────────────────────────────────────────────────────┘
-                          ↓ imports
-┌─────────────────────────────────────────────────────────┐
-│  SMART Core Ontology                                    │
-│  QuantitativeProperty, MeasurementUnit, Dimension,      │
-│  ClassificationScheme, CompliantWith                    │
-└─────────────────────────────────────────────────────────┘
-```
+<LayerDiagram
+  layers={[
+    { index: '01', title: 'Domain Ontology (per Recommendation)', lines: ['oiml-r60: LoadCell, AccuracyClass, MpeTier', 'oiml-r144: DiaphragmGasMeter, FlowRateClass'], note: 'Subclasses OIML Core.', accent: 'amber' },
+    { index: '02', title: 'OIML Core Ontology', lines: ['Recommendation, Requirement, ConformanceTest, Form', 'Certificate, IssuingAuthority, TestLaboratory'], note: 'Shared across all OIML standards.', accent: 'brand' },
+    { index: '03', title: 'SMART Core Ontology', lines: ['QuantitativeProperty, MeasurementUnit, Dimension', 'ClassificationScheme, CompliantWith'], note: 'Cross-programme foundation.', accent: 'teal' },
+  ]}
+  arrows={['extends', 'imports']}
+/>
 
 ## SMART Core
 

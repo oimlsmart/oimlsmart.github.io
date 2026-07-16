@@ -15,7 +15,7 @@ const alignClass = align === 'center' ? 'text-center mx-auto items-center' : ''
 
 {title && (
   <section class={`page-hero relative pt-14 pb-10 mb-10 border-b border-rule bp-grid bp-grid--major ${alignClass}`}>
-    <div class="px-2 relative z-10">
+    <div class="page-hero__inner relative z-10">
       {eyebrow && (
         <div class="bp-section-anchor mb-5 max-w-3xl">
           <span class="bp-section-anchor__num">{anchor}</span>
@@ -39,6 +39,14 @@ const alignClass = align === 'center' ? 'text-center mx-auto items-center' : ''
 <style>
   .page-hero {
     position: relative;
+  }
+  .page-hero__inner {
+    /* Match the .prose-enhanced container below the hero so titles and body
+       text share the same column. Keeps the layout coherent across every
+       ContentPage (news, pages, etc.). */
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
   }
   .page-hero::after {
     content: '';
