@@ -65,6 +65,7 @@ for (const ent of entities) {
   // Apply updates via regex within the block.
   let updatedBlock = block
     .replace(/"ontology":\s*"[^"]*"/, `"ontology": "smart"`)
+    .replace(/"type":\s*"[^"]*"/, `"type": "class"`)
     .replace(/"label":\s*"[^"]*"/, `"label": ${JSON.stringify(ent.label)}`)
     .replace(/"description":\s*"[^"]*"/, `"description": ${JSON.stringify(ent.desc)}`)
 
