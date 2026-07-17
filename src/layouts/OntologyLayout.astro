@@ -209,6 +209,7 @@ const nsAccent: Record<string, string> = {
                     <ul class="py-1">
                       {sub.entities.map((e) => {
                         const isActive = e.slug === activeSlug
+                        const localName = e.qname.split(':').slice(1).join(':') || e.label
                         return (
                           <li
                             class="ontology-sidebar__entity"
@@ -231,7 +232,7 @@ const nsAccent: Record<string, string> = {
                             >
                               <span class={`w-1 h-1 mt-1.5 rounded-full shrink-0 ${nsColor[e.ontology] || 'bg-slate-400'}`}></span>
                               <span class="flex-1 min-w-0">
-                                <span class={`block text-[11px] font-mono truncate ${isActive ? 'text-accent font-semibold' : 'text-ink'}`}>{e.qname.split(':').slice(1).join(':')}</span>
+                                <span class={`block text-[11px] font-mono truncate ${isActive ? 'text-accent font-semibold' : 'text-ink'}`}>{localName}</span>
                               </span>
                             </a>
                           </li>
@@ -358,8 +359,6 @@ const nsAccent: Record<string, string> = {
         // after navigation. Removed per user direction.)
 
         // Persist <details> open/closed state across navigations.
-        // Without this, every page load resets to the default `open`
-        // state and the sidebar appears to "collapse" when clicking an entity.
         const allDetails = list.querySelectorAll('details[data-persist-key]');
         allDetails.forEach((d) => {
           const key = 'ontology-details-' + d.getAttribute('data-persist-key');
@@ -370,6 +369,27 @@ const nsAccent: Record<string, string> = {
             try { sessionStorage.setItem(key, d.open ? '1' : '0'); } catch {}
           });
         });
+
+        // Persist sidebar scroll position across navigations.
+        // The sidebar <nav> is destroyed/recreated on every page swap, so
+        // its scrollTop resets to 0. Save it on scroll (debounced) and
+        // restore on bind (which runs after astro:page-load, when the new
+        // DOM is ready).
+        let scrollTimer = null;
+        list.addEventListener('scroll', () => {
+          if (scrollTimer) clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(() => {
+            try { sessionStorage.setItem('ontology-sidebar-scroll', String(list.scrollTop)); } catch {}
+          }, 150);
+        });
+        // Restore AFTER details state is set, so the layout matches what
+        // the user had before (collapsed/expanded sections affect scroll height).
+        try {
+          const savedScroll = sessionStorage.getItem('ontology-sidebar-scroll');
+          if (savedScroll !== null) {
+            requestAnimationFrame(() => { list.scrollTop = parseInt(savedScroll, 10) || 0; });
+          }
+        } catch {}
       }
 
       window.__ontologySidebarBind = bind;
