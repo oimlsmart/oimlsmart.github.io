@@ -16,14 +16,6 @@ const alignClass = align === 'center' ? 'text-center mx-auto items-center' : ''
 {title && (
   <section class={`page-hero relative pt-14 pb-10 mb-10 border-b border-rule bp-grid bp-grid--major ${alignClass}`}>
     <div class="page-hero__inner relative z-10">
-      {eyebrow && (
-        <div class="bp-section-anchor mb-5 max-w-3xl">
-          <span class="bp-section-anchor__num">{anchor}</span>
-          <span>{eyebrow}</span>
-          <span class="bp-section-anchor__line"></span>
-          <span class="bp-coord">OIML · SMART</span>
-        </div>
-      )}
       <h1 class="page-hero__title font-serif text-[clamp(2rem,5vw,3.25rem)] font-medium tracking-[-0.025em] leading-[1.05] max-w-3xl">
         {title}
       </h1>
