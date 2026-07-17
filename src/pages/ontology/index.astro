@@ -72,21 +72,28 @@ const navCards = [
       {namespaces.map((ns) => {
         const c = accentMap[ns.color] || accentMap.brand
         const entityCount = visible.filter((e) => e.ontology === ns.prefix).length
+        // smart.ttl has no ontology entity in the data file; point its
+        // namespace card at the root class instead of a non-existent
+        // /ontology/smart- route.
+        const href = ns.prefix === 'smart'
+          ? '/ontology/smart-Entity'
+          : `/ontology/${ns.prefix}-`
         return (
-          <div class="bp-crosshair bp-card-hover relative bg-paper-soft border border-rule rounded-md p-5 overflow-hidden">
+          <a href={href} class="bp-crosshair bp-card-hover group relative bg-paper-soft border border-rule rounded-md p-5 overflow-hidden no-underline text-inherit hover:border-accent block">
             <div class={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${c.bar}`}></div>
             <div class="flex items-center gap-2 mb-2 pt-1">
               <span class={`w-2 h-2 rounded-full ${c.dot}`}></span>
               <span class={`font-mono text-[10px] tracking-[0.1em] uppercase ${c.accent}`}>{ns.prefix}:</span>
               <span class="ml-auto bp-coord">v{ns.version}</span>
             </div>
-            <h2 class="font-serif text-base font-semibold mb-1">{ns.title}</h2>
+            <h2 class="font-serif text-base font-semibold mb-1 group-hover:text-accent transition-colors">{ns.title}</h2>
             <p class="text-xs text-ink-soft leading-relaxed mb-3">{ns.description}</p>
             <div class="flex items-center justify-between pt-2 border-t border-rule">
               <span class="bp-coord">{entityCount} entities</span>
+              <span class={`text-[10px] font-mono ${c.accent} group-hover:translate-x-0.5 transition-transform`}>View →</span>
               <code class="text-[10px] text-ink-muted font-mono break-all opacity-70 truncate max-w-[12rem]">{ns.uri}</code>
             </div>
-          </div>
+          </a>
         )
       })}
     </div>
