@@ -147,26 +147,18 @@ const nsAccent: Record<string, string> = {
           {orderedNamespaces.map((ns) => {
             const entities = entitiesByOntology.get(ns.prefix) || []
             return (
-              <section data-ontology={ns.prefix} class="border-b border-rule last:border-0">
-                <!-- Section header — clickable, links to the ontology's main entity -->
-                {(() => {
-                  const sectionHref = ns.prefix === 'smart'
-                    ? '/ontology/smart-Entity'
-                    : `/ontology/${ns.prefix}-`
-                  return (
-                    <a
-                      href={sectionHref}
-                      class="sticky top-0 z-10 flex items-center gap-2 px-3 py-2 bg-paper-raised border-b border-rule no-underline text-inherit hover:bg-paper bp-focus-ring group"
-                      data-active={(activeSlug === ns.prefix + '-' || (ns.prefix === 'smart' && activeSlug === 'smart-Entity')) ? 'true' : 'false'}
-                    >
-                      <span class={`w-2 h-2 rounded-full ${nsColor[ns.prefix]}`}></span>
-                      <span class={`font-mono text-[10px] uppercase tracking-[0.1em] ${nsAccent[ns.prefix]}`}>{ns.prefix}</span>
-                      <span class="text-xs text-ink-muted truncate flex-1 group-hover:text-ink transition-colors">{ns.title.replace('Ontology', '').replace('Taxonomy', '').trim()}</span>
-                      <span class="bp-coord">{entities.length}</span>
-                      <svg class="w-3 h-3 text-ink-muted opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7" /></svg>
-                    </a>
-                  )
-                })()}
+              <details
+                open
+                data-ontology={ns.prefix}
+                class="ontology-sidebar__family border-b border-rule last:border-0 group"
+              >
+                <summary class="sticky top-0 z-10 flex items-center gap-2 px-3 py-2 bg-paper-raised border-b border-rule cursor-pointer hover:bg-paper list-none bp-focus-ring">
+                  <span class={`w-2 h-2 rounded-full ${nsColor[ns.prefix]}`}></span>
+                  <span class={`font-mono text-[10px] uppercase tracking-[0.1em] ${nsAccent[ns.prefix]}`}>{ns.prefix}</span>
+                  <span class="text-xs text-ink-muted truncate flex-1">{ns.title.replace('Ontology', '').replace('Taxonomy', '').trim()}</span>
+                  <span class="bp-coord">{entities.length}</span>
+                  <svg class="w-3 h-3 text-ink-muted transition-transform group-open:rotate-0 -rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
+                </summary>
                 <ul class="py-1">
                   {entities.map((e) => {
                     const isActive = e.slug === activeSlug
@@ -199,7 +191,7 @@ const nsAccent: Record<string, string> = {
                     )
                   })}
                 </ul>
-              </section>
+              </details>
             )
           })}
           <p class="ontology-sidebar__empty text-[10px] text-ink-muted italic px-3 py-4 text-center hidden">No matches.</p>
@@ -312,12 +304,9 @@ const nsAccent: Record<string, string> = {
           }
         });
 
-        // Scroll active into view
-        const active = list.querySelector('[data-active="true"]');
-        if (active) {
-          const li = active.closest('.ontology-sidebar__entity');
-          if (li) li.scrollIntoView({ block: 'center' });
-        }
+        // Sidebar should not move on click — don't scroll active into view.
+        // (Previously: scrollIntoView on bind caused the sidebar to jump
+        // after navigation. Removed per user direction.)
       }
 
       window.__ontologySidebarBind = bind;
@@ -328,6 +317,9 @@ const nsAccent: Record<string, string> = {
 
   <style is:global>
     .ontology-layout { position: relative; padding-top: 1rem; padding-bottom: 2rem; }
+    /* Native details/summary styling — kill the default marker */
+    .ontology-sidebar__family > summary { list-style: none; }
+    .ontology-sidebar__family > summary::-webkit-details-marker { display: none; }
     @media (max-width: 1023px) {
       .ontology-sidebar {
         max-height: 0;
