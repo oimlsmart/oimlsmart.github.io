@@ -1,45 +1,121 @@
 ---
-import Base from '../../layouts/Base.astro'
-import OntologyBrowser from '../../components/ontology/OntologyBrowser.vue'
+import OntologyLayout from '../../layouts/OntologyLayout.astro'
+import { ontologyEntities, ontologyNamespaces } from '../../data/ontology-data'
+
+const all = ontologyEntities as readonly {
+  ontology: string
+  type: string
+  qname: string
+  label: string
+  description: string
+}[]
+
+const namespaces = ontologyNamespaces as readonly {
+  prefix: string
+  uri: string
+  title: string
+  description: string
+  color: string
+  version: string
+}[]
+
+const knownPrefixes = new Set(namespaces.map((n) => n.prefix))
+const visible = all.filter((e) => knownPrefixes.has(e.ontology))
+const counts = {
+  class: visible.filter((e) => e.type === 'class').length,
+  property: visible.filter((e) => e.type === 'objectProperty' || e.type === 'datatypeProperty' || e.type === 'annotationProperty').length,
+  individual: visible.filter((e) => e.type === 'individual').length,
+  concept: visible.filter((e) => e.type === 'concept' || e.type === 'conceptScheme').length,
+}
+
+const accentMap: Record<string, { dot: string; chip: string; accent: string; bar: string }> = {
+  brand: { dot: 'bg-brand-500', chip: 'bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-200', accent: 'text-brand-700 dark:text-brand-300', bar: 'from-brand-500/15' },
+  teal: { dot: 'bg-teal-500', chip: 'bg-teal-50 text-teal-700 dark:bg-teal-900/40 dark:text-teal-200', accent: 'text-teal-700 dark:text-teal-300', bar: 'from-teal-500/15' },
+  amber: { dot: 'bg-amber-500', chip: 'bg-amber-50 text-amber-700 dark:bg-amber-900/40 dark:text-amber-200', accent: 'text-amber-700 dark:text-amber-300', bar: 'from-amber-500/15' },
+}
+
+const navCards = [
+  { href: '/ontology/oiml-', title: 'Browse classes', count: `${counts.class} classes`, description: 'The OWL class hierarchy — the nouns of the OIML domain model.', accent: 'brand' },
+  { href: '/ontology/oiml-hasPart', title: 'Browse properties', count: `${counts.property} properties`, description: 'Object, datatype, and annotation properties — the verbs and modifiers.', accent: 'teal' },
+  { href: '/ontology/oiml-pubtype-', title: 'SKOS vocabularies', count: `${counts.concept} concepts`, description: 'Concept schemes and their concepts — publication types, accuracy classes.', accent: 'amber' },
+  { href: '/ontology/oiml-r60-R-60', title: 'Named individuals', count: `${counts.individual} individuals`, description: 'Concrete instances — standards, parts, form fragments.', accent: 'brand' },
+]
 ---
 
-<Base
-  title="Ontology"
-  description="Browse the OIML semantic ontology — classes, properties, individuals, and concept schemes."
->
-  <div class="relative bp-noise">
-    <section class="relative px-8 pt-14 pb-10 border-b border-rule bp-grid bp-grid--major">
-      <div class="max-w-6xl mx-auto relative z-10">
-        <div class="bp-section-anchor mb-5">
-          <span class="bp-section-anchor__num">§ O</span>
-          <span>Resources · Ontology</span>
-          <span class="bp-section-anchor__line"></span>
-          <span class="bp-coord">OWL · SKOS · RDF</span>
-        </div>
-        <div class="grid md:grid-cols-[1.4fr_1fr] gap-8 items-end">
-          <div>
-            <h1 class="font-serif text-[clamp(2.25rem,5.5vw,3.5rem)] font-medium leading-[1.05] tracking-[-0.025em] mb-4 bp-reveal">
-              Semantic <em class="italic font-normal text-accent">Ontology</em>
-            </h1>
-            <p class="text-[1.125rem] leading-[1.6] text-ink-soft max-w-2xl bp-reveal" style="--reveal-delay:80ms;">
-              Browse the OIML semantic ontology — classes, properties, individuals, and concept schemes that underpin cross-Recommendation interoperability and semantic queries.
-            </p>
-          </div>
-          <div class="flex flex-wrap gap-2 bp-reveal" style="--reveal-delay:160ms;">
-            <span class="bp-chip">OWL</span>
-            <span class="bp-chip">RDF / Turtle</span>
-            <span class="bp-chip">SKOS</span>
-            <span class="bp-chip">JSON-LD</span>
-          </div>
-        </div>
+<OntologyLayout title="Ontology Browser" description="Browse the OIML semantic ontology — classes, properties, individuals, and concept schemes.">
+  <section class="relative px-8 pt-10 pb-8 border-b border-rule bp-grid bp-grid--major">
+    <div class="relative z-10 bp-reveal">
+      <h1 class="font-serif text-[clamp(2.25rem,5.5vw,3.5rem)] font-medium leading-[1.05] tracking-[-0.025em] mb-3">
+        Semantic <em class="italic font-normal text-accent">Ontology</em>
+      </h1>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-2xl mb-4">
+        Browse {visible.length} entities across the OIML semantic ontologies — classes, properties, individuals, and concept schemes that underpin cross-Recommendation interoperability and semantic queries.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        <span class="bp-chip">OWL</span>
+        <span class="bp-chip">RDF / Turtle</span>
+        <span class="bp-chip">SKOS</span>
+        <span class="bp-chip">JSON-LD</span>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <div class="bp-ticks" aria-hidden="true"></div>
-    <section class="relative px-8 py-10 bp-grid">
-      <div class="max-w-6xl mx-auto relative z-10 bp-reveal">
-        <OntologyBrowser client:load />
-      </div>
-    </section>
-  </div>
-</Base>
+  <!-- Ontology namespace cards -->
+  <section class="px-8 py-8 bp-grid">
+    <div class="bp-section-anchor mb-4">
+      <span class="bp-section-anchor__num">§ 01</span>
+      <span>Ontologies</span>
+      <span class="bp-section-anchor__line"></span>
+      <span class="bp-coord">{namespaces.length} namespaces</span>
+    </div>
+    <div class="grid sm:grid-cols-3 gap-3 bp-reveal">
+      {namespaces.map((ns) => {
+        const c = accentMap[ns.color] || accentMap.brand
+        const entityCount = visible.filter((e) => e.ontology === ns.prefix).length
+        return (
+          <div class="bp-crosshair bp-card-hover relative bg-paper-soft border border-rule rounded-md p-5 overflow-hidden">
+            <div class={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${c.bar}`}></div>
+            <div class="flex items-center gap-2 mb-2 pt-1">
+              <span class={`w-2 h-2 rounded-full ${c.dot}`}></span>
+              <span class={`font-mono text-[10px] tracking-[0.1em] uppercase ${c.accent}`}>{ns.prefix}:</span>
+              <span class="ml-auto bp-coord">v{ns.version}</span>
+            </div>
+            <h2 class="font-serif text-base font-semibold mb-1">{ns.title}</h2>
+            <p class="text-xs text-ink-soft leading-relaxed mb-3">{ns.description}</p>
+            <div class="flex items-center justify-between pt-2 border-t border-rule">
+              <span class="bp-coord">{entityCount} entities</span>
+              <code class="text-[10px] text-ink-muted font-mono break-all opacity-70 truncate max-w-[12rem]">{ns.uri}</code>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  </section>
+
+  <!-- Quick-jump cards -->
+  <div class="bp-ticks"></div>
+  <section class="px-8 py-8 bp-grid bp-grid--major">
+    <div class="bp-section-anchor mb-4">
+      <span class="bp-section-anchor__num">§ 02</span>
+      <span>Browse by category</span>
+      <span class="bp-section-anchor__line"></span>
+      <span class="bp-coord">Use the sidebar for the full list</span>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 bp-reveal">
+      {navCards.map((card) => {
+        const c = accentMap[card.accent] || accentMap.brand
+        return (
+          <a href={card.href} class="bp-card-hover bp-crosshair group relative bg-paper-soft border border-rule rounded-md p-4 no-decoration text-inherit hover:border-accent">
+            <div class="flex items-center justify-between mb-3">
+              <span class={`w-2 h-2 rounded-full ${c.dot}`}></span>
+              <svg class="w-3 h-3 text-ink-muted opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7" /></svg>
+            </div>
+            <h3 class="font-serif text-sm font-semibold mb-1 group-hover:text-accent transition-colors">{card.title}</h3>
+            <div class="bp-coord mb-2">{card.count}</div>
+            <p class="text-[11px] text-ink-soft leading-relaxed">{card.description}</p>
+          </a>
+        )
+      })}
+    </div>
+  </section>
+</OntologyLayout>

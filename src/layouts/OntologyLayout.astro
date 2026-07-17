@@ -1,0 +1,272 @@
+---
+// ── OntologyLayout.astro ─────────────────────────────────────────────
+// Two-pane layout for /ontology/* routes. A persistent left sidebar acts
+// as the "browser" — search + type/namespace filters + a scrollable list
+// of every entity. The main pane is the route's own content (either the
+// landing overview or a single entity's detail page).
+//
+// The sidebar is server-rendered (works without JS) and progressively
+// enhanced by an inline script that adds live search filtering, type
+// chips, keyboard nav, and active-entity scroll-into-view.
+
+import Base from './Base.astro'
+import { ontologyEntities, ontologyNamespaces, ontologyTypeMeta } from '../data/ontology-data'
+
+interface Entity {
+  uri: string
+  qname: string
+  slug: string
+  label: string
+  description: string
+  ontology: string
+  type: string
+  parent?: string
+}
+
+interface NamespaceEntry {
+  prefix: string
+  title: string
+  color: string
+  version: string
+}
+
+interface Props {
+  title: string
+  description?: string
+  activeSlug?: string
+}
+
+const { title, description, activeSlug = '' } = Astro.props
+
+const all = ontologyEntities as readonly Entity[]
+const namespaces = ontologyNamespaces as readonly NamespaceEntry[]
+const typeMeta = ontologyTypeMeta as Record<string, { label: string; color: string; colorDot: string }>
+const knownPrefixes = new Set(namespaces.map((n) => n.prefix))
+
+// Sidebar entities: only those in known namespaces, sorted for browsing.
+const sidebarEntities = all
+  .filter((e) => knownPrefixes.has(e.ontology))
+  .slice()
+  .sort((a, b) => {
+    // Ontology order: smart → oiml → oiml-pubtype
+    const ontOrder = ['smart', 'oiml', 'oiml-pubtype']
+    const oa = ontOrder.indexOf(a.ontology)
+    const ob = ontOrder.indexOf(b.ontology)
+    if (oa !== ob) return (oa === -1 ? 99 : oa) - (ob === -1 ? 99 : ob)
+    // Then by type (ontology first, then class, then properties, etc.)
+    const typeOrder = ['ontology', 'class', 'objectProperty', 'datatypeProperty', 'annotationProperty', 'conceptScheme', 'concept', 'individual']
+    const ta = typeOrder.indexOf(a.type)
+    const tb = typeOrder.indexOf(b.type)
+    if (ta !== tb) return (ta === -1 ? 99 : ta) - (tb === -1 ? 99 : tb)
+    return a.label.localeCompare(b.label)
+  })
+
+const nsColor: Record<string, string> = {
+  smart: 'bg-teal-500',
+  oiml: 'bg-brand-500',
+  'oiml-pubtype': 'bg-amber-500',
+  external: 'bg-slate-400',
+}
+
+const typeCounts: Record<string, number> = {}
+for (const e of sidebarEntities) {
+  typeCounts[e.type] = (typeCounts[e.type] || 0) + 1
+}
+
+const typeOptions = Object.entries(typeMeta)
+  .filter(([t]) => typeCounts[t])
+  .map(([t, m]) => ({ type: t, label: m.label, count: typeCounts[t] }))
+  .sort((a, b) => a.label.localeCompare(b.label))
+---
+
+<Base title={title} description={description}>
+  <div class="ontology-layout max-w-[100rem] mx-auto px-4 sm:px-6 lg:px-8 py-6 bp-grid">
+    <div class="ontology-layout__grid grid gap-6 lg:grid-cols-[20rem_minmax(0,1fr)]">
+
+      <!-- ═══ SIDEBAR ═══ -->
+      <aside class="ontology-sidebar lg:max-h-[calc(100vh-6rem)] lg:sticky lg:top-20 flex flex-col bp-crosshair bg-paper-soft border border-rule rounded-md overflow-hidden">
+        <!-- Sidebar header -->
+        <header class="px-4 py-3 border-b border-rule bg-paper-raised">
+          <div class="flex items-center justify-between mb-2">
+            <span class="bp-coord">§ Ontology</span>
+            <span class="bp-tally">
+              <span class="bp-tally__current" id="ontology-sidebar-visible-count">{sidebarEntities.length}</span>
+              <span class="bp-tally__sep">/</span>
+              <span>{sidebarEntities.length}</span>
+            </span>
+          </div>
+          <!-- Search -->
+          <div class="relative">
+            <input
+              type="search"
+              id="ontology-sidebar-search"
+              placeholder="Search entities…   ( press / )"
+              class="w-full pl-8 pr-7 py-1.5 text-xs border border-rule rounded bg-paper text-ink focus:outline-none focus:border-accent bp-focus-ring"
+              autocomplete="off"
+              aria-label="Search ontology entities"
+            />
+            <svg class="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink-muted pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+            </svg>
+            <kbd id="ontology-sidebar-kbd" class="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-mono px-1 py-0.5 border border-rule rounded bg-paper text-ink-muted pointer-events-none">/</kbd>
+          </div>
+        </header>
+
+        <!-- Type filter chips -->
+        <div class="px-3 py-2 border-b border-rule flex flex-wrap gap-1" id="ontology-sidebar-types">
+          <button data-filter-type="" class="text-[10px] px-1.5 py-0.5 rounded border bg-paper text-ink-soft hover:border-ink is-active">All</button>
+          {typeOptions.map((t) => (
+            <button data-filter-type={t.type} class="text-[10px] px-1.5 py-0.5 rounded border bg-paper text-ink-soft hover:border-ink">
+              {t.label} <span class="opacity-60">{t.count}</span>
+            </button>
+          ))}
+        </div>
+
+        <!-- Entity list -->
+        <nav class="ontology-sidebar__list flex-1 overflow-y-auto" id="ontology-sidebar-list" aria-label="Ontology entities">
+          <ul class="divide-y divide-rule">
+            {sidebarEntities.map((e) => {
+              const isActive = e.slug === activeSlug
+              const dotClass = nsColor[e.ontology] || nsColor.external
+              const typeLabel = typeMeta[e.type]?.label || e.type
+              return (
+                <li
+                  class="ontology-sidebar__entity"
+                  data-qname={e.qname}
+                  data-label={e.label.toLowerCase()}
+                  data-type={e.type}
+                  data-ontology={e.ontology}
+                  data-description={(e.description || '').toLowerCase()}
+                >
+                  <a
+                    href={`/ontology/${e.slug}`}
+                    class={`flex items-start gap-2 px-3 py-1.5 transition-colors no-underline text-inherit ${
+                      isActive
+                        ? 'bg-accent-soft border-l-2 border-accent'
+                        : 'border-l-2 border-transparent hover:bg-paper-raised'
+                    }`}
+                    data-active={isActive ? 'true' : 'false'}
+                  >
+                    <span class={`w-1.5 h-1.5 mt-1.5 rounded-full shrink-0 ${dotClass}`}></span>
+                    <span class="flex-1 min-w-0">
+                      <span class="block text-[11px] font-mono truncate group-hover:text-accent">{e.qname}</span>
+                      <span class="block text-[10px] text-ink-muted truncate">{typeLabel}</span>
+                    </span>
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
+          <p class="ontology-sidebar__empty text-[10px] text-ink-muted italic px-3 py-4 text-center hidden">No matches.</p>
+        </nav>
+
+        <!-- Footer -->
+        <footer class="px-3 py-2 border-t border-rule bg-paper-raised">
+          <div class="flex items-center justify-between">
+            <span class="bp-coord">{namespaces.length} ontologies</span>
+            <a href="/ontology/" class="text-[10px] text-accent hover:underline">Overview →</a>
+          </div>
+        </footer>
+      </aside>
+
+      <!-- ═══ MAIN ═══ -->
+      <main class="ontology-main min-w-0">
+        <slot />
+      </main>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      // Set up once across the SPA lifetime.
+      if (window.__ontologySidebarWired) {
+        // Re-bind active state on subsequent navigations.
+        window.__ontologySidebarBind && window.__ontologySidebarBind();
+        return;
+      }
+      window.__ontologySidebarWired = true;
+
+      function bind() {
+        const input = document.getElementById('ontology-sidebar-search');
+        const list = document.getElementById('ontology-sidebar-list');
+        const kbd = document.getElementById('ontology-sidebar-kbd');
+        const typeBtns = document.querySelectorAll('#ontology-sidebar-types [data-filter-type]');
+        const countEl = document.getElementById('ontology-sidebar-visible-count');
+        const emptyEl = list && list.querySelector('.ontology-sidebar__empty');
+        if (!input || !list) return;
+
+        const items = Array.from(list.querySelectorAll('.ontology-sidebar__entity'));
+        let currentType = '';
+
+        function applyFilters() {
+          const q = (input.value || '').toLowerCase().trim();
+          let visible = 0;
+          for (const item of items) {
+            const label = item.getAttribute('data-label') || '';
+            const qname = (item.getAttribute('data-qname') || '').toLowerCase();
+            const desc = item.getAttribute('data-description') || '';
+            const type = item.getAttribute('data-type') || '';
+            const matchesText = !q || label.includes(q) || qname.includes(q) || desc.includes(q);
+            const matchesType = !currentType || type === currentType;
+            const show = matchesText && matchesType;
+            item.style.display = show ? '' : 'none';
+            if (show) visible++;
+          }
+          if (countEl) countEl.textContent = String(visible);
+          if (emptyEl) emptyEl.classList.toggle('hidden', visible > 0);
+        }
+
+        input.addEventListener('input', applyFilters);
+        if (kbd) {
+          input.addEventListener('focus', () => kbd.classList.add('hidden'));
+          input.addEventListener('blur', () => { if (!input.value) kbd.classList.remove('hidden'); });
+        }
+
+        typeBtns.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            currentType = btn.getAttribute('data-filter-type') || '';
+            typeBtns.forEach((b) => {
+              b.classList.remove('is-active', 'bg-accent', 'text-white', 'border-accent');
+              b.classList.add('bg-paper', 'text-ink-soft');
+            });
+            btn.classList.add('is-active', 'bg-accent', 'text-white', 'border-accent');
+            btn.classList.remove('bg-paper', 'text-ink-soft');
+            applyFilters();
+          });
+        });
+
+        // Global "/" focuses search (desktop only)
+        document.addEventListener('keydown', (e) => {
+          if (e.key === '/' && document.activeElement !== input && !e.target.matches('input, textarea, select')) {
+            e.preventDefault();
+            input.focus();
+          }
+          if (e.key === 'Escape' && document.activeElement === input) {
+            input.value = '';
+            applyFilters();
+            input.blur();
+          }
+        });
+
+        // Scroll active entity into view
+        const active = list.querySelector('[data-active="true"]');
+        if (active) {
+          const li = active.closest('.ontology-sidebar__entity');
+          if (li) li.scrollIntoView({ block: 'center' });
+        }
+      }
+
+      window.__ontologySidebarBind = bind;
+      document.addEventListener('astro:page-load', bind);
+      bind();
+    })();
+  </script>
+
+  <style is:global>
+    .ontology-layout { position: relative; }
+    /* On narrow viewports the sidebar collapses above the main content. */
+    @media (max-width: 1023px) {
+      .ontology-sidebar { max-height: 24rem; }
+    }
+  </style>
+</Base>
