@@ -3,7 +3,7 @@
 
 export const ontologyEntities = [
   {
-    "uri": "https://w3id.org/standards/oiml/taxonomies/publication-type/",
+    "uri": "https://w3id.org/oiml/taxonomies/publication-type/",
     "qname": "oiml-pubtype:",
     "slug": "oiml-pubtype-",
     "label": "OIML Publication Type Taxonomy",
@@ -21,7 +21,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/taxonomies/publication-type/internationalRecommendation",
+    "uri": "https://w3id.org/oiml/taxonomies/publication-type/internationalRecommendation",
     "qname": "oiml-pubtype:internationalRecommendation",
     "slug": "oiml-pubtype-internationalRecommendation",
     "label": "International Recommendation",
@@ -35,7 +35,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/taxonomies/publication-type/internationalDocument",
+    "uri": "https://w3id.org/oiml/taxonomies/publication-type/internationalDocument",
     "qname": "oiml-pubtype:internationalDocument",
     "slug": "oiml-pubtype-internationalDocument",
     "label": "International Document",
@@ -49,7 +49,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/taxonomies/publication-type/basicPublication",
+    "uri": "https://w3id.org/oiml/taxonomies/publication-type/basicPublication",
     "qname": "oiml-pubtype:basicPublication",
     "slug": "oiml-pubtype-basicPublication",
     "label": "Basic Publication",
@@ -63,7 +63,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/taxonomies/publication-type/guide",
+    "uri": "https://w3id.org/oiml/taxonomies/publication-type/guide",
     "qname": "oiml-pubtype:guide",
     "slug": "oiml-pubtype-guide",
     "label": "OIML Guide",
@@ -77,7 +77,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/taxonomies/publication-type/vocabulary",
+    "uri": "https://w3id.org/oiml/taxonomies/publication-type/vocabulary",
     "qname": "oiml-pubtype:vocabulary",
     "slug": "oiml-pubtype-vocabulary",
     "label": "Vocabulary",
@@ -91,7 +91,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/taxonomies/publication-type/bulletin",
+    "uri": "https://w3id.org/oiml/taxonomies/publication-type/bulletin",
     "qname": "oiml-pubtype:bulletin",
     "slug": "oiml-pubtype-bulletin",
     "label": "Bulletin",
@@ -105,7 +105,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/taxonomies/publication-type/expertReport",
+    "uri": "https://w3id.org/oiml/taxonomies/publication-type/expertReport",
     "qname": "oiml-pubtype:expertReport",
     "slug": "oiml-pubtype-expertReport",
     "label": "Expert Report",
@@ -119,7 +119,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/OIMLPublicationType",
+    "uri": "https://w3id.org/oiml/ontologies/core/OIMLPublicationType",
     "qname": "oiml:OIMLPublicationType",
     "slug": "oiml-OIMLPublicationType",
     "label": "OIML Publication Type",
@@ -129,7 +129,7 @@ export const ontologyEntities = [
     "parent": "smart:PublicationDocumentType"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/",
+    "uri": "https://w3id.org/oiml/ontologies/core/",
     "qname": "oiml:",
     "slug": "oiml-",
     "label": "OIML Core Ontology",
@@ -142,7 +142,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/DeviceUnderTest",
+    "uri": "https://w3id.org/oiml/ontologies/core/DeviceUnderTest",
     "qname": "oiml:DeviceUnderTest",
     "slug": "oiml-DeviceUnderTest",
     "label": "Device Under Test",
@@ -152,7 +152,7 @@ export const ontologyEntities = [
     "parent": "smart:Entity"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/Classification",
+    "uri": "https://w3id.org/oiml/ontologies/core/Classification",
     "qname": "oiml:Classification",
     "slug": "oiml-Classification",
     "label": "Classification",
@@ -162,7 +162,7 @@ export const ontologyEntities = [
     "parent": "smart:Entity"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/TestParameter",
+    "uri": "https://w3id.org/oiml/ontologies/core/TestParameter",
     "qname": "oiml:TestParameter",
     "slug": "oiml-TestParameter",
     "label": "Test Parameter",
@@ -172,7 +172,7 @@ export const ontologyEntities = [
     "parent": "smart:Entity"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/Standard",
+    "uri": "https://w3id.org/oiml/ontologies/core/Standard",
     "qname": "oiml:Standard",
     "slug": "oiml-Standard",
     "label": "Standard",
@@ -182,7 +182,7 @@ export const ontologyEntities = [
     "parent": "smart:PublicationDocument"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/RequirementsDocument",
+    "uri": "https://w3id.org/oiml/ontologies/core/RequirementsDocument",
     "qname": "oiml:RequirementsDocument",
     "slug": "oiml-RequirementsDocument",
     "label": "Requirements Document",
@@ -192,7 +192,7 @@ export const ontologyEntities = [
     "parent": "smart:PublicationDocument"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/TestProcedures",
+    "uri": "https://w3id.org/oiml/ontologies/core/TestProcedures",
     "qname": "oiml:TestProcedures",
     "slug": "oiml-TestProcedures",
     "label": "Test Procedures",
@@ -202,7 +202,7 @@ export const ontologyEntities = [
     "parent": "smart:PublicationDocument"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/TestReportForms",
+    "uri": "https://w3id.org/oiml/ontologies/core/TestReportForms",
     "qname": "oiml:TestReportForms",
     "slug": "oiml-TestReportForms",
     "label": "Test Report Forms",
@@ -212,7 +212,7 @@ export const ontologyEntities = [
     "parent": "smart:PublicationDocument"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/RequirementsClass",
+    "uri": "https://w3id.org/oiml/ontologies/core/RequirementsClass",
     "qname": "oiml:RequirementsClass",
     "slug": "oiml-RequirementsClass",
     "label": "Requirements Class",
@@ -222,7 +222,7 @@ export const ontologyEntities = [
     "parent": "smart:ProvisionSet"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasApplicability",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasApplicability",
     "qname": "oiml:hasApplicability",
     "slug": "oiml-hasApplicability",
     "label": "has applicability",
@@ -239,7 +239,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/ConformanceClass",
+    "uri": "https://w3id.org/oiml/ontologies/core/ConformanceClass",
     "qname": "oiml:ConformanceClass",
     "slug": "oiml-ConformanceClass",
     "label": "Conformance Class",
@@ -249,7 +249,7 @@ export const ontologyEntities = [
     "parent": "smart:ProvisionSet"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/TestReport",
+    "uri": "https://w3id.org/oiml/ontologies/core/TestReport",
     "qname": "oiml:TestReport",
     "slug": "oiml-TestReport",
     "label": "Test Report",
@@ -259,7 +259,7 @@ export const ontologyEntities = [
     "parent": "oiml:Standard"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/TestReportForm",
+    "uri": "https://w3id.org/oiml/ontologies/core/TestReportForm",
     "qname": "oiml:TestReportForm",
     "slug": "oiml-TestReportForm",
     "label": "Test Report Form",
@@ -269,7 +269,7 @@ export const ontologyEntities = [
     "parent": "smart:Entity"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasPart",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasPart",
     "qname": "oiml:hasPart",
     "slug": "oiml-hasPart",
     "label": "has part",
@@ -284,7 +284,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasRequirementsClass",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasRequirementsClass",
     "qname": "oiml:hasRequirementsClass",
     "slug": "oiml-hasRequirementsClass",
     "label": "has requirements class",
@@ -299,7 +299,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasConformanceClass",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasConformanceClass",
     "qname": "oiml:hasConformanceClass",
     "slug": "oiml-hasConformanceClass",
     "label": "has conformance class",
@@ -314,7 +314,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasTestReport",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasTestReport",
     "qname": "oiml:hasTestReport",
     "slug": "oiml-hasTestReport",
     "label": "has test report",
@@ -329,7 +329,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasTestReportForm",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasTestReportForm",
     "qname": "oiml:hasTestReportForm",
     "slug": "oiml-hasTestReportForm",
     "label": "has test report form",
@@ -344,7 +344,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/Applicability",
+    "uri": "https://w3id.org/oiml/ontologies/core/Applicability",
     "qname": "oiml:Applicability",
     "slug": "oiml-Applicability",
     "label": "Applicability",
@@ -354,7 +354,7 @@ export const ontologyEntities = [
     "parent": "smart:ExternalConstraint"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/Requirement",
+    "uri": "https://w3id.org/oiml/ontologies/core/Requirement",
     "qname": "oiml:Requirement",
     "slug": "oiml-Requirement",
     "label": "Requirement",
@@ -364,7 +364,7 @@ export const ontologyEntities = [
     "parent": "smart:Requirement"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/ConformanceTest",
+    "uri": "https://w3id.org/oiml/ontologies/core/ConformanceTest",
     "qname": "oiml:ConformanceTest",
     "slug": "oiml-ConformanceTest",
     "label": "Conformance Test",
@@ -374,7 +374,7 @@ export const ontologyEntities = [
     "parent": "smart:Provision"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/Term",
+    "uri": "https://w3id.org/oiml/ontologies/core/Term",
     "qname": "oiml:Term",
     "slug": "oiml-Term",
     "label": "Term",
@@ -384,7 +384,7 @@ export const ontologyEntities = [
     "parent": "smart:TermEntry"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/IssuingAuthority",
+    "uri": "https://w3id.org/oiml/ontologies/core/IssuingAuthority",
     "qname": "oiml:IssuingAuthority",
     "slug": "oiml-IssuingAuthority",
     "label": "Issuing Authority",
@@ -394,7 +394,7 @@ export const ontologyEntities = [
     "parent": "smart:Organization"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/Certificate",
+    "uri": "https://w3id.org/oiml/ontologies/core/Certificate",
     "qname": "oiml:Certificate",
     "slug": "oiml-Certificate",
     "label": "Certificate",
@@ -404,7 +404,7 @@ export const ontologyEntities = [
     "parent": "smart:Entity"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/Certification",
+    "uri": "https://w3id.org/oiml/ontologies/core/Certification",
     "qname": "oiml:Certification",
     "slug": "oiml-Certification",
     "label": "Certification",
@@ -414,7 +414,7 @@ export const ontologyEntities = [
     "parent": "smart:Activity"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/AuditReport",
+    "uri": "https://w3id.org/oiml/ontologies/core/AuditReport",
     "qname": "oiml:AuditReport",
     "slug": "oiml-AuditReport",
     "label": "Audit Report",
@@ -424,7 +424,7 @@ export const ontologyEntities = [
     "parent": "smart:Entity"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/CalibrationRecord",
+    "uri": "https://w3id.org/oiml/ontologies/core/CalibrationRecord",
     "qname": "oiml:CalibrationRecord",
     "slug": "oiml-CalibrationRecord",
     "label": "Calibration Record",
@@ -434,7 +434,7 @@ export const ontologyEntities = [
     "parent": "smart:Entity"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/EvaluationResult",
+    "uri": "https://w3id.org/oiml/ontologies/core/EvaluationResult",
     "qname": "oiml:EvaluationResult",
     "slug": "oiml-EvaluationResult",
     "label": "Evaluation Result",
@@ -444,7 +444,7 @@ export const ontologyEntities = [
     "parent": "smart:Entity"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/TestEquipment",
+    "uri": "https://w3id.org/oiml/ontologies/core/TestEquipment",
     "qname": "oiml:TestEquipment",
     "slug": "oiml-TestEquipment",
     "label": "Test Equipment",
@@ -454,7 +454,7 @@ export const ontologyEntities = [
     "parent": "smart:Entity"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/MeasurementResult",
+    "uri": "https://w3id.org/oiml/ontologies/core/MeasurementResult",
     "qname": "oiml:MeasurementResult",
     "slug": "oiml-MeasurementResult",
     "label": "Measurement Result",
@@ -464,7 +464,7 @@ export const ontologyEntities = [
     "parent": "smart:Entity"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasRequirement",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasRequirement",
     "qname": "oiml:hasRequirement",
     "slug": "oiml-hasRequirement",
     "label": "has requirement",
@@ -479,7 +479,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasConformanceTest",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasConformanceTest",
     "qname": "oiml:hasConformanceTest",
     "slug": "oiml-hasConformanceTest",
     "label": "has conformance test",
@@ -494,7 +494,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/verifiedBy",
+    "uri": "https://w3id.org/oiml/ontologies/core/verifiedBy",
     "qname": "oiml:verifiedBy",
     "slug": "oiml-verifiedBy",
     "label": "verified by",
@@ -509,7 +509,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/documentedBy",
+    "uri": "https://w3id.org/oiml/ontologies/core/documentedBy",
     "qname": "oiml:documentedBy",
     "slug": "oiml-documentedBy",
     "label": "documented by",
@@ -524,7 +524,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasTerm",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasTerm",
     "qname": "oiml:hasTerm",
     "slug": "oiml-hasTerm",
     "label": "has term",
@@ -539,7 +539,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/issuedBy",
+    "uri": "https://w3id.org/oiml/ontologies/core/issuedBy",
     "qname": "oiml:issuedBy",
     "slug": "oiml-issuedBy",
     "label": "issued by",
@@ -554,7 +554,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/basedOn",
+    "uri": "https://w3id.org/oiml/ontologies/core/basedOn",
     "qname": "oiml:basedOn",
     "slug": "oiml-basedOn",
     "label": "based on",
@@ -569,7 +569,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/certifiesCompliance",
+    "uri": "https://w3id.org/oiml/ontologies/core/certifiesCompliance",
     "qname": "oiml:certifiesCompliance",
     "slug": "oiml-certifiesCompliance",
     "label": "certifies compliance with",
@@ -584,7 +584,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/conducts",
+    "uri": "https://w3id.org/oiml/ontologies/core/conducts",
     "qname": "oiml:conducts",
     "slug": "oiml-conducts",
     "label": "conducts",
@@ -599,7 +599,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/evaluates",
+    "uri": "https://w3id.org/oiml/ontologies/core/evaluates",
     "qname": "oiml:evaluates",
     "slug": "oiml-evaluates",
     "label": "evaluates",
@@ -614,7 +614,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasClassification",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasClassification",
     "qname": "oiml:hasClassification",
     "slug": "oiml-hasClassification",
     "label": "has classification",
@@ -629,7 +629,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/containsFormResult",
+    "uri": "https://w3id.org/oiml/ontologies/core/containsFormResult",
     "qname": "oiml:containsFormResult",
     "slug": "oiml-containsFormResult",
     "label": "contains form result",
@@ -644,7 +644,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/produces",
+    "uri": "https://w3id.org/oiml/ontologies/core/produces",
     "qname": "oiml:produces",
     "slug": "oiml-produces",
     "label": "produces",
@@ -659,7 +659,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/usesEquipment",
+    "uri": "https://w3id.org/oiml/ontologies/core/usesEquipment",
     "qname": "oiml:usesEquipment",
     "slug": "oiml-usesEquipment",
     "label": "uses equipment",
@@ -674,7 +674,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasCalibration",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasCalibration",
     "qname": "oiml:hasCalibration",
     "slug": "oiml-hasCalibration",
     "label": "has calibration",
@@ -689,7 +689,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/measures",
+    "uri": "https://w3id.org/oiml/ontologies/core/measures",
     "qname": "oiml:measures",
     "slug": "oiml-measures",
     "label": "measures",
@@ -704,7 +704,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasMeasurementResult",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasMeasurementResult",
     "qname": "oiml:hasMeasurementResult",
     "slug": "oiml-hasMeasurementResult",
     "label": "has measurement result",
@@ -719,7 +719,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/hasOIMLPublicationType",
+    "uri": "https://w3id.org/oiml/ontologies/core/hasOIMLPublicationType",
     "qname": "oiml:hasOIMLPublicationType",
     "slug": "oiml-hasOIMLPublicationType",
     "label": "has OIML publication type",
@@ -734,7 +734,7 @@ export const ontologyEntities = [
     ]
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-rated-operating-conditions",
+    "uri": "https://w3id.org/oiml/r129/req-rated-operating-conditions",
     "qname": "oiml-r129:req-rated-operating-conditions",
     "slug": "oiml-r129-req-rated-operating-conditions",
     "label": "Rated operating conditions",
@@ -747,7 +747,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-4.2.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-disturbance-resistance",
+    "uri": "https://w3id.org/oiml/r129/req-disturbance-resistance",
     "qname": "oiml-r129:req-disturbance-resistance",
     "slug": "oiml-r129-req-disturbance-resistance",
     "label": "Disturbance resistance",
@@ -760,7 +760,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-4.3.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-no-significant-faults",
+    "uri": "https://w3id.org/oiml/r129/req-no-significant-faults",
     "qname": "oiml-r129:req-no-significant-faults",
     "slug": "oiml-r129-req-no-significant-faults",
     "label": "No significant faults during disturbances",
@@ -773,7 +773,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-4.3.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-light-acoustic-effects",
+    "uri": "https://w3id.org/oiml/r129/req-light-acoustic-effects",
     "qname": "oiml-r129:req-light-acoustic-effects",
     "slug": "oiml-r129-req-light-acoustic-effects",
     "label": "Light and acoustic effects",
@@ -786,7 +786,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-4.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-scale-intervals-min-dimension",
+    "uri": "https://w3id.org/oiml/r129/req-scale-intervals-min-dimension",
     "qname": "oiml-r129:req-scale-intervals-min-dimension",
     "slug": "oiml-r129-req-scale-intervals-min-dimension",
     "label": "Scale intervals and minimum dimension",
@@ -799,7 +799,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-4.1.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-mpe",
+    "uri": "https://w3id.org/oiml/r129/req-mpe",
     "qname": "oiml-r129:req-mpe",
     "slug": "oiml-r129-req-mpe",
     "label": "Value of the maximum permissible error",
@@ -812,7 +812,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-4.1.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-fault-limit",
+    "uri": "https://w3id.org/oiml/r129/req-fault-limit",
     "qname": "oiml-r129:req-fault-limit",
     "slug": "oiml-r129-req-fault-limit",
     "label": "Value of the fault limit",
@@ -825,7 +825,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-4.1.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-variation-between-indicators",
+    "uri": "https://w3id.org/oiml/r129/req-variation-between-indicators",
     "qname": "oiml-r129:req-variation-between-indicators",
     "slug": "oiml-r129-req-variation-between-indicators",
     "label": "Maximum permissible variation between indicators",
@@ -838,7 +838,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-4.1.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-multi-interval",
+    "uri": "https://w3id.org/oiml/r129/req-multi-interval",
     "qname": "oiml-r129:req-multi-interval",
     "slug": "oiml-r129-req-multi-interval",
     "label": "Multi-interval instruments",
@@ -851,7 +851,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-4.1.5"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-calculated-quantities",
+    "uri": "https://w3id.org/oiml/r129/req-calculated-quantities",
     "qname": "oiml-r129:req-calculated-quantities",
     "slug": "oiml-r129-req-calculated-quantities",
     "label": "Calculated quantities",
@@ -864,7 +864,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-4.1.6"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-error-determination-rules",
+    "uri": "https://w3id.org/oiml/r129/req-error-determination-rules",
     "qname": "oiml-r129:req-error-determination-rules",
     "slug": "oiml-r129-req-error-determination-rules",
     "label": "Rules for the determination of errors",
@@ -877,7 +877,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-4.1.7"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-object-shape",
+    "uri": "https://w3id.org/oiml/r129/req-object-shape",
     "qname": "oiml-r129:req-object-shape",
     "slug": "oiml-r129-req-object-shape",
     "label": "Shape of the object",
@@ -890,7 +890,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#annex-a.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-surface-colour-uniform",
+    "uri": "https://w3id.org/oiml/r129/req-surface-colour-uniform",
     "qname": "oiml-r129:req-surface-colour-uniform",
     "slug": "oiml-r129-req-surface-colour-uniform",
     "label": "Surface colour — uniform",
@@ -903,7 +903,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#annex-a.3.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-surface-colour-non-uniform",
+    "uri": "https://w3id.org/oiml/r129/req-surface-colour-non-uniform",
     "qname": "oiml-r129:req-surface-colour-non-uniform",
     "slug": "oiml-r129-req-surface-colour-non-uniform",
     "label": "Surface colour — non-uniform",
@@ -916,7 +916,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#annex-a.3.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-surface-reflectivity",
+    "uri": "https://w3id.org/oiml/r129/req-surface-reflectivity",
     "qname": "oiml-r129:req-surface-reflectivity",
     "slug": "oiml-r129-req-surface-reflectivity",
     "label": "Surface reflectivity and absorption",
@@ -929,7 +929,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#annex-a.3.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-transparency",
+    "uri": "https://w3id.org/oiml/r129/req-transparency",
     "qname": "oiml-r129:req-transparency",
     "slug": "oiml-r129-req-transparency",
     "label": "Transparency",
@@ -942,7 +942,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#annex-a.3.7"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-surface-roughness",
+    "uri": "https://w3id.org/oiml/r129/req-surface-roughness",
     "qname": "oiml-r129:req-surface-roughness",
     "slug": "oiml-r129-req-surface-roughness",
     "label": "Surface roughness",
@@ -955,7 +955,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#annex-a.3.8"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-surface-protrusions",
+    "uri": "https://w3id.org/oiml/r129/req-surface-protrusions",
     "qname": "oiml-r129:req-surface-protrusions",
     "slug": "oiml-r129-req-surface-protrusions",
     "label": "Protrusions on the surface",
@@ -968,7 +968,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#annex-a.3.9"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-orientation-position",
+    "uri": "https://w3id.org/oiml/r129/req-orientation-position",
     "qname": "oiml-r129:req-orientation-position",
     "slug": "oiml-r129-req-orientation-position",
     "label": "Orientation and position",
@@ -981,7 +981,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#annex-a.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-speed-movement",
+    "uri": "https://w3id.org/oiml/r129/req-speed-movement",
     "qname": "oiml-r129:req-speed-movement",
     "slug": "oiml-r129-req-speed-movement",
     "label": "Speed of relative movement",
@@ -994,7 +994,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-software-identification",
+    "uri": "https://w3id.org/oiml/r129/req-software-identification",
     "qname": "oiml-r129:req-software-identification",
     "slug": "oiml-r129-req-software-identification",
     "label": "Software identification",
@@ -1007,7 +1007,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-6.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-algorithm-correctness",
+    "uri": "https://w3id.org/oiml/r129/req-algorithm-correctness",
     "qname": "oiml-r129:req-algorithm-correctness",
     "slug": "oiml-r129-req-algorithm-correctness",
     "label": "Correctness of algorithms and functions",
@@ -1020,7 +1020,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-6.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-securing-software",
+    "uri": "https://w3id.org/oiml/r129/req-securing-software",
     "qname": "oiml-r129:req-securing-software",
     "slug": "oiml-r129-req-securing-software",
     "label": "Securing and protecting software",
@@ -1033,7 +1033,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-6.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-authentication-results",
+    "uri": "https://w3id.org/oiml/r129/req-authentication-results",
     "qname": "oiml-r129:req-authentication-results",
     "slug": "oiml-r129-req-authentication-results",
     "label": "Authentication of measurement results",
@@ -1046,7 +1046,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-6.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-audit-trail",
+    "uri": "https://w3id.org/oiml/r129/req-audit-trail",
     "qname": "oiml-r129:req-audit-trail",
     "slug": "oiml-r129-req-audit-trail",
     "label": "Audit trail",
@@ -1059,7 +1059,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-6.5"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-significant-defect-detection",
+    "uri": "https://w3id.org/oiml/r129/req-significant-defect-detection",
     "qname": "oiml-r129:req-significant-defect-detection",
     "slug": "oiml-r129-req-significant-defect-detection",
     "label": "Detection of significant defects",
@@ -1072,7 +1072,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-6.7"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-durability-protection",
+    "uri": "https://w3id.org/oiml/r129/req-durability-protection",
     "qname": "oiml-r129:req-durability-protection",
     "slug": "oiml-r129-req-durability-protection",
     "label": "Durability protection support",
@@ -1085,7 +1085,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-6.8"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-fraudulent-use",
+    "uri": "https://w3id.org/oiml/r129/req-fraudulent-use",
     "qname": "oiml-r129:req-fraudulent-use",
     "slug": "oiml-r129-req-fraudulent-use",
     "label": "Fraudulent use prevention",
@@ -1098,7 +1098,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.1.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-suitability-construction",
+    "uri": "https://w3id.org/oiml/r129/req-suitability-construction",
     "qname": "oiml-r129:req-suitability-construction",
     "slug": "oiml-r129-req-suitability-construction",
     "label": "Suitability of construction",
@@ -1111,7 +1111,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.1.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-suitability-use",
+    "uri": "https://w3id.org/oiml/r129/req-suitability-use",
     "qname": "oiml-r129:req-suitability-use",
     "slug": "oiml-r129-req-suitability-use",
     "label": "Suitability for use",
@@ -1124,7 +1124,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.1.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-suitability-verification",
+    "uri": "https://w3id.org/oiml/r129/req-suitability-verification",
     "qname": "oiml-r129:req-suitability-verification",
     "slug": "oiml-r129-req-suitability-verification",
     "label": "Suitability for verification",
@@ -1137,7 +1137,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.1.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-zero-ready-adjustment",
+    "uri": "https://w3id.org/oiml/r129/req-zero-ready-adjustment",
     "qname": "oiml-r129:req-zero-ready-adjustment",
     "slug": "oiml-r129-req-zero-ready-adjustment",
     "label": "Zero or ready adjustment",
@@ -1150,7 +1150,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.1.5"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-tare-device",
+    "uri": "https://w3id.org/oiml/r129/req-tare-device",
     "qname": "oiml-r129:req-tare-device",
     "slug": "oiml-r129-req-tare-device",
     "label": "Tare device",
@@ -1163,7 +1163,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.1.6"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-warm-up",
+    "uri": "https://w3id.org/oiml/r129/req-warm-up",
     "qname": "oiml-r129:req-warm-up",
     "slug": "oiml-r129-req-warm-up",
     "label": "Warm-up period",
@@ -1176,7 +1176,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.1.7"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-presentation-indications",
+    "uri": "https://w3id.org/oiml/r129/req-presentation-indications",
     "qname": "oiml-r129:req-presentation-indications",
     "slug": "oiml-r129-req-presentation-indications",
     "label": "Presentation of indications",
@@ -1189,7 +1189,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.2.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-units-of-measurement",
+    "uri": "https://w3id.org/oiml/r129/req-units-of-measurement",
     "qname": "oiml-r129:req-units-of-measurement",
     "slug": "oiml-r129-req-units-of-measurement",
     "label": "Units of measurement",
@@ -1202,7 +1202,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.2.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-scale-interval-value",
+    "uri": "https://w3id.org/oiml/r129/req-scale-interval-value",
     "qname": "oiml-r129:req-scale-interval-value",
     "slug": "oiml-r129-req-scale-interval-value",
     "label": "Value of the scale interval",
@@ -1215,7 +1215,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.2.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-limits-of-indication",
+    "uri": "https://w3id.org/oiml/r129/req-limits-of-indication",
     "qname": "oiml-r129:req-limits-of-indication",
     "slug": "oiml-r129-req-limits-of-indication",
     "label": "Limits of indication",
@@ -1228,7 +1228,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.2.6"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-nameplate-markings",
+    "uri": "https://w3id.org/oiml/r129/req-nameplate-markings",
     "qname": "oiml-r129:req-nameplate-markings",
     "slug": "oiml-r129-req-nameplate-markings",
     "label": "Nameplate markings",
@@ -1241,7 +1241,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.3.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-technical-specifications",
+    "uri": "https://w3id.org/oiml/r129/req-technical-specifications",
     "qname": "oiml-r129:req-technical-specifications",
     "slug": "oiml-r129-req-technical-specifications",
     "label": "Technical specifications display",
@@ -1254,7 +1254,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.3.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-verification-mark",
+    "uri": "https://w3id.org/oiml/r129/req-verification-mark",
     "qname": "oiml-r129:req-verification-mark",
     "slug": "oiml-r129-req-verification-mark",
     "label": "Verification mark provision",
@@ -1267,7 +1267,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.4.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-sealing",
+    "uri": "https://w3id.org/oiml/r129/req-sealing",
     "qname": "oiml-r129:req-sealing",
     "slug": "oiml-r129-req-sealing",
     "label": "Sealing provisions",
@@ -1280,7 +1280,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.4.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-interfaces",
+    "uri": "https://w3id.org/oiml/r129/req-interfaces",
     "qname": "oiml-r129:req-interfaces",
     "slug": "oiml-r129-req-interfaces",
     "label": "Interfaces for peripheral devices",
@@ -1293,7 +1293,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.5.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-checking-significant-faults",
+    "uri": "https://w3id.org/oiml/r129/req-checking-significant-faults",
     "qname": "oiml-r129:req-checking-significant-faults",
     "slug": "oiml-r129-req-checking-significant-faults",
     "label": "Acting upon significant faults",
@@ -1306,7 +1306,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.6.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/req-indication-check",
+    "uri": "https://w3id.org/oiml/r129/req-indication-check",
     "qname": "oiml-r129:req-indication-check",
     "slug": "oiml-r129-req-indication-check",
     "label": "Indication check",
@@ -1319,7 +1319,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.6.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-voltage-dips",
+    "uri": "https://w3id.org/oiml/r129/test-voltage-dips",
     "qname": "oiml-r129:test-voltage-dips",
     "slug": "oiml-r129-test-voltage-dips",
     "label": "AC mains voltage dips and interruptions",
@@ -1332,7 +1332,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-bursts",
+    "uri": "https://w3id.org/oiml/r129/test-bursts",
     "qname": "oiml-r129:test-bursts",
     "slug": "oiml-r129-test-bursts",
     "label": "Electrical bursts",
@@ -1345,7 +1345,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-esd",
+    "uri": "https://w3id.org/oiml/r129/test-esd",
     "qname": "oiml-r129:test-esd",
     "slug": "oiml-r129-test-esd",
     "label": "Electrostatic discharge",
@@ -1358,7 +1358,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-surges",
+    "uri": "https://w3id.org/oiml/r129/test-surges",
     "qname": "oiml-r129:test-surges",
     "slug": "oiml-r129-test-surges",
     "label": "Electrical surges",
@@ -1371,7 +1371,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-rf-immunity-radiated",
+    "uri": "https://w3id.org/oiml/r129/test-rf-immunity-radiated",
     "qname": "oiml-r129:test-rf-immunity-radiated",
     "slug": "oiml-r129-test-rf-immunity-radiated",
     "label": "Immunity to RF electromagnetic fields — Radiated",
@@ -1384,7 +1384,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-rf-immunity-conducted",
+    "uri": "https://w3id.org/oiml/r129/test-rf-immunity-conducted",
     "qname": "oiml-r129:test-rf-immunity-conducted",
     "slug": "oiml-r129-test-rf-immunity-conducted",
     "label": "Immunity to RF electromagnetic fields — Conducted",
@@ -1397,7 +1397,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-damp-heat-cyclic",
+    "uri": "https://w3id.org/oiml/r129/test-damp-heat-cyclic",
     "qname": "oiml-r129:test-damp-heat-cyclic",
     "slug": "oiml-r129-test-damp-heat-cyclic",
     "label": "Damp heat cyclic",
@@ -1410,7 +1410,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-ambient-light",
+    "uri": "https://w3id.org/oiml/r129/test-ambient-light",
     "qname": "oiml-r129:test-ambient-light",
     "slug": "oiml-r129-test-ambient-light",
     "label": "Ambient light test",
@@ -1423,7 +1423,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-acoustics",
+    "uri": "https://w3id.org/oiml/r129/test-acoustics",
     "qname": "oiml-r129:test-acoustics",
     "slug": "oiml-r129-test-acoustics",
     "label": "Acoustics test",
@@ -1436,7 +1436,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-construction-examination",
+    "uri": "https://w3id.org/oiml/r129/test-construction-examination",
     "qname": "oiml-r129:test-construction-examination",
     "slug": "oiml-r129-test-construction-examination",
     "label": "Construction examination",
@@ -1449,7 +1449,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#clause-1.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-marking-examination",
+    "uri": "https://w3id.org/oiml/r129/test-marking-examination",
     "qname": "oiml-r129:test-marking-examination",
     "slug": "oiml-r129-test-marking-examination",
     "label": "Marking examination",
@@ -1462,7 +1462,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-1:2020#clause-5.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-documentation-examination",
+    "uri": "https://w3id.org/oiml/r129/test-documentation-examination",
     "qname": "oiml-r129:test-documentation-examination",
     "slug": "oiml-r129-test-documentation-examination",
     "label": "Documentation examination",
@@ -1475,7 +1475,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#clause-1.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-software-examination",
+    "uri": "https://w3id.org/oiml/r129/test-software-examination",
     "qname": "oiml-r129:test-software-examination",
     "slug": "oiml-r129-test-software-examination",
     "label": "Software examination",
@@ -1488,7 +1488,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#clause-1.4.10"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-object-characteristics",
+    "uri": "https://w3id.org/oiml/r129/test-object-characteristics",
     "qname": "oiml-r129:test-object-characteristics",
     "slug": "oiml-r129-test-object-characteristics",
     "label": "Object characteristic tests",
@@ -1501,7 +1501,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-warm-up-time",
+    "uri": "https://w3id.org/oiml/r129/test-warm-up-time",
     "qname": "oiml-r129:test-warm-up-time",
     "slug": "oiml-r129-test-warm-up-time",
     "label": "Instrument warm-up time",
@@ -1514,7 +1514,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-repeatability",
+    "uri": "https://w3id.org/oiml/r129/test-repeatability",
     "qname": "oiml-r129:test-repeatability",
     "slug": "oiml-r129-test-repeatability",
     "label": "Repeatability",
@@ -1527,7 +1527,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-static-temperatures",
+    "uri": "https://w3id.org/oiml/r129/test-static-temperatures",
     "qname": "oiml-r129:test-static-temperatures",
     "slug": "oiml-r129-test-static-temperatures",
     "label": "Static temperatures",
@@ -1540,7 +1540,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-damp-heat-steady",
+    "uri": "https://w3id.org/oiml/r129/test-damp-heat-steady",
     "qname": "oiml-r129:test-damp-heat-steady",
     "slug": "oiml-r129-test-damp-heat-steady",
     "label": "Damp heat steady-state",
@@ -1553,7 +1553,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-ac-voltage-variation",
+    "uri": "https://w3id.org/oiml/r129/test-ac-voltage-variation",
     "qname": "oiml-r129:test-ac-voltage-variation",
     "slug": "oiml-r129-test-ac-voltage-variation",
     "label": "AC mains voltage variation",
@@ -1566,7 +1566,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r129/test-low-voltage-battery",
+    "uri": "https://w3id.org/oiml/r129/test-low-voltage-battery",
     "qname": "oiml-r129:test-low-voltage-battery",
     "slug": "oiml-r129-test-low-voltage-battery",
     "label": "Low voltage of internal battery",
@@ -1579,7 +1579,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:129-2:2020#anx-a"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-measurement-units",
+    "uri": "https://w3id.org/oiml/r144/req-measurement-units",
     "qname": "oiml-r144:req-measurement-units",
     "slug": "oiml-r144-req-measurement-units",
     "label": "Presentation of measurement results",
@@ -1592,7 +1592,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-measuring-range",
+    "uri": "https://w3id.org/oiml/r144/req-measuring-range",
     "qname": "oiml-r144:req-measuring-range",
     "slug": "oiml-r144-req-measuring-range",
     "label": "Measuring range",
@@ -1605,7 +1605,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-mpe-intrinsic",
+    "uri": "https://w3id.org/oiml/r144/req-mpe-intrinsic",
     "qname": "oiml-r144:req-mpe-intrinsic",
     "slug": "oiml-r144-req-mpe-intrinsic",
     "label": "Maximum permissible intrinsic error",
@@ -1618,7 +1618,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.3.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-mpe-operating",
+    "uri": "https://w3id.org/oiml/r144/req-mpe-operating",
     "qname": "oiml-r144:req-mpe-operating",
     "slug": "oiml-r144-req-mpe-operating",
     "label": "MPE on verification under rated operating conditions",
@@ -1631,7 +1631,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.3.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-repeatability",
+    "uri": "https://w3id.org/oiml/r144/req-repeatability",
     "qname": "oiml-r144:req-repeatability",
     "slug": "oiml-r144-req-repeatability",
     "label": "Repeatability",
@@ -1644,7 +1644,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-rated-conditions",
+    "uri": "https://w3id.org/oiml/r144/req-rated-conditions",
     "qname": "oiml-r144:req-rated-conditions",
     "slug": "oiml-r144-req-rated-conditions",
     "label": "Rated operating conditions",
@@ -1657,7 +1657,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.5.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-cross-sensitivity",
+    "uri": "https://w3id.org/oiml/r144/req-cross-sensitivity",
     "qname": "oiml-r144:req-cross-sensitivity",
     "slug": "oiml-r144-req-cross-sensitivity",
     "label": "Cross sensitivity",
@@ -1670,7 +1670,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.5.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-vibration",
+    "uri": "https://w3id.org/oiml/r144/req-vibration",
     "qname": "oiml-r144:req-vibration",
     "slug": "oiml-r144-req-vibration",
     "label": "Vibration resistance",
@@ -1683,7 +1683,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.5.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-disturbances",
+    "uri": "https://w3id.org/oiml/r144/req-disturbances",
     "qname": "oiml-r144:req-disturbances",
     "slug": "oiml-r144-req-disturbances",
     "label": "Disturbances",
@@ -1696,7 +1696,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.5.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-response-time",
+    "uri": "https://w3id.org/oiml/r144/req-response-time",
     "qname": "oiml-r144:req-response-time",
     "slug": "oiml-r144-req-response-time",
     "label": "Response time",
@@ -1709,7 +1709,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.6"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-warm-up-time",
+    "uri": "https://w3id.org/oiml/r144/req-warm-up-time",
     "qname": "oiml-r144:req-warm-up-time",
     "slug": "oiml-r144-req-warm-up-time",
     "label": "Warm-up time",
@@ -1722,7 +1722,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.7"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-drift",
+    "uri": "https://w3id.org/oiml/r144/req-drift",
     "qname": "oiml-r144:req-drift",
     "slug": "oiml-r144-req-drift",
     "label": "Stability with time (drift)",
@@ -1735,7 +1735,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-4.8"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-corrosion-resistant",
+    "uri": "https://w3id.org/oiml/r144/req-corrosion-resistant",
     "qname": "oiml-r144:req-corrosion-resistant",
     "slug": "oiml-r144-req-corrosion-resistant",
     "label": "Corrosion resistant materials",
@@ -1748,7 +1748,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.1.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-representative-sampling",
+    "uri": "https://w3id.org/oiml/r144/req-representative-sampling",
     "qname": "oiml-r144:req-representative-sampling",
     "slug": "oiml-r144-req-representative-sampling",
     "label": "Representative sampling",
@@ -1761,7 +1761,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.1.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-gas-switching",
+    "uri": "https://w3id.org/oiml/r144/req-gas-switching",
     "qname": "oiml-r144:req-gas-switching",
     "slug": "oiml-r144-req-gas-switching",
     "label": "Gas switching system",
@@ -1774,7 +1774,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.1.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-zero-gas-filter",
+    "uri": "https://w3id.org/oiml/r144/req-zero-gas-filter",
     "qname": "oiml-r144:req-zero-gas-filter",
     "slug": "oiml-r144-req-zero-gas-filter",
     "label": "Zero gas filter",
@@ -1787,7 +1787,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.1.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-pump-mounting",
+    "uri": "https://w3id.org/oiml/r144/req-pump-mounting",
     "qname": "oiml-r144:req-pump-mounting",
     "slug": "oiml-r144-req-pump-mounting",
     "label": "Pump mounting",
@@ -1800,7 +1800,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.1.5"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-gas-flow-meter",
+    "uri": "https://w3id.org/oiml/r144/req-gas-flow-meter",
     "qname": "oiml-r144:req-gas-flow-meter",
     "slug": "oiml-r144-req-gas-flow-meter",
     "label": "Gas flow meter",
@@ -1813,7 +1813,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.1.6"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-air-tightness",
+    "uri": "https://w3id.org/oiml/r144/req-air-tightness",
     "qname": "oiml-r144:req-air-tightness",
     "slug": "oiml-r144-req-air-tightness",
     "label": "Air-tightness",
@@ -1826,7 +1826,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.1.7"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-interface-peripherals",
+    "uri": "https://w3id.org/oiml/r144/req-interface-peripherals",
     "qname": "oiml-r144:req-interface-peripherals",
     "slug": "oiml-r144-req-interface-peripherals",
     "label": "Interface for peripherals",
@@ -1839,7 +1839,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.1.8"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-interface-isolation",
+    "uri": "https://w3id.org/oiml/r144/req-interface-isolation",
     "qname": "oiml-r144:req-interface-isolation",
     "slug": "oiml-r144-req-interface-isolation",
     "label": "Interface and peripheral isolation",
@@ -1852,7 +1852,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.1.9"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-indication-range",
+    "uri": "https://w3id.org/oiml/r144/req-indication-range",
     "qname": "oiml-r144:req-indication-range",
     "slug": "oiml-r144-req-indication-range",
     "label": "Indication range",
@@ -1865,7 +1865,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.2.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-analog-scale",
+    "uri": "https://w3id.org/oiml/r144/req-analog-scale",
     "qname": "oiml-r144:req-analog-scale",
     "slug": "oiml-r144-req-analog-scale",
     "label": "Analog scale requirements",
@@ -1878,7 +1878,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.2.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-digital-display",
+    "uri": "https://w3id.org/oiml/r144/req-digital-display",
     "qname": "oiml-r144:req-digital-display",
     "slug": "oiml-r144-req-digital-display",
     "label": "Digital display requirements",
@@ -1891,7 +1891,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.2.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-printing-device",
+    "uri": "https://w3id.org/oiml/r144/req-printing-device",
     "qname": "oiml-r144:req-printing-device",
     "slug": "oiml-r144-req-printing-device",
     "label": "Printing device",
@@ -1904,7 +1904,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-computing-device",
+    "uri": "https://w3id.org/oiml/r144/req-computing-device",
     "qname": "oiml-r144:req-computing-device",
     "slug": "oiml-r144-req-computing-device",
     "label": "Computing device",
@@ -1917,7 +1917,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-alarm-system",
+    "uri": "https://w3id.org/oiml/r144/req-alarm-system",
     "qname": "oiml-r144:req-alarm-system",
     "slug": "oiml-r144-req-alarm-system",
     "label": "Alarm system",
@@ -1930,7 +1930,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.5.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-gas-flow-monitoring",
+    "uri": "https://w3id.org/oiml/r144/req-gas-flow-monitoring",
     "qname": "oiml-r144:req-gas-flow-monitoring",
     "slug": "oiml-r144-req-gas-flow-monitoring",
     "label": "Gas flow monitoring",
@@ -1943,7 +1943,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.5.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-readiness-indication",
+    "uri": "https://w3id.org/oiml/r144/req-readiness-indication",
     "qname": "oiml-r144:req-readiness-indication",
     "slug": "oiml-r144-req-readiness-indication",
     "label": "Readiness indication",
@@ -1956,7 +1956,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.5.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-sensor-expiry",
+    "uri": "https://w3id.org/oiml/r144/req-sensor-expiry",
     "qname": "oiml-r144:req-sensor-expiry",
     "slug": "oiml-r144-req-sensor-expiry",
     "label": "Electrochemical sensor expiry warning",
@@ -1969,7 +1969,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.5.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-adjustment-facilities",
+    "uri": "https://w3id.org/oiml/r144/req-adjustment-facilities",
     "qname": "oiml-r144:req-adjustment-facilities",
     "slug": "oiml-r144-req-adjustment-facilities",
     "label": "Adjustment facilities",
@@ -1982,7 +1982,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.6.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-internal-adjustment",
+    "uri": "https://w3id.org/oiml/r144/req-internal-adjustment",
     "qname": "oiml-r144:req-internal-adjustment",
     "slug": "oiml-r144-req-internal-adjustment",
     "label": "Internal adjustment isolation",
@@ -1995,7 +1995,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.6.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-negative-zero",
+    "uri": "https://w3id.org/oiml/r144/req-negative-zero",
     "qname": "oiml-r144:req-negative-zero",
     "slug": "oiml-r144-req-negative-zero",
     "label": "Negative zero indication",
@@ -2008,7 +2008,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.6.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-auto-adjustment-output",
+    "uri": "https://w3id.org/oiml/r144/req-auto-adjustment-output",
     "qname": "oiml-r144:req-auto-adjustment-output",
     "slug": "oiml-r144-req-auto-adjustment-output",
     "label": "Automatic adjustment output",
@@ -2021,7 +2021,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.6.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-adjustment-security",
+    "uri": "https://w3id.org/oiml/r144/req-adjustment-security",
     "qname": "oiml-r144:req-adjustment-security",
     "slug": "oiml-r144-req-adjustment-security",
     "label": "Adjustment access control",
@@ -2034,7 +2034,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.7.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-mode-security",
+    "uri": "https://w3id.org/oiml/r144/req-mode-security",
     "qname": "oiml-r144:req-mode-security",
     "slug": "oiml-r144-req-mode-security",
     "label": "Mode change access control",
@@ -2047,7 +2047,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.7.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/req-inscriptions",
+    "uri": "https://w3id.org/oiml/r144/req-inscriptions",
     "qname": "oiml-r144:req-inscriptions",
     "slug": "oiml-r144-req-inscriptions",
     "label": "Inscriptions and markings",
@@ -2060,7 +2060,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-1:2013#clause-5.8"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-error-determination",
+    "uri": "https://w3id.org/oiml/r144/test-error-determination",
     "qname": "oiml-r144:test-error-determination",
     "slug": "oiml-r144-test-error-determination",
     "label": "Error determination",
@@ -2073,7 +2073,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-drift-test",
+    "uri": "https://w3id.org/oiml/r144/test-drift-test",
     "qname": "oiml-r144:test-drift-test",
     "slug": "oiml-r144-test-drift-test",
     "label": "Stability with time (drift test)",
@@ -2086,7 +2086,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.3"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-repeatability-test",
+    "uri": "https://w3id.org/oiml/r144/test-repeatability-test",
     "qname": "oiml-r144:test-repeatability-test",
     "slug": "oiml-r144-test-repeatability-test",
     "label": "Repeatability test",
@@ -2099,7 +2099,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.4"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-dry-heat",
+    "uri": "https://w3id.org/oiml/r144/test-dry-heat",
     "qname": "oiml-r144:test-dry-heat",
     "slug": "oiml-r144-test-dry-heat",
     "label": "Dry heat test",
@@ -2112,7 +2112,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.5"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-cold",
+    "uri": "https://w3id.org/oiml/r144/test-cold",
     "qname": "oiml-r144:test-cold",
     "slug": "oiml-r144-test-cold",
     "label": "Cold test",
@@ -2125,7 +2125,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.6"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-damp-heat",
+    "uri": "https://w3id.org/oiml/r144/test-damp-heat",
     "qname": "oiml-r144:test-damp-heat",
     "slug": "oiml-r144-test-damp-heat",
     "label": "Damp heat test",
@@ -2138,7 +2138,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.7"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-ambient-pressure",
+    "uri": "https://w3id.org/oiml/r144/test-ambient-pressure",
     "qname": "oiml-r144:test-ambient-pressure",
     "slug": "oiml-r144-test-ambient-pressure",
     "label": "Ambient pressure test",
@@ -2151,7 +2151,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.8"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-power-supply",
+    "uri": "https://w3id.org/oiml/r144/test-power-supply",
     "qname": "oiml-r144:test-power-supply",
     "slug": "oiml-r144-test-power-supply",
     "label": "Power supply variation test",
@@ -2164,7 +2164,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.9"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-cross-sensitivity-test",
+    "uri": "https://w3id.org/oiml/r144/test-cross-sensitivity-test",
     "qname": "oiml-r144:test-cross-sensitivity-test",
     "slug": "oiml-r144-test-cross-sensitivity-test",
     "label": "Cross sensitivity test",
@@ -2177,7 +2177,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.10"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-vibration-test",
+    "uri": "https://w3id.org/oiml/r144/test-vibration-test",
     "qname": "oiml-r144:test-vibration-test",
     "slug": "oiml-r144-test-vibration-test",
     "label": "Mechanical vibration test",
@@ -2190,7 +2190,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.11.1"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-shock-test",
+    "uri": "https://w3id.org/oiml/r144/test-shock-test",
     "qname": "oiml-r144:test-shock-test",
     "slug": "oiml-r144-test-shock-test",
     "label": "Mechanical shock test",
@@ -2203,7 +2203,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.11.2"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-power-reduction",
+    "uri": "https://w3id.org/oiml/r144/test-power-reduction",
     "qname": "oiml-r144:test-power-reduction",
     "slug": "oiml-r144-test-power-reduction",
     "label": "Short time power reduction test",
@@ -2216,7 +2216,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.12"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-burst-mains",
+    "uri": "https://w3id.org/oiml/r144/test-burst-mains",
     "qname": "oiml-r144:test-burst-mains",
     "slug": "oiml-r144-test-burst-mains",
     "label": "Electrical burst test (AC/DC mains)",
@@ -2229,7 +2229,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.13"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-burst-signal",
+    "uri": "https://w3id.org/oiml/r144/test-burst-signal",
     "qname": "oiml-r144:test-burst-signal",
     "slug": "oiml-r144-test-burst-signal",
     "label": "Electrical burst test (signal lines)",
@@ -2242,7 +2242,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.14"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-surge",
+    "uri": "https://w3id.org/oiml/r144/test-surge",
     "qname": "oiml-r144:test-surge",
     "slug": "oiml-r144-test-surge",
     "label": "Surge test",
@@ -2255,7 +2255,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.15"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-esd",
+    "uri": "https://w3id.org/oiml/r144/test-esd",
     "qname": "oiml-r144:test-esd",
     "slug": "oiml-r144-test-esd",
     "label": "Electrostatic discharge test",
@@ -2268,7 +2268,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.16"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-rf-emf",
+    "uri": "https://w3id.org/oiml/r144/test-rf-emf",
     "qname": "oiml-r144:test-rf-emf",
     "slug": "oiml-r144-test-rf-emf",
     "label": "Radiated RF electromagnetic field test",
@@ -2281,7 +2281,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.17"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-low-battery",
+    "uri": "https://w3id.org/oiml/r144/test-low-battery",
     "qname": "oiml-r144:test-low-battery",
     "slug": "oiml-r144-test-low-battery",
     "label": "Low battery voltage test",
@@ -2294,7 +2294,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.18"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-warm-up-test",
+    "uri": "https://w3id.org/oiml/r144/test-warm-up-test",
     "qname": "oiml-r144:test-warm-up-test",
     "slug": "oiml-r144-test-warm-up-test",
     "label": "Warm-up time test",
@@ -2307,7 +2307,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.19"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-response-time-test",
+    "uri": "https://w3id.org/oiml/r144/test-response-time-test",
     "qname": "oiml-r144:test-response-time-test",
     "slug": "oiml-r144-test-response-time-test",
     "label": "Response time test",
@@ -2320,7 +2320,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.20"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-flow-spillover",
+    "uri": "https://w3id.org/oiml/r144/test-flow-spillover",
     "qname": "oiml-r144:test-flow-spillover",
     "slug": "oiml-r144-test-flow-spillover",
     "label": "Spillover of gas flow rates test",
@@ -2333,7 +2333,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.21"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-leakproofness",
+    "uri": "https://w3id.org/oiml/r144/test-leakproofness",
     "qname": "oiml-r144:test-leakproofness",
     "slug": "oiml-r144-test-leakproofness",
     "label": "Leakproofness test",
@@ -2346,7 +2346,7 @@ export const ontologyEntities = [
     "reference": "urn:oiml:pub:r:144-2:2013#clause-1.22"
   },
   {
-    "uri": "https://w3id.org/standards/oiml/oiml-r144/test-visual-examination",
+    "uri": "https://w3id.org/oiml/r144/test-visual-examination",
     "qname": "oiml-r144:test-visual-examination",
     "slug": "oiml-r144-test-visual-examination",
     "label": "Visual and technical examination",
@@ -2459,7 +2459,7 @@ export const ontologyEntities = [
   }
 ] as const
 
-export const ontologyPrefixes = [{"prefix":"owl","uri":"http://www.w3.org/2002/07/owl#"},{"prefix":"rdf","uri":"http://www.w3.org/1999/02/22-rdf-syntax-ns#"},{"prefix":"rdfs","uri":"http://www.w3.org/2000/01/rdf-schema#"},{"prefix":"skos","uri":"http://www.w3.org/2004/02/skos/core#"},{"prefix":"dcterms","uri":"http://purl.org/dc/terms/"},{"prefix":"oiml","uri":"https://w3id.org/standards/oiml/ontologies/core/"},{"prefix":"oiml-pubtype","uri":"https://w3id.org/standards/oiml/taxonomies/publication-type/"},{"prefix":"smart","uri":"https://w3id.org/standards/smart/ontologies/core/"}] as const
+export const ontologyPrefixes = [{"prefix":"owl","uri":"http://www.w3.org/2002/07/owl#"},{"prefix":"rdf","uri":"http://www.w3.org/1999/02/22-rdf-syntax-ns#"},{"prefix":"rdfs","uri":"http://www.w3.org/2000/01/rdf-schema#"},{"prefix":"skos","uri":"http://www.w3.org/2004/02/skos/core#"},{"prefix":"dcterms","uri":"http://purl.org/dc/terms/"},{"prefix":"oiml","uri":"https://w3id.org/oiml/ontologies/core/"},{"prefix":"oiml-pubtype","uri":"https://w3id.org/oiml/taxonomies/publication-type/"},{"prefix":"smart","uri":"https://w3id.org/standards/smart/ontologies/core/"}] as const
 
 export const ontologyImportChain = {"oiml:":{"imports":["smart:"],"description":"Core ontology for OIML International Recommendations. Defines classes and properties shared across all OIML standards, including the standard structure (Requirements, Tests, Test Report, Forms) and certification lifecycle (Authority, Certificate, Audit, Calibration).","version":"1.0.0"}} as const
 
@@ -2476,7 +2476,7 @@ export const ontologyNamespaces = [
   },
   {
     "prefix": "oiml",
-    "uri": "https://w3id.org/standards/oiml/ontologies/core/",
+    "uri": "https://w3id.org/oiml/ontologies/core/",
     "title": "OIML Core Ontology",
     "description": "Core ontology for OIML International Recommendations. Defines classes and properties shared across all OIML standards: standard structure (Requirements, Tests, Test Report, Forms) and certification lifecycle (Authority, Certificate, Audit, Calibration). Parallel to — and a superset of — the IEC-ISO SMART Core Ontology; the two are explicitly mapped rather than related by subclassing.",
     "color": "brand",
@@ -2484,7 +2484,7 @@ export const ontologyNamespaces = [
   },
   {
     "prefix": "oiml-pubtype",
-    "uri": "https://w3id.org/standards/oiml/taxonomies/publication-type/",
+    "uri": "https://w3id.org/oiml/taxonomies/publication-type/",
     "title": "OIML Publication Type Taxonomy",
     "description": "A SKOS concept scheme enumerating the kinds of publication documents issued by OIML: International Recommendation (R), International Document (D), Basic Publication (B), Guide (G), Vocabulary (V), Bulletin (BL), and Expert Report (E).",
     "color": "amber",

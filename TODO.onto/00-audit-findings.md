@@ -8,8 +8,8 @@
 | Prefix | Namespace URI | Source | Status on current site |
 |---|---|---|---|
 | `smart:` | `https://w3id.org/standards/smart/ontologies/core/` | IEC-ISO SMART core ontology | **MISSING** (referenced via `owl:imports` from `oiml.ttl` but no entities rendered) |
-| `oiml:` | `https://w3id.org/standards/oiml/ontologies/core/` | OIML Core Ontology | Present (413 entities) |
-| `oiml-r60:` | `https://w3id.org/standards/oiml/r60/ontologies/core/` | OIML R 60 Domain Ontology | Present |
+| `oiml:` | `https://w3id.org/oiml/ontologies/core/` | OIML Core Ontology | Present (413 entities) |
+| `oiml-r60:` | `https://w3id.org/oiml/ontologies/r60/` | OIML R 60 Domain Ontology | Present |
 
 The `smart:` namespace is referenced from `oiml.ttl` via `rdfs:subClassOf` for 10 classes (Entity, PublicationDocument, Organization, Activity, ProvisionSet, Provision, Requirement, TermEntry, ExternalConstraint, PublicationDocumentType). All 10 currently show up as broken "external" stubs in the browser because no SMART core TTL ships with the site.
 
