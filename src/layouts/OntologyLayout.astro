@@ -182,48 +182,44 @@ const nsColor: Record<string, string> = {
         <!-- Entity tree, grouped by ontology then type -->
         <nav class="ontology-sidebar__list flex-1 overflow-y-auto" id="ontology-sidebar-list" aria-label="Ontology entities">
           {groups.map((group) => {
-            const hasActiveInGroup = group.sections.some((s) =>
-              flattenTree(s.tree).some((n) => n.entity.slug === activeSlug)
-            )
             return (
               <section
                 class="border-b border-rule last:border-0"
                 data-ontology={group.ns.prefix}
-                data-collapsed={hasActiveInGroup ? 'false' : 'true'}
+                data-collapsed="true"
               >
                 <!-- Ontology header (clickable to collapse) -->
                 <button
                   type="button"
                   class="ontology-sidebar__family w-full px-3 py-2 sticky top-0 bg-paper-raised border-b border-rule flex items-center gap-2 z-10 hover:bg-paper text-left bp-focus-ring"
                   data-family-toggle={group.ns.prefix}
-                  aria-expanded={hasActiveInGroup ? 'true' : 'false'}
+                  aria-expanded="false"
                 >
                   <span class={`w-2 h-2 rounded-full ${nsColor[group.ns.prefix]}`}></span>
                   <span class="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-soft">{group.ns.prefix}</span>
                   <span class="text-xs text-ink-muted truncate flex-1">{group.ns.title.replace('Ontology', '').replace('Taxonomy', '').trim()}</span>
                   <span class="bp-coord">{group.totalCount}</span>
-                  <svg class="w-3 h-3 text-ink-muted transition-transform" data-family-chevron viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
+                  <svg class="w-3 h-3 text-ink-muted transition-transform -rotate-90" data-family-chevron viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
                 </button>
-                <div data-family-body={group.ns.prefix} class={hasActiveInGroup ? '' : 'hidden'}>
+                <div data-family-body={group.ns.prefix} class="hidden">
                   {group.sections.map((section) => {
                     const flat = flattenTree(section.tree)
-                    const hasActiveInSection = flat.some((n) => n.entity.slug === activeSlug)
                     return (
                       <div
                         class="ontology-sidebar__section"
                         data-section-type={section.type}
-                        data-collapsed={hasActiveInSection ? 'false' : 'false'}
+                        data-collapsed="true"
                       >
                         <button
                           type="button"
                           class="ontology-sidebar__section-head w-full px-3 pt-2 pb-1 flex items-center gap-2 hover:bg-paper text-left bp-focus-ring"
                           data-section-toggle={section.type}
-                          aria-expanded="true"
+                          aria-expanded="false"
                         >
-                          <svg class="w-2.5 h-2.5 text-ink-muted transition-transform" data-section-chevron viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
+                          <svg class="w-2.5 h-2.5 text-ink-muted transition-transform -rotate-90" data-section-chevron viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
                           <span class="bp-coord text-ink-muted flex-1">↳ {section.label} · {section.flatCount}</span>
                         </button>
-                        <ul class="pb-2" data-section-body={section.type}>
+                        <ul class="pb-2 hidden" data-section-body={section.type}>
                           {flat.map((node) => {
                             const e = node.entity
                             const isActive = e.slug === activeSlug
@@ -355,6 +351,13 @@ const nsColor: Record<string, string> = {
           body.classList.toggle('hidden', !shouldExpand);
           const chevron = btn.querySelector('[data-family-chevron]');
           if (chevron) chevron.style.transform = shouldExpand ? '' : 'rotate(-90deg)';
+          // Persist across SPA navigations within the session.
+          try {
+            sessionStorage.setItem(
+              'ontology-sidebar-family-' + btn.getAttribute('data-family-toggle'),
+              shouldExpand ? '1' : '0'
+            );
+          } catch {}
         }
 
         function expandSection(btn) {
@@ -366,6 +369,12 @@ const nsColor: Record<string, string> = {
           body.classList.toggle('hidden', !shouldExpand);
           const chevron = btn.querySelector('[data-section-chevron]');
           if (chevron) chevron.style.transform = shouldExpand ? '' : 'rotate(-90deg)';
+          try {
+            sessionStorage.setItem(
+              'ontology-sidebar-section-' + btn.getAttribute('data-section-toggle'),
+              shouldExpand ? '1' : '0'
+            );
+          } catch {}
         }
 
         // Wire family/section toggles
@@ -402,22 +411,32 @@ const nsColor: Record<string, string> = {
           }
         });
 
-        // Scroll-spy: highlight the active entity row and scroll into view.
-        // (Active is server-rendered with data-active="true". We just need to
-        // make sure its family/section are expanded so it's actually visible.)
+        // Scroll-spy: highlight the active entity row. Per user direction
+        // ("not expanding, only collapsible"), families/sections are NOT
+        // auto-expanded. Restore the user's session-persisted expand state
+        // instead — that way their previous choices survive navigation.
+        familyToggles.forEach((btn) => {
+          const key = 'ontology-sidebar-family-' + btn.getAttribute('data-family-toggle');
+          let saved = null;
+          try { saved = sessionStorage.getItem(key); } catch {}
+          if (saved === '1') expandFamily(btn, true);
+        });
+        sectionToggles.forEach((btn) => {
+          const key = 'ontology-sidebar-section-' + btn.getAttribute('data-section-toggle');
+          let saved = null;
+          try { saved = sessionStorage.getItem(key); } catch {}
+          if (saved === '1') expandSection(btn);
+        });
+
+        // If the active entity is currently visible (because the user
+        // expanded its family/section), scroll it into view. Otherwise
+        // leave it untouched — the user can expand to find it.
         const active = list.querySelector('[data-active="true"]');
         if (active) {
-          // Expand the family and section that contain the active entity.
-          const family = active.closest('[data-ontology]');
-          if (family) {
-            const familyToggle = family.querySelector('[data-family-toggle]');
-            if (familyToggle && familyToggle.getAttribute('aria-expanded') === 'false') {
-              expandFamily(familyToggle);
-            }
-          }
-          // Scroll the active row into view (centered).
           const li = active.closest('.ontology-sidebar__entity');
-          if (li) li.scrollIntoView({ block: 'center' });
+          if (li && li.offsetParent !== null) {
+            li.scrollIntoView({ block: 'center' });
+          }
         }
       }
 
