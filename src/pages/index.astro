@@ -441,83 +441,92 @@ const audiencePaths = [
 <script is:inline src="/spinning-globe-3d.js"></script>
 <script is:inline>
   (function () {
-    var GLOBE_OPTS = {
-      mode: 'forward',
-      duration: 5.6,
-      spinSpeed: 3.3,
-      delay: 500,
-      fillTime: 4.0
-    };
+    // Wire up listeners + observer exactly once across the SPA lifetime.
+    // The script itself re-executes on every navigation back to / (because
+    // it is `is:inline` in index.astro), but `document` persists across
+    // Astro view transitions — so we must not add another observer/listener
+    // each time, and the init function must live on `window` so subsequent
+    // script executions can call it.
+    if (!window.__heroGlobeWired) {
+      window.__heroGlobeWired = true;
+      window.__initHeroGlobe = function () {
+        var isDark = document.documentElement.classList.contains('dark');
+        var container = document.getElementById('hero-globe');
+        if (!container || typeof SpinningGlobe3D === 'undefined') return;
+        // Clear any prior instance so we get a clean rebuild on theme switch
+        // or on a fresh navigation back to the home page.
+        container.innerHTML = '';
+        new SpinningGlobe3D('#hero-globe', {
+          mode: 'forward',
+          duration: 5.6,
+          spinSpeed: 3.3,
+          delay: 500,
+          fillTime: 4.0,
+          theme: isDark ? 'dark' : 'light'
+        });
+      };
 
-    function initGlobe() {
-      var isDark = document.documentElement.classList.contains('dark');
-      var container = document.getElementById('hero-globe');
-      if (!container || typeof SpinningGlobe3D === 'undefined') return;
-      // Clear any prior instance so we get a clean rebuild on theme switch
-      container.innerHTML = '';
-      new SpinningGlobe3D('#hero-globe', Object.assign(
-        { theme: isDark ? 'dark' : 'light' },
-        GLOBE_OPTS
-      ));
-    }
-
-    // Re-init the globe whenever the `.dark` class flips on <html>.
-    // ThemeToggle.vue adds/removes it; we observe and swap the globe theme.
-    var themeObserver = new MutationObserver(function (mutations) {
-      for (var i = 0; i < mutations.length; i++) {
-        if (mutations[i].attributeName === 'class') {
-          initGlobe();
-          return;
+      // Re-init the globe whenever the `.dark` class flips on <html>.
+      // ThemeToggle.vue adds/removes it; we observe and swap the globe theme.
+      var themeObserver = new MutationObserver(function (mutations) {
+        for (var i = 0; i < mutations.length; i++) {
+          if (mutations[i].attributeName === 'class') {
+            window.__initHeroGlobe();
+            return;
+          }
         }
-      }
-    });
-    themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class'],
-    });
+      });
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initGlobe);
-    } else {
-      initGlobe();
+      // astro:page-load fires on initial load AND after every view-transition
+      // navigation. DOMContentLoaded only fires once per full page load, so
+      // it doesn't cover the case of landing on /oiml-cs and navigating
+      // back to / via the SPA router.
+      document.addEventListener('astro:page-load', window.__initHeroGlobe);
     }
 
-    function initParallax() {
-      var target = document.querySelector('[data-parallax-target]');
-      var hero = document.querySelector('.home-hero');
-      if (!target || !hero) return;
-      var ticking = false;
-      function onMove(e) {
-        if (ticking) return;
-        ticking = true;
+    // Also attempt init immediately on script execution. Covers the first
+    // paint (before astro:page-load fires) without waiting for the event.
+    window.__initHeroGlobe && window.__initHeroGlobe();
+
+    // Parallax: bind mousemove once (the listener on `window` persists
+    // across view transitions); re-bind the hero element on every page load
+    // because `.home-hero` is in <body> which gets swapped.
+    if (!window.__heroParallaxWired) {
+      window.__heroParallaxWired = true;
+      window.__heroParallaxState = { target: null, hero: null, ticking: false };
+      window.addEventListener('mousemove', function (e) {
+        var st = window.__heroParallaxState;
+        if (!st.target || !st.hero || st.ticking) return;
+        st.ticking = true;
         requestAnimationFrame(function () {
-          var rect = hero.getBoundingClientRect();
+          var rect = st.hero.getBoundingClientRect();
           var cx = rect.left + rect.width / 2;
           var cy = rect.top + rect.height / 2;
           var dx = (e.clientX - cx) / rect.width;
           var dy = (e.clientY - cy) / rect.height;
-          target.style.transform =
+          st.target.style.transform =
             'rotateY(' + (dx * 8).toFixed(2) + 'deg) rotateX(' + (-dy * 6).toFixed(2) + 'deg)';
-          ticking = false;
+          st.ticking = false;
+        });
+      }, { passive: true });
+    }
+
+    window.__bindHeroParallax = function () {
+      var st = window.__heroParallaxState;
+      st.target = document.querySelector('[data-parallax-target]');
+      st.hero = document.querySelector('.home-hero');
+      if (st.target && st.hero) {
+        st.hero.addEventListener('mouseleave', function () {
+          if (st.target) st.target.style.transform = 'rotateY(0deg) rotateX(0deg)';
         });
       }
-      function onLeave() {
-        target.style.transform = 'rotateY(0deg) rotateX(0deg)';
-      }
-      window.addEventListener('mousemove', onMove, { passive: true });
-      hero.addEventListener('mouseleave', onLeave);
-    }
+    };
 
-    function initAll() {
-      initGlobe();
-      initParallax();
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initAll);
-    } else {
-      initAll();
-    }
-    document.addEventListener('astro:after-swap', initAll);
+    document.addEventListener('astro:page-load', window.__bindHeroParallax);
+    window.__bindHeroParallax();
   })();
 </script>
