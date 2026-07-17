@@ -222,7 +222,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-if="entity" class="max-w-[48rem] mx-auto px-6 py-8 bp-grid">
+  <div v-if="entity" class="max-w-[48rem] mx-auto px-6 pb-8 bp-grid">
     <!-- Breadcrumb -->
     <nav class="mb-6 flex items-center gap-2 text-sm flex-wrap">
       <a href="/ontology/" class="bp-link-draw">← Ontology Browser</a>
