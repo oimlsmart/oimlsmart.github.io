@@ -1,8 +1,9 @@
 ---
 // ── OntologyLayout.astro ─────────────────────────────────────────────
-// Two-pane layout for /ontology/* routes. Sidebar is server-rendered
-// as a hierarchy tree (classes nested under their parents; other types
-// flat). Sticky on lg+ so it stays visible while scrolling.
+// Two-pane layout for /ontology/* routes. The sidebar is an always-visible
+// flat list of every entity — no collapsing, no expanding. Search filters
+// live; type chips narrow by category; section headers group by ontology
+// without hiding anything.
 
 import Base from './Base.astro'
 import { ontologyEntities, ontologyNamespaces, ontologyTypeMeta } from '../data/ontology-data'
@@ -15,10 +16,6 @@ interface Entity {
   description: string
   ontology: string
   type: string
-  parent?: string
-  domain?: string[]
-  range?: string[]
-  instanceOf?: string[]
 }
 
 interface NamespaceEntry {
@@ -45,89 +42,46 @@ const knownPrefixes = new Set(namespaces.map((n) => n.prefix))
 const visible = all.filter((e) => knownPrefixes.has(e.ontology))
 
 const nsOrder = ['smart', 'oiml', 'oiml-pubtype']
-const typeOrder = ['ontology', 'class', 'objectProperty', 'datatypeProperty', 'annotationProperty', 'conceptScheme', 'concept', 'individual']
+const orderedNamespaces = nsOrder
+  .map((p) => namespaces.find((n) => n.prefix === p))
+  .filter((n): n is NamespaceEntry => Boolean(n))
 
-// Group by ontology then by type, with classes nested as a parent→children tree.
-interface SidebarGroup {
-  ns: NamespaceEntry
-  sections: Array<{
-    type: string
-    label: string
-    tree: TreeNode[]   // classes nested; other types flat (depth=0)
-    flatCount: number  // total entities in this section
-  }>
-  totalCount: number
-}
-
-interface TreeNode {
-  entity: Entity
-  depth: number
-  children: TreeNode[]
-}
-
-function buildClassTree(entities: Entity[]): TreeNode[] {
-  const byQname = new Map(entities.map((e) => [e.qname, e]))
-  const childrenOf = new Map<string, Entity[]>()
-  for (const e of entities) {
-    if (!e.parent || !byQname.has(e.parent)) continue
-    const arr = childrenOf.get(e.parent) || []
-    arr.push(e)
-    childrenOf.set(e.parent, arr)
-  }
-  // Roots = classes with no parent OR whose parent isn't in this set
-  const roots = entities.filter((e) => !e.parent || !byQname.has(e.parent))
-  const sortSiblings = (a: Entity, b: Entity) => a.label.localeCompare(b.label)
-
-  function build(entity: Entity, depth: number, seen: Set<string>): TreeNode {
-    if (seen.has(entity.qname)) return { entity, depth, children: [] }
-    seen.add(entity.qname)
-    const kids = (childrenOf.get(entity.qname) || []).slice().sort(sortSiblings)
-    return {
-      entity,
-      depth,
-      children: kids.map((k) => build(k, depth + 1, new Set(seen))),
-    }
-  }
-  return roots.slice().sort(sortSiblings).map((r) => build(r, 0, new Set()))
-}
-
-function flattenTree(nodes: TreeNode[]): TreeNode[] {
-  const out: TreeNode[] = []
-  function walk(n: TreeNode) {
-    out.push(n)
-    n.children.forEach(walk)
-  }
-  nodes.forEach(walk)
-  return out
-}
-
-const groups: SidebarGroup[] = nsOrder
-  .filter((prefix) => namespaces.find((n) => n.prefix === prefix))
-  .map((prefix) => {
-    const ns = namespaces.find((n) => n.prefix === prefix)!
-    const ontEntities = visible.filter((e) => e.ontology === prefix)
-    const sections = typeOrder
-      .filter((t) => ontEntities.some((e) => e.type === t))
-      .map((t) => {
-        const matching = ontEntities.filter((e) => e.type === t)
-        const tree = t === 'class'
-          ? buildClassTree(matching)
-          : matching.slice().sort((a, b) => a.label.localeCompare(b.label)).map((e) => ({ entity: e, depth: 0, children: [] }))
-        return {
-          type: t,
-          label: typeMeta[t]?.label || t,
-          tree,
-          flatCount: matching.length,
-        }
+const entitiesByOntology = new Map<string, Entity[]>()
+for (const ns of orderedNamespaces) {
+  entitiesByOntology.set(
+    ns.prefix,
+    visible
+      .filter((e) => e.ontology === ns.prefix)
+      .slice()
+      .sort((a, b) => {
+        // Sort by type (class first, then properties, etc.) then by label
+        const typeOrder = ['ontology', 'class', 'objectProperty', 'datatypeProperty', 'annotationProperty', 'conceptScheme', 'concept', 'individual']
+        const ta = typeOrder.indexOf(a.type)
+        const tb = typeOrder.indexOf(b.type)
+        if (ta !== tb) return (ta === -1 ? 99 : ta) - (tb === -1 ? 99 : tb)
+        return a.label.localeCompare(b.label)
       })
-    return { ns, sections, totalCount: ontEntities.length }
-  })
+  )
+}
+
+const typeCounts: Record<string, number> = {}
+for (const e of visible) typeCounts[e.type] = (typeCounts[e.type] || 0) + 1
+const typeOptions = Object.entries(typeMeta)
+  .filter(([t]) => typeCounts[t])
+  .map(([t, m]) => ({ type: t, label: m.label, count: typeCounts[t] }))
+  .sort((a, b) => a.label.localeCompare(b.label))
 
 const nsColor: Record<string, string> = {
   smart: 'bg-teal-500',
   oiml: 'bg-brand-500',
   'oiml-pubtype': 'bg-amber-500',
   external: 'bg-slate-400',
+}
+
+const nsAccent: Record<string, string> = {
+  smart: 'text-teal-700 dark:text-teal-300',
+  oiml: 'text-brand-700 dark:text-brand-300',
+  'oiml-pubtype': 'text-amber-700 dark:text-amber-300',
 }
 ---
 
@@ -145,15 +99,15 @@ const nsColor: Record<string, string> = {
       <svg class="w-3 h-3 ml-auto transition-transform" data-chevron viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
     </button>
 
-    <div class="ontology-layout__grid grid gap-6 lg:grid-cols-[20rem_minmax(0,1fr)]">
+    <div class="ontology-layout__grid grid gap-6 lg:grid-cols-[22rem_minmax(0,1fr)]">
 
       <!-- ═══ SIDEBAR ═══ -->
       <aside
         id="ontology-sidebar"
-        class="ontology-sidebar lg:sticky lg:top-[5.5rem] lg:max-h-[calc(100vh-7rem)] flex flex-col bp-crosshair bg-paper-soft border border-rule rounded-md overflow-hidden lg:block"
+        class="ontology-sidebar lg:sticky lg:top-[5.5rem] lg:max-h-[calc(100vh-7rem)] flex flex-col bp-crosshair bg-paper-soft border border-rule rounded-md overflow-hidden"
         data-open="false"
       >
-        <!-- Header -->
+        <!-- Search header -->
         <header class="px-4 py-3 border-b border-rule bg-paper-raised">
           <div class="flex items-center justify-between mb-2">
             <span class="bp-coord">§ Ontology</span>
@@ -177,95 +131,62 @@ const nsColor: Record<string, string> = {
             </svg>
             <kbd id="ontology-sidebar-kbd" class="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-mono px-1 py-0.5 border border-rule rounded bg-paper text-ink-muted pointer-events-none">/</kbd>
           </div>
+          <!-- Type chips -->
+          <div class="flex flex-wrap gap-1 mt-2" id="ontology-sidebar-types">
+            <button data-filter-type="" class="is-active text-[10px] px-1.5 py-0.5 rounded border bg-accent text-white border-accent">All <span class="opacity-70">{visible.length}</span></button>
+            {typeOptions.map((t) => (
+              <button data-filter-type={t.type} class="text-[10px] px-1.5 py-0.5 rounded border bg-paper text-ink-soft border-rule hover:border-ink">
+                {t.label} <span class="opacity-60">{t.count}</span>
+              </button>
+            ))}
+          </div>
         </header>
 
-        <!-- Entity tree, grouped by ontology then type -->
+        <!-- Flat list of all entities, grouped by ontology (no collapsing) -->
         <nav class="ontology-sidebar__list flex-1 overflow-y-auto" id="ontology-sidebar-list" aria-label="Ontology entities">
-          {groups.map((group) => {
+          {orderedNamespaces.map((ns) => {
+            const entities = entitiesByOntology.get(ns.prefix) || []
             return (
-              <section
-                class="border-b border-rule last:border-0"
-                data-ontology={group.ns.prefix}
-                data-collapsed="true"
-              >
-                <!-- Ontology header (clickable to collapse) -->
-                <button
-                  type="button"
-                  class="ontology-sidebar__family w-full px-3 py-2 sticky top-0 bg-paper-raised border-b border-rule flex items-center gap-2 z-10 hover:bg-paper text-left bp-focus-ring"
-                  data-family-toggle={group.ns.prefix}
-                  aria-expanded="false"
-                >
-                  <span class={`w-2 h-2 rounded-full ${nsColor[group.ns.prefix]}`}></span>
-                  <span class="font-mono text-[10px] uppercase tracking-[0.1em] text-ink-soft">{group.ns.prefix}</span>
-                  <span class="text-xs text-ink-muted truncate flex-1">{group.ns.title.replace('Ontology', '').replace('Taxonomy', '').trim()}</span>
-                  <span class="bp-coord">{group.totalCount}</span>
-                  <svg class="w-3 h-3 text-ink-muted transition-transform -rotate-90" data-family-chevron viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
-                </button>
-                <div data-family-body={group.ns.prefix} class="hidden">
-                  {group.sections.map((section) => {
-                    const flat = flattenTree(section.tree)
+              <section data-ontology={ns.prefix} class="border-b border-rule last:border-0">
+                <!-- Section header (NOT clickable — always visible) -->
+                <div class="sticky top-0 z-10 flex items-center gap-2 px-3 py-2 bg-paper-raised border-b border-rule">
+                  <span class={`w-2 h-2 rounded-full ${nsColor[ns.prefix]}`}></span>
+                  <span class={`font-mono text-[10px] uppercase tracking-[0.1em] ${nsAccent[ns.prefix]}`}>{ns.prefix}</span>
+                  <span class="text-xs text-ink-muted truncate flex-1">{ns.title.replace('Ontology', '').replace('Taxonomy', '').trim()}</span>
+                  <span class="bp-coord">{entities.length}</span>
+                </div>
+                <ul class="py-1">
+                  {entities.map((e) => {
+                    const isActive = e.slug === activeSlug
                     return (
-                      <div
-                        class="ontology-sidebar__section"
-                        data-section-type={section.type}
-                        data-collapsed="true"
+                      <li
+                        class="ontology-sidebar__entity"
+                        data-qname={e.qname}
+                        data-label={e.label.toLowerCase()}
+                        data-type={e.type}
+                        data-ontology={e.ontology}
+                        data-description={(e.description || '').toLowerCase()}
                       >
-                        <button
-                          type="button"
-                          class="ontology-sidebar__section-head w-full px-3 pt-2 pb-1 flex items-center gap-2 hover:bg-paper text-left bp-focus-ring"
-                          data-section-toggle={section.type}
-                          aria-expanded="false"
+                        <a
+                          href={`/ontology/${e.slug}`}
+                          class={`flex items-start gap-2 py-1 px-3 border-l-2 transition-colors no-underline text-inherit ${
+                            isActive
+                              ? 'bg-accent-soft border-accent'
+                              : 'border-transparent hover:bg-paper-raised'
+                          }`}
+                          data-active={isActive ? 'true' : 'false'}
+                          title={`${typeMeta[e.type]?.label || e.type} — ${e.qname}`}
                         >
-                          <svg class="w-2.5 h-2.5 text-ink-muted transition-transform -rotate-90" data-section-chevron viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
-                          <span class="bp-coord text-ink-muted flex-1">↳ {section.label} · {section.flatCount}</span>
-                        </button>
-                        <ul class="pb-2 hidden" data-section-body={section.type}>
-                          {flat.map((node) => {
-                            const e = node.entity
-                            const isActive = e.slug === activeSlug
-                            const hasChildren = node.children.length > 0
-                            return (
-                              <li
-                                class="ontology-sidebar__entity"
-                                data-qname={e.qname}
-                                data-label={e.label.toLowerCase()}
-                                data-type={e.type}
-                                data-ontology={e.ontology}
-                                data-description={(e.description || '').toLowerCase()}
-                              >
-                                <a
-                                  href={`/ontology/${e.slug}`}
-                                  style={`padding-left: ${0.75 + node.depth * 0.85}rem;`}
-                                  class={`group flex items-start gap-1.5 py-1 pr-3 border-l-2 transition-colors no-underline text-inherit ${
-                                    isActive
-                                      ? 'bg-accent-soft border-accent is-current'
-                                      : 'border-transparent hover:bg-paper-raised'
-                                  }`
-                                  }
-                                  data-active={isActive ? 'true' : 'false'}
-                                  title={`${typeMeta[e.type]?.label || e.type} — ${e.qname}`}
-                                >
-                                  {node.depth > 0 && (
-                                    <span class="text-ink-muted opacity-50 select-none" aria-hidden="true">└</span>
-                                  )}
-                                  <span class="flex-1 min-w-0">
-                                    <span class={`block text-[11px] font-mono truncate ${isActive ? 'text-accent font-semibold' : 'text-ink group-hover:text-accent'}`}>{e.qname.split(':').slice(1).join(':')}</span>
-                                    {node.depth === 0 && (
-                                      <span class="block text-[10px] text-ink-muted truncate">{e.label}</span>
-                                    )}
-                                  </span>
-                                  {hasChildren && (
-                                    <span class="text-[9px] text-ink-muted opacity-60 select-none" aria-hidden="true">{node.children.length}→</span>
-                                  )}
-                                </a>
-                              </li>
-                            )
-                          })}
-                        </ul>
-                      </div>
+                          <span class={`w-1 h-1 mt-1.5 rounded-full shrink-0 ${nsColor[e.ontology] || 'bg-slate-400'}`}></span>
+                          <span class="flex-1 min-w-0">
+                            <span class={`block text-[11px] font-mono truncate ${isActive ? 'text-accent font-semibold' : 'text-ink'}`}>{e.qname.split(':').slice(1).join(':')}</span>
+                            <span class="block text-[9px] text-ink-muted truncate">{e.label} · {typeMeta[e.type]?.label || e.type}</span>
+                          </span>
+                        </a>
+                      </li>
                     )
                   })}
-                </div>
+                </ul>
               </section>
             )
           })}
@@ -274,7 +195,7 @@ const nsColor: Record<string, string> = {
 
         <!-- Footer -->
         <footer class="px-3 py-2 border-t border-rule bg-paper-raised flex items-center justify-between">
-          <span class="bp-coord">{namespaces.length} ontologies</span>
+          <span class="bp-coord">{orderedNamespaces.length} ontologies</span>
           <a href="/ontology/" class="text-[10px] text-accent hover:underline">Overview →</a>
         </footer>
       </aside>
@@ -302,13 +223,11 @@ const nsColor: Record<string, string> = {
         const emptyEl = list && list.querySelector('.ontology-sidebar__empty');
         const sidebar = document.getElementById('ontology-sidebar');
         const toggle = document.getElementById('ontology-sidebar-toggle');
-        const familyToggles = list ? list.querySelectorAll('[data-family-toggle]') : [];
-        const sectionToggles = list ? list.querySelectorAll('[data-section-toggle]') : [];
+        const typeBtns = list ? list.parentElement.parentElement.querySelectorAll('#ontology-sidebar-types [data-filter-type]') : [];
         if (!input || !list) return;
 
         const items = Array.from(list.querySelectorAll('.ontology-sidebar__entity'));
-        const sections = Array.from(list.querySelectorAll('.ontology-sidebar__section'));
-        const ontologyGroups = Array.from(list.querySelectorAll('[data-ontology]'));
+        const sections = Array.from(list.querySelectorAll('[data-ontology]'));
         let currentType = '';
 
         function applyFilters() {
@@ -325,63 +244,39 @@ const nsColor: Record<string, string> = {
             item.style.display = show ? '' : 'none';
             if (show) totalVisible++;
           }
-          // Hide sections and ontology groups with no visible children
-          for (const section of sections) {
-            const visibleChildren = section.querySelectorAll('.ontology-sidebar__entity:not([style*="display: none"])').length
-            section.style.display = visibleChildren > 0 ? '' : 'none';
-          }
-          for (const og of ontologyGroups) {
-            const visibleChildren = og.querySelectorAll('.ontology-sidebar__entity:not([style*="display: none"])').length
-            og.style.display = visibleChildren > 0 ? '' : 'none';
+          // Hide empty sections
+          for (const sec of sections) {
+            const visibleChildren = sec.querySelectorAll('.ontology-sidebar__entity:not([style*="display: none"])').length;
+            sec.style.display = visibleChildren > 0 ? '' : 'none';
           }
           if (countEl) countEl.textContent = String(totalVisible);
           if (emptyEl) emptyEl.classList.toggle('hidden', totalVisible > 0);
-          // When searching, expand all families so results are visible
-          if (q && q.length > 0) {
-            familyToggles.forEach((btn) => expandFamily(btn, true));
-          }
         }
 
-        function expandFamily(btn, forceExpand) {
-          const body = list.querySelector(`[data-family-body="${btn.getAttribute('data-family-toggle')}"]`);
-          if (!body) return;
-          const isCollapsed = btn.getAttribute('aria-expanded') === 'false';
-          const shouldExpand = forceExpand != null ? forceExpand : isCollapsed;
-          btn.setAttribute('aria-expanded', shouldExpand ? 'true' : 'false');
-          body.classList.toggle('hidden', !shouldExpand);
-          const chevron = btn.querySelector('[data-family-chevron]');
-          if (chevron) chevron.style.transform = shouldExpand ? '' : 'rotate(-90deg)';
-          // Persist across SPA navigations within the session.
-          try {
-            sessionStorage.setItem(
-              'ontology-sidebar-family-' + btn.getAttribute('data-family-toggle'),
-              shouldExpand ? '1' : '0'
-            );
-          } catch {}
+        input.addEventListener('input', applyFilters);
+        if (kbd) {
+          input.addEventListener('focus', () => kbd.classList.add('hidden'));
+          input.addEventListener('blur', () => { if (!input.value) kbd.classList.remove('hidden'); });
         }
 
-        function expandSection(btn) {
-          const body = list.querySelector(`[data-section-body="${btn.getAttribute('data-section-toggle')}"]`);
-          if (!body) return;
-          const isCollapsed = btn.getAttribute('aria-expanded') === 'false';
-          const shouldExpand = !isCollapsed;
-          btn.setAttribute('aria-expanded', shouldExpand ? 'true' : 'false');
-          body.classList.toggle('hidden', !shouldExpand);
-          const chevron = btn.querySelector('[data-section-chevron]');
-          if (chevron) chevron.style.transform = shouldExpand ? '' : 'rotate(-90deg)';
-          try {
-            sessionStorage.setItem(
-              'ontology-sidebar-section-' + btn.getAttribute('data-section-toggle'),
-              shouldExpand ? '1' : '0'
-            );
-          } catch {}
+        // Type chips
+        const typeContainer = document.getElementById('ontology-sidebar-types');
+        if (typeContainer) {
+          typeContainer.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-filter-type]');
+            if (!btn) return;
+            currentType = btn.getAttribute('data-filter-type') || '';
+            typeContainer.querySelectorAll('[data-filter-type]').forEach((b) => {
+              b.classList.remove('is-active', 'bg-accent', 'text-white', 'border-accent');
+              b.classList.add('bg-paper', 'text-ink-soft', 'border-rule');
+            });
+            btn.classList.add('is-active', 'bg-accent', 'text-white', 'border-accent');
+            btn.classList.remove('bg-paper', 'text-ink-soft', 'border-rule');
+            applyFilters();
+          });
         }
 
-        // Wire family/section toggles
-        familyToggles.forEach((btn) => btn.addEventListener('click', () => expandFamily(btn)));
-        sectionToggles.forEach((btn) => btn.addEventListener('click', () => expandSection(btn)));
-
-        // Mobile drawer toggle (hidden on lg+)
+        // Mobile drawer
         if (toggle && sidebar) {
           toggle.addEventListener('click', () => {
             const open = sidebar.getAttribute('data-open') === 'true';
@@ -392,13 +287,7 @@ const nsColor: Record<string, string> = {
           });
         }
 
-        // Search + keyboard shortcuts
-        input.addEventListener('input', applyFilters);
-        if (kbd) {
-          input.addEventListener('focus', () => kbd.classList.add('hidden'));
-          input.addEventListener('blur', () => { if (!input.value) kbd.classList.remove('hidden'); });
-        }
-
+        // Global "/" focus, ESC clear
         document.addEventListener('keydown', (e) => {
           if (e.key === '/' && document.activeElement !== input && !e.target.matches('input, textarea, select')) {
             e.preventDefault();
@@ -411,32 +300,11 @@ const nsColor: Record<string, string> = {
           }
         });
 
-        // Scroll-spy: highlight the active entity row. Per user direction
-        // ("not expanding, only collapsible"), families/sections are NOT
-        // auto-expanded. Restore the user's session-persisted expand state
-        // instead — that way their previous choices survive navigation.
-        familyToggles.forEach((btn) => {
-          const key = 'ontology-sidebar-family-' + btn.getAttribute('data-family-toggle');
-          let saved = null;
-          try { saved = sessionStorage.getItem(key); } catch {}
-          if (saved === '1') expandFamily(btn, true);
-        });
-        sectionToggles.forEach((btn) => {
-          const key = 'ontology-sidebar-section-' + btn.getAttribute('data-section-toggle');
-          let saved = null;
-          try { saved = sessionStorage.getItem(key); } catch {}
-          if (saved === '1') expandSection(btn);
-        });
-
-        // If the active entity is currently visible (because the user
-        // expanded its family/section), scroll it into view. Otherwise
-        // leave it untouched — the user can expand to find it.
+        // Scroll active into view
         const active = list.querySelector('[data-active="true"]');
         if (active) {
           const li = active.closest('.ontology-sidebar__entity');
-          if (li && li.offsetParent !== null) {
-            li.scrollIntoView({ block: 'center' });
-          }
+          if (li) li.scrollIntoView({ block: 'center' });
         }
       }
 
@@ -448,7 +316,6 @@ const nsColor: Record<string, string> = {
 
   <style is:global>
     .ontology-layout { position: relative; padding-top: 1rem; padding-bottom: 2rem; }
-    /* Sidebar is collapsed by default on mobile; lg+ always visible. */
     @media (max-width: 1023px) {
       .ontology-sidebar {
         max-height: 0;
