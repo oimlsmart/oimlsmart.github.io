@@ -102,6 +102,97 @@ const children = computed(() =>
   entity.value ? allEntities.filter((e) => e.parent === entity.value!.qname && knownPrefixes.has(e.ontology)) : []
 )
 
+// All descendants (transitive closure of children)
+const allDescendants = computed(() => {
+  if (!entity.value) return []
+  const start = entity.value.qname
+  const result: Entity[] = []
+  const queue: string[] = [start]
+  const seen = new Set<string>([start])
+  while (queue.length) {
+    const qn = queue.shift()!
+    for (const e of allEntities) {
+      if (e.parent === qn && knownPrefixes.has(e.ontology) && !seen.has(e.qname)) {
+        seen.add(e.qname)
+        result.push(e)
+        queue.push(e.qname)
+      }
+    }
+  }
+  return result
+})
+
+// Ancestor chain (root → immediate parent)
+const ancestors = computed(() => {
+  if (!entity.value) return []
+  const chain: Entity[] = []
+  let cur: Entity | undefined = entity.value
+  const seen = new Set<string>()
+  while (cur?.parent && !seen.has(cur.qname)) {
+    seen.add(cur.qname)
+    const parent = findByQname(cur.parent)
+    if (!parent) break
+    chain.unshift(parent)
+    cur = parent
+  }
+  return chain
+})
+
+// For a CLASS: properties where this class is in the domain
+const propertiesOfThisClass = computed(() => {
+  if (!entity.value || entity.value.type !== 'class') return []
+  const qn = entity.value.qname
+  return allEntities.filter(
+    (e) =>
+      (e.type === 'objectProperty' || e.type === 'datatypeProperty' || e.type === 'annotationProperty') &&
+      e.domain?.includes(qn) &&
+      knownPrefixes.has(e.ontology)
+  )
+})
+
+// Properties inherited from ancestor classes
+const inheritedProperties = computed(() => {
+  if (!entity.value || entity.value.type !== 'class') return []
+  const ancestorQnames = ancestors.value.map((a) => a.qname)
+  return allEntities.filter(
+    (e) => {
+      if (e.type !== 'objectProperty' && e.type !== 'datatypeProperty' && e.type !== 'annotationProperty') return false
+      if (!knownPrefixes.has(e.ontology)) return false
+      // Domain includes some ancestor AND not already in propertiesOfThisClass
+      const inSelf = e.domain?.includes(entity.value!.qname)
+      if (inSelf) return false
+      return e.domain?.some((d) => ancestorQnames.includes(d))
+    }
+  )
+})
+
+// For a CLASS: individuals that are instanceOf this class (or any descendant)
+const instancesOfClass = computed(() => {
+  if (!entity.value || entity.value.type !== 'class') return []
+  const targetQnames = new Set<string>([entity.value.qname, ...allDescendants.value.map((e) => e.qname)])
+  return allEntities.filter(
+    (e) => e.type === 'individual' &&
+      knownPrefixes.has(e.ontology) &&
+      e.instanceOf?.some((t) => targetQnames.has(t))
+  )
+})
+
+// For any entity: where used (back-references)
+const whereUsed = computed(() => {
+  if (!entity.value) return []
+  const qn = entity.value.qname
+  const results: Array<{ entity: Entity; context: string }> = []
+  for (const e of allEntities) {
+    if (e.qname === qn || !knownPrefixes.has(e.ontology)) continue
+    if (e.parent === qn) results.push({ entity: e, context: 'subClassOf' })
+    if (e.domain?.includes(qn)) results.push({ entity: e, context: 'domain' })
+    if (e.range?.includes(qn)) results.push({ entity: e, context: 'range' })
+    if (e.scheme === qn) results.push({ entity: e, context: 'inScheme' })
+    if (e.instanceOf?.includes(qn)) results.push({ entity: e, context: 'type' })
+  }
+  return results
+})
+
 const siblings = computed(() => {
   if (!entity.value?.parent) return []
   return allEntities.filter(
@@ -250,10 +341,113 @@ onMounted(() => {
       </div>
     </section>
 
+    <!-- Properties of this class (Ontospy-style) -->
+    <section v-if="propertiesOfThisClass.length" class="mb-6 bp-reveal bp-crosshair bg-paper-soft border border-rule rounded-md p-5">
+      <h2 class="bp-section-anchor mb-3">
+        <span class="bp-section-anchor__num">§ 04</span>
+        <span>Properties of this class</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">{{ propertiesOfThisClass.length }} direct</span>
+      </h2>
+      <div class="overflow-x-auto rounded-md border border-rule">
+        <table class="w-full text-xs">
+          <thead>
+            <tr class="bg-paper border-b border-rule">
+              <th class="text-left px-3 py-1.5 font-semibold text-ink-muted">Property</th>
+              <th class="text-left px-3 py-1.5 font-semibold text-ink-muted">Type</th>
+              <th class="text-left px-3 py-1.5 font-semibold text-ink-muted">Range</th>
+              <th class="text-left px-3 py-1.5 font-semibold text-ink-muted">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="p in propertiesOfThisClass" :key="p.qname" class="border-b border-rule last:border-0">
+              <td class="px-3 py-1.5"><a :href="`/ontology/${p.slug}`" class="text-accent hover:underline font-medium font-mono">{{ p.qname }}</a></td>
+              <td class="px-3 py-1.5">
+                <span class="bp-chip">{{ typeMeta[p.type]?.label || p.type }}</span>
+              </td>
+              <td class="px-3 py-1.5 text-ink-muted font-mono text-[10px]">
+                <template v-if="p.range?.length">
+                  <a v-for="r, i in p.range" :key="r" :href="linkTo(r) || '#'" class="text-ink-soft hover:text-accent">{{ r }}<span v-if="i < p.range.length - 1">, </span></a>
+                </template>
+                <span v-else>—</span>
+              </td>
+              <td class="px-3 py-1.5 text-ink-muted truncate max-w-xs">{{ p.description || '—' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Inherited properties -->
+    <section v-if="inheritedProperties.length" class="mb-6 bp-reveal bp-crosshair bg-paper-soft border border-rule rounded-md p-5">
+      <h2 class="bp-section-anchor mb-3">
+        <span class="bp-section-anchor__num">§ 05</span>
+        <span>Inherited properties</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">{{ inheritedProperties.length }} from {{ ancestors.length }} ancestor{{ ancestors.length > 1 ? 's' : '' }}</span>
+      </h2>
+      <p class="text-xs text-ink-muted mb-3">Properties whose domain is an ancestor class — instances of <code class="font-mono text-accent">{{ entity.qname }}</code> inherit these.</p>
+      <div class="flex flex-wrap gap-1.5">
+        <a v-for="p in inheritedProperties" :key="p.qname" :href="`/ontology/${p.slug}`"
+           class="bp-chip bp-card-hover hover:border-accent hover:text-accent inline-flex items-center gap-1.5">
+          <span class="w-1 h-1 rounded-full bg-ink-muted"></span>
+          {{ p.qname }}
+        </a>
+      </div>
+    </section>
+
+    <!-- All descendants -->
+    <section v-if="allDescendants.length > children.length" class="mb-6 bp-reveal bp-crosshair bg-paper-soft border border-rule rounded-md p-5">
+      <h2 class="bp-section-anchor mb-3">
+        <span class="bp-section-anchor__num">§ 06</span>
+        <span>All descendants</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">{{ allDescendants.length }} transitive</span>
+      </h2>
+      <div class="flex flex-wrap gap-1.5">
+        <a v-for="d in allDescendants" :key="d.qname" :href="`/ontology/${d.slug}`"
+           class="bp-chip bp-card-hover hover:border-accent hover:text-accent">{{ d.qname }}</a>
+      </div>
+    </section>
+
+    <!-- Instances -->
+    <section v-if="instancesOfClass.length" class="mb-6 bp-reveal bp-crosshair bg-paper-soft border border-rule rounded-md p-5">
+      <h2 class="bp-section-anchor mb-3">
+        <span class="bp-section-anchor__num">§ 07</span>
+        <span>Instances</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">{{ instancesOfClass.length }} individuals</span>
+      </h2>
+      <div class="flex flex-wrap gap-1.5">
+        <a v-for="inst in instancesOfClass" :key="inst.qname" :href="`/ontology/${inst.slug}`"
+           class="bp-chip bp-card-hover hover:border-accent hover:text-accent inline-flex items-center gap-1.5">
+          <span class="w-1 h-1 rounded-full bg-amber-500"></span>
+          {{ inst.label }}
+        </a>
+      </div>
+    </section>
+
+    <!-- Where used (back-references) -->
+    <section v-if="whereUsed.length" class="mb-6 bp-reveal bp-crosshair bg-paper-soft border border-rule rounded-md p-5">
+      <h2 class="bp-section-anchor mb-3">
+        <span class="bp-section-anchor__num">§ 08</span>
+        <span>Where used</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">{{ whereUsed.length }} references</span>
+      </h2>
+      <ul class="space-y-1 text-xs">
+        <li v-for="wu in whereUsed.slice(0, 16)" :key="`${wu.entity.qname}-${wu.context}`">
+          <a :href="`/ontology/${wu.entity.slug}`" class="text-accent hover:underline font-mono">{{ wu.entity.qname }}</a>
+          <span class="text-ink-muted ml-2">via {{ wu.context }}</span>
+        </li>
+      </ul>
+      <p v-if="whereUsed.length > 16" class="text-[10px] text-ink-muted mt-2">+ {{ whereUsed.length - 16 }} more</p>
+    </section>
+
     <!-- See also -->
     <section v-if="relatedBySeeAlso.length" class="mb-6 bp-reveal bp-crosshair bg-paper-soft border border-rule rounded-md p-5">
       <h2 class="bp-section-anchor mb-3">
-        <span class="bp-section-anchor__num">§ 04</span>
+        <span class="bp-section-anchor__num">§ 09</span>
         <span>See Also</span>
       </h2>
       <div class="grid grid-cols-1 gap-2">

@@ -2470,7 +2470,7 @@ export const ontologyNamespaces = [
     "prefix": "smart",
     "uri": "https://w3id.org/standards/smart/ontologies/core/",
     "title": "IEC-ISO SMART Core Ontology",
-    "description": "Foundational ontology for representing machine-actionable standards content, as defined by the IEC/ISO SMART project. Provides the root Entity class and the Provision, PublicationDocument, and TermEntry models that OIML extends.",
+    "description": "Reference ontology for machine-actionable standards content, as defined by the IEC/ISO SMART project. Provides the Entity, Provision, PublicationDocument, and TermEntry primitives. The OIML Core Ontology is parallel to this — feature-equivalent where applicable, a superset for OIML's certification domain, and explicitly mapped rather than a subclass extension.",
     "color": "teal",
     "version": "2.0.0"
   },
@@ -2478,7 +2478,7 @@ export const ontologyNamespaces = [
     "prefix": "oiml",
     "uri": "https://w3id.org/standards/oiml/ontologies/core/",
     "title": "OIML Core Ontology",
-    "description": "Core ontology for OIML International Recommendations. Defines classes and properties shared across all OIML standards, including the standard structure (Requirements, Tests, Test Report, Forms) and certification lifecycle (Authority, Certificate, Audit, Calibration).",
+    "description": "Core ontology for OIML International Recommendations. Defines classes and properties shared across all OIML standards: standard structure (Requirements, Tests, Test Report, Forms) and certification lifecycle (Authority, Certificate, Audit, Calibration). Parallel to — and a superset of — the IEC-ISO SMART Core Ontology; the two are explicitly mapped rather than related by subclassing.",
     "color": "brand",
     "version": "1.0.0"
   },
