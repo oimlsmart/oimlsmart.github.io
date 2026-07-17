@@ -9,7 +9,7 @@
 
 <https://w3id.org/standards/smart/ontologies/core/> rdf:type owl:Ontology ;
   dcterms:title "IEC-ISO SMART Core Ontology"@en ;
-  dcterms:description "Core ontology for representing (SMART) machine-actionable content of standards, as defined by the IEC/ISO SMART project. Provides foundational classes (Entity, PublicationDocument, Provision, Requirement, Organization, Activity, TermEntry) that domain-specific ontologies (e.g. OIML Core) extend via subclassing."@en ;
+  dcterms:description "Reference ontology for machine-actionable standards content, as defined by the IEC/ISO SMART project. Provides the Entity, Provision, PublicationDocument, and TermEntry primitives. Parallel to — and a subset of — the OIML Core Ontology, which carries an explicit equivalence mapping for the overlapping vocabulary rather than a subclassing relationship."@en ;
   dcterms:source <https://www.iec.ch/dyn/www/f?p=103:7:::::FSP_ORG_ID,FSP_LANG_ID:1277,25> ;
   owl:versionInfo "2.0.0" .
 

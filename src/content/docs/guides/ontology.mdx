@@ -12,11 +12,11 @@ import LayerDiagram from '../../../components/diagrams/LayerDiagram.astro'
 
 <LayerDiagram
   layers={[
-    { index: '01', title: 'Domain Ontology (per Recommendation)', lines: ['oiml-r60: LoadCell, AccuracyClass, MpeTier', 'oiml-r144: DiaphragmGasMeter, FlowRateClass'], note: 'Subclasses OIML Core.', accent: 'amber' },
-    { index: '02', title: 'OIML Core Ontology', lines: ['Recommendation, Requirement, ConformanceTest, Form', 'Certificate, IssuingAuthority, TestLaboratory'], note: 'Shared across all OIML standards.', accent: 'brand' },
-    { index: '03', title: 'SMART Core Ontology', lines: ['QuantitativeProperty, MeasurementUnit, Dimension', 'ClassificationScheme, CompliantWith'], note: 'Cross-programme foundation.', accent: 'teal' },
+    { index: '01', title: 'Domain Ontology (per Recommendation)', lines: ['oiml-r60: LoadCell, AccuracyClass, MpeTier', 'oiml-r144: DiaphragmGasMeter, FlowRateClass'], note: 'Specialises OIML Core.', accent: 'amber' },
+    { index: '02', title: 'OIML Core Ontology', lines: ['Recommendation, Requirement, ConformanceTest, Form', 'Certificate, IssuingAuthority, TestLaboratory'], note: 'Superset; maps to SMART Core.', accent: 'brand' },
+    { index: '03', title: 'IEC-ISO SMART Core Ontology', lines: ['QuantitativeProperty, MeasurementUnit, Dimension', 'ClassificationScheme, CompliantWith'], note: 'Parallel — feature-equivalent.', accent: 'teal' },
   ]}
-  arrows={['extends', 'imports']}
+  arrows={['specialises', 'maps to (parallel)']}
 />
 
 ## SMART Core
