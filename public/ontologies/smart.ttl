@@ -1,0 +1,71 @@
+@prefix : <https://w3id.org/standards/smart/ontologies/core/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix smart: <https://w3id.org/standards/smart/ontologies/core/> .
+@base <https://w3id.org/standards/smart/ontologies/core/> .
+
+<https://w3id.org/standards/smart/ontologies/core/> rdf:type owl:Ontology ;
+  dcterms:title "IEC-ISO SMART Core Ontology"@en ;
+  dcterms:description "Reference ontology for machine-actionable standards content, as defined by the IEC/ISO SMART project. Provides the Entity, Provision, PublicationDocument, and TermEntry primitives. Parallel to — and a subset of — the OIML Core Ontology, which carries an explicit equivalence mapping for the overlapping vocabulary rather than a subclassing relationship."@en ;
+  dcterms:source <https://www.iec.ch/dyn/www/f?p=103:7:::::FSP_ORG_ID,FSP_LANG_ID:1277,25> ;
+  owl:versionInfo "2.0.0" .
+
+#################################################################
+#    Foundational Classes
+#################################################################
+
+smart:Entity rdf:type owl:Class ;
+  rdfs:label "Entity"@en ;
+  skos:definition "The root class of the SMART Core Ontology. Every domain object that can be identified, described, and referenced within a machine-actionable standard is an Entity."@en .
+
+smart:PublicationDocument rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Publication Document"@en ;
+  skos:definition "A document published by a standards body. International Recommendations, Guides, Vocabularies, and other publication types are subclasses."@en .
+
+smart:PublicationDocumentType rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Publication Document Type"@en ;
+  skos:definition "The type of a publication document (e.g. International Recommendation, Guide, Vocabulary). Used as the value of publication-type taxonomies."@en .
+
+smart:TermEntry rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Term Entry"@en ;
+  skos:definition "A terminological entry grouping one or more designations (terms, symbols, abbreviations) for a single concept, together with its definition and grammatical/contextual metadata, in accordance with ISO 10241-1."@en .
+
+smart:Organization rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Organization"@en ;
+  skos:definition "An organization — a body such as a standards body, regulatory authority, conformity-assessment body, or manufacturer, that has a role in the publication, certification, or conformity-assessment lifecycle."@en .
+
+smart:Activity rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Activity"@en ;
+  skos:definition "An activity or process carried out by an Organization, such as certification, auditing, or testing."@en .
+
+smart:ExternalConstraint rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "External Constraint"@en ;
+  skos:definition "A constraint that originates outside the provision itself — typically a classification-dimension applicability that restricts a provision to a subset of a device family (e.g. accuracy class, technology, humidity class)."@en .
+
+#################################################################
+#    Provision Model
+#################################################################
+
+smart:Provision rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Provision"@en ;
+  skos:definition "A single normative provision in a standard — a requirement, recommendation, permission, or statement, expressed in a machine-actionable form."@en .
+
+smart:Requirement rdf:type owl:Class ;
+  rdfs:subClassOf smart:Provision ;
+  rdfs:label "Requirement"@en ;
+  skos:definition "A provision that expresses an obligation: the agent subject to the requirement must perform (or refrain from) the action or satisfy the condition."@en .
+
+smart:ProvisionSet rdf:type owl:Class ;
+  rdfs:subClassOf smart:Entity ;
+  rdfs:label "Provision Set"@en ;
+  skos:definition "A named grouping of related provisions in a standard — e.g. a Requirements Class grouping related requirements, or a Conformance Class grouping related conformance tests."@en .
