@@ -471,8 +471,12 @@ onMounted(() => {
         <div class="flex-1 min-w-0">
           <span class="bp-coord block mb-1">Member of</span>
           <div :class="nsColor.accent" class="font-serif text-lg font-semibold mb-1">{{ currentNamespace.title }}</div>
-          <div class="bp-uri" :data-copy="currentNamespace.uri">
+          <div class="bp-uri">
             <code>{{ currentNamespace.uri }}</code>
+            <button @click="copyToClipboard(currentNamespace.uri, 'ns-uri')" class="bp-uri__copy" :aria-label="copied === 'ns-uri' ? 'Copied' : 'Copy namespace URI'">
+              <span v-if="copied === 'ns-uri'">✓</span>
+              <svg v-else width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+            </button>
           </div>
           <p class="text-xs text-ink-muted mt-2">v{{ currentNamespace.version }}</p>
         </div>
@@ -488,8 +492,12 @@ onMounted(() => {
           <span v-else>Copy</span>
         </button>
       </div>
-      <div class="bp-uri" :data-copy="entity.uri">
+      <div class="bp-uri">
         <code>{{ entity.uri }}</code>
+        <button @click="copyToClipboard(entity.uri, 'uri')" class="bp-uri__copy" :aria-label="copied === 'uri' ? 'Copied' : 'Copy URI'">
+          <span v-if="copied === 'uri'">✓</span>
+          <svg v-else width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+        </button>
       </div>
     </section>
   </div>
