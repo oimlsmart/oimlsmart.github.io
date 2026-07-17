@@ -1,24 +1,28 @@
 # Lychee link checker configuration
 # https://lychee.link.cli.rs/
 
-# Absolute paths like /docs/foo resolve against the live site URL,
-# so routes served by sibling GitHub Pages sites (e.g. /vocab/, /resolutions/)
-# are checked against their real public URLs instead of looking for a file
-# in dist/ that doesn't exist locally.
-base_url = "https://www.oimlsmart.org"
-
 # Accept 200..399 status codes as valid (including redirects)
 accept = ["100", "200", "201", "202", "203", "204", "206", "207", "301", "302", "303", "304", "307", "308"]
 
-# Exclude these patterns from checking (no noise from internal links
-# or known-good external URLs with aggressive redirect chains)
+# Exclude these patterns from checking.
+#
+# NOTE: we do NOT set `base_url` here. Doing so makes lychee resolve every
+# absolute path against the live site, which 404s on the build-specific
+# hashed assets under `/_astro/*` (their hashes change per build).
+# Instead, sibling-Pages-site URLs (/vocab/, /resolutions/) are excluded
+# from the local-build check and verified separately against the live
+# site by the `live-sibling-pages` step in `.github/workflows/links.yml`.
 exclude = [
   "localhost",
   "127.0.0.1",
   "https://www.oiml.org",
-  # Cross-app nav target — served by the smart repo's authenticated browser
-  # app, not deployable from here. (Contrast: /vocab/ and /resolutions/ are
-  # real sibling Pages sites and MUST be checked — see base_url above.)
+  # Sibling GitHub Pages sites on the same domain — checked live by CI.
+  "/vocab",
+  "/vocab/",
+  "/resolutions",
+  "/resolutions/",
+  # Cross-app nav target — served by the smart repo's authenticated
+  # browser app, not deployable from here.
   "/concepts-management",
   "/concepts-management/",
   # Source repo is private during the pilot — link is for reference, not public.

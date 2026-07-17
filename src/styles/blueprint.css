@@ -210,17 +210,17 @@
 }
 
 /* ── Reveal on scroll (IntersectionObserver driven) ──────────────────
-   Add .bp-reveal to fade up; pair with .is-visible via JS. ─ */
+   Content is VISIBLE by default — we never hide it. The motion is a
+   subtle translate that hints at depth without risking an invisible
+   page if JS fails or an observer never fires. Add .bp-reveal to
+   nudge content into place; pair with .is-visible via JS. */
 .bp-reveal {
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity var(--bp-transition-slow),
-    transform var(--bp-transition-slow);
+  opacity: 1;
+  transform: translateY(6px);
+  transition: transform var(--bp-transition-slow);
   transition-delay: var(--reveal-delay, 0ms);
 }
 .bp-reveal.is-visible {
-  opacity: 1;
   transform: translateY(0);
 }
 
@@ -327,16 +327,18 @@
   to { stroke-dashoffset: 0; }
 }
 
-/* ── Hero stagger (sequential fade-up) ───────────────────────────────
-   Apply .hero-stagger + style="--stagger-i:N"; a global rule keys off it. ─ */
+/* ── Hero stagger (sequential entrance) ──────────────────────────────
+   Apply .hero-stagger + style="--stagger-i:N"; visible by default —
+   only the translate animates, so the hero is readable even if the
+   animation never fires. */
 .hero-stagger {
-  opacity: 0;
-  transform: translateY(8px);
+  opacity: 1;
+  transform: translateY(6px);
   animation: bp-stagger-in 0.7s var(--bp-transition-slow) forwards;
   animation-delay: calc(var(--stagger-i, 0) * 90ms + 100ms);
 }
 @keyframes bp-stagger-in {
-  to { opacity: 1; transform: translateY(0); }
+  to { transform: translateY(0); }
 }
 
 /* ── Pulse indicator (small calibration status dot) ────────────────── */

@@ -59,6 +59,22 @@ jobs:
           output: link-check-results.md
           format: markdown
 
+      - name: Verify sibling GitHub Pages sites are live
+        run: |
+          set -euo pipefail
+          # Sibling Pages sites on the same domain — not in this repo's dist/
+          # so the file-based check above excludes them. Verify them live instead.
+          for url in \
+            https://www.oimlsmart.org/vocab/ \
+            https://www.oimlsmart.org/resolutions/; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L "$url")
+            echo "$url → HTTP $code"
+            if [ "$code" != "200" ]; then
+              echo "::error::Sibling Pages site $url returned HTTP $code"
+              exit 1
+            fi
+          done
+
       - name: Upload link check results
         if: always()
         uses: actions/upload-artifact@v4
