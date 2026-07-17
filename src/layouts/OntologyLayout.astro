@@ -71,6 +71,27 @@ const typeOptions = Object.entries(typeMeta)
   .map(([t, m]) => ({ type: t, label: m.label, count: typeCounts[t] }))
   .sort((a, b) => a.label.localeCompare(b.label))
 
+// Per-ontology type breakdown — used to render subgroups under each family.
+const typeOrderForGrouping = ['class', 'objectProperty', 'datatypeProperty', 'annotationProperty', 'shape', 'conceptScheme', 'concept', 'individual', 'ontology']
+const entitiesByOntologyByType = new Map<string, Array<{ type: string; label: string; entities: Entity[] }>>()
+for (const ns of orderedNamespaces) {
+  const ontEntities = visible.filter((e) => e.ontology === ns.prefix)
+  const byType: Array<{ type: string; label: string; entities: Entity[] }> = []
+  for (const t of typeOrderForGrouping) {
+    const matching = ontEntities
+      .filter((e) => e.type === t)
+      .slice()
+      .sort((a, b) => a.label.localeCompare(b.label))
+    if (matching.length === 0) continue
+    byType.push({
+      type: t,
+      label: typeMeta[t]?.label || t,
+      entities: matching,
+    })
+  }
+  entitiesByOntologyByType.set(ns.prefix, byType)
+}
+
 const nsColor: Record<string, string> = {
   smart: 'bg-teal-500',
   oiml: 'bg-brand-500',
@@ -146,6 +167,10 @@ const nsAccent: Record<string, string> = {
         <nav class="ontology-sidebar__list flex-1 overflow-y-auto" id="ontology-sidebar-list" aria-label="Ontology entities">
           {orderedNamespaces.map((ns) => {
             const entities = entitiesByOntology.get(ns.prefix) || []
+            const byType = entitiesByOntologyByType.get(ns.prefix) || []
+            const overviewHref = ns.prefix === 'smart'
+              ? '/ontology/smart-Entity'
+              : `/ontology/${ns.prefix}-`
             return (
               <details
                 open
@@ -159,38 +184,57 @@ const nsAccent: Record<string, string> = {
                   <span class="bp-coord">{entities.length}</span>
                   <svg class="w-3 h-3 text-ink-muted transition-transform group-open:rotate-0 -rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
                 </summary>
-                <ul class="py-1">
-                  {entities.map((e) => {
-                    const isActive = e.slug === activeSlug
-                    return (
-                      <li
-                        class="ontology-sidebar__entity"
-                        data-qname={e.qname}
-                        data-label={e.label.toLowerCase()}
-                        data-type={e.type}
-                        data-ontology={e.ontology}
-                        data-description={(e.description || '').toLowerCase()}
-                      >
-                        <a
-                          href={`/ontology/${e.slug}`}
-                          class={`flex items-start gap-2 py-1 px-3 border-l-2 transition-colors no-underline text-inherit ${
-                            isActive
-                              ? 'bg-accent-soft border-accent'
-                              : 'border-transparent hover:bg-paper-raised'
-                          }`}
-                          data-active={isActive ? 'true' : 'false'}
-                          title={`${typeMeta[e.type]?.label || e.type} — ${e.qname}`}
-                        >
-                          <span class={`w-1 h-1 mt-1.5 rounded-full shrink-0 ${nsColor[e.ontology] || 'bg-slate-400'}`}></span>
-                          <span class="flex-1 min-w-0">
-                            <span class={`block text-[11px] font-mono truncate ${isActive ? 'text-accent font-semibold' : 'text-ink'}`}>{e.qname.split(':').slice(1).join(':')}</span>
-                            <span class="block text-[9px] text-ink-muted truncate">{e.label} · {typeMeta[e.type]?.label || e.type}</span>
-                          </span>
-                        </a>
-                      </li>
-                    )
-                  })}
-                </ul>
+                <!-- Overview link (always visible when family is open) -->
+                <a
+                  href={overviewHref}
+                  class="flex items-center gap-2 px-3 py-1.5 border-b border-rule bg-paper hover:bg-paper-raised no-underline text-inherit group"
+                >
+                  <span class={`w-1.5 h-1.5 rounded-full ${nsColor[ns.prefix]} opacity-70`}></span>
+                  <span class={`text-[11px] font-medium ${nsAccent[ns.prefix]} group-hover:translate-x-0.5 transition-transform`}>Overview</span>
+                  <svg class="w-3 h-3 text-ink-muted ml-auto group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7" /></svg>
+                </a>
+                <!-- Type subcategories -->
+                {byType.map((sub) => (
+                  <details class="ontology-sidebar__typegroup border-b border-rule last:border-0 group/type">
+                    <summary class="flex items-center gap-2 px-3 py-1.5 cursor-pointer hover:bg-paper-raised list-none bp-focus-ring">
+                      <svg class="w-2.5 h-2.5 text-ink-muted transition-transform group-open/type:rotate-0 -rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
+                      <span class="bp-coord text-ink-muted flex-1">{sub.label}</span>
+                      <span class="text-[9px] text-ink-muted opacity-70">{sub.entities.length}</span>
+                    </summary>
+                    <ul class="py-1">
+                      {sub.entities.map((e) => {
+                        const isActive = e.slug === activeSlug
+                        return (
+                          <li
+                            class="ontology-sidebar__entity"
+                            data-qname={e.qname}
+                            data-label={e.label.toLowerCase()}
+                            data-type={e.type}
+                            data-ontology={e.ontology}
+                            data-description={(e.description || '').toLowerCase()}
+                          >
+                            <a
+                              href={`/ontology/${e.slug}`}
+                              style="padding-left: 2.25rem;"
+                              class={`flex items-start gap-2 py-1 pr-3 border-l-2 transition-colors no-underline text-inherit ${
+                                isActive
+                                  ? 'bg-accent-soft border-accent'
+                                  : 'border-transparent hover:bg-paper-raised'
+                              }`}
+                              data-active={isActive ? 'true' : 'false'}
+                              title={`${typeMeta[e.type]?.label || e.type} — ${e.qname}`}
+                            >
+                              <span class={`w-1 h-1 mt-1.5 rounded-full shrink-0 ${nsColor[e.ontology] || 'bg-slate-400'}`}></span>
+                              <span class="flex-1 min-w-0">
+                                <span class={`block text-[11px] font-mono truncate ${isActive ? 'text-accent font-semibold' : 'text-ink'}`}>{e.qname.split(':').slice(1).join(':')}</span>
+                              </span>
+                            </a>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </details>
+                ))}
               </details>
             )
           })}
@@ -318,8 +362,10 @@ const nsAccent: Record<string, string> = {
   <style is:global>
     .ontology-layout { position: relative; padding-top: 1rem; padding-bottom: 2rem; }
     /* Native details/summary styling — kill the default marker */
-    .ontology-sidebar__family > summary { list-style: none; }
-    .ontology-sidebar__family > summary::-webkit-details-marker { display: none; }
+    .ontology-sidebar__family > summary,
+    .ontology-sidebar__typegroup > summary { list-style: none; }
+    .ontology-sidebar__family > summary::-webkit-details-marker,
+    .ontology-sidebar__typegroup > summary::-webkit-details-marker { display: none; }
     @media (max-width: 1023px) {
       .ontology-sidebar {
         max-height: 0;
