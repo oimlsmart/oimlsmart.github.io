@@ -21,6 +21,8 @@ exclude = [
   "/vocab/",
   "/resolutions",
   "/resolutions/",
+  "/publications",
+  "/publications/",
   # Cross-app nav target — served by the smart repo's authenticated
   # browser app, not deployable from here.
   "/concepts-management",

@@ -66,7 +66,8 @@ jobs:
           # so the file-based check above excludes them. Verify them live instead.
           for url in \
             https://www.oimlsmart.org/vocab/ \
-            https://www.oimlsmart.org/resolutions/; do
+            https://www.oimlsmart.org/resolutions/ \
+            https://www.oimlsmart.org/publications/; do
             code=$(curl -s -o /dev/null -w '%{http_code}' -L "$url")
             echo "$url → HTTP $code"
             if [ "$code" != "200" ]; then
