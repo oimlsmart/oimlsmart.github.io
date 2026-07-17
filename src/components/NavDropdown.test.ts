@@ -10,10 +10,10 @@ describe('nav-config', () => {
       expect(ids).toEqual(['resources', 'about', 'internal'])
     })
 
-    it('resources dropdown contains recommendations, library, vocabularies, docs', () => {
+    it('resources dropdown contains expected links in correct order', () => {
       const resources = NAV_DROPDOWNS.find(d => d.id === 'resources')!
       const labels = resources.links.map(l => l.label)
-      expect(labels).toEqual(['Recommendations', 'Library', 'Vocabularies', 'Resolutions', 'Ontology', 'Developer Docs'])
+      expect(labels).toEqual(['Recommendations', 'Library', 'Ontology', 'Developer Docs', 'Publications', 'Vocabularies', 'Resolutions'])
     })
 
     it('internal dropdown has variant "internal"', () => {
