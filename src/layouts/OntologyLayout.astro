@@ -175,6 +175,7 @@ const nsAccent: Record<string, string> = {
               <details
                 open
                 data-ontology={ns.prefix}
+                data-persist-key={`family-${ns.prefix}`}
                 class="ontology-sidebar__family border-b border-rule last:border-0 group"
               >
                 <summary class="sticky top-0 z-10 flex items-center gap-2 px-3 py-2 bg-paper-raised border-b border-rule cursor-pointer hover:bg-paper list-none bp-focus-ring">
@@ -195,7 +196,11 @@ const nsAccent: Record<string, string> = {
                 </a>
                 <!-- Type subcategories -->
                 {byType.map((sub) => (
-                  <details class="ontology-sidebar__typegroup border-b border-rule last:border-0 group/type">
+                  <details
+                    open
+                    data-persist-key={`type-${ns.prefix}-${sub.type}`}
+                    class="ontology-sidebar__typegroup border-b border-rule last:border-0 group/type"
+                  >
                     <summary class="flex items-center gap-2 px-3 py-1.5 cursor-pointer hover:bg-paper-raised list-none bp-focus-ring">
                       <svg class="w-2.5 h-2.5 text-ink-muted transition-transform group-open/type:rotate-0 -rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" /></svg>
                       <span class="bp-coord text-ink-muted flex-1">{sub.label}</span>
@@ -351,6 +356,20 @@ const nsAccent: Record<string, string> = {
         // Sidebar should not move on click — don't scroll active into view.
         // (Previously: scrollIntoView on bind caused the sidebar to jump
         // after navigation. Removed per user direction.)
+
+        // Persist <details> open/closed state across navigations.
+        // Without this, every page load resets to the default `open`
+        // state and the sidebar appears to "collapse" when clicking an entity.
+        const allDetails = list.querySelectorAll('details[data-persist-key]');
+        allDetails.forEach((d) => {
+          const key = 'ontology-details-' + d.getAttribute('data-persist-key');
+          let saved = null;
+          try { saved = sessionStorage.getItem(key); } catch {}
+          if (saved !== null) d.open = saved === '1';
+          d.addEventListener('toggle', () => {
+            try { sessionStorage.setItem(key, d.open ? '1' : '0'); } catch {}
+          });
+        });
       }
 
       window.__ontologySidebarBind = bind;
@@ -361,11 +380,15 @@ const nsAccent: Record<string, string> = {
 
   <style is:global>
     .ontology-layout { position: relative; padding-top: 1rem; padding-bottom: 2rem; }
-    /* Native details/summary styling — kill the default marker */
-    .ontology-sidebar__family > summary,
-    .ontology-sidebar__typegroup > summary { list-style: none; }
-    .ontology-sidebar__family > summary::-webkit-details-marker,
-    .ontology-sidebar__typegroup > summary::-webkit-details-marker { display: none; }
+    /* Kill the default <summary> disclosure triangle on every browser.
+       Tailwind's list-none maps to list-style-type:none which doesn't
+       suppress the marker; we need list-style:none (shorthand) + the
+       ::marker and ::-webkit-details-marker pseudos to cover all engines. */
+    .ontology-sidebar summary {
+      list-style: none;
+    }
+    .ontology-sidebar summary::-webkit-details-marker { display: none; }
+    .ontology-sidebar summary::marker { content: ""; }
     @media (max-width: 1023px) {
       .ontology-sidebar {
         max-height: 0;

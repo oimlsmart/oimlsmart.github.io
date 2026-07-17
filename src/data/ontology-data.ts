@@ -2365,7 +2365,7 @@ export const ontologyEntities = [
     "label": "Publication Document Type",
     "description": "The type of a publication document (e.g. International Recommendation, Guide, Vocabulary). Used as the value of publication-type taxonomies.",
     "ontology": "smart",
-    "type": "external",
+    "type": "class",
     "parent": "smart:Entity"
   },
   {
@@ -2375,7 +2375,7 @@ export const ontologyEntities = [
     "label": "Entity",
     "description": "The root class of the SMART Core Ontology. Every domain object that can be identified, described, and referenced within a machine-actionable standard is an Entity.",
     "ontology": "smart",
-    "type": "external"
+    "type": "class"
   },
   {
     "uri": "https://w3id.org/standards/smart/ontologies/core/PublicationDocument",
@@ -2384,7 +2384,7 @@ export const ontologyEntities = [
     "label": "Publication Document",
     "description": "A document published by a standards body. International Recommendations, Guides, Vocabularies, and other publication types are subclasses.",
     "ontology": "smart",
-    "type": "external",
+    "type": "class",
     "parent": "smart:Entity"
   },
   {
@@ -2394,7 +2394,7 @@ export const ontologyEntities = [
     "label": "Provision Set",
     "description": "A named grouping of related provisions in a standard — e.g. a Requirements Class grouping related requirements, or a Conformance Class grouping related conformance tests.",
     "ontology": "smart",
-    "type": "external",
+    "type": "class",
     "parent": "smart:Entity"
   },
   {
@@ -2404,7 +2404,7 @@ export const ontologyEntities = [
     "label": "Provision",
     "description": "A single normative provision in a standard — a requirement, recommendation, permission, or statement, expressed in a machine-actionable form.",
     "ontology": "smart",
-    "type": "external",
+    "type": "class",
     "parent": "smart:Entity"
   },
   {
@@ -2414,7 +2414,7 @@ export const ontologyEntities = [
     "label": "External Constraint",
     "description": "A constraint that originates outside the provision itself — typically a classification-dimension applicability that restricts a provision to a subset of a device family (e.g. accuracy class, technology, humidity class).",
     "ontology": "smart",
-    "type": "external",
+    "type": "class",
     "parent": "smart:Entity"
   },
   {
@@ -2424,7 +2424,7 @@ export const ontologyEntities = [
     "label": "Requirement",
     "description": "A provision that expresses an obligation: the agent subject to the requirement must perform (or refrain from) the action or satisfy the condition.",
     "ontology": "smart",
-    "type": "external",
+    "type": "class",
     "parent": "smart:Provision"
   },
   {
@@ -2434,7 +2434,7 @@ export const ontologyEntities = [
     "label": "Term Entry",
     "description": "A terminological entry grouping one or more designations (terms, symbols, abbreviations) for a single concept, together with its definition and grammatical/contextual metadata, in accordance with ISO 10241-1.",
     "ontology": "smart",
-    "type": "external",
+    "type": "class",
     "parent": "smart:Entity"
   },
   {
@@ -2444,7 +2444,7 @@ export const ontologyEntities = [
     "label": "Organization",
     "description": "An organization — a body such as a standards body, regulatory authority, conformity-assessment body, or manufacturer, that has a role in the publication, certification, or conformity-assessment lifecycle.",
     "ontology": "smart",
-    "type": "external",
+    "type": "class",
     "parent": "smart:Entity"
   },
   {
@@ -2454,7 +2454,7 @@ export const ontologyEntities = [
     "label": "Activity",
     "description": "An activity or process carried out by an Organization, such as certification, auditing, or testing.",
     "ontology": "smart",
-    "type": "external",
+    "type": "class",
     "parent": "smart:Entity"
   }
 ] as const
