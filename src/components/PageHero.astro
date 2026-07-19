@@ -3,12 +3,10 @@ interface Props {
   title?: string
   lede?: string
   description?: string
-  eyebrow?: string
-  anchor?: string
   align?: 'left' | 'center'
 }
 
-const { title, lede, description, eyebrow, anchor = '§', align = 'left' } = Astro.props
+const { title, lede, description, align = 'left' } = Astro.props
 const displayLede = lede ?? description
 const alignClass = align === 'center' ? 'text-center mx-auto items-center' : ''
 ---
