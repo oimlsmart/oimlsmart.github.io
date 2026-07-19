@@ -1,46 +1,32 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
 import {
-  ontologyEntities,
+  type OntologyEntity as Entity,
+  type NamespaceEntry,
+  allEntities,
+  namespaces,
+  knownPrefixes,
+  entityByQname,
+  linkTo,
+  paletteForNamespace,
   ontologyTypeMeta,
-  ontologyNamespaces,
-} from '../../data/ontology-data'
-
-interface Entity {
-  uri: string
-  qname: string
-  slug: string
-  label: string
-  description: string
-  ontology: string
-  type: string
-  scopeNote?: string
-  altLabel?: string
-  seeAlso?: string[]
-  parent?: string
-  domain?: string[]
-  range?: string[]
-  scheme?: string
-  instanceOf?: string[]
-  topConcepts?: string[]
-  properties?: Record<string, string[]>
-  reference?: string
-}
-
-interface NamespaceEntry {
-  prefix: string
-  uri: string
-  title: string
-  description: string
-  color: string
-  version: string
-}
+  typeLabel,
+  typeColorClass,
+} from '../../data/ontology-domain'
+import {
+  ancestors as graphAncestors,
+  descendants as graphDescendants,
+  children as graphChildren,
+  siblings as graphSiblings,
+  propertiesOfClass,
+  inheritedProperties as graphInheritedProperties,
+  instancesOf,
+  whereUsed as graphWhereUsed,
+  relatedBySeeAlso as graphRelatedBySeeAlso,
+} from '../../lib/ontology-graph'
 
 const props = defineProps<{ slug: string }>()
 const typeMeta = ontologyTypeMeta as Record<string, { label: string; color: string; colorDot: string }>
-const allEntities = ontologyEntities as readonly Entity[]
-const namespaces = ontologyNamespaces as readonly NamespaceEntry[]
-const knownPrefixes = new Set(namespaces.map((n) => n.prefix))
 
 const copied = ref<string | null>(null)
 
@@ -53,155 +39,46 @@ const currentNamespace = computed(() => {
   return namespaces.find((n) => n.prefix === entity.value!.ontology)
 })
 
-const namespaceColors: Record<string, { chip: string; dot: string; accent: string; bar: string }> = {
-  brand: {
-    chip: 'bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-200',
-    dot: 'bg-brand-500',
-    accent: 'text-brand-700 dark:text-brand-300',
-    bar: 'from-brand-500/15 to-brand-500/0',
-  },
-  teal: {
-    chip: 'bg-teal-50 text-teal-700 dark:bg-teal-900/40 dark:text-teal-200',
-    dot: 'bg-teal-500',
-    accent: 'text-teal-700 dark:text-teal-300',
-    bar: 'from-teal-500/15 to-teal-500/0',
-  },
-  amber: {
-    chip: 'bg-amber-50 text-amber-700 dark:bg-amber-900/40 dark:text-amber-200',
-    dot: 'bg-amber-500',
-    accent: 'text-amber-700 dark:text-amber-300',
-    bar: 'from-amber-500/15 to-amber-500/0',
-  },
-  slate: {
-    chip: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
-    dot: 'bg-slate-400',
-    accent: 'text-slate-700 dark:text-slate-300',
-    bar: 'from-slate-500/15 to-slate-500/0',
-  },
-}
-
-const nsColor = computed(() => {
-  const colorName = currentNamespace.value?.color || 'slate'
-  return namespaceColors[colorName] || namespaceColors.slate
-})
-
-function findByQname(qname: string): Entity | undefined {
-  return allEntities.find((e) => e.qname === qname)
-}
-
-function linkTo(qname: string): string {
-  const e = findByQname(qname)
-  return e ? `/ontology/${e.slug}` : ''
-}
+const nsColor = computed(() => paletteForNamespace(entity.value?.ontology || ''))
 
 const parentEntity = computed(() =>
-  entity.value?.parent ? findByQname(entity.value.parent) : undefined
+  entity.value?.parent ? entityByQname(entity.value.parent) : undefined
 )
 
 const children = computed(() =>
-  entity.value ? allEntities.filter((e) => e.parent === entity.value!.qname && knownPrefixes.has(e.ontology)) : []
+  entity.value ? graphChildren(entity.value, allEntities) : []
 )
 
-// All descendants (transitive closure of children)
-const allDescendants = computed(() => {
-  if (!entity.value) return []
-  const start = entity.value.qname
-  const result: Entity[] = []
-  const queue: string[] = [start]
-  const seen = new Set<string>([start])
-  while (queue.length) {
-    const qn = queue.shift()!
-    for (const e of allEntities) {
-      if (e.parent === qn && knownPrefixes.has(e.ontology) && !seen.has(e.qname)) {
-        seen.add(e.qname)
-        result.push(e)
-        queue.push(e.qname)
-      }
-    }
-  }
-  return result
-})
+const allDescendants = computed(() =>
+  entity.value ? graphDescendants(entity.value, allEntities) : []
+)
 
-// Ancestor chain (root → immediate parent)
-const ancestors = computed(() => {
-  if (!entity.value) return []
-  const chain: Entity[] = []
-  let cur: Entity | undefined = entity.value
-  const seen = new Set<string>()
-  while (cur?.parent && !seen.has(cur.qname)) {
-    seen.add(cur.qname)
-    const parent = findByQname(cur.parent)
-    if (!parent) break
-    chain.unshift(parent)
-    cur = parent
-  }
-  return chain
-})
+const ancestors = computed(() =>
+  entity.value ? graphAncestors(entity.value, allEntities) : []
+)
 
-// For a CLASS: properties where this class is in the domain
-const propertiesOfThisClass = computed(() => {
-  if (!entity.value || entity.value.type !== 'class') return []
-  const qn = entity.value.qname
-  return allEntities.filter(
-    (e) =>
-      (e.type === 'objectProperty' || e.type === 'datatypeProperty' || e.type === 'annotationProperty') &&
-      e.domain?.includes(qn) &&
-      knownPrefixes.has(e.ontology)
-  )
-})
+const propertiesOfThisClass = computed(() =>
+  entity.value ? propertiesOfClass(entity.value, allEntities) : []
+)
 
-// Properties inherited from ancestor classes
-const inheritedProperties = computed(() => {
-  if (!entity.value || entity.value.type !== 'class') return []
-  const ancestorQnames = ancestors.value.map((a) => a.qname)
-  return allEntities.filter(
-    (e) => {
-      if (e.type !== 'objectProperty' && e.type !== 'datatypeProperty' && e.type !== 'annotationProperty') return false
-      if (!knownPrefixes.has(e.ontology)) return false
-      // Domain includes some ancestor AND not already in propertiesOfThisClass
-      const inSelf = e.domain?.includes(entity.value!.qname)
-      if (inSelf) return false
-      return e.domain?.some((d) => ancestorQnames.includes(d))
-    }
-  )
-})
+const inheritedProperties = computed(() =>
+  entity.value ? graphInheritedProperties(entity.value, allEntities) : []
+)
 
-// For a CLASS: individuals that are instanceOf this class (or any descendant)
-const instancesOfClass = computed(() => {
-  if (!entity.value || entity.value.type !== 'class') return []
-  const targetQnames = new Set<string>([entity.value.qname, ...allDescendants.value.map((e) => e.qname)])
-  return allEntities.filter(
-    (e) => e.type === 'individual' &&
-      knownPrefixes.has(e.ontology) &&
-      e.instanceOf?.some((t) => targetQnames.has(t))
-  )
-})
+const instancesOfClass = computed(() =>
+  entity.value ? instancesOf(entity.value, allEntities) : []
+)
 
-// For any entity: where used (back-references)
-const whereUsed = computed(() => {
-  if (!entity.value) return []
-  const qn = entity.value.qname
-  const results: Array<{ entity: Entity; context: string }> = []
-  for (const e of allEntities) {
-    if (e.qname === qn || !knownPrefixes.has(e.ontology)) continue
-    if (e.parent === qn) results.push({ entity: e, context: 'subClassOf' })
-    if (e.domain?.includes(qn)) results.push({ entity: e, context: 'domain' })
-    if (e.range?.includes(qn)) results.push({ entity: e, context: 'range' })
-    if (e.scheme === qn) results.push({ entity: e, context: 'inScheme' })
-    if (e.instanceOf?.includes(qn)) results.push({ entity: e, context: 'type' })
-  }
-  return results
-})
+const whereUsed = computed(() =>
+  entity.value ? graphWhereUsed(entity.value, allEntities) : []
+)
 
-const siblings = computed(() => {
-  if (!entity.value?.parent) return []
-  return allEntities.filter(
-    (e) => e.parent === entity.value!.parent && e.qname !== entity.value!.qname && knownPrefixes.has(e.ontology)
-  ).slice(0, 8)
-})
+const siblings = computed(() =>
+  entity.value ? graphSiblings(entity.value, allEntities) : []
+)
 
 const relatedBySeeAlso = computed(() =>
-  entity.value?.seeAlso?.map((q) => findByQname(q)).filter((e): e is Entity => Boolean(e)) || []
+  entity.value ? graphRelatedBySeeAlso(entity.value, allEntities) : []
 )
 
 async function copyToClipboard(text: string, key: string) {
