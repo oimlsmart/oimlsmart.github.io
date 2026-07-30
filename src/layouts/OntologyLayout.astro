@@ -6,26 +6,19 @@
 // without hiding anything.
 
 import Base from './Base.astro'
-import { ontologyEntities, ontologyNamespaces, ontologyTypeMeta } from '../data/ontology-data'
-
-interface Entity {
-  uri: string
-  qname: string
-  slug: string
-  label: string
-  description: string
-  ontology: string
-  type: string
-}
-
-interface NamespaceEntry {
-  prefix: string
-  title: string
-  color: string
-  version: string
-  uri: string
-  description: string
-}
+import {
+  type OntologyEntity as Entity,
+  type NamespaceEntry,
+  visibleEntities,
+  namespaces,
+  ontologyTypeMeta,
+  nsDot as nsColor,
+  nsAccent,
+  TYPE_ORDER,
+  shortLabel,
+  localName,
+  typeLabel,
+} from '../data/ontology-domain'
 
 interface Props {
   title: string
@@ -35,11 +28,8 @@ interface Props {
 
 const { title, description, activeSlug = '' } = Astro.props
 
-const all = ontologyEntities as readonly Entity[]
-const namespaces = ontologyNamespaces as readonly NamespaceEntry[]
 const typeMeta = ontologyTypeMeta as Record<string, { label: string; color: string; colorDot: string }>
-const knownPrefixes = new Set(namespaces.map((n) => n.prefix))
-const visible = all.filter((e) => knownPrefixes.has(e.ontology))
+const visible = visibleEntities
 
 const nsOrder = ['smart', 'oiml', 'oiml-pubtype']
 const orderedNamespaces = nsOrder
@@ -54,10 +44,8 @@ for (const ns of orderedNamespaces) {
       .filter((e) => e.ontology === ns.prefix)
       .slice()
       .sort((a, b) => {
-        // Sort by type (class first, then properties, etc.) then by label
-        const typeOrder = ['ontology', 'class', 'objectProperty', 'datatypeProperty', 'annotationProperty', 'conceptScheme', 'concept', 'individual']
-        const ta = typeOrder.indexOf(a.type)
-        const tb = typeOrder.indexOf(b.type)
+        const ta = TYPE_ORDER.indexOf(a.type)
+        const tb = TYPE_ORDER.indexOf(b.type)
         if (ta !== tb) return (ta === -1 ? 99 : ta) - (tb === -1 ? 99 : tb)
         return a.label.localeCompare(b.label)
       })
@@ -72,12 +60,11 @@ const typeOptions = Object.entries(typeMeta)
   .sort((a, b) => a.label.localeCompare(b.label))
 
 // Per-ontology type breakdown — used to render subgroups under each family.
-const typeOrderForGrouping = ['class', 'objectProperty', 'datatypeProperty', 'annotationProperty', 'shape', 'conceptScheme', 'concept', 'individual', 'ontology']
 const entitiesByOntologyByType = new Map<string, Array<{ type: string; label: string; entities: Entity[] }>>()
 for (const ns of orderedNamespaces) {
   const ontEntities = visible.filter((e) => e.ontology === ns.prefix)
   const byType: Array<{ type: string; label: string; entities: Entity[] }> = []
-  for (const t of typeOrderForGrouping) {
+  for (const t of TYPE_ORDER) {
     const matching = ontEntities
       .filter((e) => e.type === t)
       .slice()
@@ -90,19 +77,6 @@ for (const ns of orderedNamespaces) {
     })
   }
   entitiesByOntologyByType.set(ns.prefix, byType)
-}
-
-const nsColor: Record<string, string> = {
-  smart: 'bg-teal-500',
-  oiml: 'bg-brand-500',
-  'oiml-pubtype': 'bg-amber-500',
-  external: 'bg-slate-400',
-}
-
-const nsAccent: Record<string, string> = {
-  smart: 'text-teal-700 dark:text-teal-300',
-  oiml: 'text-brand-700 dark:text-brand-300',
-  'oiml-pubtype': 'text-amber-700 dark:text-amber-300',
 }
 ---
 

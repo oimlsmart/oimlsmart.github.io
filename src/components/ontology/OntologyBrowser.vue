@@ -1,44 +1,17 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import {
-  ontologyEntities,
-  ontologyNamespaces,
+  type OntologyEntity as Entity,
+  type NamespaceEntry,
+  allEntities,
+  namespaces,
+  visibleEntities,
+  paletteForNamespace,
   ontologyTypeMeta,
-} from '../../data/ontology-data'
-
-interface Entity {
-  uri: string
-  qname: string
-  slug: string
-  label: string
-  description: string
-  ontology: string
-  type: string
-  scopeNote?: string
-  altLabel?: string
-  seeAlso?: string[]
-  parent?: string
-  domain?: string[]
-  range?: string[]
-  scheme?: string
-  instanceOf?: string[]
-  topConcepts?: string[]
-}
-
-interface NamespaceEntry {
-  prefix: string
-  uri: string
-  title: string
-  description: string
-  color: string
-  version: string
-}
+  shortLabel as domainShortLabel,
+} from '../../data/ontology-domain'
 
 const typeMeta = ontologyTypeMeta as Record<string, { label: string; color: string; colorDot: string }>
-const allEntities = ontologyEntities as readonly Entity[]
-const namespaces = ontologyNamespaces as readonly NamespaceEntry[]
-const knownPrefixes = new Set(namespaces.map((n) => n.prefix))
-const visibleEntities = computed(() => allEntities.filter((e) => knownPrefixes.has(e.ontology)))
 
 const search = ref('')
 const filterType = ref<string>('')
@@ -46,54 +19,17 @@ const filterNamespace = ref<string>('')
 const activeSlug = ref<string>('')
 const searchInputRef = ref<HTMLInputElement | null>(null)
 
-// 3-accent palette — see TODO.onto/09
-const namespaceColors: Record<string, { chip: string; chipActive: string; dot: string; border: string; headerAccent: string; bar: string }> = {
-  brand: {
-    chip: 'bg-brand-50 text-brand-700 dark:bg-brand-900/40 dark:text-brand-200',
-    chipActive: 'bg-brand-600 text-white border-brand-600',
-    dot: 'bg-brand-500',
-    border: 'border-l-brand-400',
-    headerAccent: 'text-brand-700 dark:text-brand-300',
-    bar: 'from-brand-500/10 to-brand-500/0',
-  },
-  teal: {
-    chip: 'bg-teal-50 text-teal-700 dark:bg-teal-900/40 dark:text-teal-200',
-    chipActive: 'bg-teal-600 text-white border-teal-600',
-    dot: 'bg-teal-500',
-    border: 'border-l-teal-400',
-    headerAccent: 'text-teal-700 dark:text-teal-300',
-    bar: 'from-teal-500/10 to-teal-500/0',
-  },
-  amber: {
-    chip: 'bg-amber-50 text-amber-700 dark:bg-amber-900/40 dark:text-amber-200',
-    chipActive: 'bg-amber-600 text-white border-amber-600',
-    dot: 'bg-amber-500',
-    border: 'border-l-amber-400',
-    headerAccent: 'text-amber-700 dark:text-amber-300',
-    bar: 'from-amber-500/10 to-amber-500/0',
-  },
-  slate: {
-    chip: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
-    chipActive: 'bg-slate-700 text-white border-slate-700',
-    dot: 'bg-slate-400',
-    border: 'border-l-slate-300',
-    headerAccent: 'text-slate-700 dark:text-slate-300',
-    bar: 'from-slate-500/10 to-slate-500/0',
-  },
-}
-
 function nsColor(prefix: string) {
-  const ns = namespaces.find((n) => n.prefix === prefix)
-  return namespaceColors[ns?.color || 'slate'] || namespaceColors.slate
+  return paletteForNamespace(prefix)
 }
 
 function shortLabel(title: string): string {
-  return title.replace('Ontology', '').replace('Taxonomy', '').trim()
+  return domainShortLabel(title)
 }
 
 const typeOptions = computed(() => {
   const types = new Map<string, number>()
-  for (const e of visibleEntities.value) {
+  for (const e of visibleEntities) {
     if (!typeMeta[e.type]) continue
     types.set(e.type, (types.get(e.type) || 0) + 1)
   }
@@ -103,7 +39,7 @@ const typeOptions = computed(() => {
 })
 
 const filtered = computed(() => {
-  let list = visibleEntities.value
+  let list = visibleEntities
   if (filterNamespace.value) {
     list = list.filter((e) => e.ontology === filterNamespace.value || e.qname.startsWith(filterNamespace.value + ':'))
   }
@@ -124,14 +60,14 @@ const filtered = computed(() => {
 const namespaceGroups = computed(() => {
   const groups: Array<{ ns: NamespaceEntry; entities: Entity[]; total: number }> = []
   for (const ns of namespaces) {
-    const all = visibleEntities.value.filter((e) => e.ontology === ns.prefix || e.qname.startsWith(ns.prefix + ':'))
+    const all = visibleEntities.filter((e) => e.ontology === ns.prefix || e.qname.startsWith(ns.prefix + ':'))
     const entities = filtered.value.filter((e) => e.ontology === ns.prefix || e.qname.startsWith(ns.prefix + ':'))
     if (entities.length > 0) groups.push({ ns, entities, total: all.length })
   }
   return groups
 })
 
-const totalVisible = computed(() => visibleEntities.value.length)
+const totalVisible = computed(() => visibleEntities.length)
 const visibleCount = computed(() => filtered.value.length)
 const hasFilters = computed(() => !!(search.value || filterType.value || filterNamespace.value))
 
@@ -264,7 +200,7 @@ onBeforeUnmount(() => {
         <div :class="`absolute -left-6 top-0 bottom-0 w-1 rounded-full bg-gradient-to-b ${nsColor(group.ns.prefix).bar}`" aria-hidden="true"></div>
         <div class="flex items-center gap-2 flex-wrap mb-2">
           <span class="w-2.5 h-2.5 rounded-full" :class="nsColor(group.ns.prefix).dot"></span>
-          <h2 :class="['font-serif text-xl font-semibold', nsColor(group.ns.prefix).headerAccent]">
+          <h2 :class="['font-serif text-xl font-semibold', nsColor(group.ns.prefix).accent]">
             {{ group.ns.title }}
           </h2>
           <code class="text-xs text-ink-muted font-mono">{{ group.ns.prefix }}:</code>
