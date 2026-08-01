@@ -10,8 +10,8 @@
 /** Gate numbers as stated by the SSOT architecture doc (for-agents.md). */
 export const GATE_NUMBERS = {
   packages: 28,
-  vitestTests: 4041,
-  vitestFiles: 236,
+  vitestTests: 4044,
+  vitestFiles: 237,
   e2e: '57/57',
   validateErrors: 0,
   validateWarnings: 488,
