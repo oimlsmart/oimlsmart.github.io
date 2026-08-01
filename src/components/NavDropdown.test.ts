@@ -17,7 +17,7 @@ describe('nav-config', () => {
         '/platform',
         '/programs/oiml-smart',
         '/architecture',
-        'https://primmel.github.io/primmel-oiml-smart/',
+        'https://primmel.github.io/primmel-smart-docs/',
       ])
     })
 

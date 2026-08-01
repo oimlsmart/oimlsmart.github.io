@@ -33,9 +33,9 @@ export const PLATFORM_REPOS: readonly PlatformRepo[] = [
   { repo: 'primmel/sst', role: 'the SST framework: kind-agnostic runtime, shell, bench, specs' },
   { repo: 'oimlsmart/sst-instruments', role: 'the OIML instrument library for the SST (kinds, instances, the composite)' },
   {
-    repo: 'primmel/primmel-oiml-smart',
+    repo: 'primmel/primmel-smart-docs',
     role: 'the published docs site (the volumes, the demo manual)',
-    href: 'https://primmel.github.io/primmel-oiml-smart/',
+    href: 'https://primmel.github.io/primmel-smart-docs/',
   },
   { repo: 'primmel/primmel', role: 'the predecessor language (v2; v3 is a strict superset)' },
 ]
@@ -60,7 +60,7 @@ export const EIGHT_WORDS = [
   { word: 'process', kind: 'sort', gloss: 'a transition reified as an object' },
 ] as const
 
-const DOCS = 'https://primmel.github.io/primmel-oiml-smart'
+const DOCS = 'https://primmel.github.io/primmel-smart-docs'
 
 /** The docs federation — links only, never duplicated content. */
 export const FEDERATION = [
