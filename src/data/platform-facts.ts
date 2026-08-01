@@ -30,7 +30,8 @@ export interface PlatformRepo {
 export const PLATFORM_REPOS: readonly PlatformRepo[] = [
   { repo: 'oimlsmart/smart', role: 'the platform: Primmel packages (SSOT), generated data trees, the app, the pipelines' },
   { repo: 'primmel/primmel-ts', role: 'the kernel: parser, linter (C1–C99), coverage calculus, diff' },
-  { repo: 'oimlsmart/sim-instruments', role: 'standalone simulated instruments (/twin + /world)' },
+  { repo: 'primmel/sst', role: 'the SST framework: kind-agnostic runtime, shell, bench, specs' },
+  { repo: 'oimlsmart/sst-instruments', role: 'the OIML instrument library for the SST (kinds, instances, the composite)' },
   {
     repo: 'primmel/primmel-oiml-smart',
     role: 'the published docs site (the volumes, the demo manual)',
