@@ -48,10 +48,12 @@ const features = [
 ]
 
 const audiencePaths = [
-  { num: 'i', title: 'For OIML Member States', description: 'Understand what SMART means for national legal metrology programmes and how to participate in the technical committees shaping the SMART agenda.', link: '/about/what-is-smart' },
-  { num: 'ii', title: 'For Standards Developers', description: 'Author new SMART International Recommendations in YAML using the developer guides, schemas, and the Primmel modelling language.', link: '/docs/guides/getting-started' },
-  { num: 'iii', title: 'For OIML-CS Participants', description: 'Issuing Authorities, Test Laboratories, and Manufacturers use the digital certification tools for end-to-end OIML-CS workflows.', link: '/oiml-cs' },
-  { num: 'iv', title: 'For Metrology Professionals', description: 'Browse the structured library of OIML documents, requirements, and ontology terms across all modelled Recommendations.', link: '/library' },
+  { num: 'i', title: 'For Member States & NMIs', description: 'Executable Recommendations, monitorable compliance, and a tiered adoption program for legal-metrology authorities.', link: '/about/audiences/member-states' },
+  { num: 'ii', title: 'For Manufacturers', description: 'Publish a reference model of your instrument, ship a SMART twin, and certify continuously instead of episodically.', link: '/about/audiences/manufacturers' },
+  { num: 'iii', title: 'For Test Laboratories', description: 'Structured test runs, evidence captured once at the bench, reports generated — rehearsed on the simulator first.', link: '/about/audiences/laboratories' },
+  { num: 'iv', title: 'For Issuing Authorities', description: 'The OIML-CS as a digital workflow: applications to certificates, every verdict computed, every document traceable.', link: '/about/audiences/issuing-authorities' },
+  { num: 'v', title: 'For Instrument Users', description: 'Continuous compliance for the instruments you depend on — query the twin, read the evidence stream.', link: '/about/audiences/instrument-users' },
+  { num: 'vi', title: 'For Educators & Students', description: 'The classroom: certify a simulated load cell before you ever touch a real instrument.', link: '/about/audiences/educators' },
 ]
 ---
 
@@ -339,10 +341,10 @@ const audiencePaths = [
           <span class="bp-section-anchor__num">§ 06</span>
           <span>Audience Paths</span>
           <span class="bp-section-anchor__line"></span>
-          <span class="bp-coord">Internal Review</span>
+          <span class="bp-coord">Six seats</span>
         </div>
-        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Internal review paths</h2>
-        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">This site supports ongoing internal review of the OIML SMART pilot. OIML Member States and Corresponding Members are invited to contact OIML directly for engagement.</p>
+        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Who OIML SMART is for</h2>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">The program touches every role in legal metrology — and for each role it changes something specific. Pick your seat: the pain as it exists today, the mechanism that removes it, the proof you can check.</p>
       </div>
       <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
         {audiencePaths.map((path, i) => (

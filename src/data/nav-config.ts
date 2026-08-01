@@ -56,6 +56,7 @@ export const NAV_DROPDOWNS: readonly NavDropdownConfig[] = [
     variant: 'default',
     links: [
       { label: 'What is OIML SMART?', href: '/about/what-is-smart' },
+      { label: 'Who it is for', href: '/about/audiences' },
       { label: 'Why SMART', href: '/about/why-smart' },
       { label: 'How It Works', href: '/about/how-it-works' },
       { label: 'Technology', href: '/about/technology' },
