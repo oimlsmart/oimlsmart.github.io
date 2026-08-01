@@ -28,16 +28,18 @@ export interface PlatformRepo {
 }
 
 export const PLATFORM_REPOS: readonly PlatformRepo[] = [
-  { repo: 'oimlsmart/smart', role: 'the platform: Primmel packages (SSOT), generated data trees, the app, the pipelines' },
-  { repo: 'primmel/primmel-ts', role: 'the kernel: parser, linter (C1–C99), coverage calculus, diff' },
-  { repo: 'primmel/sst', role: 'the SST framework: kind-agnostic runtime, shell, bench, specs' },
-  { repo: 'oimlsmart/sst-instruments', role: 'the OIML instrument library for the SST (kinds, instances, the composite)' },
+  { repo: 'oimlsmart/smart', role: 'the platform: Primmel packages (SSOT), generated data trees, the app, the pipelines (private — cited, never linked)' },
+  { repo: 'primmel/primmel-ts', role: 'the kernel: parser, linter (C1–C99), coverage calculus, diff', href: 'https://github.com/primmel/primmel-ts' },
+  { repo: 'primmel/sst', role: 'the SST framework: kind-agnostic runtime, shell, bench, specs', href: 'https://github.com/primmel/sst' },
+  { repo: 'oimlsmart/sst-instruments', role: 'the OIML instrument library for the SST (kinds, instances, the composite)', href: 'https://github.com/oimlsmart/sst-instruments' },
+  { repo: 'oimlsmart/cnml', role: 'the OIML CNML project: the certificate format on Confium Mode 3', href: 'https://github.com/oimlsmart/cnml' },
   {
     repo: 'primmel/primmel-smart-docs',
-    role: 'the published docs site (the volumes, the demo manual)',
+    role: 'the published docs federation (the volumes, the demo manual)',
     href: 'https://primmel.github.io/primmel-smart-docs/',
   },
   { repo: 'primmel/primmel', role: 'the predecessor language (v2; v3 is a strict superset)' },
+  { repo: 'oimlsmart/smart-classroom-r60', role: 'the OIML classroom viewer (private — cited, never linked)' },
 ]
 
 /** The Recommendations modelled in the program (oiml-r* packages). */
