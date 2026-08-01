@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="900" height="640" fill="#ffffff"/>
+  <text x="450" y="32" text-anchor="middle" font-size="19" font-weight="600" fill="#1e293b">The target — the ladder, scalable to N programs</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Layer 1: Ribose products -->
+  <rect x="30" y="56" width="840" height="96" rx="12" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="450" y="78" text-anchor="middle" font-size="13" font-weight="700" fill="#166534">Ribose products (program-agnostic)</text>
+  <rect x="60" y="90" width="370" height="48" rx="8" fill="#ffffff" stroke="#86efac"/>
+  <text x="245" y="110" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">github.com/primmel</text>
+  <text x="245" y="125" text-anchor="middle" font-size="9" fill="#15803d">primmel-ts · editor · primmel.github.io · spec</text>
+  <rect x="470" y="90" width="370" height="48" rx="8" fill="#ffffff" stroke="#86efac"/>
+  <text x="655" y="110" text-anchor="middle" font-size="11" font-weight="700" fill="#166534">github.com/confium</text>
+  <text x="655" y="125" text-anchor="middle" font-size="9" fill="#15803d">confium · confium-ruby · specs · confium.github.io</text>
+
+  <!-- Layer 2: the platform -->
+  <rect x="30" y="176" width="840" height="130" rx="12" fill="#f5f3ff" stroke="#c4b5fd"/>
+  <text x="450" y="198" text-anchor="middle" font-size="13" font-weight="700" fill="#5b21b6">Primmel SMART platform</text>
+  <rect x="60" y="210" width="250" height="80" rx="8" fill="#ffffff" stroke="#c4b5fd"/>
+  <text x="185" y="230" text-anchor="middle" font-size="10.5" font-weight="700" fill="#5b21b6">github.com/primmel/</text>
+  <text x="185" y="246" text-anchor="middle" font-size="10" font-weight="600" fill="#5b21b6">primmel-smart (R4)</text>
+  <text x="185" y="262" text-anchor="middle" font-size="8.5" fill="#7c3aed">gateway · monitor · twin-lab · twin-cert</text>
+  <text x="185" y="276" text-anchor="middle" font-size="8.5" fill="#7c3aed">verdict + form engines · app shell · gates</text>
+  <rect x="330" y="210" width="250" height="80" rx="8" fill="#ffffff" stroke="#c4b5fd"/>
+  <text x="455" y="230" text-anchor="middle" font-size="10.5" font-weight="700" fill="#5b21b6">github.com/primmel/sst</text>
+  <text x="455" y="246" text-anchor="middle" font-size="10" font-weight="600" fill="#5b21b6">the Primmel SST framework (R3 split)</text>
+  <text x="455" y="262" text-anchor="middle" font-size="8.5" fill="#7c3aed">runtime · shell · drivers · stream · specs</text>
+  <text x="455" y="276" text-anchor="middle" font-size="8.5" fill="#7c3aed">loads subject libraries as plugins</text>
+  <rect x="600" y="210" width="250" height="80" rx="8" fill="#ffffff" stroke="#c4b5fd"/>
+  <text x="725" y="230" text-anchor="middle" font-size="10.5" font-weight="700" fill="#5b21b6">github.com/primmel/</text>
+  <text x="725" y="246" text-anchor="middle" font-size="10" font-weight="600" fill="#5b21b6">primmel-smart-docs (R3 rename)</text>
+  <text x="725" y="262" text-anchor="middle" font-size="8.5" fill="#7c3aed">the federation: platform docs at root,</text>
+  <text x="725" y="276" text-anchor="middle" font-size="8.5" fill="#7c3aed">one section per program — the sidebar ladder</text>
+
+  <!-- Layer 3: programs -->
+  <rect x="30" y="330" width="410" height="250" rx="12" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="235" y="352" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e40af">github.com/oimlsmart — OIML SMART</text>
+  <rect x="46" y="364" width="178" height="52" rx="6" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="135" y="384" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">smart</text>
+  <text x="135" y="398" text-anchor="middle" font-size="8.5" fill="#3b82f6">program SSOT + app instance</text>
+  <text x="135" y="410" text-anchor="middle" font-size="8.5" fill="#3b82f6">oiml-* · acme-* packages · data trees</text>
+  <rect x="240" y="364" width="178" height="52" rx="6" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="329" y="384" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">sst-instruments (R3 split)</text>
+  <text x="329" y="398" text-anchor="middle" font-size="8.5" fill="#3b82f6">the OIML instrument library:</text>
+  <text x="329" y="410" text-anchor="middle" font-size="8.5" fill="#3b82f6">D 11 base · 4 kinds · ACME instances</text>
+  <rect x="46" y="428" width="178" height="52" rx="6" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="135" y="448" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">digital-certificates</text>
+  <text x="135" y="462" text-anchor="middle" font-size="8.5" fill="#3b82f6">CNML — OIML SMART's certificate</text>
+  <text x="135" y="474" text-anchor="middle" font-size="8.5" fill="#3b82f6">format on Confium Mode 3</text>
+  <rect x="240" y="428" width="178" height="52" rx="6" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="329" y="448" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">smart-classroom-r60 · vocab</text>
+  <text x="329" y="462" text-anchor="middle" font-size="8.5" fill="#3b82f6">the OIML classroom (sync-on-load)</text>
+  <text x="329" y="474" text-anchor="middle" font-size="8.5" fill="#3b82f6">+ the VIM/VIML register</text>
+  <rect x="46" y="492" width="372" height="70" rx="8" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="235" y="512" text-anchor="middle" font-size="9.5" font-weight="700" fill="#166534">program SSOT flow (proven today)</text>
+  <text x="235" y="528" text-anchor="middle" font-size="8.5" fill="#15803d">packages → data trees → app · handshake: SST reads packages direct</text>
+  <text x="235" y="544" text-anchor="middle" font-size="8.5" fill="#15803d">classroom sync-on-load · CNML bridge (R-I2, signing)</text>
+
+  <rect x="460" y="330" width="410" height="250" rx="12" fill="#fefce8" stroke="#fde047"/>
+  <text x="665" y="352" text-anchor="middle" font-size="12.5" font-weight="700" fill="#854d0e">github.com/〈scope〉smart — program #2+</text>
+  <rect x="476" y="364" width="178" height="52" rx="6" fill="#ffffff" stroke="#fde047"/>
+  <text x="565" y="384" text-anchor="middle" font-size="10" font-weight="700" fill="#854d0e">smart</text>
+  <text x="565" y="398" text-anchor="middle" font-size="8.5" fill="#a16207">its standards as packages</text>
+  <text x="565" y="410" text-anchor="middle" font-size="8.5" fill="#a16207">its scheme + app config</text>
+  <rect x="670" y="364" width="178" height="52" rx="6" fill="#ffffff" stroke="#fde047"/>
+  <text x="759" y="384" text-anchor="middle" font-size="10" font-weight="700" fill="#854d0e">classroom-〈scope〉</text>
+  <text x="759" y="398" text-anchor="middle" font-size="8.5" fill="#a16207">its curriculum instance</text>
+  <rect x="476" y="428" width="178" height="52" rx="6" fill="#ffffff" stroke="#fde047"/>
+  <text x="565" y="448" text-anchor="middle" font-size="10" font-weight="700" fill="#854d0e">certificates-〈scope〉</text>
+  <text x="565" y="462" text-anchor="middle" font-size="8.5" fill="#a16207">its NAMED format on Confium</text>
+  <text x="565" y="474" text-anchor="middle" font-size="8.5" fill="#a16207">Mode 3 (as CNML is OIML's)</text>
+  <rect x="670" y="428" width="178" height="52" rx="6" fill="#ffffff" stroke="#fde047"/>
+  <text x="759" y="448" text-anchor="middle" font-size="10" font-weight="700" fill="#854d0e">sst-〈subjects〉</text>
+  <text x="759" y="462" text-anchor="middle" font-size="8.5" fill="#a16207">its SST library on primmel/sst</text>
+  <text x="759" y="474" text-anchor="middle" font-size="8.5" fill="#a16207">(the plugin rule — no platform fork)</text>
+  <rect x="476" y="492" width="372" height="70" rx="8" fill="#fef2f2" stroke="#fca5a5"/>
+  <text x="665" y="512" text-anchor="middle" font-size="9.5" font-weight="700" fill="#b91c1c">the skeleton, instanced — never a fork</text>
+  <text x="665" y="528" text-anchor="middle" font-size="8.5" fill="#dc2626">packages → trees → the SAME app framework (R2 config seam)</text>
+  <text x="665" y="544" text-anchor="middle" font-size="8.5" fill="#dc2626">the SAME platform (kernel, SST, Confium, docs) proves it (I1 gate)</text>
+
+  <!-- Inheritance arrows -->
+  <line x1="245" y1="138" x2="245" y2="202" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr)"/>
+  <line x1="655" y1="138" x2="655" y2="202" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr)"/>
+  <line x1="185" y1="290" x2="185" y2="356" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr)"/>
+  <line x1="455" y1="290" x2="600" y2="356" stroke="#64748b" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#arr)"/>
+  <line x1="725" y1="290" x2="725" y2="324" stroke="#64748b" stroke-width="1.8" marker-end="url(#arr)"/>
+  <line x1="655" y1="152" x2="135" y2="422" stroke="#c4b5fd" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <line x1="655" y1="152" x2="565" y2="422" stroke="#fde047" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+
+  <text x="450" y="606" text-anchor="middle" font-size="10" fill="#475569">programs inherit DOWN the ladder (kernel → platform → program); content flows UP as models, never as code forks</text>
+  <text x="450" y="622" text-anchor="middle" font-size="10" fill="#475569">the integration manifest (audit I1) is the continuous proof of every link on this page</text>
+</svg>

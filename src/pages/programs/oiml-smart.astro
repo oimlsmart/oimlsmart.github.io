@@ -1,0 +1,124 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import { PROGRAM_RECS, FEDERATION } from '../../data/platform-facts'
+
+const classroom = [
+  { tier: 'Tier 0', name: 'the tour', desc: 'fifteen minutes: what a SMART Recommendation is, why it exists, what it changes.' },
+  { tier: 'Tier 1', name: 'the reader', desc: 'read a modelled Recommendation — requirements, tests, forms — and find your way around.' },
+  { tier: 'Tier 2', name: 'the operator', desc: 'run the certification chain against the simulator: apply, test, evaluate, issue.' },
+  { tier: 'Tier 3', name: 'the author', desc: 'model a Recommendation yourself, in Primmel, from the source PDF to the package.' },
+  { tier: 'Tier 4', name: 'the platform', desc: 'extend the kernel, the runtime, and the twin interfaces — the internals, proved.' },
+]
+
+const learnVolume = FEDERATION.find(f => f.volume === 'The classroom')!
+const demoManual = FEDERATION.find(f => f.volume === 'The demo manual')!
+---
+
+<Base>
+  <PageHero
+    title="OIML SMART — the program"
+    lede="The first program on the Primmel SMART ladder: OIML International Recommendations as executable models, the OIML Certification System as a digital workflow, and a classroom to learn all of it."
+  />
+
+  <div class="px-8 pb-20 max-w-5xl">
+    {/* § 01 — the Recommendations */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 01</span>
+        <span>The Recommendations</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">{PROGRAM_RECS.length} modelled</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        Each Recommendation is a Primmel package — requirements, conformance tests, and report forms
+        modelled as constraints, processes, and evidence interfaces over the instrument's aspects,
+        with clause-level provenance back to the source document.
+      </p>
+      <div class="grid grid-cols-4 gap-4 max-[960px]:grid-cols-2">
+        {PROGRAM_RECS.map((r) => (
+          <article class="bg-paper-soft border border-rule rounded-md p-5 bp-card-hover">
+            <div class="font-mono text-xs font-medium tracking-[0.1em] text-accent mb-2">{r.id}</div>
+            <h3 class="font-serif text-[1.125rem] mb-1 leading-tight">{r.title}</h3>
+            <p class="text-[0.8125rem] text-ink-muted">{r.note}</p>
+          </article>
+        ))}
+      </div>
+      <p class="text-sm text-ink-muted mt-4">
+        Browse the modelled content in the <a class="text-accent underline underline-offset-2" href="/recommendations/">Recommendations library</a> — each entry shows its requirements, tests, and forms.
+      </p>
+    </section>
+
+    {/* § 02 — the OIML-CS */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 02</span>
+        <span>The certification workflow</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">OIML-CS · B 18:2025</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        The OIML Certification System is modelled end to end — application, test dispatch, laboratory
+        testing, type evaluation, certificate issuance — on the ISO/IEC 17000-series conformity
+        assessment chain it normatively references. Every participant role, every document, every
+        verdict is an entity in the model.
+      </p>
+      <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
+        <img src="/diagrams/shared/workflow-chain.svg" alt="The OIML-CS workflow chain: application through testing, evaluation, and certificate issuance" class="w-full max-w-3xl mx-auto" loading="lazy" />
+      </figure>
+      <div class="flex flex-wrap gap-3">
+        <a class="btn btn-ghost bp-focus-ring" href="/oiml-cs">The OIML-CS, role by role →</a>
+        <a class="btn btn-ghost bp-focus-ring" href={FEDERATION.find(f => f.volume === 'The OIML-CS scheme')?.href} target="_blank" rel="noopener">The scheme volume →</a>
+      </div>
+    </section>
+
+    {/* § 03 — the instrument SST + demo */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 03</span>
+        <span>The simulator</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">SST · no hardware needed</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        The program ships simulated SMART twins of real instrument families — analog and digital load
+        cells, belt scales, gas meters — with configurable physics: temperature cycles leave realistic
+        residuals, creep and hysteresis behave the way the Recommendation says they should. The demo
+        manual walks the full chain against a simulator: certify a load cell from application to
+        certificate without touching hardware.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a class="btn btn-primary bp-focus-ring" href={demoManual.href} target="_blank" rel="noopener">Run the demo →</a>
+        <a class="btn btn-ghost bp-focus-ring" href="/platform">How the twin runtime works →</a>
+      </div>
+    </section>
+
+    {/* § 04 — the classroom */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 04</span>
+        <span>The classroom</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">tiers 0–4</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        A layered curriculum: each tier is complete for its depth, and each opens into the next. Stop
+        wherever your role stops.
+      </p>
+      <div class="flex flex-col border border-rule rounded-md overflow-hidden">
+        {classroom.map((t) => (
+          <div class="flex gap-5 items-baseline bg-paper-soft p-5 border-b border-rule last:border-b-0 bp-card-hover">
+            <span class="font-mono text-xs text-accent whitespace-nowrap">{t.tier}</span>
+            <div>
+              <h3 class="font-serif text-[1.0625rem] inline">{t.name}</h3>
+              <span class="text-sm text-ink-soft"> — {t.desc}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="text-sm text-ink-muted mt-4">
+        The full curriculum lives in <a class="text-accent underline underline-offset-2" href={learnVolume.href} target="_blank" rel="noopener">the classroom volume</a>.
+      </p>
+    </section>
+  </div>
+</Base>

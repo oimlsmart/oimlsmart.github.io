@@ -2,6 +2,15 @@
 import Base from '../layouts/Base.astro'
 import SITE from '../data/site-meta'
 import { STANDARDS, STANDARDS_STATS } from '../data/standards'
+import { EIGHT_WORDS, ENTRY_POINTS } from '../data/platform-facts'
+
+const ladder = [
+  { name: 'Primmel', detail: 'the typed, executable modelling language — models that run', href: 'https://primmel.github.io/', external: true },
+  { name: 'Primmel SMART', detail: 'the platform: methodology, app framework, twin runtime, SST, twin certification', href: '/platform' },
+  { name: 'OIML SMART', detail: 'this program — executable Recommendations, the digital OIML-CS, the classroom', href: '/programs/oiml-smart', current: true },
+  { name: '〈scope〉 SMART', detail: 'the open slots — accreditation, MSS certification, lab programs (zero forks)', href: 'https://primmel.github.io/programs/', external: true },
+  { name: 'Confium', detail: 'the threshold-cryptography PKI the certificates ride', href: 'https://primmel.github.io/primmel-oiml-smart/confium/', external: true },
+]
 
 const acronym = [
   { letter: 'S', word: 'Standards', description: 'International metrology recommendations as structured digital artifacts.' },
@@ -112,6 +121,28 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
+        ENTRY POINTS — the three live doors
+        ═══════════════════════════════════════════════════════════════ */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="py-14 px-8">
+      <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
+        {ENTRY_POINTS.map((e) => (
+          <a
+            href={e.href}
+            {...(e.external ? { target: '_blank', rel: 'noopener' } : {})}
+            class="block p-6 bg-paper-soft border border-rule rounded-md no-underline text-inherit bp-card-hover bp-reveal group bp-crosshair"
+          >
+            <div class="flex items-center justify-between mb-2">
+              <h2 class="font-serif text-[1.25rem]">{e.label}</h2>
+              <span class="text-accent opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
+            </div>
+            <p class="text-sm text-ink-soft">{e.desc}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    {/* ═══════════════════════════════════════════════════════════════
         SMART ACRONYM — interactive grid
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
@@ -148,13 +179,56 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
-        STATS — count-up metrics
+        THE FOUNDATION — the eight words + the ladder
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
     <section class="py-20 px-8 bp-grid bp-grid--major">
       <div class="max-w-3xl mb-12 bp-reveal">
         <div class="bp-section-anchor mb-4">
           <span class="bp-section-anchor__num">§ 02</span>
+          <span>What SMART is built on</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-coord">IS · HAS · DOES</span>
+        </div>
+        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Eight words, then a ladder</h2>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Every SMART artifact — an instrument, a lab, a certificate — is described with exactly eight words: three relations and five sorts, closed under composition. On that foundation sits a ladder of real programs, one language all the way up.</p>
+      </div>
+      <div class="grid grid-cols-[1.2fr_1fr] gap-10 items-start max-[960px]:grid-cols-1">
+        <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden">
+          {EIGHT_WORDS.map((w) => (
+            <div class="bg-paper-soft p-4 bp-card-hover">
+              <div class="flex items-baseline gap-2">
+                <span class="font-serif text-[1.125rem] text-accent italic">{w.word}</span>
+                <span class="bp-chip">{w.kind}</span>
+              </div>
+              <p class="text-[0.75rem] text-ink-muted mt-1 leading-snug">{w.gloss}</p>
+            </div>
+          ))}
+        </div>
+        <ol class="list-none p-0 m-0 grid gap-3">
+          {ladder.map((rung, i) => (
+            <li class={`flex gap-4 items-start border rounded-md p-4 ${rung.current ? 'border-accent bg-accent-soft' : 'border-rule bg-paper-soft'} bp-card-hover`}>
+              <span class="inline-flex items-center justify-center w-7 h-7 rounded-full border border-accent text-accent font-mono text-xs shrink-0">{i + 1}</span>
+              <div>
+                <a href={rung.href} {...(rung.external ? { target: '_blank', rel: 'noopener' } : {})} class="font-semibold text-accent no-underline hover:underline underline-offset-2">
+                  {rung.name}{rung.current && <span class="bp-chip ml-2">you are here</span>}
+                </a>
+                <p class="text-[0.8125rem] text-ink-muted mt-0.5">{rung.detail}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    {/* ═══════════════════════════════════════════════════════════════
+        STATS — count-up metrics
+        ═══════════════════════════════════════════════════════════════ */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="py-20 px-8 bp-grid bp-grid--major">
+      <div class="max-w-3xl mb-12 bp-reveal">
+        <div class="bp-section-anchor mb-4">
+          <span class="bp-section-anchor__num">§ 03</span>
           <span>Pilot Coverage</span>
           <span class="bp-section-anchor__line"></span>
           <span class="bp-coord">Working Snapshot</span>
@@ -189,7 +263,7 @@ const audiencePaths = [
     <section class="py-20 px-8 bp-grid">
       <div class="max-w-3xl mb-12 bp-reveal">
         <div class="bp-section-anchor mb-4">
-          <span class="bp-section-anchor__num">§ 03</span>
+          <span class="bp-section-anchor__num">§ 04</span>
           <span>Recommendations</span>
           <span class="bp-section-anchor__line"></span>
           <span class="bp-coord">{recommendations.length} modelled</span>
@@ -230,7 +304,7 @@ const audiencePaths = [
     <section class="py-20 px-8 bp-grid bp-grid--major">
       <div class="max-w-3xl mb-12 bp-reveal">
         <div class="bp-section-anchor mb-4">
-          <span class="bp-section-anchor__num">§ 04</span>
+          <span class="bp-section-anchor__num">§ 05</span>
           <span>Capabilities</span>
           <span class="bp-section-anchor__line"></span>
           <span class="bp-coord">{features.length} subsystems</span>
@@ -262,7 +336,7 @@ const audiencePaths = [
     <section class="py-20 px-8 bp-grid">
       <div class="max-w-3xl mb-12 bp-reveal">
         <div class="bp-section-anchor mb-4">
-          <span class="bp-section-anchor__num">§ 05</span>
+          <span class="bp-section-anchor__num">§ 06</span>
           <span>Audience Paths</span>
           <span class="bp-section-anchor__line"></span>
           <span class="bp-coord">Internal Review</span>

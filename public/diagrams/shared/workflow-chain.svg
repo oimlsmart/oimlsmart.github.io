@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 300" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="980" height="300" fill="#ffffff"/>
+  <text x="490" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="#1e293b">The OIML-CS certification chain</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <g font-size="12" fill="#475569" text-anchor="middle">
+    <rect x="20" y="90" width="130" height="90" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="85" y="118" font-weight="600" fill="#1e293b">Applicant</text>
+    <text x="85" y="140">applies with the</text>
+    <text x="85" y="160">type documentation</text>
+
+    <rect x="180" y="90" width="130" height="90" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="245" y="118" font-weight="600" fill="#1e293b">Issuing Authority</text>
+    <text x="245" y="140">reviews, dispatches</text>
+    <text x="245" y="160">to a Test Laboratory</text>
+
+    <rect x="340" y="90" width="130" height="90" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="405" y="118" font-weight="600" fill="#1e293b">Test Laboratory</text>
+    <text x="405" y="140">runs the tests, records</text>
+    <text x="405" y="160">evidence in the forms</text>
+
+    <rect x="500" y="90" width="130" height="90" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="565" y="118" font-weight="600" fill="#1e293b">Test report</text>
+    <text x="565" y="140">form instances —</text>
+    <text x="565" y="160">inputs, readings, verdicts</text>
+
+    <rect x="660" y="90" width="130" height="90" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="725" y="118" font-weight="600" fill="#1e293b">Evaluation</text>
+    <text x="725" y="140">per-provision</text>
+    <text x="725" y="160">determinations</text>
+
+    <rect x="820" y="90" width="140" height="90" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="890" y="118" font-weight="600" fill="#1d4ed8">Certificate</text>
+    <text x="890" y="140">issued, registered,</text>
+    <text x="890" y="160">surveilled</text>
+  </g>
+
+  <g stroke="#64748b" stroke-width="1.5">
+    <line x1="150" y1="135" x2="172" y2="135" marker-end="url(#arr)"/>
+    <line x1="310" y1="135" x2="332" y2="135" marker-end="url(#arr)"/>
+    <line x1="470" y1="135" x2="492" y2="135" marker-end="url(#arr)"/>
+    <line x1="630" y1="135" x2="652" y2="135" marker-end="url(#arr)"/>
+    <line x1="790" y1="135" x2="812" y2="135" marker-end="url(#arr)"/>
+  </g>
+
+  <rect x="340" y="220" width="300" height="56" rx="10" fill="#fefce8" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="490" y="244" text-anchor="middle" font-size="12" font-weight="600" fill="#854d0e">every step is data in the packages:</text>
+  <text x="490" y="264" text-anchor="middle" font-size="12" fill="#475569">requirements, tests, forms, processes, machines</text>
+
+  <text x="490" y="296" text-anchor="middle" font-size="13" fill="#64748b">The workflow is not code — it is the model executed: the Recommendation's own tests, forms, and lifecycle machines drive every screen.</text>
+</svg>

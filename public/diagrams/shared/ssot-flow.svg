@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="900" height="380" fill="#ffffff"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="#1e293b">The single source of truth and its drift guard</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect x="30" y="90" width="200" height="120" rx="10" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/>
+  <text x="130" y="120" text-anchor="middle" font-size="14" font-weight="600" fill="#854d0e">primmel-packages/</text>
+  <text x="130" y="144" text-anchor="middle" font-size="12" fill="#475569">THE single source of truth</text>
+  <text x="130" y="164" text-anchor="middle" font-size="12" fill="#475569">26 packages: recs, core,</text>
+  <text x="130" y="184" text-anchor="middle" font-size="12" fill="#475569">modules, CASCO, products, programs</text>
+
+  <rect x="280" y="90" width="180" height="120" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="370" y="120" text-anchor="middle" font-size="14" font-weight="600" fill="#1e293b">data/ trees</text>
+  <text x="370" y="144" text-anchor="middle" font-size="12" fill="#475569">GENERATED artifacts</text>
+  <text x="370" y="164" text-anchor="middle" font-size="12" fill="#475569">(npm run gen:data)</text>
+  <text x="370" y="184" text-anchor="middle" font-size="12" fill="#475569">never hand-edited</text>
+
+  <rect x="510" y="90" width="180" height="120" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="600" y="120" text-anchor="middle" font-size="14" font-weight="600" fill="#1e293b">generated TS</text>
+  <text x="600" y="144" text-anchor="middle" font-size="12" fill="#475569">browser/src/data/generated/</text>
+  <text x="600" y="164" text-anchor="middle" font-size="12" fill="#475569">types, standards data,</text>
+  <text x="600" y="184" text-anchor="middle" font-size="12" fill="#475569">store manifests, ontology</text>
+
+  <rect x="740" y="90" width="130" height="120" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="805" y="120" text-anchor="middle" font-size="14" font-weight="600" fill="#1d4ed8">the app</text>
+  <text x="805" y="144" text-anchor="middle" font-size="12" fill="#475569">every screen,</text>
+  <text x="805" y="164" text-anchor="middle" font-size="12" fill="#475569">every verdict,</text>
+  <text x="805" y="184" text-anchor="middle" font-size="12" fill="#475569">every form</text>
+
+  <line x1="230" y1="150" x2="272" y2="150" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="460" y1="150" x2="502" y2="150" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="690" y1="150" x2="732" y2="150" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="180" y="250" width="540" height="80" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+  <text x="450" y="282" text-anchor="middle" font-size="14" font-weight="600" fill="#065f46">The SSOT drift guard — npm run test:ssot</text>
+  <text x="450" y="306" text-anchor="middle" font-size="12" fill="#475569">packages ≡ data trees (direction 1: regenerate, byte-diff) ∧ app config ≡ packages (direction 2: rebuild, byte-diff) — both directions, on every gate</text>
+
+  <line x1="370" y1="210" x2="370" y2="242" stroke="#059669" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="600" y1="210" x2="600" y2="242" stroke="#059669" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="180" y1="290" x2="122" y2="218" stroke="#059669" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <text x="450" y="360" text-anchor="middle" font-size="13" fill="#64748b">You change the package; the pipeline regenerates; the guard proves nothing drifted. Any hand-edit downstream fails the build.</text>
+</svg>

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content'
 import DocsLayout from '../../layouts/DocsLayout.astro'
+import { FEDERATION } from '../../data/platform-facts'
 
 const sections = [
   { key: 'guides', label: 'Developer Guides', desc: 'Narrative walkthroughs for authoring a SMART Recommendation.' },
@@ -19,6 +20,21 @@ const counts = sections.map(s => allDocs.filter(d => d.id.startsWith(s.key + '/'
     <h1 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-semibold tracking-[-0.025em]">Developer documentation</h1>
     <p class="text-[1.0625rem] leading-[1.6] text-ink-soft max-w-2xl mt-3">Everything a standards developer, software engineer, or technical evaluator needs to author, deploy, or integrate OIML SMART Recommendations.</p>
   </div>
+
+  {/* The docs federation — the deep volumes (links only, never duplicated) */}
+  <div class="mt-10 mb-12 border border-rule rounded-md bg-paper-soft p-6">
+    <h2 class="font-serif text-[1.375rem] font-semibold mb-2">The docs federation</h2>
+    <p class="text-sm text-ink-soft mb-5 max-w-2xl">These pages are the developer quickstart. The full volumes — the proved foundation, the kernel, the platform runtime, the program guides, the classroom — live in the shared docs site. One home per kind; we link, never duplicate.</p>
+    <div class="grid grid-cols-2 gap-x-8 max-[960px]:grid-cols-1">
+      {FEDERATION.map((f) => (
+        <a class="group block py-3 border-b border-rule no-underline text-inherit" href={f.href} target="_blank" rel="noopener">
+          <h3 class="text-[0.9375rem] font-semibold transition-colors group-hover:text-accent">{f.volume} <span class="text-accent opacity-0 group-hover:opacity-100 transition-opacity">→</span></h3>
+          <p class="text-[0.8125rem] text-ink-muted mt-0.5">{f.desc}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+
   <div class="mt-8 flex flex-col">
     {sections.map((s, i) => (
       <a class="group block py-5 border-b border-rule no-underline text-inherit transition-[padding] duration-150 hover:pl-2" href={`/docs/${s.key}/`}>

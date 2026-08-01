@@ -24,6 +24,17 @@ export interface NavStandaloneLink {
 
 export const NAV_DROPDOWNS: readonly NavDropdownConfig[] = [
   {
+    id: 'platform',
+    label: 'Platform',
+    variant: 'default',
+    links: [
+      { label: 'The Primmel SMART Platform', href: '/platform', desc: 'Methodology, twin runtime, SST, certificates' },
+      { label: 'The OIML SMART Program', href: '/programs/oiml-smart', desc: 'Recommendations, OIML-CS, simulator, classroom' },
+      { label: 'Component Architecture', href: '/architecture', desc: 'The repos, the SSOT flow, the gates' },
+      { label: 'The Docs Federation', href: 'https://primmel.github.io/primmel-oiml-smart/', desc: 'The full volumes — foundation to classroom', external: true },
+    ],
+  },
+  {
     id: 'resources',
     label: 'Resources',
     variant: 'default',
@@ -68,6 +79,7 @@ export type NavItem =
   | { type: 'link'; label: string; href: string; matchPrefix: string }
 
 export const NAV_ITEMS: readonly NavItem[] = [
+  { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'platform')! },
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'resources')! },
   { type: 'link', label: 'News', href: '/news/', matchPrefix: '/news' },
   { type: 'link', label: 'OIML-CS', href: '/oiml-cs', matchPrefix: '/oiml-cs' },

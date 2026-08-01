@@ -1,0 +1,177 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+import { EIGHT_WORDS, FEDERATION } from '../data/platform-facts'
+
+const layers = [
+  {
+    name: 'The physical instrument',
+    role: 'the reality',
+    desc: 'A load cell on a quarry belt, a gas meter on a wall. It holds values and runs processes whether anyone models it or not.',
+  },
+  {
+    name: 'The full digital twin',
+    role: 'the representation',
+    desc: 'Whatever the manufacturer maintains — physics simulation, IoT telemetry, an admin shell. Rich, vendor-specific, ungoverned by any standard.',
+  },
+  {
+    name: 'The SMART twin',
+    role: 'the governed projection',
+    desc: 'A tailored projection of the full twin, declared by the Recommendation itself: the standard says which aspects Primmel governs, the twin interface is derived from that declaration.',
+  },
+]
+
+const runtime = [
+  { name: 'The gateway', desc: 'connectors to live twins — HTTP/GraphQL bindings declared in the model, never hardcoded per instrument.' },
+  { name: 'The monitor', desc: 'a scheduler that probes the governed aspects and re-judges compliance as evidence arrives.' },
+  { name: 'The verdict engine', desc: 'one dialect, reused everywhere: requirements evaluated against served values; silence degrades to indeterminate, never a silent pass.' },
+  { name: 'The evidence store', desc: 'every probe, verdict, and re-judgment accrues as an append-only stream — audit reads history, never a snapshot.' },
+]
+
+const sstFacts = [
+  { term: '/twin', desc: 'the certification channel — what a real SMART twin would serve, probe by probe.' },
+  { term: '/world', desc: 'the practice channel — place a load, shift the temperature, run the clock. Teaching and rehearsal only.' },
+  { term: 'the wall', desc: 'the app never reads /world during certification. The epistemic wall is architectural, not a policy note.' },
+]
+---
+
+<Base>
+  <PageHero
+    title="The Primmel SMART platform"
+    lede="OIML SMART runs on Primmel SMART — the platform that turns a standard from a PDF into an executable model: a methodology, an app framework, a twin runtime, a simulator, and a certificate chain."
+  />
+
+  <div class="px-8 pb-20 max-w-5xl">
+    {/* § 01 — the methodology */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 01</span>
+        <span>The methodology</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">IS · HAS · DOES</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        Every subject — an instrument, a lab, a whole certification scheme — is described with exactly
+        eight words. Three relations and five sorts, closed under composition: the system is complete
+        for every descriptive claim, and it never needs a ninth primitive. Requirements are constraints
+        on those aspects; tests are processes that probe them; forms are the evidence interfaces.
+      </p>
+      <div class="grid grid-cols-4 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-2">
+        {EIGHT_WORDS.map((w) => (
+          <div class="bg-paper-soft p-4 bp-card-hover">
+            <div class="flex items-baseline gap-2">
+              <span class="font-serif text-[1.25rem] text-accent italic">{w.word}</span>
+              <span class="bp-chip">{w.kind}</span>
+            </div>
+            <p class="text-[0.8125rem] text-ink-muted mt-1 leading-snug">{w.gloss}</p>
+          </div>
+        ))}
+      </div>
+      <p class="text-sm text-ink-muted mt-4">
+        Proved, not asserted — <a class="text-accent underline underline-offset-2" href={FEDERATION[0].href} target="_blank" rel="noopener">the foundation volume</a> carries the closure, completeness, and extensibility theorems.
+      </p>
+    </section>
+
+    {/* § 02 — the three-layer twin */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 02</span>
+        <span>The three-layer twin</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">the key idea</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        A SMART twin is not the vendor's digital twin and not the instrument itself — it is the
+        <strong class="text-ink font-semibold"> governed projection</strong> between them. The standard
+        declares what it governs; the projection serves exactly that; the twin-certification program
+        certifies that the projection stays faithful to the physical device.
+      </p>
+      <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
+        <img src="/diagrams/shared/three-layer-twin.svg" alt="The three layers: physical instrument, full digital twin, SMART twin as governed projection" class="w-full max-w-3xl mx-auto" loading="lazy" />
+      </figure>
+      <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
+        {layers.map((l) => (
+          <article class="bg-paper-soft border border-rule rounded-md p-5 bp-card-hover">
+            <div class="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-accent mb-1">{l.role}</div>
+            <h3 class="font-serif text-[1.125rem] mb-1.5">{l.name}</h3>
+            <p class="text-sm text-ink-soft leading-relaxed">{l.desc}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {/* § 03 — the twin runtime */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 03</span>
+        <span>The twin runtime</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">continuous compliance</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        A Primmel model is executable. Plug a live twin into the runtime and certification stops being
+        a point-in-time event: the monitor probes the governed aspects on a schedule, the verdict
+        engine re-judges, and every judgment lands in the evidence stream.
+      </p>
+      <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
+        <img src="/diagrams/shared/twin-runtime.svg" alt="The twin runtime: gateway connectors, monitor scheduler, verdict engine, evidence streams" class="w-full max-w-3xl mx-auto" loading="lazy" />
+      </figure>
+      <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
+        {runtime.map((r) => (
+          <div class="bg-paper-soft p-5 bp-card-hover">
+            <h3 class="font-serif text-[1.0625rem] mb-1">{r.name}</h3>
+            <p class="text-sm text-ink-soft leading-relaxed">{r.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* § 04 — the SST */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 04</span>
+        <span>The SST</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">practice without hardware</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        The Simulated SMART Twin is a full-fidelity stand-in for a physical instrument: the same
+        <code class="font-mono text-[0.875em]">/twin</code> interface a real device would serve, plus a
+        <code class="font-mono text-[0.875em]">/world</code> channel for the physics a lab would apply.
+        Operators rehearse the whole certification chain before they ever touch hardware.
+      </p>
+      <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
+        <img src="/diagrams/shared/sst-interaction.svg" alt="The SST's two channels: /twin for certification, /world for practice, with the epistemic wall between" class="w-full max-w-3xl mx-auto" loading="lazy" />
+      </figure>
+      <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
+        {sstFacts.map((s) => (
+          <article class="bg-paper-soft border border-rule rounded-md p-5 bp-card-hover">
+            <h3 class="font-mono text-[0.9375rem] text-accent mb-1.5">{s.term}</h3>
+            <p class="text-sm text-ink-soft leading-relaxed">{s.desc}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {/* § 05 — certificates */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 05</span>
+        <span>The certificate chain</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">CNML · Confium</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        Verdicts terminate in certificates — CNML documents with cryptographic provenance, signed over
+        a threshold-cryptography PKI (Confium). A certificate names its evidence; the evidence names
+        its probes; the probes name the governed aspect set they served. The chain is checkable end
+        to end by anyone holding the public keys.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a class="btn btn-ghost bp-focus-ring" href={FEDERATION.find(f => f.volume === 'CNML certificates')?.href} target="_blank" rel="noopener">The CNML volume →</a>
+        <a class="btn btn-ghost bp-focus-ring" href={FEDERATION.find(f => f.volume === 'Confium')?.href} target="_blank" rel="noopener">The Confium volume →</a>
+        <a class="btn btn-ghost bp-focus-ring" href="/architecture">The component architecture →</a>
+      </div>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+import { GATE_NUMBERS, PLATFORM_REPOS, FEDERATION } from '../data/platform-facts'
+
+const gates = [
+  { label: 'Primmel packages (SSOT)', value: `${GATE_NUMBERS.packages}`, note: '0 lint errors' },
+  { label: 'App unit tests', value: GATE_NUMBERS.vitestTests.toLocaleString('en-US'), note: `${GATE_NUMBERS.vitestFiles} files` },
+  { label: 'End-to-end', value: GATE_NUMBERS.e2e, note: 'puppeteer, live app' },
+  { label: 'Data validation', value: `${GATE_NUMBERS.validateErrors} errors`, note: `${GATE_NUMBERS.validateWarnings} warnings tracked` },
+  { label: 'Kernel suite', value: GATE_NUMBERS.kernel, note: 'primmel-ts' },
+  { label: 'Simulator suite', value: GATE_NUMBERS.sim, note: 'sim-instruments' },
+]
+---
+
+<Base>
+  <PageHero
+    title="The component architecture"
+    lede="One platform, five repositories, one data flow — Primmel packages are the single source of truth, everything else is generated, executed, or published from them. Every number on this page is pinned by a freshness gate against the live system."
+  />
+
+  <div class="px-8 pb-20 max-w-5xl">
+    {/* § 01 — the repos */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 01</span>
+        <span>The repositories</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">{PLATFORM_REPOS.length} repos · 2 orgs</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        The platform spans two GitHub organizations — <code class="font-mono text-[0.875em]">primmel</code> for
+        the language, kernel, and shared documentation, <code class="font-mono text-[0.875em]">oimlsmart</code> for
+        the program — each repo with exactly one job.
+      </p>
+      <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
+        <img src="/diagrams/shared/repo-tree-target.svg" alt="The target repository tree: primmel and oimlsmart organizations and how their repos link" class="w-full max-w-3xl mx-auto" loading="lazy" />
+      </figure>
+      <div class="flex flex-col border border-rule rounded-md overflow-hidden">
+        {PLATFORM_REPOS.map((r) => (
+          <div class="flex gap-5 items-baseline bg-paper-soft p-5 border-b border-rule last:border-b-0 bp-card-hover">
+            <code class="font-mono text-[0.8125rem] text-accent whitespace-nowrap">{r.repo}</code>
+            <div class="text-sm text-ink-soft">
+              {r.role}
+              {r.href && (
+                <> — <a class="text-accent underline underline-offset-2" href={r.href} target="_blank" rel="noopener">visit</a></>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* § 02 — the SSOT flow */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 02</span>
+        <span>The single source of truth</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">byte-clean both directions</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        Normative content is authored exactly once — as Primmel packages. The data trees the app
+        executes are generated artifacts; the documentation site's projections are generated
+        artifacts. A drift guard proves packages ≡ data ≡ projections byte-clean in both directions,
+        so nothing can silently fork.
+      </p>
+      <figure class="border border-rule rounded-md bg-paper-soft p-6">
+        <img src="/diagrams/shared/ssot-flow.svg" alt="The SSOT flow: Primmel packages generate data trees and app projections, with the drift guard proving byte-clean equivalence" class="w-full max-w-3xl mx-auto" loading="lazy" />
+      </figure>
+    </section>
+
+    {/* § 03 — the gates */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 03</span>
+        <span>The gates</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">pinned by the freshness gate</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        These are the live numbers, as of the current platform snapshot. This page cannot drift: a
+        test parses the platform's own architecture doc and fails the build if a figure below goes
+        stale.
+      </p>
+      <div class="grid grid-cols-3 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-2">
+        {gates.map((g) => (
+          <div class="bg-paper-soft p-6 text-center bp-card-hover">
+            <div class="font-serif text-[2rem] leading-none text-accent">{g.value}</div>
+            <div class="text-[0.8125rem] font-semibold mt-2">{g.label}</div>
+            <div class="font-mono text-[0.6875rem] text-ink-muted mt-1">{g.note}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* § 04 — the deep docs */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 04</span>
+        <span>The deep documentation</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">the federation</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        Every component has exactly one documentation home. The volumes below are the deep
+        reference — this site links, never duplicates.
+      </p>
+      <div class="flex flex-col">
+        {FEDERATION.map((f) => (
+          <a class="group block py-4 border-b border-rule no-underline text-inherit transition-[padding] duration-150 hover:pl-2" href={f.href} target="_blank" rel="noopener">
+            <h3 class="font-serif text-[1.0625rem] font-semibold transition-colors group-hover:text-accent">{f.volume} <span class="text-accent opacity-0 group-hover:opacity-100 transition-opacity">→</span></h3>
+            <p class="text-sm text-ink-soft mt-0.5">{f.desc}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="900" height="300" fill="#ffffff"/>
+  <text x="450" y="32" text-anchor="middle" font-size="18" font-weight="600" fill="#1e293b">The migration phases — each gated, each shippable</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- R0 -->
+  <rect x="30" y="66" width="150" height="150" rx="10" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="105" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="#166534">R0</text>
+  <text x="105" y="108" text-anchor="middle" font-size="10" font-weight="600" fill="#166534">boundaries + branding</text>
+  <text x="105" y="126" text-anchor="middle" font-size="8.5" fill="#15803d">days · zero moves</text>
+  <text x="40" y="146" font-size="8.5" fill="#15803d">· the naming registry everywhere</text>
+  <text x="40" y="160" font-size="8.5" fill="#15803d">· the platform/program inventory</text>
+  <text x="40" y="174" font-size="8.5" fill="#15803d">· the boundary gate in CI</text>
+  <text x="40" y="194" font-size="8.5" font-weight="600" fill="#166534">gate: suite + boundary gate</text>
+
+  <!-- R1 -->
+  <rect x="200" y="66" width="150" height="150" rx="10" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="275" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="#1e40af">R1</text>
+  <text x="275" y="108" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">documentation federation</text>
+  <text x="275" y="126" text-anchor="middle" font-size="8.5" fill="#3b82f6">one wave</text>
+  <text x="210" y="146" font-size="8.5" fill="#3b82f6">· the sidebar IS the ladder</text>
+  <text x="210" y="160" font-size="8.5" fill="#3b82f6">· confium/ + cnml/ sections</text>
+  <text x="210" y="174" font-size="8.5" fill="#3b82f6">· the operator-guidance wave</text>
+  <text x="210" y="194" font-size="8.5" font-weight="600" fill="#1e40af">gate: docs CI + link gates ×2</text>
+
+  <!-- R2 -->
+  <rect x="370" y="66" width="150" height="150" rx="10" fill="#f5f3ff" stroke="#c4b5fd"/>
+  <text x="445" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="#5b21b6">R2</text>
+  <text x="445" y="108" text-anchor="middle" font-size="10" font-weight="600" fill="#5b21b6">software config seam</text>
+  <text x="445" y="126" text-anchor="middle" font-size="8.5" fill="#7c3aed">mechanical</text>
+  <text x="380" y="146" font-size="8.5" fill="#7c3aed">· OIML-ness → ONE config seam</text>
+  <text x="380" y="160" font-size="8.5" fill="#7c3aed">· branding · copy · rec registry</text>
+  <text x="380" y="174" font-size="8.5" fill="#7c3aed">· the framework reads it at boot</text>
+  <text x="380" y="194" font-size="8.5" font-weight="600" fill="#5b21b6">gate: e2e byte-identical</text>
+
+  <!-- R3 -->
+  <rect x="540" y="66" width="150" height="150" rx="10" fill="#fefce8" stroke="#fde047"/>
+  <text x="615" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="#854d0e">R3</text>
+  <text x="615" y="108" text-anchor="middle" font-size="10" font-weight="600" fill="#854d0e">repo re-homing</text>
+  <text x="615" y="126" text-anchor="middle" font-size="8.5" fill="#a16207">git-only moves</text>
+  <text x="550" y="146" font-size="8.5" fill="#a16207">· SST → github.com/primmel</text>
+  <text x="550" y="160" font-size="8.5" fill="#a16207">· docs → primmel-smart-docs</text>
+  <text x="550" y="174" font-size="8.5" fill="#a16207">· env-var transitions</text>
+  <text x="550" y="194" font-size="8.5" font-weight="600" fill="#854d0e">gate: every consumer's suite</text>
+
+  <!-- R4 -->
+  <rect x="710" y="66" width="150" height="150" rx="10" fill="#fef2f2" stroke="#fca5a5"/>
+  <text x="785" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="#b91c1c">R4</text>
+  <text x="785" y="108" text-anchor="middle" font-size="10" font-weight="600" fill="#b91c1c">platform extraction</text>
+  <text x="785" y="126" text-anchor="middle" font-size="8.5" fill="#dc2626">when program #2 signs</text>
+  <text x="720" y="146" font-size="8.5" fill="#dc2626">· github.com/primmel/primmel-smart</text>
+  <text x="720" y="160" font-size="8.5" fill="#dc2626">· CASCO packages → platform set</text>
+  <text x="720" y="174" font-size="8.5" fill="#dc2626">· program #2 on the skeleton</text>
+  <text x="720" y="194" font-size="8.5" font-weight="600" fill="#b91c1c">gate: the I1 manifest, ×2 programs</text>
+
+  <line x1="180" y1="141" x2="192" y2="141" stroke="#64748b" stroke-width="1.6" marker-end="url(#arr)"/>
+  <line x1="350" y1="141" x2="362" y2="141" stroke="#64748b" stroke-width="1.6" marker-end="url(#arr)"/>
+  <line x1="520" y1="141" x2="532" y2="141" stroke="#64748b" stroke-width="1.6" marker-end="url(#arr)"/>
+  <line x1="690" y1="141" x2="702" y2="141" stroke="#64748b" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <rect x="30" y="240" width="830" height="42" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="450" y="258" text-anchor="middle" font-size="10" fill="#475569">no phase starts before the previous is green end to end — the integration manifest (audit I1) is the definition of done for every phase</text>
+  <text x="450" y="274" text-anchor="middle" font-size="10" fill="#475569">R0–R2 are safe without any external coordination; R3 coordinates with the SST repo's owner; R4 is triggered by program #2, never before</text>
+</svg>

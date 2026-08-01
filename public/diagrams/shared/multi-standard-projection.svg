@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 430" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="820" height="430" fill="#ffffff"/>
+  <text x="410" y="32" text-anchor="middle" font-size="19" font-weight="600" fill="#1e293b">Multi-standard projection — one implementation, several lenses, no merged claims</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- The implementation model -->
+  <rect x="290" y="62" width="240" height="96" rx="12" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="410" y="86" text-anchor="middle" font-size="13" font-weight="700" fill="#166534">the implementation model</text>
+  <text x="410" y="103" text-anchor="middle" font-size="10" fill="#15803d">acme-lc500 (the product reference)</text>
+  <text x="410" y="122" text-anchor="middle" font-size="9.5" fill="#16a34a">r60-map.prl · twin-cert-map.prl</text>
+  <text x="410" y="137" text-anchor="middle" font-size="9.5" fill="#16a34a">maps_to { oiml-r60 oiml-twin-cert }</text>
+
+  <!-- The two lenses -->
+  <rect x="60" y="212" width="300" height="150" rx="12" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="210" y="236" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e40af">lens 1 · oiml-r60</text>
+  <text x="210" y="252" text-anchor="middle" font-size="9.5" fill="#3b82f6">the Recommendation's own reading</text>
+  <text x="76" y="276" font-size="10" fill="#1e293b">/req/class-c/mpe · creep · repeatability</text>
+  <text x="76" y="292" font-size="10" fill="#1e293b">/req/metrological/* · /req/electronic/*</text>
+  <text x="76" y="308" font-size="10" fill="#1e293b">/twin/interface (endpoint + serves)</text>
+  <text x="76" y="332" font-size="10" font-weight="600" fill="#166534">coverage: full ×10 (its own, independent)</text>
+
+  <rect x="460" y="212" width="300" height="150" rx="12" fill="#f5f3ff" stroke="#c4b5fd"/>
+  <text x="610" y="236" text-anchor="middle" font-size="12.5" font-weight="700" fill="#5b21b6">lens 2 · oiml-twin-cert</text>
+  <text x="610" y="252" text-anchor="middle" font-size="9.5" fill="#7c3aed">the fidelity program's own reading</text>
+  <text x="476" y="276" font-size="10" fill="#1e293b">/req/twin-fidelity/static-conformance</text>
+  <text x="476" y="292" font-size="10" fill="#1e293b">indication-band · freshness · timestamp</text>
+  <text x="476" y="308" font-size="10" fill="#1e293b">state-fidelity · creep-envelope</text>
+  <text x="476" y="332" font-size="10" font-weight="600" fill="#166534">coverage: full ×6 (its own, independent)</text>
+
+  <!-- The shared source -->
+  <rect x="290" y="382" width="240" height="40" rx="8" fill="#fefce8" stroke="#fde047"/>
+  <text x="410" y="400" text-anchor="middle" font-size="10" font-weight="600" fill="#854d0e">shared source: lc500_api serves BOTH</text>
+  <text x="410" y="414" text-anchor="middle" font-size="9" fill="#a16207">write once, comply twice — verdicts never merge</text>
+
+  <!-- Arrows -->
+  <line x1="350" y1="158" x2="240" y2="204" stroke="#64748b" stroke-width="1.6" marker-end="url(#arr)"/>
+  <line x1="470" y1="158" x2="580" y2="204" stroke="#64748b" stroke-width="1.6" marker-end="url(#arr)"/>
+  <line x1="210" y1="362" x2="340" y2="386" stroke="#a16207" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <line x1="610" y1="362" x2="480" y2="386" stroke="#a16207" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+
+  <!-- The collision note -->
+  <rect x="560" y="62" width="230" height="96" rx="10" fill="#fef2f2" stroke="#fca5a5"/>
+  <text x="675" y="84" text-anchor="middle" font-size="11" font-weight="700" fill="#b91c1c">the collision doctrine</text>
+  <text x="675" y="102" text-anchor="middle" font-size="9" fill="#dc2626">a register named by ≥2 governed sets:</text>
+  <text x="675" y="116" text-anchor="middle" font-size="9" fill="#dc2626">computed (never silent) — each standard</text>
+  <text x="675" y="130" text-anchor="middle" font-size="9" fill="#dc2626">keeps its own lens; stricter wins for any</text>
+  <text x="675" y="144" text-anchor="middle" font-size="9" fill="#dc2626">single-view merge, declared in the model</text>
+</svg>

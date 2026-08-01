@@ -1,0 +1,46 @@
+name: gates
+
+# The SSOT gates (TODO.integration/26): the diagram-drift spec and the
+# content-freshness spec compare this site against the PRIVATE
+# oimlsmart/smart repository (the single source of truth). GitHub
+# Actions can only check that repo out when a PAT is configured:
+#
+#   1. create a fine-grained PAT with read access to oimlsmart/smart
+#   2. add it as secret  SMART_REPO_PAT
+#   3. set repo variable SMART_REPO_AVAILABLE = true
+#
+# Until then this job skips cleanly (the gates still run locally —
+# `npm test` — wherever both repos are checked out side by side).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ssot-gates:
+    if: ${{ vars.SMART_REPO_AVAILABLE == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check out the smart repo (the diagram + freshness sources)
+        uses: actions/checkout@v6
+        with:
+          repository: oimlsmart/smart
+          token: ${{ secrets.SMART_REPO_PAT }}
+          path: smart
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Diagram drift + content freshness gates
+        run: npm test
+        env:
+          SMART_REPO: ${{ github.workspace }}/smart

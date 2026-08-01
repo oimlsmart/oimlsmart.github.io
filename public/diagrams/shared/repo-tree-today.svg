@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 620" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="880" height="620" fill="#ffffff"/>
+  <text x="440" y="32" text-anchor="middle" font-size="19" font-weight="600" fill="#1e293b">The program today — three GitHub orgs, the links as they are</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#b91c1c"/>
+    </marker>
+  </defs>
+
+  <!-- org: primmel -->
+  <rect x="30" y="60" width="250" height="200" rx="12" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="155" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#166534">github.com/primmel</text>
+  <text x="155" y="100" text-anchor="middle" font-size="9" fill="#15803d">the language org</text>
+  <rect x="46" y="112" width="218" height="34" rx="6" fill="#ffffff" stroke="#86efac"/>
+  <text x="155" y="127" text-anchor="middle" font-size="10" font-weight="600" fill="#166534">primmel-ts</text>
+  <text x="155" y="140" text-anchor="middle" font-size="8.5" fill="#15803d">the kernel (parser, linter, coverage, diff)</text>
+  <rect x="46" y="152" width="218" height="34" rx="6" fill="#ffffff" stroke="#86efac"/>
+  <text x="155" y="167" text-anchor="middle" font-size="10" font-weight="600" fill="#166534">editor · primmel.github.io · spec (mmel)</text>
+  <text x="155" y="180" text-anchor="middle" font-size="8.5" fill="#15803d">editor, primmel.org, the v2 archive</text>
+  <rect x="46" y="192" width="218" height="34" rx="6" fill="#ffffff" stroke="#86efac"/>
+  <text x="155" y="207" text-anchor="middle" font-size="10" font-weight="600" fill="#166534">primmel-oiml-smart</text>
+  <text x="155" y="220" text-anchor="middle" font-size="8.5" fill="#b91c1c">the docs site — volumes lag the program</text>
+
+  <!-- org: confium -->
+  <rect x="30" y="310" width="250" height="170" rx="12" fill="#f5f3ff" stroke="#c4b5fd"/>
+  <text x="155" y="334" text-anchor="middle" font-size="13" font-weight="700" fill="#5b21b6">github.com/confium</text>
+  <text x="155" y="350" text-anchor="middle" font-size="9" fill="#7c3aed">the Ribose threshold-crypto product</text>
+  <rect x="46" y="362" width="218" height="34" rx="6" fill="#ffffff" stroke="#c4b5fd"/>
+  <text x="155" y="377" text-anchor="middle" font-size="10" font-weight="600" fill="#5b21b6">confium</text>
+  <text x="155" y="390" text-anchor="middle" font-size="8.5" fill="#7c3aed">Rust workspace — TC Modes 1–3</text>
+  <rect x="46" y="402" width="218" height="34" rx="6" fill="#ffffff" stroke="#c4b5fd"/>
+  <text x="155" y="417" text-anchor="middle" font-size="10" font-weight="600" fill="#5b21b6">confium-ruby · specs · confium.github.io</text>
+  <text x="155" y="430" text-anchor="middle" font-size="8.5" fill="#7c3aed">bindings, confium.org/specs, the site</text>
+
+  <!-- org: oimlsmart -->
+  <rect x="600" y="60" width="250" height="460" rx="12" fill="#eff6ff" stroke="#93c5fd"/>
+  <text x="725" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#1e40af">github.com/oimlsmart</text>
+  <text x="725" y="100" text-anchor="middle" font-size="9" fill="#3b82f6">the OIML SMART program org</text>
+  <rect x="616" y="112" width="218" height="44" rx="6" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="725" y="128" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">smart</text>
+  <text x="725" y="141" text-anchor="middle" font-size="8.5" fill="#3b82f6">the SSOT packages + the app (the center)</text>
+  <rect x="616" y="162" width="218" height="44" rx="6" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="725" y="178" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">sim-instruments</text>
+  <text x="725" y="191" text-anchor="middle" font-size="8.5" fill="#b91c1c">the SST — a PLATFORM component mis-homed here</text>
+  <rect x="616" y="212" width="218" height="44" rx="6" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="725" y="228" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">smart-classroom-r60</text>
+  <text x="725" y="241" text-anchor="middle" font-size="8.5" fill="#3b82f6">the educational viewer (sync-on-load)</text>
+  <rect x="616" y="262" width="218" height="44" rx="6" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="725" y="278" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">digital-certificates</text>
+  <text x="725" y="291" text-anchor="middle" font-size="8.5" fill="#3b82f6">the OIML CNML project (Mode 3 flagship)</text>
+  <rect x="616" y="312" width="218" height="34" rx="6" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="725" y="327" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">vocab</text>
+  <text x="725" y="340" text-anchor="middle" font-size="8.5" fill="#3b82f6">the VIM/VIML register</text>
+  <rect x="616" y="362" width="218" height="142" rx="8" fill="#fefce8" stroke="#fde047"/>
+  <text x="725" y="384" text-anchor="middle" font-size="10.5" font-weight="700" fill="#854d0e">the next program slots in HERE</text>
+  <text x="725" y="404" text-anchor="middle" font-size="9" fill="#a16207">github.com/〈scope〉smart/</text>
+  <text x="725" y="422" text-anchor="middle" font-size="9" fill="#a16207">ISO 170XX · ILAC · MSS (BSI)</text>
+  <text x="725" y="444" text-anchor="middle" font-size="9" fill="#a16207">each with the same skeleton:</text>
+  <text x="725" y="460" text-anchor="middle" font-size="9" fill="#a16207">smart · sim-〈subjects〉 · classroom · certificates</text>
+
+  <!-- Links -->
+  <line x1="280" y1="130" x2="608" y2="134" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="440" y="122" text-anchor="middle" font-size="9" fill="#475569">PRIMMEL_TS symlink — every gate runs the live kernel</text>
+
+  <line x1="600" y1="150" x2="288" y2="180" stroke="#64748b" stroke-width="1.6" marker-end="url(#arr)"/>
+  <text x="440" y="176" text-anchor="middle" font-size="9" fill="#475569">the SST reads primmel-packages/ directly — handshake pinned</text>
+
+  <line x1="616" y1="240" x2="600" y2="240" stroke="#64748b" stroke-width="1.6" marker-end="url(#arr)"/>
+  <text x="608" y="231" text-anchor="middle" font-size="8" fill="#475569">sync-on-load</text>
+
+  <line x1="280" y1="209" x2="608" y2="209" stroke="#b91c1c" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <text x="440" y="201" text-anchor="middle" font-size="9" fill="#b91c1c">docs lag a wave — no gate ties them</text>
+
+  <line x1="280" y1="395" x2="608" y2="290" stroke="#b91c1c" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <text x="440" y="350" text-anchor="middle" font-size="9" fill="#b91c1c">CNML is UNCONNECTED — the signing bridge (I2) unbuilt</text>
+
+  <line x1="725" y1="156" x2="725" y2="164" stroke="#64748b" stroke-width="1.6" marker-end="url(#arr)"/>
+  <text x="725" y="530" text-anchor="middle" font-size="10" fill="#94a3b8">every arrow into/out of `smart` is tested today EXCEPT the two red dashed ones</text>
+</svg>

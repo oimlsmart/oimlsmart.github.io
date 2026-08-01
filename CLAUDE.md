@@ -4,25 +4,52 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-The public website for **[www.oimlsmart.org](https://www.oimlsmart.org)** — the marketing,
-about, and documentation pages for the **OIML SMART** pilot programme.
+The public website for **[www.oimlsmart.org](https://www.oimlsmart.org)** — the public
+front door of the whole Primmel SMART / OIML SMART architecture: what the platform is,
+what the program is, the component map, the docs federation directory, and the run/demo
+entry points. Overview + pointers live here; the deep volumes live in the docs
+federation (linked, never duplicated).
 
-Built with **[Astro](https://astro.build/)** — static HTML output, zero client-side JS
-by default. The only inline scripts are the dark-mode toggle and the globe animation.
+Built with **[Astro](https://astro.build/)** — static HTML output, Vue islands where
+interactivity is needed (see `TODO.astro/index.md` for the island inventory).
 
-This repo contains **only the public, non-logged-in** content. The interactive application
-lives in the **separate [`smart` repository](https://github.com/oimlsmart/smart)** under
-`browser/`. The application's routes under `/app/*` require authentication and are
-**never deployed from here**.
+The ladder pages (added in TODO.integration/26) are the spine:
+
+- `/` — hero + the eight words (IS–HAS–DOES) + the ladder + the three live entry points
+- `/platform` — the Primmel SMART platform (methodology, twin runtime, SST, certificates)
+- `/programs/oiml-smart` — the OIML program (Recommendations, OIML-CS, simulator, classroom)
+- `/architecture` — the component map: repos, SSOT flow, live gate numbers
+- `/docs/` — the developer quickstart + the docs-federation directory
+
+The production certification app lives in the **private [`smart` repository](https://github.com/oimlsmart/smart)**
+under `browser/`. This repo additionally carries an **app-subpath migration in progress**
+(`src/pages/app/`, auth/pinia/workflow islands) — state and remaining work are tracked in
+`TODO.astro/index.md`; build on that structure, not on stale assumptions.
 
 ## Build / develop
 
 ```bash
 npm install
 npm run dev      # http://localhost:4321
-npm run build    # output to dist/
-npm run preview  # preview the production build
+npm run build    # output to dist/ (+ pagefind index)
+npm test         # vitest — includes the SSOT gates below
+npm run test:e2e # playwright
 ```
+
+## The SSOT gates (don't let this site go stale)
+
+- **Facts home:** every claim the site makes about the live platform (gate numbers,
+  repo list, program list, federation links) lives in `src/data/platform-facts.ts`.
+  Pages render from it — never re-type a number into prose.
+- **Freshness gate:** `src/platform-freshness.test.ts` parses
+  `smart/docs/architecture/for-agents.md` (sibling checkout or `SMART_REPO`) and fails
+  when a pinned claim drifts. No SSOT checkout ⇒ the gate fails loudly.
+- **Diagram pipeline:** `scripts/sync-diagrams.mjs` copies the shared SVG set from the
+  smart repo into `public/diagrams/shared/`; `--check` proves byte-identity
+  (`src/diagram-sync.test.ts`). The smart repo is the only diagram home — never redraw.
+- **CI:** `.github/workflows/gates.yml` runs both gates when repo variable
+  `SMART_REPO_AVAILABLE=true` + secret `SMART_REPO_PAT` are configured (the smart repo
+  is private; until then the gates run locally wherever both repos are checked out).
 
 ## Architecture
 
@@ -55,16 +82,19 @@ File-based routing in `src/pages/`:
 | Route | Source |
 |---|---|
 | `/` | `src/pages/index.astro` |
-| `/app/` | `src/pages/app.astro` |
+| `/platform` | `src/pages/platform.astro` |
+| `/architecture` | `src/pages/architecture.astro` |
+| `/programs/oiml-smart` | `src/pages/programs/oiml-smart.astro` |
+| `/app/*` | `src/pages/app/` (migration in progress — `TODO.astro/`) |
 | `/oiml-cs` | `src/pages/oiml-cs.astro` |
 | `/404` | `src/pages/404.astro` |
 | `/docs/` | `src/pages/docs/index.astro` |
 | `/docs/[...slug]` | `src/pages/docs/[...slug].astro` (catch-all) |
-| `/blog/` | `src/pages/blog/index.astro` |
-| `/blog/[...slug]` | `src/pages/blog/[...slug].astro` |
+| `/news/`, `/blog/[...slug]` | `src/pages/news/`, content `blog` collection |
 | `/about/[...slug]` | `src/pages/about/[...slug].astro` |
 | `/recommendations/[...slug]` | `src/pages/recommendations/[...slug].astro` |
 | `/library/[...slug]` | `src/pages/library/[...slug].astro` |
+| `/ontology/*`, `/vocabularies/*` | `src/pages/ontology/`, `src/pages/vocabularies/` |
 | `/feed.xml` | `src/pages/feed.xml.js` (RSS) |
 
 ### Components
@@ -106,12 +136,18 @@ uploads `dist/` as a GitHub Pages artifact, and deploys.
 
 ## Things future agents trip on
 
-- **No VitePress.** The site was migrated from VitePress to Astro. Don't add `.vitepress/` config or Vue SFC patterns.
-- **No Vue.** All components are `.astro` files. No `<script setup>`, no Vue composables, no hydration.
+- **No VitePress.** The site was migrated from VitePress to Astro. Don't add `.vitepress/` config.
+- **Vue islands are real.** `ThemeToggle`, `MobileNav`, `NavDropdown`, `SearchBox` (public) plus the
+  app-subpath workflow islands are Vue SFCs hydrated with `client:*` directives — see
+  `TODO.astro/index.md` for the authoritative inventory. The rest is `.astro`.
+- **Nav is data.** `src/data/nav-config.ts` is the single nav source for desktop + mobile;
+  a contract test (`nav-config.contract.test.ts`) proves every link resolves and no href repeats.
 - **Dark mode** is handled by an inline `<script>` in `Base.astro` — not by a composable or component lifecycle.
-- **`APP_URL`** is read via `import.meta.env.APP_URL` in `app.astro` (Vite statically replaces it at build time).
-- **Content Collections** — adding a new page means adding a `.md` file under `src/content/` with the right frontmatter schema. The routing page automatically picks it up.
+- **`APP_URL`** is read via `import.meta.env.APP_URL` (Vite statically replaces it at build time).
+- **Content Collections** — adding a new page means adding a `.md`/`.mdx` file under `src/content/` with the right frontmatter schema. The routing page automatically picks it up.
 - **Docs sidebar** is generated from the `docs` content collection at build time — no manual sidebar config.
 - **OCL code blocks** — use ` ```txt ` not ` ```ocl ` (Shiki doesn't have an OCL grammar).
 - **`package-lock.json`** IS committed. The GHA workflow uses `npm ci`.
 - **DRAFT / pilot** notices are everywhere. The site is internal-only. All content is draft.
+- **Platform claims** go in `src/data/platform-facts.ts` (pinned by the freshness gate) —
+  never hardcode gate numbers or repo lists into a page.

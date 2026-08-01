@@ -44,6 +44,9 @@ function collectContentSlugs(dir: string, base = ''): Set<string> {
 }
 
 function hrefResolves(href: string, routes: Set<string>, slugs: Set<string>): boolean {
+  // Absolute URLs are out of scope for the route resolver — the lychee
+  // link gate proves their liveness.
+  if (/^https?:\/\//.test(href)) return true
   if (EXTERNAL_HREFS.has(href)) return true
   const normalized = href.replace(/\/$/, '')
   if (routes.has(normalized) || routes.has(href)) return true

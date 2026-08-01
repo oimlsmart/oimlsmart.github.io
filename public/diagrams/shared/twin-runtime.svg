@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="960" height="400" fill="#ffffff"/>
+  <text x="480" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="#1e293b">The twin runtime</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <rect x="30" y="90" width="150" height="100" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="105" y="120" text-anchor="middle" font-size="14" font-weight="600" fill="#1d4ed8">the twin</text>
+  <text x="105" y="142" text-anchor="middle" font-size="12" fill="#475569">serves the governed</text>
+  <text x="105" y="162" text-anchor="middle" font-size="12" fill="#475569">registers + timestamps</text>
+
+  <rect x="230" y="90" width="150" height="100" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="305" y="120" text-anchor="middle" font-size="14" font-weight="600" fill="#1e293b">gateway</text>
+  <text x="305" y="142" text-anchor="middle" font-size="12" fill="#475569">connectors (rest_json,</text>
+  <text x="305" y="162" text-anchor="middle" font-size="12" fill="#475569">graphql, mqtt, file_drop)</text>
+
+  <rect x="430" y="90" width="150" height="100" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="505" y="120" text-anchor="middle" font-size="14" font-weight="600" fill="#1e293b">monitor</text>
+  <text x="505" y="142" text-anchor="middle" font-size="12" fill="#475569">scheduler + the verdict</text>
+  <text x="505" y="162" text-anchor="middle" font-size="12" fill="#475569">engine + freshness gate</text>
+
+  <rect x="630" y="90" width="150" height="100" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="705" y="120" text-anchor="middle" font-size="14" font-weight="600" fill="#1e293b">evidence streams</text>
+  <text x="705" y="142" text-anchor="middle" font-size="12" fill="#475569">facts · verdicts ·</text>
+  <text x="705" y="162" text-anchor="middle" font-size="12" fill="#475569">escalations (append-only)</text>
+
+  <rect x="630" y="240" width="150" height="100" rx="10" fill="#fefce8" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="705" y="270" text-anchor="middle" font-size="14" font-weight="600" fill="#854d0e">certificate machine</text>
+  <text x="705" y="292" text-anchor="middle" font-size="12" fill="#475569">flag → investigate →</text>
+  <text x="705" y="312" text-anchor="middle" font-size="12" fill="#475569">suspend → reinstate | withdraw</text>
+
+  <rect x="230" y="240" width="350" height="100" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+  <text x="405" y="270" text-anchor="middle" font-size="14" font-weight="600" fill="#065f46">the probe channel</text>
+  <text x="405" y="292" text-anchor="middle" font-size="12" fill="#475569">reference_instrument (PREFERRED) · observer_attestation</text>
+  <text x="405" y="312" text-anchor="middle" font-size="12" fill="#475569">(declared limitation) · sim_ground_truth (acceptance only)</text>
+
+  <g stroke="#64748b" stroke-width="1.5">
+    <line x1="180" y1="140" x2="222" y2="140" marker-end="url(#arr)"/>
+    <line x1="380" y1="140" x2="422" y2="140" marker-end="url(#arr)"/>
+    <line x1="580" y1="140" x2="622" y2="140" marker-end="url(#arr)"/>
+    <line x1="705" y1="190" x2="705" y2="232" marker-end="url(#arr)"/>
+    <line x1="505" y1="190" x2="505" y2="232" marker-end="url(#arr)"/>
+    <line x1="580" y1="290" x2="622" y2="290" marker-end="url(#arr)"/>
+  </g>
+  <text x="552" y="279" font-size="11" fill="#64748b">closes / re-proves</text>
+
+  <text x="480" y="382" text-anchor="middle" font-size="13" fill="#64748b">failure ⇒ indeterminate, never an exception in evidence · silence is not evidence · evidence accrues, never rewrites</text>
+</svg>
