@@ -39,8 +39,8 @@ const recommendations = STANDARDS.map((s) => ({
 }))
 
 const features = [
-  { num: '01', title: 'Structured Requirements', description: 'Machine-readable requirements with explicit acceptance criteria and applicability filters.', tag: 'OWL · RDF' },
-  { num: '02', title: 'Conformance Testing', description: 'Structured test procedures linked to requirements via explicit dependency chains.', tag: 'TESTS · SHACL' },
+  { num: '01', title: 'Structured Requirements', description: 'Requirements as executable constraints with explicit acceptance criteria and applicability filters.', tag: 'PRIMMEL' },
+  { num: '02', title: 'Conformance Testing', description: 'Tests as executable processes, linked to the requirements they probe via explicit dependency chains.', tag: 'PROCESSES' },
   { num: '03', title: 'Smart Forms', description: 'Calculation-powered forms that auto-compute field values based on instrument classification.', tag: 'CALC · FORM' },
   { num: '04', title: 'Certification Workflow', description: 'End-to-end digital certification: application → test report → evaluation → certificate.', tag: 'WORKFLOW' },
   { num: '05', title: 'Semantic Ontology', description: 'OWL-based ontology for cross-Recommendation interoperability and semantic queries.', tag: 'OWL · SKOS' },
@@ -106,7 +106,7 @@ const audiencePaths = [
         <div class="hero-stagger mt-10 flex items-center gap-6 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-muted max-[960px]:justify-center flex-wrap" style="--stagger-i:4">
           <span class="flex items-center gap-1.5">
             <span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span>
-            OWL · RDF · SHACL
+            Primmel · PRL
           </span>
           <span class="opacity-50">·</span>
           <span class="flex items-center gap-1.5">
