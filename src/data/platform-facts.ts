@@ -12,7 +12,7 @@ export const GATE_NUMBERS = {
   packages: 28,
   vitestTests: 4089,
   vitestFiles: 243,
-  e2e: '64/64',
+  e2e: '65/65',
   validateErrors: 0,
   validateWarnings: 488,
   kernel: '1062/1062',
