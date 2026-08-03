@@ -1,177 +1,139 @@
 ---
 import Base from '../layouts/Base.astro'
 import PageHero from '../components/PageHero.astro'
-import { EIGHT_WORDS, FEDERATION } from '../data/platform-facts'
 
-const layers = [
-  {
-    name: 'The physical instrument',
-    role: 'the reality',
-    desc: 'A load cell on a quarry belt, a gas meter on a wall. It holds values and runs processes whether anyone models it or not.',
-  },
-  {
-    name: 'The full digital twin',
-    role: 'the representation',
-    desc: 'Whatever the manufacturer maintains — physics simulation, IoT telemetry, an admin shell. Rich, vendor-specific, ungoverned by any standard.',
-  },
-  {
-    name: 'The SMART twin',
-    role: 'the governed projection',
-    desc: 'A tailored projection of the full twin, declared by the Recommendation itself: the standard says which aspects Primmel governs, the twin interface is derived from that declaration.',
-  },
+const workflow = [
+  { step: 'Application', desc: 'the applicant files for type evaluation against a modelled Recommendation — identity, classification, the model family matrix.' },
+  { step: 'Sample request', desc: 'the issuing authority requests samples of the type; the chain of custody starts here, every hand-off recorded.' },
+  { step: 'Dispatch', desc: 'the application goes to a test laboratory as a structured test request — per form, per requirement set, never a PDF in an email.' },
+  { step: 'Lab test runs', desc: 'the laboratory executes the conformance tests; evidence is captured once, at the bench, against the form the Recommendation declares.' },
+  { step: 'Evaluation', desc: 'the test reports roll up into a type evaluation — every verdict computed from the requirement model, none asserted by hand.' },
+  { step: 'CNML-signed certificate', desc: 'the authority issues the certificate as a signed CNML document — the verdict chain, signed, verifiable by anyone.' },
+  { step: 'BIML registration', desc: 'the certificate registers with the BIML — the public register is the same database the workflow wrote to all along.' },
 ]
 
-const runtime = [
-  { name: 'The gateway', desc: 'connectors to live twins — HTTP/GraphQL bindings declared in the model, never hardcoded per instrument.' },
-  { name: 'The monitor', desc: 'a scheduler that probes the governed aspects and re-judges compliance as evidence arrives.' },
-  { name: 'The verdict engine', desc: 'one dialect, reused everywhere: requirements evaluated against served values; silence degrades to indeterminate, never a silent pass.' },
-  { name: 'The evidence store', desc: 'every probe, verdict, and re-judgment accrues as an append-only stream — audit reads history, never a snapshot.' },
+const consoles = [
+  { name: 'Applicant portal', role: 'the manufacturer', desc: 'File the application, declare the model family, ship samples, watch the verdicts arrive — status is a query, not a phone call.' },
+  { name: 'IA console', role: 'the issuing authority', desc: 'Review applications, request samples, dispatch test requests, judge the evaluation, sign and issue the certificate.' },
+  { name: 'TL workbench', role: 'the test laboratory', desc: 'The lab inbox, the structured test run, evidence capture at the bench, the test report generated from the run itself.' },
+  { name: 'BIML console', role: 'the register', desc: 'Registration of issued certificates, the participant registry, the public record — the system of the OIML-CS, operated by the Bureau.' },
 ]
 
-const sstFacts = [
-  { term: '/twin', desc: 'the certification channel — what a real SMART twin would serve, probe by probe.' },
-  { term: '/world', desc: 'the practice channel — place a load, shift the temperature, run the clock. Teaching and rehearsal only.' },
-  { term: 'the wall', desc: 'the app never reads /world during certification. The epistemic wall is architectural, not a policy note.' },
+const deployments = [
+  { mode: 'Shared', name: 'BIML-operated', desc: 'One hosted platform serves every issuing authority and test laboratory. The register is built in; participation is an account, not an installation.' },
+  { mode: 'Local + submission', name: 'IA-operated', desc: 'An issuing authority runs its own instance under its own custody; signed submissions flow into the shared register, which verifies the signature chain on import.' },
 ]
 ---
 
-<Base>
+<Base
+  title="The OIML-CS SMART platform"
+  description="The web system through which the OIML-CS serves issuing authorities and test laboratories: application, sampling, dispatch, test runs, evaluation, CNML-signed certificates, and BIML registration."
+>
   <PageHero
-    title="The Primmel SMART platform"
-    lede="OIML SMART runs on Primmel SMART — the platform that turns a standard from a PDF into an executable model: a methodology, an app framework, a twin runtime, a simulator, and a certificate chain."
+    title="The OIML-CS SMART platform"
+    lede="The web system through which the OIML Certification System serves issuing authorities and test laboratories: applications arrive, samples move, test runs produce evidence, evaluations compute verdicts, and certificates issue signed — then register with the BIML."
   />
 
   <div class="px-8 pb-20 max-w-5xl">
-    {/* § 01 — the methodology */}
+    {/* § 01 — the certification workflow */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 01</span>
-        <span>The methodology</span>
+        <span>The certification workflow</span>
         <span class="bp-section-anchor__line"></span>
-        <span class="bp-coord">IS · HAS · DOES</span>
+        <span class="bp-coord">B 18:2025 · end to end</span>
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
-        Every subject — an instrument, a lab, a whole certification scheme — is described with exactly
-        eight words. Three relations and five sorts, closed under composition: the system is complete
-        for every descriptive claim, and it never needs a ninth primitive. Requirements are constraints
-        on those aspects; tests are processes that probe them; forms are the evidence interfaces.
+        The OIML-CS workflow, modelled end to end on <strong class="text-ink font-semibold">B 18:2025</strong>.
+        Every participant role, every document, every verdict is an entity in the system — so the whole
+        chain is traceable, and every state change carries its evidence.
       </p>
-      <div class="grid grid-cols-4 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-2">
-        {EIGHT_WORDS.map((w) => (
-          <div class="bg-paper-soft p-4 bp-card-hover">
-            <div class="flex items-baseline gap-2">
-              <span class="font-serif text-[1.25rem] text-accent italic">{w.word}</span>
-              <span class="bp-chip">{w.kind}</span>
+      <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
+        <img src="/diagrams/shared/workflow-chain.svg" alt="The OIML-CS workflow chain: application through sampling, dispatch, testing, evaluation, certificate issuance, and registration" class="w-full max-w-3xl mx-auto" loading="lazy" />
+      </figure>
+      <ol class="list-none p-0 m-0 flex flex-col border border-rule rounded-md overflow-hidden">
+        {workflow.map((w, i) => (
+          <li class="flex gap-5 items-baseline bg-paper-soft p-5 border-b border-rule last:border-b-0 bp-card-hover">
+            <span class="font-mono text-xs text-accent whitespace-nowrap">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 class="font-serif text-[1.0625rem] inline">{w.step}</h3>
+              <span class="text-sm text-ink-soft"> — {w.desc}</span>
             </div>
-            <p class="text-[0.8125rem] text-ink-muted mt-1 leading-snug">{w.gloss}</p>
-          </div>
+          </li>
         ))}
-      </div>
+      </ol>
       <p class="text-sm text-ink-muted mt-4">
-        Proved, not asserted — <a class="text-accent underline underline-offset-2" href={FEDERATION[0].href} target="_blank" rel="noopener">the foundation volume</a> carries the closure, completeness, and extensibility theorems.
+        The scheme itself — the roles, the documents, the governance — is on <a class="text-accent underline underline-offset-2" href="/oiml-cs">the OIML-CS page</a>; the certificate format is <a class="text-accent underline underline-offset-2" href="/cnml">OIML CNML</a>.
       </p>
     </section>
 
-    {/* § 02 — the three-layer twin */}
+    {/* § 02 — the four consoles */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 02</span>
-        <span>The three-layer twin</span>
+        <span>The four consoles</span>
         <span class="bp-section-anchor__line"></span>
-        <span class="bp-coord">the key idea</span>
+        <span class="bp-coord">one seat per role</span>
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
-        A SMART twin is not the vendor's digital twin and not the instrument itself — it is the
-        <strong class="text-ink font-semibold"> governed projection</strong> between them. The standard
-        declares what it governs; the projection serves exactly that; the twin-certification program
-        certifies that the projection stays faithful to the physical device.
+        Every participant in the OIML-CS gets a console shaped to their role in the workflow —
+        the same underlying model, four different seats.
       </p>
-      <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
-        <img src="/diagrams/shared/three-layer-twin.svg" alt="The three layers: physical instrument, full digital twin, SMART twin as governed projection" class="w-full max-w-3xl mx-auto" loading="lazy" />
-      </figure>
-      <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
-        {layers.map((l) => (
-          <article class="bg-paper-soft border border-rule rounded-md p-5 bp-card-hover">
-            <div class="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-accent mb-1">{l.role}</div>
-            <h3 class="font-serif text-[1.125rem] mb-1.5">{l.name}</h3>
-            <p class="text-sm text-ink-soft leading-relaxed">{l.desc}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    {/* § 03 — the twin runtime */}
-    <section class="mb-16 bp-reveal">
-      <div class="bp-section-anchor mb-4">
-        <span class="bp-section-anchor__num">§ 03</span>
-        <span>The twin runtime</span>
-        <span class="bp-section-anchor__line"></span>
-        <span class="bp-coord">continuous compliance</span>
-      </div>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
-        A Primmel model is executable. Plug a live twin into the runtime and certification stops being
-        a point-in-time event: the monitor probes the governed aspects on a schedule, the verdict
-        engine re-judges, and every judgment lands in the evidence stream.
-      </p>
-      <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
-        <img src="/diagrams/shared/twin-runtime.svg" alt="The twin runtime: gateway connectors, monitor scheduler, verdict engine, evidence streams" class="w-full max-w-3xl mx-auto" loading="lazy" />
-      </figure>
       <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
-        {runtime.map((r) => (
+        {consoles.map((c) => (
           <div class="bg-paper-soft p-5 bp-card-hover">
-            <h3 class="font-serif text-[1.0625rem] mb-1">{r.name}</h3>
-            <p class="text-sm text-ink-soft leading-relaxed">{r.desc}</p>
+            <div class="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-accent mb-1">{c.role}</div>
+            <h3 class="font-serif text-[1.125rem] mb-1.5">{c.name}</h3>
+            <p class="text-sm text-ink-soft leading-relaxed">{c.desc}</p>
           </div>
         ))}
       </div>
     </section>
 
-    {/* § 04 — the SST */}
+    {/* § 03 — the deployment modes */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
-        <span class="bp-section-anchor__num">§ 04</span>
-        <span>The SST</span>
+        <span class="bp-section-anchor__num">§ 03</span>
+        <span>Two deployment modes</span>
         <span class="bp-section-anchor__line"></span>
-        <span class="bp-coord">practice without hardware</span>
+        <span class="bp-coord">shared · local + submission</span>
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
-        The Simulated SMART Twin is a full-fidelity stand-in for a physical instrument: the same
-        <code class="font-mono text-[0.875em]">/twin</code> interface a real device would serve, plus a
-        <code class="font-mono text-[0.875em]">/world</code> channel for the physics a lab would apply.
-        Operators rehearse the whole certification chain before they ever touch hardware.
+        The platform runs where the authority needs it: as the shared system the BIML operates for
+        everyone, or as an authority's own instance whose signed submissions the shared register
+        accepts.
       </p>
-      <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
-        <img src="/diagrams/shared/sst-interaction.svg" alt="The SST's two channels: /twin for certification, /world for practice, with the epistemic wall between" class="w-full max-w-3xl mx-auto" loading="lazy" />
-      </figure>
-      <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
-        {sstFacts.map((s) => (
+      <div class="grid grid-cols-2 gap-4 max-[960px]:grid-cols-1">
+        {deployments.map((d) => (
           <article class="bg-paper-soft border border-rule rounded-md p-5 bp-card-hover">
-            <h3 class="font-mono text-[0.9375rem] text-accent mb-1.5">{s.term}</h3>
-            <p class="text-sm text-ink-soft leading-relaxed">{s.desc}</p>
+            <div class="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-accent mb-1">{d.mode}</div>
+            <h3 class="font-serif text-[1.125rem] mb-1.5">{d.name}</h3>
+            <p class="text-sm text-ink-soft leading-relaxed">{d.desc}</p>
           </article>
         ))}
       </div>
     </section>
 
-    {/* § 05 — certificates */}
+    {/* § 04 — try it + the platform credit */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
-        <span class="bp-section-anchor__num">§ 05</span>
-        <span>The certificate chain</span>
+        <span class="bp-section-anchor__num">§ 04</span>
+        <span>Try the workflow</span>
         <span class="bp-section-anchor__line"></span>
-        <span class="bp-coord">CNML · Confium</span>
+        <span class="bp-coord">in your browser</span>
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
-        Verdicts terminate in certificates — CNML documents with cryptographic provenance, signed over
-        a threshold-cryptography PKI (Confium). A certificate names its evidence; the evidence names
-        its probes; the probes name the governed aspect set they served. The chain is checkable end
-        to end by anyone holding the public keys.
+        The pilot build runs the whole chain in your browser — seed a sample application, dispatch it,
+        run the tests against the simulated instrument, evaluate, and issue the certificate.
       </p>
-      <div class="flex flex-wrap gap-3">
-        <a class="btn btn-ghost bp-focus-ring" href={FEDERATION.find(f => f.volume === 'CNML certificates')?.href} target="_blank" rel="noopener">The CNML volume →</a>
-        <a class="btn btn-ghost bp-focus-ring" href={FEDERATION.find(f => f.volume === 'Confium')?.href} target="_blank" rel="noopener">The Confium volume →</a>
-        <a class="btn btn-ghost bp-focus-ring" href="/architecture">The component architecture →</a>
+      <div class="flex flex-wrap gap-3 mb-10">
+        <a class="btn btn-primary bp-focus-ring" href="/app">Open the app →</a>
+        <a class="btn btn-ghost bp-focus-ring" href="/sst">The simulated instruments →</a>
+        <a class="btn btn-ghost bp-focus-ring" href="/programs/oiml-smart">The program overview →</a>
       </div>
+      <p class="text-sm text-ink-muted border-t border-rule pt-5 max-w-3xl">
+        OIML SMART and CNML are powered by <a class="text-accent underline underline-offset-2" href="https://www.primmel.org/" target="_blank" rel="noopener">the Primmel SMART platform</a>.
+      </p>
     </section>
   </div>
 </Base>

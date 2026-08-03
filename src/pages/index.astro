@@ -4,12 +4,19 @@ import SITE from '../data/site-meta'
 import { STANDARDS, STANDARDS_STATS } from '../data/standards'
 import { EIGHT_WORDS, ENTRY_POINTS } from '../data/platform-facts'
 
-const ladder = [
-  { name: 'Primmel', detail: 'the typed, executable modelling language — models that run', href: 'https://www.primmel.org/', external: true },
-  { name: 'Primmel SMART', detail: 'the platform: methodology, app framework, twin runtime, SST, twin certification', href: '/platform' },
-  { name: 'OIML SMART', detail: 'this program — executable Recommendations, the digital OIML-CS, the classroom', href: '/programs/oiml-smart', current: true },
-  { name: '〈scope〉 SMART', detail: 'the open slots — accreditation, MSS certification, lab programs (zero forks)', href: 'https://www.primmel.org/programs/', external: true },
-  { name: 'Confium', detail: 'the threshold-cryptography PKI the certificates ride', href: 'https://primmel.github.io/primmel-smart-docs/confium/', external: true },
+const components = [
+  { name: 'OIML SMART Recommendations', detail: 'The published, expert-authored executable Recommendations — R 60, R 91, R 129, R 144 today, each with clause-level provenance to the source document.', href: '/recommendations' },
+  { name: 'OIML SMART Studio', detail: 'Viewing and authoring SMART Recommendations — the canvas where experts model a Recommendation, one click from the live Studio.', href: '/studio' },
+  { name: 'OIML-CS SMART platform', detail: 'The web system through which the OIML-CS serves issuing authorities and test laboratories — applications to certificates to BIML registration.', href: '/platform' },
+  { name: 'OIML SMART Measuring Instruments', detail: 'Physical instruments with a SMART digital twin — the instrument itself is the API that certification talks to.', href: '/instruments' },
+  { name: 'OIML SST for Measuring Instruments', detail: 'The Simulated SMART Twin — the ACME LC-500 family with metrologically real physics, no hardware required.', href: '/sst' },
+  { name: 'OIML CNML', detail: 'The Certificat Numérique de Métrologie Légale — the machine-readable certificate an issuing authority signs for a certified type.', href: '/cnml' },
+]
+
+const flowSteps = [
+  { num: '01', title: 'Pick a Recommendation', detail: 'read the modelled requirements, tests, and forms', href: '/recommendations' },
+  { num: '02', title: 'Test the simulation', detail: 'run the chain against a simulated instrument — no hardware', href: '/sst' },
+  { num: '03', title: 'Issue the certificate', detail: 'application to signed CNML, in your browser', href: '/app' },
 ]
 
 const acronym = [
@@ -181,7 +188,7 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
-        THE FOUNDATION — the eight words + the ladder
+        THE FOUNDATION — the eight words, the platform, the components
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
     <section class="py-20 px-8 bp-grid bp-grid--major">
@@ -192,34 +199,76 @@ const audiencePaths = [
           <span class="bp-section-anchor__line"></span>
           <span class="bp-coord">IS · HAS · DOES</span>
         </div>
-        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Eight words, then a ladder</h2>
-        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Every SMART artifact — an instrument, a lab, a certificate — is described with exactly eight words: three relations and five sorts, closed under composition. On that foundation sits a ladder of real programs, one language all the way up.</p>
+        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Eight words, one platform, six components</h2>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Every SMART artifact — an instrument, a lab, a certificate — is described with exactly eight words: three relations and five sorts, closed under composition. OIML SMART is a program of six components, each a product in its own right.</p>
       </div>
-      <div class="grid grid-cols-[1.2fr_1fr] gap-10 items-start max-[960px]:grid-cols-1">
-        <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden">
-          {EIGHT_WORDS.map((w) => (
-            <div class="bg-paper-soft p-4 bp-card-hover">
-              <div class="flex items-baseline gap-2">
-                <span class="font-serif text-[1.125rem] text-accent italic">{w.word}</span>
-                <span class="bp-chip">{w.kind}</span>
-              </div>
-              <p class="text-[0.75rem] text-ink-muted mt-1 leading-snug">{w.gloss}</p>
+      <div class="grid grid-cols-4 gap-px bg-rule border border-rule rounded-md overflow-hidden mb-6 max-[960px]:grid-cols-2">
+        {EIGHT_WORDS.map((w) => (
+          <div class="bg-paper-soft p-4 bp-card-hover">
+            <div class="flex items-baseline gap-2">
+              <span class="font-serif text-[1.125rem] text-accent italic">{w.word}</span>
+              <span class="bp-chip">{w.kind}</span>
             </div>
+            <p class="text-[0.75rem] text-ink-muted mt-1 leading-snug">{w.gloss}</p>
+          </div>
+        ))}
+      </div>
+      <a
+        href="https://www.primmel.org/"
+        target="_blank"
+        rel="noopener"
+        class="block border border-rule rounded-md bg-paper-soft p-6 mb-10 no-underline text-inherit bp-card-hover bp-reveal group bp-crosshair"
+      >
+        <div class="bp-coord mb-2">The platform underneath</div>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          OIML SMART and CNML are powered by <strong class="text-ink font-semibold">the Primmel SMART platform</strong> — the modelling language, runtime machinery, and certificate PKI beneath everything on this site.
+          <span class="text-accent opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all inline-block">primmel.org →</span>
+        </p>
+      </a>
+      <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
+        {components.map((c, i) => (
+          <a
+            href={c.href}
+            class="block p-6 bg-paper-soft border border-rule rounded-md no-underline text-inherit relative bp-card-hover bp-reveal group bp-crosshair"
+            style={`--reveal-delay: ${i * 60}ms`}
+          >
+            <div class="component-logo-slot mb-4" aria-hidden="true"><span>Logo</span></div>
+            <div class="flex items-center justify-between mb-2 gap-3">
+              <h3 class="font-serif text-[1.125rem] leading-tight">{c.name}</h3>
+              <span class="text-accent opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0">→</span>
+            </div>
+            <p class="text-[0.8125rem] text-ink-muted leading-relaxed">{c.detail}</p>
+            <div class="absolute top-3 right-3 bp-coord opacity-0 group-hover:opacity-100 transition-opacity">{String(i + 1).padStart(2, '0')}</div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    {/* ═══════════════════════════════════════════════════════════════
+        THE FULL FLOW — the demo path, end to end
+        ═══════════════════════════════════════════════════════════════ */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="py-14 px-8" aria-label="The full flow">
+      <div class="border border-rule rounded-md bg-paper-soft p-7 bp-reveal bp-crosshair">
+        <div class="flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-accent mb-5 flex-wrap">
+          <span>The full flow</span>
+          <span class="opacity-50">·</span>
+          <span class="text-ink-muted">from a Recommendation, test an instrument's simulation, issue its certificate</span>
+        </div>
+        <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
+          {flowSteps.map((s) => (
+            <a
+              href={s.href}
+              class="flex gap-4 items-start border border-rule rounded-md bg-paper p-5 no-underline text-inherit bp-card-hover group"
+            >
+              <span class="inline-flex items-center justify-center w-7 h-7 rounded-full border border-accent text-accent font-mono text-xs shrink-0">{s.num}</span>
+              <span>
+                <span class="font-semibold block">{s.title}<span class="text-accent opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all inline-block ml-1">→</span></span>
+                <span class="text-[0.8125rem] text-ink-muted block mt-0.5">{s.detail}</span>
+              </span>
+            </a>
           ))}
         </div>
-        <ol class="list-none p-0 m-0 grid gap-3">
-          {ladder.map((rung, i) => (
-            <li class={`flex gap-4 items-start border rounded-md p-4 ${rung.current ? 'border-accent bg-accent-soft' : 'border-rule bg-paper-soft'} bp-card-hover`}>
-              <span class="inline-flex items-center justify-center w-7 h-7 rounded-full border border-accent text-accent font-mono text-xs shrink-0">{i + 1}</span>
-              <div>
-                <a href={rung.href} {...(rung.external ? { target: '_blank', rel: 'noopener' } : {})} class="font-semibold text-accent no-underline hover:underline underline-offset-2">
-                  {rung.name}{rung.current && <span class="bp-chip ml-2">you are here</span>}
-                </a>
-                <p class="text-[0.8125rem] text-ink-muted mt-0.5">{rung.detail}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
       </div>
     </section>
 
@@ -499,6 +548,27 @@ const audiencePaths = [
 
   .rec-card:hover { border-color: var(--accent); }
   .rec-card:hover .bp-chip { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+  /* ── Component logo slots (empty placeholders — logos land later) ─ */
+  .component-logo-slot {
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 1px dashed var(--ink-muted);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.55;
+    transition: opacity 150ms ease, border-color 150ms ease;
+  }
+  .component-logo-slot span {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  a:hover .component-logo-slot { opacity: 0.9; border-color: var(--accent); }
 
   @media (max-width: 960px) {
     .vf-coord { font-size: 0.5625rem; }

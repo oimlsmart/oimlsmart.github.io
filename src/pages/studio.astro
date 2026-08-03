@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+
+const surfaces = [
+  { name: 'The rec palettes', desc: 'Requirement, conformance test, form, and instrument creation — each with the parser\u2019s own minimal shape, never a free-form document.' },
+  { name: 'The certificate preview', desc: 'The subject\u2019s IS/HAS facets rendered as certificate-style tables — identity, design parameters with the MPE table, attributes, promises — as you model.' },
+  { name: 'The doc map', desc: 'The model mapped back onto the source document\u2019s statements — what the model covers, what it deliberately omits, what remains.' },
+  { name: 'Review before commit', desc: 'The kernel\u2019s model-diff as the review step: a Recommendation change is a diff a committee can read.' },
+]
+
+const loop = [
+  { step: 'Read like a modeller', desc: 'instrument / truths / checks / verdict — the IS–HAS–DOES read of the source document.' },
+  { step: 'Open the model', desc: 'the OIML program plugin activates; the rec palettes and certificate preview appear.' },
+  { step: 'Shape the subject', desc: 'IS identity + design parameters, HAS attributes + characteristics, DOES behaviors.' },
+  { step: 'Requirements with provenance', desc: 'each a constraint on the subject, each carrying its clause URN back to the source.' },
+  { step: 'Tests and forms', desc: 'preconditions, procedures, acceptance rules; the form as the evidence skeleton.' },
+  { step: 'The workflow, simulated', desc: 'walk the gates live with registers — conform, invalid ambient, out-of-MPE.' },
+  { step: 'Map, review, save', desc: 'the doc map shows coverage; the model diff is the review-before-commit.' },
+]
+---
+
+<Base
+  title="OIML SMART Studio"
+  description="OIML SMART Studio — viewing and authoring OIML SMART Recommendations: the canvas, the inspectors, the doc map, and the certificate preview, with clause-level provenance back to the source document."
+>
+  <PageHero
+    title="OIML SMART Studio"
+    lede="The Studio is where OIML SMART Recommendations are viewed and authored — the canvas, the inspectors, the doc map, and the certificate preview, every requirement carrying its clause-level provenance back to the source document."
+  />
+
+  <div class="px-8 pb-20 max-w-5xl">
+    {/* § 01 — viewing and authoring */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 01</span>
+        <span>Viewing and authoring</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">the authoring half of the toolchain</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        Everything else on this site is the runtime: source models → generated data → evaluation →
+        certificates. The Studio is how the models themselves get written — and how reviewers read
+        them. Open an OIML-CS model and the OIML program layer activates: the Recommendation
+        surfaces below, on top of the same kernel doctrine everywhere else.
+      </p>
+      <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
+        {surfaces.map((s) => (
+          <div class="bg-paper-soft p-5 bp-card-hover">
+            <h3 class="font-serif text-[1.0625rem] mb-1">{s.name}</h3>
+            <p class="text-sm text-ink-soft leading-relaxed">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* § 02 — the authoring loop */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 02</span>
+        <span>The authoring loop</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">seven steps, document to package</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        Authoring a Recommendation is a loop, not a leap: from the source PDF to a validated
+        package in seven steps, each one checkable.
+      </p>
+      <ol class="list-none p-0 m-0 flex flex-col border border-rule rounded-md overflow-hidden">
+        {loop.map((l, i) => (
+          <li class="flex gap-5 items-baseline bg-paper-soft p-5 border-b border-rule last:border-b-0 bp-card-hover">
+            <span class="font-mono text-xs text-accent whitespace-nowrap">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3 class="font-serif text-[1.0625rem] inline">{l.step}</h3>
+              <span class="text-sm text-ink-soft"> — {l.desc}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    {/* § 03 — the live Studio */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 03</span>
+        <span>Open the Studio</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">live · in the browser</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        The Studio runs in the browser. Open the live build to view the modelled Recommendations —
+        or follow the guide and author one yourself.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a class="btn btn-primary bp-focus-ring" href="https://www.primmel.org/editor/" target="_blank" rel="noopener">Open the live Studio →</a>
+        <a class="btn btn-ghost bp-focus-ring" href="/docs/guides/primmel-studio">The Studio guide →</a>
+        <a class="btn btn-ghost bp-focus-ring" href="/recommendations">The modelled Recommendations →</a>
+      </div>
+    </section>
+  </div>
+</Base>

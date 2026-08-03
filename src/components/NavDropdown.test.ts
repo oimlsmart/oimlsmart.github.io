@@ -10,11 +10,15 @@ describe('nav-config', () => {
       expect(ids).toEqual(['platform', 'resources', 'about', 'internal'])
     })
 
-    it('platform dropdown contains the ladder pages in order', () => {
+    it('platform dropdown contains the component pages in order', () => {
       const platform = NAV_DROPDOWNS.find(d => d.id === 'platform')!
       const hrefs = platform.links.map(l => l.href)
       expect(hrefs).toEqual([
         '/platform',
+        '/studio',
+        '/instruments',
+        '/sst',
+        '/cnml',
         '/programs/oiml-smart',
         '/architecture',
         'https://primmel.github.io/primmel-smart-docs/',
