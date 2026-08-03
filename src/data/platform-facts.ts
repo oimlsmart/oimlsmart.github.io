@@ -10,8 +10,8 @@
 /** Gate numbers as stated by the SSOT architecture doc (for-agents.md). */
 export const GATE_NUMBERS = {
   packages: 28,
-  vitestTests: 4093,
-  vitestFiles: 244,
+  vitestTests: 4106,
+  vitestFiles: 246,
   e2e: '66/66',
   validateErrors: 0,
   validateWarnings: 488,
@@ -35,8 +35,8 @@ export const PLATFORM_REPOS: readonly PlatformRepo[] = [
   { repo: 'oimlsmart/cnml', role: 'the OIML CNML project: the certificate format on Confium Mode 3', href: 'https://github.com/oimlsmart/cnml' },
   {
     repo: 'primmel/primmel-smart-docs',
-    role: 'the published docs federation (the volumes, the demo manual)',
-    href: 'https://primmel.github.io/primmel-smart-docs/',
+    role: 'the published docs federation (the platform volumes)',
+    href: 'https://www.primmel.org/primmel-smart-docs/',
   },
   { repo: 'primmel/primmel', role: 'the predecessor language (v2; v3 is a strict superset)' },
   { repo: 'oimlsmart/smart-classroom-r60', role: 'the OIML classroom viewer (private — cited, never linked)' },
@@ -62,26 +62,28 @@ export const EIGHT_WORDS = [
   { word: 'process', kind: 'sort', gloss: 'a transition reified as an object' },
 ] as const
 
-const DOCS = 'https://primmel.github.io/primmel-smart-docs'
+const DOCS = 'https://www.primmel.org/primmel-smart-docs'
 
-/** The docs federation — links only, never duplicated content. */
+/** The docs federation — one home per kind: the platform volumes link out
+ *  to the Primmel SMART docs site; the OIML program volumes live here. */
 export const FEDERATION = [
   { volume: 'The foundation', href: `${DOCS}/foundation/`, desc: 'the eight terms and the closure rules, proved' },
   { volume: 'The Primmel kernel', href: `${DOCS}/primmel/`, desc: 'the language surface — subjects, processes, mappings, packages, twins' },
-  { volume: 'The platform runtime', href: `${DOCS}/platform/`, desc: 'the SMART platform, the twin lab, projection, the composite twin, CNML' },
-  { volume: 'OIML Core', href: `${DOCS}/oiml-core/`, desc: 'the shared measuring-instrument modelling framework' },
-  { volume: 'Authoring Recommendations', href: `${DOCS}/oiml-rec/`, desc: 'methodology, subjects, requirements, tests, forms, packaging, walkthroughs' },
-  { volume: 'The OIML-CS scheme', href: `${DOCS}/oiml-cs/`, desc: 'the certification system modelled on B 18:2025' },
-  { volume: 'CNML certificates', href: `${DOCS}/cnml/`, desc: 'the certificate format the verdict chain issues' },
+  { volume: 'The platform runtime', href: `${DOCS}/platform/`, desc: 'the SMART platform, the twin lab, projection, the composite twin, the CNML bridge' },
+  { volume: 'Primmel SST', href: `${DOCS}/sst/`, desc: 'the simulated-SMART-twin framework — simulated instruments/servers/clients of a twin endpoint' },
+  { volume: 'OIML Core', href: '/docs/oiml-core/', desc: 'the shared measuring-instrument modelling framework' },
+  { volume: 'Authoring Recommendations', href: '/docs/oiml-rec/', desc: 'methodology, subjects, requirements, tests, forms, packaging, walkthroughs' },
+  { volume: 'The OIML-CS scheme', href: '/docs/oiml-cs/', desc: 'the certification system modelled on B 18:2025' },
+  { volume: 'CNML certificates', href: '/docs/cnml/', desc: 'the certificate format the verdict chain issues' },
   { volume: 'Confium', href: `${DOCS}/confium/`, desc: 'the threshold-cryptography PKI the certificates ride' },
-  { volume: 'The NMI section', href: `${DOCS}/nmi/`, desc: 'the adoption program for legal-metrology authorities' },
+  { volume: 'The NMI section', href: '/docs/nmi/', desc: 'the adoption program for legal-metrology authorities' },
   { volume: 'The classroom', href: `${DOCS}/learn/`, desc: 'the layered curriculum, tiers 0–4' },
-  { volume: 'The demo manual', href: `${DOCS}/oiml-rec/13-running-the-demo/`, desc: 'run the full certification chain yourself' },
+  { volume: 'The demo manual', href: '/docs/oiml-rec/13-running-the-demo', desc: 'run the full certification chain yourself' },
 ] as const
 
 /** The three live entry points from the home page. */
 export const ENTRY_POINTS = [
   { label: 'The app', href: '/app/', desc: 'the certification workflow, in your browser' },
-  { label: 'The docs', href: `${DOCS}/`, desc: 'the volumes — methodology to operator guides', external: true },
-  { label: 'The demo', href: `${DOCS}/oiml-rec/13-running-the-demo/`, desc: 'certify a simulated load cell end to end', external: true },
+  { label: 'The docs', href: '/docs/', desc: 'the volumes — methodology to operator guides' },
+  { label: 'The demo', href: '/docs/oiml-rec/13-running-the-demo', desc: 'certify a simulated load cell end to end' },
 ] as const

@@ -15,7 +15,7 @@ const META: Record<string, {label:string,desc:string}> = {
   nmi: { label: 'For NMIs', desc: 'The adoption program for legal-metrology authorities.' },
 }
 
-const section = 'workflow'
+const section = 'cnml'
 const info = META[section]
 const pages = (await getCollection('docs'))
   .filter(d => d.id.startsWith(section + '/'))
