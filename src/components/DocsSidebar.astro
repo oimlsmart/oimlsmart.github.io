@@ -2,13 +2,18 @@
 import { getCollection } from 'astro:content'
 import { byDocsOrder } from '../lib/docs-sort'
 
-const SECTION_ORDER = ['guides', 'arch', 'workflow', 'specifications', 'ref'] as const
+const SECTION_ORDER = ['guides', 'arch', 'workflow', 'specifications', 'ref', 'oiml-core', 'oiml-rec', 'oiml-cs', 'cnml', 'nmi'] as const
 const SECTION_LABELS: Record<string, string> = {
   guides: 'Guides',
   arch: 'Architecture',
   workflow: 'Workflow',
   specifications: 'Specs',
   ref: 'Reference',
+  'oiml-core': 'OIML Core',
+  'oiml-rec': 'Authoring',
+  'oiml-cs': 'OIML-CS',
+  cnml: 'CNML',
+  nmi: 'For NMIs',
 }
 
 const allDocs = await getCollection('docs')
