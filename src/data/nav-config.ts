@@ -25,11 +25,15 @@ export interface NavStandaloneLink {
 export const NAV_DROPDOWNS: readonly NavDropdownConfig[] = [
   {
     id: 'platform',
-    label: 'Platform',
+    label: 'Components',
     variant: 'default',
     links: [
-      { label: 'The Primmel SMART Platform', href: '/platform', desc: 'Methodology, twin runtime, SST, certificates' },
-      { label: 'The OIML SMART Program', href: '/programs/oiml-smart', desc: 'Recommendations, OIML-CS, simulator, classroom' },
+      { label: 'The OIML-CS SMART Platform', href: '/platform', desc: 'Applications → testing → evaluation → certificates → registration' },
+      { label: 'OIML SMART Studio', href: '/studio', desc: 'View and author SMART Recommendations' },
+      { label: 'SMART Measuring Instruments', href: '/instruments', desc: 'The physical instrument is the API' },
+      { label: 'The Instrument SST', href: '/sst', desc: 'The simulated SMART twin — no hardware needed' },
+      { label: 'OIML CNML', href: '/cnml', desc: 'The machine-readable certificate, verifiable in seven checks' },
+      { label: 'The OIML SMART Program', href: '/programs/oiml-smart', desc: 'The program overview' },
       { label: 'Component Architecture', href: '/architecture', desc: 'The repos, the SSOT flow, the gates' },
       { label: 'The Docs Federation', href: 'https://primmel.github.io/primmel-smart-docs/', desc: 'The full volumes — foundation to classroom', external: true },
     ],

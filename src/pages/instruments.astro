@@ -1,0 +1,114 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+
+const layers = [
+  {
+    name: 'The physical instrument',
+    role: 'the reality',
+    desc: 'A load cell on a quarry belt, a gas meter on a wall. It holds values and runs processes whether anyone models it or not.',
+  },
+  {
+    name: 'The full digital twin',
+    role: 'the representation',
+    desc: 'Whatever the manufacturer maintains — physics simulation, IoT telemetry, an admin shell. Rich, vendor-specific, ungoverned by any standard.',
+  },
+  {
+    name: 'The SMART twin',
+    role: 'the governed projection',
+    desc: 'A tailored projection of the full twin, declared by the Recommendation itself: the standard says which aspects are governed, the twin interface is derived from that declaration.',
+  },
+]
+
+const access = [
+  { name: 'The governed aspect set', desc: 'The Recommendation declares which aspects of the instrument it governs — the twin serves exactly those, nothing else.' },
+  { name: 'Probes, not screenshots', desc: 'Certification queries values from the instrument itself. A verdict rests on served evidence, never on a photographed display.' },
+  { name: 'The evidence stream', desc: 'Every probe, verdict, and re-judgment accrues as an append-only stream — audit reads history, never a snapshot.' },
+  { name: 'Continuous compliance', desc: 'Certification stops being a point-in-time event: the governed aspects are probed on a schedule and compliance is re-judged as evidence arrives.' },
+]
+---
+
+<Base
+  title="OIML SMART Measuring Instruments"
+  description="OIML SMART Measuring Instruments — physical instruments providing a SMART digital twin for access and certification. The instrument itself is the API certification talks to."
+>
+  <PageHero
+    title="OIML SMART Measuring Instruments"
+    lede="A SMART measuring instrument is a physical instrument with a digital twin the Recommendation governs — certification talks to the instrument itself, through its twin, probe by probe. The instrument is the API."
+  />
+
+  <div class="px-8 pb-20 max-w-5xl">
+    {/* § 01 — the instrument is the API */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 01</span>
+        <span>The instrument is the API</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">the key idea</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        A SMART twin is not the vendor's digital twin and not the instrument itself — it is the
+        <strong class="text-ink font-semibold"> governed projection</strong> between them. The
+        Recommendation declares what it governs; the projection serves exactly that; the
+        certification program certifies that the projection stays faithful to the physical device.
+        To the OIML-CS, the instrument's twin endpoint <em>is</em> the instrument.
+      </p>
+      <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
+        <img src="/diagrams/shared/three-layer-twin.svg" alt="The three layers: physical instrument, full digital twin, SMART twin as governed projection" class="w-full max-w-3xl mx-auto" loading="lazy" />
+      </figure>
+      <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
+        {layers.map((l) => (
+          <article class="bg-paper-soft border border-rule rounded-md p-5 bp-card-hover">
+            <div class="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-accent mb-1">{l.role}</div>
+            <h3 class="font-serif text-[1.125rem] mb-1.5">{l.name}</h3>
+            <p class="text-sm text-ink-soft leading-relaxed">{l.desc}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {/* § 02 — access and certification */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 02</span>
+        <span>Access and certification</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">continuous compliance</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        Once an instrument serves a SMART twin, certification and surveillance become queries
+        against it — scheduled, recorded, and re-judged as new evidence arrives.
+      </p>
+      <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
+        {access.map((a) => (
+          <div class="bg-paper-soft p-5 bp-card-hover">
+            <h3 class="font-serif text-[1.0625rem] mb-1">{a.name}</h3>
+            <p class="text-sm text-ink-soft leading-relaxed">{a.desc}</p>
+          </div>
+        ))}
+      </div>
+      <p class="text-sm text-ink-muted mt-4">
+        Silence degrades a verdict to <em>indeterminate</em>, never a silent pass — an instrument that stops answering is visibly non-conformant, not quietly certified.
+      </p>
+    </section>
+
+    {/* § 03 — see one before you buy one */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 03</span>
+        <span>Before the hardware</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">the simulated family</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        Every behaviour described on this page can be exercised today against the simulated
+        instruments — the same twin interface, no hardware required.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a class="btn btn-primary bp-focus-ring" href="/sst">The simulated instruments →</a>
+        <a class="btn btn-ghost bp-focus-ring" href="/platform">The certification workflow →</a>
+        <a class="btn btn-ghost bp-focus-ring" href="/cnml">The certificate they earn →</a>
+      </div>
+    </section>
+  </div>
+</Base>

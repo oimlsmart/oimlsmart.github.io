@@ -1,0 +1,148 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+import { FEDERATION } from '../data/platform-facts'
+
+const channels = [
+  { term: '/twin', desc: 'the certification channel — what a real SMART twin would serve, probe by probe.' },
+  { term: '/world', desc: 'the practice channel — place a load, shift the temperature, run the clock. Teaching and rehearsal only.' },
+  { term: 'the wall', desc: 'the app never reads /world during certification. The epistemic wall is architectural, not a policy note.' },
+]
+
+const family = [
+  { id: 'ACME LC-500', rec: 'R 60', kind: 'Load cells', note: 'the reference pilot — the full certification chain runs against this family', chip: 'R 60 · pilot' },
+  { id: 'ACME RS-180', rec: 'R 91', kind: 'Traffic speed meters', note: 'preview edition 2025', chip: 'R 91' },
+  { id: 'ACME MD-3xx', rec: 'R 129', kind: 'Dimensioners', note: 'multi-dimensional measurement', chip: 'R 129' },
+  { id: 'ACME CGM-200', rec: 'R 144', kind: 'Gas analyzers', note: 'custody-transfer, with the sampling-line composite', chip: 'R 144' },
+]
+
+const physics = [
+  { name: 'Creep by the class law', desc: 'a good cell holds its allowance; the creep-fail sample exceeds it — the verdict follows the physics.' },
+  { name: 'Temperature residuals', desc: 'environmental cycles (the D 11 profiles) leave realistic residuals on the served value.' },
+  { name: 'Warm-up on the 5τ arc', desc: 'power on an instrument and it settles the way the physics says it should.' },
+  { name: 'Fidelity knobs', desc: 'the dishonest twin: offset and lag on the served value only, the ground truth untouched — the wall holds.' },
+]
+
+const demoManual = FEDERATION.find(f => f.volume === 'The demo manual')!
+---
+
+<Base
+  title="OIML SST for Measuring Instruments"
+  description="The OIML SST for Measuring Instruments — the Simulated SMART Twin of the SMART instruments: the ACME LC-500 family, metrologically real physics and environment simulation, no hardware required."
+>
+  <PageHero
+    title="OIML SST for Measuring Instruments"
+    lede="The Simulated SMART Twin is a full-fidelity stand-in for a physical instrument: the same twin interface a real device would serve, plus a practice channel for the physics a lab would apply. Rehearse the whole certification chain before you ever touch hardware."
+  />
+
+  <div class="px-8 pb-20 max-w-5xl">
+    {/* § 01 — what an SST is */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 01</span>
+        <span>What an SST is</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">two channels · one wall</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        An SST serves two channels. The certification channel answers exactly the probes a real
+        SMART twin would; the practice channel lets an operator apply the physics a laboratory
+        would. The two never mix — what certification sees is only what the twin serves.
+      </p>
+      <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
+        <img src="/diagrams/shared/sst-interaction.svg" alt="The SST's two channels: /twin for certification, /world for practice, with the epistemic wall between" class="w-full max-w-3xl mx-auto" loading="lazy" />
+      </figure>
+      <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
+        {channels.map((s) => (
+          <article class="bg-paper-soft border border-rule rounded-md p-5 bp-card-hover">
+            <h3 class="font-mono text-[0.9375rem] text-accent mb-1.5">{s.term}</h3>
+            <p class="text-sm text-ink-soft leading-relaxed">{s.desc}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    {/* § 02 — the ACME family */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 02</span>
+        <span>The instrument family</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">one kind per Recommendation</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        The library ships a simulated manufacturer — ACME — with one instrument family per
+        modelled Recommendation. The <strong class="text-ink font-semibold">LC-500 load-cell
+        family</strong> is the reference pilot: the full certification chain, from application to
+        signed certificate, runs against it.
+      </p>
+      <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
+        {family.map((f) => (
+          <div class="bg-paper-soft p-5 bp-card-hover">
+            <div class="flex items-center justify-between mb-1">
+              <h3 class="font-serif text-[1.125rem]">{f.id}</h3>
+              <span class="bp-chip">{f.chip}</span>
+            </div>
+            <div class="font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-accent mb-1.5">{f.kind}</div>
+            <p class="text-sm text-ink-soft leading-relaxed">{f.note}</p>
+          </div>
+        ))}
+      </div>
+      <p class="text-sm text-ink-muted mt-4">
+        Each instance is custody-bound: one boot, one sample, one chain of custody — a physics variant is a boot-time sample, not a runtime toggle.
+      </p>
+    </section>
+
+    {/* § 03 — the physics */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 03</span>
+        <span>Physics and environment</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">metrologically real</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        The simulation is metrologically real and configurable per sample — the Recommendation's
+        own laws drive what the twin serves.
+      </p>
+      <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
+        {physics.map((p) => (
+          <div class="bg-paper-soft p-5 bp-card-hover">
+            <h3 class="font-serif text-[1.0625rem] mb-1">{p.name}</h3>
+            <p class="text-sm text-ink-soft leading-relaxed">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* § 04 — run it */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 04</span>
+        <span>Run it</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">no hardware needed</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        The instrument library lives in
+        <code class="font-mono text-[0.875em]">oimlsmart/sst-instruments</code>; the runtime boots
+        an instance by path. Boot the LC-500, then run the whole certification chain against it
+        from the app.
+      </p>
+      <figure class="border border-rule rounded-md bg-paper-soft p-5 mb-6 overflow-x-auto">
+        <pre class="font-mono text-[0.8125rem] leading-relaxed text-ink-soft"><code># the LC-500 load cell (R 60), one boot = one sample
+npx tsx packages/runtime/sst-runtime/src/bin.ts run \
+  ../sst-instruments/packages/instances/acme-lc500 5290
+
+# a physics variant — the cell that fails its creep allowance
+npx tsx packages/runtime/sst-runtime/src/bin.ts run \
+  ../sst-instruments/packages/instances/acme-lc500 5290 creep-fail</code></pre>
+      </figure>
+      <div class="flex flex-wrap gap-3">
+        <a class="btn btn-primary bp-focus-ring" href="https://github.com/oimlsmart/sst-instruments" target="_blank" rel="noopener">The instrument library →</a>
+        <a class="btn btn-ghost bp-focus-ring" href={demoManual.href} target="_blank" rel="noopener">The demo manual →</a>
+        <a class="btn btn-ghost bp-focus-ring" href="/instruments">The real instruments →</a>
+      </div>
+    </section>
+  </div>
+</Base>

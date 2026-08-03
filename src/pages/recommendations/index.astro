@@ -158,6 +158,34 @@ const structure = [
       </div>
     </section>
 
+    {/* ─── Provenance ──────────────────────────────────── */}
+    <div class="bp-ticks" aria-hidden="true"></div>
+    <section class="relative px-8 py-16 bp-grid">
+      <div class="max-w-3xl mx-auto relative z-10">
+        <div class="bp-section-anchor mb-4 bp-reveal">
+          <span class="bp-section-anchor__num">§ 04</span>
+          <span>Provenance</span>
+          <span class="bp-section-anchor__line"></span>
+          <span class="bp-coord">clause by clause</span>
+        </div>
+        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4 bp-reveal">
+          Every clause accounted for
+        </h2>
+        <p class="text-[1.0625rem] leading-[1.7] text-ink-soft mb-5 bp-reveal">
+          Each Recommendation here is expert-authored against its published source — and every requirement, conformance test, and form carries clause-level provenance back to that source as a document URN plus clause reference:
+        </p>
+        <figure class="border border-rule rounded-md bg-paper-soft p-5 mb-5 overflow-x-auto bp-reveal">
+          <pre class="font-mono text-[0.8125rem] leading-relaxed text-ink-soft"><code>{'source: { doc: urn:oiml:pub:r:60-1:2021, clause: "5.2.1" }'}</code></pre>
+        </figure>
+        <p class="text-[1.0625rem] leading-[1.7] text-ink-soft bp-reveal">
+          The drift between the PDF and the model is therefore auditable line by line — nothing enters a SMART Recommendation without naming the clause it came from. The mechanics are in the
+          <a href="/docs/" class="text-accent underline">developer docs</a>, including the
+          <a href="/docs/ref/urn-specification" class="text-accent underline">URN specification</a> and the
+          <a href="/docs/guides/primmel-studio" class="text-accent underline">Studio guide</a> for authoring with provenance.
+        </p>
+      </div>
+    </section>
+
     <div class="bp-ticks bp-ticks--dense" aria-hidden="true"></div>
   </div>
 </Base>
