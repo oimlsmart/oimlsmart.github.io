@@ -71,7 +71,8 @@ jobs:
             https://www.oimlsmart.org/recs/ \
             https://www.oimlsmart.org/studio/ \
             https://www.oimlsmart.org/smi/ \
-            https://www.oimlsmart.org/sst/; do
+            https://www.oimlsmart.org/sst/ \
+            https://www.oimlsmart.org/cnml/; do
             code=$(curl -s -o /dev/null -w '%{http_code}' -L "$url")
             echo "$url → HTTP $code"
             if [ "$code" != "200" ]; then
