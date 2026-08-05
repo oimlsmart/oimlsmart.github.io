@@ -70,7 +70,7 @@ export const FEDERATION = [
   { volume: 'The foundation', href: `${DOCS}/foundation/`, desc: 'the eight terms and the closure rules, proved' },
   { volume: 'The Primmel kernel', href: `${DOCS}/primmel/`, desc: 'the language surface — subjects, processes, mappings, packages, twins' },
   { volume: 'The platform runtime', href: `${DOCS}/platform/`, desc: 'the SMART platform, the twin lab, projection, the composite twin, the CNML bridge' },
-  { volume: 'Primmel SST', href: `${DOCS}/sst/`, desc: 'the simulated-SMART-twin framework — simulated instruments/servers/clients of a twin endpoint' },
+  { volume: 'SST for Measuring Instruments', href: '/sst', desc: 'the simulated SMART twin — simulated instruments of a twin endpoint, no hardware' },
   { volume: 'OIML Core', href: '/docs/oiml-core/', desc: 'the shared measuring-instrument modelling framework' },
   { volume: 'Authoring Recommendations', href: '/docs/oiml-rec/', desc: 'methodology, subjects, requirements, tests, forms, packaging, walkthroughs' },
   { volume: 'The OIML-CS scheme', href: '/docs/oiml-cs/', desc: 'the certification system modelled on B 18:2025' },
