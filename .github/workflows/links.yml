@@ -67,7 +67,11 @@ jobs:
           for url in \
             https://www.oimlsmart.org/vocab/ \
             https://www.oimlsmart.org/resolutions/ \
-            https://www.oimlsmart.org/publications/; do
+            https://www.oimlsmart.org/publications/ \
+            https://www.oimlsmart.org/recs/ \
+            https://www.oimlsmart.org/studio/ \
+            https://www.oimlsmart.org/smi/ \
+            https://www.oimlsmart.org/sst/; do
             code=$(curl -s -o /dev/null -w '%{http_code}' -L "$url")
             echo "$url → HTTP $code"
             if [ "$code" != "200" ]; then
