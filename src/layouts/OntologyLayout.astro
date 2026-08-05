@@ -202,7 +202,7 @@ for (const ns of orderedNamespaces) {
                                   : 'border-transparent hover:bg-paper-raised'
                               }`}
                               data-active={isActive ? 'true' : 'false'}
-                              title={`${typeMeta[e.type]?.label || e.type} — ${e.qname}`}
+                              title={`${typeMeta[e.type]?.label || e.type}, ${e.qname}`}
                             >
                               <span class={`w-1 h-1 mt-1.5 rounded-full shrink-0 ${nsColor[e.ontology] || 'bg-slate-400'}`}></span>
                               <span class="flex-1 min-w-0">
