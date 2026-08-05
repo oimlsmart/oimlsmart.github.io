@@ -31,6 +31,8 @@ exclude = [
   "/smi/",
   "/sst",
   "/sst/",
+  "/cnml",
+  "/cnml/",
   # Cross-app nav target — served by the smart repo's authenticated
   # browser app, not deployable from here.
   "/concepts-management",
