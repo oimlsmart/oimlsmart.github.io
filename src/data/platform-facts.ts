@@ -77,7 +77,7 @@ export const FEDERATION = [
   { volume: 'CNML certificates', href: '/docs/cnml/', desc: 'the certificate format the verdict chain issues' },
   { volume: 'Confium', href: `${DOCS}/confium/`, desc: 'the threshold-cryptography PKI the certificates ride' },
   { volume: 'The NMI section', href: '/docs/nmi/', desc: 'the adoption program for legal-metrology authorities' },
-  { volume: 'The classroom', href: `${DOCS}/learn/`, desc: 'the layered curriculum, tiers 0–4' },
+  { volume: 'The classroom', href: '/learn/', desc: 'the layered curriculum, tiers 0–5' },
   { volume: 'The demo manual', href: '/docs/oiml-rec/13-running-the-demo', desc: 'run the full certification chain yourself' },
 ] as const
 

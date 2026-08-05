@@ -28,7 +28,7 @@ describe('nav-config', () => {
     it('resources dropdown contains expected links in correct order', () => {
       const resources = NAV_DROPDOWNS.find(d => d.id === 'resources')!
       const labels = resources.links.map(l => l.label)
-      expect(labels).toEqual(['Document Library', 'Ontology', 'Developer Docs', 'The OIML SMART Program', 'Component Architecture', 'The Docs Federation'])
+      expect(labels).toEqual(['Document Library', 'Ontology', 'Learn', 'Developer Docs', 'The OIML SMART Program', 'Component Architecture', 'The Docs Federation'])
     })
 
     it('internal dropdown has variant "internal"', () => {

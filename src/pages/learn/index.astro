@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import { getCollection } from 'astro:content'
+
+const tiers = (await getCollection('pages'))
+  .filter(p => p.id.startsWith('learn/'))
+  .sort((a, b) => a.id.localeCompare(b.id))
+---
+
+<Base
+  title="Learn OIML SMART — the layered curriculum"
+  description="The OIML SMART curriculum in the system's own layered shape: each tier is learnable on its own and opens into the next, with a real assessment gate at every tier."
+>
+  <PageHero
+    title="Learn OIML SMART"
+    lede="The curriculum for the whole system, in the system's own layered shape: each tier is learnable on its own and opens into the next. Every tier has a real assessment gate, a gate of the system you reproduce, never a quiz."
+  />
+
+  <div class="px-8 pb-20 max-w-5xl">
+    <section class="mb-10">
+      <h2 class="font-serif text-[clamp(1.5rem,3.5vw,2rem)] font-semibold tracking-[-0.025em] mb-4">The tiers</h2>
+      <div class="flex flex-col border border-rule rounded-md overflow-hidden">
+        {tiers.map(t => (
+          <a
+            href={`/learn/${t.id.replace(/^learn\//, '').replace(/\.mdx?$/, '')}`}
+            class="group flex flex-col gap-0.5 px-5 py-4 border-b border-rule last:border-b-0 bg-paper-soft no-underline text-inherit transition-[padding] duration-150 hover:pl-6"
+          >
+            <span class="font-serif text-[1rem] font-semibold group-hover:text-accent">{t.data.title}</span>
+            {t.data.description && <span class="text-[0.8125rem] text-ink-soft">{t.data.description}</span>}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-10 border border-rule rounded-md bg-paper-soft p-6">
+      <h2 class="font-serif text-[1.25rem] font-semibold mb-2">The language track</h2>
+      <p class="text-[0.9375rem] leading-relaxed text-ink-soft">
+        The Primmel language volume is the platform's own reference: subjects, processes, mappings,
+        packages, provenance, and the live-twin chapters. It lives with the platform's volumes at
+        <a class="text-accent underline underline-offset-2" href="https://www.primmel.org/primmel-smart-docs/primmel/">primmel.org</a>.
+      </p>
+    </section>
+  </div>
+</Base>

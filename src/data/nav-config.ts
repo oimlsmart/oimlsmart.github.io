@@ -47,6 +47,7 @@ export const NAV_DROPDOWNS: readonly NavDropdownConfig[] = [
       // live in the Components dropdown — one href, one home)
       { label: 'Document Library', href: '/library/', desc: 'Structured OIML document library' },
       { label: 'Ontology', href: '/ontology/', desc: 'Semantic model: classes, properties, individuals' },
+      { label: 'Learn', href: '/learn/', desc: 'The layered curriculum, tiers 0–5' },
       { label: 'Developer Docs', href: '/docs/', desc: 'Guides, architecture, specifications' },
       { label: 'The OIML SMART Program', href: '/programs/oiml-smart', desc: 'The program overview' },
       { label: 'Component Architecture', href: '/architecture', desc: 'The repos, the SSOT flow, the gates' },
