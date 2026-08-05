@@ -1,7 +1,7 @@
 {
   "name": "oimlsmart.github.io",
   "version": "1.0.0",
-  "description": "OIML SMART — Machine-Actionable Recommendations",
+  "description": "OIML SMART \u2014 Machine-Actionable Recommendations",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
@@ -36,6 +36,7 @@
     "pagefind": "^1.5.2",
     "pinia": "^3.0.4",
     "tailwindcss": "^4.3.2",
-    "vue": "^3.5.39"
+    "vue": "^3.5.39",
+    "@oimlsmart/site-shell": "file:vendor/site-shell"
   }
 }

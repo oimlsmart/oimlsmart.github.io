@@ -20,6 +20,9 @@ export default defineConfig({
     plugins: [
       tailwindcss(),
     ],
+    // The linked shell package's Vue islands resolve through the site's
+    // own vue (the standard linked-package dedupe).
+    resolve: { dedupe: ['vue'] },
   },
   markdown: {
     shikiConfig: {

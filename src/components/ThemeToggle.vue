@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import { useTheme } from '../composables/useTheme'
-const { isDark, toggle } = useTheme()
+/** Wrapper — the island lives in @oimlsmart/site-shell (one chrome
+ *  SSOT, TODO.FULL/02); attrs + slots forward. */
+import Pkg from '@oimlsmart/site-shell/components/ThemeToggle.vue'
 </script>
 
 <template>
-  <button
-    class="bg-transparent border border-rule rounded w-8 h-8 cursor-pointer flex items-center justify-center text-sm text-inherit transition-[border-color] duration-150 hover:border-accent"
-    @click="toggle" data-testid="theme-toggle"
-    :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-  >
-    <span v-show="!isDark" class="icon-sun">☀</span>
-    <span v-show="isDark" class="icon-moon">☾</span>
-  </button>
+  <Pkg v-bind=""><slot /></Pkg>
 </template>
