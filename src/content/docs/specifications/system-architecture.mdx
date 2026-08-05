@@ -2,7 +2,7 @@
 title: 'System Architecture'
 order: 1
 shortTitle: '01 Architecture'
-description: 'The top-level architecture of the SMART platform — entities, layers, and the build pipeline.'
+description: 'The top-level architecture of the SMART platform, entities, layers, and the build pipeline.'
 eyebrow: 'Formal Specification · SMART_REQS 01'
 ---
 
@@ -15,7 +15,7 @@ import LayerDiagram from '../../../components/diagrams/LayerDiagram.astro'
 
 ## Purpose
 
-This document defines the complete architecture of the evolved MMEL/SMART system — a
+This document defines the complete architecture of the evolved MMEL/SMART system, a
 declarative specification language for metrological standards, declared in YAML, where
 every domain concept is explicitly defined as an entity with typed attributes, every
 computation is expressed in a formal OCL expression language, and every evaluation
@@ -28,7 +28,7 @@ produces a traceable pass/fail result linked back to normative requirements.
    means adding YAML files, not changing code (OCP).
 3. **Closed under reference.** Every identifier used in an expression resolves to a
    declared entity. No undefined variables, no dangling references. Symbols are the
-   canonical variable declarations — every variable name resolves to a Symbol.
+   canonical variable declarations, every variable name resolves to a Symbol.
 4. **MECE.** Every concept has exactly one canonical definition point. No overlap, no
    gaps between entity responsibilities.
 5. **Traceability.** Every evaluation result traces back through a chain:
@@ -43,13 +43,13 @@ produces a traceable pass/fail result linked back to normative requirements.
 
 Every concept in the SMART specification language is modelled as one of the following
 primitives. Each primitive has a single canonical definition point in the YAML data
-files. The catalog is exhaustive — if it's not listed here, it's not a SMART primitive.
+files. The catalog is exhaustive, if it's not listed here, it's not a SMART primitive.
 
 ### Specification Primitives (declared in YAML)
 
 | # | Primitive | Layer | YAML Location | Defining REQ | Purpose |
 |---|-----------|-------|---------------|--------------|---------|
-| 1 | **Standard** | — | `standard.yaml` | 01 | Recommendation identity, enums, value models, workflow config |
+| 1 | **Standard** |, | `standard.yaml` | 01 | Recommendation identity, enums, value models, workflow config |
 | 2 | **Symbol** | 0 | `symbols.yaml` | 11 | Domain variable: typed quantity with source, formula, dependencies |
 | 3 | **Formula** | 0 | `symbols.yaml` (on Symbol) | 11 | Computation rule: display + evaluable expression + input bindings |
 | 4 | **Calculation** | 0 | `standard.yaml` → `evaluation.calculations` | 07 | Named, typed, reusable computation primitive |
@@ -72,10 +72,10 @@ files. The catalog is exhaustive — if it's not listed here, it's not a SMART p
 | 21 | **ComputationContext** | 3 | on Form | 03 | Shared parameter scope (header form, dimensions, tables) |
 | 22 | **PassFailDef** | 3 | on Form | 03 | Overall form pass/fail with OCL pass_if and derivation rules |
 | 23 | **Reference** | 3 | on any entity | 01 | Normative URN link to specification clause |
-| 24 | **Expression** | — | on any computed field | 04, 08 | OCL or AsciiMath expression: the computation language |
+| 24 | **Expression** |, | on any computed field | 04, 08 | OCL or AsciiMath expression: the computation language |
 | 25 | **Uncertainty** | 3 | on FormField | 03 | GUM-compatible measurement uncertainty budget (Type A/B/combined) |
-| 26 | **Applicability** | — | on Requirement/Test | 02 | Classification dimension filter (accuracy_class, technology, etc.) |
-| 27 | **StateMachine** | — | `standard.yaml` → `evaluation.state_machines` | 10 | Entity lifecycle: states, transitions, guards |
+| 26 | **Applicability** |, | on Requirement/Test | 02 | Classification dimension filter (accuracy_class, technology, etc.) |
+| 27 | **StateMachine** |, | `standard.yaml` → `evaluation.state_machines` | 10 | Entity lifecycle: states, transitions, guards |
 
 ### Runtime Primitives (entity instances in IndexedDB)
 

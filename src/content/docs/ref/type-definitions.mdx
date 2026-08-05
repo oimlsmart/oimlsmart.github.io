@@ -167,7 +167,7 @@ The generated types are produced by the build pipeline:
   <span class="text-ink-muted">TypeScript output</span>
 </div>
 
-The build is incremental — only changed types are regenerated. Adding a field
+The build is incremental, only changed types are regenerated. Adding a field
 to `requirements/metrological.yaml` updates the corresponding `Requirement`
 interface and all consumers are notified at compile time.
 
@@ -187,10 +187,10 @@ The types support several extension patterns:
 
 - **Computed fields**: a `CalculatedField` can reference any other field or constant.
 - **Multi-tier criteria**: a `Requirement` can carry an array of `AcceptanceCriterion` when multiple thresholds apply.
-- **Cross-references**: `targets`, `result_forms`, `lookup`, `calculation` — all are URNs validated at build time.
+- **Cross-references**: `targets`, `result_forms`, `lookup`, `calculation`, all are URNs validated at build time.
 
 ## Where to read more
 
-- [YAML Schema Reference](/docs/ref/yaml-schema) — the schemas these types are generated from.
-- [Developer guide — Provision Data Model](/docs/guides/provision-data-model).
-- [Formal spec — System Architecture](/docs/specifications/system-architecture).
+- [YAML Schema Reference](/docs/ref/yaml-schema), the schemas these types are generated from.
+- [Developer guide, Provision Data Model](/docs/guides/provision-data-model).
+- [Formal spec, System Architecture](/docs/specifications/system-architecture).

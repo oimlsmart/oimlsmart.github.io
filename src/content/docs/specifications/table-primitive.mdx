@@ -2,7 +2,7 @@
 title: 'Table Primitive'
 order: 9
 shortTitle: '09 Tables'
-description: 'The Table primitive — tiered, scalar, and range lookups with interpolation.'
+description: 'The Table primitive, tiered, scalar, and range lookups with interpolation.'
 eyebrow: 'Formal Specification · SMART_REQS 09'
 ---
 
@@ -13,8 +13,8 @@ eyebrow: 'Formal Specification · SMART_REQS 09'
 ## Purpose
 
 This document defines the **Table** as a first-class primitive entity in the SMART
-specification system. Tables define structured lookup data — tiered thresholds,
-parameter profiles, classification constraints — that Calculations and Conditions
+specification system. Tables define structured lookup data, tiered thresholds,
+parameter profiles, classification constraints, that Calculations and Conditions
 reference via formal lookup operations.
 
 ## Design Rationale
@@ -27,7 +27,7 @@ R 60 defines several tables in the normative text:
 - **n_LC ranges**: per class
 - **Temperature span minimums**: per class
 
-These are currently defined as `value_model` profiles in `standard.yaml` — an ad-hoc
+These are currently defined as `value_model` profiles in `standard.yaml`, an ad-hoc
 structure that's not formally typed or validated. Making Table a first-class primitive
 provides:
 
@@ -35,7 +35,7 @@ provides:
 2. **Formal key structure** for lookup operations
 3. **Validation** that lookup keys match table dimensions
 4. **Reusability** across calculations and conditions
-5. **Rendering** — tables can be displayed as HTML/MathML from their definition
+5. **Rendering**, tables can be displayed as HTML/MathML from their definition
 
 ## Entity Definition
 

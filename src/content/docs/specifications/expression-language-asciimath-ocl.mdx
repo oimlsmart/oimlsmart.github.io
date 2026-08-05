@@ -2,7 +2,7 @@
 title: 'Expression Language'
 order: 8
 shortTitle: '08 Expressions'
-description: 'The two expression languages used in SMART — AsciiMath for arithmetic, OCL for booleans.'
+description: 'The two expression languages used in SMART, AsciiMath for arithmetic, OCL for booleans.'
 eyebrow: 'Formal Specification · SMART_REQS 08'
 ---
 
@@ -43,7 +43,7 @@ unnatural syntax and misses the benefit of established math libraries. The split
 
 ## Where Each Language Is Used
 
-### AsciiMath (math.js) — Calculation expressions
+### AsciiMath (math.js), Calculation expressions
 
 ```yaml
 - name: loadCellError
@@ -67,7 +67,7 @@ unnatural syntax and misses the benefit of established math libraries. The split
 The expression is plain math.js syntax. Variables are resolved from the calculation's
 input bindings.
 
-### OCL — Evaluation rules, conditions, pass/fail
+### OCL, Evaluation rules, conditions, pass/fail
 
 ```yaml
 # In form field evaluation rules
@@ -94,7 +94,7 @@ All OCL expressions use the `ocl{}` prefix to distinguish them from math express
 - `rule: "ocl{abs(error_EL) <= abs(mpe)}"` → OCL expression (prefixed)
 - `pass_if: "ocl{all_results = 'pass'}"` → OCL expression (prefixed)
 
-Calculation expressions do NOT use the `ocl{}` prefix — they're pure math.
+Calculation expressions do NOT use the `ocl{}` prefix, they're pure math.
 
 ## math.js Integration
 
@@ -156,7 +156,7 @@ OCL now handles only:
 8. **Built-in functions**: `abs()`, `max()`, `min()` (for comparisons, not math)
 
 Arithmetic operations (`+`, `-`, `*`, `/`) are still supported in OCL for threshold
-expressions like `0.7 * abs(mpe)` — these are simple enough that math.js isn't needed.
+expressions like `0.7 * abs(mpe)`, these are simple enough that math.js isn't needed.
 
 ## OCL Grammar (Revised)
 

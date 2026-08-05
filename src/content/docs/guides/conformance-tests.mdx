@@ -93,16 +93,16 @@ single requirement may be verified by multiple tests.
 
 <div class="bp-annotation my-4">
   <span class="bp-annotation__label">Note</span>
-  Each <code>targets</code> reference resolves to a declared <code>Requirement</code> URN — no dangling references, no implicit knowledge.
+  Each <code>targets</code> reference resolves to a declared <code>Requirement</code> URN, no dangling references, no implicit knowledge.
 </div>
 
 ## Variables
 
 Test variables are typed quantities. Three roles:
 
-- **`input`** — values applied by the test (loads, temperatures).
-- **`measured`** — values read from the instrument under test.
-- **`derived`** — values computed from inputs and measurements (errors, ratios).
+- **`input`**, values applied by the test (loads, temperatures).
+- **`measured`**, values read from the instrument under test.
+- **`derived`**, values computed from inputs and measurements (errors, ratios).
 
 Variables flow into the result form's field bindings. The form's pass/fail
 expression can reference any variable.
@@ -138,7 +138,7 @@ the form schema.
 
 ## Test class grouping
 
-Tests are grouped under a `ConformanceTestClass` (CC) — analogous to a
+Tests are grouped under a `ConformanceTestClass` (CC), analogous to a
 requirements class. A CC typically groups tests by topic:
 measurement-error, repeatability, creep, temperature-effects, etc.
 

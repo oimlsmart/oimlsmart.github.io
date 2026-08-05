@@ -6,7 +6,7 @@ eyebrow: 'OIML Core · 04 of 10'
 order: 4
 ---
 
-> *In this chapter:* Module B — everything that *names* things beyond the
+> *In this chapter:* Module B, everything that *names* things beyond the
 > subject chain itself: the manufacturer, legally-relevant software,
 > markings, sealing, calibration events, and the certificate. Plus the
 > module's dependency rule and the one sanctioned cycle in the metamodel.
@@ -20,19 +20,19 @@ The subject chain (Chapter 2) says what an instrument *is*; Module B says
 *when it was calibrated*, and *what conformity it has earned*. In the
 metamodel's own words: "Everything that NAMES things beyond the subject
 chain itself ... The subject chain lives in instrument-description; this
-module's artifacts reference it" (`oiml-core-ontology.yaml` —
+module's artifacts reference it" (`oiml-core-ontology.yaml` , 
 identity-provenance).
 
-In kernel terms, Module B realizes the IS **provenance** aspect — the
+In kernel terms, Module B realizes the IS **provenance** aspect, the
 pedigree of the subject: manufacturer, source clauses, supersedes chains,
-legally-relevant software identity — plus the legally-relevant identity
+legally-relevant software identity, plus the legally-relevant identity
 artifacts (markings, seals) and the conformity artifact (the
-certificate). Seven classes, all ● in the metamodel (v0.6.1 — the
+certificate). Seven classes, all ● in the metamodel (v0.6.1, the
 v0.6.1 line added `VerificationMark`):
 
 | Class | What it names | Anchors to |
 |---|---|---|
-| Manufacturer | the responsible organization | — |
+| Manufacturer | the responsible organization |, |
 | SoftwareComponent | legally-relevant software of a Model | C (Model), OIML D 31 |
 | Marking | datasheet/inscription of a Model | C (Model) |
 | Sealing | protection against unauthorized modification | C (Model), D1 (Recommendation) |
@@ -43,21 +43,21 @@ v0.6.1 line added `VerificationMark`):
 ## 4.2 The dependency rule and the sanctioned cycle
 
 Module B is the one place where the metamodel relaxes its own
-acyclicity — and says so explicitly (`oiml-core-ontology.yaml` —
+acyclicity, and says so explicitly (`oiml-core-ontology.yaml` , 
 dependencyRules):
 
-> **identity-provenance depends on A and C** — its artifacts NAME
+> **identity-provenance depends on A and C**, its artifacts NAME
 > subjects (Model/Sample) defined in C. The C → B back-edge
 > (`Model.manufacturer`) is the only sanctioned cycle.
 
 The logic: a Certificate must reference the Model it certifies, a
 CalibrationRecord the Sample it calibrates, a Marking the Model it
-inscribes — so B points at C. But an instrument that cannot name its
-manufacturer is not legally identifiable — so C points back at B,
+inscribes, so B points at C. But an instrument that cannot name its
+manufacturer is not legally identifiable, so C points back at B,
 exactly twice: `MeasuringInstrumentModelFamily.manufacturer` and
 `MeasuringInstrumentModel.manufacturer`. Those two references are the
-whole cycle, and they are sanctioned because the alternative — duplicating
-organization data inside C — is worse than the cycle. Every other
+whole cycle, and they are sanctioned because the alternative, duplicating
+organization data inside C, is worse than the cycle. Every other
 cross-module edge follows the strict law (Chapter 0, six-modules
 diagram).
 
@@ -67,7 +67,7 @@ And one flow rule closes the loop with the conformity modules:
 > Marking.**
 
 D3's TypeApprovalDecision issues the certificate (Chapter 7); B is where
-the artifact lives (§4.8); C surfaces it — `Model.typeApprovalRef` is
+the artifact lives (§4.8); C surfaces it, `Model.typeApprovalRef` is
 "filled after D3 approval", and the instrument's marking is the legal
 display channel. No module ever writes backwards.
 
@@ -80,16 +80,16 @@ Manufacturer:
 ```
 
 Deliberately thin: "an organization responsible for the instrument". Its
-weight comes from being the *target* of the sanctioned back-edge — every
-Family and every Model references one — and from being the party the
+weight comes from being the *target* of the sanctioned back-edge, every
+Family and every Model references one, and from being the party the
 EvaluationReport is `issuedTo` (D3). In the running system it is a stored
-entity (`data/r60/entities/parties.yaml` — Manufacturer, "metamodel
+entity (`data/r60/entities/parties.yaml`, Manufacturer, "metamodel
 Module B Manufacturer"), alongside the other workflow parties (issuing
-authorities, test laboratories — including manufacturer-owned labs,
+authorities, test laboratories, including manufacturer-owned labs,
 flagged `lab_kind: manufacturer_test_lab` with a mandatory parent
 reference). Chapter 8 develops the full party model.
 
-## 4.4 SoftwareComponent — the D 31 identity
+## 4.4 SoftwareComponent, the D 31 identity
 
 Modern instruments are part software, and legal metrology needs to know
 *which* software it approved. OIML D 31 supplies the concepts; Module B
@@ -105,7 +105,7 @@ SoftwareComponent:
 ```
 
 The decisive field is `legallyRelevant`: only legally-relevant software
-falls under type-approval control — a change to it is a change to the
+falls under type-approval control, a change to it is a change to the
 type; a change to anything else is not. `version`, `checksum` and
 `identificationMethod` make the identity checkable at examination time.
 In the anatomy this is provenance at the software layer: the kernel's IS
@@ -125,7 +125,7 @@ Marking:
 ```
 
 A marking is the datasheet/inscription of a Model: not just *what* must
-be written but *where* — the `location` is legally positioned (a
+be written but *where*, the `location` is legally positioned (a
 nameplate, a non-removable surface, a software-displayed identification).
 This is the display half of the certificate flow: the type-approval
 designation an instrument bears is a marking item whose content traces to
@@ -148,7 +148,7 @@ says what it `protects` (a component, an adjustment, the software), by
 what `means` (physical seal, electronic seal, password), and `where`.
 The optional `requiredBy` reference closes the loop with D1: sealing
 *requirements* live in the Recommendation; the Sealing record is the
-design that answers them — which is why B may reference D1 here even
+design that answers them, which is why B may reference D1 here even
 though its stated dependencies are A and C: the reference is to the
 requirement that mandates the seal, a naming relation, not a bind.
 
@@ -161,15 +161,15 @@ CalibrationRecord:
   result, traceability, nextDue              # optional
 ```
 
-One calibration event for one Sample — note the level: calibration
+One calibration event for one Sample, note the level: calibration
 happens to *units*, so the anchor is the Sample, not the Model. The
 `traceability` reference is Module A's TraceabilityChain (Chapter 1,
 §1.7): the record claims not just that the unit was calibrated but
 *through which chain to the SI*. `nextDue` is where the metamodel meets
-the calendar — calibration is recurrent, and the record carries the
+the calendar, calibration is recurrent, and the record carries the
 validity window that subsequent verification will check.
 
-**The entity home in the running system** (● smart ce10a43 — task 55):
+**The entity home in the running system** (● smart ce10a43, task 55):
 Marking, Sealing and CalibrationRecord are stored Core entities
 (`data/core/entities/module-b.yaml`, authored as
 `primmel-packages/oiml-smart-core/entities/module-b.prl`; workspace
@@ -181,16 +181,16 @@ DRAFT → AFFIXED → INSPECTED → SUPERSEDED
 ```
 
 SUPERSEDED is reachable from every state, and the `superseded_by`
-reference chains the replacement — the VerificationRecord supersede
+reference chains the replacement, the VerificationRecord supersede
 discipline applied to the identity artifacts; history is kept,
 superseded records stop participating. The R 60 pilot seeds the
 certified HLCi flow (`data/r60/sample-data.yaml`) with anchors verified
-against R 60-1: the mandatory marking set (6.2.1 — a laser-engraved
+against R 60-1: the mandatory marking set (6.2.1, a laser-engraved
 data plate, non-removable without damage), the class and load-type
-designations (6.2.4), and the firmware sealing (6.1) — each carried to
+designations (6.2.4), and the firmware sealing (6.1), each carried to
 INSPECTED with affixed-by/at and inspected-by/at provenance on record.
 
-## 4.8 Certificate — the conformity artifact
+## 4.8 Certificate, the conformity artifact
 
 ```yaml
 Certificate:
@@ -202,12 +202,12 @@ Certificate:
   issueDate, validUntil
 ```
 
-The certificate is the artifact conformity assessment exists to produce —
+The certificate is the artifact conformity assessment exists to produce , 
 "issued by D3, stored here". Three fields tell its whole story:
 
 - **`kind` and `subject` together encode the level of the act.** A
   *type-approval* certificate has a **Model** as subject (type approval
-  certifies the type, never an individual unit — Chapter 2, §2.5);
+  certifies the type, never an individual unit, Chapter 2, §2.5);
   *verification* and *calibration* certificates have **Samples**.
 - **`basisRecommendation`** names the requirement set it certifies
   against.
@@ -218,19 +218,19 @@ The certificate is the artifact conformity assessment exists to produce —
   re-runnability, applied to the artifact itself).
 
 In the running system the certificate is a workflow entity with an annex
-(`data/r60/entities/workflow.yaml` — Certificate, CertificateAnnex), its
+(`data/r60/entities/workflow.yaml`, Certificate, CertificateAnnex), its
 scope is the application's family × class matrix (or the amended outcome
 of a conditional evaluation), and its number and dimension labels come
 from the certificate template (`data/r60/evaluation/certificate-template.yaml`
-— `number_format: "{shortName}/{edition}-{scheme}-{authority}-{year2}.
-{seq}"`, `dimension_labels` pattern `{accuracy_class}{n_lc_thousands}` —
+,  `number_format: "{shortName}/{edition}-{scheme}-{authority}-{year2}.
+{seq}"`, `dimension_labels` pattern `{accuracy_class}{n_lc_thousands}` , 
 the `C6` group label of Chapter 2 surfacing on the legal document). On
 approval, `Model.typeApprovalRef` is filled: the sanctioned flow D3 → B →
 C, completed.
 
 **A note on the passport** (Volume I, Chapter 14 ○): the model-native
-passport is the public *projection* of this identity layer — manufacturer,
-software identity, markings — served from the instrument's endpoint. It
+passport is the public *projection* of this identity layer, manufacturer,
+software identity, markings, served from the instrument's endpoint. It
 is not a certificate. The Certificate remains the legal artifact: issued
 by D3, basis-bound, spine-walkable. The passport projects what the
 instrument *is*; the certificate attests what it has *earned*.
@@ -292,16 +292,16 @@ certificate DE_26_041 {
   Module A TraceabilityChain.
 - **One-way certificate flow.** Certificates are created only by a D3
   decision, stored only in B, surfaced in C only via `typeApprovalRef`
-  and Marking items — never authored inside C or D1.
+  and Marking items, never authored inside C or D1.
 - **Legal relevance is explicit.** `SoftwareComponent.legallyRelevant`
-  and every Marking item's `location` are required — an unlocated marking
+  and every Marking item's `location` are required, an unlocated marking
   or an unclassified software component is a schema error, not a gap to
   fill later.
 
 ## 4.11 Summary
 
 - Module B names what the chain cannot: manufacturer, legally-relevant
-  software, markings, seals, calibrations, certificates — the IS
+  software, markings, seals, calibrations, certificates, the IS
   provenance aspect, realized. Marking, Sealing and CalibrationRecord
   are stored entities with DRAFT→AFFIXED→INSPECTED→SUPERSEDED lifecycle
   machines (● task 55), piloted in R 60 against R 60-1 6.1/6.2.1/6.2.4.
@@ -316,6 +316,6 @@ certificate DE_26_041 {
 - Certificates flow one way: D3 issues → B stores → C displays via
   Marking and `typeApprovalRef`.
 
-*Next: [Chapter 5 — Specification](/docs/oiml-core/05-specification): Module D1 —
+*Next: [Chapter 5, Specification](/docs/oiml-core/05-specification): Module D1 , 
 requirements as constraints bound to the subject, and conformance tests
 as operations on it.*

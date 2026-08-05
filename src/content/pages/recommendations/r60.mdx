@@ -10,7 +10,7 @@ eyebrow: 'Recommendation · R 60 · 2021'
 ## Scope
 
 OIML R 60:2021 specifies the metrological and technical requirements,
-test procedures, and test report format for **load cells** — the force
+test procedures, and test report format for **load cells**, the force
 transducers at the heart of every nonautomatic weighing instrument.
 
 The Recommendation covers load cells used in instruments subject to legal
@@ -35,10 +35,10 @@ The SMART decomposition of R 60 captures the full Recommendation end-to-end:
 
 ## Headline tests
 
-- **Measurement error** (R 60 §3.4.1) — verifies that errors at increasing and decreasing loads stay within the maximum permissible error (MPE) for the instrument's accuracy class and load range.
-- **Repeatability** (R 60 §3.4.2) — verifies that repeated loadings at the same point produce readings within a tight tolerance.
-- **Creep** (R 60 §3.4.3) — verifies the load cell reading is stable over time under constant load.
-- **Temperature effects** (R 60 §3.4.4) — verifies the cell performs within tolerance across its rated temperature range.
+- **Measurement error** (R 60 §3.4.1), verifies that errors at increasing and decreasing loads stay within the maximum permissible error (MPE) for the instrument's accuracy class and load range.
+- **Repeatability** (R 60 §3.4.2), verifies that repeated loadings at the same point produce readings within a tight tolerance.
+- **Creep** (R 60 §3.4.3), verifies the load cell reading is stable over time under constant load.
+- **Temperature effects** (R 60 §3.4.4), verifies the cell performs within tolerance across its rated temperature range.
 
 Each test maps to one or more requirements via the cross-reference graph; the
 SMART evaluation pipeline aggregates the per-test verdicts into the overall
@@ -47,7 +47,7 @@ type evaluation.
 ## MPE table
 
 The maximum permissible error varies by accuracy class and load range. In the
-SMART model this is encoded as a **Table primitive** — declared once in
+SMART model this is encoded as a **Table primitive**, declared once in
 `standard.yaml` and referenced by every form that needs an MPE value:
 
 ```yaml

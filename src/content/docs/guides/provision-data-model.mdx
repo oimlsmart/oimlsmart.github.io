@@ -1,7 +1,7 @@
 ---
 title: 'Provision Data Model'
 shortTitle: 'Provisions'
-description: 'The provision data model is the heart of a SMART Recommendation. Three entity types — requirements, conformance tests, and forms — together describe everything the Recommendation normatively requires.'
+description: 'The provision data model is the heart of a SMART Recommendation. Three entity types, requirements, conformance tests, and forms, together describe everything the Recommendation normatively requires.'
 eyebrow: 'Guide · 05 of 14'
 ---
 
@@ -23,13 +23,13 @@ import FlowDiagram from '../../../components/diagrams/FlowDiagram.astro'
   ]}
 />
 
-- **Requirement** — a normative provision with an obligation level (shall/should/may) and structured acceptance criteria.
-- **Conformance Test** — a test procedure that targets one or more requirements, producing measured values and pass/fail verdicts.
-- **Form** — a structured schema that captures the test's measurements, with embedded calculations that auto-compute derived values.
+- **Requirement**, a normative provision with an obligation level (shall/should/may) and structured acceptance criteria.
+- **Conformance Test**, a test procedure that targets one or more requirements, producing measured values and pass/fail verdicts.
+- **Form**, a structured schema that captures the test's measurements, with embedded calculations that auto-compute derived values.
 
 Every cross-reference is explicit. The build pipeline validates that every `targets`, `result_form`, `applicability_filter`, and `calculation.lookup` reference resolves to a declared entity.
 
-## Requirements — `requirements/*.yaml`
+## Requirements, `requirements/*.yaml`
 
 ```yaml
 # requirements/metrological.yaml
@@ -57,11 +57,11 @@ requirements:
 
 ### Acceptance criteria types
 
-- **`tiered`** — graded acceptance levels (e.g. accuracy class) with per-tier thresholds.
-- **`threshold`** — single numeric limit, possibly parameterized by dimension context.
-- **`qualitative`** — descriptive pass/fail criteria (construction, marking).
+- **`tiered`**, graded acceptance levels (e.g. accuracy class) with per-tier thresholds.
+- **`threshold`**, single numeric limit, possibly parameterized by dimension context.
+- **`qualitative`**, descriptive pass/fail criteria (construction, marking).
 
-## Conformance tests — `conformance/*.yaml`
+## Conformance tests, `conformance/*.yaml`
 
 ```yaml
 # conformance/measurement-error-mdlo.yaml
@@ -90,7 +90,7 @@ ref: "R 60 §4.4.1"
 
 The `targets` block links this test to the requirements it verifies. A single test can verify multiple requirements (and vice versa).
 
-## Forms — `forms/*.yaml`
+## Forms, `forms/*.yaml`
 
 ```yaml
 # forms/measurement-error-mdlo.yaml
@@ -137,9 +137,9 @@ pass_if: |
   and error_decreasing <= mpe
 ```
 
-A form is fully declarative — field kinds, calculation wiring, MPE lookups, and the pass/fail expression are all in the schema.
+A form is fully declarative, field kinds, calculation wiring, MPE lookups, and the pass/fail expression are all in the schema.
 
-## Cross-references — `cross-refs.yaml`
+## Cross-references, `cross-refs.yaml`
 
 To keep entity files small, cross-references can be declared separately:
 

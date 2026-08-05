@@ -3,7 +3,7 @@ title: 'Form Data Binding'
 shortTitle: 'Data Binding'
 ---
 
-A form's fields don't exist in isolation — they bind to a context made up of the Form schema, the ConformanceTest, the InstrumentSample, and the TestReport. Resolving these bindings is what lets the engine evaluate calculations and pass/fail verdicts.
+A form's fields don't exist in isolation, they bind to a context made up of the Form schema, the ConformanceTest, the InstrumentSample, and the TestReport. Resolving these bindings is what lets the engine evaluate calculations and pass/fail verdicts.
 
 ## The binding context
 
@@ -21,12 +21,12 @@ When a `FormInstance` is created, the engine assembles its **binding context**:
 
 A field's value can come from:
 
-1. **Direct entry** — the TL types it in.
-2. **Computation** — declared in the field's `calculation` block; resolved via topological order over other fields.
-3. **Table lookup** — declared in the field's `lookup` block; resolved by binding the table's inputs from the context.
-4. **Context reference** — bound to a value from the parent TestReport or ClassificationGroup (e.g. ambient temperature, accuracy class).
+1. **Direct entry**, the TL types it in.
+2. **Computation**, declared in the field's `calculation` block; resolved via topological order over other fields.
+3. **Table lookup**, declared in the field's `lookup` block; resolved by binding the table's inputs from the context.
+4. **Context reference**, bound to a value from the parent TestReport or ClassificationGroup (e.g. ambient temperature, accuracy class).
 
-The engine validates at build time that every field has exactly one resolution source — no ambiguous bindings, no missing sources.
+The engine validates at build time that every field has exactly one resolution source, no ambiguous bindings, no missing sources.
 
 ## Why this matters
 
