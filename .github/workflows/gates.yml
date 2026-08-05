@@ -26,6 +26,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Checkout the shell package (the chrome SSOT)
+        uses: actions/checkout@v6
+        with:
+          repository: oimlsmart/site-shell
+          path: vendor/site-shell
+
       - name: Check out the smart repo (the diagram + freshness sources)
         uses: actions/checkout@v6
         with:
