@@ -133,7 +133,7 @@ Identifier        ::= Letter (Letter | Digit | '_')*
 
 | Level | Operators | Associativity |
 |-------|-----------|--------------|
-| 1 | Primary, `$context.*`, literal | — |
+| 1 | Primary, `$context.*`, literal |, |
 | 2 | `.`, `->`, `()`, `[]` (postfix) | Left |
 | 3 | `^` (power) | Right |
 | 4 | `-` (unary), `not` | Right |
@@ -144,8 +144,8 @@ Identifier        ::= Letter (Letter | Digit | '_')*
 | 9 | `xor` | Left |
 | 10 | `or` | Left |
 | 11 | `implies` | Right |
-| 12 | `if/then/else/endif` | — |
-| 13 | `let/in` | — |
+| 12 | `if/then/else/endif` |, |
+| 13 | `let/in` |, |
 
 ## Type System
 
@@ -158,7 +158,7 @@ Identifier        ::= Letter (Letter | Digit | '_')*
 | `String` | Text value | `'pass'`, `'yes'` |
 | `Boolean` | Truth value | `true`, `false` |
 | `Collection(T)` | Ordered sequence of T | `Sequence{1, 2, 3}` |
-| `Void` | No value (NaN, null) | — |
+| `Void` | No value (NaN, null) |, |
 
 ### Implicit Type Coercion
 
@@ -315,42 +315,42 @@ form in `computation_context` declares which form provides shared values.
 
 ## Expression Examples (R 60 Domain)
 
-### Derived field — load cell error
+### Derived field, load cell error
 ```yaml
 derivation: "ocl{(avg_indication - reference_indication) / $context.conversion_factor_f}"
 ```
 
-### Derived field — maximum creep change
+### Derived field, maximum creep change
 ```yaml
 derivation: "ocl{creep_readings->collect(r | r.change_v)->max()}"
 ```
 
-### Derived field — creep at specific time
+### Derived field, creep at specific time
 ```yaml
 derivation: "ocl{creep_readings->select(r | r.time_minutes = 30)->first().change_v}"
 ```
 
-### Derived field — barometric pressure effect (with index guard)
+### Derived field, barometric pressure effect (with index guard)
 ```yaml
 derivation: "ocl{if $index = 0 then 0 else change_v / abs(pressure - prev(pressure)) endif}"
 ```
 
-### Evaluated field — MPE check
+### Evaluated field, MPE check
 ```yaml
 rule: "ocl{abs(error_EL) <= abs(mpe)}"
 ```
 
-### Evaluated field — nested collection quantifier
+### Evaluated field, nested collection quantifier
 ```yaml
 rule: "ocl{temperature_series->forAll(t | t.test_loads->forAll(l | l.within_mpe = 'yes'))}"
 ```
 
-### Pass/fail — conjunction
+### Pass/fail, conjunction
 ```yaml
 pass_if: "ocl{creep_30min_result = 'pass' and creep_20_30_result = 'pass' and dr_half_v_result = 'pass'}"
 ```
 
-### Table lookup — MPE
+### Table lookup, MPE
 ```yaml
 derivation: "ocl{lookup_mpe($context.D_max, $context.accuracy_class, $context.p_LC)}"
 ```

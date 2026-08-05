@@ -7,12 +7,12 @@ import { COMPONENTS } from '../data/components'
 import { EIGHT_WORDS, ENTRY_POINTS } from '../data/platform-facts'
 
 // The eight components come from the ONE registry (src/data/components.ts)
-// — the nav's Components dropdown reads the same definition.
+//, the nav's Components dropdown reads the same definition.
 const components = COMPONENTS
 
 const flowSteps = [
   { num: '01', title: 'Pick a Recommendation', detail: 'read the modelled requirements, tests, and forms', href: '/recs' },
-  { num: '02', title: 'Test the simulation', detail: 'run the chain against a simulated instrument — no hardware', href: '/sst' },
+  { num: '02', title: 'Test the simulation', detail: 'run the chain against a simulated instrument, no hardware', href: '/sst' },
   { num: '03', title: 'Run the certification', detail: 'application to evaluation on the OIML-CS SMART platform', href: '/smart' },
   { num: '04', title: 'Issue the certificate', detail: 'the signed CNML, verifiable in a browser', href: '/cnml' },
 ]
@@ -55,9 +55,9 @@ const features = [
 const audiencePaths = [
   { num: 'i', title: 'For Member States & NMIs', description: 'Executable Recommendations, monitorable compliance, and a tiered adoption program for legal-metrology authorities.', link: '/about/audiences/member-states' },
   { num: 'ii', title: 'For Manufacturers', description: 'Publish a reference model of your instrument, ship a SMART twin, and certify continuously instead of episodically.', link: '/about/audiences/manufacturers' },
-  { num: 'iii', title: 'For Test Laboratories', description: 'Structured test runs, evidence captured once at the bench, reports generated — rehearsed on the simulator first.', link: '/about/audiences/laboratories' },
+  { num: 'iii', title: 'For Test Laboratories', description: 'Structured test runs, evidence captured once at the bench, reports generated, rehearsed on the simulator first.', link: '/about/audiences/laboratories' },
   { num: 'iv', title: 'For Issuing Authorities', description: 'The OIML-CS as a digital workflow: applications to certificates, every verdict computed, every document traceable.', link: '/about/audiences/issuing-authorities' },
-  { num: 'v', title: 'For Instrument Users', description: 'Continuous compliance for the instruments you depend on — query the twin, read the evidence stream.', link: '/about/audiences/instrument-users' },
+  { num: 'v', title: 'For Instrument Users', description: 'Continuous compliance for the instruments you depend on, query the twin, read the evidence stream.', link: '/about/audiences/instrument-users' },
   { num: 'vi', title: 'For Educators & Students', description: 'The classroom: certify a simulated load cell before you ever touch a real instrument.', link: '/about/audiences/educators' },
 ]
 ---
@@ -65,7 +65,7 @@ const audiencePaths = [
 <Base>
   <div class="relative overflow-hidden bp-noise">
     {/* ═══════════════════════════════════════════════════════════════
-        HERO — calibration sheet header
+        HERO, calibration sheet header
         ═══════════════════════════════════════════════════════════════ */}
     <section class="home-hero relative min-h-[min(92vh,840px)] grid grid-cols-[1fr_1.1fr] gap-16 items-center px-8 py-20 max-[960px]:grid-cols-1 max-[960px]:text-center bp-grid bp-grid--major">
       <div class="home-globe relative z-10 flex items-center justify-center min-[960px]:order-1" data-parallax-target>
@@ -95,7 +95,7 @@ const audiencePaths = [
           </em>
         </h1>
         <p class="hero-stagger text-[1.1875rem] leading-[1.55] text-ink-soft max-w-2xl mb-10" style="--stagger-i:2">
-          <strong class="text-ink font-semibold">OIML SMART</strong> transforms International Recommendations from static PDF documents into structured digital artifacts — executable, traceable, and interoperable across the global metrology community.
+          <strong class="text-ink font-semibold">OIML SMART</strong> transforms International Recommendations from static PDF documents into structured digital artifacts, executable, traceable, and interoperable across the global metrology community.
         </p>
         <div class="hero-stagger flex flex-wrap gap-3 items-center max-[960px]:justify-center" style="--stagger-i:3">
           <a class="btn btn-primary bp-magnetic bp-focus-ring" href="/recs/" data-magnetic-strength="0.2">
@@ -128,7 +128,7 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
-        ENTRY POINTS — the three live doors
+        ENTRY POINTS, the three live doors
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
     <section class="py-14 px-8">
@@ -150,7 +150,7 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
-        SMART ACRONYM — interactive grid
+        SMART ACRONYM, interactive grid
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
     <section class="py-20 px-8 bp-grid">
@@ -166,7 +166,7 @@ const audiencePaths = [
           </span>
         </div>
         <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">What "SMART" stands for</h2>
-        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Five properties that distinguish a SMART Recommendation from a traditional PDF. Together, they make the Recommendation a functional digital artifact — not just a document.</p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Five properties that distinguish a SMART Recommendation from a traditional PDF. Together, they make the Recommendation a functional digital artifact, not just a document.</p>
       </div>
       <div class="grid grid-cols-[repeat(5,1fr)] gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-2">
         {acronym.map((item, i) => (
@@ -186,7 +186,7 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
-        THE FOUNDATION — the eight words, the platform, the components
+        THE FOUNDATION, the eight words, the platform, the components
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
     <section class="py-20 px-8 bp-grid bp-grid--major">
@@ -219,7 +219,7 @@ const audiencePaths = [
       >
         <div class="bp-coord mb-2">The platform underneath</div>
         <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-          OIML SMART and CNML are powered by <strong class="text-ink font-semibold">the Primmel SMART platform</strong> — the modelling language, runtime machinery, and certificate PKI beneath everything on this site.
+          OIML SMART and CNML are powered by <strong class="text-ink font-semibold">the Primmel SMART platform</strong>, the modelling language, runtime machinery, and certificate PKI beneath everything on this site.
           <span class="text-accent opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all inline-block">primmel.org →</span>
         </p>
       </a>
@@ -245,7 +245,7 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
-        THE FULL FLOW — the demo path, end to end
+        THE FULL FLOW, the demo path, end to end
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
     <section class="py-14 px-8" aria-label="The full flow">
@@ -273,7 +273,7 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
-        STATS — count-up metrics
+        STATS, count-up metrics
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
     <section class="py-20 px-8 bp-grid bp-grid--major">
@@ -308,7 +308,7 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
-        RECOMMENDATIONS — hover-lift cards
+        RECOMMENDATIONS, hover-lift cards
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
     <section class="py-20 px-8 bp-grid">
@@ -349,7 +349,7 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
-        FEATURES — numbered capability grid
+        FEATURES, numbered capability grid
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
     <section class="py-20 px-8 bp-grid bp-grid--major">
@@ -361,7 +361,7 @@ const audiencePaths = [
           <span class="bp-coord">{features.length} subsystems</span>
         </div>
         <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Capabilities delivered in the pilot</h2>
-        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">These are the working capabilities in the current build. They are subject to change — the pilot is intentionally exploratory.</p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">These are the working capabilities in the current build. They are subject to change, the pilot is intentionally exploratory.</p>
       </div>
       <div class="grid grid-cols-3 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
         {features.map((f, i) => (
@@ -381,7 +381,7 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
-        AUDIENCE PATHS — roman-numeral navigation
+        AUDIENCE PATHS, roman-numeral navigation
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
     <section class="py-20 px-8 bp-grid">
@@ -393,7 +393,7 @@ const audiencePaths = [
           <span class="bp-coord">Six seats</span>
         </div>
         <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Who OIML SMART is for</h2>
-        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">The program touches every role in legal metrology — and for each role it changes something specific. Pick your seat: the pain as it exists today, the mechanism that removes it, the proof you can check.</p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">The program touches every role in legal metrology, and for each role it changes something specific. Pick your seat: the pain as it exists today, the mechanism that removes it, the proof you can check.</p>
       </div>
       <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
         {audiencePaths.map((path, i) => (
@@ -496,7 +496,7 @@ const audiencePaths = [
   .vf-coord-bl { bottom: -0.45em; left: 14px; }
   .vf-coord-br { bottom: -0.45em; right: 14px; }
 
-  /* ── Eyebrow label (hero only — section anchors use bp-section-anchor) ─ */
+  /* ── Eyebrow label (hero only, section anchors use bp-section-anchor) ─ */
   .eyebrow {
     display: inline-block;
     font-family: var(--font-mono);
@@ -549,7 +549,7 @@ const audiencePaths = [
   .rec-card:hover { border-color: var(--accent); }
   .rec-card:hover .bp-chip { background: var(--accent); color: var(--paper); border-color: var(--accent); }
 
-  /* ── Component logo slots (empty placeholders — logos land later) ─ */
+  /* ── Component logo slots (empty placeholders, logos land later) ─ */
   .component-logo-slot {
     width: 3.5rem;
     height: 3.5rem;
@@ -586,7 +586,7 @@ const audiencePaths = [
     // Wire up listeners + observer exactly once across the SPA lifetime.
     // The script itself re-executes on every navigation back to / (because
     // it is `is:inline` in index.astro), but `document` persists across
-    // Astro view transitions — so we must not add another observer/listener
+    // Astro view transitions, so we must not add another observer/listener
     // each time, and the init function must live on `window` so subsequent
     // script executions can call it.
     if (!window.__heroGlobeWired) {

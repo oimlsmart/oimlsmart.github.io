@@ -3,7 +3,7 @@ title: 'Tables & Lookups'
 shortTitle: 'Tables'
 ---
 
-The Table primitive is the second cross-cutting primitive (along with [Calculations](/docs/arch/computation-engine)). It encodes the multi-dimensional lookup tables that pervade OIML Recommendations — most notably the Maximum Permissible Error (MPE) tables.
+The Table primitive is the second cross-cutting primitive (along with [Calculations](/docs/arch/computation-engine)). It encodes the multi-dimensional lookup tables that pervade OIML Recommendations, most notably the Maximum Permissible Error (MPE) tables.
 
 ## Why a primitive
 
@@ -15,9 +15,9 @@ In SMART, the MPE table is declared once as a **Table** entity and referenced by
 
 A Table can be one of three kinds:
 
-- **Tiered table** — a discrete mapping from a classification (e.g. accuracy class) to a value or set of values. Indexed by enumeration.
-- **Scalar table** — a continuous mapping from a single numeric input to an output. Supports interpolation.
-- **Range table** — a piecewise mapping from numeric ranges to values. Supports interpolation within ranges and extrapolation rules at boundaries.
+- **Tiered table**, a discrete mapping from a classification (e.g. accuracy class) to a value or set of values. Indexed by enumeration.
+- **Scalar table**, a continuous mapping from a single numeric input to an output. Supports interpolation.
+- **Range table**, a piecewise mapping from numeric ranges to values. Supports interpolation within ranges and extrapolation rules at boundaries.
 
 ## Example: R 60 MPE table
 
@@ -43,4 +43,4 @@ ranges:
   # ...
 ```
 
-Any form that needs the MPE for a given load simply declares `lookup: r60_mpe_table` and binds its inputs. The engine resolves it at runtime.
+Any form that needs the MPE for a given load declares `lookup: r60_mpe_table` and binds its inputs. The engine resolves it at runtime.

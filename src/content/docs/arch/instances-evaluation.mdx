@@ -5,7 +5,7 @@ shortTitle: 'Evaluation'
 
 Layers 4 and 5: runtime data and the evaluation pipeline that produces verdicts.
 
-## Layer 4 — Form Instances
+## Layer 4, Form Instances
 
 A **FormInstance** is a runtime occurrence of a Form, populated by a Test Laboratory during a specific test. It references:
 
@@ -16,11 +16,11 @@ A **FormInstance** is a runtime occurrence of a Form, populated by a Test Labora
 
 Form instances live in IndexedDB in the browser (or in a server-side store for non-browser deployments). Each instance is a versioned, immutable-on-submit record.
 
-## Layer 5 — Evaluation Results
+## Layer 5, Evaluation Results
 
 The evaluation pipeline (described in the [architecture overview](/docs/arch/overview#data-flow)) processes a populated FormInstance against its schema and produces:
 
-- A **FormDetermination** for each criterion — pass / fail / conditional, with computed evidence.
+- A **FormDetermination** for each criterion, pass / fail / conditional, with computed evidence.
 - An **EvaluationResult** aggregating all FormDeterminations for the form.
 - Traceability links back through the schema to the originating Requirement.
 

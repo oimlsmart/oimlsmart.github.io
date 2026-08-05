@@ -10,7 +10,7 @@ The Test Laboratory captures test results as a structured **TestReport**, popula
 - References to the originating **TestRequest**.
 - The **InstrumentSample(s)** tested.
 - A set of **FormInstances**, one per ConformanceTest performed.
-- The TL's **observations** — free-text notes about anomalies, deviations, or noteworthy behaviour.
+- The TL's **observations**, free-text notes about anomalies, deviations, or noteworthy behaviour.
 - The TL's **overall conclusion** per test (pass / fail / conditional).
 - The TL's **signature** and date.
 
@@ -22,7 +22,7 @@ See [Forms](/docs/arch/forms) for the form lifecycle and [Form Data Binding](/do
 
 ## Pass/fail computation
 
-Each FormInstance is evaluated against its `pass_if` expression (in [OCL](/docs/arch/expression-language)) to produce a pass / fail / conditional verdict. The verdict is computed by the engine — not entered by the TL — to eliminate transcription errors.
+Each FormInstance is evaluated against its `pass_if` expression (in [OCL](/docs/arch/expression-language)) to produce a pass / fail / conditional verdict. The verdict is computed by the engine, not entered by the TL, to eliminate transcription errors.
 
 ## Submission
 

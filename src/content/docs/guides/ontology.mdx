@@ -14,7 +14,7 @@ import LayerDiagram from '../../../components/diagrams/LayerDiagram.astro'
   layers={[
     { index: '01', title: 'Domain Ontology (per Recommendation)', lines: ['oiml-r60: LoadCell, AccuracyClass, MpeTier', 'oiml-r144: DiaphragmGasMeter, FlowRateClass'], note: 'Specialises OIML Core.', accent: 'amber' },
     { index: '02', title: 'OIML Core Ontology', lines: ['Recommendation, Requirement, ConformanceTest, Form', 'Certificate, IssuingAuthority, TestLaboratory'], note: 'Superset; maps to SMART Core.', accent: 'brand' },
-    { index: '03', title: 'IEC-ISO SMART Core Ontology', lines: ['QuantitativeProperty, MeasurementUnit, Dimension', 'ClassificationScheme, CompliantWith'], note: 'Parallel — feature-equivalent.', accent: 'teal' },
+    { index: '03', title: 'IEC-ISO SMART Core Ontology', lines: ['QuantitativeProperty, MeasurementUnit, Dimension', 'ClassificationScheme, CompliantWith'], note: 'Parallel, feature-equivalent.', accent: 'teal' },
   ]}
   arrows={['specialises', 'maps to (parallel)']}
 />
@@ -25,9 +25,9 @@ The SMART Core ontology defines cross-cutting concepts used by every SMART
 standardization programme worldwide (OIML SMART, IEC-ISO SMART, BSI SMART).
 It imports:
 
-- **QUDT** — Quantities, Units, Dimensions of Trade.
-- **OML** — Ontology of units of Measure.
-- **VIM** — International Vocabulary of Metrology.
+- **QUDT**, Quantities, Units, Dimensions of Trade.
+- **OML**, Ontology of units of Measure.
+- **VIM**, International Vocabulary of Metrology.
 
 This layer is what makes OIML SMART interoperable with other SMART
 initiatives. The equivalence mapping (OIML ↔ IEC-ISO) lives here.
@@ -37,10 +37,10 @@ initiatives. The equivalence mapping (OIML ↔ IEC-ISO) lives here.
 The OIML Core ontology defines OIML-specific concepts shared across all
 Recommendations:
 
-- **Recommendation** — the top-level document concept.
-- **Requirement, ConformanceTest, Form** — the provision model.
-- **Certificate, IssuingAuthority, TestLaboratory** — the OIML-CS model.
-- **AccuracyClass, ApplicationClass** — the classification model.
+- **Recommendation**, the top-level document concept.
+- **Requirement, ConformanceTest, Form**, the provision model.
+- **Certificate, IssuingAuthority, TestLaboratory**, the OIML-CS model.
+- **AccuracyClass, ApplicationClass**, the classification model.
 
 Every SMART Recommendation imports OIML Core. New Recommendations inherit
 all shared concepts for free.
@@ -71,13 +71,13 @@ The domain ontology is the canonical source for terminology terms, entity
 types, and the cross-reference graph. The build pipeline extracts terms
 from the ontology into the standard's `terminology` block.
 
-## Why an ontology?
+## The reason for the ontology
 
 The ontology layer delivers three things the YAML data alone cannot:
 
-1. **Cross-Recommendation queries** — "Find every requirement in any Recommendation that references Class A accuracy."
-2. **Reasoning** — infer that R 60 Class A is equivalent to R 76 Class I (where the mapping is declared).
-3. **External interoperability** — expose OIML SMART data via SPARQL endpoints that third-party tools can query.
+1. **Cross-Recommendation queries**, "Find every requirement in any Recommendation that references Class A accuracy."
+2. **Reasoning**, infer that R 60 Class A is equivalent to R 76 Class I (where the mapping is declared).
+3. **External interoperability**, expose OIML SMART data via SPARQL endpoints that third-party tools can query.
 
 ## Authoring the ontology
 
@@ -89,7 +89,7 @@ build pipeline:
 3. Extracts terminology terms into `terminology.yaml`.
 4. Generates a TypeScript module for runtime use.
 
-If you skip the ontology file, the standard still works — terminology is
+If you skip the ontology file, the standard still works, terminology is
 just less richly typed.
 
 ## Browsing the ontology

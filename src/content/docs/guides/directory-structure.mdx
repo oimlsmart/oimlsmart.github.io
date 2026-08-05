@@ -105,14 +105,14 @@ After build, the generated TypeScript modules live under:
 />
 
 The application imports these modules at runtime. There is no dynamic loading
-of YAML in production — everything is pre-validated TypeScript.
+of YAML in production, everything is pre-validated TypeScript.
 
 ## Conventions
 
 - **One entity per file** when entities are large (forms, tests). Group small entities (terminology entries, enums) in a single file.
 - **Naming**: lowercase-kebab-case for files. Camel-case for identifiers (`mpe`, `measurementErrorMdlo`).
 - **Cross-references**: always use the URN form (`urn:oiml:requirement:r60:mpe`), never a file path.
-- **Comments**: YAML files support `#` comments — use them to record the source clause from the Recommendation (`# R 60 §3.4.1`).
+- **Comments**: YAML files support `#` comments, use them to record the source clause from the Recommendation (`# R 60 §3.4.1`).
 
 ## Next
 

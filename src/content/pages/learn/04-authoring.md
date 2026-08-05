@@ -1,11 +1,11 @@
 ---
-title: "Tier 4 — authoring (a day)"
+title: "Tier 4, authoring (a day)"
 description: "Author a SMART Recommendation: from the source document to a validated Primmel package."
 ---
 
-# Tier 4 — authoring (a day)
+# Tier 4, authoring (a day)
 
-The final tier: you stop reading models and **write** one — a small
+The final tier: you stop reading models and **write** one, a small
 standard as a Primmel package, with the linker and the coverage gates
 as your feedback loop. The pattern is the OIML classroom's
 (`smart-r60`, the reference instance that teaches R 60 exactly this
@@ -74,10 +74,10 @@ requirement /req/metrological/measuring-range-min {
 ```
 
 Every piece you met on the earlier tiers, authored now: the register
-(quantities, never bare numbers — INV-1), the subject (IS/HAS/DOES),
+(quantities, never bare numbers, INV-1), the subject (IS/HAS/DOES),
 the requirement (a constraint with a limit and a verification path).
 
-## Hands-on — author and be graded (a day)
+## Hands-on, author and be graded (a day)
 
 1. Create `primmel-packages/my-standard/` with the two files above
    (`package.primmel`, `model.prl`).
@@ -97,27 +97,27 @@ the requirement (a constraint with a limit and a verification path).
    exhibited attributes). Restore it.
 4. **The classroom pattern.** Look at the reference instance
    (`~/src/oimlsmart/smart-r60/`): the classroom syncs the data trees
-   on load and runs its unit specs against them — your package is
+   on load and runs its unit specs against them, your package is
    teachable the moment the gates pass.
 
 **Make it (the checkable artifact).** Your package, lint-clean, plus
-one sentence per finding you fixed — that is the author's log every
+one sentence per finding you fixed, that is the author's log every
 real package in this program carries (each shipped package's history
 is exactly such a log).
 
-## When is a model done?
+## When a model is done
 
 - `primmel check` is silent at default AND `--strict --audit`.
 - Every reference resolves; every requirement has a verification path
   (the C5 honesty: no undeclared coverage gap).
-- The text you *didn't* model is a named gap with a reason — the
+- The text you *didn't* model is a named gap with a reason, the
   coverage budget only burns down (C72), never quietly grows.
 - The package regenerates byte-clean through the SSOT loop
   (`npm run test:ssot` on the program side).
 
 Depth: [the authoring volume](https://www.oimlsmart.org/docs/oiml-rec/01-methodology)
 on the OIML SMART site, and the
-the classroom's own pattern (the `smart-classroom-r60` repo — private during the pilot).
+the classroom's own pattern (the `smart-classroom-r60` repo, private during the pilot).
 
 *You have finished the curriculum: concept → hands-on → duality →
 chain → authoring. The volumes beside this section go deeper on every

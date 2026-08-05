@@ -9,10 +9,10 @@ const sections = [
   { key: 'workflow', label: 'Workflow', desc: 'The end-to-end certification process from application to certificate.' },
   { key: 'specifications', label: 'Formal Specifications', desc: 'The 11-document SMART_REQS normative specification set.' },
   { key: 'ref', label: 'Reference', desc: 'Schemas, types, syntax, and identifiers.' },
-  { key: 'oiml-core', label: 'OIML Core', desc: 'The OIML Core metamodel — the 4-layer architecture, the six modules, the invariants.' },
+  { key: 'oiml-core', label: 'OIML Core', desc: 'The OIML Core metamodel, the 4-layer architecture, the six modules, the invariants.' },
   { key: 'oiml-rec', label: 'Authoring Recommendations', desc: 'The methodology, the R 60 / R 91 / R 144 walkthroughs, the demo manual.' },
   { key: 'oiml-cs', label: 'The OIML-CS Scheme', desc: 'The B 18:2025 constitution, the runtimes, the coverage machinery.' },
-  { key: 'cnml', label: 'CNML Certificates', desc: 'The certificate format the verdict chain issues — schemas, sign/verify, the operator manuals.' },
+  { key: 'cnml', label: 'CNML Certificates', desc: 'The certificate format the verdict chain issues, schemas, sign/verify, the operator manuals.' },
   { key: 'nmi', label: 'For NMIs', desc: 'The position pack and the authority quickstart for legal-metrology authorities.' },
 ]
 
@@ -26,10 +26,10 @@ const counts = sections.map(s => allDocs.filter(d => d.id.startsWith(s.key + '/'
     <p class="text-[1.0625rem] leading-[1.6] text-ink-soft max-w-2xl mt-3">Everything a standards developer, software engineer, or technical evaluator needs to author, deploy, or integrate OIML SMART Recommendations.</p>
   </div>
 
-  {/* The docs federation — the platform volumes (links only, never duplicated) */}
+  {/* The docs federation, the platform volumes (links only, never duplicated) */}
   <div class="mt-10 mb-12 border border-rule rounded-md bg-paper-soft p-6">
     <h2 class="font-serif text-[1.375rem] font-semibold mb-2">The docs federation</h2>
-    <p class="text-sm text-ink-soft mb-5 max-w-2xl">The OIML program volumes live here, in the sections below. The platform volumes — the proved foundation, the Primmel kernel, the platform runtime, the SST, Confium, the classroom — live on the Primmel SMART docs site. One home per kind; we link, never duplicate.</p>
+    <p class="text-sm text-ink-soft mb-5 max-w-2xl">The OIML program volumes live here, in the sections below. The platform volumes, the proved foundation, the Primmel kernel, the platform runtime, the SST, Confium, the classroom, live on the Primmel SMART docs site. One home per kind; we link, never duplicate.</p>
     <div class="grid grid-cols-2 gap-x-8 max-[960px]:grid-cols-1">
       {FEDERATION.filter(f => f.href.startsWith('http')).map((f) => (
         <a class="group block py-3 border-b border-rule no-underline text-inherit" href={f.href} target="_blank" rel="noopener">

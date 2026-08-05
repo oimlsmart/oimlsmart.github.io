@@ -35,21 +35,21 @@ const accentMap: Record<string, { dot: string; chip: string; accent: string; bar
 }
 
 const navCards = [
-  { href: '/ontology/oiml-', title: 'Browse classes', count: `${counts.class} classes`, description: 'The OWL class hierarchy — the nouns of the OIML domain model.', accent: 'brand' },
-  { href: '/ontology/oiml-hasPart', title: 'Browse properties', count: `${counts.property} properties`, description: 'Object, datatype, and annotation properties — the verbs and modifiers.', accent: 'teal' },
-  { href: '/ontology/oiml-pubtype-', title: 'SKOS vocabularies', count: `${counts.concept} concepts`, description: 'Concept schemes and their concepts — publication types, accuracy classes.', accent: 'amber' },
-  { href: '/ontology/smart-Entity', title: 'Reference primitives', count: 'IEC-ISO SMART Core', description: 'smart:Entity and its siblings — the cross-programme vocabulary that OIML Core maps to.', accent: 'brand' },
+  { href: '/ontology/oiml-', title: 'Browse classes', count: `${counts.class} classes`, description: 'The OWL class hierarchy, the nouns of the OIML domain model.', accent: 'brand' },
+  { href: '/ontology/oiml-hasPart', title: 'Browse properties', count: `${counts.property} properties`, description: 'Object, datatype, and annotation properties, the verbs and modifiers.', accent: 'teal' },
+  { href: '/ontology/oiml-pubtype-', title: 'SKOS vocabularies', count: `${counts.concept} concepts`, description: 'Concept schemes and their concepts, publication types, accuracy classes.', accent: 'amber' },
+  { href: '/ontology/smart-Entity', title: 'Reference primitives', count: 'IEC-ISO SMART Core', description: 'smart:Entity and its siblings, the cross-programme vocabulary that OIML Core maps to.', accent: 'brand' },
 ]
 ---
 
-<OntologyLayout title="Ontology Browser" description="Browse the OIML semantic ontology — classes, properties, individuals, and concept schemes.">
+<OntologyLayout title="Ontology Browser" description="Browse the OIML semantic ontology, classes, properties, individuals, and concept schemes.">
   <section class="relative px-8 pb-8 border-b border-rule bp-grid bp-grid--major">
     <div class="relative z-10 bp-reveal">
       <h1 class="font-serif text-[clamp(2.25rem,5.5vw,3.5rem)] font-medium leading-[1.05] tracking-[-0.025em] mb-3">
         Semantic <em class="italic font-normal text-accent">Ontology</em>
       </h1>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-2xl mb-4">
-        Browse {visible.length} entities across the OIML semantic ontologies — classes, properties, individuals, and concept schemes that underpin cross-Recommendation interoperability and semantic queries.
+        Browse {visible.length} entities across the OIML semantic ontologies, classes, properties, individuals, and concept schemes that underpin cross-Recommendation interoperability and semantic queries.
       </p>
       <div class="flex flex-wrap gap-2">
         <span class="bp-chip">OWL</span>

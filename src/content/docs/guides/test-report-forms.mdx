@@ -1,7 +1,7 @@
 ---
 title: 'Test Report Forms'
 shortTitle: 'TRFs'
-description: 'Forms are executable schemas. They declare fields (direct, calculated, metadata, verdict) and a pass/fail expression that the engine evaluates to produce a verdict — automatically, no spreadsheet formulas.'
+description: 'Forms are executable schemas. They declare fields (direct, calculated, metadata, verdict) and a pass/fail expression that the engine evaluates to produce a verdict, automatically, no spreadsheet formulas.'
 eyebrow: 'Guide · 09 of 14'
 ---
 
@@ -29,7 +29,7 @@ result_summary:
 
 ## Field kinds
 
-### `direct` — measured value
+### `direct`, measured value
 
 A value the test laboratory enters from instrument readings.
 
@@ -42,7 +42,7 @@ A value the test laboratory enters from instrument readings.
   required: true
 ```
 
-### `calculated` — engine-computed
+### `calculated`, engine-computed
 
 A value the engine computes from other fields, constants, or table lookups.
 
@@ -63,7 +63,7 @@ A value the engine computes from other fields, constants, or table lookups.
       load: load
 ```
 
-### `metadata` — context
+### `metadata`, context
 
 A non-measurement context value (operator, ambient temperature, sample serial).
 
@@ -76,7 +76,7 @@ A non-measurement context value (operator, ambient temperature, sample serial).
   default: 20
 ```
 
-### `verdict` — pass/fail
+### `verdict`, pass/fail
 
 The aggregate pass/fail result, computed by evaluating the form's `pass_if` expression.
 
@@ -102,7 +102,7 @@ See the [OCL Reference](/docs/ref/ocl-reference) for the syntax.
 
 ## Multi-row tables
 
-Many test report forms are tabular — the same measurement repeated at
+Many test report forms are tabular, the same measurement repeated at
 multiple load points:
 
 ```yaml
@@ -163,11 +163,11 @@ Fields can declare when they apply:
 
 ## Form lifecycle
 
-1. **Instantiate** — create a `FormInstance` from the schema, bound to a Test and TestReport.
-2. **Populate** — TL enters measured values and metadata.
-3. **Derive** — engine evaluates calculated fields in topological order.
-4. **Evaluate** — engine applies `pass_if` to produce the overall verdict.
-5. **Trace** — each evaluation result links back through the form to the originating requirement.
+1. **Instantiate**, create a `FormInstance` from the schema, bound to a Test and TestReport.
+2. **Populate**, TL enters measured values and metadata.
+3. **Derive**, engine evaluates calculated fields in topological order.
+4. **Evaluate**, engine applies `pass_if` to produce the overall verdict.
+5. **Trace**, each evaluation result links back through the form to the originating requirement.
 
 The result is a fully auditable, machine-readable test report.
 

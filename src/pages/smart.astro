@@ -3,20 +3,20 @@ import Base from '../layouts/Base.astro'
 import PageHero from '../components/PageHero.astro'
 
 const workflow = [
-  { step: 'Application', desc: 'the applicant files for type evaluation against a modelled Recommendation — identity, classification, the model family matrix.' },
+  { step: 'Application', desc: 'the applicant files for type evaluation against a modelled Recommendation, identity, classification, the model family matrix.' },
   { step: 'Sample request', desc: 'the issuing authority requests samples of the type; the chain of custody starts here, every hand-off recorded.' },
-  { step: 'Dispatch', desc: 'the application goes to a test laboratory as a structured test request — per form, per requirement set, never a PDF in an email.' },
+  { step: 'Dispatch', desc: 'the application goes to a test laboratory as a structured test request, per form, per requirement set, never a PDF in an email.' },
   { step: 'Lab test runs', desc: 'the laboratory executes the conformance tests; evidence is captured once, at the bench, against the form the Recommendation declares.' },
-  { step: 'Evaluation', desc: 'the test reports roll up into a type evaluation — every verdict computed from the requirement model, none asserted by hand.' },
-  { step: 'CNML-signed certificate', desc: 'the authority issues the certificate as a signed CNML document — the verdict chain, signed, verifiable by anyone.' },
-  { step: 'BIML registration', desc: 'the certificate registers with the BIML — the public register is the same database the workflow wrote to all along.' },
+  { step: 'Evaluation', desc: 'the test reports roll up into a type evaluation, every verdict computed from the requirement model, none asserted by hand.' },
+  { step: 'CNML-signed certificate', desc: 'the authority issues the certificate as a signed CNML document, the verdict chain, signed, verifiable by anyone.' },
+  { step: 'BIML registration', desc: 'the certificate registers with the BIML, the public register is the same database the workflow wrote to all along.' },
 ]
 
 const consoles = [
-  { name: 'Applicant portal', role: 'the manufacturer', desc: 'File the application, declare the model family, ship samples, watch the verdicts arrive — status is a query, not a phone call.' },
+  { name: 'Applicant portal', role: 'the manufacturer', desc: 'File the application, declare the model family, ship samples, watch the verdicts arrive, status is a query, not a phone call.' },
   { name: 'IA console', role: 'the issuing authority', desc: 'Review applications, request samples, dispatch test requests, judge the evaluation, sign and issue the certificate.' },
   { name: 'TL workbench', role: 'the test laboratory', desc: 'The lab inbox, the structured test run, evidence capture at the bench, the test report generated from the run itself.' },
-  { name: 'BIML console', role: 'the register', desc: 'Registration of issued certificates, the participant registry, the public record — the system of the OIML-CS, operated by the Bureau.' },
+  { name: 'BIML console', role: 'the register', desc: 'Registration of issued certificates, the participant registry, the public record, the system of the OIML-CS, operated by the Bureau.' },
 ]
 
 const deployments = [
@@ -32,11 +32,11 @@ const deployments = [
   <PageHero
     logo={{ name: "cs-smart", alt: "The OIML-CS SMART platform logo." }}
     title="The OIML-CS SMART platform"
-    lede="The web system through which the OIML Certification System serves issuing authorities and test laboratories: applications arrive, samples move, test runs produce evidence, evaluations compute verdicts, and certificates issue signed — then register with the BIML."
+    lede="The web system through which the OIML Certification System serves issuing authorities and test laboratories: applications arrive, samples move, test runs produce evidence, evaluations compute verdicts, and certificates issue signed, then register with the BIML."
   />
 
   <div class="px-8 pb-20 max-w-5xl">
-    {/* § 01 — the certification workflow */}
+    {/* § 01, the certification workflow */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 01</span>
@@ -46,7 +46,7 @@ const deployments = [
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
         The OIML-CS workflow, modelled end to end on <strong class="text-ink font-semibold">B 18:2025</strong>.
-        Every participant role, every document, every verdict is an entity in the system — so the whole
+        Every participant role, every document, every verdict is an entity in the system, so the whole
         chain is traceable, and every state change carries its evidence.
       </p>
       <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
@@ -58,17 +58,17 @@ const deployments = [
             <span class="font-mono text-xs text-accent whitespace-nowrap">{String(i + 1).padStart(2, '0')}</span>
             <div>
               <h3 class="font-serif text-[1.0625rem] inline">{w.step}</h3>
-              <span class="text-sm text-ink-soft"> — {w.desc}</span>
+              <span class="text-sm text-ink-soft">, {w.desc}</span>
             </div>
           </li>
         ))}
       </ol>
       <p class="text-sm text-ink-muted mt-4">
-        The scheme itself — the roles, the documents, the governance — is on <a class="text-accent underline underline-offset-2" href="/oiml-cs">the OIML-CS page</a>; the certificate format is <a class="text-accent underline underline-offset-2" href="/cnml">OIML CNML</a>.
+        The scheme itself, the roles, the documents, the governance, is on <a class="text-accent underline underline-offset-2" href="/oiml-cs">the OIML-CS page</a>; the certificate format is <a class="text-accent underline underline-offset-2" href="/cnml">OIML CNML</a>.
       </p>
     </section>
 
-    {/* § 02 — the four consoles */}
+    {/* § 02, the four consoles */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 02</span>
@@ -77,8 +77,8 @@ const deployments = [
         <span class="bp-coord">one seat per role</span>
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
-        Every participant in the OIML-CS gets a console shaped to their role in the workflow —
-        the same underlying model, four different seats.
+        Every participant in the OIML-CS gets a console shaped to their role in the workflow,
+        the same underlying model in four different seats.
       </p>
       <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1">
         {consoles.map((c) => (
@@ -91,7 +91,7 @@ const deployments = [
       </div>
     </section>
 
-    {/* § 03 — history + the deployment modes */}
+    {/* § 03, history + the deployment modes */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 03</span>
@@ -109,7 +109,7 @@ const deployments = [
       </p>
     </section>
 
-    {/* § 04 — the deployment modes */}
+    {/* § 04, the deployment modes */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 04</span>
@@ -138,7 +138,7 @@ const deployments = [
       </p>
     </section>
 
-    {/* § 05 — try it + the platform credit */}
+    {/* § 05, try it + the platform credit */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 05</span>
@@ -147,7 +147,7 @@ const deployments = [
         <span class="bp-coord">in your browser</span>
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
-        The pilot build runs the whole chain in your browser — seed a sample application, dispatch it,
+        The pilot build runs the whole chain in your browser, seed a sample application, dispatch it,
         run the tests against the simulated instrument, evaluate, and issue the certificate.
       </p>
       <div class="flex flex-wrap gap-3 mb-10">

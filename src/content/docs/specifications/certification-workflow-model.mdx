@@ -15,7 +15,7 @@ import TreeDiagram from '../../../components/diagrams/TreeDiagram.astro'
 
 ## Purpose
 
-This document defines the certification workflow layer — the runtime entity model that
+This document defines the certification workflow layer, the runtime entity model that
 governs how OIML type evaluations proceed from manufacturer application through testing
 to certificate issuance. It sits above the form engine (Layers 1–5 from SMART_REQS 01)
 and orchestrates how form instances are created, populated, and consolidated.
@@ -34,7 +34,7 @@ declared in `dimensions.yaml` per standard, not hardcoded in the workflow engine
    `dimensions.yaml` per standard declares group classification fields, model parameters,
    computed parameters, shared context mappings, and certificate classification fields.
    Adding a new standard = adding dimension schema + form schemas. Core engine is
-   unchanged. (OCP — same as SMART_REQS 01 principle 2.)
+   unchanged. (OCP, same as SMART_REQS 01 principle 2.)
 
 3. **State machines govern all entity lifecycles.** Every status transition is explicit,
    guarded, and auditable. Invalid transitions are rejected.
@@ -321,12 +321,12 @@ SUBMITTED → UNDER_REVIEW → ACCEPTED
 
 | From | To | Guard | Actor |
 |---|---|---|---|
-| — | SUBMITTED | Required fields filled | Applicant |
-| SUBMITTED | UNDER_REVIEW | — | IA |
-| SUBMITTED | WITHDRAWN | — | Applicant |
+|, | SUBMITTED | Required fields filled | Applicant |
+| SUBMITTED | UNDER_REVIEW |, | IA |
+| SUBMITTED | WITHDRAWN |, | Applicant |
 | UNDER_REVIEW | ACCEPTED | instrumentModelFamilyId set, documentation complete | IA |
-| UNDER_REVIEW | REJECTED | — | IA |
-| REJECTED | SUBMITTED | — | Applicant |
+| UNDER_REVIEW | REJECTED |, | IA |
+| REJECTED | SUBMITTED |, | Applicant |
 
 ### TestRequest
 
@@ -338,10 +338,10 @@ DRAFT → SUBMITTED → ACCEPTED → IN_PROGRESS → COMPLETED
 
 | From | To | Guard | Actor |
 |---|---|---|---|
-| — | DRAFT | — | IA |
+|, | DRAFT |, | IA |
 | DRAFT | SUBMITTED | TL assigned, samples selected, procedures selected | IA |
-| SUBMITTED | ACCEPTED | — | TL |
-| SUBMITTED | REJECTED | — | TL |
+| SUBMITTED | ACCEPTED |, | TL |
+| SUBMITTED | REJECTED |, | TL |
 | ACCEPTED | IN_PROGRESS | Draft TestReport created | TL |
 | IN_PROGRESS | COMPLETED | testReportId set | TL |
 

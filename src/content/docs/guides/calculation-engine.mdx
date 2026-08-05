@@ -1,12 +1,12 @@
 ---
 title: 'Calculation Engine'
 shortTitle: 'Calculations'
-description: 'The Calculation primitive: a typed, reusable, named computation. Defined once, referenced everywhere — the DRY mechanism for arithmetic in SMART forms.'
+description: 'The Calculation primitive: a typed, reusable, named computation. Defined once, referenced everywhere, the DRY mechanism for arithmetic in SMART forms.'
 eyebrow: 'Guide · 10 of 14'
 ---
 
 
-## Why a primitive?
+## The reason for a primitive
 
 In a traditional test report, formulas are copied into spreadsheets by hand. Each form reinvents the same calculations, with inevitable divergence.
 
@@ -52,7 +52,7 @@ The SMART Calculation primitive fixes this: a calculation is declared once in `c
 
 ## The expression language
 
-Calculations use **AsciiMath** for arithmetic — a plain-text math notation
+Calculations use **AsciiMath** for arithmetic, a plain-text math notation
 that's easy to read and write:
 
 ```
@@ -66,7 +66,7 @@ full grammar.
 
 For boolean conditions (in form `pass_if` expressions, applicability
 filters, state machine guards), SMART uses **OCL** (Object Constraint
-Language) instead — see the [OCL reference](/docs/ref/ocl-reference).
+Language) instead, see the [OCL reference](/docs/ref/ocl-reference).
 
 ## Numeric safety
 
@@ -110,7 +110,7 @@ A calculation can declare branches:
       values: [A, B, C, D]
 ```
 
-For more complex branching, prefer a [Table lookup](/docs/guides/test-report-forms#calculated-engine-computed) — tables are more declarative and easier to audit.
+For more complex branching, prefer a [Table lookup](/docs/guides/test-report-forms#calculated-engine-computed), tables are more declarative and easier to audit.
 
 ## Reusing calculations across forms
 
@@ -128,7 +128,7 @@ fields:
 ```
 
 The same `r60_load_error` calculation is used by every R 60 form that needs
-to compute relative error — no duplication, no drift.
+to compute relative error, no duplication, no drift.
 
 ## Table lookups inside calculations
 
@@ -143,7 +143,7 @@ A calculation can perform a table lookup as part of its expression:
     - name: load
 ```
 
-Or the lookup can be declared as a separate calculated field — both forms
+Or the lookup can be declared as a separate calculated field, both forms
 are valid; the choice depends on which reads better.
 
 ## Next

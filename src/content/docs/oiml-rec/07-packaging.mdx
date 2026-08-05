@@ -13,26 +13,26 @@ order: 7
 > twin for the `.prl` round-trip, and `.prd` fragment extracts whose
 > reconstruction gate proves the model still says what the source says.
 > Then the composition question: how a rec package consumes core and
-> shared modules by `uses` — reference, never redefine.
+> shared modules by `uses`, reference, never redefine.
 
 ---
 
 ## 7.1 The package is the deliverable
 
-Everything the previous five chapters authored — subject, requirements,
-tests, forms, evaluation — must land somewhere a machine can find,
+Everything the previous five chapters authored, subject, requirements,
+tests, forms, evaluation, must land somewhere a machine can find,
 validate, and build. That somewhere is the **package**: one directory
 per Recommendation, self-describing, registered, and complete. Two
 rules from Chapter 1 govern its shape:
 
-- **Primmel (PRL) is the single source of truth** (chapter 11 — the flip
+- **Primmel (PRL) is the single source of truth** (chapter 11, the flip
   landed). The `.prl` packages are authoritative; the `data/<rec>/` YAML
   trees are generated artifacts (`npm run gen:data`, never hand-edited),
   and TypeScript in `browser/src/data/generated/` is derived from them at
   build time; services carry no domain content. A new Recommendation is a
   *data* addition, never a code change.
 - **A new Recommendation is data, not schema.** The metamodel is schema
-  only; the R 60 profile states the rule — "A new Recommendation = a new
+  only; the R 60 profile states the rule, "A new Recommendation = a new
   profile file; zero schema changes" (`oiml-r60-loadcell-profile.yaml`).
 
 The contract below is the one R 60 ships today; R 91 and R 144 follow
@@ -69,22 +69,22 @@ are the document machinery (Layer 0 anchoring: terminology, obligation,
 value types) plus app-facing concerns (navigation, redirects) and the
 Layer-3 seed (`sample-data.yaml`, §7.6).
 
-### 7.2.1 `standard.yaml` — the manifest ●
+### 7.2.1 `standard.yaml`, the manifest ●
 
 `data/r60/standard.yaml` is the package's self-description, in three
 blocks:
 
-1. **Identity** — `id`, `shortName`, `fullName`, `baseUrn`, `version`,
+1. **Identity**, `id`, `shortName`, `fullName`, `baseUrn`, `version`,
    `editions`, `description`, `publisher`, `docnumber`, `doctype`. The
    `baseUrn` (`urn:oiml:pub:r:60:2021`) is the namespace every
    provenance reference in the package resolves against.
-2. **`structure:`** — the registry. Every file in the package is
+2. **`structure:`**, the registry. Every file in the package is
    registered with `path` + `label` + `description`, grouped by layer
    (model / entities / specification / execution / evaluation /
    root-level). The rule is absolute: **a file not in `standard.yaml`
    does not exist as far as the build is concerned.** The generators
    discover content through the registry, never by walking the tree.
-3. **`source:`** — where the authoritative text lives: the Metanorma
+3. **`source:`**, where the authoritative text lives: the Metanorma
    collection (`sources/r060/collection.yml`), the part documents, and
    the package's Primmel twin (`primmel: primmel-packages/oiml-r60`).
 
@@ -99,7 +99,7 @@ The package's data instantiates a schema it does not own. Above
 schema only: classes, enumerations, INV-1..10), and beside it one
 **domain profile per Recommendation**
 (`ontology-remix/OIML Recommendation Models/Ontology/R 60/oiml-r60-loadcell-profile.yaml`)
-— the Recommendation's ontology-level data: subject taxonomy,
+,  the Recommendation's ontology-level data: subject taxonomy,
 attribute-definition semantics, formulas, constraints, the error model.
 The profile is data, not schema: adding R 91 or R 144 changed zero lines
 of the metamodel (the OCP claim the gap audit verified in practice).
@@ -114,7 +114,7 @@ Every file kind in the package validates against a JSON Schema in
 `data/schemas/` (~40 schemas: `standard-meta.yaml`, `model.yaml`,
 `entities.yaml`, `rc.yaml`, `cc.yaml`, `form.yaml`, `verdicts.yaml`,
 `tables.yaml`, `symbols.yaml`, `evaluation-*.yaml`, …). The discipline
-for a new file kind — say, the `reference-materials.yaml` R 144 added —
+for a new file kind, say, the `reference-materials.yaml` R 144 added , 
 is three steps, in order:
 
 1. author the schema in `data/schemas/`;
@@ -129,30 +129,30 @@ loudly, never passes vacuously.
 
 ## 7.5 `uses` composition: core + modules + overlay ◐
 
-One directory per Recommendation works — until the second and third
+One directory per Recommendation works, until the second and third
 Recommendations exist and the census can measure what they share. The
 measured facts (`analysis/cross-standard-layering.md` §0–1): 12 of
 R 91's 34 files are *byte-identical* to R 60's; 8 of R 144's are
-structurally identical; and the identical class splits in two —
+structurally identical; and the identical class splits in two , 
 genuinely shared skeletons (workflow entities, state machines,
 approvals, roles, obligation) and **copy residue that is wrong for the
 rec** (R 91 shipping R 60's certificate template, gateways, notes and
-checklist — the deep-audit's R2 finding). The copy mechanism and the
+checklist, the deep-audit's R2 finding). The copy mechanism and the
 bug mechanism are the same mechanism. Composition replaces both.
 
 ![Package composition](diagrams/package-composition.svg)
 
-The design (layering census §5, ◐ — scaffolding landed, wiring planned
+The design (layering census §5, ◐, scaffolding landed, wiring planned
 for v3):
 
-- **Core** (`data/core/`, `id: core`, `kind: core`) — the Tier-1
+- **Core** (`data/core/`, `id: core`, `kind: core`), the Tier-1
   verbatim content: subject-chain and workflow entities, parties,
   evaluation skeletons (state machines, approvals, roles, workflow,
   processes), the OIML-CS 18-element report checklist, obligation
   catalog, value-type base. Never a publishable rec; the registry
   excludes `kind: core` from rec listings.
 - **Modules** (`data/modules/<name>/`, `id: module-<name>`,
-  `kind: module`) — seven parameterized test/form families measured out
+  `kind: module`), seven parameterized test/form families measured out
   of the census: `module-emc-disturbances`, `module-env-iec60068`,
   `module-software-d31`, `module-reference-materials`,
   `module-specimen-governance`, `module-report-headers`,
@@ -161,9 +161,9 @@ for v3):
   supply). The module freezes the *skeleton*; the rec binds its own
   attribute ids, severities, acceptance expressions and clause URNs.
   Parameterization is not new machinery: conformance-test `variables`
-  and form `bind:` paths already do it — the module makes it a package
+  and form `bind:` paths already do it, the module makes it a package
   boundary.
-- **Rec overlay** (`data/<rec>/`) — normative content only: subject,
+- **Rec overlay** (`data/<rec>/`), normative content only: subject,
   dimensions, attributes, requirements, tests, forms, tables,
   terminology, plus the rec overlay of evaluation config.
 
@@ -172,12 +172,12 @@ declares `id: core` (package `oiml-smart-core`) with the OIML-CS process
 requirements as its first content, and each of the seven modules declares
 its `layer.yaml` (package ids `oiml-smart-module-<name>`, `kind module`).
 The composition wiring is live: the registry composes the virtual
-effective tree per rec — layers first, the rec's overlay merged REC-WINS
-— and the existing generators consume the composed tree unchanged, so
+effective tree per rec, layers first, the rec's overlay merged REC-WINS
+,  and the existing generators consume the composed tree unchanged, so
 "generated app data identical" stays a testable acceptance (the layering
 snapshot tests pin it).
 
-The consumption declaration lives on the rec's manifest — the shipped
+The consumption declaration lives on the rec's manifest, the shipped
 R 144 `uses:` (YAML face), verbatim:
 
 ```yaml
@@ -198,7 +198,7 @@ uses:
 
 In the package manifests the same composition reads `uses { iso-iec-17000
 … oiml-cs oiml-smart-core oiml-smart-module-specimen-governance
-oiml-smart-module-reference-materials }` — the layer.yaml ids map to
+oiml-smart-module-reference-materials }`, the layer.yaml ids map to
 package ids (Volume I, chapter 8).
 
 The composition law is the one rule that makes this safe:
@@ -212,39 +212,39 @@ layer's identity scalar or unions an owned multilingual array (the old
 `data-types-codegen.ts` now errors on conflicting shapes), and the
 layer-owned requirement namespaces (`/req/cs/**`) reject rec-side
 declarations at composition. The existing generators consume the
-composed tree unchanged — so "generated app data identical" stays a
+composed tree unchanged, so "generated app data identical" stays a
 testable acceptance. Composition also tolerates partial consumers:
 every module `provides` must be consumed or explicitly waived, so a rec
-that binds nothing yet (R 91's preview edition) composes cleanly —
+that binds nothing yet (R 91's preview edition) composes cleanly , 
 "not yet modelled", never an error.
 
 Why not single inheritance? Because `extends` is a single string and a
 rec is foundation + scheme + core + N modules. The v2 tree made the
 point by dangling: every rec declared `extends oiml-core` while no such
 package existed (layering census §5.2). The shipped answer is
-multi-package `uses` — `oiml-smart-core` is a real package, and every
+multi-package `uses`, `oiml-smart-core` is a real package, and every
 rec composes it.
 
 ### 7.5.1 A fourth package kind: `product_reference` (●)
 
-`core`, `module`, `rec` — the three kinds above are all published from
+`core`, `module`, `rec`, the three kinds above are all published from
 the standards side. The model supply chain (Volume I, [chapter
 15](https://www.primmel.org/primmel-smart-docs/primmel/15-model-supply-chain/), on the Primmel SMART docs site) adds a fourth, published by the
-**manufacturer** — and it ships (● smart c24a644, task 36): the **ACME
-LC-500** package holds the product model — the instrument's own
-IS/HAS/DOES anatomy, authored by exactly this volume's method — with
+**manufacturer**, and it ships (● smart c24a644, task 36): the **ACME
+LC-500** package holds the product model, the instrument's own
+IS/HAS/DOES anatomy, authored by exactly this volume's method, with
 every conformance-relevant aspect *mapped* to the Recommendation's
 (`maps_to { oiml-r60 }` + `model/r60-map.prl`). Note what the package
-does *not* do: it composes nothing from the rec — no `uses` edge; the
+does *not* do: it composes nothing from the rec, no `uses` edge; the
 two are related by **mapping only**. Which is one more reason the id
 discipline of chapters 2–4 matters: the manufacturer's conformance
 claim resolves into *your* anchors.
 
 Two consumption modes follow for the instrument user (chapter 15,
-§15.3) — both shipped, both demonstrated by the quarry belt-scale
-package: **abstract import** — static, version-pinned
+§15.3), both shipped, both demonstrated by the quarry belt-scale
+package: **abstract import**, static, version-pinned
 (`uses { acme-lc500@2021 }`, reference-only under the chain checks),
-design-time — and **live integration** — the deployed unit serves a
+design-time, and **live integration**, the deployed unit serves a
 live twin inside the user's own model. The rec author's part is only to
 know the package they ship is the mapping target; the certificate it
 issues is what the product model cites as promises-as-verified.
@@ -261,13 +261,13 @@ family → group → model → sample → application → request
 ```
 
 R 60 ships thirteen such flows (`data/r60/sample-data.yaml`), compiled
-from fifteen real certificate PDFs in `reference-docs/certificates/` —
+from fifteen real certificate PDFs in `reference-docs/certificates/` , 
 one manufacturer, one family, one group per certificate classification
 label (`C3`/`C4`/`C6`), one model per classification-row E_max, 1–2
 samples, then the workflow chain to an ACTIVE certificate. The seed is
 what makes every downstream claim checkable: the store manifest builds,
 the verdict matrix has evidence to re-execute, the certificate template
-has classifications to print. R 144 ships two flows — and proves the
+has classifications to print. R 144 ships two flows, and proves the
 chain tolerates missing levels (family → model → sample, no groups;
 Chapter 9).
 
@@ -275,7 +275,7 @@ The seed is also a regression instrument: the sample-data compiler
 normalizes flows into store records at build time, so a modelling edit
 that breaks the seed breaks the build, not the demo.
 
-## 7.7 `primmel-packages/` — the single source of truth ●
+## 7.7 `primmel-packages/`, the single source of truth ●
 
 Every rec package has a native-language twin under `primmel-packages/`
 (`primmel-packages/oiml-r60/`, 88 `.prl` files plus the
@@ -313,34 +313,34 @@ package {
 
 Rules: merged by convention (directory names fixed, file names free);
 cross-file references by stable ids only (`/req/...`, `/conf/...`,
-attribute ids — never paths). The semantic round-trip YAML ⇔ native is
+attribute ids, never paths). The semantic round-trip YAML ⇔ native is
 implemented and CI-tested (`browser/build/yaml-to-primmel.ts` and
-`primmel-to-yaml.ts` — construct-symmetric codecs, TODO.refactor/16),
+`primmel-to-yaml.ts`, construct-symmetric codecs, TODO.refactor/16),
 and the runtime plug is proven: a full build from
 `primmel-packages/oiml-r60` with zero validation errors
 (`SMART_STANDARDS_SOURCE=primmel`, W6).
 
-The migration phases have **landed**: A — YAML authoritative, converter
-proves round-trip — done; B — YAML becomes generated output of the
-native package — **done** (the task-31b SSOT flip, smart a549dab: the
+The migration phases have **landed**: A, YAML authoritative, converter
+proves round-trip, done; B, YAML becomes generated output of the
+native package, **done** (the task-31b SSOT flip, smart a549dab: the
 packages are authoritative, `npm run gen:data` regenerates the YAML
 trees, and `npm run test:ssot` proves both directions byte-clean; the
-documented codec exclusions — pair_list blocks, formula engine
-variants, the common-test-conditions register — ship inside the package
-as `payload/*.yaml` and compose back, drift failing loudly); C — new
-recs authored Primmel-native only — the standing rule (R 129 is the
+documented codec exclusions, pair_list blocks, formula engine
+variants, the common-test-conditions register, ship inside the package
+as `payload/*.yaml` and compose back, drift failing loudly); C, new
+recs authored Primmel-native only, the standing rule (R 129 is the
 first, task 22).
 
 ## 7.8 Registering the standard so the build sees it ●
 
 Packaging ends in registration. The build's standards registry
 discovers packages by scanning `data/*/` for `standard.yaml` and keying
-on its `id` — no central list to edit. Two consequences the author must
+on its `id`, no central list to edit. Two consequences the author must
 know:
 
 - **Id collisions shadow.** The registry resolves duplicate ids by sort
   order (later entry wins): `data/r144` shadows the legacy
-  `data/oiml-r144`. Deliberate for migration, dangerous by accident —
+  `data/oiml-r144`. Deliberate for migration, dangerous by accident , 
   choose ids deliberately, and prefer deleting stale trees to
   out-sorting them.
 - **Non-rec packages need a kind.** `kind: core` / `kind: module` keep
@@ -361,7 +361,7 @@ executable. Anything less is a directory.
 ## 7.9 Fragment provenance: `.prd` extracts and the reconstruction gate ●
 
 Clause provenance (every element carries a clause URN) tells you *which
-clause* — not *which sentence* — and it cannot prove the model still says
+clause*, not *which sentence*, and it cannot prove the model still says
 what the source says. Fragment provenance closes that loop: each source
 document is decomposed into **addressable fragments**, published as a
 **`.prd` file** (Primmel Document, the formal successor of the Demo
@@ -407,7 +407,7 @@ fragments:
 
 Extracts are **regenerable artifacts, never hand-edited**
 (`scripts/extract-prd.py` reads the compiled Metanorma presentation XML
-of the `sources/<rec>/` tree — the presentation materializes the printed
+of the `sources/<rec>/` tree, the presentation materializes the printed
 clause numbering, obligations and captions the raw adoc lacks). Where
 extraction is imperfect, curations go in the extractor's `OVERRIDES`
 table with a clause-referenced reason; `prd.test.ts` re-runs the
@@ -419,21 +419,21 @@ Every provenance form an element already carries is a fragment address,
 and the linker's **R27 `fragment-references`** rule resolves all of them
 against the cited document's `.prd`:
 
-- `reference: "urn:…#clause-5.2"` — the coarse, human-legible citation;
-- **`source: { doc, clause, fragment? }`** — the machine-checkable
+- `reference: "urn:…#clause-5.2"`, the coarse, human-legible citation;
+- **`source: { doc, clause, fragment? }`**, the machine-checkable
   binding (rc/cc schemas): a single map, or a list when the element
   realizes a whole clause family (a test binding its procedure's step
   clauses 2.10.1.1–16). The optional `fragment` key composes
   sub-addresses (`…#clause-5.2/s2`) once finer fragments exist;
-- form `references: [{ urn, role }]` — the report form realizes its
+- form `references: [{ urn, role }]`, the report form realizes its
   R 60-3 section (`role: report-format`) and the calculation procedures
   behind its derivations (`role: calculation`);
-- terminology `source:` — a URN list citing both the vocabulary origin
+- terminology `source:`, a URN list citing both the vocabulary origin
   (VIML/VIM) and the Recommendation's own clause-3 definition fragment;
 - tables' `source: { doc, clause }` maps (a table address like
   `table-1` passes through as-is).
 
-A citation that resolves to no declared fragment is a build error — the
+A citation that resolves to no declared fragment is a build error, the
 rule burned every dangling pseudo-address the corpus carried (lettered
 list items, `-option`/`-cond` suffices, a pre-2021 renumbering), each
 remapped to the clause the content actually resides at, with the remap
@@ -441,30 +441,30 @@ recorded in the file's header comment.
 
 ### The congruence gate
 
-The model emits an ordered fragment stream per document — every `.prd`
+The model emits an ordered fragment stream per document, every `.prd`
 fragment in document order, carrying its bound elements (clause tree →
-provisions → supplements) — and the gate (a `npm run validate` section,
+provisions → supplements), and the gate (a `npm run validate` section,
 `browser/build/prd-congruence.ts`) proves it on three axes:
 
-- **coverage** — every *normative* fragment is bound by ≥1 model
+- **coverage**, every *normative* fragment is bound by ≥1 model
   element. Deliberate absences are **named gaps** in
   `sources-prd/congruence.yaml` with clause-referenced reasons; a gap
   that becomes bound is STALE and fails.
-- **order** — the model does not reorder the document's logic: an
+- **order**, the model does not reorder the document's logic: an
   element's bindings follow source order, and each document-following
   file's elements follow source order by first bound fragment. Thematic
   registries (per-class variants, symbol/calculation registers) take
   `order_exceptions`, stale-guarded. Form files are evidence views keyed
   by the report structure and are exempt.
-- **text identity** — a bound statement/definition appears verbatim, up
+- **text identity**, a bound statement/definition appears verbatim, up
   to normalization (asciimath → plain symbols, punctuation dropped), in
   its fragment's subtree text. Paraphrase drift fails; deliberate
   condensations and per-class specializations take `text_exceptions`,
   stale-guarded.
 
 The acceptance discipline: the R 60 reconstruction covers **100 % of
-normative fragments — bound or documented gap** (R 60-1: 132 bound +
-7 gaps of 139; R 60-2: 142 + 9 of 151; R 60-3: 275 + 16 of 291 — the
+normative fragments, bound or documented gap** (R 60-1: 132 bound +
+7 gaps of 139; R 60-2: 142 + 9 of 151; R 60-3: 275 + 16 of 291, the
 census is test-pinned), and the gate is mutation-proven
 (`prd-congruence.test.ts`: seeded coverage gaps, order inversions, text
 mismatches and stale named gaps each fail it). The sentence layer on
@@ -517,12 +517,12 @@ Package-level checks the linker and gates enforce:
 - every file in the tree is registered in `standard.yaml`
   `structure:`, and every registered path exists (no ghosts, no
   orphans);
-- every file validates against its `data/schemas/` schema — a new file
+- every file validates against its `data/schemas/` schema, a new file
   kind without a schema is an authoring error;
 - every `uses:` entry resolves to a declared core/module package;
   `requires:` of every consumed module is satisfied by core + earlier
   modules + the rec itself;
-- no id is defined twice across the composed tree — the overlay
+- no id is defined twice across the composed tree, the overlay
   references upstream ids, never redefines them;
 - every module `provides` is consumed by the rec or explicitly waived;
 - `sample-data.yaml` seeds at least one complete flow: every workflow
@@ -540,16 +540,16 @@ Package-level checks the linker and gates enforce:
   metamodel never changes for a new Recommendation.
 - New file kinds are schema-first; the gates fail loudly on the
   unregistered and the unvalidated.
-- Composition is `uses: [core, modules…]` with one law — reference,
-  never redefine — producing a virtual effective tree the existing
-  generators consume unchanged (● — core + the seven modules ship as
+- Composition is `uses: [core, modules…]` with one law, reference,
+  never redefine, producing a virtual effective tree the existing
+  generators consume unchanged (●, core + the seven modules ship as
   `kind` packages; R 60, R 144, R 129 are the proving consumers; the
   census measured why).
 - `sample-data.yaml` seeds one full flow family → … → certificate; the
-  `.prl` twin under `primmel-packages/` is the single source of truth —
+  `.prl` twin under `primmel-packages/` is the single source of truth , 
   the YAML trees regenerate from it, byte-clean in both directions
   (task-31b flip).
-- `sources-prd/` holds the `.prd` fragment extracts — regenerable from
+- `sources-prd/` holds the `.prd` fragment extracts, regenerable from
   the Metanorma presentation by `scripts/extract-prd.py`, schema-checked
   by `data/schemas/prd.yaml`; every element's provenance resolves
   against them (linker R27), and the reconstruction gate proves
@@ -558,10 +558,10 @@ Package-level checks the linker and gates enforce:
 - Registration is discovery by manifest id plus the three gates:
   validate, build, vitest.
 - A fourth package kind, `product_reference` (●), lets a manufacturer
-  ship the product model mapped to the rec — the package you author is
+  ship the product model mapped to the rec, the package you author is
   the mapping target, consumed by abstract import or live integration
   (Volume I, chapter 15; §7.5.1).
 
-*Next: [Chapter 8 — Walkthrough: OIML R 60](/docs/oiml-rec/08-walkthrough-r60):
-the worked example, end to end — from three source documents to a
+*Next: [Chapter 8, Walkthrough: OIML R 60](/docs/oiml-rec/08-walkthrough-r60):
+the worked example, end to end, from three source documents to a
 running package.*

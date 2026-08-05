@@ -51,29 +51,29 @@ The layers are connected through explicit references. Tests target requirements 
 
 ## Data Flow
 
-Layers 1–3 are **build-time** YAML artifacts — they define the structure and rules. Layers 4–6 are **runtime** entities that live in IndexedDB in the browser. The evaluation pipeline processes runtime data against build-time declarations.
+Layers 1–3 are **build-time** YAML artifacts, they define the structure and rules. Layers 4–6 are **runtime** entities that live in IndexedDB in the browser. The evaluation pipeline processes runtime data against build-time declarations.
 
 <ol class="pipeline-steps list-none grid gap-2 my-8" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); counter-reset: pipeline;">
   <li class="relative bg-paper-soft border border-rule rounded p-3 pl-12 text-sm leading-snug" style="counter-increment: pipeline;">
-    <strong>LOAD</strong> — Retrieve form schema and ConformanceTest definition
+    <strong>LOAD</strong>, Retrieve form schema and ConformanceTest definition
   </li>
   <li class="relative bg-paper-soft border border-rule rounded p-3 pl-12 text-sm leading-snug" style="counter-increment: pipeline;">
-    <strong>BIND</strong> — Resolve computation context from entity graph
+    <strong>BIND</strong>, Resolve computation context from entity graph
   </li>
   <li class="relative bg-paper-soft border border-rule rounded p-3 pl-12 text-sm leading-snug" style="counter-increment: pipeline;">
-    <strong>POPULATE</strong> — Fill direct/measured fields with user data
+    <strong>POPULATE</strong>, Fill direct/measured fields with user data
   </li>
   <li class="relative bg-paper-soft border border-rule rounded p-3 pl-12 text-sm leading-snug" style="counter-increment: pipeline;">
-    <strong>DERIVE</strong> — Evaluate derived/computed fields (topological order)
+    <strong>DERIVE</strong>, Evaluate derived/computed fields (topological order)
   </li>
   <li class="relative bg-paper-soft border border-rule rounded p-3 pl-12 text-sm leading-snug" style="counter-increment: pipeline;">
-    <strong>EVALUATE</strong> — Apply OCL evaluation rules → pass/fail per field
+    <strong>EVALUATE</strong>, Apply OCL evaluation rules → pass/fail per field
   </li>
   <li class="relative bg-paper-soft border border-rule rounded p-3 pl-12 text-sm leading-snug" style="counter-increment: pipeline;">
-    <strong>AGGREGATE</strong> — Evaluate form-level pass_if → overall result
+    <strong>AGGREGATE</strong>, Evaluate form-level pass_if → overall result
   </li>
   <li class="relative bg-paper-soft border border-rule rounded p-3 pl-12 text-sm leading-snug" style="counter-increment: pipeline;">
-    <strong>TRACE</strong> — Link results back to Requirements (evidence chain)
+    <strong>TRACE</strong>, Link results back to Requirements (evidence chain)
   </li>
 </ol>
 

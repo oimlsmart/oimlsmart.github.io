@@ -2,7 +2,7 @@
 title: 'Calculation Primitive'
 order: 7
 shortTitle: '07 Calculation'
-description: 'The Calculation primitive — typed, reusable, named computations.'
+description: 'The Calculation primitive, typed, reusable, named computations.'
 eyebrow: 'Formal Specification · SMART_REQS 07'
 ---
 
@@ -26,11 +26,11 @@ Without a Calculation primitive, the same formula appears in multiple places:
 - `(max(runs) - min(runs)) / f` appears in load-test-3run, load-test-5run, repeatability, humidity-ch
 
 This violates MECE and DRY. A Calculation provides:
-1. **Single definition point** — one canonical formula, typed and referenced.
-2. **Reuse across forms and tests** — forms bind their field names to calculation inputs.
-3. **Normative traceability** — each calculation links to the clause in R 60-1/2/3.
-4. **Type safety** — inputs and output are typed, enabling static validation.
-5. **Testability** — calculations can be unit-tested independently of forms.
+1. **Single definition point**, one canonical formula, typed and referenced.
+2. **Reuse across forms and tests**, forms bind their field names to calculation inputs.
+3. **Normative traceability**, each calculation links to the clause in R 60-1/2/3.
+4. **Type safety**, inputs and output are typed, enabling static validation.
+5. **Testability**, calculations can be unit-tested independently of forms.
 
 ## Entity Definition
 
@@ -271,4 +271,4 @@ generator continues to support both during transition.
 | `/calc/max-allowable-span-variation` | Max allowable span variation | dMax, accuracyClass | maxVar (v) | R 60-1, 5.7.2.6 |
 | `/calc/electronic-difference` | Electronic disturbance difference | indWith, indWithout, f | difference (v) | R 60-3, 2.1.9 |
 | `/calc/significant-fault` | Significant fault determination | difference, vMin | significantFault (boolean) | R 60-1, 5.3 |
-| `/calc/pass-fail-threshold` | Generic pass/fail by threshold | computedValue, limit | result (pass/fail) | — |
+| `/calc/pass-fail-threshold` | Generic pass/fail by threshold | computedValue, limit | result (pass/fail) |, |

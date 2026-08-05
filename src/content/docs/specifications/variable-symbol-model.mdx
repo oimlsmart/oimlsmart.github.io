@@ -17,7 +17,7 @@ import LayerDiagram from '../../../components/diagrams/LayerDiagram.astro'
 
 This document defines the **Symbol** as a first-class primitive entity in the SMART
 specification system. A Symbol declares a typed, named variable in the standard's
-mathematical model — the domain vocabulary of quantities that flow through the entire
+mathematical model, the domain vocabulary of quantities that flow through the entire
 computation pipeline. Symbols sit at the Recommendation level alongside Requirements,
 Conformance Tests, Forms, and Calculations.
 
@@ -37,15 +37,15 @@ Without a Symbol primitive, variables are declared ad-hoc in multiple places:
 
 This violates MECE and DRY. A Symbol provides:
 
-1. **Single definition point** — one canonical declaration per variable.
-2. **Type consistency** — type and unit defined once, referenced everywhere.
-3. **Formula on the symbol** — the normative formula from the standard is part of the
+1. **Single definition point**, one canonical declaration per variable.
+2. **Type consistency**, type and unit defined once, referenced everywhere.
+3. **Formula on the symbol**, the normative formula from the standard is part of the
    symbol, not scattered across calculations and form fields.
-4. **Dependency ordering** — `formula.inputs` creates a symbol-to-symbol DAG that
+4. **Dependency ordering**, `formula.inputs` creates a symbol-to-symbol DAG that
    determines evaluation order. The engine evaluates `f` before `E_L` because
    `E_L.formula.inputs` includes `f`.
-5. **Normative traceability** — each symbol links to the clause that defines it.
-6. **Closed under reference** — every variable name in a form field, calculation
+5. **Normative traceability**, each symbol links to the clause that defines it.
+6. **Closed under reference**, every variable name in a form field, calculation
    input, or test expression resolves to a declared Symbol.
 
 ## Relationship to Other Primitives
@@ -138,8 +138,8 @@ calculation's typed input parameters.
 
 | Source | Meaning | Required Fields | Example |
 |--------|---------|-----------------|---------|
-| `declared` | Stated by manufacturer or evaluator | — | D_max, E_max, n_LC, p_LC |
-| `measured` | Directly observed by test operator | — | t, T_1, T_2 |
+| `declared` | Stated by manufacturer or evaluator |, | D_max, E_max, n_LC, p_LC |
+| `measured` | Directly observed by test operator |, | t, T_1, T_2 |
 | `derived` | Computed from other symbols via formula | `formula` | E_L, C_C, C_DR, f |
 | `lookup` | Retrieved from value model table | `calculation` | MPE |
 
@@ -393,21 +393,21 @@ When `symbol` is set:
 | ID | Notation | Formula (display) | Inputs | Calculation |
 |----|----------|--------------------|--------|-------------|
 | CC | C_C(t) | (ind − initial ind) / f | f | creep |
-| CC-30-20 | C_C(30–20) | (ind₃₀ − ind₂₀) / f | f | — |
+| CC-30-20 | C_C(30–20) | (ind₃₀ − ind₂₀) / f | f |, |
 | CDR | C_DR | (ind₂ − ind₁) / f | f | deadLoadOutputReturn |
 | CHmax | C_Hmax | [(indDmax−indDmin)after − before] / f | f | humidityCHmax |
 | CHmin | C_Hmin | [(indDmin)after − before] / f | f | humidityCHmin |
 | CM | C_M | (avgT₂ − avgT₁) / f | f | temperatureMDLO |
-| CM-vmin | C_M(v_min) | (avgT₂ − avgT₁) / f, per degC | f, vmin | — |
+| CM-vmin | C_M(v_min) | (avgT₂ − avgT₁) / f, per degC | f, vmin |, |
 | CP | C_P | (indP₂ − indP₁) / f | f | barometricPressureEffect |
-| CP-vmin | C_P(v_min) | (indP₂ − indP₁) / f, per kPa | f, vmin | — |
+| CP-vmin | C_P(v_min) | (indP₂ − indP₁) / f, per kPa | f, vmin |, |
 | DR | DR | (Emax − Emin) × CDR / nLC | Emax, Emin, CDR, nLC | deadLoadReturnMass |
 | EL | E_L | (avg test ind − ref ind) / f | f | loadCellError |
 | ER | E_R | (max ind − min ind) / f | f | repeatabilityError |
 | f | f | (avg ind 75% − ind Dmin) / (0.75 × n) | Dmax, Dmin, n | conversionFactor |
 | Ri | R_i | [(load − Dmin) / (Dmax − Dmin)] × n × f | Dmax, Dmin, n, f | referenceIndication |
-| Y | Y | (Emax − Emin) / vmin | Emax, Emin, vmin | — |
-| Z | Z | (Emax − Emin) / (2 × DR) | Emax, Emin, DR | — |
+| Y | Y | (Emax − Emin) / vmin | Emax, Emin, vmin |, |
+| Z | Z | (Emax − Emin) / (2 × DR) | Emax, Emin, DR |, |
 
 ### Parameters (9)
 
@@ -417,10 +417,10 @@ When `symbol` is set:
 | Dmin | D_min | number | g, kg, or t | R 60-1, 3.5.12 |
 | Emax | E_max | number | g, kg, or t | R 60-1, 3.5.5 |
 | Emin | E_min | number | g, kg, or t | R 60-1, 3.5.9 |
-| n | n | integer | — | R 60-1, 3.5.13 |
-| nLC | n_LC | integer | — | R 60-1, 3.5.8 |
+| n | n | integer |, | R 60-1, 3.5.13 |
+| nLC | n_LC | integer |, | R 60-1, 3.5.8 |
 | pLC | p_LC | number | dimensionless | R 60-1, 3.7.2 |
-| v | v | number | — | R 60-1, 3.5.4 |
+| v | v | number |, | R 60-1, 3.5.4 |
 | vmin | v_min | number | g, kg, or t | R 60-1, 3.5.11 |
 
 ### Lookup (1)

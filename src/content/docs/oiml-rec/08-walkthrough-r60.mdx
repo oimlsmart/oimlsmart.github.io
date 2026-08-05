@@ -16,8 +16,8 @@ order: 8
 
 ## 8.1 From three documents to one running package
 
-R 60 arrives as three source documents — R 60-1 (requirements),
-R 60-2 (test procedures), R 60-3 (test report format), 2021 editions —
+R 60 arrives as three source documents, R 60-1 (requirements),
+R 60-2 (test procedures), R 60-3 (test report format), 2021 editions , 
 and leaves as a package: 107 YAML files under `data/r60/`, 44
 attributes, 60 requirements, 62 conformance tests, 38 symbols,
 17 calculations, 13 seeded evaluation flows, zero validation errors.
@@ -37,12 +37,12 @@ The rest of this chapter walks the five decisions that make it a
 
 ## 8.2 The subject: LoadCell, four variants, five axes
 
-The subject declaration (`data/r60/model/instrument.yaml` —
+The subject declaration (`data/r60/model/instrument.yaml` , 
 `subject_type`) is a subclass of the metamodel's
 `MeasuringInstrumentModel` with its normative definition and clause
 provenance (R 60-1, 3.1.3). The signal-processing taxonomy of 3.1.3 is
-four **variants** — `analogue_passive`, `analogue_active`, `digital`,
-`digital_with_processing` (3.1.3.1–3.1.3.4) — each with definition and
+four **variants**, `analogue_passive`, `analogue_active`, `digital`,
+`digital_with_processing` (3.1.3.1–3.1.3.4), each with definition and
 source clause. Variants change what the subject *is*; they are IS-level
 structure, not classification.
 
@@ -51,14 +51,14 @@ Classification is five orthogonal dimension axes
 is *set*: `technology`, `humidity_class` and `construction` at family
 scope; `accuracy_class` and `load_type` at group scope. The
 `accuracy_class` axis shows why dimensions are data, not just enums:
-each value carries the `n_lc_limits` payload of R 60-1 Table 1 —
+each value carries the `n_lc_limits` payload of R 60-1 Table 1 , 
 
 ```yaml
       - id: C
         n_lc_limits: { lower: 500, upper: 10000 }
 ```
 
-— so "class C" is not a string but a machine-checkable claim: n_lc must
+,  so "class C" is not a string but a machine-checkable claim: n_lc must
 fall in [500, 10000], and the linker can test every group that declares
 the class. Every axis is mirrored by an `is_dimension: true` attribute
 in `attributes.yaml`, so requirement `applicability` blocks and
@@ -67,26 +67,26 @@ capability filters reference one uniform vocabulary.
 ## 8.3 The family matrix: criteria, groups, and the C6 label
 
 R 60-1, 3.4.2 defines the load cell family by six criteria, transcribed
-**verbatim** into `family_criteria` — same material, same measurement
+**verbatim** into `family_criteria`, same material, same measurement
 technique, same strain-gauge attachment principle, same construction
 method, same set of specifications, one or more groups of identical
 metrological characteristics. The criterion is a *boundary rule*: a
-candidate model violating any criterion is a different family — a
+candidate model violating any criterion is a different family, a
 separate application, not another group.
 
 Inside the family, `model_groups` declares what a group is: Models
-having identical metrological characteristics —
+having identical metrological characteristics , 
 
 ```yaml
   identical_characteristics: [ metrological_class, n_lc, "y", z, temperature_rating ]
   identical_attributes: [ accuracy_class, n_lc, "y", z, t_min, t_max ]
 ```
 
-— and each group carries a compact `group_label`: `'C6'` is class C
+,  and each group carries a compact `group_label`: `'C6'` is class C
 with n_lc 6000. Within a group, Models differ only by E_max (R 60-2,
 Annex D), which is what makes the family a *matrix*: capacities ×
 metrological characteristics, one cell per (group × capacity). The label
-is not decorative — it is the same string the certificate template's
+is not decorative, it is the same string the certificate template's
 `dimension_labels` pattern composes (`{accuracy_class}{n_lc_thousands}`),
 so the taxonomy and the certificate can never disagree about what was
 approved. Sample selection runs per group, and R 60-2 §2.4 + Annex D's
@@ -98,12 +98,12 @@ merit walk (smallest E_max per group, 5–10× steps) is data in
 ## 8.4 The attribute register: three decisions
 
 The 44-entry register (`data/r60/model/attributes.yaml`) is the INV-2
-schema layer: each attribute defined once — snake_case id, print
+schema layer: each attribute defined once, snake_case id, print
 `symbol`, definition, clause source, quantity kind, unit, `origin`,
-`scope`, `category` — then *valued* per chain level. Three entries
+`scope`, `category`, then *valued* per chain level. Three entries
 teach the decision table:
 
-**`e_max` — design-fixed, model scope.** The maximum capacity
+**`e_max`, design-fixed, model scope.** The maximum capacity
 distinguishes one catalogue model from another; it is set by design and
 stated per Model:
 
@@ -115,7 +115,7 @@ stated per Model:
     scope: model
 ```
 
-**`d_min` — test-dependent, sample scope.** The smallest load actually
+**`d_min`, test-dependent, sample scope.** The smallest load actually
 applied during test is chosen under test, differs per physical unit,
 and is never inherited: it lives on the sample's `test_context`:
 
@@ -126,7 +126,7 @@ and is never inherited: it lives on the sample's `test_context`:
     scope: sample
 ```
 
-**`dr` — the scope/origin puzzle.** Minimum dead load output return is
+**`dr`, the scope/origin puzzle.** Minimum dead load output return is
 `origin: test-dependent` (its value is verified per sample by the DR
 test) but `scope: group` (it is *stated* as a declared group
 characteristic), with a `derived` fallback
@@ -134,7 +134,7 @@ characteristic), with a `derived` fallback
 explicit: "Declared group characteristic (verified per sample by the DR
 test); the measured value is a D2 MeasurementResult." Origin says where
 the value comes from; scope says where it is stated. The two align
-often enough to lull you — `dr` is the register's reminder to decide
+often enough to lull you, `dr` is the register's reminder to decide
 them independently.
 
 ## 8.5 Requirements walk: definitional and lookup
@@ -157,15 +157,15 @@ R 60-1, 5.2) shows the full anatomy in six lines of substance:
 
 Statement + clause URN carry the normative text; `binds_to` anchors the
 two aspect paths (a HAS test-context value against an IS design
-parameter — the duality made executable); `limit` is the machine-check;
+parameter, the duality made executable); `limit` is the machine-check;
 `verification.method: definitional` says honestly that the type
 definition itself is checked, no lab needed. The legacy
 `acceptance_criteria` block stays for provenance, but binds/limit is
-canonical — an unbound requirement judges nothing.
+canonical, an unbound requirement judges nothing.
 
 **A lookup requirement** (`/req/metrological/creep`, R 60-1, 5.5.1)
 shows the table discipline: the limit is computed from data, never
-restated —
+restated , 
 
 ```text
 ocl{abs(c_c) <= 0.7 * abs(lookupMPE(sample.test_context.d_max,
@@ -177,7 +177,7 @@ ocl{abs(c_c) <= 0.7 * abs(lookupMPE(sample.test_context.d_max,
 Three facts are modelled, not hidden in prose: the observable `c_c`
 (creep, a characteristic derived from behavior I/O) is judged against
 0.7 × MPE; the MPE itself comes from `mpe_tiers` in `tables.yaml` via
-`lookupMPE` (Recommendation tables are data — never bake tiers into
+`lookupMPE` (Recommendation tables are data, never bake tiers into
 OCL); and the creep clause's own rule that p_LC is *always* 0.7 here is
 the literal `0.7` argument, not the manufacturer's declared p_LC. The
 conjoined `0.9 * e_max <= d_max <= e_max` carries the test-geometry
@@ -189,7 +189,7 @@ The central metrological test,
 `/conf/metrological-tests/measurement-error-repeatability-mdlo`
 (R 60-2, 2.10.1), targets three requirements and shows the variable
 discipline. Every variable has a `source`: `measured` run inputs,
-`derived` OCL over inputs, `computed` table lookups —
+`derived` OCL over inputs, `computed` table lookups , 
 
 ```yaml
       - name: e_r
@@ -200,14 +200,14 @@ discipline. Every variable has a `source`: `measured` run inputs,
         derivation: "ocl{lookupMPE(test_load, accuracy_class, p_lc)}"
 ```
 
-— all *derived from* the requirement limits and subject parameters,
+,  all *derived from* the requirement limits and subject parameters,
 never restated by hand (INV-3 for tests).
 
 Two author-facing mechanisms deserve attention:
 
-- **`instances:` — runtime class-driven instantiation.** The run count
+- **`instances:`, runtime class-driven instantiation.** The run count
   is not a constant: A/B run 5 applications, C/D run 3 (R 60-2,
-  2.10.1.12). The test declares it once —
+  2.10.1.12). The test declares it once , 
 
   ```yaml
       instances:
@@ -219,7 +219,7 @@ Two author-facing mechanisms deserve attention:
           D: { n_runs: 3 }
   ```
 
-  — and the applicability engine expands it per subject at runtime.
+ , and the applicability engine expands it per subject at runtime.
   The comment in the file records the bug this replaced: a hardcoded
   `n_runs: 3` had silently materialized class A/B forms with 3 runs.
 - **Class inheritance.** Per-class aggregations in
@@ -232,7 +232,7 @@ Two author-facing mechanisms deserve attention:
 
 Run validity is a precondition, not a verdict: the test's
 `preconditions:` carry the temperature-stability rule of R 60-2,
-2.7.3.1, evaluated before the limit — a violated precondition yields an
+2.7.3.1, evaluated before the limit, a violated precondition yields an
 `invalid` run (void), never a `fail`.
 
 ## 8.7 Forms walk: binds and the binding-key drift
@@ -266,14 +266,14 @@ per-field `measurement_method` (`declared`, `direct`, `computed` +
 evaluated results.
 
 It also carries the register's most instructive defect. The
-`conversionFactor` calculation declares an input named `n` — the
+`conversionFactor` calculation declares an input named `n`, the
 verification intervals *of the tested range*: `(E_max − E_min)/v_min`
 when the test spans the classified range (R 60-3, 2.1.2.4), equal to Y
 in that case. The form's sibling field `n_lc` is a different quantity:
 the manufacturer's declared *maximum* intervals
 (`group.parameters.n_lc`). The methodology's pitfall register (§9.4,
-item 8) records the drift — the form bound `n_lc` where the calc
-declares `n` — and the repaired binding is what ships:
+item 8) records the drift, the form bound `n_lc` where the calc
+declares `n`, and the repaired binding is what ships:
 
 ```yaml
       calculation: conversionFactor
@@ -285,14 +285,14 @@ declares `n` — and the repaired binding is what ships:
 
 Two lessons in one line: binding *keys* must equal the calc's declared
 input names, and easy-to-confuse integer quantities (`n_lc` vs `n` vs
-`y`) are different semantics — the linker rule
+`y`) are different semantics, the linker rule
 ("`calculation_bindings` key matches a declared calc input") exists
 because this exact drift shipped green once.
 
 ## 8.8 Evaluation walk: thirteen flows to a certificate
 
 `data/r60/sample-data.yaml` seeds thirteen complete flows compiled from
-fifteen real certificate PDFs — the DE1/PTB Hottinger HLCi family among
+fifteen real certificate PDFs, the DE1/PTB Hottinger HLCi family among
 them: one manufacturer → one family (`technology: digital`,
 `humidity_symbol: CH`, `construction: strain-gauge`, parameters p_LC
 0.7, t_min −10 °C, t_max +40 °C…) → groups by classification label
@@ -307,8 +307,8 @@ and a certificate whose classification labels (`C6`) are the groups'
 own labels.
 
 The seed is the package's proof of life: it exercises every layer in
-order — delegation through the chain, applicability over the five axes,
-calculations over bound evidence, the verdict chain — and it fails the
+order, delegation through the chain, applicability over the five axes,
+calculations over bound evidence, the verdict chain, and it fails the
 build when any layer drifts.
 
 ## 8.9 The twin angle: this package, switched on (○)
@@ -320,22 +320,22 @@ declared on the subject (chapter 2, §2.11 of this volume), a quarry's
 belt scale integrates one, and the IA's Compliance Engine subscribes to
 `watch_state` and runs an hourly monitor over the served values.
 
-Nothing in §8.2–§8.8 changes to make that possible — that is the
+Nothing in §8.2–§8.8 changes to make that possible, that is the
 point. The monitor evaluates the §8.5 requirements' own
 `lookupMPE(...)` against a live indication; a unit reporting `fault`
 yields `invalid` through the same precondition semantics as §8.6; the
 quarterly creep re-derivation is §8.6's characteristic computed over a
 streamed series instead of a lab run; and the freshness rule (stale ⇒
 `indeterminate`, never a silent pass) guards every served value. The
-package authored once judges the Tuesday in the lab — and every day
-after it. (The endpoint declaration ships in this package —
-`model/twin.prl`, task 49 — and the monitor + gateway runtimes are
+package authored once judges the Tuesday in the lab, and every day
+after it. (The endpoint declaration ships in this package , 
+`model/twin.prl`, task 49, and the monitor + gateway runtimes are
 live, tasks 33/34; the model they
 consume is the one this chapter just walked.)
 
 ## 8.10 Grammar sketch *(illustrative v3 syntax)*
 
-The whole walkthrough as one closure slice — each secondary element
+The whole walkthrough as one closure slice, each secondary element
 anchoring the primary tier, each judgment referencing one derivation:
 
 ```prl
@@ -404,7 +404,7 @@ next Recommendation should run first:
 - The subject is four IS variants over five HAS classification axes;
   dimension values carry machine-checkable payloads (`n_lc_limits`).
 - The family matrix is criteria (verbatim) + groups (identical
-  characteristics) + labels (`C6`) that the certificate reuses —
+  characteristics) + labels (`C6`) that the certificate reuses , 
   taxonomy and certificate cannot drift apart.
 - The attribute register's hard cases are the lessons: `e_max`
   (design/model) vs `d_min` (test/sample) vs `dr` (origin ≠ scope).
@@ -413,9 +413,9 @@ next Recommendation should run first:
   checked names, not suggestions; thirteen seeded flows carry the whole
   synthesis to a certificate.
 - Switched on, nothing is re-modelled: Volume I, chapter 14, §14.9 runs
-  *this* package — the `lc500_api` endpoint, the hourly monitor, the
-  same `lookupMPE` — as its live-twin worked example (○).
+  *this* package, the `lc500_api` endpoint, the hourly monitor, the
+  same `lookupMPE`, as its live-twin worked example (○).
 
-*Next: [Chapter 9 — Walkthrough: R 91 and R 144](/docs/oiml-rec/09-walkthrough-r91-r144):
-two Recommendations of different kinds — and what modelling them forced
+*Next: [Chapter 9, Walkthrough: R 91 and R 144](/docs/oiml-rec/09-walkthrough-r91-r144):
+two Recommendations of different kinds, and what modelling them forced
 into the frame.*

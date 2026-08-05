@@ -6,7 +6,7 @@ export async function getStaticPaths() {
   const pages = await getCollection('pages')
   return pages
     // The /recs index falls through to the recs repo's minisite (the
-    // component's own home, TODO.components/06) — this route serves only
+    // component's own home, TODO.components/06), this route serves only
     // the per-Recommendation browser pages.
     .filter(p => p.id.startsWith('recommendations/'))
     .map(entry => {

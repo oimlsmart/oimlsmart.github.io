@@ -16,11 +16,11 @@ const gates = [
 <Base>
   <PageHero
     title="The component architecture"
-    lede="One platform, five repositories, one data flow — Primmel packages are the single source of truth, everything else is generated, executed, or published from them. Every number on this page is pinned by a freshness gate against the live system."
+    lede="One platform, five repositories, one data flow, Primmel packages are the single source of truth, everything else is generated, executed, or published from them. Every number on this page is pinned by a freshness gate against the live system."
   />
 
   <div class="px-8 pb-20 max-w-5xl">
-    {/* § 01 — the repos */}
+    {/* § 01, the repos */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 01</span>
@@ -29,9 +29,9 @@ const gates = [
         <span class="bp-coord">{PLATFORM_REPOS.length} repos · 2 orgs</span>
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
-        The platform spans two GitHub organizations — <code class="font-mono text-[0.875em]">primmel</code> for
+        The platform spans two GitHub organizations, <code class="font-mono text-[0.875em]">primmel</code> for
         the language, kernel, and shared documentation, <code class="font-mono text-[0.875em]">oimlsmart</code> for
-        the program — each repo with exactly one job.
+        the program, each repo with exactly one job.
       </p>
       <figure class="border border-rule rounded-md bg-paper-soft p-6 mb-6">
         <img src="/diagrams/shared/repo-tree-target.svg" alt="The target repository tree: primmel and oimlsmart organizations and how their repos link" class="w-full max-w-3xl mx-auto" loading="lazy" />
@@ -43,7 +43,7 @@ const gates = [
             <div class="text-sm text-ink-soft">
               {r.role}
               {r.href && (
-                <> — <a class="text-accent underline underline-offset-2" href={r.href} target="_blank" rel="noopener">visit</a></>
+                <>, <a class="text-accent underline underline-offset-2" href={r.href} target="_blank" rel="noopener">visit</a></>
               )}
             </div>
           </div>
@@ -51,7 +51,7 @@ const gates = [
       </div>
     </section>
 
-    {/* § 02 — the SSOT flow */}
+    {/* § 02, the SSOT flow */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 02</span>
@@ -60,7 +60,7 @@ const gates = [
         <span class="bp-coord">byte-clean both directions</span>
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
-        Normative content is authored exactly once — as Primmel packages. The data trees the app
+        Normative content is authored exactly once, as Primmel packages. The data trees the app
         executes are generated artifacts; the documentation site's projections are generated
         artifacts. A drift guard proves packages ≡ data ≡ projections byte-clean in both directions,
         so nothing can silently fork.
@@ -70,7 +70,7 @@ const gates = [
       </figure>
     </section>
 
-    {/* § 03 — the gates */}
+    {/* § 03, the gates */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 03</span>
@@ -94,7 +94,7 @@ const gates = [
       </div>
     </section>
 
-    {/* § 04 — the deep docs */}
+    {/* § 04, the deep docs */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 04</span>
@@ -104,7 +104,7 @@ const gates = [
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
         Every component has exactly one documentation home. The volumes below are the deep
-        reference — this site links, never duplicates.
+        reference, this site links, never duplicates.
       </p>
       <div class="flex flex-col">
         {FEDERATION.map((f) => (
