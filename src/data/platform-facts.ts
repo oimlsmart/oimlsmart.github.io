@@ -72,18 +72,18 @@ export const FEDERATION = [
   { volume: 'The platform runtime', href: `${DOCS}/platform/`, desc: 'the SMART platform, the twin lab, projection, the composite twin, the CNML bridge' },
   { volume: 'SST for Measuring Instruments', href: '/sst', desc: 'the simulated SMART twin — simulated instruments of a twin endpoint, no hardware' },
   { volume: 'OIML Core', href: '/docs/oiml-core/', desc: 'the shared measuring-instrument modelling framework' },
-  { volume: 'Authoring Recommendations', href: '/docs/oiml-rec/', desc: 'methodology, subjects, requirements, tests, forms, packaging, walkthroughs' },
+  { volume: 'Authoring Recommendations', href: 'https://www.oimlsmart.org/recs/docs/', desc: 'methodology, subjects, requirements, tests, forms, packaging, walkthroughs' },
   { volume: 'The OIML-CS scheme', href: '/docs/oiml-cs/', desc: 'the certification system modelled on B 18:2025' },
   { volume: 'CNML certificates', href: '/docs/cnml/', desc: 'the certificate format the verdict chain issues' },
   { volume: 'Confium', href: `${DOCS}/confium/`, desc: 'the threshold-cryptography PKI the certificates ride' },
   { volume: 'The NMI section', href: '/docs/nmi/', desc: 'the adoption program for legal-metrology authorities' },
   { volume: 'The classroom', href: '/learn/', desc: 'the layered curriculum, tiers 0–5' },
-  { volume: 'The demo manual', href: '/docs/oiml-rec/13-running-the-demo', desc: 'run the full certification chain yourself' },
+  { volume: 'The demo manual', href: 'https://www.oimlsmart.org/recshttps://www.oimlsmart.org/recs/docs/13-running-the-demo', desc: 'run the full certification chain yourself' },
 ] as const
 
 /** The three live entry points from the home page. */
 export const ENTRY_POINTS = [
   { label: 'The app', href: '/app/', desc: 'the certification workflow, in your browser' },
   { label: 'The docs', href: '/docs/', desc: 'the volumes — methodology to operator guides' },
-  { label: 'The demo', href: '/docs/oiml-rec/13-running-the-demo', desc: 'certify a simulated load cell end to end' },
+  { label: 'The demo', href: 'https://www.oimlsmart.org/recshttps://www.oimlsmart.org/recs/docs/13-running-the-demo', desc: 'certify a simulated load cell end to end' },
 ] as const
