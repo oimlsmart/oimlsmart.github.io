@@ -16,6 +16,7 @@ const checks = [
   { name: 'signature', desc: 'the XMLDSig signature verifies against the signer\u2019s public key.' },
   { name: 'scope', desc: 'the signer was entitled to issue for this Recommendation and scheme scope.' },
   { name: 'crl', desc: 'neither the signer\u2019s key nor the certificate is on the revocation list.' },
+  { name: 'er-binding', desc: 'the certificate binds its evaluation report — the digest inside the signed payload.' },
   { name: 'timestamp', desc: 'the signing time is anchored — the key was valid when the signature was made.' },
   { name: 'transparency', desc: 'the certificate is in the public log — what was issued is what you hold.' },
 ]
@@ -23,11 +24,12 @@ const checks = [
 
 <Base
   title="OIML CNML — Certificat Numérique de Métrologie Légale"
-  description="OIML CNML, the Certificat Numérique de Métrologie Légale — the machine-readable certificate an issuing authority signs for a certified measuring-instrument type: anatomy of an issued certificate and the seven-check verification pipeline."
+  description="OIML CNML, the Certificat Numérique de Métrologie Légale — the machine-readable certificate an issuing authority signs for a certified measuring-instrument type: anatomy of an issued certificate and the eight-check verification pipeline."
 >
   <PageHero
+    logo={{ name: "cnml-box", alt: "The OIML CNML logo." }}
     title="OIML CNML — the Certificat Numérique de Métrologie Légale"
-    lede="The SMART certificate an issuing authority signs for a certified measuring-instrument type: a machine-readable XML document per Recommendation, carrying the certified type, the characteristics, and the test reports — verifiable by anyone, in a browser, in seven checks."
+    lede="The SMART certificate an issuing authority signs for a certified measuring-instrument type: a machine-readable XML document per Recommendation, carrying the certified type, the characteristics, and the test reports — verifiable by anyone, in a browser, in eight checks."
   />
 
   <div class="px-8 pb-20 max-w-5xl">
@@ -56,16 +58,16 @@ const checks = [
       </ol>
     </section>
 
-    {/* § 02 — the seven checks */}
+    {/* § 02 — the eight checks */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 02</span>
         <span>Verifying a certificate</span>
         <span class="bp-section-anchor__line"></span>
-        <span class="bp-coord">the fixed seven-check pipeline</span>
+        <span class="bp-coord">the fixed eight-check pipeline</span>
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
-        Verification is a fixed pipeline of seven checks — no keys, no accounts, no trust in the
+        Verification is a fixed pipeline of eight checks — no keys, no accounts, no trust in the
         presenter. It runs in the browser; the file never leaves the verifier's device.
       </p>
       <div class="flex flex-col border border-rule rounded-md overflow-hidden">
@@ -101,7 +103,7 @@ const checks = [
       <div class="flex flex-wrap gap-3">
         <a class="btn btn-primary bp-focus-ring" href="https://github.com/oimlsmart/cnml" target="_blank" rel="noopener">The CNML repository →</a>
         <a class="btn btn-ghost bp-focus-ring" href="/docs/cnml/">The CNML docs →</a>
-        <a class="btn btn-ghost bp-focus-ring" href="/platform">The issuing workflow →</a>
+        <a class="btn btn-ghost bp-focus-ring" href="/smart">The issuing workflow →</a>
         <a class="btn btn-ghost bp-focus-ring" href="/app/certificates">Certificates in the app →</a>
       </div>
     </section>

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro'
+import ComponentLogo from '../../components/ComponentLogo.astro'
 import { STANDARDS, STANDARDS_STATS } from '../../data/standards'
 
 const heroStats = [
@@ -34,8 +35,9 @@ const structure = [
         </div>
         <div class="grid md:grid-cols-[1.4fr_1fr] gap-10 items-end">
           <div>
+            <ComponentLogo name="smart-rec" alt="The SMART Recommendations logo." width={120} class="block mb-6" />
             <h1 class="font-serif text-[clamp(2.25rem,5.5vw,3.75rem)] font-medium leading-[1.02] tracking-[-0.025em] mb-5 bp-reveal">
-              Modelled <em class="italic font-normal text-accent">Recommendations</em>
+              SMART <em class="italic font-normal text-accent">Recommendations</em>
             </h1>
             <p class="text-[1.125rem] leading-[1.6] text-ink-soft max-w-2xl bp-reveal" style="--reveal-delay:80ms;">
               Each OIML International Recommendation listed here has been fully decomposed into machine-readable requirements, conformance tests, calculation-powered forms, and terminology. The structured data drives the interactive application — these pages summarize what each Recommendation covers.

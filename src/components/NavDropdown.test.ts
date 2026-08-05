@@ -14,21 +14,21 @@ describe('nav-config', () => {
       const platform = NAV_DROPDOWNS.find(d => d.id === 'platform')!
       const hrefs = platform.links.map(l => l.href)
       expect(hrefs).toEqual([
-        '/platform',
+        '/recs',
         '/studio',
-        '/instruments',
+        '/smart',
+        '/smi',
         '/sst',
         '/cnml',
-        '/programs/oiml-smart',
-        '/architecture',
-        'https://primmel.github.io/primmel-smart-docs/',
+        '/vocab',
+        '/publications',
       ])
     })
 
     it('resources dropdown contains expected links in correct order', () => {
       const resources = NAV_DROPDOWNS.find(d => d.id === 'resources')!
       const labels = resources.links.map(l => l.label)
-      expect(labels).toEqual(['Recommendations', 'Library', 'Ontology', 'Developer Docs', 'Publications', 'Vocabularies', 'Resolutions'])
+      expect(labels).toEqual(['Document Library', 'Ontology', 'Developer Docs', 'The OIML SMART Program', 'Component Architecture', 'The Docs Federation'])
     })
 
     it('internal dropdown has variant "internal"', () => {
@@ -44,9 +44,8 @@ describe('nav-config', () => {
   })
 
   describe('NAV_STANDALONE', () => {
-    it('contains OIML-CS', () => {
-      const labels = NAV_STANDALONE.map(l => l.label)
-      expect(labels).toContain('OIML-CS')
+    it('is empty (the OIML-CS standalone folded into the /smart component)', () => {
+      expect(NAV_STANDALONE).toEqual([])
     })
   })
 

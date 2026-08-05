@@ -7,7 +7,7 @@
 // = appending one entry to this array.
 //
 // Why centralize:
-// - 'OIML-R-60' / 'r60' / 'R 60' / '/recommendations/r60/' were
+// - 'OIML-R-60' / 'r60' / 'R 60' / '/recs/r60/' were
 //   previously scattered across pages. Each was an implicit convention.
 // - Type safety: StandardRef enforces that every standard declares
 //   every required field. No more half-filled inline objects.
@@ -52,7 +52,7 @@ export const STANDARDS: readonly StandardRef[] = [
       'Metrological regulation for load cells used in nonautomatic weighing instruments. The pilot SMART Recommendation.',
     year: 2021,
     counts: { requirements: 42, tests: 18, forms: 12 },
-    recommendationsPath: '/recommendations/r60',
+    recommendationsPath: '/recs/r60',
     libraryPath: '/library/r60',
     oimlPdfUrl: 'https://www.oiml.org/en/files/pdf_r/r060-e21.pdf',
   },
@@ -65,7 +65,7 @@ export const STANDARDS: readonly StandardRef[] = [
       'Dynamic measuring instruments for the determination of mass of road vehicles in motion.',
     year: 2000,
     counts: { requirements: 35, tests: 14, forms: 9 },
-    recommendationsPath: '/recommendations/r129',
+    recommendationsPath: '/recs/r129',
     libraryPath: '/library/r129',
   },
   {
@@ -76,7 +76,7 @@ export const STANDARDS: readonly StandardRef[] = [
     scope: 'Gas meters — diaphragm gas meters deployed for custody transfer and billing.',
     year: 2006,
     counts: { requirements: 28, tests: 11, forms: 8 },
-    recommendationsPath: '/recommendations/r144',
+    recommendationsPath: '/recs/r144',
     libraryPath: '/library/r144',
   },
 ] as const
