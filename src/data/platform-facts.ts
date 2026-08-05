@@ -78,12 +78,12 @@ export const FEDERATION = [
   { volume: 'Confium', href: `${DOCS}/confium/`, desc: 'the threshold-cryptography PKI the certificates ride' },
   { volume: 'The NMI section', href: '/docs/nmi/', desc: 'the adoption program for legal-metrology authorities' },
   { volume: 'The classroom', href: '/learn/', desc: 'the layered curriculum, tiers 0–5' },
-  { volume: 'The demo manual', href: 'https://www.oimlsmart.org/recshttps://www.oimlsmart.org/recs/docs/13-running-the-demo', desc: 'run the full certification chain yourself' },
+  { volume: 'The demo manual', href: 'https://www.oimlsmart.org/recs/docs/oiml-rec/13-running-the-demo', desc: 'run the full certification chain yourself' },
 ] as const
 
 /** The three live entry points from the home page. */
 export const ENTRY_POINTS = [
   { label: 'The app', href: '/app/', desc: 'the certification workflow, in your browser' },
   { label: 'The docs', href: '/docs/', desc: 'the volumes — methodology to operator guides' },
-  { label: 'The demo', href: 'https://www.oimlsmart.org/recshttps://www.oimlsmart.org/recs/docs/13-running-the-demo', desc: 'certify a simulated load cell end to end' },
+  { label: 'The demo', href: 'https://www.oimlsmart.org/recs/docs/oiml-rec/13-running-the-demo', desc: 'certify a simulated load cell end to end' },
 ] as const
