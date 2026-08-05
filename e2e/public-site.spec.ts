@@ -15,10 +15,19 @@ test.describe('Public site — critical paths', () => {
     await expect(trigger).toContainText('Resources')
 
     const dropdownContainer = trigger.locator('xpath=..')
-    await expect(dropdownContainer.locator('a[href="/recommendations/"]')).toHaveCount(1)
     await expect(dropdownContainer.locator('a[href="/library/"]')).toHaveCount(1)
     await expect(dropdownContainer.locator('a[href="/ontology/"]')).toHaveCount(1)
     await expect(dropdownContainer.locator('a[href="/docs/"]')).toHaveCount(1)
+  })
+
+  test('the components dropdown carries the eight components', async ({ page }) => {
+    await page.goto('/')
+    const trigger = page.getByTestId('nav-dropdown-platform')
+    await expect(trigger).toBeVisible()
+    const dropdownContainer = trigger.locator('xpath=..')
+    for (const href of ['/recs', '/studio', '/smart', '/smi', '/sst', '/cnml', '/vocab', '/publications']) {
+      await expect(dropdownContainer.locator(`a[href="${href}"]`)).toHaveCount(1)
+    }
   })
 
   test('about dropdown trigger is present', async ({ page }) => {
@@ -37,12 +46,13 @@ test.describe('Public site — critical paths', () => {
     await expect(trigger).toContainText('Internal')
   })
 
-  test('OIML-CS is a standalone top-level nav link', async ({ page }) => {
+  test('the OIML-CS SMART platform is the /smart component entry', async ({ page }) => {
     await page.goto('/')
-    // Scope to the site nav so we don't match footer or audience-card duplicates.
-    const link = page.locator('#nav-menu').getByRole('link', { name: 'OIML-CS' })
-    await expect(link).toBeVisible()
-    await expect(link).toHaveAttribute('href', '/oiml-cs')
+    // The standalone top-level link folded into the Components dropdown
+    // (the nav contract: one href, one home).
+    const trigger = page.getByTestId('nav-dropdown-platform')
+    const dropdownContainer = trigger.locator('xpath=..')
+    await expect(dropdownContainer.locator('a[href="/smart"]')).toHaveCount(1)
   })
 
   test('vocabularies page renders with action box', async ({ page }) => {
