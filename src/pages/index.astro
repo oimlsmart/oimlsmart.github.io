@@ -1,22 +1,26 @@
 ---
 import Base from '../layouts/Base.astro'
 import SITE from '../data/site-meta'
+import ComponentLogo from '../components/ComponentLogo.astro'
 import { STANDARDS, STANDARDS_STATS } from '../data/standards'
 import { EIGHT_WORDS, ENTRY_POINTS } from '../data/platform-facts'
 
 const components = [
-  { name: 'OIML SMART Recommendations', detail: 'The published, expert-authored executable Recommendations — R 60, R 91, R 129, R 144 today, each with clause-level provenance to the source document.', href: '/recommendations' },
-  { name: 'OIML SMART Studio', detail: 'Viewing and authoring SMART Recommendations — the canvas where experts model a Recommendation, one click from the live Studio.', href: '/studio' },
-  { name: 'OIML-CS SMART platform', detail: 'The web system through which the OIML-CS serves issuing authorities and test laboratories — applications to certificates to BIML registration.', href: '/platform' },
-  { name: 'OIML SMART Measuring Instruments', detail: 'Physical instruments with a SMART digital twin — the instrument itself is the API that certification talks to.', href: '/instruments' },
-  { name: 'OIML SST for Measuring Instruments', detail: 'The Simulated SMART Twin — the ACME LC-500 family with metrologically real physics, no hardware required.', href: '/sst' },
-  { name: 'OIML CNML', detail: 'The Certificat Numérique de Métrologie Légale — the machine-readable certificate an issuing authority signs for a certified type.', href: '/cnml' },
+  { name: 'SMART Recommendations', detail: 'The published, expert-authored executable Recommendations. R 60, R 91, R 129, and R 144 are modelled today, each with clause-level provenance to the source document.', href: '/recs', logo: 'smart-rec', alt: 'The SMART Recommendations logo.' },
+  { name: 'SMART Studio', detail: 'The canvas for viewing and authoring SMART Recommendations. An expert models a Recommendation graphically and the model is the published artifact.', href: '/studio', logo: 'smart-studio', alt: 'The SMART Studio logo.' },
+  { name: 'OIML-CS SMART platform', detail: 'The web system through which the OIML-CS serves issuing authorities and test laboratories. Applications, testing, evaluation, certificates, and BIML registration run as one digital workflow.', href: '/smart', logo: 'cs-smart', alt: 'The OIML-CS SMART platform logo.' },
+  { name: 'SMART Measuring Instruments', detail: 'Physical instruments that provide a SMART digital twin. The instrument itself is the API that certification and continuous compliance talk to.', href: '/smi', logo: 'smi', alt: 'The SMART Measuring Instruments logo.' },
+  { name: 'SST for Measuring Instruments', detail: 'The Simulated SMART Twin. The ACME LC-500 family and its siblings simulate metrologically real physics, so test programs run without hardware.', href: '/sst', logo: 'sst', alt: 'The SST for Measuring Instruments logo.' },
+  { name: 'OIML CNML', detail: 'The Certificat Numérique de Métrologie Légale. The machine-readable certificate an issuing authority signs for a certified type, verifiable by anyone in a browser.', href: '/cnml', logo: 'cnml-box', alt: 'The OIML CNML logo.' },
+  { name: 'SMART Vocabulary', detail: 'The shared terminology. Every concept in a SMART Recommendation resolves to one governed term across publications.', href: '/vocab' },
+  { name: 'SMART Resources', detail: 'The publications and resolutions databases. The full OIML corpus, searchable and cross-referenced.', href: '/publications' },
 ]
 
 const flowSteps = [
-  { num: '01', title: 'Pick a Recommendation', detail: 'read the modelled requirements, tests, and forms', href: '/recommendations' },
+  { num: '01', title: 'Pick a Recommendation', detail: 'read the modelled requirements, tests, and forms', href: '/recs' },
   { num: '02', title: 'Test the simulation', detail: 'run the chain against a simulated instrument — no hardware', href: '/sst' },
-  { num: '03', title: 'Issue the certificate', detail: 'application to signed CNML, in your browser', href: '/app' },
+  { num: '03', title: 'Run the certification', detail: 'application to evaluation on the OIML-CS SMART platform', href: '/smart' },
+  { num: '04', title: 'Issue the certificate', detail: 'the signed CNML, verifiable in a browser', href: '/cnml' },
 ]
 
 const acronym = [
@@ -100,7 +104,7 @@ const audiencePaths = [
           <strong class="text-ink font-semibold">OIML SMART</strong> transforms International Recommendations from static PDF documents into structured digital artifacts — executable, traceable, and interoperable across the global metrology community.
         </p>
         <div class="hero-stagger flex flex-wrap gap-3 items-center max-[960px]:justify-center" style="--stagger-i:3">
-          <a class="btn btn-primary bp-magnetic bp-focus-ring" href="/recommendations/" data-magnetic-strength="0.2">
+          <a class="btn btn-primary bp-magnetic bp-focus-ring" href="/recs/" data-magnetic-strength="0.2">
             Explore Recommendations <span class="arrow">→</span>
           </a>
           <a class="btn btn-ghost bp-magnetic bp-focus-ring" href="/about/what-is-smart" data-magnetic-strength="0.15">
@@ -199,8 +203,8 @@ const audiencePaths = [
           <span class="bp-section-anchor__line"></span>
           <span class="bp-coord">IS · HAS · DOES</span>
         </div>
-        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Eight words, one platform, six components</h2>
-        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Every SMART artifact — an instrument, a lab, a certificate — is described with exactly eight words: three relations and five sorts, closed under composition. OIML SMART is a program of six components, each a product in its own right.</p>
+        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Eight words, one platform, eight components</h2>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Every SMART artifact, an instrument, a lab, a certificate, is described with exactly eight words: three relations and five sorts, closed under composition. OIML SMART is a program of eight components, each a product in its own right.</p>
       </div>
       <div class="grid grid-cols-4 gap-px bg-rule border border-rule rounded-md overflow-hidden mb-6 max-[960px]:grid-cols-2">
         {EIGHT_WORDS.map((w) => (
@@ -232,7 +236,9 @@ const audiencePaths = [
             class="block p-6 bg-paper-soft border border-rule rounded-md no-underline text-inherit relative bp-card-hover bp-reveal group bp-crosshair"
             style={`--reveal-delay: ${i * 60}ms`}
           >
-            <div class="component-logo-slot mb-4" aria-hidden="true"><span>Logo</span></div>
+            {c.logo
+              ? <ComponentLogo name={c.logo} alt={c.alt ?? ''} width={96} class="mb-4 block" />
+              : <div class="mb-4 h-[48px] flex items-center"><span class="font-serif text-[1.75rem] text-accent leading-none">{c.name.split(' ').pop()}</span></div>}
             <div class="flex items-center justify-between mb-2 gap-3">
               <h3 class="font-serif text-[1.125rem] leading-tight">{c.name}</h3>
               <span class="text-accent opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0">→</span>
@@ -255,7 +261,7 @@ const audiencePaths = [
           <span class="opacity-50">·</span>
           <span class="text-ink-muted">from a Recommendation, test an instrument's simulation, issue its certificate</span>
         </div>
-        <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
+        <div class="grid grid-cols-4 gap-4 max-[960px]:grid-cols-2">
           {flowSteps.map((s) => (
             <a
               href={s.href}

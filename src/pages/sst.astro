@@ -31,6 +31,7 @@ const demoManual = FEDERATION.find(f => f.volume === 'The demo manual')!
   description="The OIML SST for Measuring Instruments — the Simulated SMART Twin of the SMART instruments: the ACME LC-500 family, metrologically real physics and environment simulation, no hardware required."
 >
   <PageHero
+    logo={{ name: "sst", alt: "The SST for Measuring Instruments logo." }}
     title="OIML SST for Measuring Instruments"
     lede="The Simulated SMART Twin is a full-fidelity stand-in for a physical instrument: the same twin interface a real device would serve, plus a practice channel for the physics a lab would apply. Rehearse the whole certification chain before you ever touch hardware."
   />
@@ -141,7 +142,7 @@ npx tsx packages/runtime/sst-runtime/src/bin.ts run \
       <div class="flex flex-wrap gap-3">
         <a class="btn btn-primary bp-focus-ring" href="https://github.com/oimlsmart/sst-instruments" target="_blank" rel="noopener">The instrument library →</a>
         <a class="btn btn-ghost bp-focus-ring" href={demoManual.href} target="_blank" rel="noopener">The demo manual →</a>
-        <a class="btn btn-ghost bp-focus-ring" href="/instruments">The real instruments →</a>
+        <a class="btn btn-ghost bp-focus-ring" href="/smi">The real instruments →</a>
       </div>
     </section>
   </div>

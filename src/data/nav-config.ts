@@ -28,14 +28,14 @@ export const NAV_DROPDOWNS: readonly NavDropdownConfig[] = [
     label: 'Components',
     variant: 'default',
     links: [
-      { label: 'The OIML-CS SMART Platform', href: '/platform', desc: 'Applications → testing → evaluation → certificates → registration' },
-      { label: 'OIML SMART Studio', href: '/studio', desc: 'View and author SMART Recommendations' },
-      { label: 'SMART Measuring Instruments', href: '/instruments', desc: 'The physical instrument is the API' },
-      { label: 'The Instrument SST', href: '/sst', desc: 'The simulated SMART twin — no hardware needed' },
-      { label: 'OIML CNML', href: '/cnml', desc: 'The machine-readable certificate, verifiable in seven checks' },
-      { label: 'The OIML SMART Program', href: '/programs/oiml-smart', desc: 'The program overview' },
-      { label: 'Component Architecture', href: '/architecture', desc: 'The repos, the SSOT flow, the gates' },
-      { label: 'The Docs Federation', href: 'https://primmel.github.io/primmel-smart-docs/', desc: 'The full volumes — foundation to classroom', external: true },
+      { label: 'SMART Recommendations', href: '/recs', desc: 'The published, expert-authored executable Recommendations' },
+      { label: 'SMART Studio', href: '/studio', desc: 'View and author SMART Recommendations' },
+      { label: 'OIML-CS SMART Platform', href: '/smart', desc: 'Applications → testing → evaluation → certificates → registration' },
+      { label: 'SMART Measuring Instruments', href: '/smi', desc: 'The physical instrument is the API' },
+      { label: 'SST for Measuring Instruments', href: '/sst', desc: 'The simulated SMART twin — no hardware needed' },
+      { label: 'OIML CNML', href: '/cnml', desc: 'The machine-readable certificate, verifiable in eight checks' },
+      { label: 'SMART Vocabulary', href: '/vocab', desc: 'The governed terminology across publications' },
+      { label: 'SMART Resources', href: '/publications', desc: 'The publications and resolutions databases' },
     ],
   },
   {
@@ -43,15 +43,14 @@ export const NAV_DROPDOWNS: readonly NavDropdownConfig[] = [
     label: 'Resources',
     variant: 'default',
     links: [
-      // Internal routes — served by this site
-      { label: 'Recommendations', href: '/recommendations/', desc: 'SMART-modeled OIML Recommendations' },
-      { label: 'Library', href: '/library/', desc: 'Structured OIML document library' },
+      // Internal routes — served by this site (the component minisites
+      // live in the Components dropdown — one href, one home)
+      { label: 'Document Library', href: '/library/', desc: 'Structured OIML document library' },
       { label: 'Ontology', href: '/ontology/', desc: 'Semantic model: classes, properties, individuals' },
       { label: 'Developer Docs', href: '/docs/', desc: 'Guides, architecture, specifications' },
-      // External sites — sibling GitHub Pages on the same domain
-      { label: 'Publications', href: '/publications/', desc: 'OIML publications database', external: true },
-      { label: 'Vocabularies', href: '/vocab/', desc: 'OIML terminology and concept browser', external: true },
-      { label: 'Resolutions', href: '/resolutions/', desc: 'OIML resolutions database', external: true },
+      { label: 'The OIML SMART Program', href: '/programs/oiml-smart', desc: 'The program overview' },
+      { label: 'Component Architecture', href: '/architecture', desc: 'The repos, the SSOT flow, the gates' },
+      { label: 'The Docs Federation', href: 'https://primmel.github.io/primmel-smart-docs/', desc: 'The platform volumes — foundation to classroom', external: true },
     ],
   },
   {
@@ -87,14 +86,13 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'platform')! },
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'resources')! },
   { type: 'link', label: 'News', href: '/news/', matchPrefix: '/news' },
-  { type: 'link', label: 'OIML-CS', href: '/oiml-cs', matchPrefix: '/oiml-cs' },
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'about')! },
   { type: 'dropdown', config: NAV_DROPDOWNS.find(d => d.id === 'internal')! },
 ]
 
-export const NAV_STANDALONE: readonly NavStandaloneLink[] = [
-  { label: 'OIML-CS', href: '/oiml-cs', matchPrefix: '/oiml-cs' },
-] as const
+// The standalone OIML-CS top-level link folded into the /smart component
+// entry (the nav contract: one href, one home).
+export const NAV_STANDALONE: readonly NavStandaloneLink[] = [] as const
 
 export function isLinkActive(href: string, currentPath: string): boolean {
   const normalized = href.replace(/\/$/, '')

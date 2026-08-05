@@ -18,7 +18,7 @@ describe('standards registry', () => {
         expect(s.counts.requirements).toBeGreaterThan(0)
         expect(s.counts.tests).toBeGreaterThan(0)
         expect(s.counts.forms).toBeGreaterThan(0)
-        expect(s.recommendationsPath).toMatch(/^\/recommendations\/[a-z0-9-]+$/)
+        expect(s.recommendationsPath).toMatch(/^\/recs\/[a-z0-9-]+$/)
         expect(s.libraryPath).toMatch(/^\/library\/[a-z0-9-]+$/)
       }
     })

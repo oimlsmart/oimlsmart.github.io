@@ -37,7 +37,8 @@ describe('MobileNav', () => {
     const text = wrapper.text()
     expect(text).toContain('Resources')
     expect(text).toContain('News')
-    expect(text).toContain('OIML-CS')
+    // The OIML-CS standalone folded into the Components dropdown (/smart).
+    expect(text).toContain('Components')
     expect(text).toContain('About')
     expect(text).toContain('Sign in')
   })
