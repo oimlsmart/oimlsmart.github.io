@@ -76,7 +76,7 @@ export const FEDERATION = [
   { volume: 'The OIML-CS scheme', href: '/docs/oiml-cs/', desc: 'the certification system modelled on B 18:2025' },
   { volume: 'CNML certificates', href: '/docs/cnml/', desc: 'the certificate format the verdict chain issues' },
   { volume: 'Confium', href: `${DOCS}/confium/`, desc: 'the threshold-cryptography PKI the certificates ride' },
-  { volume: 'The NMI section', href: '/docs/nmi/', desc: 'the adoption program for legal-metrology authorities' },
+  { volume: 'The NMI section', href: 'https://www.oimlsmart.org/smi/docs/', desc: 'the adoption program for legal-metrology authorities' },
   { volume: 'The classroom', href: '/learn/', desc: 'the layered curriculum, tiers 0–5' },
   { volume: 'The demo manual', href: 'https://www.oimlsmart.org/recs/docs/oiml-rec/13-running-the-demo', desc: 'run the full certification chain yourself' },
 ] as const
