@@ -3,18 +3,12 @@ import Base from '../layouts/Base.astro'
 import SITE from '../data/site-meta'
 import ComponentLogo from '../components/ComponentLogo.astro'
 import { STANDARDS, STANDARDS_STATS } from '../data/standards'
+import { COMPONENTS } from '../data/components'
 import { EIGHT_WORDS, ENTRY_POINTS } from '../data/platform-facts'
 
-const components = [
-  { name: 'SMART Recommendations', detail: 'The published, expert-authored executable Recommendations. R 60, R 91, R 129, and R 144 are modelled today, each with clause-level provenance to the source document.', href: '/recs', logo: 'smart-rec', alt: 'The SMART Recommendations logo.' },
-  { name: 'SMART Studio', detail: 'The canvas for viewing and authoring SMART Recommendations. An expert models a Recommendation graphically and the model is the published artifact.', href: '/studio', logo: 'smart-studio', alt: 'The SMART Studio logo.' },
-  { name: 'OIML-CS SMART platform', detail: 'The web system through which the OIML-CS serves issuing authorities and test laboratories. Applications, testing, evaluation, certificates, and BIML registration run as one digital workflow.', href: '/smart', logo: 'cs-smart', alt: 'The OIML-CS SMART platform logo.' },
-  { name: 'SMART Measuring Instruments', detail: 'Physical instruments that provide a SMART digital twin. The instrument itself is the API that certification and continuous compliance talk to.', href: '/smi', logo: 'smi', alt: 'The SMART Measuring Instruments logo.' },
-  { name: 'SST for Measuring Instruments', detail: 'The Simulated SMART Twin. The ACME LC-500 family and its siblings simulate metrologically real physics, so test programs run without hardware.', href: '/sst', logo: 'sst', alt: 'The SST for Measuring Instruments logo.' },
-  { name: 'OIML CNML', detail: 'The Certificat Numérique de Métrologie Légale. The machine-readable certificate an issuing authority signs for a certified type, verifiable by anyone in a browser.', href: '/cnml', logo: 'cnml-box', alt: 'The OIML CNML logo.' },
-  { name: 'SMART Vocabulary', detail: 'The shared terminology. Every concept in a SMART Recommendation resolves to one governed term across publications.', href: '/vocab' },
-  { name: 'SMART Resources', detail: 'The publications and resolutions databases. The full OIML corpus, searchable and cross-referenced.', href: '/publications' },
-]
+// The eight components come from the ONE registry (src/data/components.ts)
+// — the nav's Components dropdown reads the same definition.
+const components = COMPONENTS
 
 const flowSteps = [
   { num: '01', title: 'Pick a Recommendation', detail: 'read the modelled requirements, tests, and forms', href: '/recs' },
