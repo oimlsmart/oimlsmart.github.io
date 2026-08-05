@@ -32,3 +32,4 @@ link-check-results.md
 
 # Wrangler/Cloudflare local state
 .wrangler/
+vendor/
