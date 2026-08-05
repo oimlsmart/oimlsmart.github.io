@@ -22,21 +22,16 @@ export interface NavStandaloneLink {
   readonly matchPrefix: string
 }
 
+import { COMPONENTS } from './components'
+
 export const NAV_DROPDOWNS: readonly NavDropdownConfig[] = [
   {
     id: 'platform',
     label: 'Components',
     variant: 'default',
-    links: [
-      { label: 'SMART Recommendations', href: '/recs', desc: 'The published, expert-authored executable Recommendations' },
-      { label: 'SMART Studio', href: '/studio', desc: 'View and author SMART Recommendations' },
-      { label: 'OIML-CS SMART Platform', href: '/smart', desc: 'Applications → testing → evaluation → certificates → registration' },
-      { label: 'SMART Measuring Instruments', href: '/smi', desc: 'The physical instrument is the API' },
-      { label: 'SST for Measuring Instruments', href: '/sst', desc: 'The simulated SMART twin — no hardware needed' },
-      { label: 'OIML CNML', href: '/cnml', desc: 'The machine-readable certificate, verifiable in eight checks' },
-      { label: 'SMART Vocabulary', href: '/vocab', desc: 'The governed terminology across publications' },
-      { label: 'SMART Resources', href: '/publications', desc: 'The publications and resolutions databases' },
-    ],
+    // The eight components come from the ONE registry (components.ts) —
+    // the index's grid reads the same definition.
+    links: COMPONENTS.map(c => ({ label: c.name, href: c.href, desc: c.desc })),
   },
   {
     id: 'resources',
