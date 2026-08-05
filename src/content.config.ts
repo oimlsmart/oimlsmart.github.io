@@ -25,9 +25,9 @@ const docs = defineCollection({
 })
 
 const pages = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/pages' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/pages' }),
   schema: z.object({
-    title: z.string(),
+    title: z.string().optional(),
     description: z.string().optional(),
     eyebrow: z.string().optional(),
     layout: z.string().optional(),
