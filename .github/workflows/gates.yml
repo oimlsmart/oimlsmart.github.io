@@ -50,3 +50,6 @@ jobs:
         run: npm test
         env:
           SMART_REPO: ${{ github.workspace }}/smart
+
+      - name: Prose em-dash guard (TODO.FULL/09)
+        run: node scripts/emdash-guard.mjs
