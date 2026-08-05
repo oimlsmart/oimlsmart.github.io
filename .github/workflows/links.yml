@@ -17,6 +17,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Checkout the shell package (the chrome SSOT)
+        uses: actions/checkout@v6
+        with:
+          repository: oimlsmart/site-shell
+          path: vendor/site-shell
+
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
