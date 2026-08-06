@@ -23,6 +23,8 @@ exclude = [
   "/resolutions/",
   "/publications",
   "/publications/",
+  "/certificates",
+  "/certificates/",
   # The component repos' minisites — served by their own Pages sites
   # (TODO.components); the top site releases these paths deliberately.
   "/studio",
