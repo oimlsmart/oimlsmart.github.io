@@ -230,10 +230,10 @@ test_run run-2026-0142 {
   executes       /conf/metrological-tests/measurement-error-repeatability-mdlo
   method_version "r60-2:2021#2.10.1"          # INV-8 pin
   sample         sample:ACME-LC-500-SN0047    # ONE sample
-  lab            lab:NMI-Force-2
+  lab            lab:example-tl-2
   operator       "J. Verger"
   started        2026-03-11T09:20:00Z
-  equipment      [{ id: "force-machine-2", cal_cert: "FM2-2025-118" }]
+  equipment      [{ id: "force-machine-2", cal_cert: "ETL-2025-118" }]
 
   evidence {                                   # fills the method's output slots
     { fills: test_loads,  repetition: 1, value: 500.0 kg, timestamp: 2026-03-11T09:41Z
