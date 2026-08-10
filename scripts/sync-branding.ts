@@ -19,7 +19,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from '
 import { join, resolve } from 'node:path'
 import { createHash } from 'node:crypto'
 
-const BRANDING = process.env.BRANDING_REPO ?? resolve(process.env.HOME ?? '', 'src/oimlsmart/branding')
+const BRANDING = process.env.BRANDING_REPO ?? null
 const DEST = resolve(process.cwd(), 'public/img/components')
 const CHECK = process.argv.includes('--check')
 
@@ -43,8 +43,8 @@ function sha(path: string): string {
   return createHash('sha256').update(readFileSync(path)).digest('hex')
 }
 
-if (!existsSync(BRANDING)) {
-  console.log(`branding checkout absent at ${BRANDING} — the sync skips honestly (set BRANDING_REPO)`)
+if (BRANDING === null || !existsSync(BRANDING)) {
+  console.log('BRANDING_REPO unset or absent — the sync skips honestly (declare the branding checkout via BRANDING_REPO)')
   process.exit(0)
 }
 
