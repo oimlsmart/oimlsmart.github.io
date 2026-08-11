@@ -3,12 +3,11 @@ import Base from '../layouts/Base.astro'
 import SITE from '../data/site-meta'
 import ComponentLogo from '../components/ComponentLogo.astro'
 import { STANDARDS, STANDARDS_STATS } from '../data/standards'
-import { COMPONENTS } from '../data/components'
+import { SMART_COMPONENTS, SMARTPLUS_COMPONENTS } from '../data/components'
 import { EIGHT_WORDS, ENTRY_POINTS } from '../data/platform-facts'
 
-// The eight components come from the ONE registry (src/data/components.ts)
-//, the nav's Components dropdown reads the same definition.
-const components = COMPONENTS
+const smartComponents = SMART_COMPONENTS
+const smartplusComponents = SMARTPLUS_COMPONENTS
 
 const flowSteps = [
   { num: '01', title: 'Pick a Recommendation', detail: 'read the modelled requirements, tests, and forms', href: '/recs' },
@@ -31,6 +30,9 @@ const stats = [
   { label: 'Conformance Tests', value: STANDARDS_STATS.totalTests, format: 'comma' },
   { label: 'Smart Forms', value: STANDARDS_STATS.totalForms, format: 'comma' },
 ]
+
+const formatStat = (value: number, format: string) =>
+  format === 'comma' ? value.toLocaleString('en-US') : String(value)
 
 const recommendations = STANDARDS.map((s) => ({
   number: s.recommendationNumber,
@@ -186,7 +188,7 @@ const audiencePaths = [
     </section>
 
     {/* ═══════════════════════════════════════════════════════════════
-        THE FOUNDATION, the eight words, the platform, the components
+        THE FOUNDATION, the eight words, then the components by tier
         ═══════════════════════════════════════════════════════════════ */}
     <div class="bp-ticks" aria-hidden="true"></div>
     <section class="py-20 px-8 bp-grid bp-grid--major">
@@ -197,10 +199,10 @@ const audiencePaths = [
           <span class="bp-section-anchor__line"></span>
           <span class="bp-coord">IS · HAS · DOES</span>
         </div>
-        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Eight words, one platform, eight components</h2>
-        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Every SMART artifact, an instrument, a lab, a certificate, is described with exactly eight words: three relations and five sorts, closed under composition. OIML SMART is a program of eight components, each a product in its own right.</p>
+        <h2 class="font-serif text-[clamp(1.75rem,4vw,2.5rem)] font-medium tracking-[-0.02em] mb-4">Eight words, two tiers, twelve components</h2>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">Every SMART artifact, an instrument, a lab, a certificate, is described with exactly eight words: three relations and five sorts, closed under composition. The program is split into two tiers — <strong class="text-ink font-semibold">SMART</strong> (published artifacts and Type-approval certification) and <strong class="text-ink font-semibold">SMART+</strong> (the full instrument-instance and measurement lifecycle).</p>
       </div>
-      <div class="grid grid-cols-4 gap-px bg-rule border border-rule rounded-md overflow-hidden mb-6 max-[960px]:grid-cols-2">
+      <div class="grid grid-cols-4 gap-px bg-rule border border-rule rounded-md overflow-hidden mb-10 max-[960px]:grid-cols-2">
         {EIGHT_WORDS.map((w) => (
           <div class="bg-paper-soft p-4 bp-card-hover">
             <div class="flex items-baseline gap-2">
@@ -211,36 +213,65 @@ const audiencePaths = [
           </div>
         ))}
       </div>
-      <a
-        href="https://www.primmel.org/"
-        target="_blank"
-        rel="noopener"
-        class="block border border-rule rounded-md bg-paper-soft p-6 mb-10 no-underline text-inherit bp-card-hover bp-reveal group bp-crosshair"
-      >
-        <div class="bp-coord mb-2">The platform underneath</div>
-        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-          OIML SMART and CNML are powered by <strong class="text-ink font-semibold">the Primmel SMART platform</strong>, the modelling language, runtime machinery, and certificate PKI beneath everything on this site.
-          <span class="text-accent opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all inline-block">primmel.org →</span>
-        </p>
-      </a>
-      <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
-        {components.map((c, i) => (
-          <a
-            href={c.href}
-            class="block p-6 bg-paper-soft border border-rule rounded-md no-underline text-inherit relative bp-card-hover bp-reveal group bp-crosshair"
-            style={`--reveal-delay: ${i * 60}ms`}
-          >
-            {c.logo
-              ? <ComponentLogo name={c.logo} alt={c.alt ?? ''} width={96} class="mb-4 block" />
-              : <div class="mb-4 h-[48px] flex items-center"><span class="font-serif text-[1.75rem] text-accent leading-none">{c.name.split(' ').pop()}</span></div>}
-            <div class="flex items-center justify-between mb-2 gap-3">
-              <h3 class="font-serif text-[1.125rem] leading-tight">{c.name}</h3>
-              <span class="text-accent opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0">→</span>
-            </div>
-            <p class="text-[0.8125rem] text-ink-muted leading-relaxed">{c.detail}</p>
-            <div class="absolute top-3 right-3 bp-coord opacity-0 group-hover:opacity-100 transition-opacity">{String(i + 1).padStart(2, '0')}</div>
-          </a>
-        ))}
+
+      {/* ── SMART tier ──────────────────────────────────────────── */}
+      <div class="mb-12">
+        <div class="flex items-baseline justify-between mb-6 flex-wrap gap-2">
+          <div>
+            <div class="bp-coord mb-1">Tier · SMART</div>
+            <h3 class="font-serif text-[1.5rem] font-medium tracking-[-0.01em]">Published artifacts and Type-approval certification</h3>
+          </div>
+          <span class="bp-chip">{smartComponents.length} components</span>
+        </div>
+        <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
+          {smartComponents.map((c, i) => (
+            <a
+              href={c.href}
+              class="block p-6 bg-paper-soft border border-rule rounded-md no-underline text-inherit relative bp-card-hover bp-reveal group bp-crosshair"
+              style={`--reveal-delay: ${i * 60}ms`}
+            >
+              {c.logo
+                ? <ComponentLogo name={c.logo} alt={c.alt ?? ''} width={96} class="mb-4 block" />
+                : <div class="mb-4 h-[48px] flex items-center"><span class="font-serif text-[1.75rem] text-accent leading-none">{c.name.split(' ').pop()}</span></div>}
+              <div class="flex items-center justify-between mb-2 gap-3">
+                <h4 class="font-serif text-[1.125rem] leading-tight">{c.name}</h4>
+                <span class="text-accent opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0">→</span>
+              </div>
+              <p class="text-[0.8125rem] text-ink-muted leading-relaxed">{c.detail}</p>
+              <div class="absolute top-3 right-3 bp-coord opacity-0 group-hover:opacity-100 transition-opacity">{String(i + 1).padStart(2, '0')}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ── SMART+ tier ─────────────────────────────────────────── */}
+      <div>
+        <div class="flex items-baseline justify-between mb-6 flex-wrap gap-2">
+          <div>
+            <div class="bp-coord mb-1">Tier · SMART+</div>
+            <h3 class="font-serif text-[1.5rem] font-medium tracking-[-0.01em]">Instrument-instance and measurement lifecycle</h3>
+          </div>
+          <span class="bp-chip">{smartplusComponents.length} components</span>
+        </div>
+        <div class="grid grid-cols-3 gap-4 max-[960px]:grid-cols-1">
+          {smartplusComponents.map((c, i) => (
+            <a
+              href={c.href}
+              class="block p-6 bg-paper-soft border border-rule rounded-md no-underline text-inherit relative bp-card-hover bp-reveal group bp-crosshair"
+              style={`--reveal-delay: ${i * 60}ms`}
+            >
+              {c.logo
+                ? <ComponentLogo name={c.logo} alt={c.alt ?? ''} width={96} class="mb-4 block" />
+                : <div class="mb-4 h-[48px] flex items-center"><span class="font-serif text-[1.75rem] text-accent leading-none">{c.name.split(' ').pop()}</span></div>}
+              <div class="flex items-center justify-between mb-2 gap-3">
+                <h4 class="font-serif text-[1.125rem] leading-tight">{c.name}</h4>
+                <span class="text-accent opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all shrink-0">→</span>
+              </div>
+              <p class="text-[0.8125rem] text-ink-muted leading-relaxed">{c.detail}</p>
+              <div class="absolute top-3 right-3 bp-coord opacity-0 group-hover:opacity-100 transition-opacity">{String(i + 1).padStart(2, '0')}</div>
+            </a>
+          ))}
+        </div>
       </div>
     </section>
 
@@ -296,10 +327,8 @@ const audiencePaths = [
             <div class="bp-metric">
               <span
                 class="bp-metric__value bp-counter"
-                data-target={s.value}
-                data-format={s.format}
                 aria-label={`${s.label}: ${s.value}`}
-              >0</span>
+              >{formatStat(s.value, s.format)}</span>
               <span class="bp-metric__label">{s.label}</span>
             </div>
           </div>

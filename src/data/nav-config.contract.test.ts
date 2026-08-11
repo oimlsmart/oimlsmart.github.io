@@ -76,9 +76,20 @@ describe('nav-config ↔ pages contract', () => {
     expect(unresolved).toEqual([])
   })
 
-  it('no two nav links share the same href', () => {
-    const hrefs = allNavLinks.map(l => l.href)
-    expect(new Set(hrefs).size).toBe(hrefs.length)
+  it('no two nav links within the same dropdown share the same href', () => {
+    // Cross-dropdown sharing is allowed for tier-paired routes (e.g. the
+    // SMART-tier CNML and SMART+-tier CNML both live at /cnml, distinguished
+    // by a tier toggle on the destination page). Within a single dropdown,
+    // hrefs must still be unique.
+    const unresolved: string[] = []
+    for (const dropdown of NAV_DROPDOWNS) {
+      const hrefs = dropdown.links.map(l => l.href)
+      const dupes = hrefs.filter((h, i) => hrefs.indexOf(h) !== i)
+      for (const dupe of new Set(dupes)) {
+        unresolved.push(`${dropdown.id}: duplicate href ${dupe}`)
+      }
+    }
+    expect(unresolved).toEqual([])
   })
 
   it('every dropdown has a unique id', () => {
