@@ -6,5 +6,5 @@
  * copy: the 2026-08 vocab-logo drift (the shell gained the slot, this
  * copy did not) is why the copy was removed.
  */
-export { COMPONENTS } from '@oimlsmart/site-shell/data/components.ts'
-export type { SmartComponent } from '@oimlsmart/site-shell/data/components.ts'
+export { COMPONENTS, SMART_COMPONENTS, SMARTPLUS_COMPONENTS } from '@oimlsmart/site-shell/data/components.ts'
+export type { SmartComponent, ComponentTier, ComponentDeployment } from '@oimlsmart/site-shell/data/components.ts'

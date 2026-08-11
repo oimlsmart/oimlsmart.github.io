@@ -37,8 +37,9 @@ describe('MobileNav', () => {
     const text = wrapper.text()
     expect(text).toContain('Resources')
     expect(text).toContain('News')
-    // The OIML-CS standalone folded into the Components dropdown (/smart).
-    expect(text).toContain('Components')
+    // Component dropdowns split into SMART and SMART+ tiers.
+    expect(text).toContain('SMART')
+    expect(text).toContain('SMART+')
     expect(text).toContain('About')
     expect(text).toContain('Sign in')
   })

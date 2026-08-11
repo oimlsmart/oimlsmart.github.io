@@ -5,23 +5,34 @@ import { NAV_DROPDOWNS, NAV_STANDALONE, isLinkActive, isDropdownActive } from '.
 
 describe('nav-config', () => {
   describe('NAV_DROPDOWNS', () => {
-    it('has exactly 4 dropdowns: platform, resources, about, internal', () => {
+    it('has exactly 5 dropdowns: smart, smartplus, resources, about, internal', () => {
       const ids = NAV_DROPDOWNS.map(d => d.id)
-      expect(ids).toEqual(['platform', 'resources', 'about', 'internal'])
+      expect(ids).toEqual(['smart', 'smartplus', 'resources', 'about', 'internal'])
     })
 
-    it('platform dropdown contains the component pages in order', () => {
-      const platform = NAV_DROPDOWNS.find(d => d.id === 'platform')!
-      const hrefs = platform.links.map(l => l.href)
+    it('smart dropdown contains the SMART-tier components in order', () => {
+      const smart = NAV_DROPDOWNS.find(d => d.id === 'smart')!
+      const hrefs = smart.links.map(l => l.href)
       expect(hrefs).toEqual([
         '/recs',
-        '/studio',
-        '/smart',
-        '/smi',
-        '/sst',
-        '/cnml',
         '/vocab',
         '/publications',
+        '/studio',
+        '/cnml',
+        '/smart',
+        '/platform',
+      ])
+    })
+
+    it('smartplus dropdown contains the SMART+-tier components in order', () => {
+      const smartplus = NAV_DROPDOWNS.find(d => d.id === 'smartplus')!
+      const hrefs = smartplus.links.map(l => l.href)
+      expect(hrefs).toEqual([
+        '/cnml',
+        '/smi',
+        '/sst',
+        '/smart',
+        '/platform',
       ])
     })
 

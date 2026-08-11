@@ -37,6 +37,16 @@ const MAP: Record<string, string> = {
   'oiml-logo_sst-dark.svg': 'sst-dark.svg',
   'oiml-logo_cnml-box-light.svg': 'cnml-box-light.svg',
   'oiml-logo_cnml-box-dark.svg': 'cnml-box-dark.svg',
+  // SMART tier — OIML SMART Platform (member/NMI/TL deployment).
+  'oiml-logo_smart-platform-light.svg': 'smart-platform-light.svg',
+  'oiml-logo_smart-platform-dark.svg': 'smart-platform-dark.svg',
+  // SMART+ tier — OIML SMART+ Platform (member deployment).
+  'oiml-logo_smartplus-light.svg': 'smartplus-light.svg',
+  'oiml-logo_smartplus-dark.svg': 'smartplus-dark.svg',
+  // SMART+ tier — OIML-CS SMART+ Platform (global). Brand ships only a
+  // light variant (-36 is the latest iteration); ComponentLogo's
+  // <picture>/<source> falls back to it in dark mode.
+  'oiml-logo_cs-smartplus-light-36.svg': 'cs-smartplus-light.svg',
 }
 
 function sha(path: string): string {

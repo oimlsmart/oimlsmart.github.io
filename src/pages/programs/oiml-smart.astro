@@ -18,10 +18,25 @@ const demoManual = FEDERATION.find(f => f.volume === 'The demo manual')!
 <Base>
   <PageHero
     title="OIML SMART, the program"
-    lede="The first program built on the Primmel SMART platform: OIML International Recommendations as executable models, the OIML Certification System as a digital workflow, and a classroom to learn all of it."
+    lede="The first program built on the Primmel SMART platform: OIML International Recommendations as executable models, the OIML Certification System as a digital workflow, and a classroom to learn all of it. Two tiers, SMART (Type-approval) and SMART+ (instrument-instance lifecycle)."
   />
 
   <div class="px-8 pb-20 max-w-5xl">
+    {/* § 00, the two tiers */}
+    <section class="mb-16 bp-reveal">
+      <div class="bp-section-anchor mb-4">
+        <span class="bp-section-anchor__num">§ 00</span>
+        <span>Two tiers, one program</span>
+        <span class="bp-section-anchor__line"></span>
+        <span class="bp-coord">SMART · SMART+</span>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        <strong class="text-ink font-semibold">SMART</strong> covers the published, expert-authored artifacts (Recommendations, Vocabulary, Resources), the SMART Studio for authoring, CNML at the Issuing-Authority / Type-approval level, and the two platform deployments that run the Type-approval workflow: the global OIML-CS SMART Platform and the optional member-state OIML SMART Platform.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl">
+        <strong class="text-ink font-semibold">SMART+</strong> extends the program to the full instrument-instance and measurement lifecycle: CNML at the Type-instance and measurement level, the SMART Measuring Instruments and SST families, and the OIML-CS SMART+ Platform (global) and OIML SMART+ Platform (member-state) that run it.
+      </p>
+    </section>
     {/* § 01, the Recommendations */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">

@@ -33,10 +33,10 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
 
       <div class="gate-rule" />
 
-      <a class="enter" href="/api/auth/signin/github">
-        <span class="enter-label">Continue with GitHub</span>
+      <a class="enter" href="/app/launch/">
+        <span class="enter-label">Launch the OIML SMART app</span>
         <span class="enter-arrow">→</span>
-        <span class="enter-meta">oauth · web flow</span>
+        <span class="enter-meta">local server · port 5190</span>
       </a>
 
       <p class="gate-note">
@@ -45,7 +45,8 @@ const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: '
           the SMART application running on this machine. From a clone of the
           <code>smart</code> repository, execute <code>bin/dev</code> in your
           terminal. The local server listens on
-          <a href="/app/">www.oimlsmart.org/app</a>.
+          <a href="/app/">www.oimlsmart.org/app</a>; GitHub sign-in is brokered
+          by the local server, not this public site.
         </span>
       </p>
 

@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+import ComponentLogo from '../components/ComponentLogo.astro'
+import TierToggle from '../components/TierToggle.astro'
+
+const federation = [
+  { role: 'Member State / NMI', desc: 'Operates a local OIML SMART Platform instance under national custody. Workflow engine and certificate PKI run inside the member’s trust boundary.' },
+  { role: 'Test laboratory', desc: 'May run a local instance for bench-side evidence capture, federating test runs upstream to the OIML-CS SMART Platform.' },
+  { role: 'Issuing authority', desc: 'Can issue CNML certificates from a local instance; the signed chain verifies at the global register on import.' },
+  { role: 'OIML-CS (BIML)', desc: 'Operates the global OIML-CS SMART Platform that the member deployments federate with — the shared register, the verifier of last resort.' },
+]
+
+const smartplusFederation = [
+  { role: 'Member State / NMI', desc: 'Operates a local OIML SMART+ Platform covering the full instrument-instance lifecycle — every certified instrument in service, its measurement stream, its compliance state.' },
+  { role: 'Test laboratory', desc: 'Runs ongoing conformance and re-verification against live instrument twins; results federate upstream against the Type-approval baseline held at the global platform.' },
+  { role: 'Issuing authority', desc: 'Issues and revokes Type-instance certificates from the local platform; each instance’s measurement stream is signed and traceable.' },
+  { role: 'OIML-CS (BIML)', desc: 'Operates the global OIML-CS SMART+ Platform — the registry of Type-instance certificates, the cross-border verifier for instruments in service.' },
+]
+---
+
+<Base
+  title="The OIML SMART Platform"
+  description="The optional member-state deployment of the SMART runtime — workflow engine and certificate PKI under national custody, federating with the global OIML-CS SMART Platform."
+>
+  <PageHero
+    eyebrow="Member deployment · federated"
+    title="The OIML SMART Platform"
+    lede="Member states, NMIs, and test laboratories may operate their own SMART runtime under their own custody, federating with the global OIML-CS SMART Platform. Or they can use the global platform directly — participation is a choice, not a requirement."
+  />
+
+  <section class="py-14 px-8">
+    <div class="max-w-5xl">
+      <TierToggle default="smart" />
+
+      <div class="max-w-3xl mb-12" data-tier="smart">
+        <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Two ways to run the SMART-tier runtime</h2>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+          The <strong class="text-ink font-semibold">OIML-CS SMART Platform</strong> is the BIML-operated global deployment — every issuing authority and test laboratory participates by account, not by installation. The <strong class="text-ink font-semibold">OIML SMART Platform</strong> is the same workflow engine and certificate PKI, packaged for a member state or laboratory to run under its own custody. Signed artifacts produced locally federate upstream; the global register verifies the signature chain on import.
+        </p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          The SMART-tier platform covers the Type-approval workflow: application, testing, evaluation, CNML certificate issuance, BIML registration.
+        </p>
+      </div>
+
+      <div class="max-w-3xl mb-12" data-tier="smartplus">
+        <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The runtime extended to the full instrument lifecycle</h2>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+          The <strong class="text-ink font-semibold">OIML-CS SMART+ Platform</strong> extends the global runtime to Type-instance and measurement-level data: every certified instrument in service, its calibration, its live measurement stream, its continuous-compliance verdict. The <strong class="text-ink font-semibold">OIML SMART+ Platform</strong> is the member-state deployment of the same — instrument-instance certificates and measurement streams under national custody, federating with the global register.
+        </p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          SMART+ assumes the SMART-tier Type-approval baseline is already in place. The two tiers compose: a Type-instance certificate is only meaningful against a Type-approval certificate that defines what the instrument must satisfy.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 max-[960px]:grid-cols-1 mb-12" data-tier="smart">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <ComponentLogo name="cs-smart" alt="The OIML-CS SMART platform logo." width={96} class="mb-4 block" />
+          <div class="bp-coord mb-1">Global deployment</div>
+          <h3 class="font-serif text-[1.25rem] mb-2">OIML-CS SMART Platform</h3>
+          <p class="text-[0.9375rem] text-ink-soft mb-3">BIML-operated. The shared register, the verifier of last resort. Every participant lands here whether or not they also run a local instance.</p>
+          <a href="/smart" class="text-accent text-sm font-medium">Open the global platform →</a>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <ComponentLogo name="smart-platform" alt="The OIML SMART Platform logo." width={96} class="mb-4 block" />
+          <div class="bp-coord mb-1">Member deployment</div>
+          <h3 class="font-serif text-[1.25rem] mb-2">OIML SMART Platform</h3>
+          <p class="text-[0.9375rem] text-ink-soft mb-3">Run locally under national custody. Same workflow engine, same certificate PKI, federated with the global register.</p>
+          <span class="text-ink-muted text-sm font-mono">Pilot — local-deployment packaging in progress</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 max-[960px]:grid-cols-1 mb-12" data-tier="smartplus">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <ComponentLogo name="cs-smartplus" alt="The OIML-CS SMART+ platform logo." width={96} class="mb-4 block" />
+          <div class="bp-coord mb-1">Global deployment · SMART+</div>
+          <h3 class="font-serif text-[1.25rem] mb-2">OIML-CS SMART+ Platform</h3>
+          <p class="text-[0.9375rem] text-ink-soft mb-3">BIML-operated. The registry of Type-instance certificates, the cross-border verifier for instruments in service.</p>
+          <a href="/smart#smartplus" class="text-accent text-sm font-medium">Open the global SMART+ platform →</a>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <ComponentLogo name="smartplus" alt="The OIML SMART+ Platform logo." width={96} class="mb-4 block" />
+          <div class="bp-coord mb-1">Member deployment · SMART+</div>
+          <h3 class="font-serif text-[1.25rem] mb-2">OIML SMART+ Platform</h3>
+          <p class="text-[0.9375rem] text-ink-soft mb-3">Run locally under national custody. Type-instance certificates and measurement streams, federated with the global SMART+ register.</p>
+          <span class="text-ink-muted text-sm font-mono">Pilot — SMART+ packaging in progress</span>
+        </div>
+      </div>
+
+      <div class="max-w-3xl mb-8" data-tier="smart">
+        <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who runs what at the SMART tier</h2>
+      </div>
+      <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1 mb-12" data-tier="smart">
+        {federation.map((f) => (
+          <div class="bg-paper-soft p-5">
+            <div class="bp-coord mb-1">{f.role}</div>
+            <p class="text-[0.9375rem] leading-relaxed text-ink-soft">{f.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="max-w-3xl mb-8" data-tier="smartplus">
+        <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who runs what at the SMART+ tier</h2>
+      </div>
+      <div class="grid grid-cols-2 gap-px bg-rule border border-rule rounded-md overflow-hidden max-[960px]:grid-cols-1 mb-12" data-tier="smartplus">
+        {smartplusFederation.map((f) => (
+          <div class="bg-paper-soft p-5">
+            <div class="bp-coord mb-1">{f.role}</div>
+            <p class="text-[0.9375rem] leading-relaxed text-ink-soft">{f.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="border-t border-rule pt-8 max-w-3xl">
+        <p class="text-sm text-ink-muted">The OIML SMART Platform pilot is in progress. Local-deployment packaging, federation protocols, and the SMART+ tier extension are under active development on the <code class="font-mono text-xs">smart</code> repository.</p>
+      </div>
+    </div>
+  </section>
+</Base>
