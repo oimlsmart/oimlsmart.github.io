@@ -1,0 +1,130 @@
+---
+title: 'OIML SMART AI: answers with citations from OIML publications'
+date: 2026-08-27
+author: OIML SMART team
+summary: 'We built a question-answering service over the OIML publications corpus. It answers in your language, cites the exact publication, edition and clause for every claim, and says plainly when the corpus does not contain the answer.'
+draft: false
+---
+
+The OIML publishes close to 900 documents: Recommendations, Basic
+publications, Guides, Documents and Expert reports. Together they are the
+reference library of legal metrology. In practice, though, they are hard to
+search. Questions like "what is the current edition of R 60?", "how does
+R 76-1 define the maximum permissible error for class III?" or "which
+publication defines a 'load cell'?" require knowing the corpus before you can
+query it.
+
+We built [ai.oimlsmart.org](https://ai.oimlsmart.org) to lower that barrier.
+You ask a question in your own language; it answers in that language and
+cites the exact publication, edition and clause for every claim. This post
+is a plain account of how it works and where it falls short.
+
+## What it does
+
+The service is a retrieval-augmented question-answering system — often
+abbreviated RAG. The idea is simple: before a language model answers, it is
+given passages retrieved from a trusted corpus, and it may only use those.
+Everything else in the system exists to make that retrieval good and to keep
+the model honest about what it found.
+
+Three rules shape the answers:
+
+- **Every claim cites its source**, inline, like `[OIML R 60-1:2021 §4.4.2]`.
+- **Normative values are quoted verbatim** from the cited passage, so a
+  number in an answer can be checked against the source mechanically.
+- **If the corpus doesn't contain the answer, the system says so** — a plain
+  refusal sentence, not a guess. Refusals are never cached, so a repeated
+  off-corpus question is re-evaluated, not replayed.
+
+Editions matter in legal metrology, so the service keeps a registry of
+publication families and their editions, and steers answers toward the
+current edition. Whether an edition is current is derived from the
+bibliographic record's supersession links — we found the record's own status
+field contradicts its links in 58 cases, so we trust the links.
+
+## How it works
+
+When you ask a question:
+
+1. A small language model reads it first — which language, which publication
+   or edition it names, whether it concerns a defined term, what earlier
+   turns of the conversation it refers to. There are no keyword rules; the
+   same model makes these judgements for every question.
+2. The question is expanded into several search forms and run against a
+   vector index of the corpus. Chunks were split along clause boundaries, and
+   almost all of them (99.4%) carry a short model-written preamble
+   describing where they sit in their document — a technique that
+   measurably improves retrieval. A terminology graph adds candidates when
+   the question involves a defined term.
+3. A cross-encoder reranker orders the candidates; complex questions get a
+   second, stronger reranking pass.
+4. The answer is generated from the retrieved passages under the citation
+   contract above.
+5. A separate judge grades whether the passages support the answer, and a
+   faithfulness check scores the final text. Unsupported answers are
+   withheld, not shown with a shrug.
+
+All models are open-weight (Qwen, DeepSeek families) served on Cloudflare
+Workers AI; there is no dependency on a proprietary model provider. The
+corpus stays in our own infrastructure. Frequent questions are served from
+caches, which keeps the service fast and its running costs modest — the full
+one-time enrichment of 31,000 chunks cost about $54.
+
+Quality is measured, not assumed: a golden question set with expected
+citations runs end-to-end on every change; paraphrase probes check that the
+same question asked eight ways hits the same sources; judged metrics score
+faithfulness, relevancy and precision; retrieval hit-rate is tracked
+independently of generation. These suites run in CI and gate deployment.
+
+A fuller technical description, including the exact models per role and the
+evaluation suites, is on the service itself:
+[How it works](https://ai.oimlsmart.org/how-it-works/).
+
+## What it doesn't do (yet)
+
+An honest list:
+
+- **The index is English-only.** Answers are written in your language, but
+  the source text indexed today is the English editions.
+- **Tables and equations are flattened into prose** during indexing. You can
+  ask about a table value and get the right clause, but not the table row as
+  a structure.
+- **Some bibliographic gaps remain.** 36 of 224 publication families lack a
+  recorded supersession link, so their current edition cannot be derived.
+  The registry surfaces these gaps rather than papering over them; fixing
+  them means fixing the source bibliographic data, which we are feeding
+  back upstream.
+- **Verification reduces errors; it does not eliminate them.** A wrong
+  answer that looks supported can still pass the checks. The citations are
+  on every answer so readers can verify — please do.
+
+## What's next: document structure, not document text
+
+The most interesting direction ahead comes from how these publications are
+made. OIML publications are authored in Metanorma, a model-driven document
+system: the source of truth is a typed document model — clauses, tables,
+equations, requirements, figures — from which renderings (PDF, HTML) are
+generated. Today our index mostly sees the text.
+
+The next step is to ingest the structure itself:
+
+- **Typed retrieval units** — a table row, an equation, a requirement
+  statement as first-class objects, so a question about accuracy-class
+  limits can return the actual table row it lives in.
+- **Bibliographic relations** (the Relaton dataset) as a queryable graph —
+  already built: 7,128 nodes, 6,486 edges.
+- **Terminology concepts** from Glossarist datasets, linked to the clauses
+  that define them.
+- **Canonical identifiers** via the PubID scheme, so any spelling of a
+  publication resolves to one identity.
+
+We are contributing this direction to the Metanorma project's ongoing work
+on AI-friendly serialization of document models, so that any
+Metanorma-authored corpus — not only ours — can be indexed this way.
+
+## Try it
+
+The service is live at [ai.oimlsmart.org](https://ai.oimlsmart.org). Sign in
+with your OIML SMART account for higher limits and conversation history; an
+HTTP API and an MCP server (for AI agents) are documented on the site. The
+thumbs up/down on each answer feeds our evaluation loop — it genuinely helps.
