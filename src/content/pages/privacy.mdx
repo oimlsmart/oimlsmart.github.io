@@ -1,0 +1,88 @@
+---
+title: Privacy Policy
+description: 'What the OIML SMART estate collects, where it lives, how long it stays, and the control you have over it. One policy for every oimlsmart.org service.'
+eyebrow: 'Legal · Estate-wide'
+---
+
+*Last updated: 28 August 2026. This policy is versioned with the site; its history is public on GitHub.*
+
+This policy covers the whole OIML SMART estate: this website (www.oimlsmart.org), the identity service (id.oimlsmart.org), the platform instances that run the certification workflow, the AI assistant (ai.oimlsmart.org), and the status page (status.oimlsmart.org). One policy, because one programme operates all of them.
+
+## Who is responsible
+
+The estate is operated by the OIML SMART programme, a programme of the International Organization of Legal Metrology delivered by Ribose. The programme is the data controller for the services described here; Ribose is the operator you deal with in practice.
+
+Questions, access requests, and erasure requests: **identity@oimlsmart.org**.
+
+## What each service holds
+
+### The identity service (id.oimlsmart.org)
+
+The identity service is the estate's OpenID Connect provider. It holds the account registry:
+
+- your email address and display name;
+- your organisation memberships and roles, granted and revoked by your organisation's administrators;
+- your sign-in credentials: a password hash, passkeys (WebAuthn public keys), authenticator-app secrets (TOTP), and recovery codes stored as hashes;
+- links to the upstream identity providers you choose to sign in with (GitHub today);
+- your active sessions;
+- an audit journal of security and administrative events: sign-ins, factor changes, grants, and offboarding acts. Every event names its actor.
+
+### The platform instances
+
+The platform instances run the OIML certification workflow. They hold the workflow data that you and your organisation enter: applications, instrument descriptions, test and evaluation data, evidence files, review records, and the reports and certificates the workflow produces. Signed documents may carry an OpenTimestamps proof: a public timestamp anchor of the document's digest. The anchor never contains the document itself.
+
+### The demo instances
+
+Demo instances are clearly marked, and they carry fictional data only: fictional instruments, fictional organisations, fictional people. Nothing on a demo instance is a real record. Do not enter real personal or business data on a demo instance.
+
+### The AI assistant (ai.oimlsmart.org)
+
+- Anonymous use is rate-limited per IP address. The counter is all that is kept.
+- Signed-in members have conversation histories tied to their account. You can delete a conversation at any time, and deletion removes it.
+- Thumbs-up and thumbs-down feedback is logged against a hash of the question, for evaluation.
+- To produce an answer, your question and the passages retrieved for it are sent to the provider of the answer model. That transfer is the service working as designed; it is stated here because you should know.
+- Integrators authenticate with API keys; usage counters are kept per key.
+
+### The status page (status.oimlsmart.org)
+
+The status page is public and anonymous: no accounts, no login. It renders probe results about the estate's own services, and probe history is kept for 90 days. Visiting the page leaves you unknown to us.
+
+### This website
+
+www.oimlsmart.org is a static site. It holds no accounts and collects nothing beyond the hosting provider's standard delivery logs.
+
+## Cookies and storage
+
+The estate uses exactly two kinds of browser storage:
+
+1. **Session cookies** that keep you signed in, at the identity service, the platform instances, and the AI assistant. They are strictly necessary for the service to work, and they expire with the session.
+2. **A theme preference** (the `oiml-theme` key in localStorage) that remembers light or dark mode.
+
+There are no tracking cookies, no analytics beacons, no advertising technology, and no third-party trackers anywhere in the estate.
+
+## Where the data lives
+
+- **Cloudflare** hosts the services: the compute, the databases, and the storage.
+- **GitHub** holds the source code, hosts the public sites, and runs the estate's operational automation.
+- **OpenTimestamps** anchors evidence digests for signed documents, as described above.
+- **The answer-model providers** process AI assistant queries, as described above.
+
+We do not sell personal data, and we do not share it with anyone else.
+
+## Retention
+
+- Account data stays while the account is active.
+- The identity service's audit journal is retained for the life of the registry. The certification scheme runs on audit evidence, and the operator's own log is part of that posture.
+- AI conversation histories stay until you delete them.
+- Status probe history is kept for 90 days.
+- Backups run on a schedule, with bounded retention and a tested restore drill.
+
+## Your control
+
+The account console at id.oimlsmart.org is the self-service surface: review your profile, your sessions, and your sign-in factors; end one session or all of them; or erase the account. Erasure anonymises the account record. The audit journal keeps the fact that the event happened, under a reference that no longer resolves to you.
+
+For anything the console does not cover (access, correction, export, erasure), email **identity@oimlsmart.org**.
+
+## Changes
+
+This policy is versioned in the site's public repository. Material changes are announced before they take effect; the date at the top states the current version.
