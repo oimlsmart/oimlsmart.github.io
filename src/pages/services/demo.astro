@@ -4,6 +4,13 @@ import PageHero from '../../components/PageHero.astro'
 import ActionBox from '../../components/ActionBox.astro'
 import StatusRow from '../../components/StatusRow.astro'
 import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
+import ServiceShot from '../../components/ServiceShot.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
+
+// Every screenshot below is captured by scripts/capture-services.ts,
+// which performs the act and asserts the surface before capturing; the
+// date travels with each shot. Re-run the script to refresh the evidence.
+const captured = '2026-08-29'
 ---
 
 <Base
@@ -18,45 +25,175 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
 
   <section class="px-8 pb-20 max-w-5xl">
     <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What it is</h2>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        The SMART Platform in demo posture: the same software as the production hub, seeded with the demonstration cast, the manufacturer ACME Measurement GmbH and its LC-500 load-cell line, the Example Issuing Authority, the Example Test Laboratory, and the BIML register. Every person and organization is fictional by design; every artifact they produce is real platform output.
-      </p>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        A persistent <em>Demonstration environment</em> banner marks every page: fictional data, resets nightly. The reset is a scheduled job that re-seeds the instance, so the demo is self-healing and anything you enter is gone by morning. Demo instances never carry real data, and production never carries the demo cast.
-      </p>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        The canonical try-it path is the worked-example certificate: the ACME LC-500's type-evaluation chain, carried through application, testing, and evaluation to certificate <span class="font-mono text-sm">R60/2021-A-EX1-26.01</span>, active, registered by BIML, with its CNML sign-and-verify panel on the page, at <span class="font-mono text-sm">/app/standards/r60/certificates/crt-acme-lc</span>. The guided demo (any app page with <span class="font-mono text-sm">?demo=full-flow</span>) walks the same chain step by step with a presenter script.
-      </p>
-    </div>
-
-    <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who it's for</h2>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        Anyone who wants to see the workflow before asking for anything: a committee member preparing a position, an authority officer evaluating the console, a laboratory wondering what a structured test request looks like, a manufacturer rehearsing an application. No approval stands between you and a demo account.
-      </p>
-    </div>
-
-    <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where it lives</h2>
       <ActionBox
         href="https://demo.oimlsmart.org/"
-        label="demo.oimlsmart.org"
-        description="The demo hub. Enter the app; the login page carries the demo accounts as one-click buttons."
+        label="Open the demo instance"
+        description="Enter the app and click a demo account on the login page. No request, no approval; the shared demo password is printed there too."
+      />
+      <ServiceShot
+        service="demo"
+        id="demo-portal-applicant"
+        alt="The applicant portal on the demo instance: ACME Measurement GmbH's five applications and three certificates, signed in with the one-click Applicant demo account"
+        caption="The applicant portal, one click after the login page: the pilot's applications and certificates already on the record"
+        date={captured}
       />
     </div>
 
     <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
-      <ol class="list-decimal pl-6 text-[1.0625rem] leading-relaxed text-ink-soft grid gap-2 mb-4">
-        <li>Open <a href="https://demo.oimlsmart.org/app/login" class="text-accent underline underline-offset-2">demo.oimlsmart.org/app/login</a>.</li>
-        <li>Under <em>demo accounts</em>, click the role you want: Applicant (the ACME manufacturer), Issuing Authority, Test Laboratory, BIML Officer, the laboratory's own named operators, and more. The click signs you in and lands you on that role's console; the shared demo password is printed on the page for the manual form.</li>
-        <li>The console opens with the pilot's applications, samples, test projects, and certificates already on the record.</li>
-        <li>For the end-to-end story, start the guided demo from the login page (or add <span class="font-mono text-sm">?demo=full-flow</span> to any app page) and follow the presenter script.</li>
-      </ol>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        Remember the nightly reset: work you want to keep belongs on a real deployment, not here.
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What you can do</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-8">
+        Nine acts, each performed against the live demo before this page listed it; the dated capture under each act is the audit artifact, re-produced by <span class="font-mono text-sm">scripts/capture-services.ts</span> on every refresh.
       </p>
+      <ol class="grid gap-10 list-none pl-0">
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">1. Sign in with one click.</strong> The login page carries the demo cast as buttons: Applicant, Issuing Authority, Test Laboratory, the laboratory's named operators, BIML Officer, and more. The click signs you in and lands you on that role's console; the shared demo password is printed on the page for the manual form.
+          </p>
+          <ServiceShot
+            service="demo"
+            id="demo-login-accounts"
+            alt="The demo login page listing the one-click demo accounts: Applicant, Issuing Authority, Test Laboratory, BIML Officer, and the rest of the fictional cast"
+            caption="The login page: the whole demo cast as one-click accounts"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">2. Work the applicant portal.</strong> As the ACME manufacturer you see your five applications with their states and your three certificates, all real platform records from the pilot seed.
+          </p>
+          <ServiceShot
+            service="demo"
+            id="demo-portal-applicant"
+            alt="The applicant portal: five applications with ACCEPTED states and three ACTIVE certificates for the LC-500 line"
+            caption="The applicant portal: applications and certificates on one record"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">3. Open one application and see the whole file.</strong> Application XX-ACME-2026-0001 opens with its state, its instrument, and the link that follows the evaluation project the authority is running for it.
+          </p>
+          <ServiceShot
+            service="demo"
+            id="demo-application-detail"
+            alt="Application XX-ACME-2026-0001 open in the applicant portal: ACCEPTED, LC-500i, with the follow-the-evaluation-project link"
+            caption="One application, the whole file, and the path into the evaluation"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">4. Open the worked-example certificate.</strong> Certificate <span class="font-mono text-sm">R60/2021-A-EX1-26.01</span> renders as the full OIML document: ACTIVE, the classification table, the conditions, the revision history, the signature block, and the pointer that closes the loop: verify it against the public register.
+          </p>
+          <ServiceShot
+            service="demo"
+            id="demo-certificate"
+            alt="The worked-example certificate R60/2021-A-EX1-26.01: ACTIVE, with the classification table, conditions, revision history, and the verify-against-the-register pointer"
+            caption="The certificate as the full document, with the verification pointer at its foot"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">5. Verify the certificate against the public register, no sign-in.</strong> The number lookup answers from the public BIML register (B 18:2025 §15.8): the verdict, the registration record, and the W3C Status List revocation and suspension checks with their check timestamp.
+          </p>
+          <ServiceShot
+            service="demo"
+            id="demo-verify"
+            alt="The public verify page: R60/2021-A-EX1-26.01 ACTIVE, BIML registration record, NOT REVOKED and NOT SUSPENDED with the check timestamp"
+            caption="The public register's verdict: ACTIVE, not revoked, not suspended"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">6. Sit at the Issuing Authority console.</strong> The review queue, the twelve type-evaluation projects with their stages, the active test requests, and the certificate waiting ready to issue: the authority's whole desk on one screen.
+          </p>
+          <ServiceShot
+            service="demo"
+            id="demo-ia-console"
+            alt="The Issuing Authority console: review queue, twelve type evaluation projects with their stages, active test requests, ready to issue"
+            caption="The IA console: review, dispatch, evaluation, issuance"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">7. Sit at the Test Laboratory workbench.</strong> The dispatch inbox is where the authority's test requests land, and the ANR axis lets the laboratory declare, per Recommendation and country, which Additional National Requirement tests it can perform.
+          </p>
+          <ServiceShot
+            service="demo"
+            id="demo-tl-workbench"
+            alt="The Test Laboratory workbench: the dispatch inbox and the ANR test capability declaration for OIML R 60"
+            caption="The TL workbench: the inbox and the ANR capability declaration"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">8. Work the BIML console.</strong> The registration inbox is where issued certificates arrive for the BIML's registration act; the worked-example certificate shows in the recently-registered list with its registration record.
+          </p>
+          <ServiceShot
+            service="demo"
+            id="demo-biml-console"
+            alt="The BIML console: the registration inbox and R60/2021-A-EX1-26.01 in the recently registered list"
+            caption="The BIML console: registration as a first-class act"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">9. Start the guided demo.</strong> From the login page (or <span class="font-mono text-sm">?demo=full-flow</span> on any app page) a presenter script walks the full certification chain, step by step, with the demo cast.
+          </p>
+          <ServiceShot
+            service="demo"
+            id="demo-guided-demo"
+            alt="The guided demo presenter script on the login page: the full certification flow, step 1 of 24, Submit the application"
+            caption="The presenter script: the full flow in 24 steps"
+            date={captured}
+          />
+        </li>
+      </ol>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How it works</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The demo is the SMART Platform itself in demo posture: the same software as the production hub, seeded with the demonstration cast, the manufacturer ACME Measurement GmbH and its LC-500 load-cell line, the Example Issuing Authority, the Example Test Laboratory, and the BIML register. Every person and organization is fictional by design; every artifact they produce is real platform output.
+      </p>
+      <FlowDiagram
+        caption="FIG. THE DEMO LOOP"
+        steps={[
+          { label: 'Pick a demo account', sub: 'one click, no approval', accent: 'amber' },
+          { label: 'Work the role console', sub: 'the real workflow', accent: 'brand' },
+          { label: 'Share one record', sub: 'every role sees the same file', accent: 'teal' },
+          { label: 'Nightly reset', sub: 're-seeded, self-healing', accent: 'slate' },
+        ]}
+        arrows={[
+          { label: 'sign in', detail: 'the demo cast as buttons' },
+          { label: 'act', detail: 'apply, review, test, register' },
+          { label: 'observe', detail: 'verdicts and certificates arrive' },
+        ]}
+      />
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        A persistent <em>Demonstration environment</em> banner marks every page: fictional data, resets nightly. The reset is a scheduled job that re-seeds the instance, so the demo is self-healing and anything you enter is gone by morning. Demo instances never carry real data, and production never carries the demo cast.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">SMART today, SMART+ next</h2>
+      <div class="border border-rule rounded-md bg-paper-soft p-6 mb-4">
+        <p class="font-mono text-xs tracking-[0.12em] text-ink-muted mb-2">SMART · LIVE TODAY</p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          Everything in the inventory above is SMART: the certification workflow over the modelled Recommendations, the role consoles, the CNML certificate, the register. Open the demo and it is all there.
+        </p>
+      </div>
+      <div class="border border-dashed border-rule rounded-md p-6">
+        <p class="font-mono text-xs tracking-[0.12em] text-ink-muted mb-2">SMART+ · THE ROADMAP TIER</p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          The same demo is where the SMART+ surfaces are piloted: the simulated instruments of <a href="/technologies/sst" class="text-accent underline underline-offset-2">the SST</a> and the monitored-fleet twin story of <a href="/technologies/smart-twin" class="text-accent underline underline-offset-2">the SMART Twin</a> run here as rehearsal. The deployable compliance engine and the cryptographically signed serves remain <strong class="text-ink font-semibold">roadmap</strong> items, tracked on the technology pages and the platform's future wave; nothing on this page presents them as present.
+        </p>
+      </div>
     </div>
 
     <div class="max-w-3xl mb-12">
@@ -69,9 +206,50 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
       <ServiceEntitlement service="demo-instance" />
     </div>
 
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The honest questions</h2>
+      <div class="grid gap-4">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Is anything I enter kept?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No. The instance re-seeds nightly, so experiments, half-finished applications, and test entries are gone by morning. Work you want to keep belongs on a real deployment, not here.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Is the demo cast real?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Every person and organization is fictional by design, and the banner says so on every page. The artifacts are not fictional: the applications, verdicts, and the signed certificate are real platform output, produced by the same code that runs the production hub.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Do I need anyone's approval to look?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No. The one-click demo accounts exist so a committee member, an authority officer, or a laboratory can see the whole workflow before asking for anything. A production account is a different path, through <a href="/services/identity" class="text-accent underline underline-offset-2">the identity service</a>, and approval there comes from your own organization.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Is the demo the same software as production?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Yes, the same codebase in demo posture: seeded cast, nightly reset, and the demonstration banner. Production instances differ only by their deployment profile (the hub, IA-only, TL-only, IA+TL), which is the same software booted with a different declared shape.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="https://demo.oimlsmart.org/"
+        label="Try the demo"
+        description="demo.oimlsmart.org, then Enter App: the demo accounts are one-click buttons on the login page. The applicant portal and the IA console are the two consoles to see first."
+      />
+      <ActionBox
+        href="/docs/"
+        label="Read the docs"
+        description="The developer quickstart and the docs federation: the workflow model, the deployment profiles, the data conventions."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org, the programme's front-door address. Guided walkthroughs for committees are the commonest request."
+      />
+    </div>
+
     <div class="border-t border-rule pt-8 max-w-3xl">
       <p class="text-sm text-ink-muted">
-        Verified 2026-08-29: the demo hub and the login page answered live; the Applicant demo-account button signed in in one click and landed on the applicant portal; the worked-example certificate page rendered certificate R60/2021-A-EX1-26.01 as ACTIVE with its BIML registration record and the CNML sign-and-verify panel.
+        Verified {captured}: every act in the inventory was performed headlessly against the live demo by scripts/capture-services.ts (the one-click sign-ins, the application and certificate pages, all four role consoles, the guided-demo overlay) and each capture carries its assertions in public/img/services/manifest.json.
       </p>
     </div>
   </section>
