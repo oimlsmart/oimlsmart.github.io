@@ -1,7 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro'
 import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
 import EntitlementMatrix from '../../components/EntitlementMatrix.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
 import { UPSELL_NARRATIVES, SOFTWARE_REPOS } from '../../data/entitlement-matrix'
 ---
 
@@ -22,9 +24,23 @@ import { UPSELL_NARRATIVES, SOFTWARE_REPOS } from '../../data/entitlement-matrix
         <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
           <strong class="text-ink font-semibold">Using is for everyone.</strong> Member States, Corresponding Members, their Issuing Authorities and Test Laboratories, Utilizers and Associates, applicants — everyone gets an account on the estate and everyone uses the hosted OIML-CS SMART Platform; the hosted path never requires running anything yourself.
         </p>
-        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
           <strong class="text-ink font-semibold">Running is a Member State entitlement.</strong> Self-deploying the SMART Platform (on-prem or cloud, with streaming updates on the rolling channel) attaches to the Member State category — an Issuing Authority or Test Laboratory operates its own instance under its proposing Member State's entitlement. The identity service software is the one piece any member may run on its own domain.
         </p>
+        <FlowDiagram
+          caption="FIG. USE VERSUS RUN"
+          steps={[
+            { label: 'Every member category', sub: 'use the hosted estate', accent: 'brand' },
+            { label: 'Member State', sub: 'the self-host entitlement', accent: 'teal' },
+            { label: 'IA / TL', sub: 'operate under their Member State', accent: 'amber' },
+            { label: 'Any member', sub: 'the identity software, config-only', accent: 'slate' },
+          ]}
+          arrows={[
+            { label: 'ratification', detail: 'the Corresponding Member path upward' },
+            { label: 'designation', detail: 'the body operates, the state is entitled' },
+            { label: 'the exception', detail: 'one piece everyone may run' },
+          ]}
+        />
       </div>
 
       <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The matrix</h2>
@@ -32,6 +48,22 @@ import { UPSELL_NARRATIVES, SOFTWARE_REPOS } from '../../data/entitlement-matrix
         Per service, per member category. Cells badged <span class="font-mono text-xs border border-dashed border-ink-muted rounded-full px-2 py-0.5 text-ink-muted">proposed</span> are the programme coordinator's extrapolation, not yet confirmed policy.
       </p>
       <EntitlementMatrix />
+
+      <div class="max-w-3xl mt-16 mb-12">
+        <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">SMART today, SMART+ next</h2>
+        <div class="border border-rule rounded-md bg-paper-soft p-6 mb-4">
+          <p class="font-mono text-xs tracking-[0.12em] text-ink-muted mb-2">SMART · LIVE TODAY</p>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+            Every row of the matrix above the twin line is the live SMART estate: the account, the platform (hosted and self-host), the demo, the studio viewer, the vocabulary, the status service, the AI service, the Recommendations content, the trust registry, the SST pilot cells.
+          </p>
+        </div>
+        <div class="border border-dashed border-rule rounded-md p-6">
+          <p class="font-mono text-xs tracking-[0.12em] text-ink-muted mb-2">SMART+ · THE ROADMAP TIER</p>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+            The matrix's last row, the SMART Twin, reads <em>roadmap</em> across every member category, and it means it: the SMART+ services have no entitlement cells yet because they are not yet services anyone can use or run. When the tier ships, the row fills in; the honest cell today is the empty one.
+          </p>
+        </div>
+      </div>
 
       <div class="max-w-3xl mt-16">
         <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The paths upward</h2>
@@ -68,6 +100,25 @@ import { UPSELL_NARRATIVES, SOFTWARE_REPOS } from '../../data/entitlement-matrix
         <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
           Where a repository carries no open-source license yet, the honest wording is the one above — "source available", never "open source". The self-host runbooks are live: the identity service's <a href="https://github.com/oimlsmart/identity/blob/main/docs/deployment/identity-self-host.md" class="text-accent">self-host runbook</a> walks a member from a stock checkout to its own OP on its own domain, config-only; the SMART Platform's deployment runbook (topologies A and B, rolling upgrades) ships with the member repository.
         </p>
+      </div>
+
+      <div class="max-w-3xl mt-16">
+        <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+        <ActionBox
+          href="https://demo.oimlsmart.org/"
+          label="Try the demo"
+          description="The hosted estate in demo posture: one-click demo accounts on the login page, no request needed."
+        />
+        <ActionBox
+          href="/services/identity"
+          label="Get an account"
+          description="The join flow, the approval path, and the self-host exception, walked on the identity service page."
+        />
+        <ActionBox
+          href="mailto:info@oimlsmart.org"
+          label="Talk to us"
+          description="info@oimlsmart.org, the programme's front-door address. Entitlement and deployment questions land here."
+        />
       </div>
 
       <div class="border-t border-rule pt-8 max-w-3xl mt-16">

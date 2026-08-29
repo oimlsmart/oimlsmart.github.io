@@ -2,17 +2,14 @@
 import Base from '../../layouts/Base.astro'
 import PageHero from '../../components/PageHero.astro'
 import ActionBox from '../../components/ActionBox.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
 
 // The services directory: each card links its service page (TODO.promotion
-// wave 04); the service page carries the live link, the access path, the
-// status row, and the entitlement row. Every live URL is verified at
-// authoring time; the lychee gate re-proves them on every build.
-const services = [
-  {
-    title: 'Who can run what',
-    desc: 'The entitlement matrix: which services each member category can use on the hosted estate, and which they may run themselves.',
-    href: '/services/who-can-run-what',
-  },
+// wave 04); the service page carries the live link, the performed capability
+// inventory with dated captures (wave 10), the status row, and the
+// entitlement row. Every live URL is verified at authoring time; the lychee
+// gate re-proves them on every build.
+const smartServices = [
   {
     title: 'The SMART Platform',
     desc: 'The certification workflow itself: application, testing, evaluation, certificate. The instance kinds, the role consoles, the access path.',
@@ -71,8 +68,22 @@ const services = [
     <div class="max-w-3xl mb-12">
       <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What changes</h2>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        One identity spans the estate, every artifact is addressable by URL, and one status page tells you what is running. The services below are the whole estate as it stands; nothing is hidden behind a brochure.
+        One identity spans the estate, every artifact is addressable by URL, and one status page tells you what is running. The services below are the whole estate as it stands; nothing is hidden behind a brochure. Every service page carries the same anatomy: a dated screenshot of the live surface, the concrete things you can do (each performed headlessly before it was listed, the capture its evidence), one diagram, and the entitlement row quoted from the single matrix.
       </p>
+      <FlowDiagram
+        caption="FIG. THE ESTATE"
+        steps={[
+          { label: 'The identity service', sub: 'one account, per organization', accent: 'brand' },
+          { label: 'The certification services', sub: 'the hub, the instances, the demo', accent: 'teal' },
+          { label: 'The public surfaces', sub: 'vocabulary, studio, status, AI', accent: 'amber' },
+          { label: 'The entitlements', sub: 'who can run what', accent: 'slate' },
+        ]}
+        arrows={[
+          { label: 'signs in to', detail: 'GitHub, Google, passkey, password' },
+          { label: 'serve', detail: 'no account needed' },
+          { label: 'governed by', detail: 'the single matrix, quoted everywhere' },
+        ]}
+      />
     </div>
 
     <div class="max-w-3xl mb-12">
@@ -85,8 +96,33 @@ const services = [
       <ActionBox
         href="https://demo.oimlsmart.org/"
         label="Open the demo instance"
-        description="The full platform with the pilot data loaded. Sign in with a demo account; request one via info@oimlsmart.org."
+        description="The full platform with the pilot data loaded. Sign in with a one-click demo account on the login page; no request needed."
       />
+    </div>
+
+    <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The services (SMART, live today)</h2>
+    <div class="grid grid-cols-2 gap-4 max-[960px]:grid-cols-1 mb-4">
+      {smartServices.map(s => (
+        <a href={s.href} class="group border border-rule rounded-md bg-paper-soft p-6 no-underline text-inherit transition-colors hover:border-accent">
+          <h3 class="font-serif text-[1.25rem] mb-2 group-hover:text-accent">{s.title}</h3>
+          <p class="text-[0.9375rem] text-ink-soft">{s.desc}</p>
+        </a>
+      ))}
+    </div>
+    <div class="max-w-3xl mb-12">
+      <a href="/services/who-can-run-what" class="group block border border-rule rounded-md bg-paper-soft p-6 no-underline text-inherit transition-colors hover:border-accent">
+        <h3 class="font-serif text-[1.25rem] mb-2 group-hover:text-accent">Who can run what</h3>
+        <p class="text-[0.9375rem] text-ink-soft">The entitlement matrix: which services each member category can use on the hosted estate, and which they may run themselves.</p>
+      </a>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The SMART+ tier (roadmap)</h2>
+      <div class="border border-dashed border-rule rounded-md p-6">
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          The SMART+ services (the SMI twin, the SST simulation at estate scale, signed measurements, continuous compliance) are the vision tier: piloted on the demo, <strong class="text-ink font-semibold">roadmap</strong> as member-served deployments, and documented on the technology pages, <a href="/technologies/smart-twin" class="text-accent underline underline-offset-2">the SMART Twin</a> and <a href="/technologies/sst" class="text-accent underline underline-offset-2">the SST</a>. When a SMART+ service ships, it joins the directory above; until then, this directory lists only what answers live today.
+        </p>
+      </div>
     </div>
 
     <div class="max-w-3xl mb-12">
@@ -94,16 +130,6 @@ const services = [
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
         Access, accounts, and service questions: <a class="text-accent underline underline-offset-2" href="mailto:info@oimlsmart.org">info@oimlsmart.org</a>.
       </p>
-    </div>
-
-    <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The services</h2>
-    <div class="grid grid-cols-2 gap-4 max-[960px]:grid-cols-1">
-      {services.map(s => (
-        <a href={s.href} class="group border border-rule rounded-md bg-paper-soft p-6 no-underline text-inherit transition-colors hover:border-accent">
-          <h3 class="font-serif text-[1.25rem] mb-2 group-hover:text-accent">{s.title}</h3>
-          <p class="text-[0.9375rem] text-ink-soft">{s.desc}</p>
-        </a>
-      ))}
     </div>
   </section>
 </Base>
