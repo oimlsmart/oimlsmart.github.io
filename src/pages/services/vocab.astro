@@ -1,0 +1,69 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import StatusRow from '../../components/StatusRow.astro'
+import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
+---
+
+<Base
+  title="The Vocabulary"
+  description="The OIML vocabularies as linked, diagrammed, addressable concepts: the VIM and VIML edition series, the curated Complete Vocabulary, and the G 18 term-usage registry. Public, no account."
+>
+  <PageHero
+    eyebrow="Services"
+    title="The Vocabulary"
+    lede="Every term of legal metrology, linked: the VIM and VIML edition series, the curated OIML Complete Vocabulary, and the G 18 registry of how the publications actually use each term. Every concept has its own URL, so a citation can point at the term itself."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl">
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What it is</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The OIML's terminology as a browsable, addressable dataset collection rather than a shelf of PDFs: the International Vocabulary of Metrology (VIM) and the International Vocabulary of Legal Metrology (VIML), each as a full edition series with the current edition marked, the curated Complete Vocabulary collection across both, and the G 18 term-usage registry, which collates where each term is used across the Recommendations and checks each usage against the vocabulary definition.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Concepts are searchable, diagrammed (the graph view draws the term relations), and addressable: every concept carries its own URL, in five languages. The dataset detail, edition by edition with concept counts, lives on this site at <a href="/vocabularies/" class="text-accent underline underline-offset-2">Vocabularies</a>.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who it's for</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Authors checking that a draft uses the defined term, not a near-synonym; translators working across the edition series in their language; toolmakers anchoring a model or a form to the governed concept rather than to a copied definition.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where it lives</h2>
+      <ActionBox
+        href="https://www.oimlsmart.org/vocab/"
+        label="www.oimlsmart.org/vocab/"
+        description="The vocabulary service. Public, no account; search, browse the datasets, or open the graph view."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Open the link. Citing a term means copying its URL; there is no account tier and nothing to request.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Status</h2>
+      <StatusRow rows={['vocab-surface']} />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who can use it, who can run it</h2>
+      <ServiceEntitlement service="vocab" />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified 2026-08-29: the service answered live and rendered the VIML and VIM edition series with their current editions marked, the curated Complete Vocabulary collection, and the search and graph entries.
+      </p>
+    </div>
+  </section>
+</Base>
