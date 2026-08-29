@@ -1,0 +1,443 @@
+{
+  "capturedAt": "2026-08-29",
+  "shots": [
+    {
+      "service": "ai",
+      "id": "ai-ask-cited-answer",
+      "caption": "A real question, answered with clause-level citations: the class C load-cell MPE, with the SOURCES panel naming publication, edition, and clause.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "SOURCES",
+        "OIML R 60",
+        "load cell"
+      ]
+    },
+    {
+      "service": "demo",
+      "id": "demo-certificate",
+      "caption": "The worked-example certificate R60/2021-A-EX1-26.01: ACTIVE, the full document with its classification table, revision history, and the public-register verify pointer.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "R60/2021-A-EX1-26.01",
+        "ACTIVE",
+        "Print certificate",
+        "OIML CERTIFICATE HISTORY"
+      ]
+    },
+    {
+      "service": "demo",
+      "id": "demo-verify",
+      "caption": "The public verification path: the certificate number checked against the public BIML register (B 18:2025 §15.8), no sign-in, with the W3C Status List revocation and suspension checks.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "Verify an OIML certificate",
+        "ACTIVE",
+        "BIML registration",
+        "NOT REVOKED",
+        "NOT SUSPENDED"
+      ]
+    },
+    {
+      "service": "studio-viewer",
+      "id": "studio-mapping",
+      "caption": "The mapping lens, honest about the current model: no mapping profiles declared yet.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "no mapping profiles",
+        "map_profile"
+      ]
+    },
+    {
+      "service": "demo",
+      "id": "demo-login-accounts",
+      "caption": "The demo login page: the one-click demo accounts, the shared demo password, and the guided-demo entry.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "demo accounts",
+        "Applicant",
+        "Issuing Authority",
+        "Test Laboratory",
+        "BIML Officer",
+        "Demo password:"
+      ]
+    },
+    {
+      "service": "demo",
+      "id": "demo-portal-applicant",
+      "caption": "The applicant portal after the one-click sign-in: ACME's five applications and three certificates.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "ACME Measurement GmbH",
+        "My applications",
+        "My certificates",
+        "R60/2021-A-EX1-26.01"
+      ]
+    },
+    {
+      "service": "demo",
+      "id": "demo-application-detail",
+      "caption": "One application opened: XX-ACME-2026-0001, ACCEPTED, with the link into the evaluation project.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "XX-ACME-2026-0001",
+        "ACCEPTED",
+        "LC-500i"
+      ]
+    },
+    {
+      "service": "demo",
+      "id": "demo-ia-console",
+      "caption": "The Issuing Authority console: the review queue, the twelve type-evaluation projects, the dispatch and issuance work.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "Review queue",
+        "Type evaluation projects",
+        "Ready to issue"
+      ]
+    },
+    {
+      "service": "demo",
+      "id": "demo-tl-workbench",
+      "caption": "The Test Laboratory workbench: the dispatch inbox and the ANR test-capability declaration.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "Inbox",
+        "ANR test capability",
+        "OIML R 60"
+      ]
+    },
+    {
+      "service": "demo",
+      "id": "demo-biml-console",
+      "caption": "The BIML console: the registration inbox and the recently registered worked-example certificate.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "Registration inbox",
+        "R60/2021-A-EX1-26.01",
+        "ACTIVE"
+      ]
+    },
+    {
+      "service": "demo",
+      "id": "demo-guided-demo",
+      "caption": "The guided demo's presenter script: the full certification flow, step 1 of 24, from the login page.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "Guided demo",
+        "Step 1 of 24",
+        "Submit the application"
+      ]
+    },
+    {
+      "service": "identity",
+      "id": "id-sign-in",
+      "caption": "The estate sign-in: GitHub, Google, passkey, or password, and the Request an account link.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "Sign in with GitHub",
+        "Sign in with Google",
+        "passkey",
+        "Request an account"
+      ]
+    },
+    {
+      "service": "identity",
+      "id": "id-join-flow",
+      "caption": "The join flow: full name, work email, and the organization selector fed by the live OIML-CS participants register, labeled by kind.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "Request an account",
+        "Full name",
+        "Work email",
+        "Member State",
+        "Corresponding Member"
+      ]
+    },
+    {
+      "service": "identity",
+      "id": "id-discovery",
+      "caption": "The OpenID discovery document every relying party in the estate resolves sign-in through.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "issuer",
+        "authorization_endpoint",
+        "token_endpoint"
+      ]
+    },
+    {
+      "service": "status",
+      "id": "status-overview",
+      "caption": "All twelve probe rows operational: identity, the platform instances, the AI service, and the public surfaces, each with its measured uptime and p95.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "All systems operational",
+        "Operational",
+        "30-day uptime",
+        "90-day uptime"
+      ]
+    },
+    {
+      "service": "status",
+      "id": "status-objectives",
+      "caption": "Objectives vs reality: the declared availability and latency objectives next to the measured numbers, never rounded up.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "Objectives vs reality",
+        "Declared availability",
+        "meeting"
+      ]
+    },
+    {
+      "service": "status",
+      "id": "status-incidents",
+      "caption": "The incident record: human-written, after the fact. When nothing has broken, it says so.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "Incidents",
+        "No incidents on record"
+      ]
+    },
+    {
+      "service": "ai",
+      "id": "ai-refusal",
+      "caption": "The off-corpus posture: a question the OIML library cannot answer gets a plain refusal, not an invention.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "don't have information",
+        "indexed OIML publications"
+      ]
+    },
+    {
+      "service": "ai",
+      "id": "ai-how-it-works",
+      "caption": "The service's own honest account: what happens between your question and the answer, including what it does not do.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "How it works",
+        "close to 900",
+        "citation"
+      ]
+    },
+    {
+      "service": "ai",
+      "id": "ai-api",
+      "caption": "The API reference: anonymous and member tiers with their daily question allowances, SSE streaming or complete JSON.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "API Reference",
+        "POST /api/ask",
+        "20 questions/day"
+      ]
+    },
+    {
+      "service": "studio-viewer",
+      "id": "studio-tree",
+      "caption": "The model tree of OIML R 60 as data: 13 roles, 31 processes, with the read-only and computed-valid markers.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "read only",
+        "valid",
+        "PROCESSES",
+        "submit_application"
+      ]
+    },
+    {
+      "service": "studio-viewer",
+      "id": "studio-code",
+      "caption": "The code view: the same model as Primmel source — package, kind, editions, base URN, the modules it composes.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "model.prl",
+        "package",
+        "oiml-r60"
+      ]
+    },
+    {
+      "service": "studio-viewer",
+      "id": "studio-diff",
+      "caption": "The diff lens: load a second version and the kernel's model-diff computes added, removed, changed, and moved per element.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "load a version to compare",
+        "model-diff"
+      ]
+    },
+    {
+      "service": "studio-viewer",
+      "id": "studio-certificate-preview",
+      "caption": "The certificate preview: the instrument certificate rendered from the model itself.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "INSTRUMENT CERTIFICATE",
+        "PREVIEW"
+      ]
+    },
+    {
+      "service": "vocab",
+      "id": "vocab-home",
+      "caption": "The eleven datasets: the VIML and VIM edition series with the current editions marked, and the curated Complete Vocabulary.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "11 datasets",
+        "VIML",
+        "VIM",
+        "Complete Vocabulary",
+        "7,451"
+      ]
+    },
+    {
+      "service": "vocab",
+      "id": "vocab-search",
+      "caption": "Search across every edition at once: \"calibration\" hits grouped per dataset, each with its concept number.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "calibration hierarchy",
+        "OIML V 2-200:2012",
+        "COMPLETE VOCABULARY"
+      ]
+    },
+    {
+      "service": "vocab",
+      "id": "vocab-concept",
+      "caption": "One concept, one URL: calibration hierarchy (VIM 2.40) with its definition, relations, edition series, languages, and canonical URI.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "calibration hierarchy",
+        "LANGUAGES",
+        "URI",
+        "current edition"
+      ]
+    },
+    {
+      "service": "vocab",
+      "id": "vocab-graph",
+      "caption": "The graph view: the term relations drawn as a navigable graph.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": []
+    },
+    {
+      "service": "platform",
+      "id": "platform-hub",
+      "caption": "The production hub: the published SMART Recommendations with their requirement, test, and form counts.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "OIML SMART",
+        "R 60",
+        "R 144"
+      ]
+    },
+    {
+      "service": "platform",
+      "id": "platform-nmi-instance",
+      "caption": "The IA+TL pilot instance at nmi.oimlsmart.org: the same software, booted under the member-state deployment profile.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "OIML SMART",
+        "Recommendations"
+      ]
+    },
+    {
+      "service": "platform",
+      "id": "platform-tl-instance",
+      "caption": "The TL-only pilot instance at tl.oimlsmart.org: the laboratory posture of the same codebase.",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "asserted": [
+        "OIML SMART",
+        "Recommendations"
+      ]
+    }
+  ]
+}
