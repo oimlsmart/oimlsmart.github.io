@@ -8,7 +8,7 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
 
 <Base
   title="The demo instance"
-  description="The always-on OIML SMART sandbox: the full platform pre-loaded with the fictional demo cast, one-click demo accounts, the nightly reset, and the signed worked-example certificate as the canonical try-it path."
+  description="The always-on OIML SMART sandbox: the full platform pre-loaded with the fictional demo cast, one-click demo accounts, the nightly reset, and the worked-example certificate as the canonical try-it path."
 >
   <PageHero
     eyebrow="Services"
@@ -26,7 +26,7 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
         A persistent <em>Demonstration environment</em> banner marks every page: fictional data, resets nightly. The reset is a scheduled job that re-seeds the instance, so the demo is self-healing and anything you enter is gone by morning. Demo instances never carry real data, and production never carries the demo cast.
       </p>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        The canonical try-it path is the signed worked-example certificate: the ACME LC-500's type-evaluation chain, carried through application, testing, and evaluation to a CNML certificate with its OpenTimestamps attestation, at <span class="font-mono text-sm">/app/standards/r60/certificates/crt-acme-lc</span>. The guided demo (any app page with <span class="font-mono text-sm">?demo=full-flow</span>) walks the same chain step by step with a presenter script.
+        The canonical try-it path is the worked-example certificate: the ACME LC-500's type-evaluation chain, carried through application, testing, and evaluation to certificate <span class="font-mono text-sm">R60/2021-A-EX1-26.01</span>, active, registered by BIML, with its CNML sign-and-verify panel on the page, at <span class="font-mono text-sm">/app/standards/r60/certificates/crt-acme-lc</span>. The guided demo (any app page with <span class="font-mono text-sm">?demo=full-flow</span>) walks the same chain step by step with a presenter script.
       </p>
     </div>
 
@@ -50,8 +50,8 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
       <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
       <ol class="list-decimal pl-6 text-[1.0625rem] leading-relaxed text-ink-soft grid gap-2 mb-4">
         <li>Open <a href="https://demo.oimlsmart.org/app/login" class="text-accent underline underline-offset-2">demo.oimlsmart.org/app/login</a>.</li>
-        <li>Under <em>demo accounts</em>, click the role you want: Applicant (the ACME manufacturer), Issuing Authority, Test Laboratory, BIML Officer, the laboratory's own named operators, and more. Clicking fills the account; the shared demo password is printed on the page.</li>
-        <li>Sign in. You land on that role's console with the pilot's applications, samples, test projects, and certificates already on the record.</li>
+        <li>Under <em>demo accounts</em>, click the role you want: Applicant (the ACME manufacturer), Issuing Authority, Test Laboratory, BIML Officer, the laboratory's own named operators, and more. The click signs you in and lands you on that role's console; the shared demo password is printed on the page for the manual form.</li>
+        <li>The console opens with the pilot's applications, samples, test projects, and certificates already on the record.</li>
         <li>For the end-to-end story, start the guided demo from the login page (or add <span class="font-mono text-sm">?demo=full-flow</span> to any app page) and follow the presenter script.</li>
       </ol>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
@@ -71,7 +71,7 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
 
     <div class="border-t border-rule pt-8 max-w-3xl">
       <p class="text-sm text-ink-muted">
-        Verified 2026-08-29: the demo hub, the login page with its one-click demo accounts and printed shared password, the demonstration-environment banner, and the worked-example certificate page all answered live; the Applicant button was clicked and filled the manufacturer's account.
+        Verified 2026-08-29: the demo hub and the login page answered live; the Applicant demo-account button signed in in one click and landed on the applicant portal; the worked-example certificate page rendered certificate R60/2021-A-EX1-26.01 as ACTIVE with its BIML registration record and the CNML sign-and-verify panel.
       </p>
     </div>
   </section>
