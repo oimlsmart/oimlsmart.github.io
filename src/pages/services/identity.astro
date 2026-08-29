@@ -1,0 +1,84 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import StatusRow from '../../components/StatusRow.astro'
+import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
+---
+
+<Base
+  title="The identity service"
+  description="One account for the whole OIML SMART estate: the sign-in providers, the organization registry, what an organization administrator can do, and the exact path to request an account."
+>
+  <PageHero
+    eyebrow="Services"
+    title="The identity service"
+    lede="One account spans the estate: the platform, the demo instance, the studio, the AI service all sign in through the same service, and member deployments federate with it instead of running their own user directories. Accounts are issued per organization, never self-declared."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl">
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What it is</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The estate's OpenID Provider. Sign-in is by GitHub, Google, passkey, or password; every relying party in the estate resolves sign-in through its published <a href="https://id.oimlsmart.org/.well-known/openid-configuration" class="text-accent underline underline-offset-2">discovery document</a>. Behind the accounts sits the organization registry: the OIML-CS participants on the corrected member taxonomy, Member States and Corresponding Members, their Issuing Authorities and Test Laboratories, Utilizers and Associates, each organization registered with the participation that entitles it.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        An organization administrator manages their own organization: they invite and approve members, shape what each member can see and do (the visibility cones), and hold the organization's keys, the ones the trust registry records for signing and submission. Approval of a new account always comes from the requester's own organization, never from the bureau and never automatically.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who it's for</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Everyone who touches the estate: member-state and corresponding-member personnel, authority officers, laboratory operators, applicants, designated Utilizers and Associates. One person, one account, the roles their organization grants. Administrators are the first account of a registered organization; the join flow makes one when a new organization is admitted.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where it lives</h2>
+      <ActionBox
+        href="https://id.oimlsmart.org/"
+        label="id.oimlsmart.org"
+        description="The sign-in page. The 'Request an account' link is the join flow; the discovery document is at /.well-known/openid-configuration."
+      />
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        The software is a public repository, <a href="https://github.com/oimlsmart/identity" class="text-accent underline underline-offset-2">oimlsmart/identity</a> (source available; the open-source license is pending, the honest wording until it lands). Any member may run its own identity service from it on its own domain: the <a href="https://github.com/oimlsmart/identity/blob/main/docs/deployment/identity-self-host.md" class="text-accent underline underline-offset-2">self-host runbook</a> walks a stock checkout to a running provider, config-only.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
+      <ol class="list-decimal pl-6 text-[1.0625rem] leading-relaxed text-ink-soft grid gap-2 mb-4">
+        <li>Open <a href="https://id.oimlsmart.org/" class="text-accent underline underline-offset-2">id.oimlsmart.org</a> and choose <em>Request an account</em> (it lands on <span class="font-mono text-sm">/op/join</span>).</li>
+        <li>Enter your full name and work email, then pick your organization from the selector. The selector is fed by the participants register, registered organizations only, labelled by kind (OIML Member, Member State or Corresponding Member; Issuing Authority; Test Laboratory; Utilizer; Associate), so you cannot invent a standing your organization does not hold.</li>
+        <li>Ask for the role your work needs; the options are bounded by the organization's kind (an issuing authority's staff see the authority roles, a laboratory's the operator roles).</li>
+        <li>Submit. The request lands with your organization's administrator, who verifies and approves it; you sign in once they have.</li>
+      </ol>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        If your organization is not on the register yet, the <em>not listed</em> path names it in free text and lands with the BIML secretariat, which verifies the participation; the requester becomes the organization's first administrator once it is registered. A manufacturer of measuring instruments takes the manufacturer path: the organization is declared on self-registration (its work-email domain is the standing's first proof) and can be upgraded to authority-endorsed later.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Status</h2>
+      <StatusRow rows={['identity-op-discovery', 'identity-sign-in']} />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who can use it, who can run it</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        The account is universal; the software's self-host posture is the one piece of the estate any member may run. Both rows quoted from the single source:
+      </p>
+      <h3 class="font-serif text-[1.25rem] mb-3">The estate account</h3>
+      <ServiceEntitlement service="estate-account" />
+      <h3 class="font-serif text-[1.25rem] mb-3 mt-8">The identity service software</h3>
+      <ServiceEntitlement service="identity-software" />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified 2026-08-29: the sign-in page, the discovery document, and the join flow all answered live; the join flow walked to the organization selector, which offered the real register (member states and corresponding members by name, authorities, laboratories, utilizers, associates).
+      </p>
+    </div>
+  </section>
+</Base>
