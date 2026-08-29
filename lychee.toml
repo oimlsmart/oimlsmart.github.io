@@ -43,19 +43,6 @@ exclude = [
   "/concepts-management/",
   # Source repo is private during the pilot — link is for reference, not public.
   "https://github.com/oimlsmart/smart",
-  # TODO.promotion/01 deploy ordering — REMOVE AFTER THE SECTIONS DEPLOY.
-  # The federation nav links these front-door absolute (site-shell
-  # ADR-0003), so the URLs are checked live, where they 404 until this
-  # wave's PR merges and Pages redeploys. Anchored so only the section
-  # roots skip; member pages (e.g. /services/who-can-run-what) and the
-  # /about/audiences/* pages keep their normal checks.
-  "^https://www\\.oimlsmart\\.org/audiences/$",
-  "^https://www\\.oimlsmart\\.org/technologies/$",
-  "^https://www\\.oimlsmart\\.org/use-cases/$",
-  "^https://www\\.oimlsmart\\.org/services/$",
-  # Same ordering for the cs-smartplus dark variant: the file ships in
-  # this wave's PR (it 404s on the live site until the deploy).
-  "^https://www\\.oimlsmart\\.org/img/components/cs-smartplus-dark\\.svg$",
 ]
 
 # Don't check mailto links
