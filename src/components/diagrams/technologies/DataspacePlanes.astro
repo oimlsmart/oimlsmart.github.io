@@ -1,0 +1,73 @@
+---
+/**
+ * DataspacePlanes — the dataspace mechanism in one diagram: the estate's
+ * machinery named in dataspace terms (identity, data, policy, catalog),
+ * custody stays with each party, and policies authored as model content
+ * export to ODRL on the wire. House style; dark-mode correct via the
+ * TechFigure palette.
+ */
+import TechFigure from './TechFigure.astro'
+---
+
+<TechFigure caption="The four planes in dataspace terms: custody never moves to a center; evidence moves between instances under policy; the catalog endpoint is the shipping edge of this work.">
+  <svg viewBox="0 0 860 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dataspace-planes-title">
+    <title id="dataspace-planes-title">The estate answers the dataspace's four planes: identity by the trust registry, data by peer-to-peer custody, policy by ODRL exports, catalog by each instance's offer surface</title>
+
+    <defs>
+      <marker id="dsp-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"></path>
+      </marker>
+    </defs>
+
+    <text x="430" y="30" text-anchor="middle" font-size="17" font-weight="600" fill="var(--dg-text)">A dataspace, not a data lake</text>
+
+    <!-- The parties -->
+    <rect x="30" y="70" width="170" height="110" rx="8" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" />
+    <text x="115" y="96" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-text)">The laboratory</text>
+    <text x="115" y="116" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">holds the evaluation's</text>
+    <text x="115" y="130" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">evidence</text>
+    <text x="115" y="158" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">custody stays here</text>
+
+    <rect x="30" y="210" width="170" height="110" rx="8" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" />
+    <text x="115" y="236" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-text)">The authority</text>
+    <text x="115" y="256" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">holds the decision</text>
+    <text x="115" y="270" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">and its record</text>
+    <text x="115" y="298" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">custody stays here</text>
+
+    <!-- The four planes -->
+    <rect x="270" y="56" width="290" height="76" rx="8" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" />
+    <text x="415" y="80" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-source-text)">Identity · the trust anchor</text>
+    <text x="286" y="100" font-size="9" fill="var(--dg-text-soft)">the organization registry + the trust registry;</text>
+    <text x="286" y="114" font-size="9" fill="var(--dg-text-soft)">no parallel trust framework</text>
+
+    <rect x="270" y="148" width="290" height="76" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="415" y="172" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-gen-text)">Data · peer-to-peer exchange</text>
+    <text x="286" y="192" font-size="9" fill="var(--dg-text-soft)">evidence moves between instances under</text>
+    <text x="286" y="206" font-size="9" fill="var(--dg-text-soft)">custody; no central data lake</text>
+
+    <rect x="270" y="240" width="290" height="76" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="415" y="264" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-gen-text)">Policy · usage control</text>
+    <text x="286" y="284" font-size="9" fill="var(--dg-text-soft)">policies authored as model content,</text>
+    <text x="286" y="298" font-size="9" fill="var(--dg-text-soft)">exported as ODRL 2.2 on the wire</text>
+
+    <rect x="270" y="332" width="290" height="56" rx="8" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" />
+    <text x="415" y="356" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-gov-text)">Catalog · the offer surface</text>
+    <text x="415" y="374" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">each instance serves its offered artifact classes</text>
+
+    <!-- The wire -->
+    <rect x="620" y="148" width="210" height="168" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5" />
+    <text x="725" y="174" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-text)">On the wire</text>
+    <text x="636" y="198" font-size="9.5" fill="var(--dg-text-soft)">the Dataspace Protocol</text>
+    <text x="636" y="214" font-size="9.5" fill="var(--dg-text-soft)">(ISO/IEC 20151 track)</text>
+    <text x="636" y="238" font-size="9.5" fill="var(--dg-text-soft)">ODRL 2.2 policy expressions</text>
+    <text x="636" y="262" font-size="9.5" fill="var(--dg-text-soft)">the IDS Reference Architecture</text>
+    <text x="636" y="278" font-size="9.5" fill="var(--dg-text-soft)">Model's planes</text>
+    <text x="725" y="304" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">the catalog endpoint ships today;</text>
+    <text x="725" y="318" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">negotiation is roadmap</text>
+
+    <line x1="200" y1="125" x2="262" y2="100" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#dsp-arr)" />
+    <line x1="200" y1="265" x2="262" y2="270" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#dsp-arr)" />
+    <line x1="560" y1="232" x2="612" y2="232" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#dsp-arr)" />
+    <text x="586" y="222" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">exports</text>
+  </svg>
+</TechFigure>
