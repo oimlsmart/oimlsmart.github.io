@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="900" height="480" fill="#0a1628"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="#f5efe4">The laboratory&#8217;s arc: evidence captured once, at the moment of work</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#8d9bb4"/>
+    </marker>
+  </defs>
+
+  <rect x="30" y="80" width="190" height="86" rx="10" fill="#13233d" stroke="#1f3357" stroke-width="1.5"/>
+  <text x="125" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="#f5efe4">1 &#183; The dispatch lands</text>
+  <text x="125" y="126" text-anchor="middle" font-size="11" fill="#c2cad8">the IA&#8217;s request in your inbox:</text>
+  <text x="125" y="142" text-anchor="middle" font-size="11" fill="#c2cad8">forms, samples, terms</text>
+
+  <rect x="250" y="80" width="190" height="86" rx="10" fill="#13233d" stroke="#1f3357" stroke-width="1.5"/>
+  <text x="345" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="#f5efe4">2 &#183; Accept</text>
+  <text x="345" y="126" text-anchor="middle" font-size="11" fill="#c2cad8">your laboratory joins the</text>
+  <text x="345" y="142" text-anchor="middle" font-size="11" fill="#c2cad8">Evaluation Project&#8217;s dataspace</text>
+
+  <rect x="470" y="80" width="190" height="86" rx="10" fill="#1a2c47" stroke="#89b4ef" stroke-width="1.5"/>
+  <text x="565" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="#89b4ef">3 &#183; The guided run</text>
+  <text x="565" y="126" text-anchor="middle" font-size="11" fill="#c2cad8">the workbench walks the procedure;</text>
+  <text x="565" y="142" text-anchor="middle" font-size="11" fill="#c2cad8">readings accrue as evidence</text>
+
+  <rect x="690" y="80" width="180" height="86" rx="10" fill="#13233d" stroke="#1f3357" stroke-width="1.5"/>
+  <text x="780" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="#f5efe4">4 &#183; The report</text>
+  <text x="780" y="126" text-anchor="middle" font-size="11" fill="#c2cad8">generated from the evidence,</text>
+  <text x="780" y="142" text-anchor="middle" font-size="11" fill="#c2cad8">never transcribed after</text>
+
+  <line x1="220" y1="123" x2="242" y2="123" stroke="#8d9bb4" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="440" y1="123" x2="462" y2="123" stroke="#8d9bb4" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="660" y1="123" x2="682" y2="123" stroke="#8d9bb4" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="250" y="216" width="410" height="100" rx="10" fill="#13233d" stroke="#1f3357" stroke-width="1.5"/>
+  <text x="280" y="244" font-size="14" font-weight="600" fill="#f5efe4">Every row traces</text>
+  <text x="280" y="266" font-size="12" fill="#c2cad8">the condition, the input, the reading, the timestamp, the operator &#8212;</text>
+  <text x="280" y="284" font-size="12" fill="#c2cad8">and the clause that required it. Where evidence cannot be produced,</text>
+  <text x="280" y="302" font-size="12" fill="#c2cad8">the verdict reads INDETERMINATE &#8212; never a silent pass.</text>
+
+  <rect x="30" y="216" width="190" height="100" rx="10" fill="#16324a" stroke="#5ba3cc" stroke-width="1.5"/>
+  <text x="125" y="244" text-anchor="middle" font-size="13" font-weight="600" fill="#5ba3cc">Records mode</text>
+  <text x="125" y="264" text-anchor="middle" font-size="11" fill="#c2cad8">a report performed offline</text>
+  <text x="125" y="280" text-anchor="middle" font-size="11" fill="#c2cad8">registers as what it is &#8212;</text>
+  <text x="125" y="296" text-anchor="middle" font-size="11" fill="#c2cad8">never claims platform runs</text>
+
+  <rect x="690" y="216" width="180" height="100" rx="10" fill="#2a2416" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="780" y="244" text-anchor="middle" font-size="13" font-weight="600" fill="#fbbf24">Roadmap (SMART+)</text>
+  <text x="780" y="264" text-anchor="middle" font-size="11" fill="#c2cad8">rehearse on the simulated</text>
+  <text x="780" y="280" text-anchor="middle" font-size="11" fill="#c2cad8">twin before hardware &#8212;</text>
+  <text x="780" y="296" text-anchor="middle" font-size="11" fill="#c2cad8">same instructions, no risk</text>
+
+  <line x1="780" y1="166" x2="780" y2="196" stroke="#8d9bb4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+  <text x="780" y="190" text-anchor="middle" font-size="11" fill="#8d9bb4">the IA evaluates</text>
+
+  <text x="450" y="380" text-anchor="middle" font-size="13" fill="#8d9bb4">Your metrologists&#8217; expertise goes into measurement; the paperwork mechanics leave the bench.</text>
+  <text x="450" y="404" text-anchor="middle" font-size="13" fill="#8d9bb4">The report an IA receives from you is data it can compute against, not prose it must trust.</text>
+
+  <text x="450" y="456" text-anchor="middle" font-size="12" fill="#8d9bb4">The dispatch is one TestRequest per laboratory &#8212; your inbox shows exactly your share, live.</text>
+</svg>

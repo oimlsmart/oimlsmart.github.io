@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="900" height="500" fill="#faf6ee"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="#0a1628">One estate, seven seats: who touches which surface</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#6b7a92"/>
+    </marker>
+  </defs>
+
+  <rect x="330" y="190" width="240" height="110" rx="10" fill="#edf3fb" stroke="#004996" stroke-width="1.5"/>
+  <text x="450" y="222" text-anchor="middle" font-size="15" font-weight="600" fill="#004996">OIML SMART</text>
+  <text x="450" y="244" text-anchor="middle" font-size="11" fill="#3a4a63">the Recommendations as models,</text>
+  <text x="450" y="260" text-anchor="middle" font-size="11" fill="#3a4a63">the certification workflow,</text>
+  <text x="450" y="276" text-anchor="middle" font-size="11" fill="#3a4a63">the register, the verification</text>
+
+  <rect x="30" y="70" width="210" height="64" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="135" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="#0a1628">Member states &#38; NMIs</text>
+  <text x="135" y="112" text-anchor="middle" font-size="11" fill="#3a4a63">custody, designation, self-host</text>
+
+  <rect x="30" y="160" width="210" height="64" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="135" y="184" text-anchor="middle" font-size="13" font-weight="600" fill="#0a1628">Corresponding Members</text>
+  <text x="135" y="202" text-anchor="middle" font-size="11" fill="#3a4a63">every hosted service, no hosting</text>
+
+  <rect x="30" y="250" width="210" height="64" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="135" y="274" text-anchor="middle" font-size="13" font-weight="600" fill="#0a1628">Issuing authorities</text>
+  <text x="135" y="292" text-anchor="middle" font-size="11" fill="#3a4a63">the OIML-CS as a workflow</text>
+
+  <rect x="30" y="340" width="210" height="64" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="135" y="364" text-anchor="middle" font-size="13" font-weight="600" fill="#0a1628">Test laboratories</text>
+  <text x="135" y="382" text-anchor="middle" font-size="11" fill="#3a4a63">evidence captured at the bench</text>
+
+  <rect x="660" y="70" width="210" height="64" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="765" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="#0a1628">Manufacturers</text>
+  <text x="765" y="112" text-anchor="middle" font-size="11" fill="#3a4a63">apply once, follow it live</text>
+
+  <rect x="660" y="160" width="210" height="64" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="765" y="184" text-anchor="middle" font-size="13" font-weight="600" fill="#0a1628">Instrument users</text>
+  <text x="765" y="202" text-anchor="middle" font-size="11" fill="#3a4a63">verify, never trust letterhead</text>
+
+  <rect x="660" y="250" width="210" height="64" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="765" y="274" text-anchor="middle" font-size="13" font-weight="600" fill="#0a1628">Educators &#38; students</text>
+  <text x="765" y="292" text-anchor="middle" font-size="11" fill="#3a4a63">the classroom on the simulator</text>
+
+  <line x1="240" y1="102" x2="350" y2="196" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="240" y1="192" x2="322" y2="216" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="240" y1="282" x2="322" y2="262" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="240" y1="372" x2="350" y2="292" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="660" y1="102" x2="550" y2="196" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="660" y1="192" x2="578" y2="216" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="660" y1="282" x2="578" y2="262" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="30" y="430" width="840" height="52" rx="10" fill="#fdf6e9" stroke="#d97706" stroke-width="1.5"/>
+  <text x="450" y="451" text-anchor="middle" font-size="12" fill="#92400e">Every page separates what is live today (SMART) from the vision (SMART+) &#8212; the twin, the simulation,</text>
+  <text x="450" y="468" text-anchor="middle" font-size="12" fill="#92400e">signed measurements, continuous compliance &#8212; each future item anchored to the roadmap, never blurred into the present.</text>
+</svg>

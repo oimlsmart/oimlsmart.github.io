@@ -1,79 +1,126 @@
 ---
 title: 'For Instrument Users'
-description: Continuous compliance for the measuring instruments your business depends on, query the twin, read the evidence stream, trust the verdict chain.
+description: Verify any certificate yourself, in seconds, without an account; and where your organization is designated under the OIML-CS, see your national requirements become data.
 eyebrow: 'About · Audiences · 05'
 ---
 
 import EntitlementRow from '../../../../components/EntitlementRow.astro'
 import ActionBox from '../../../../components/ActionBox.astro'
+import AudienceShot from '../../../../components/AudienceShot.astro'
+import SmartSplit from '../../../../components/SmartSplit.astro'
 
-If your operation depends on measuring instruments, OIML SMART makes
-their compliance state something you can query instead of a sticker you
-trust. If your organization is a Utilizer or an Associate designated
-under the OIML-CS, the platform renders that designation as a fact and
-opens the evaluation-report and certificate surfaces it grants.
-
-## What you do today
-
-The instruments your operation depends on, the belt scale at the
-quarry, the gas meter at the custody-transfer point, are certified on
-a cycle. Between verifications you run on faith: a sticker, a date,
-and the hope that nothing drifted. When a dispute arises, you
-reconstruct the instrument's behavior from logs and memory. And when
-an OIML certificate or type evaluation report lands on your desk as
-the basis for a national approval, accepting it means reading a PDF
-and trusting its letterhead.
-
-## What changes
-
-A SMART-twin-capable instrument serves its **governed aspects live**:
-the quantities the Recommendation cares about, queryable through a
-standard interface, certified as faithful to the physical device by the
-twin-certification program. Compliance stops being a date on a sticker
-and becomes **a stream you can read**, verdicts computed against the
-Recommendation's requirements as evidence arrives, accruing append-only
-so history is never rewritten. Your own implementation model can
-import the manufacturer's reference model as a standing promise, or
-plug the live twin directly into your operations monitoring.
-
-For designated bodies the change is just as concrete. A Utilizer or an
-Associate signs the Declaration the OIML-CS prescribes (PD-08),
-accepting OIML certificates and type evaluation reports as the basis
-for national or regional type approvals. On the platform that
-designation is a registry fact linked to your designating Member State
-or Corresponding Member, your personnel hold accounts against it, and
-the report and certificate surfaces open per the designation, with the
-evidence chain attached, so acceptance becomes verification instead of
-trust.
-
-## What it looks like in practice
-
-Your quarry's belt scale answers queries through its twin interface;
-the compliance engine re-judges its requirements on a schedule; you
-see the current verdict and the full evidence history behind it. When
-the scale drifts out of its maximum permissible errors, the verdict
-degrades, visibly, immediately, with the probes that show it, instead
-of surfacing at next year's verification as a year of disputed
-invoices.
-
-## What you can try now
-
-The three-layer twin is the architecture's central idea: the physical
-device, the manufacturer's full twin, and the SMART twin as the
-governed projection between them, with the standard itself declaring
-what is governed. The twin-cert demo shows a certificate issued for
-exactly this fidelity promise.
+**Stop trusting the sticker; start reading the record.** Any certificate
+presented to you verifies against the public register in seconds, with no
+account and no phone call. And if your organization is a Utilizer or an
+Associate under the OIML-CS, your designation is a registry fact and
+your national requirements become data the applicant sees before
+applying, not after.
 
 <ActionBox
-  href="https://demo.oimlsmart.org/"
-  label="Open the live demo"
-  description="The instrument twin, the compliance verdicts, the evidence history. Sign in with a demo account; request one via info@oimlsmart.org."
+  href="https://demo.oimlsmart.org/app/verify/"
+  label="Verify a certificate now, no account"
+  description="The public verification surface: enter R60/2021-A-EX1-26.01 and read the verdict yourself."
 />
-<ActionBox
-  href="/smi"
-  label="See how the instrument twin works"
-  description="The three layers: the physical device, the full twin, and the governed projection between them."
+
+<AudienceShot
+  src="/img/audiences/shared/2026-08-29-verify-number-verdict-light.png"
+  dark="/img/audiences/shared/2026-08-29-verify-number-verdict-dark.png"
+  alt="The public verify page answering ACTIVE for R60/2021-A-EX1-26.01 with the register reference and the live status lists"
+  caption="The verdict: ACTIVE, with the BIML registration, the registered copy, and the revocation and suspension lists checked live."
+  performed="Performed on the live demo, 2026-08-29: verified R60/2021-A-EX1-26.01 by number, no account."
 />
+
+## What you can do
+
+Every act below was performed against the live demo before it was listed;
+the dated screenshot under each is the audit artifact.
+
+**Verify any certificate by its number.** The answer comes from the
+public register (B 18:2025 §15.8): the particulars, the classifications,
+the validity window, and the live revocation and suspension status from
+the W3C status lists, with the check's own timestamp.
+
+**Verify the certificate file itself.** A certificate downloaded as a
+Verifiable Credential (the .vc.json file) verifies against its issuer's
+DID document: the same verdict, straight from the file, no lookup
+needed. We downloaded the demo certificate's VC and verified it in the
+audit for this page.
+
+**Browse the register.** Every certificate the instance publishes, per
+scheme, with the export and the print view; the registered copy is the
+validity reference, and a presented document checks against it field by
+field.
+
+<AudienceShot
+  src="/img/audiences/shared/2026-08-29-certificate-register-light.png"
+  dark="/img/audiences/shared/2026-08-29-certificate-register-dark.png"
+  alt="The public certificate register listing the registered certificates with their schemes and validity"
+  caption="The public register: the OIML-CS entries the BIML has registered, browsable by anyone."
+  performed="Performed on the live demo, 2026-08-29: browsed the register, no account."
+/>
+
+**Where you are designated, see the designation rendered.** A Utilizer or
+Associate signs the Declaration the OIML-CS prescribes (PD-08). On the
+platform that designation is a registry fact linked to your designating
+member; your personnel hold accounts against it.
+
+**Declare your Additional National Requirements as data.** ANRs are
+declared per Recommendation and per market, moderated by the CS
+registry, and only an APPROVED declaration is live. Applicants targeting
+your market see the requirement before they apply, not in a finding
+after.
+
+<AudienceShot
+  src="/img/audiences/instrument-users/2026-08-29-anr-registry-light.png"
+  dark="/img/audiences/instrument-users/2026-08-29-anr-registry-dark.png"
+  alt="The ANR provisions page: the declaration registry and the declare form"
+  caption="The ANR surface: your market's declarations, and the declare form with its moderation doctrine."
+  performed="Performed on the live demo, 2026-08-29: signed in as the demo's Utilizer officer and opened the ANR registry."
+/>
+
+**Ask the OIML corpus, with citations.** The AI service answers questions
+about OIML publications with clause-level citations; if the corpus has
+no answer, it says so.
+
+<AudienceShot
+  src="/img/audiences/shared/2026-08-29-ai-answer-cited-light.png"
+  dark="/img/audiences/shared/2026-08-29-ai-answer-cited-dark.png"
+  alt="The OIML SMART AI answering 'What is R 60?' with numbered clause-level sources"
+  caption="The AI service: every claim carries a citation you can check."
+  performed="Performed on the live AI service, 2026-08-29: asked 'What is R 60?' and read the cited answer."
+/>
+
+## How it works
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/img/audiences/diagrams/instrument-users-light.svg" alt="From a presented certificate to verification: number lookup or file check, live status, decided" class="logo-light" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
+  <img src="/img/audiences/diagrams/instrument-users-dark.svg" alt="From a presented certificate to verification: number lookup or file check, live status, decided (dark)" class="logo-dark" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
+</figure>
+
+## What this changes, and what it does not
+
+Today the instruments your operation depends on are certified on a
+cycle, and between verifications you run on faith: a sticker, a date,
+and the hope that nothing drifted. Accepting a certificate means reading
+a PDF and trusting its letterhead. On the platform, acceptance becomes
+verification: the register answers in seconds, and the answer carries
+the live status. What does not change: your national requirements and
+your approvals remain yours; the platform informs them, it does not
+pre-empt them.
+
+<SmartSplit>
+  <ul slot="today">
+    <li><a href="https://demo.oimlsmart.org/app/verify/">Public verification</a> by number or by credential file, no account.</li>
+    <li>The <a href="https://demo.oimlsmart.org/app/register/">public register</a> with the registered copies.</li>
+    <li>The ANR declaration surface for designated Utilizers and Associates.</li>
+    <li>The <a href="https://ai.oimlsmart.org/">AI service</a> answering from the OIML corpus with citations.</li>
+  </ul>
+  <ul slot="vision">
+    <li>The instruments you run serving their governed aspects live: compliance as a stream you read, not a sticker you trust (the <a href="/technologies/smart-twin">SMART twin</a> is roadmap).</li>
+    <li>A verdict that degrades visibly when the instrument drifts, with the probes that show it (continuous compliance is roadmap).</li>
+    <li>Your operations monitoring reading the twin directly (the <a href="/technologies/dataspace-interop">dataspace bindings</a> are roadmap).</li>
+  </ul>
+</SmartSplit>
 
 ## What you can use, and what you can run
 
@@ -83,11 +130,51 @@ to fuller participation spelled out.
 
 <EntitlementRow category="utilizer-associate" upsell="utilizer-associate" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the
-programme's front-door address, or use the
-[contact page](/about/contact). For accounts, talk to your designating
-Member State or Corresponding Member; the designation you hold is what
-your access renders. And ask your instrument suppliers the only
-question that matters: *where is your SMART twin?*
+### Is the public answer legally the register's answer?
+
+Yes. The verification reads the copy the BIML registered (B 18:2025
+§15.8): the registered copy is the validity reference, and the verify
+page says so on its face. A mismatch between a presented document and
+the registered copy is exactly what the page exists to surface.
+
+### What about the instrument between verifications?
+
+Today, honestly: the platform verifies certificates, not instruments in
+the field. The continuous answer (the instrument's twin serving its
+governed aspects live, verdicts re-judged as evidence arrives) is the
+SMART+ tier and it is roadmap, labeled as such above. We will not claim
+it early.
+
+### Our national requirements are law. Who moderates them here?
+
+You declare them; the CS registry moderates the declaration; only an
+APPROVED declaration is live. The platform never edits your requirement:
+it stores your verbatim text, your instrument's clause reference, and
+your scheme scope, and renders them to applicants targeting your market.
+
+### We are not designated under the OIML-CS. Is any of this ours?
+
+The public surfaces are everyone's: verify, the register, the published
+Recommendations, the AI service. The designated surfaces open with a
+designation; your designating Member State or Corresponding Member is
+the path, and the entitlement row above says exactly what it opens.
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/verify/"
+  label="Verify a certificate"
+  description="Public, no account. Try R60/2021-A-EX1-26.01 and read the verdict chain yourself."
+/>
+<ActionBox
+  href="https://demo.oimlsmart.org/app/register/"
+  label="Browse the register"
+  description="The certificates the demo instance publishes, with the validity doctrine stated on the page."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: for designated access, talk to your designating member; and ask your instrument suppliers the only question that matters: where is your SMART twin?"
+/>

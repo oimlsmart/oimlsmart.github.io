@@ -1,71 +1,148 @@
 ---
 title: 'For Issuing Authorities'
-description: The OIML-CS as a digital workflow, applications, dispatch, evaluation, certificates, every verdict computed, every document traceable, on B 18:2025.
+description: The OIML-CS as a digital workflow, applications, samples, dispatch, evaluation, certificates, every verdict computed, every document traceable, on B 18:2025.
 eyebrow: 'About · Audiences · 04'
 ---
 
 import EntitlementRow from '../../../../components/EntitlementRow.astro'
 import ActionBox from '../../../../components/ActionBox.astro'
+import AudienceShot from '../../../../components/AudienceShot.astro'
+import SmartSplit from '../../../../components/SmartSplit.astro'
 
-OIML SMART runs your certification workflow the way B 18 describes it:
-applications in, test laboratories dispatched, evaluations synthesized,
+**Your certification workflow, run the way B 18 describes it.** Applications
+in, samples tracked, test work dispatched, evaluations synthesized,
 certificates signed, every verdict computed from the Recommendation's
 model rather than transcribed from prose. Your liability posture does
 not widen; the platform does digitally what your authority does today.
 
-## What you do today
-
-Your authority coordinates the certification chain over email and
-document stores: applications arrive as PDFs, test reports come back as
-PDFs, the type evaluation report is assembled by hand, and the
-certificate is a signed artifact whose supporting evidence lives in
-three other systems. Accepting another authority's evaluation means
-re-reading their documents and trusting their prose.
-
-## What changes
-
-The **OIML-CS is modelled as executable processes** on B 18:2025 and
-the ISO/IEC 17000-series chain it normatively references. Applications,
-test dispatch, laboratory reports, type evaluation, and issuance are
-stages in one workflow with one verdict engine. The certificate that
-emerges is a **CNML document**: machine-readable, cryptographically
-signed, and, the decisive property, **carrying its evidence chain**.
-Every claim in it names the tests, readings, and verdicts behind it;
-anyone holding the public keys can verify it without phoning you.
-
-## What it looks like in practice
-
-An application enters through the applicant portal; dispatch goes to a
-designated laboratory; evidence accrues as the laboratory works; the
-type evaluation report synthesizes verdicts that were computed, not
-transcribed; issuance is a signing event over a verdict chain. When
-another authority's evaluation crosses your desk, you verify its chain
-cryptographically instead of trusting its letterhead. Suspension and
-withdrawal semantics are modelled too, a certificate's lifecycle is as
-explicit as its issuance.
-
-## What you can try now
-
-The scheme volume models the OIML-CS roles, documents, and processes
-you work with today, Issuing Authority, Test Laboratory, Utilizer,
-Associate, Applicant, each mapped to its B 18 clause. The platform's
-integration gate proves the issuance and verification contracts live.
-
 <ActionBox
-  href="https://demo.oimlsmart.org/"
-  label="Open the demo's Issuing Authority console"
-  description="The application queue, the dispatch, the evaluation review, the signing event. Sign in with a demo account; request one via info@oimlsmart.org."
+  href="https://demo.oimlsmart.org/app/login"
+  label="Try the Issuing Authority console now"
+  description="Sign in with the one-click Issuing Authority demo account (no registration; the instance resets nightly) and the review queue below is yours."
 />
-<ActionBox
-  href="/oiml-cs"
-  label="Read the OIML-CS overview"
-  description="The roles you recognize, on B 18:2025, with the scheme's document chain."
+
+<AudienceShot
+  src="/img/audiences/issuing-authorities/2026-08-29-project-hub-light.png"
+  alt="The Evaluation Project hub: application record, samples, test requests, verdicts, certificate"
+  caption="The Evaluation Project hub: the application record, the samples, the dispatches, the verdicts, the certificate, on one page."
+  performed="Performed on the live demo, 2026-08-29: accepted an application and opened its Evaluation Project as the Issuing Authority."
 />
-<ActionBox
-  href="https://primmel.github.io/primmel-smart-docs/oiml-cs/"
-  label="Read the scheme volume"
-  description="The full executable model: roles, documents, and processes mapped to their B 18 clauses."
+
+## What you can do
+
+Every act below was performed against the live demo before it was listed;
+the dated screenshot under each is the audit artifact.
+
+**See every application waiting on you, oldest first.** The review queue
+is a queue, not an inbox folder; nothing waits silently.
+
+<AudienceShot
+  src="/img/audiences/issuing-authorities/2026-08-29-review-queue-waiting-light.png"
+  alt="The IA console with the review queue holding waiting applications"
+  caption="The IA console: the review queue, the projects, the cards for what needs you."
+  performed="Performed on the live demo, 2026-08-29: opened the console with applications waiting in the queue."
 />
+
+**Open one and the whole file is there.** The applicant, the instrument
+with its classified attributes, the documentation, the review notes, and
+the acts the state machine currently allows, and only those.
+
+<AudienceShot
+  src="/img/audiences/issuing-authorities/2026-08-29-review-whole-file-light.png"
+  alt="The IA review of a submitted application: the timeline, the subject chain, the documentation, the review actions"
+  caption="The review page: the whole application file, with the open acts (request samples, request changes) and the closed ones explained."
+  performed="Performed on the live demo, 2026-08-29: opened a submitted application's review page."
+/>
+
+**Issue the sample request from the review.** Type evaluation needs
+physical samples (PD-05 §4.3); the request, the shipment, and the
+receipts are tracked records, and the decision actions stay closed until
+the samples are received. No silent hop over the sample states.
+
+<AudienceShot
+  src="/img/audiences/issuing-authorities/2026-08-29-sample-request-form-light.png"
+  alt="The sample request form on the IA review page"
+  caption="The sample request: particulars typed, the act recorded, the decision gate honestly closed until receipts."
+  performed="Performed on the live demo, 2026-08-29: issued a sample request on a live application."
+/>
+
+**Accept, and the Evaluation Project opens.** The project is the shared
+dataspace the laboratory joins on dispatch: samples, test requests,
+reports, verdicts, and the certificate-to-be share one record.
+
+**Select the samples for the evaluation, with the justification.**
+R 60-3 §4.7 with the §4.7.2 note, as a recorded act; only the selected
+samples ever enter the dispatch pool.
+
+**Dispatch test work on a matrix.** Test forms crossed with samples,
+assigned per laboratory; one TestRequest per laboratory; out-of-round
+rows are reported, never silently dropped.
+
+<AudienceShot
+  src="/img/audiences/issuing-authorities/2026-08-29-dispatch-builder-light.png"
+  alt="The dispatch builder: the test-forms by samples matrix with per-laboratory assignment"
+  caption="The dispatch builder: the matrix, the per-laboratory composition, the issue act."
+  performed="Performed on the live demo, 2026-08-29: composed and issued a TestRequest to the Example Test Laboratory."
+/>
+
+**Issue certificates from finalized evaluations.** The certificates desk
+lists what is ready, carries the issued set with its register acts, and
+the issuance form reviews the certified scope and the scheme before the
+signature. Registering with the BIML is one act, and the registered copy
+is the validity reference the public verify page answers from.
+
+<AudienceShot
+  src="/img/audiences/issuing-authorities/2026-08-29-certificates-issued-light.png"
+  dark="/img/audiences/issuing-authorities/2026-08-29-certificates-issued-dark.png"
+  alt="The IA certificates desk: issue-from-evaluation picker and the issued certificates with BIML registration acts"
+  caption="The certificates desk: issue from a finalized evaluation, register with the BIML, print."
+  performed="Performed on the live demo, 2026-08-29: opened the certificates desk and the issuance form on a finalized evaluation (not signed; the register story stays the seeded one)."
+/>
+
+**Bridge the paper world without lying about it.** Enter an application
+for a client, import records, register an offline evaluation: the
+records-mode entries exist, and what entered offline is marked as such,
+never dressed as platform evidence.
+
+<AudienceShot
+  src="/img/audiences/issuing-authorities/2026-08-29-ia-console-light.png"
+  dark="/img/audiences/issuing-authorities/2026-08-29-ia-console-dark.png"
+  alt="The IA console header with the enter-for-client, import-records, and offline-evaluation entries"
+  caption="The console's records-mode entries: for a client, from files, from offline work."
+  performed="Performed on the live demo, 2026-08-29: the IA console's entry points."
+/>
+
+## How it works
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/img/audiences/diagrams/issuing-authorities-light.svg" alt="The certification arc: review, samples, dispatch, evaluation, issue, register, verified anywhere" class="logo-light" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
+  <img src="/img/audiences/diagrams/issuing-authorities-dark.svg" alt="The certification arc: review, samples, dispatch, evaluation, issue, register, verified anywhere (dark)" class="logo-dark" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
+</figure>
+
+## What this changes, and what it does not
+
+Today your authority coordinates the chain over email and document
+stores: applications arrive as PDFs, test reports come back as PDFs, the
+type evaluation report is assembled by hand, and accepting another
+authority's evaluation means trusting their letterhead. On the platform
+every stage is an act with a record, and the certificate carries its
+evidence chain. What does not change: your review, your evaluation, your
+decision, your signature. The verdict engine computes; the authority
+decides.
+
+<SmartSplit>
+  <ul slot="today">
+    <li>The <a href="https://demo.oimlsmart.org/">IA console</a>: the review queue, the Evaluation Projects, the certificates desk.</li>
+    <li>The dispatch builder and the laboratory negotiation-evidence record.</li>
+    <li><a href="/technologies/cnml">CNML certificates</a> signed over the verdict chain, registered with the BIML, publicly verified.</li>
+    <li>Records mode: offline evaluations and client-entered applications, honestly marked.</li>
+  </ul>
+  <ul slot="vision">
+    <li>Verifying another authority's evaluation cryptographically, chain and all, instead of re-reading prose (the inter-authority verification legs are roadmap).</li>
+    <li>The twin-backed evaluation: evidence arriving from the instrument's <a href="/technologies/smart-twin">SMART twin</a> between bench sessions (roadmap).</li>
+    <li>Suspension and withdrawal propagated to every verifiable copy the moment you act (the status-list distribution is roadmap).</li>
+  </ul>
+</SmartSplit>
 
 ## What you can use, and what you can run
 
@@ -76,11 +153,53 @@ single entitlement source, with the path spelled out.
 
 <EntitlementRow category="ia-tl" upsell="body-to-ms" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the
-programme's front-door address, or use the
-[contact page](/about/contact). Whether you operate under the hosted
-platform or under your Member State's deployment, the first
-conversation is the same: which Recommendations, which scheme, which of
-your laboratories.
+### Does the platform decide, or do we?
+
+You decide. The verdict engine computes the Recommendation's arithmetic
+and states what the evidence supports, including INDETERMINATE where
+evidence is missing. The review, the evaluation, and the issuance are
+your acts, recorded as yours. The platform's discipline is that nothing
+is transcribed and nothing is silent.
+
+### Does this widen our liability?
+
+No. The platform does digitally what your authority does today: the same
+Declaration, the same scope, the same decision. The certificate is
+stronger evidence of the same act, not a larger act. If anything, the
+record-keeping narrows your exposure: every verdict shows what it was
+computed from.
+
+### Another authority's evaluation crosses our desk. What changes?
+
+Today you trust the letterhead. On the platform the evaluation's chain
+is verifiable: the certificate verifies against the BIML-registered copy
+by number or by file, and the verdict chain behind it names the tests
+and readings. Full chain-level verification of a foreign evaluation is a
+roadmap leg; the certificate verification is live today.
+
+### We still receive paper applications. Is this all-or-nothing?
+
+No. Records mode exists exactly for the transition: enter an application
+for a client, register an offline evaluation, import records. What came
+from paper is marked as coming from paper; the audit trail never
+pretends otherwise. Gradualness is the design, not the exception.
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/login"
+  label="Open the demo's Issuing Authority console"
+  description="The one-click Issuing Authority account, no registration. The review queue, the dispatch, the certificates desk."
+/>
+<ActionBox
+  href="/oiml-cs"
+  label="Read the OIML-CS overview"
+  description="The roles you recognize, on B 18:2025, with the scheme's document chain."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: which Recommendations, which scheme, which of your laboratories; the first conversation starts there."
+/>

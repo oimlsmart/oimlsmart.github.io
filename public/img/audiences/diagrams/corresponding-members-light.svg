@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="900" height="480" fill="#faf6ee"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="#0a1628">The Corresponding Member&#8217;s position: full hosted access, one honest gap</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#6b7a92"/>
+    </marker>
+  </defs>
+
+  <rect x="40" y="70" width="250" height="110" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="165" y="98" text-anchor="middle" font-size="15" font-weight="600" fill="#0a1628">CORRESPONDING MEMBER</text>
+  <text x="165" y="120" text-anchor="middle" font-size="12" fill="#3a4a63">participates without a vote;</text>
+  <text x="165" y="138" text-anchor="middle" font-size="12" fill="#3a4a63">the Convention governs that &#8212;</text>
+  <text x="165" y="158" text-anchor="middle" font-size="11" fill="#6b7a92">the platform serves it, never sells it</text>
+
+  <rect x="360" y="60" width="500" height="54" rx="10" fill="#edf3fb" stroke="#004996" stroke-width="1.5"/>
+  <text x="610" y="82" text-anchor="middle" font-size="14" font-weight="600" fill="#004996">Every hosted service, today</text>
+  <text x="610" y="101" text-anchor="middle" font-size="11" fill="#3a4a63">the OIML-CS SMART Platform &#183; the AI at the member tier &#183; the library &#183; verify &#183; the register</text>
+
+  <rect x="360" y="128" width="500" height="54" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="610" y="150" text-anchor="middle" font-size="14" font-weight="600" fill="#0a1628">Your Associate, rendered as what it is</text>
+  <text x="610" y="169" text-anchor="middle" font-size="11" fill="#3a4a63">the designation a registry fact linked to you; its Declaration standing visible, not filed away</text>
+
+  <rect x="360" y="196" width="500" height="54" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="610" y="218" text-anchor="middle" font-size="14" font-weight="600" fill="#0a1628">The same evidence Member States read</text>
+  <text x="610" y="237" text-anchor="middle" font-size="11" fill="#3a4a63">the Recommendations as models with clause-level provenance; the register; the verification surface</text>
+
+  <line x1="290" y1="87" x2="352" y2="87" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="290" y1="155" x2="352" y2="155" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="290" y1="223" x2="352" y2="223" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="360" y="290" width="500" height="54" rx="10" fill="#fdf6e9" stroke="#d97706" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="610" y="312" text-anchor="middle" font-size="14" font-weight="600" fill="#92400e">The one entitlement that waits for ratification</text>
+  <text x="610" y="331" text-anchor="middle" font-size="11" fill="#3a4a63">self-hosting the platform software &#8212; your own instance, your data residency, streaming updates</text>
+
+  <line x1="290" y1="317" x2="352" y2="317" stroke="#6b7a92" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+  <text x="321" y="307" text-anchor="middle" font-size="11" fill="#6b7a92">ratify</text>
+
+  <rect x="40" y="290" width="250" height="54" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="165" y="312" text-anchor="middle" font-size="13" font-weight="600" fill="#0a1628">MEMBER STATE</text>
+  <text x="165" y="330" text-anchor="middle" font-size="11" fill="#3a4a63">the upward step is the OIML&#8217;s own</text>
+
+  <rect x="40" y="390" width="820" height="50" rx="10" fill="#e8f1f8" stroke="#024873" stroke-width="1.5"/>
+  <text x="450" y="412" text-anchor="middle" font-size="12" fill="#024873">Nothing to run: the hosted path never requires the self-host entitlement. Accounts for your</text>
+  <text x="450" y="429" text-anchor="middle" font-size="12" fill="#024873">personnel, your Associate&#8217;s standing rendered honestly, and every public surface is yours.</text>
+
+  <text x="450" y="464" text-anchor="middle" font-size="13" fill="#6b7a92">Read access is never a vote; the platform keeps the Convention&#8217;s categories exactly as they are.</text>
+</svg>

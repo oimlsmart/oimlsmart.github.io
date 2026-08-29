@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="900" height="480" fill="#faf6ee"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="#0a1628">The member state&#8217;s chain: designation, custody, verification</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#6b7a92"/>
+    </marker>
+  </defs>
+
+  <rect x="40" y="70" width="250" height="120" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="165" y="100" text-anchor="middle" font-size="15" font-weight="600" fill="#0a1628">MEMBER STATE</text>
+  <text x="165" y="122" text-anchor="middle" font-size="12" fill="#3a4a63">your regulation cites the</text>
+  <text x="165" y="140" text-anchor="middle" font-size="12" fill="#3a4a63">Recommendation &#8212; now a model</text>
+  <text x="165" y="162" text-anchor="middle" font-size="11" fill="#6b7a92">the entitled party: the platform self-hosts here</text>
+
+  <rect x="360" y="60" width="220" height="64" rx="10" fill="#edf3fb" stroke="#004996" stroke-width="1.5"/>
+  <text x="470" y="86" text-anchor="middle" font-size="14" font-weight="600" fill="#004996">Issuing Authority</text>
+  <text x="470" y="106" text-anchor="middle" font-size="11" fill="#3a4a63">you propose it (PD-03); it issues</text>
+
+  <rect x="360" y="146" width="220" height="64" rx="10" fill="#edf3fb" stroke="#004996" stroke-width="1.5"/>
+  <text x="470" y="172" text-anchor="middle" font-size="14" font-weight="600" fill="#004996">Test Laboratory</text>
+  <text x="470" y="192" text-anchor="middle" font-size="11" fill="#3a4a63">designated under the IA&#8217;s scope</text>
+
+  <rect x="360" y="232" width="220" height="64" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="470" y="258" text-anchor="middle" font-size="14" font-weight="600" fill="#0a1628">Utilizer bodies</text>
+  <text x="470" y="278" text-anchor="middle" font-size="11" fill="#3a4a63">accept certificates by Declaration (PD-08)</text>
+
+  <line x1="290" y1="92" x2="352" y2="92" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="321" y="82" text-anchor="middle" font-size="11" fill="#6b7a92">proposes</text>
+  <line x1="290" y1="178" x2="352" y2="178" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="321" y="168" text-anchor="middle" font-size="11" fill="#6b7a92">designates</text>
+  <line x1="290" y1="264" x2="352" y2="264" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="321" y="254" text-anchor="middle" font-size="11" fill="#6b7a92">recognizes</text>
+
+  <rect x="650" y="60" width="210" height="64" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="755" y="86" text-anchor="middle" font-size="14" font-weight="600" fill="#0a1628">Certificates</text>
+  <text x="755" y="106" text-anchor="middle" font-size="11" fill="#3a4a63">signed CNML, machine-verifiable</text>
+
+  <rect x="650" y="146" width="210" height="64" rx="10" fill="#ffffff" stroke="#ddd2bd" stroke-width="1.5"/>
+  <text x="755" y="172" text-anchor="middle" font-size="14" font-weight="600" fill="#0a1628">BIML register</text>
+  <text x="755" y="192" text-anchor="middle" font-size="11" fill="#3a4a63">the validity reference (B 18 &#167;15.8)</text>
+
+  <rect x="650" y="232" width="210" height="64" rx="10" fill="#e8f1f8" stroke="#024873" stroke-width="1.5"/>
+  <text x="755" y="258" text-anchor="middle" font-size="14" font-weight="600" fill="#024873">Anyone verifies</text>
+  <text x="755" y="278" text-anchor="middle" font-size="11" fill="#3a4a63">no account, one lookup</text>
+
+  <line x1="580" y1="92" x2="642" y2="92" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="755" y1="124" x2="755" y2="138" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="755" y1="210" x2="755" y2="224" stroke="#6b7a92" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="642" y1="264" x2="588" y2="264" stroke="#6b7a92" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+  <text x="615" y="254" text-anchor="middle" font-size="11" fill="#6b7a92">accepts</text>
+
+  <rect x="40" y="330" width="820" height="100" rx="10" fill="#fdf6e9" stroke="#d97706" stroke-width="1.5"/>
+  <text x="70" y="360" font-size="14" font-weight="600" fill="#92400e">Custody never moves</text>
+  <text x="70" y="384" font-size="12" fill="#3a4a63">The text of every Recommendation stays; the model joins it. Self-host under your entitlement with</text>
+  <text x="70" y="402" font-size="12" fill="#3a4a63">streaming updates, or use the official hosted platform &#8212; the designation chain and the register</text>
+  <text x="70" y="420" font-size="12" fill="#3a4a63">render identically either way.</text>
+
+  <text x="450" y="464" text-anchor="middle" font-size="13" fill="#6b7a92">Every link in the chain is a registry fact; every verdict traces to the clause that produced it.</text>
+</svg>

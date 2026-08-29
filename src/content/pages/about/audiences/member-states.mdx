@@ -1,75 +1,158 @@
 ---
 title: 'For Member States & NMIs'
-description: What OIML SMART means for national legal metrology, executable Recommendations, monitorable compliance, and an adoption program designed for authorities, not vendors.
+description: Executable Recommendations your systems can check, a register that answers, and custody that never moves, with the self-host entitlement designed for authorities, not vendors.
 eyebrow: 'About · Audiences · 01'
 ---
 
 import EntitlementRow from '../../../../components/EntitlementRow.astro'
 import ActionBox from '../../../../components/ActionBox.astro'
+import AudienceShot from '../../../../components/AudienceShot.astro'
+import SmartSplit from '../../../../components/SmartSplit.astro'
 
-OIML SMART turns the Recommendations your regulations cite into
-machine-actionable models, so compliance becomes something your systems
-can check, not only something your documents assert. Your state keeps
-custody: the platform self-hosts under the Member State entitlement,
-and the text of every Recommendation stays.
-
-## What you do today
-
-Your national type-approval regime references OIML Recommendations as
-PDF documents. Every assessment under them is a manual exercise;
-every test report arrives on paper or as an unstructured file; market
-surveillance means sampling instruments in the field and hoping the
-sample tells the truth. You carry the legal responsibility for
-metrological trust in your economy, with tooling from the last
-century.
-
-## What changes
-
-An OIML SMART Recommendation is **executable law-adjacent content**:
-requirements are constraints, tests are processes, report forms are
-evidence interfaces, all machine-checkable, all carrying clause-level
-provenance to the source document your regulation cites. Instruments
-can serve **SMART twins**: governed projections of their real state
-that answer only the aspects the Recommendation governs. Compliance
-becomes **monitorable between assessments**, not only at them.
-
-This is the direction legal metrology was always going to take. The
-question is whether it arrives as a coherent international system or as
-a thicket of incompatible national portals. OIML SMART is the coherent
-one, built on OIML's own documents, with OIML's members as the
-governing audience.
-
-## What it looks like in practice
-
-The **NMI adoption program** is a tiered entry, not a leap: read the
-position pack (traceability mechanized, reference channels, U:MPE ≤
-1:3, pairing windows, the concepts your metrologists already use,
-formalized), reproduce a type evaluation end to end against the
-simulator with your own tooling, then trial one Recommendation with one
-laboratory. Nothing is retired until your regime is satisfied.
-
-## What you can try now
-
-The adoption volume includes an authority quickstart, stand up the
-stack and reproduce a full type evaluation, with the verdict chain and
-certificate verified at every step. The same pipeline that runs the
-public demo runs it.
+**Your regulations cite the Recommendations; now your systems can read
+them.** OIML SMART turns the Recommendations into machine-actionable
+models with clause-level provenance, so compliance becomes something
+checkable, and the certificate register becomes something that answers.
+Your state keeps custody: the platform self-hosts under the Member State
+entitlement, and the text of every Recommendation stays.
 
 <ActionBox
-  href="https://demo.oimlsmart.org/"
-  label="Open the live demo"
-  description="A full platform deployment running the simulated load-cell pilot. Sign in with a demo account; request one via info@oimlsmart.org."
+  href="https://demo.oimlsmart.org/app/verify/"
+  label="Verify a certificate now, no account"
+  description="The public surface your regime's certificates would live on: enter R60/2021-A-EX1-26.01 and read the verdict."
 />
-<ActionBox
-  href="https://www.oimlsmart.org/smi/docs/"
-  label="Read the NMI volume"
-  description="The position pack for national metrology institutes: the concepts your metrologists use, formalized."
+
+<AudienceShot
+  src="/img/audiences/shared/2026-08-29-standards-catalog-light.png"
+  dark="/img/audiences/shared/2026-08-29-standards-catalog-dark.png"
+  alt="The Standards catalog: the four Recommendations with their model counts"
+  caption="The Recommendations as models: R 60, R 91, R 129, R 144, each with its requirements, tests, and forms counted from the model."
+  performed="Performed on the live demo, 2026-08-29: opened the Standards catalog."
 />
-<ActionBox
-  href="https://www.oimlsmart.org/recs/docs/oiml-rec/13-running-the-demo"
-  label="Walk the demo manual"
-  description="Reproduce a full type evaluation with one of your metrologists, against the same pipeline the public demo runs."
+
+## What you can do
+
+Every act below was performed against the live estate before it was
+listed; the dated screenshot under each is the audit artifact.
+
+**Verify any certificate your regime relies on, in seconds.** The public
+verification reads the BIML-registered copy (B 18:2025 §15.8) and the
+live revocation and suspension lists; no account, no phone call to the
+issuing authority.
+
+<AudienceShot
+  src="/img/audiences/shared/2026-08-29-verify-number-verdict-light.png"
+  dark="/img/audiences/shared/2026-08-29-verify-number-verdict-dark.png"
+  alt="The verify page answering ACTIVE with the register reference and the live status lists"
+  caption="The verdict with its evidence: the registration, the registered copy, the live status."
+  performed="Performed on the live demo, 2026-08-29: verified R60/2021-A-EX1-26.01 by number, no account."
 />
+
+**Read the register as the validity reference.** The certificates the
+instance publishes, per scheme, browsable and exportable; the registered
+copy is what verification answers from.
+
+<AudienceShot
+  src="/img/audiences/shared/2026-08-29-certificate-register-light.png"
+  dark="/img/audiences/shared/2026-08-29-certificate-register-dark.png"
+  alt="The public certificate register"
+  caption="The register: public, complete, and honest about what validity means."
+  performed="Performed on the live demo, 2026-08-29: browsed the register, no account."
+/>
+
+**Read the Recommendations your regulation cites as models.** R 60's 180
+requirements in 14 classes, 62 test procedures, the report forms: the
+structure your assessors navigate, with clause-level provenance back to
+the document your regulation names.
+
+<AudienceShot
+  src="/img/audiences/shared/2026-08-29-r60-requirements-light.png"
+  dark="/img/audiences/shared/2026-08-29-r60-requirements-dark.png"
+  alt="R 60's requirement classes with their counts"
+  caption="R 60 as data: the requirement classes, each requirement tracing to its clause."
+  performed="Performed on the live demo, 2026-08-29: opened R 60's requirement classes."
+/>
+
+**See the OIML-CS participant registry as data.** The Issuing
+Authorities with their scopes, the registry chain your designations
+belong to: PTB, METAS, NIM, and the rest of the real register, not a
+mock-up.
+
+<AudienceShot
+  src="/img/audiences/member-states/2026-08-29-cs-ia-registry-light.png"
+  dark="/img/audiences/member-states/member-states-dark-placeholder.png"
+  alt="The OIML-CS Issuing Authority registry listing the real authorities with their scopes"
+  caption="The IA registry: the real OIML-CS register entries with their scopes."
+  performed="Performed on the live demo, 2026-08-29: opened the Issuing Authority registry."
+/>
+
+**Give your personnel accounts under your organization.** The identity
+service issues accounts per organization, approved by your own
+administrator; the join flow knows the real member directory.
+
+<AudienceShot
+  src="/img/audiences/shared/2026-08-29-identity-join-light.png"
+  dark="/img/audiences/shared/2026-08-29-identity-join-dark.png"
+  alt="The identity service join flow with the organization directory"
+  caption="Accounts per organization: the join flow, with the member directory behind it."
+  performed="Performed against id.oimlsmart.org, 2026-08-29: opened the join flow."
+/>
+
+**Ask the OIML corpus, with citations.** The AI service answers your
+metrologists' questions from the OIML publications at the member tier,
+every claim carrying a clause-level citation.
+
+<AudienceShot
+  src="/img/audiences/shared/2026-08-29-ai-answer-cited-light.png"
+  dark="/img/audiences/shared/2026-08-29-ai-answer-cited-dark.png"
+  alt="The AI service answering with clause-level citations"
+  caption="The corpus answers with citations; silence where the corpus has no answer."
+  performed="Performed against ai.oimlsmart.org, 2026-08-29: asked 'What is R 60?' and read the cited answer."
+/>
+
+**Read the whole corpus in the library.** The Recommendations, B 18, the
+procedural and operational documents: the scheme's document chain, one
+place.
+
+<AudienceShot
+  src="/img/audiences/shared/2026-08-29-library-light.png"
+  dark="/img/audiences/shared/2026-08-29-library-dark.png"
+  alt="The document library listing the OIML corpus"
+  caption="The library: the OIML corpus, browsable in the same estate."
+  performed="Performed on the live demo, 2026-08-29: opened the document library."
+/>
+
+## How it works
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/img/audiences/diagrams/member-states-light.svg" alt="The member state's chain: designation, custody, verification" class="logo-light" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
+  <img src="/img/audiences/diagrams/member-states-dark.svg" alt="The member state's chain: designation, custody, verification (dark)" class="logo-dark" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
+</figure>
+
+## What this changes, and what it does not
+
+Today your national type-approval regime references OIML
+Recommendations as PDF documents; every assessment is manual, every test
+report arrives unstructured, and market surveillance samples instruments
+and hopes the sample tells the truth. On the platform the Recommendation
+is executable content and the register answers. What does not change:
+your legal responsibility, your designations, your custody. The text
+stays; the model joins it.
+
+<SmartSplit>
+  <ul slot="today">
+    <li>The <a href="https://demo.oimlsmart.org/">platform</a>: the certification workflow, the registries, the models.</li>
+    <li><a href="https://demo.oimlsmart.org/app/verify/">Public verification</a> and the <a href="https://demo.oimlsmart.org/app/register/">register</a>.</li>
+    <li>The <a href="https://ai.oimlsmart.org/">AI service</a> at the member tier.</li>
+    <li>Self-host under your entitlement, with streaming updates (the <a href="/services/who-can-run-what">matrix</a> quotes it).</li>
+  </ul>
+  <ul slot="vision">
+    <li>Monitorable compliance between assessments: instruments serving their governed aspects through <a href="/technologies/smart-twin">SMART twins</a> (roadmap).</li>
+    <li>Market surveillance reading live verdicts instead of sampling blindly (the continuous-compliance engine is roadmap).</li>
+    <li>The <a href="/technologies/sst">SST simulation</a> to rehearse a Recommendation's behavior before your regime adopts it (roadmap).</li>
+    <li><a href="/technologies/dataspace-interop">Dataspace federation</a> with your national systems (roadmap legs named there).</li>
+  </ul>
+</SmartSplit>
 
 ## What you can use, and what you can run
 
@@ -80,11 +163,60 @@ estate's single entitlement source:
 
 <EntitlementRow category="member-state" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org) to request
-your member organization's onboarding, or use the
-[contact page](/about/contact). Onboarding means your organization's
-accounts, your proposed Issuing Authorities and designated Utilizers
-rendered as the registry chain they are, and your self-host runbook
-handover when you want it.
+### Sovereignty: does our data leave our custody?
+
+No. The self-host entitlement attaches to your category exactly so
+custody never has to move: your own instance, your data residency, the
+streaming update channel. The hosted official platform exists for the
+members who choose it; the architecture never requires it.
+
+### Liability: does the platform decide anything legally ours?
+
+No. The platform computes verdicts from the Recommendation's model and
+records who decided what; the legal acts (designation, acceptance,
+issuance, withdrawal) remain exactly where your law puts them. The
+liability surface is your existing one, with better evidence.
+
+### Cost: what does adopting this actually commit us to?
+
+The minimal honest answer: reading costs nothing (the public surfaces
+are public), participating costs accounts (the identity service issues
+them per organization), and self-hosting is one service-class deployment
+with the rolling update channel. The adoption program is tiered: read
+the position pack, reproduce a type evaluation against the simulator,
+then trial one Recommendation with one laboratory. Nothing is retired
+until your regime is satisfied.
+
+### Interop: is this a walled garden?
+
+The positions are public and boring on purpose: ISO/IEC SMART, ReqIF,
+RDF/SHACL, W3C Verifiable Credentials, DPP, AAS, OpenCDD, DSP/ODRL. The
+certificate downloads as CNML, as a VC, and as an AAS submodel today;
+the [dataspace and interop page](/technologies/dataspace-interop) names
+the planes and the export doctrine.
+
+### Gradualness: what happens to our PDFs and our existing register?
+
+Nothing dies. The text of every Recommendation stays; certificates keep
+their paper meaning; records mode lets offline work enter the record
+honestly marked. The model joins the text; it does not replace it.
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="Open the live demo"
+  description="A full platform deployment running the fictional load-cell pilot. The one-click demo accounts need no registration; the instance resets nightly."
+/>
+<ActionBox
+  href="https://www.oimlsmart.org/smi/docs/"
+  label="Read the NMI volume"
+  description="The position pack for national metrology institutes: the concepts your metrologists use, formalized."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: your member organization's onboarding starts with a conversation about which Recommendation first."
+/>

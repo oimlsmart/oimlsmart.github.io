@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-08-29T11:28:54.659Z",
+  "date": "2026-08-29",
+  "captures": [
+    {
+      "audience": "shared",
+      "name": "verify-number-verdict",
+      "file": "shared/2026-08-29-verify-number-verdict-light.png",
+      "url": "https://demo.oimlsmart.org/app/verify/",
+      "theme": "light",
+      "performed": "verified certificate R60/2021-A-EX1-26.01 by number — the verdict from the BIML-registered copy, no account",
+      "capturedAt": "2026-08-29T11:28:54.536Z"
+    }
+  ]
+}
