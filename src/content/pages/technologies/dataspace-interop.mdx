@@ -1,0 +1,114 @@
+---
+title: 'Dataspace and interoperability'
+description: 'The estate speaks the neighboring standards rather than replacing them: the Dataspace Protocol, ODRL 2.2, and the IDS Reference Architecture Model, plus generated exports to ReqIF, RDF/SHACL, and OpenCDD.'
+eyebrow: 'Technologies · 08'
+---
+
+import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
+import ActionBox from '../../../components/ActionBox.astro'
+
+The estate speaks the neighboring standards rather than replacing them:
+its federation machinery maps onto the planes the dataspace standards
+name, and its models export to the formats the requirements-management
+and linked-data ecosystems already consume. The starting point is the
+committee's adopted text, so every interop artifact is a projection
+outward from an authoritative model, never a competing source.
+
+## Why it exists
+
+Certification data does not live in one organization. An evaluation's
+evidence belongs to a laboratory, the decision to an authority, the
+register to the BIML, and the instrument's service record to its owner.
+A central data lake would ask every party to surrender custody; a
+dataspace lets each party keep custody and exchange under declared
+policy. Interoperability is therefore a governance property first and a
+wire format second.
+
+## How it works
+
+The estate's machinery names its planes in dataspace terms, aligned with
+the Dataspace Protocol under standardization as ISO/IEC 20151, the W3C
+[ODRL 2.2](https://www.w3.org/TR/odrl-model/) policy vocabulary, and the
+[IDS Reference Architecture Model](https://docs.internationaldataspaces.org/ids-knowledgebase/ids-ram-4/):
+
+| Plane | The dataspace term | The estate's answer |
+|---|---|---|
+| Identity | The trust anchor | The identity service's organization registry and the [trust registry](/technologies/trust-registry); no parallel trust framework |
+| Data | Peer-to-peer exchange | Evidence moves between instances under custody; no central data lake |
+| Policy | Usage control | Policies authored as model content, exported as ODRL 2.2 on the wire |
+| Catalog | The offer surface | Each instance serves its offered artifact classes with their policy offers |
+
+Policies are Primmel's own primitives: the semantics are self-contained
+in the model, and ODRL and the Dataspace Protocol are their exported
+expressions on the wire. The catalog endpoint is the shipping edge of
+this work; the contract-negotiation lifecycle and the conformance-suite
+legs are roadmap items in the dataspace program, tracked in the platform
+repository.
+
+## The exports, and what they cost
+
+The models export to the formats neighboring tooling consumes, under one
+doctrine: an export is generated, never authored; it regenerates on every
+build; and it states what it carries and what it leaves behind.
+Round-trip is deliberately not a goal, because information lost on the
+way out cannot come back, so nothing is re-imported into the kernel.
+
+- **ReqIF** (the OMG Requirements Interchange Format, in the DIN DKE
+  SPEC 99200 profile for public standards): the requirement rows for
+  requirements-management tools, validated against the official OMG
+  schema.
+- **RDF/OWL with SHACL shapes** (the IEC-ISO Core Ontology projection):
+  the linked-data form, machine-checked against the ontology's SHACL
+  shapes.
+- **OpenCDD back-references**: attribute definitions cite their OpenCDD
+  entries, so the vocabulary composes with the wider standards-data
+  ecosystem.
+
+## The alignment positions
+
+**Digital Product Passport.** The passport is a projection of the product
+model plus its live instance state, served by the instrument's endpoint
+under access classes. The CEN/CENELEC JTC24 framework's eight
+standardization areas are mapped area by area as authored, gated data:
+each area is either answered by the frame's primitives or named as a gap,
+and a gap left unnamed fails the gate.
+
+**Asset Administration Shell.** A SMART twin reads as an AAS submodel to
+an AAS consumer, and the estate adopts the shell concept, the
+property/operation duality, and derived submodel skeletons. The
+difference is governance: a submodel's content is whatever its vendor
+wrote, while a SMART twin's projection is declared by the standard,
+identical across conforming instruments, carrying freshness semantics and
+standing behind a certification verdict.
+
+## Where it runs live
+
+<ActionBox
+  href="https://www.primmel.org/primmel-smart-docs/primmel/12-interop/"
+  label="Read the interop chapter"
+  description="The export projections with their fidelity bookkeeping: what each format carries, what it loses, and why none of them is the kernel."
+/>
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="See the passport served in the demo"
+  description="The pilot instrument's passport resolves from its data carrier, with the public and authority views. Sign in with a demo account; request one via info@oimlsmart.org."
+/>
+
+## Who may use it, and who may run it
+
+The dataspace surface ships inside the platform, so its determination is
+the platform's, quoted from the estate's single entitlement source: the
+hosted service first, then the self-host software. The Corresponding
+Member cell on the second row carries the path upward, the ratification
+narrative on the full matrix page.
+
+<ServiceEntitlement service="cs-smart-platform" />
+
+<ServiceEntitlement service="smart-platform-software" />
+
+## Who to talk to
+
+Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
+front-door address. Alignment conversations with standards bodies and
+dataspace initiatives are the programme's standing work, and they start
+at the same address.
