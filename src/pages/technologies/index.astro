@@ -3,48 +3,49 @@ import Base from '../../layouts/Base.astro'
 import PageHero from '../../components/PageHero.astro'
 import ActionBox from '../../components/ActionBox.astro'
 
-// The technology pages land in TODO.promotion wave 03. Until then the
-// cards link the live home of each technology (a minisite, a docs
-// volume, or a running service); technologies with no live home yet are
-// marked "in preparation", never linked to a dead route.
+// The technology pages landed in TODO.promotion wave 03: every card
+// links its page under /technologies/, and each page links the live
+// surfaces (the minisites, the docs volumes, the running services).
 const technologies = [
   {
     title: 'SMART Recommendations',
     desc: 'The OIML Recommendations as structured, executable models: read on the web, consumed by software, provenance down to the clause.',
-    href: '/recommendations/',
+    href: '/technologies/smart-recommendations',
   },
   {
     title: 'Primmel',
     desc: 'The modelling language the Recommendations are authored in: entities, processes, rules, units, and the package machinery.',
-    href: 'https://www.primmel.org/primmel-smart-docs/primmel/',
+    href: '/technologies/primmel',
   },
   {
     title: 'The SMART Twin',
     desc: 'A living digital twin of the certified instrument: its compliance state computed from evidence, queryable while it operates.',
-    href: 'https://www.primmel.org/primmel-smart-docs/platform/',
+    href: '/technologies/smart-twin',
   },
   {
     title: 'The SST simulation',
     desc: 'Simulated measuring instruments with realistic physics: rehearse the full certification workflow without hardware.',
-    href: '/sst/',
+    href: '/technologies/sst',
   },
   {
     title: 'CNML',
     desc: 'The certificate format: machine-readable, cryptographically signed, verifiable without phoning home.',
-    href: '/cnml/',
+    href: '/technologies/cnml',
   },
   {
     title: 'The identity federation',
     desc: 'One account across the estate, federated to member deployments. The live identity service is the proof.',
-    href: 'https://id.oimlsmart.org/',
+    href: '/technologies/identity-federation',
   },
   {
     title: 'The trust registry',
     desc: 'The public registry of who may sign what: issuing authorities, laboratories, and the keys their certificates ride.',
+    href: '/technologies/trust-registry',
   },
   {
     title: 'Dataspace & interop',
     desc: 'The estate speaks the neighboring standards rather than replacing them: ISO/IEC SMART, ReqIF, RDF/SHACL, W3C Verifiable Credentials, DPP, AAS, OpenCDD, DSP/ODRL.',
+    href: '/technologies/dataspace-interop',
   },
 ]
 ---
