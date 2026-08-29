@@ -1,0 +1,43 @@
+---
+/**
+ * ServiceShot.astro — renders one captured service screenshot (light +
+ * dark pair) with its evidence caption. Every shot is produced by
+ * scripts/capture-services.ts (TODO.promotion/10): the script performs
+ * the act the page claims and asserts the surface before capturing, so a
+ * shot on a page is a dated audit artifact, never a hand snap. The
+ * light/dark swap follows the shell's own .logo-light/.logo-dark pattern
+ * (vendor/site-shell tokens.css).
+ */
+interface Props {
+  /** The service folder under /img/services/. */
+  service: string
+  /** The shot id (file stem, no extension/mode). */
+  id: string
+  alt: string
+  /** What the shot proves; rendered under the frame with the capture date. */
+  caption?: string
+  /** The capture date (the pages pass their frontmatter constant). */
+  date: string
+}
+
+const { service, id, alt, caption, date } = Astro.props
+const base = `/img/services/${service}/${id}`
+---
+
+<figure class="service-shot border border-rule rounded-md overflow-hidden bg-paper-soft">
+  <img src={`${base}.light.png`} alt={alt} class="shot-light w-full block" loading="lazy" />
+  <img src={`${base}.dark.png`} alt={alt} class="shot-dark w-full block" loading="lazy" />
+  {(caption || date) && (
+    <figcaption class="px-4 py-2.5 text-[0.8125rem] leading-snug text-ink-muted border-t border-rule">
+      {caption}
+      {date && <span class="whitespace-nowrap"> — captured {date} by <span class="font-mono text-[0.75rem]">scripts/capture-services.ts</span></span>}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .service-shot { margin: 0; }
+  .service-shot .shot-dark { display: none; }
+  :global(.dark) .service-shot .shot-light { display: none; }
+  :global(.dark) .service-shot .shot-dark { display: block; }
+</style>
