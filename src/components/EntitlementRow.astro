@@ -1,0 +1,114 @@
+---
+/**
+ * EntitlementRow.astro — quotes ONE member category's column from the
+ * single entitlement source (src/data/entitlement-matrix.ts,
+ * TODO.promotion/09). The audience pages render their entitlement
+ * block through this component; never a hand-copied table that drifts.
+ */
+import {
+  ENTITLEMENT_MATRIX,
+  ENTITLEMENT_LEGEND,
+  MEMBER_CATEGORIES,
+  UPSELL_NARRATIVES,
+  type MemberCategoryId,
+} from '../data/entitlement-matrix'
+
+interface Props {
+  /** The member category whose column is quoted. */
+  category: MemberCategoryId
+  /** Optionally quote one upsell narrative below the row. */
+  upsell?: (typeof UPSELL_NARRATIVES)[number]['id']
+}
+
+const { category, upsell } = Astro.props
+const label = MEMBER_CATEGORIES.find((c) => c.id === category)?.label ?? category
+const GLYPHS: Record<string, string> = Object.fromEntries(
+  ENTITLEMENT_LEGEND.map((l) => [l.mark, l.glyph]),
+)
+const rows = ENTITLEMENT_MATRIX.map((s) => ({ service: s, cell: s.cells[category] }))
+const narrative = upsell ? UPSELL_NARRATIVES.find((n) => n.id === upsell) : undefined
+---
+
+<div class="entitlement-row">
+  <div class="overflow-x-auto border border-rule rounded-md mb-3">
+    <table class="w-full border-collapse text-sm min-w-[36rem]">
+      <thead>
+        <tr class="bg-paper-soft">
+          <th class="text-left font-medium p-3 border-b border-rule">Service</th>
+          <th class="text-left font-medium p-3 border-b border-l border-rule">{label}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map(({ service, cell }) => (
+          <tr class="align-top">
+            <th class="text-left font-medium p-3 border-b border-rule bg-paper-soft">
+              {service.href ? (
+                <a href={service.href} class="text-accent">{service.name}</a>
+              ) : (
+                service.name
+              )}
+            </th>
+            <td class="p-3 border-b border-l border-rule">
+              {cell.roadmap ? (
+                <span class="text-ink-muted font-mono text-xs">roadmap</span>
+              ) : (
+                <>
+                  {cell.marks.length > 0 && (
+                    <span class="whitespace-nowrap">
+                      {cell.marks.map((m) => GLYPHS[m]).join(' ')}
+                    </span>
+                  )}
+                  {cell.marks.length === 0 && !cell.note && (
+                    <span class="text-ink-muted">-</span>
+                  )}
+                  {cell.note && (
+                    <span class="text-ink-soft"> {cell.note}</span>
+                  )}
+                  {cell.proposed && (
+                    <span class="proposed-badge">proposed</span>
+                  )}
+                </>
+              )}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <ul class="flex flex-wrap gap-x-6 gap-y-1 mb-3 text-sm text-ink-soft">
+    {ENTITLEMENT_LEGEND.map((l) => (
+      <li><span aria-hidden="true">{l.glyph}</span> {l.label}</li>
+    ))}
+  </ul>
+  <p class="text-sm text-ink-soft">
+    Quoted from the estate's single entitlement source; the full matrix,
+    all member categories by all services, lives at
+    <a href="/services/who-can-run-what" class="text-accent underline underline-offset-2">Who can run what</a>.
+  </p>
+  {narrative && (
+    <div class="border border-rule rounded-md bg-paper-soft p-6 mt-6">
+      <div class="bp-coord mb-1">⬆️ {narrative.id === 'cm-to-ms' ? 'Ratification' : narrative.id === 'body-to-ms' ? 'Under your Member State' : 'By designation'}</div>
+      <h3 class="font-serif text-[1.25rem] mb-2 mt-0">{narrative.title}</h3>
+      <p class="text-[0.9375rem] leading-relaxed text-ink-soft mb-0">{narrative.body}</p>
+      {narrative.href && (
+        <a href={narrative.href} class="text-accent text-sm font-medium inline-block mt-3">{narrative.hrefLabel} →</a>
+      )}
+    </div>
+  )}
+</div>
+
+<style>
+  .entitlement-row .proposed-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    padding: 0.25em 0.5em;
+    border: 1px dashed var(--ink-muted);
+    border-radius: 999px;
+    color: var(--ink-muted);
+    vertical-align: middle;
+    margin-left: 0.25rem;
+    white-space: nowrap;
+  }
+</style>
