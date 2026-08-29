@@ -1,0 +1,80 @@
+---
+/**
+ * OidcFederation — the identity federation mechanism in one diagram:
+ * one OpenID Provider for the estate, every platform instance a relying
+ * party, upstream sign-in for identities members already hold, the
+ * device class for instruments, and the member-run provider option from
+ * the same software. House style; dark-mode correct via the TechFigure
+ * palette.
+ */
+import TechFigure from './TechFigure.astro'
+---
+
+<TechFigure caption="One provider, many relying parties: the estate's services hold no account lists of their own; a member's own provider, built from the same software, federates by configuration.">
+  <svg viewBox="0 0 860 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="oidc-federation-title">
+    <title id="oidc-federation-title">People and instruments authenticate to the single OpenID Provider; every platform instance is a relying party; members may run their own provider from the same software</title>
+
+    <defs>
+      <marker id="oidc-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"></path>
+      </marker>
+    </defs>
+
+    <text x="430" y="30" text-anchor="middle" font-size="17" font-weight="600" fill="var(--dg-text)">One account across the estate</text>
+
+    <!-- The people and instruments -->
+    <rect x="30" y="66" width="180" height="86" rx="8" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" />
+    <text x="120" y="92" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-text)">People</text>
+    <text x="120" y="110" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">passkeys · authenticator apps</text>
+    <text x="120" y="124" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">recovery codes</text>
+    <text x="120" y="142" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">SMS / voice: a documented refusal</text>
+
+    <rect x="30" y="172" width="180" height="80" rx="8" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" />
+    <text x="120" y="198" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-text)">Instruments</text>
+    <text x="120" y="216" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">the device class: per-device</text>
+    <text x="120" y="230" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">credential, client-credentials only</text>
+
+    <rect x="30" y="272" width="180" height="80" rx="8" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" />
+    <text x="120" y="298" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-text)">Upstream identities</text>
+    <text x="120" y="316" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">GitHub linked today; Entra and</text>
+    <text x="120" y="330" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">national providers by configuration</text>
+
+    <!-- The OP -->
+    <rect x="290" y="110" width="240" height="170" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5" />
+    <text x="410" y="138" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--dg-source-text)">The OpenID Provider</text>
+    <text x="410" y="156" text-anchor="middle" font-size="9" fill="var(--dg-text-muted)">id.oimlsmart.org</text>
+    <text x="306" y="182" font-size="9.5" fill="var(--dg-text-soft)">OIDC Core 1.0, authorization code</text>
+    <text x="306" y="198" font-size="9.5" fill="var(--dg-text-soft)">+ PKCE, ES256 ID tokens, the</text>
+    <text x="306" y="214" font-size="9.5" fill="var(--dg-text-soft)">RFC 8414 discovery document</text>
+    <text x="306" y="238" font-size="9.5" fill="var(--dg-text-soft)">the organization registry: member</text>
+    <text x="306" y="254" font-size="9.5" fill="var(--dg-text-soft)">state · IA · laboratory · body, with</text>
+    <text x="306" y="270" font-size="9.5" fill="var(--dg-text-soft)">per-member data cones in the token</text>
+
+    <!-- The relying parties -->
+    <rect x="620" y="66" width="210" height="80" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="725" y="92" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-gen-text)">The platform instances</text>
+    <text x="725" y="110" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">the OIML-CS platform, the demo,</text>
+    <text x="725" y="124" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">member deployments</text>
+
+    <rect x="620" y="172" width="210" height="80" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="725" y="198" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-gen-text)">The estate services</text>
+    <text x="725" y="216" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">the studio, the vocab, the status</text>
+    <text x="725" y="230" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">service, the minisites</text>
+
+    <rect x="620" y="278" width="210" height="80" rx="8" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" />
+    <text x="725" y="304" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-gov-text)">A member's own provider</text>
+    <text x="725" y="322" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">the same software on the member's</text>
+    <text x="725" y="336" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">domain; federation by configuration</text>
+
+    <line x1="210" y1="110" x2="282" y2="150" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#oidc-arr)" />
+    <line x1="210" y1="212" x2="282" y2="200" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#oidc-arr)" />
+    <line x1="210" y1="312" x2="282" y2="250" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#oidc-arr)" />
+
+    <line x1="530" y1="140" x2="612" y2="112" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#oidc-arr)" />
+    <line x1="530" y1="195" x2="612" y2="210" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#oidc-arr)" />
+    <line x1="530" y1="250" x2="612" y2="310" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#oidc-arr)" />
+    <text x="571" y="120" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">tokens</text>
+
+    <text x="430" y="386" text-anchor="middle" font-size="10" fill="var(--dg-text-muted)">A relying party runs no login form and holds no account list; attribution is uniform across the estate.</text>
+  </svg>
+</TechFigure>
