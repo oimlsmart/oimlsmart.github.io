@@ -1,36 +1,56 @@
 ---
 title: 'CNML'
-description: 'OIML CNML, the Certificat Numérique de Métrologie Légale: the certificate as signed, time-stamped, schema-validated data, verifiable by anyone, account-free, offline.'
+description: 'OIML CNML, the Certificat Numérique de Métrologie Légale: the certificate as signed, time-stamped, schema-validated data, built on CalConnect’s Signatif framework, verifiable by anyone, account-free, offline.'
 eyebrow: 'Technologies · 05'
+captured: '2026-08-29'
 ---
 
 import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
 import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import CnmlChain from '../../../components/diagrams/technologies/CnmlChain.astro'
 
 CNML (Certificat Numérique de Métrologie Légale) is the digital
 certificate format developed under the OIML SMART program to succeed the
 PDF-based OIML-CS certificate of conformity. A CNML certificate is data:
 schema-validated against its Recommendation, cryptographically signed,
 time-stamped, and verifiable by anyone without an account, without
-contacting the issuer, and without a network connection.
+contacting the issuer, and without a network connection. It is OIML's
+technology implemented on an open standard: the signature and
+time-attestation chain is [Signatif](https://www.signatif.org/), the
+Sealed Interoperable Graduated Non-repudiable Anchored Trust
+Infrastructure Framework, a CalConnect standard and an ISO/TC 154 work
+item, so the certificate's trust machinery is a published, shared
+framework rather than a bespoke scheme.
 
-The format was produced by analyzing every existing published OIML-CS
-Type Approval certificate and digitizing the resulting model in a manner
-compatible with OIML SMART and the relevant OIML Recommendations. CNML
-operates at the type-approval tier under the OIML-CS; the PTB Digital
-Calibration Certificate operates at the calibration tier under ISO/IEC
-17025, and an instrument in legal use typically holds both. The
-implementation is developed by Ribose, and the threshold-cryptography
-substrate is provided by Confium.
+<p>
+  <a class="btn btn-primary" href="https://www.oimlsmart.org/cnml/verify">Verify a certificate <span class="arrow">→</span></a>
+</p>
 
-## Why it exists
+<ShotFigure
+  page="cnml"
+  stem="verify"
+  alt="The CNML verify page: drop a .cnml.xml file and the nine-check pipeline runs in the browser, account-free; files never leave the machine"
+  source="https://www.oimlsmart.org/cnml/verify"
+  captured="2026-08-29"
+/>
 
-PDF certificates are reproducible with consumer-grade image editing
-software, and the widespread availability of generative image models has
-increased the realism of forged documents. Verification of a PDF means
-contacting the issuer and trusting the answer. A certificate that is data
-inverts this: the document carries its own proof, and the verifier checks
-the proof instead of phoning the issuer.
+## What you can do today
+
+- **Verify a certificate in your browser.** The [verify page](https://www.oimlsmart.org/cnml/verify) runs the nine-check pipeline on a dropped file; nothing leaves your machine, no account, and a downloaded trust-anchor bundle makes the check work offline, indefinitely (the capture above).
+- **Fetch the demo certificate as a W3C Verifiable Credential.** [GET the VC form](https://demo.oimlsmart.org/api/certificates/crt-acme-lc/vc) of the demo's R 60 certificate (`vc+jwt`, signed ES256 by the demo's federation key).
+- **Fetch the same certificate as an SD-JWT.** [GET the SD-JWT form](https://demo.oimlsmart.org/api/certificates/crt-acme-lc/vc?format=sd-jwt) (`vc+sd-jwt`): the selective-disclosure carrier, live on the same certificate.
+- **Fetch the DPP conformity attestation.** [GET the DPP form](https://demo.oimlsmart.org/api/certificates/crt-acme-lc/dpp): the `oiml-smart/dpp-conformity-attestation/v1` payload with its status and suspension URLs, ready to ride the Digital Product Passport's data carrier.
+- **Fetch the AAS submodel.** [GET the AAS form](https://demo.oimlsmart.org/api/certificates/crt-acme-lc/aas-submodel): the `LegalMetrologyConformity` submodel an Asset Administration Shell consumer reads natively.
+- **Resolve the signer's key without an account.** The demo's signing key resolves by did:web at [demo.oimlsmart.org/.well-known/did.json](https://demo.oimlsmart.org/.well-known/did.json); the production posture lives on the [trust registry page](/technologies/trust-registry).
+- **Inspect the format.** The [CNML repository](https://github.com/oimlsmart/cnml) carries the format packages and the browser application; the ten format packages are published on npm under the `@oimlsmart` scope, version 1 frozen with an additive-only compatibility rule.
+
+One honest caveat on the demo links: the demo environment reseeds nightly,
+and while the worked certificate awaits its signing pass those endpoints
+answer 409 ("carries no signed CNML record") until the gate re-seals it,
+which is the signing gate doing its job rather than serving an unsigned
+artifact.
 
 ## How it works
 
@@ -49,50 +69,69 @@ so no single party can produce a signature, and each authority's key is
 scoped to its authorized Recommendations by an X.509 v3 extension that
 the verifier enforces.
 
+This is Signatif's graduated trust model at work: authorities seal
+artifacts and delegate under monotonically narrowing scope; verification
+recomputes a fixed pipeline into an objective coverage report; the
+scheme's published policy classifies the report; the verifier's own risk
+policy accepts or not.
+
+<CnmlChain />
+
 Verification is a fixed, ordered pipeline of nine checks: well-formedness,
 schema validity, signature, dimensional co-signatures, issuer scope,
 revocation, the evaluation-report binding, the timestamp proof, and
 transparency-log inclusion. The pipeline runs entirely in the verifier's
-browser on a dropped file; nothing leaves the verifier's machine, and a
-downloaded trust-anchor bundle makes the check work offline,
-indefinitely.
+browser on a dropped file; nothing leaves the verifier's machine.
 
-## Where it runs live
+## Today (SMART) and the vision (SMART+)
 
-<ActionBox
-  href="https://www.oimlsmart.org/cnml/"
-  label="Visit the CNML site"
-  description="The component home: the format, the architecture, the schemas, and the browser application."
+<SmartSplit
+  today={[
+    { text: 'The verify page is live, account-free, and offline-capable; the format is frozen at version 1 with an additive-only rule.', href: 'https://www.oimlsmart.org/cnml/verify', label: 'verify' },
+    { text: 'The demo’s certificate serves four carrier forms today: the VC, the SD-JWT, the DPP attestation, and the AAS submodel.', href: 'https://demo.oimlsmart.org/api/certificates/crt-acme-lc/vc?format=sd-jwt', label: 'the SD-JWT form' },
+    { text: 'The VC and DPP compositions are specified and published.', href: 'https://www.oimlsmart.org/cnml/docs/specifications/composition', label: 'the composition spec' },
+  ]}
+  vision={[
+    { text: 'The signed measurement: the twin’s served values sealed at the source, so continuous-compliance evidence carries the same chain of trust as the certificate. Roadmap, tracked as the CNML bridge of the platform’s future wave.', href: 'https://www.primmel.org/primmel-smart-docs/platform/06-the-cnml-bridge/', label: 'roadmap' },
+    { text: 'The five-tier hierarchy’s production ceremonies (the BIML Root and IA threshold tiers) stood up with the participating authorities.', href: 'https://www.signatif.org/', label: 'the framework' },
+  ]}
 />
-<ActionBox
-  href="https://www.oimlsmart.org/cnml/verify"
-  label="Verify a certificate"
-  description="Drop a .cnml.xml file and run the nine-check pipeline in your browser. No account; the file never leaves your machine."
-/>
-<ActionBox
-  href="https://github.com/oimlsmart/cnml"
-  label="Inspect the CNML repository"
-  description="The public repository: the format packages, the browser application, and the air-gapped CA server. The ten format packages are published on npm under the @oimlsmart scope, version 1 frozen with an additive-only compatibility rule."
-/>
-<ActionBox
-  href="https://demo.oimlsmart.org/"
-  label="See issuance in the demo"
-  description="The demo's certificate is issued through the platform's signing gate and carries its OpenTimestamps attestation. Sign in with a demo account; request one via info@oimlsmart.org."
-/>
+
+## Why it exists
+
+PDF certificates are reproducible with consumer-grade image editing
+software, and the widespread availability of generative image models has
+increased the realism of forged documents. Verification of a PDF means
+contacting the issuer and trusting the answer. A certificate that is data
+inverts this: the document carries its own proof, and the verifier checks
+the proof instead of phoning the issuer.
+
+The format was produced by analyzing every existing published OIML-CS
+Type Approval certificate and digitizing the resulting model in a manner
+compatible with OIML SMART and the relevant OIML Recommendations. CNML
+operates at the type-approval tier under the OIML-CS; the PTB Digital
+Calibration Certificate operates at the calibration tier under ISO/IEC
+17025, and an instrument in legal use typically holds both. The
+implementation is developed by [Ribose](https://www.ribose.com) on the
+Signatif framework, and the threshold-cryptography substrate is provided
+by Confium.
 
 ## How it interops
 
 The certificate composes with the frameworks its audience meets rather
 than asking them to change. The composition with W3C Verifiable
-Credentials expresses the type-approval certificate and the instance
-certificate as VCs with their co-signature proof sets; the composition
-with the EU Digital Product Passport serves the CNML passport as the DPP
-data carrier's target. Both are specified in the format's [composition
-specification](https://www.oimlsmart.org/cnml/docs/specifications/composition).
-A round-trip importer consumes PTB DCC calibration files and produces
-CNML test-report payloads, and units resolve against the BIPM Digital SI.
-The estate's own [interoperability page](/technologies/dataspace-interop)
-places these compositions on the standards map.
+Credentials is live on the demo's certificate in two carrier forms (the
+plain VC and the SD-JWT, for selective disclosure); the composition with
+the EU Digital Product Passport serves the DPP conformity attestation as
+the data carrier's target; and the AAS submodel form lets an Asset
+Administration Shell consumer read the certificate natively. All four are
+specified in the format's [composition
+specification](https://www.oimlsmart.org/cnml/docs/specifications/composition)
+and served by the demo today. A round-trip importer consumes PTB DCC
+calibration files and produces CNML test-report payloads, and units
+resolve against the BIPM Digital SI. The estate's own
+[interoperability page](/technologies/dataspace-interop) places these
+compositions on the standards map.
 
 ## Who may use it, and who may run it
 
@@ -104,9 +143,54 @@ entitlement source:
 
 <ServiceEntitlement service="cs-smart-platform" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
-front-door address. Verifiers can start without any conversation: the
-[verify page](https://www.oimlsmart.org/cnml/verify) is the whole
-onboarding.
+**Why not simply sign a PDF?**
+A signed PDF binds the renderer's pixels; the verifier learns that the
+bytes are intact, not that the content is a valid certificate. A CNML
+certificate is data: the schema gate rejects a malformed document before
+signing, and the verifier recomputes the full pipeline locally, so the
+content's shape, scope, and provenance are all checked, not only the
+signature over the bytes.
+
+**What happens if a signing key is compromised?**
+Revocation is immediate and auditable, and the required time anchor does
+the honest work: an artifact signed before a revocation still verifies,
+with the answer "valid at the time; the key since revoked, on a stated
+date". The [trust registry](/technologies/trust-registry) carries the
+standing half of that answer.
+
+**How does CNML relate to the PTB Digital Calibration Certificate?**
+They operate at different tiers and an instrument in legal use typically
+holds both: the DCC at the calibration tier under ISO/IEC 17025, CNML at
+the type-approval tier under the OIML-CS. The format ships a round-trip
+importer that consumes DCC calibration files and produces CNML
+test-report payloads, and units resolve against the BIPM Digital SI.
+
+**Is verification really offline?**
+Yes. The nine-check pipeline runs in the verifier's browser on a dropped
+file; nothing leaves the machine, and a downloaded trust-anchor bundle
+makes the check work offline, indefinitely.
+
+## Try it, read it, talk to us
+
+<ActionBox
+  href="https://www.oimlsmart.org/cnml/verify"
+  label="Verify a certificate"
+  description="Drop a .cnml.xml file and run the nine-check pipeline in your browser. No account; the file never leaves your machine."
+/>
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="See issuance in the demo"
+  description="The demo's certificate is issued through the platform's signing gate and carries its OpenTimestamps attestation. Sign in with a one-click demo account; the environment resets nightly."
+/>
+<ActionBox
+  href="https://www.oimlsmart.org/cnml/docs/specifications/composition"
+  label="Read the composition specification"
+  description="How the certificate composes with W3C Verifiable Credentials, the Digital Product Passport, and the Asset Administration Shell."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org, the programme's front-door address. Verifiers can start without any conversation: the verify page is the whole onboarding."
+/>
