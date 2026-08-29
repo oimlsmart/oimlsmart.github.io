@@ -1,73 +1,158 @@
 ---
 title: 'For Manufacturers'
-description: Publish a reference model of your instrument mapped to the Recommendation, ship a SMART twin, and certify continuously instead of episodically.
+description: Apply once against the Recommendation's model, follow the evaluation live, and receive a certificate any customer or authority can verify, anywhere, without an account.
 eyebrow: 'About · Audiences · 02'
 ---
 
 import EntitlementRow from '../../../../components/EntitlementRow.astro'
 import ActionBox from '../../../../components/ActionBox.astro'
+import AudienceShot from '../../../../components/AudienceShot.astro'
+import SmartSplit from '../../../../components/SmartSplit.astro'
 
-As an applicant you apply once against the Recommendation's model,
-follow your evaluation live instead of waiting for letters, and receive
-a certificate that any customer or authority can verify anywhere, any
-time, without an account. The same model then carries your product
-further: variants share its spine, and a SMART twin makes conformity
-continuous instead of episodic.
-
-## What you do today
-
-Type evaluation is an episodic, expensive event: prepare documentation,
-ship samples, wait for the laboratory, respond to findings, receive a
-report that is a photograph of one week in your product's life. Every
-variant re-opens the same questions; every market asks them
-differently; and once the certificate is framed, neither you nor your
-customers can *see* conformity, you can only assert it.
-
-## What changes
-
-You publish a **reference model** of your instrument: its identity,
-its holdings, its behavior, every node mapped explicitly onto the
-Recommendation's requirements, tests, and forms. Conformity stops being
-prose about your product and becomes **a computation over your
-product's model**. Then the larger step: ship a **SMART twin** with the
-instrument, a governed digital projection that serves exactly the
-aspects the Recommendation governs, live, to laboratories, authorities,
-and customers. The **twin-certification program** certifies that your
-twin stays faithful to the physical device, the promise is declared,
-probed, and signed, not just claimed.
-
-## What it looks like in practice
-
-A load-cell manufacturer models against OIML R 60: markings,
-accuracy class, temperature behavior, creep, each mapped to the clause
-that governs it. A customer importing that reference model gets your
-conformity story as data they can compute against; a customer plugging
-in the live twin gets **continuous** conformity, the compliance engine
-watches the governed aspects and re-judges as evidence arrives.
-Variants and family members share the model's common spine instead of
-re-opening the file.
-
-## What you can try now
-
-The ACME LC-500 pilot walks the entire chain, manufacturer reference
-model, customer import, live twin, twin certification, and the
-simulator lets you rehearse every step before any hardware exists.
+**Apply once. Follow it live. Hold a certificate that answers for itself.**
+As an applicant you file against the Recommendation's model, watch every
+stage of the evaluation as it happens, and receive a certificate your
+customers and authorities verify on their own, any time, with no account
+and no phone call to anyone.
 
 <ActionBox
-  href="https://demo.oimlsmart.org/"
-  label="Open the demo's applicant portal"
-  description="Apply against the model, follow the evaluation live, download the certificate. Sign in with a demo account; request one via info@oimlsmart.org."
+  href="https://demo.oimlsmart.org/app/login"
+  label="Try the applicant portal now"
+  description="Sign in with the one-click Applicant demo account (no registration; the instance resets nightly) and open the applications list below."
 />
-<ActionBox
-  href="https://www.oimlsmart.org/recs/docs/oiml-rec/12-modelling-your-product"
-  label="Read modelling your product"
-  description="The reference-model guide: identity, holdings, behavior, mapped to the Recommendation's clauses."
+
+<AudienceShot
+  src="/img/audiences/manufacturers/2026-08-29-application-journey-light.png"
+  dark="/img/audiences/manufacturers/2026-08-29-application-journey-dark.png"
+  alt="The applicant portal's application detail: the six-stage journey from submission to decision, with the certificate and the promise set"
+  caption="One application, watched live: review, samples, dispatch, testing, evaluation, decision, and the certificate it produced."
+  performed="Performed on the live demo, 2026-08-29: signed in as the Applicant, opened the application record."
 />
-<ActionBox
-  href="https://www.oimlsmart.org/recs/docs/oiml-rec/13-running-the-demo"
-  label="Walk the demo manual"
-  description="The same chain your customers will run, end to end."
+
+## What you can do
+
+Every act below was performed against the live demo before it was listed;
+the dated screenshot under each is the audit artifact.
+
+**See every application your organization has filed, with its status and
+its age, oldest visible first.** No more searching inboxes for where a
+file stands.
+
+<AudienceShot
+  src="/img/audiences/manufacturers/2026-08-29-portal-dashboard-light.png"
+  dark="/img/audiences/manufacturers/2026-08-29-portal-dashboard-dark.png"
+  alt="The applicant portal dashboard: five applications with statuses and ages, three certificates in force"
+  caption="The portal dashboard: your applications, their states, your certificates in force."
+  performed="Performed on the live demo, 2026-08-29: the Applicant's landing console."
 />
+
+**Open one application and get the whole file.** The six-stage journey,
+the participating parties, the samples, and the promise set: your
+declared scope reads as claims, each carrying its verification status
+from the evaluation's verdicts. An unlinked claim is never silently
+"verified".
+
+**Apply in a six-step wizard whose first act is the Recommendation.**
+Pick R 60, R 91, R 129, or R 144 and everything downstream derives from
+that Recommendation's model.
+
+<AudienceShot
+  src="/img/audiences/manufacturers/2026-08-29-wizard-step-1-recommendation-light.png"
+  alt="The new-application wizard, step 1: the Recommendation cards"
+  caption="Step 1 of 6: the Recommendation you apply against drives the rest of the form."
+  performed="Performed on the live demo, 2026-08-29: opened the wizard as the Applicant."
+/>
+
+**Fill the instrument step the model derives.** Choose the model family,
+tick the models in scope; the attribute definitions and declaration
+forms come from the Recommendation, not from a free-text form.
+
+<AudienceShot
+  src="/img/audiences/manufacturers/2026-08-29-wizard-step-3-instrument-light.png"
+  alt="The wizard's instrument step: the model family select and the models-in-scope checkboxes"
+  caption="The instrument step is the Recommendation's model rendered as a form."
+  performed="Performed on the live demo, 2026-08-29: selected the LC-500i family and a model in scope."
+/>
+
+**Address the application to a real Issuing Authority.** The scheme step
+offers the OIML-CS (with its Scheme A / Scheme B choice) and the
+registered authorities' cards: the same registry the OIML-CS publishes,
+not a typed-in name.
+
+<AudienceShot
+  src="/img/audiences/manufacturers/2026-08-29-wizard-step-6-scheme-ia-light.png"
+  alt="The wizard's scheme and review step: the OIML-CS scheme radios and the Issuing Authority cards"
+  caption="Scheme and review: the OIML-CS choice and the Issuing Authority pick from the live registry."
+  performed="Performed on the live demo, 2026-08-29: chose OIML-CS Scheme B, addressed to the Example Issuing Authority."
+/>
+
+**Submit and watch the journey open.** The application lands as
+SUBMITTED with the Issuing Authority; every later stage (samples,
+dispatch, testing, evaluation, decision) updates the same page, and the
+notifications inbox carries each event.
+
+<AudienceShot
+  src="/img/audiences/manufacturers/2026-08-29-application-submitted-light.png"
+  alt="The application detail right after submission: SUBMITTED state, journey at step one"
+  caption="Submitted: the journey opens, and every stage from here is visible as it happens."
+  performed="Performed on the live demo, 2026-08-29: a full wizard submission (APP-OIML-2026 series, fictional cast)."
+/>
+
+**Download the certificate three ways.** Signed CNML (the
+machine-readable original), a W3C Verifiable Credential, or an AAS
+submodel for your digital-product-passport toolchain. Each was
+downloaded in the audit; the VC file verifies on the public verify page.
+
+<AudienceShot
+  src="/img/audiences/manufacturers/2026-08-29-certificate-downloads-light.png"
+  dark="/img/audiences/manufacturers/2026-08-29-certificate-downloads-dark.png"
+  alt="The certificate page with its three download actions and the print view"
+  caption="R60/2021-A-EX1-26.01: the certificate is data. CNML, VC, AAS submodel, print."
+  performed="Performed on the live demo, 2026-08-29: opened the certificate and downloaded the CNML and VC artifacts."
+/>
+
+**Get notified at every stage.** The bell and the inbox carry your
+applications' events; nothing moves silently.
+
+<AudienceShot
+  src="/img/audiences/manufacturers/2026-08-29-notifications-light.png"
+  dark="/img/audiences/manufacturers/2026-08-29-notifications-dark.png"
+  alt="The applicant notifications inbox opened from the header bell"
+  caption="The notifications inbox: the events of your own certification work."
+  performed="Performed on the live demo, 2026-08-29: opened the Applicant's inbox."
+/>
+
+## How it works
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/img/audiences/diagrams/manufacturers-light.svg" alt="The applicant's journey: apply, follow it live, receive, prove" class="logo-light" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
+  <img src="/img/audiences/diagrams/manufacturers-dark.svg" alt="The applicant's journey: apply, follow it live, receive, prove (dark)" class="logo-dark" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
+</figure>
+
+## What this changes, and what it does not
+
+Today a type evaluation is an episodic, expensive event: documentation
+by email, samples by courier, then silence until the report arrives, a
+photograph of one week in your product's life. On the platform the
+application is data from the first step, and the file's progress is
+yours to watch. What does not change: the Recommendation's text, the
+IA's decision, the legal meaning of the certificate. The model joins the
+text; it does not replace it.
+
+<SmartSplit>
+  <ul slot="today">
+    <li>The <a href="https://demo.oimlsmart.org/">applicant portal</a>: applications, the live journey, certificates, notifications.</li>
+    <li>The certificate as <a href="/technologies/cnml">signed CNML</a>, W3C Verifiable Credential, and AAS submodel.</li>
+    <li>The <a href="https://demo.oimlsmart.org/app/verify/">public verification</a> of your certificates by anyone, without an account.</li>
+    <li>The <a href="https://demo.oimlsmart.org/app/library">library</a> and the Recommendations as models your engineers can read.</li>
+  </ul>
+  <ul slot="vision">
+    <li>Ship a <a href="/technologies/smart-twin">SMART twin</a> with the instrument: the governed aspects served live (roadmap).</li>
+    <li>The <a href="/technologies/smart-twin">twin-certification program</a>: your twin's fidelity declared, probed, and signed (roadmap).</li>
+    <li>Continuous compliance between assessments: the compliance engine re-judges as evidence arrives (roadmap).</li>
+    <li>Rehearse your own certification on the <a href="/technologies/sst">SST simulator</a> before hardware exists (the simulator is local today; hosted is roadmap).</li>
+  </ul>
+</SmartSplit>
 
 ## What you can use, and what you can run
 
@@ -77,10 +162,59 @@ quoted below from the estate's single entitlement source.
 
 <EntitlementRow category="applicant-public" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the
-programme's front-door address, or use the
-[contact page](/about/contact). Tell us your instrument category and
-the markets you certify for; the reference-model conversation starts
-there.
+### Does this change how we certify today?
+
+No. The legal instruments are untouched: the Recommendation's text
+stays, the IA decides, the certificate means what it meant. What changes
+is the mechanics around it: the application is structured data, the
+evaluation's progress is visible, and the certificate you receive is
+machine-verifiable. PDFs never die; the model joins them.
+
+### Who sees our product data?
+
+Only the parties to your evaluation, per the visibility cones the
+platform enforces: your application is addressed to one Issuing
+Authority; the test laboratory sees the dispatch it accepted; the BIML
+sees what is registered. Your fuller product documentation stays yours;
+the platform never publishes your file.
+
+### Is the Verifiable Credential real, or a demo prop?
+
+Real. It verifies against the issuer's DID document on the
+[public verify page](https://demo.oimlsmart.org/app/verify/), which is
+exactly the check your customers will run. In the audit for this page we
+downloaded the VC from the certificate page and verified the file
+itself, with no account.
+
+### What does this cost us?
+
+Using the hosted estate costs you no infrastructure: the applicant
+portal is a hosted console, and the demo instance is a public sandbox.
+The self-host entitlements belong to Member States, not to applicants;
+you never run anything.
+
+### We certify families and variants. Does every variant reopen the file?
+
+No. Variants and family members share the model's common spine: the
+wizard's instrument step picks the family and the models in scope, and
+the evaluation treats the delta, not the whole file again.
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/login"
+  label="Open the demo's applicant portal"
+  description="The one-click Applicant account, no registration. The instance is fictional and resets nightly."
+/>
+<ActionBox
+  href="https://www.oimlsmart.org/recs/docs/oiml-rec/12-modelling-your-product"
+  label="Read modelling your product"
+  description="The reference-model guide: identity, holdings, behavior, mapped to the Recommendation's clauses."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: tell us your instrument category and the markets you certify for; the reference-model conversation starts there."
+/>

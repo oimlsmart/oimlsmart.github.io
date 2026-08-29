@@ -1,72 +1,147 @@
 ---
 title: 'For Test Laboratories'
-description: Structured test runs, evidence captured once at the bench, reports generated, and a simulator to rehearse on before any instrument enters the lab.
+description: Dispatches land in your inbox, the workbench walks the procedure, evidence is captured at the moment of work, and the report is generated, never transcribed.
 eyebrow: 'About · Audiences · 03'
 ---
 
 import EntitlementRow from '../../../../components/EntitlementRow.astro'
 import ActionBox from '../../../../components/ActionBox.astro'
+import AudienceShot from '../../../../components/AudienceShot.astro'
+import SmartSplit from '../../../../components/SmartSplit.astro'
 
-OIML SMART turns the Recommendation's test procedures into a workbench
-your operators follow step by step, capturing evidence at the moment of
-work instead of transcribing it afterward. The test report is generated
-from that evidence, and your laboratory rehearses every procedure on a
-simulated instrument before a real one enters the lab.
-
-## What you do today
-
-A type evaluation in your laboratory means: read the Recommendation's
-test procedures from a PDF, set up each condition by hand, record
-readings into a form, transcribe the form into a report, and answer
-findings about transcription. Your metrologists' expertise goes into
-measurement, but a third of the bench time goes into paperwork
-mechanics, and every transcription is an error waiting to be found at
-the worst moment.
-
-## What changes
-
-The test procedures are **executable processes**, not prose. The
-laboratory workbench walks the operator step by step, *condition this,
-place that load, record here*, capturing **evidence at the moment of
-work**: the condition, the input, the reading, the timestamp, the
-instrument's own served value where a twin exists. The report is
-**generated** from the accrued evidence, not assembled afterward.
-Nothing is transcribed; nothing is re-typed; every row of the report
-traces to the probe that produced it and the clause that required it.
-
-## What it looks like in practice
-
-Before a physical instrument ever enters your lab, your operators
-rehearse the full procedure on the **simulated SMART twin**: a virtual
-load cell with realistic physics, temperature cycles leave residuals,
-creep behaves the way R 60 says it should. The workbench instructions
-are identical for the simulator and for a real SMART-twin-capable
-instrument, so training transfers directly. And the discipline is
-honest: where evidence cannot be produced, the verdict reads
-`indeterminate`, your laboratory never has to choose between silence
-and a pass.
-
-## What you can try now
-
-The operator guides run the laboratory role end to end against the
-simulator, dispatch received, tests executed, evidence accrued, report
-issued, with the same screens your bench would use.
+**Evidence captured once, at the moment of work.** The Recommendation's
+test procedures become a workbench your operators follow step by step;
+readings accrue as evidence with the operator and the timestamp
+attached; the test report is generated from that evidence, and your
+metrologists' time goes into measurement instead of paperwork mechanics.
 
 <ActionBox
-  href="https://demo.oimlsmart.org/"
-  label="Open the demo's Test Laboratory console"
-  description="The dispatch queue, the guided test runs, the report submission. Sign in with a demo account; request one via info@oimlsmart.org."
+  href="https://demo.oimlsmart.org/app/login"
+  label="Try the laboratory workbench now"
+  description="Sign in with the one-click Test Laboratory demo account (no registration; the instance resets nightly) and the inbox below is yours."
 />
-<ActionBox
-  href="https://www.oimlsmart.org/recs/docs/oiml-rec/15-operator-guides"
-  label="Walk the operator guides"
-  description="The laboratory role end to end against the simulator, on the same screens your bench would use."
+
+<AudienceShot
+  src="/img/audiences/laboratories/2026-08-29-inbox-live-request-light.png"
+  alt="The laboratory inbox with a dispatched test request in the incoming bucket"
+  caption="The laboratory inbox: the Issuing Authority's dispatch lands here, live."
+  performed="Performed on the live demo, 2026-08-29: a real dispatch issued by the IA minutes earlier, received in laboratory 21's inbox."
 />
-<ActionBox
-  href="https://www.oimlsmart.org/recs/docs/oiml-rec/13-running-the-demo"
-  label="Practice on the simulator"
-  description="The demo manual: a virtual load cell with realistic physics, no hardware required."
+
+## What you can do
+
+Every act below was performed against the live demo before it was listed;
+the dated screenshot under each is the audit artifact.
+
+**Receive the dispatch in your inbox, live.** The IA's TestRequest names
+the forms, the samples, and the terms; it appears in your incoming
+bucket the moment it is issued, no email to notice.
+
+**Open the request and see exactly your share.** The scope, the samples
+with their serials, the issuing authority's context. Accept, or decline
+with a reason; silence is not a state the record allows.
+
+<AudienceShot
+  src="/img/audiences/laboratories/2026-08-29-request-open-light.png"
+  alt="The test request view: the assigned forms and samples with the accept and decline acts"
+  caption="The request, opened: the assigned forms, the samples, the decision."
+  performed="Performed on the live demo, 2026-08-29: opened the dispatched request as the laboratory."
 />
+
+**Accept, and join the project's dataspace.** Accepting the assignment
+joins your laboratory to the Evaluation Project: the working panels
+(samples, assignments, the report) reveal, and what you produce accrues
+to the same record the IA evaluates.
+
+<AudienceShot
+  src="/img/audiences/laboratories/2026-08-29-request-accepted-light.png"
+  alt="The test request after acceptance: the working panels revealed"
+  caption="Accepted: the samples, the assignments, and the report panel open for work."
+  performed="Performed on the live demo, 2026-08-29: accepted the assignment as the laboratory."
+/>
+
+**See every report your laboratory has authored, with its status.** Form
+instances, samples, acceptance state; your output is a list you manage,
+not a file share you search.
+
+<AudienceShot
+  src="/img/audiences/laboratories/2026-08-29-test-reports-light.png"
+  dark="/img/audiences/laboratories/2026-08-29-test-reports-dark.png"
+  alt="The laboratory's test reports list with form-instance counts and acceptance status"
+  caption="The reports your laboratory authored, each row tracing to its forms and samples."
+  performed="Performed on the live demo, 2026-08-29: opened the laboratory's reports list."
+/>
+
+**Register a report you performed offline, marked as what it is.**
+Records mode: a report issued outside the platform enters as submitted
+to the IA, marked registered-offline; it never claims platform test-run
+evidence, and the IA's review stays a real act.
+
+<AudienceShot
+  src="/img/audiences/laboratories/2026-08-29-register-offline-light.png"
+  dark="/img/audiences/laboratories/2026-08-29-register-offline-dark.png"
+  alt="The register-offline test report form"
+  caption="The records-mode bridge: offline work enters the record honestly marked."
+  performed="Performed on the live demo, 2026-08-29: opened the offline-registration form as the laboratory."
+/>
+
+**Read the procedure the Recommendation actually requires.** The test
+procedures are the Recommendation's model, not a retyped PDF: the work
+instructions your bench follows derive from the same clauses the report
+traces to.
+
+<AudienceShot
+  src="/img/audiences/shared/2026-08-29-r60-requirements-light.png"
+  dark="/img/audiences/shared/2026-08-29-r60-requirements-dark.png"
+  alt="R 60 read as a model: the requirement classes with their counts and clause structure"
+  caption="R 60 as data: the requirements and test procedures with clause-level structure."
+  performed="Performed on the live demo, 2026-08-29: opened the R 60 model's reference surfaces."
+/>
+
+**Bind a twin in the twin-lab workbench.** Where a SMART-twin-capable
+instrument answers, the workbench reads its served surface by
+introspection and runs the guided conformance test against it; the
+twin's readings auto-record. (Today the demo's simulator runs locally;
+see the roadmap section.)
+
+<AudienceShot
+  src="/img/audiences/laboratories/2026-08-29-twin-lab-light.png"
+  dark="/img/audiences/laboratories/2026-08-29-twin-lab-dark.png"
+  alt="The twin-lab workbench: pick a Recommendation, give a twin endpoint, discover its served surface"
+  caption="The twin-lab: the bind surface. The Recommendation declares the interface; the endpoint is read, never assumed."
+  performed="Performed on the live demo, 2026-08-29: opened the twin-lab workbench."
+/>
+
+## How it works
+
+<figure style="margin: 1.5rem 0;">
+  <img src="/img/audiences/diagrams/laboratories-light.svg" alt="The laboratory's arc: dispatch, accept, guided run, generated report" class="logo-light" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
+  <img src="/img/audiences/diagrams/laboratories-dark.svg" alt="The laboratory's arc: dispatch, accept, guided run, generated report (dark)" class="logo-dark" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
+</figure>
+
+## What this changes, and what it does not
+
+Today a type evaluation means: read the procedures from a PDF, set up
+each condition by hand, record readings into a form, transcribe the form
+into a report, and answer findings about transcription. On the platform
+the evidence is captured at the moment of work and the report is
+generated from it; where evidence cannot be produced, the verdict reads
+INDETERMINATE, never a silent pass. What does not change: your
+measurement, your competence, your responsibility for the result. The
+platform removes the transcription, not the metrology.
+
+<SmartSplit>
+  <ul slot="today">
+    <li>The <a href="https://demo.oimlsmart.org/">laboratory workbench</a>: the inbox, the request, the reports, the offline bridge.</li>
+    <li>The Recommendation's procedures as the model your work derives from.</li>
+    <li>The twin-lab bind surface for SMART-twin-capable instruments.</li>
+  </ul>
+  <ul slot="vision">
+    <li>Rehearse every procedure on the <a href="/technologies/sst">SST simulator</a> before a real instrument enters the lab: the simulator runs locally today, hosted rehearsal is roadmap.</li>
+    <li>The guided run with the twin's readings auto-recorded end to end (the deployable evidence pipeline is roadmap).</li>
+    <li><a href="/technologies/smart-twin">Signed measurements</a>: the instrument's served values carrying their own provenance (roadmap).</li>
+  </ul>
+</SmartSplit>
 
 ## What you can use, and what you can run
 
@@ -77,10 +152,51 @@ source.
 
 <EntitlementRow category="ia-tl" upsell="body-to-ms" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the
-programme's front-door address, or use the
-[contact page](/about/contact). Tell us which Recommendations your
-laboratory works under; the simulator rehearsal for your bench starts
-there.
+### Does the workbench replace our metrologists' judgment?
+
+No. The workbench walks the procedure and captures what the operator
+does; the measurement, the setup, and the professional call remain the
+laboratory's. Where the evidence does not support a verdict, the system
+says INDETERMINATE. Your laboratory never has to choose between silence
+and a pass.
+
+### We already have a LIMS. Is this another island?
+
+The platform's surfaces are data, not documents: reports, evidence rows,
+and dispatches are structured records. Interop is a first-class position
+(the standards map: ISO/IEC SMART, ReqIF, RDF/SHACL, W3C VC, AAS), and
+records mode lets a report authored in your own systems enter honestly.
+The deep LIMS integrations are roadmap work; the honest bridge is live.
+
+### What if our laboratory works for several Issuing Authorities?
+
+The dispatch is one TestRequest per laboratory per engagement; your
+inbox shows exactly your share, per IA, and each accepted assignment
+joins only that project's dataspace. Cross-authority visibility is the
+cone machinery's job, and it is enforced, not configured per project.
+
+### We ran the evaluation before any of this existed. Do we redo it?
+
+No. Register the offline report; it enters marked registered-offline and
+the IA reviews it as a real act. Nothing is retroactively digitized, and
+nothing claims evidence it does not have.
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/login"
+  label="Open the demo's laboratory workbench"
+  description="The one-click Test Laboratory account, no registration. The inbox, the requests, the reports."
+/>
+<ActionBox
+  href="https://www.oimlsmart.org/recs/docs/oiml-rec/15-operator-guides"
+  label="Walk the operator guides"
+  description="The laboratory role end to end, on the same screens your bench would use."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: tell us which Recommendations your laboratory works under; the rehearsal starts there."
+/>
