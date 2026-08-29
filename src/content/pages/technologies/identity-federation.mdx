@@ -1,0 +1,96 @@
+---
+title: 'The identity federation'
+description: 'One account across the estate: the OIML SMART identity service is the single OpenID Provider, every platform instance is a relying party, and members may run their own provider from the same software.'
+eyebrow: 'Technologies · 06'
+---
+
+import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
+import ActionBox from '../../../components/ActionBox.astro'
+
+The identity federation gives every participant one account for the whole
+estate: the identity service at id.oimlsmart.org is the single OpenID
+Provider, and every platform instance is a relying party that runs no
+login form and holds no account list of its own. Behind the account sits
+the organization registry with the OIML member taxonomy, so a sign-in
+resolves to a member state, a corresponding member, an issuing authority,
+a test laboratory, or a designated body.
+
+## Why it exists
+
+A certification ecosystem that fragments accounts across services
+fragments the record of who did what, and legal metrology runs on
+attributed acts: who signed, for which organization, under which
+authorization. One provider makes attribution uniform, lets an
+organization administer its own people's access, and lets an instrument
+hold a machine identity of the same shape as its owner's.
+
+## How it works
+
+The service speaks OpenID Connect Core 1.0 with authorization code and
+PKCE, publishes its RFC 8414 discovery document, and issues ES256 ID
+tokens. Each registered service declares a claims policy, and receives
+the least claims it needs. An organization administrator sets each
+member's data cone: org-wide, assigned, read-only, or assigned and
+read-only together, and the token carries the posture so any service can
+learn it without a callback. Sign-in supports passkeys, authenticator
+apps, and recovery codes; SMS and voice one-time codes are a documented
+refusal, because SIM-swap and interception make them weak factors.
+
+Upstream sign-in lets a member use an identity they already hold: GitHub
+is linked today, Microsoft Entra and national or organizational providers
+come next, and adding a provider is a configuration act, not a code
+change. Instruments are first-class citizens through the device class:
+each twin holds a per-device credential, speaks the client-credentials
+grant only, and is bound to its organization and its instrument model, so
+a re-key or a revocation is a console act with an audit trail.
+
+## Where it runs live
+
+<ActionBox
+  href="https://id.oimlsmart.org/"
+  label="Open the identity service"
+  description="The live provider: sign in, manage your account, or start the join flow for your organization."
+/>
+<ActionBox
+  href="https://id.oimlsmart.org/.well-known/openid-configuration"
+  label="Read the discovery document"
+  description="The machine-readable contract every relying party consumes: the endpoints, the algorithms, the claims."
+/>
+<ActionBox
+  href="https://github.com/oimlsmart/identity"
+  label="Inspect the identity repository"
+  description="The public repository: the provider, the consoles, and the deployment runbooks (source available; the open-source license is pending)."
+/>
+<ActionBox
+  href="https://github.com/oimlsmart/identity/blob/main/docs/deployment/identity-self-host.md"
+  label="Read the self-host runbook"
+  description="Running the service as your own provider on your own domain is a configuration act, with an executable proof in the repository's end-to-end suite."
+/>
+
+## How it interops
+
+The federation is standards-bound: any OpenID Connect relying party can
+integrate, and any OpenID Provider built from the same software can serve
+a member's own domain. The estate's platform instances consume the same
+claims contract, so a member-state deployment authenticates against the
+estate provider or against the member's own without a code change. The
+organization registry and its signing keys double as the estate's
+[trust registry](/technologies/trust-registry), which is the identity
+plane the dataspace work builds on.
+
+## Who may use it, and who may run it
+
+Everyone gets an account on the estate, and any member may run the
+identity software as its own provider; member states additionally receive
+the streaming update channel. The determinations, quoted from the
+estate's single entitlement source:
+
+<ServiceEntitlement service="estate-account" />
+
+<ServiceEntitlement service="identity-software" />
+
+## Who to talk to
+
+Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
+front-door address. The first conversation about your organization's
+presence in the registry is the same address.
