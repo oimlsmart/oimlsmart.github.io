@@ -1,0 +1,101 @@
+---
+title: 'The SMART Twin'
+description: 'The Recommendation model as the running instrument’s digital twin: the standard declares the served interface, and the compliance engine judges the served evidence continuously.'
+eyebrow: 'Technologies · 03'
+---
+
+import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
+import ActionBox from '../../../components/ActionBox.astro'
+
+A SMART twin is the running instrument's digital counterpart, shaped by
+the standard itself: the Recommendation declares which values the twin
+serves and how fresh they must be, and the platform's compliance engine
+judges the served evidence continuously. The certificate stops being a
+point-in-time snapshot and becomes a live, re-computed state.
+
+## Why it exists
+
+Type evaluation today ends at issuance. The instrument then enters service,
+drifts, is recalibrated or repaired, and its conformity is re-established
+episodically, from paper records, at re-verification. Between those
+episodes the authority's record says nothing about the instrument's actual
+state. A twin that serves its governed registers turns surveillance into a
+continuous computation over evidence instead of a periodic excavation of
+files.
+
+## How it works
+
+Two distinctions carry the design. The first separates the **abstract
+reference** from the **live twin**: the manufacturer's product reference
+model declares what the instrument type promises and serves; the live twin
+is one running instrument's governed projection, pinned to that reference
+and answering for itself. The second separates the twin's own declaration
+from its judgment: the Recommendation's twin declaration fixes the
+interface (which registers, through which operations, with which freshness
+windows), and the platform's monitor computes verdicts per requirement per
+twin against it.
+
+The compliance engine runs a scheduler over the declared monitoring
+program. Served values pass a freshness gate against the twin's own
+timestamps; a stale value degrades the verdict to indeterminate rather
+than failing or passing silently. Facts, verdicts, and escalations accrue
+in append-only, version-pinned evidence streams, and a stored window can
+be re-judged under new limits without querying the twin again. Physical
+evidence stays primary: the twin-certification program pairs served values
+with a probe channel (a reference instrument, an observer attestation, or
+simulator ground truth), so a lying twin is caught by physics rather than
+by signature checks.
+
+## Where it runs live
+
+The twin runtime operates today in the platform and the demo: the
+simulated instruments serve the governed interface, the monitor judges
+them, and the twin-certification program (its governing document TW-1)
+certifies twin fidelity with suspension and withdrawal semantics. The
+deployable client/server compliance engine and cryptographically signed
+serves are **roadmap** items, tracked as the deployment and provenance
+legs of the platform's future wave.
+
+<ActionBox
+  href="https://www.oimlsmart.org/smi/"
+  label="Visit the SMART Measuring Instruments site"
+  description="The component home for instruments that provide a SMART digital twin: the instrument is the API."
+/>
+<ActionBox
+  href="https://www.primmel.org/primmel-smart-docs/platform/"
+  label="Read the platform volume"
+  description="The twin runtime, the twin lab, the projection machinery, and the composite twin."
+/>
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="Watch the monitor run in the demo"
+  description="The twin lab and the monitored fleet run against the simulated instruments. Sign in with a demo account; request one via info@oimlsmart.org."
+/>
+
+## How it interops
+
+A SMART twin reads as an Asset Administration Shell submodel to an AAS
+consumer: served registers map to properties, commands map to operations.
+The asymmetry is the program's position: a submodel is whatever a vendor
+wrote, while a twin's governed projection is declared by the standard,
+identical across conforming instruments, with freshness semantics and
+certification machinery behind it. The same projection machinery serves
+the Digital Product Passport as a named, access-classed projection of the
+product model; the [interoperability page](/technologies/dataspace-interop)
+carries the full map.
+
+## Who may use it, and who may run it
+
+The SMART Twin is the SMART+ tier, and the estate's determination for it
+is roadmap across every member category, quoted here from the single
+entitlement source. The pilot surfaces above are open today; the member
+deployments follow the roadmap.
+
+<ServiceEntitlement service="smart-twin" />
+
+## Who to talk to
+
+Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
+front-door address. The [SMART Measuring Instruments
+documentation](https://www.oimlsmart.org/smi/docs/) carries the adoption
+programme for legal-metrology authorities.
