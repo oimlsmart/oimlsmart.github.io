@@ -1,0 +1,107 @@
+---
+title: 'The SST simulation'
+description: 'Simulated SMART Twins for measuring instruments: realistic physics behind the governed twin interface, so the full certification workflow is rehearsed and taught without hardware.'
+eyebrow: 'Technologies · 04'
+---
+
+import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
+import ActionBox from '../../../components/ActionBox.astro'
+
+The SST (Simulated SMART Twin) is a family of simulated measuring
+instruments with realistic physics, built for training and rehearsal: the
+complete certification workflow runs against them with no hardware
+involved. Each simulated instrument serves the same governed twin
+interface that a physical SMART instrument serves, so software, and
+people, cannot tell the difference from the served side.
+
+## Why it exists
+
+Certification skills are learned on instruments that are expensive,
+scarce, and slow to fail in instructive ways. Platform changes need a
+rehearsal space where a verdict chain can be exercised end to end before
+it touches a real evaluation. And a certification system that is never
+shown a failing instrument cannot demonstrate what failure looks like.
+The simulation supplies instruments that behave honestly, fail on
+purpose, and reset in seconds.
+
+## How it works
+
+Each simulated instrument presents two channels. The `/twin` channel is
+the governed projection, and its schema is generated from the
+manufacturer's product reference package; a startup conformance check
+stops the instrument if the served interface drifts from the package. The
+`/world` channel is the physical world: the operator places loads, sweeps
+the environmental conditions, injects faults, and advances the virtual
+clock. An epistemic wall separates the two: certification logic reads
+only the served channel, and the world channel answers to the operator.
+The bench renders the physical scene beside an analogue dial, a
+ground-truth display a human reads with their eyes, which is how the
+classroom teaches the lying-twin lesson: the API reports what it reports,
+and the needle shows what is true.
+
+Four instruments cover the four modelled Recommendations, each with its
+own physics: a strain-gauge load cell (OIML R 60; creep and thermal
+hysteresis), a continuous gas monitor (OIML R 144; drift classes and
+cross-sensitivity), a Doppler speed meter (OIML R 91; cosine error and
+rain fade, which lose readings rather than inventing them), and an
+optical conveyor dimensioner (OIML R 129; sampling, reflectance, and
+ambient-light noise). Named scenarios such as the creep-honest cell and
+the deliberately drifting cell make the teaching cases repeatable.
+
+## Where it runs live
+
+The estate's reference rehearsal is the pilot arc: the ACME LC-500
+product reference is type-evaluated against the modelled OIML R 60, the
+certificate issues through the signing gate, a quarry deployment binds
+one simulated twin, and the monitor runs a simulated quarter in which
+drift flags the certificate, an outage degrades verdicts to
+indeterminate, and a served fault opens a service case. The whole arc is
+an executable proof in the platform's own gate set, and the same arc is
+what the live demo runs.
+
+<ActionBox
+  href="https://www.oimlsmart.org/sst/"
+  label="Visit the SST site"
+  description="The component home for the simulated instruments: the consoles, the bench, and the scenario library."
+/>
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="Run the workflow against a simulated instrument"
+  description="The live demo's whole certification chain runs on SST instruments. Sign in with a demo account; request one via info@oimlsmart.org."
+/>
+<ActionBox
+  href="https://github.com/primmel/sst"
+  label="Inspect the SST framework"
+  description="The public framework repository: the kind-agnostic runtime, the shell, the bench, and the specifications."
+/>
+<ActionBox
+  href="https://github.com/oimlsmart/sst-instruments"
+  label="Inspect the instrument library"
+  description="The public OIML instrument library: the kinds, the instances, and the composite instruments."
+/>
+
+## How it interops
+
+The simulation is driven from the platform, not beside it: the platform's
+gateway consumes the `/twin` channel through its standard connector
+registry, and the interaction contract is two endpoints and four verbs.
+Because the served schema is generated from the same product reference
+packages the platform reads, the simulation proves the supply chain it
+simulates: a package edit that changes the served interface fails the
+instrument's own startup check.
+
+## Who may use it, and who may run it
+
+The hosted simulation is part of the estate's member surfaces, and the
+self-host determination is under programme review; the cells marked
+"proposed" below are the programme's proposal, not yet confirmed policy.
+Quoted from the estate's single entitlement source:
+
+<ServiceEntitlement service="sst-simulation" />
+
+## Who to talk to
+
+Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
+front-door address. Training scenarios and classroom use are the
+commonest requests, and the scenario library is built for that
+conversation.
