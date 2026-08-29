@@ -1,0 +1,72 @@
+---
+/**
+ * RecsDerivation — the SMART Recommendations mechanism in one diagram:
+ * one authored package fans out to the page, the laboratory's form, and
+ * the verdict engine, with clause-level provenance walking every element
+ * back to the adopted text. House style; dark-mode correct via the
+ * TechFigure palette.
+ */
+import TechFigure from './TechFigure.astro'
+---
+
+<TechFigure caption="One model, four readers. Every generated surface cites the clause it derives from; the drift guard proves the data trees match the authored package byte for byte.">
+  <svg viewBox="0 0 860 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="recs-derivation-title">
+    <title id="recs-derivation-title">The Recommendation model derives the page, the test form, the verdict engine, and the certificate content from one package</title>
+
+    <defs>
+      <marker id="recs-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"></path>
+      </marker>
+    </defs>
+
+    <text x="430" y="30" text-anchor="middle" font-size="17" font-weight="600" fill="var(--dg-text)">One source, every surface</text>
+
+    <!-- The authored package -->
+    <rect x="30" y="140" width="180" height="110" rx="8" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" />
+    <text x="120" y="168" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dg-source-text)">The Recommendation</text>
+    <text x="120" y="184" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dg-source-text)">package</text>
+    <text x="120" y="204" text-anchor="middle" font-size="9.5" fill="var(--dg-source-text)">subject · requirements · tests</text>
+    <text x="120" y="218" text-anchor="middle" font-size="9.5" fill="var(--dg-source-text)">report forms · provenance</text>
+    <text x="120" y="238" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">authored once (the SSOT)</text>
+
+    <!-- The four readers -->
+    <rect x="330" y="62" width="200" height="64" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="430" y="88" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-gen-text)">The page you read</text>
+    <text x="430" y="104" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">the web rendering, clause-referenced</text>
+
+    <rect x="330" y="146" width="200" height="64" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="430" y="172" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-gen-text)">The laboratory's form</text>
+    <text x="430" y="188" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">fields bind into the same graph</text>
+
+    <rect x="330" y="230" width="200" height="64" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="430" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-gen-text)">The verdict engine</text>
+    <text x="430" y="272" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">acceptance rules compute the outcome</text>
+
+    <rect x="330" y="314" width="200" height="64" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="430" y="340" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-gen-text)">The exports</text>
+    <text x="430" y="356" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">ReqIF · RDF/SHACL · OpenCDD projections</text>
+
+    <line x1="210" y1="168" x2="322" y2="98" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#recs-arr)" />
+    <line x1="210" y1="186" x2="322" y2="180" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#recs-arr)" />
+    <line x1="210" y1="204" x2="322" y2="260" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#recs-arr)" />
+    <line x1="210" y1="222" x2="322" y2="342" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#recs-arr)" />
+    <text x="266" y="122" text-anchor="middle" font-size="9" fill="var(--dg-text-muted)">generated,</text>
+    <text x="266" y="133" text-anchor="middle" font-size="9" fill="var(--dg-text-muted)">never re-typed</text>
+
+    <!-- Provenance rail -->
+    <rect x="610" y="62" width="220" height="256" rx="10" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" />
+    <text x="720" y="90" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--dg-gov-text)">Clause-level provenance</text>
+    <text x="626" y="116" font-size="9.5" fill="var(--dg-text-soft)">every element carries its source:</text>
+    <text x="626" y="140" font-size="9.5" font-family="ui-monospace, monospace" fill="var(--dg-text)">doc: urn:oiml:pub:r:60-1:2021</text>
+    <text x="626" y="158" font-size="9.5" font-family="ui-monospace, monospace" fill="var(--dg-text)">clause: "5.2"</text>
+    <text x="626" y="186" font-size="9.5" fill="var(--dg-text-soft)">any rendered statement walks back</text>
+    <text x="626" y="202" font-size="9.5" fill="var(--dg-text-soft)">to the adopted text</text>
+    <text x="626" y="232" font-size="9.5" fill="var(--dg-text-soft)">the committee's decision stays</text>
+    <text x="626" y="248" font-size="9.5" fill="var(--dg-text-soft)">authoritative; the model derives</text>
+    <text x="626" y="276" font-size="9.5" fill="var(--dg-text-muted)">the drift guard proves the data</text>
+    <text x="626" y="292" font-size="9.5" fill="var(--dg-text-muted)">trees ≡ the package, byte-clean</text>
+
+    <line x1="530" y1="178" x2="602" y2="178" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#recs-arr)" />
+    <text x="566" y="168" text-anchor="middle" font-size="9" fill="var(--dg-text-muted)">cited by</text>
+  </svg>
+</TechFigure>
