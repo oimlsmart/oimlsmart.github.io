@@ -1,0 +1,112 @@
+---
+title: 'CNML'
+description: 'OIML CNML, the Certificat Numérique de Métrologie Légale: the certificate as signed, time-stamped, schema-validated data, verifiable by anyone, account-free, offline.'
+eyebrow: 'Technologies · 05'
+---
+
+import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
+import ActionBox from '../../../components/ActionBox.astro'
+
+CNML (Certificat Numérique de Métrologie Légale) is the digital
+certificate format developed under the OIML SMART program to succeed the
+PDF-based OIML-CS certificate of conformity. A CNML certificate is data:
+schema-validated against its Recommendation, cryptographically signed,
+time-stamped, and verifiable by anyone without an account, without
+contacting the issuer, and without a network connection.
+
+The format was produced by analyzing every existing published OIML-CS
+Type Approval certificate and digitizing the resulting model in a manner
+compatible with OIML SMART and the relevant OIML Recommendations. CNML
+operates at the type-approval tier under the OIML-CS; the PTB Digital
+Calibration Certificate operates at the calibration tier under ISO/IEC
+17025, and an instrument in legal use typically holds both. The
+implementation is developed by Ribose, and the threshold-cryptography
+substrate is provided by Confium.
+
+## Why it exists
+
+PDF certificates are reproducible with consumer-grade image editing
+software, and the widespread availability of generative image models has
+increased the realism of forged documents. Verification of a PDF means
+contacting the issuer and trusting the answer. A certificate that is data
+inverts this: the document carries its own proof, and the verifier checks
+the proof instead of phoning the issuer.
+
+## How it works
+
+The schema is the specification: each modelled Recommendation ships a
+JSON Schema (twenty-two at the format's freeze), and a document that
+fails its schema is never signed. The signature is W3C XMLDSig with
+Exclusive Canonicalization, ECDSA P-256 by default, with composite
+signatures combining Ed25519 and the post-quantum ML-DSA-65 (NIST FIPS
+204) available so that a forger must break both algorithms. Every signed
+document carries an OpenTimestamps proof of existence anchored to
+Bitcoin; the time anchor is a required part of the document, and a
+verifier's pipeline reports its absence honestly rather than treating the
+document as unprovenanced. Issuance rides a five-tier hierarchy in which
+the BIML Root and the Issuing Authority tiers sign by threshold ceremony,
+so no single party can produce a signature, and each authority's key is
+scoped to its authorized Recommendations by an X.509 v3 extension that
+the verifier enforces.
+
+Verification is a fixed, ordered pipeline of nine checks: well-formedness,
+schema validity, signature, dimensional co-signatures, issuer scope,
+revocation, the evaluation-report binding, the timestamp proof, and
+transparency-log inclusion. The pipeline runs entirely in the verifier's
+browser on a dropped file; nothing leaves the verifier's machine, and a
+downloaded trust-anchor bundle makes the check work offline,
+indefinitely.
+
+## Where it runs live
+
+<ActionBox
+  href="https://www.oimlsmart.org/cnml/"
+  label="Visit the CNML site"
+  description="The component home: the format, the architecture, the schemas, and the browser application."
+/>
+<ActionBox
+  href="https://www.oimlsmart.org/cnml/verify"
+  label="Verify a certificate"
+  description="Drop a .cnml.xml file and run the nine-check pipeline in your browser. No account; the file never leaves your machine."
+/>
+<ActionBox
+  href="https://github.com/oimlsmart/cnml"
+  label="Inspect the CNML repository"
+  description="The public repository: the format packages, the browser application, and the air-gapped CA server. The ten format packages are published on npm under the @oimlsmart scope, version 1 frozen with an additive-only compatibility rule."
+/>
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="See issuance in the demo"
+  description="The demo's certificate is issued through the platform's signing gate and carries its OpenTimestamps attestation. Sign in with a demo account; request one via info@oimlsmart.org."
+/>
+
+## How it interops
+
+The certificate composes with the frameworks its audience meets rather
+than asking them to change. The composition with W3C Verifiable
+Credentials expresses the type-approval certificate and the instance
+certificate as VCs with their co-signature proof sets; the composition
+with the EU Digital Product Passport serves the CNML passport as the DPP
+data carrier's target. Both are specified in the format's [composition
+specification](https://www.oimlsmart.org/cnml/docs/specifications/composition).
+A round-trip importer consumes PTB DCC calibration files and produces
+CNML test-report payloads, and units resolve against the BIPM Digital SI.
+The estate's own [interoperability page](/technologies/dataspace-interop)
+places these compositions on the standards map.
+
+## Who may use it, and who may run it
+
+CNML is a format, not a service, so no entitlement attaches to verifying:
+the verify path is public, account-free, and offline by design. Issuance
+is an act on the OIML-CS SMART Platform under an authority's signing
+keys, and the platform's determination is quoted from the estate's single
+entitlement source:
+
+<ServiceEntitlement service="cs-smart-platform" />
+
+## Who to talk to
+
+Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
+front-door address. Verifiers can start without any conversation: the
+[verify page](https://www.oimlsmart.org/cnml/verify) is the whole
+onboarding.
