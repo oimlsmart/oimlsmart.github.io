@@ -1,0 +1,73 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
+---
+
+<Base
+  title="The status service"
+  description="The live health of the OIML SMART estate: twelve probed services with content assertions, declared objectives against measured actuals, a human-written incident record, and RSS/Atom subscription."
+>
+  <PageHero
+    eyebrow="Services"
+    title="The status service"
+    lede="One page answers 'is it up?': every public service in the estate probed once a minute, the declared availability and latency objectives next to the measured numbers, and a human-written incident record. No account needed, ever."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl">
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What it is</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The estate's health surface. Twelve probe rows cover the identity service (discovery and sign-in separately), the platform hub and the demo/NMI/TL instances, the AI assistant, and the public surfaces (this site, the vocabulary, the studio viewer, the CNML docs, the concepts registry). A probe is not a bare 200: each row carries a content assertion, so a page that answers with the wrong document fails honestly.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        Each row publishes its declared objective next to the measured actual (30/90-day uptime, 30-day p95 latency), and a number is never rounded up to meet a target. The incident record is written by a human after the fact, published from the incident rows in the service's repository: the window, the impact, the root cause, the resolution, the follow-ups. When nothing has broken, it says so.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Subscribing is a feed act today: <a href="https://status.oimlsmart.org/feed.xml" class="text-accent underline underline-offset-2">RSS 2.0</a> or <a href="https://status.oimlsmart.org/feed.atom" class="text-accent underline underline-offset-2">Atom</a>. Email subscription rides the estate mailer posture and lands with the status tail wave; until then the page says feeds, because feeds are what exist.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who it's for</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Anyone whose work depends on the estate: the officer about to present the demo, the laboratory mid-evaluation, the applicant checking a certificate link, and the operators themselves, who read the same page you do.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where it lives</h2>
+      <ActionBox
+        href="https://status.oimlsmart.org/"
+        label="status.oimlsmart.org"
+        description="The live estate health. Public; the incident timeline is subscribable as RSS or Atom."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Open the page, or point a feed reader at the RSS/Atom URLs above. There is no account tier; the status service is the one page that must work when everything else is down, so it asks for nothing.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Status</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        The status service does not probe itself: its page is the probe output, and adding a row for itself would assert what it cannot independently check. Its software (<span class="font-mono text-sm">oimlsmart/status</span>) is a member repository, source available to members.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who can use it, who can run it</h2>
+      <ServiceEntitlement service="status-service" />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified 2026-08-29: the page answered live with all twelve probe rows operational, the declared-versus-actual objectives table, the empty incident record, and both feeds (RSS and Atom) returning 200.
+      </p>
+    </div>
+  </section>
+</Base>
