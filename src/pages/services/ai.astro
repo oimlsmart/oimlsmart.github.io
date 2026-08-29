@@ -1,0 +1,73 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import StatusRow from '../../components/StatusRow.astro'
+import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
+---
+
+<Base
+  title="The AI service"
+  description="The OIML SMART AI service: ask the OIML library in your language; every claim carries a clause-level citation, and the service says so when the corpus has no answer. The member-tier assistant of the estate."
+>
+  <PageHero
+    eyebrow="Services"
+    title="The AI service"
+    lede="Ask a question about legal metrology in your own language and get an answer that cites the exact publication, edition, and clause for every claim. When the OIML corpus does not contain the answer, the service says so instead of inventing one."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl">
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What it is</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        A retrieval-augmented question-answering service over the OIML library: close to 900 publications (Recommendations, Documents, Basic publications, Guides, Expert reports), indexed along clause boundaries. Before the language model answers, it is given passages retrieved from that corpus, and it may only use those. Answers come back in your language (EN, FR, DE, ES, AR, PL, or auto-detected).
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The honesty posture is mechanical, not rhetorical: every claim carries an inline citation like <span class="font-mono text-sm">[OIML R 60-1:2021 §4.4.2]</span>; normative values are quoted verbatim so they can be checked against the cited clause; an off-corpus question gets a plain refusal, and refusals are never cached. The service itself tells you on every answer: verify normative values against the cited clause.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        The full account of how it works and where it falls short is the programme's own write-up: <a href="/news/2026-08-27-oiml-smart-ai" class="text-accent underline underline-offset-2">OIML SMART AI: answers with citations from OIML publications</a>.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who it's for</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        The metrologist who needs the current edition's definition without knowing which document holds it; the committee delegate checking what a clause actually says before a vote; the authority officer scoping an application against the right requirements. It is the estate's member-tier assistant: the OIML publications corpus answers on the public surface, and the sign-in opens the member tier (the conformity-assessment corpus rides it, as the locked dataset on the surface shows).
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where it lives</h2>
+      <ActionBox
+        href="https://ai.oimlsmart.org/"
+        label="ai.oimlsmart.org"
+        description="The assistant. The Ask tab is the conversation; How it works is the honest account; the API tab is for toolmakers."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
+      <ol class="list-decimal pl-6 text-[1.0625rem] leading-relaxed text-ink-soft grid gap-2">
+        <li>Open <a href="https://ai.oimlsmart.org/" class="text-accent underline underline-offset-2">ai.oimlsmart.org</a> and ask; the OIML publications corpus answers directly.</li>
+        <li>For the member tier, choose <em>Sign in</em> and use your estate account. No account yet: the join flow on <a href="/services/identity" class="text-accent underline underline-offset-2">the identity service page</a> is the path, and approval comes from your own organization.</li>
+      </ol>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Status</h2>
+      <StatusRow rows={['ai-service']} />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who can use it, who can run it</h2>
+      <ServiceEntitlement service="ai-service" />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified 2026-08-29: the service answered live with the Ask, How it works, and API tabs; the datasets list (the OIML publications corpus plus the locked member-tier corpus); the citation and refusal posture stated on the surface; and the six answer languages.
+      </p>
+    </div>
+  </section>
+</Base>
