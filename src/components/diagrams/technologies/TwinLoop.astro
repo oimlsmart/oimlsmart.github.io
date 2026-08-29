@@ -1,0 +1,69 @@
+---
+/**
+ * TwinLoop — the SMART Twin mechanism in one diagram: the Recommendation
+ * declares the served interface, the instrument serves its governed
+ * registers, the monitor judges per requirement against freshness
+ * windows, and every fact lands in an append-only evidence stream that
+ * can be re-judged under new limits. House style; dark-mode correct via
+ * the TechFigure palette.
+ */
+import TechFigure from './TechFigure.astro'
+---
+
+<TechFigure caption="The continuous-compliance loop: the standard declares the interface; the twin serves it; the monitor judges; the evidence stream remembers. A stored window re-judges without asking the instrument again.">
+  <svg viewBox="0 0 860 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="twin-loop-title">
+    <title id="twin-loop-title">The Recommendation declares the twin interface; the instrument serves governed registers; the monitor computes verdicts per requirement; evidence accrues in append-only streams</title>
+
+    <defs>
+      <marker id="twin-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"></path>
+      </marker>
+    </defs>
+
+    <text x="430" y="30" text-anchor="middle" font-size="17" font-weight="600" fill="var(--dg-text)">From point-in-time certificate to live compliance state</text>
+
+    <!-- The declaration -->
+    <rect x="30" y="60" width="240" height="110" rx="8" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" />
+    <text x="150" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dg-source-text)">The Recommendation declares</text>
+    <text x="46" y="110" font-size="9.5" fill="var(--dg-text-soft)">which registers the twin serves,</text>
+    <text x="46" y="126" font-size="9.5" fill="var(--dg-text-soft)">through which operations, with which</text>
+    <text x="46" y="142" font-size="9.5" fill="var(--dg-text-soft)">freshness windows (fresh_within)</text>
+    <text x="150" y="162" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">the interface is derived, never hand-designed</text>
+
+    <!-- The live twin -->
+    <rect x="330" y="60" width="200" height="110" rx="8" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5" />
+    <text x="430" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dg-text)">The live twin</text>
+    <text x="346" y="110" font-size="9.5" fill="var(--dg-text-soft)">one running instrument's governed</text>
+    <text x="346" y="126" font-size="9.5" fill="var(--dg-text-soft)">projection, pinned to the product</text>
+    <text x="346" y="142" font-size="9.5" fill="var(--dg-text-soft)">reference, answering for itself</text>
+    <text x="430" y="162" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">serves value + unit + servedAt</text>
+
+    <!-- The monitor -->
+    <rect x="590" y="60" width="240" height="110" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="710" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dg-gen-text)">The monitor</text>
+    <text x="606" y="110" font-size="9.5" fill="var(--dg-text-soft)">the scheduler runs the declared</text>
+    <text x="606" y="126" font-size="9.5" fill="var(--dg-text-soft)">monitoring program; a stale value</text>
+    <text x="606" y="142" font-size="9.5" fill="var(--dg-text-soft)">degrades the verdict to indeterminate</text>
+    <text x="710" y="162" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">never a silent pass, never a silent fail</text>
+
+    <line x1="270" y1="115" x2="322" y2="115" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#twin-arr)" />
+    <text x="296" y="105" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">serves</text>
+    <line x1="530" y1="115" x2="582" y2="115" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#twin-arr)" />
+    <text x="556" y="105" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">judged</text>
+
+    <!-- The evidence stream -->
+    <rect x="200" y="226" width="460" height="84" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" />
+    <text x="430" y="252" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dg-text)">The evidence stream (append-only, version-pinned)</text>
+    <text x="216" y="276" font-size="9.5" fill="var(--dg-text-soft)">facts · verdicts · escalations accrue; a stored window re-judges under new limits</text>
+    <text x="216" y="292" font-size="9.5" fill="var(--dg-text-soft)">without querying the twin again</text>
+
+    <line x1="710" y1="170" x2="668" y2="240" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#twin-arr)" />
+    <line x1="200" y1="268" x2="150" y2="176" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#twin-arr)" />
+    <text x="140" y="222" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">re-judged</text>
+
+    <!-- The probe channel -->
+    <rect x="200" y="332" width="460" height="56" rx="10" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" />
+    <text x="430" y="354" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--dg-gov-text)">The probe channel keeps physics primary</text>
+    <text x="430" y="372" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">a reference instrument, an observer attestation, or simulator ground truth catches a lying twin</text>
+  </svg>
+</TechFigure>
