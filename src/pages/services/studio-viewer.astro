@@ -1,0 +1,69 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import StatusRow from '../../components/StatusRow.astro'
+import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
+---
+
+<Base
+  title="The Studio viewer"
+  description="The SMART Studio viewer: read a SMART Recommendation as a model — tree, code, inspect, and compliance views, the mapping and diff lenses, validation — public, no account. The editor is the roadmap program."
+>
+  <PageHero
+    eyebrow="Services"
+    title="The Studio viewer"
+    lede="A SMART Recommendation is a model, and the Studio is where you read it as one: the requirement tree, the code, the mappings, the diff between editions, all validated, all in the browser. It is read-only and public; authoring is the editor program on the roadmap."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl">
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What it is</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The read-only viewer over the published SMART models. Open a Recommendation and move between its lenses: the model tree and its code view, the registry of its artifacts, the mapping lens that aligns editions and related documents, the diff that shows exactly what changed, and a certificate preview. The viewer validates what it shows and says so (the <em>valid</em> marker is computed, not asserted), and it is honest about its posture: <em>read only</em>.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Authoring is a separate program, the SMART Studio editor (TODO.editor in the platform program): the package as the unit of work, provenance-carrying saves, the authoring surfaces. When it ships, the Studio stops being read-only; until then, this page says viewer and means it.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who it's for</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Recommendation authors checking their model as a reader will meet it; reviewers and committee members who want the requirement structure rather than the PDF; toolmakers confirming what the published model actually contains before they build on it.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where it lives</h2>
+      <ActionBox
+        href="https://www.oimlsmart.org/studio/view/"
+        label="www.oimlsmart.org/studio/view/"
+        description="The viewer. Public, no account; pick a model and switch lenses."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        There is nothing to request: open the link and browse. The authoring surface's repository is public (<a href="https://github.com/primmel/editor" class="text-accent underline underline-offset-2">primmel/editor</a>, source available, license pending) for toolmakers who want to follow the editor program.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Status</h2>
+      <StatusRow rows={['studio-viewer']} />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who can use it, who can run it</h2>
+      <ServiceEntitlement service="studio-viewer" />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified 2026-08-29: the viewer answered live and rendered a published model with its read-only and valid markers, the lens bar (model, registry, mapping, diff, certificate preview), and the tree/code/inspect/compliance views.
+      </p>
+    </div>
+  </section>
+</Base>
