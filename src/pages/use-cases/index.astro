@@ -1,0 +1,94 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+
+// The use-case stories land in TODO.promotion wave 05: each flow gets
+// its own guided walkthrough with live links into the demo instance.
+// Until then every story card is marked "in preparation", never linked
+// to a dead route; the live demo links sit in "What you can try now".
+const useCases = [
+  {
+    title: 'The application',
+    desc: 'A manufacturer applies against a SMART Recommendation: the guided wizard, the issuing authority picked from cards, the submit.',
+  },
+  {
+    title: "The authority's intake",
+    desc: 'The application queue at the issuing authority: review, the evaluation project, the samples, the test assignment to the laboratory.',
+  },
+  {
+    title: "The laboratory's work",
+    desc: 'The test laboratory accepts the assignment and runs the model-driven tests at the bench, evidence captured as the work happens.',
+  },
+  {
+    title: 'The evaluation and the certificate',
+    desc: 'The authority reviews the test reports against the model, issues the certificate, and registers it with the BIML.',
+  },
+  {
+    title: "The applicant's journey",
+    desc: 'The manufacturer follows every stage, notified at each, and downloads a certificate that software can verify.',
+  },
+  {
+    title: 'Continuous compliance in service',
+    desc: 'After certification the instrument’s twin keeps judging its conformance while it operates, and the evidence stays on the record.',
+  },
+]
+---
+
+<Base
+  title="Use Cases"
+  description="OIML SMART use cases: the certification workflow told end to end, from the manufacturer's application to the registered certificate, and continuous compliance while the instrument is in service."
+>
+  <PageHero
+    title="Use Cases"
+    lede="Certification, told as stories: who does what, what the system computes, and what lands on the record. Every story walks the live demo, not a mock-up."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl">
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What you do today</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        A type evaluation is a project run on files and folders: the application as a scanned form, the test schedule as a spreadsheet, the test report as a document assembled by hand, the certificate as a PDF. Progress is tracked by asking, and the audit trail is whoever kept the email thread.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What changes</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The evaluation becomes one shared record the applicant, the laboratory, and the authority all work in. The forms derive from the Recommendation's model, the evidence attaches to the test it proves, the verdicts are computed, and the certificate is issued from the same record. Nothing is re-typed, and the record itself is the audit trail.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What you can try now</h2>
+      <ActionBox
+        href="https://demo.oimlsmart.org/"
+        label="Open the live demo"
+        description="The full workflow against a simulated load cell: apply, test, evaluate, issue. Sign in with a demo account; request one via info@oimlsmart.org."
+      />
+      <ActionBox
+        href="https://www.oimlsmart.org/recs/docs/oiml-rec/13-running-the-demo"
+        label="Read the demo manual"
+        description="The step-by-step guide to running the whole certification chain yourself."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who to talk to</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Write to <a class="text-accent underline underline-offset-2" href="mailto:info@oimlsmart.org">info@oimlsmart.org</a> to walk through any of these stories with the programme team.
+      </p>
+    </div>
+
+    <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The stories</h2>
+    <div class="grid grid-cols-2 gap-4 max-[960px]:grid-cols-1">
+      {useCases.map(u => (
+        <div class="border border-dashed border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.25rem] mb-2">{u.title}</h3>
+          <p class="text-[0.9375rem] text-ink-soft mb-3">{u.desc}</p>
+          <span class="text-ink-muted text-sm font-mono">Story in preparation</span>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>

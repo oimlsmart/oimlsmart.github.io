@@ -5,14 +5,14 @@ description: "Model your own Recommendation with Primmel Studio, the dual demo a
 
 # Tier 5, the dual demo: model your own Recommendation
 
-> *A curriculum chapter of [Learn OIML SMART](README.md).*
+> *A curriculum chapter of [Learn OIML SMART](/learn/).*
 
 **The artifact:** a kernel-validated Primmel model of OIML R 7
 (1979), Clinical thermometers, built with Primmel Studio, plus the
 live proof that it simulates, maps to its source document, and
 previews as a certificate.
 
-**Prerequisites:** [Tier 4, authoring](04-authoring.md). The r60
+**Prerequisites:** [Tier 4, authoring](/learn/04-authoring). The r60
 classroom helps but is not required.
 
 ---

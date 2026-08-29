@@ -14,19 +14,24 @@ test.describe('Public site — critical paths', () => {
     await expect(trigger).toBeVisible()
     await expect(trigger).toContainText('Resources')
 
+    // Dropdown links render front-door absolute (site-shell ADR-0003).
     const dropdownContainer = trigger.locator('xpath=..')
-    await expect(dropdownContainer.locator('a[href="/library/"]')).toHaveCount(1)
-    await expect(dropdownContainer.locator('a[href="/ontology/"]')).toHaveCount(1)
-    await expect(dropdownContainer.locator('a[href="/docs/"]')).toHaveCount(1)
+    await expect(dropdownContainer.locator('a[href="https://www.oimlsmart.org/library/"]')).toHaveCount(1)
+    await expect(dropdownContainer.locator('a[href="https://www.oimlsmart.org/ontology/"]')).toHaveCount(1)
+    await expect(dropdownContainer.locator('a[href="https://www.oimlsmart.org/docs/"]')).toHaveCount(1)
   })
 
-  test('the components dropdown carries the eight components', async ({ page }) => {
+  test('the tier dropdowns carry the component entries', async ({ page }) => {
     await page.goto('/')
-    const trigger = page.getByTestId('nav-dropdown-platform')
-    await expect(trigger).toBeVisible()
-    const dropdownContainer = trigger.locator('xpath=..')
-    for (const href of ['/recs', '/studio', '/smart', '/smi', '/sst', '/cnml', '/vocab', '/publications']) {
-      await expect(dropdownContainer.locator(`a[href="${href}"]`)).toHaveCount(1)
+    // The SMART tier: published artifacts + the Type-approval level.
+    const smart = page.getByTestId('nav-dropdown-smart').locator('xpath=..')
+    for (const href of ['/recs', '/vocab', '/publications', '/studio', '/cnml', '/smart', '/platform']) {
+      await expect(smart.locator(`a[href="https://www.oimlsmart.org${href}"]`)).toHaveCount(1)
+    }
+    // The SMART+ tier: the full Type-instance + measurement lifecycle.
+    const smartplus = page.getByTestId('nav-dropdown-smartplus').locator('xpath=..')
+    for (const href of ['/cnml', '/smi', '/sst', '/smart', '/platform']) {
+      await expect(smartplus.locator(`a[href="https://www.oimlsmart.org${href}"]`)).toHaveCount(1)
     }
   })
 
@@ -48,11 +53,39 @@ test.describe('Public site — critical paths', () => {
 
   test('the OIML-CS SMART platform is the /smart component entry', async ({ page }) => {
     await page.goto('/')
-    // The standalone top-level link folded into the Components dropdown
+    // The standalone top-level link folded into the SMART tier dropdown
     // (the nav contract: one href, one home).
-    const trigger = page.getByTestId('nav-dropdown-platform')
+    const trigger = page.getByTestId('nav-dropdown-smart')
     const dropdownContainer = trigger.locator('xpath=..')
-    await expect(dropdownContainer.locator('a[href="/smart"]')).toHaveCount(1)
+    await expect(dropdownContainer.locator('a[href="https://www.oimlsmart.org/smart"]')).toHaveCount(1)
+  })
+
+  test('the four promotion sections sit in the nav and render', async ({ page }) => {
+    // TODO.promotion/01: Audiences / Technologies / Use Cases / Services
+    // are first-class standalone nav entries (front-door absolute).
+    await page.goto('/')
+    const nav = page.locator('#nav-menu')
+    for (const [label, href] of [
+      ['Audiences', '/audiences/'],
+      ['Technologies', '/technologies/'],
+      ['Use Cases', '/use-cases/'],
+      ['Services', '/services/'],
+    ] as const) {
+      const link = nav.locator(`a[href="https://www.oimlsmart.org${href}"]`)
+      await expect(link).toHaveCount(1)
+      await expect(link).toContainText(label)
+    }
+    for (const [path, heading] of [
+      ['/audiences/', 'Audiences'],
+      ['/technologies/', 'Technologies'],
+      ['/use-cases/', 'Use Cases'],
+      ['/services/', 'Services'],
+    ] as const) {
+      await page.goto(path)
+      await expect(page.locator('h1')).toContainText(heading)
+      await expect(page.locator('h2', { hasText: 'What you do today' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'What you can try now' })).toBeVisible()
+    }
   })
 
   test('vocabularies page renders with action box', async ({ page }) => {

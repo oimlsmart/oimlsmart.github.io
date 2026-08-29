@@ -1,0 +1,115 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+
+// The technology pages land in TODO.promotion wave 03. Until then the
+// cards link the live home of each technology (a minisite, a docs
+// volume, or a running service); technologies with no live home yet are
+// marked "in preparation", never linked to a dead route.
+const technologies = [
+  {
+    title: 'SMART Recommendations',
+    desc: 'The OIML Recommendations as structured, executable models: read on the web, consumed by software, provenance down to the clause.',
+    href: '/recommendations/',
+  },
+  {
+    title: 'Primmel',
+    desc: 'The modelling language the Recommendations are authored in: entities, processes, rules, units, and the package machinery.',
+    href: 'https://www.primmel.org/primmel-smart-docs/primmel/',
+  },
+  {
+    title: 'The SMART Twin',
+    desc: 'A living digital twin of the certified instrument: its compliance state computed from evidence, queryable while it operates.',
+    href: 'https://www.primmel.org/primmel-smart-docs/platform/',
+  },
+  {
+    title: 'The SST simulation',
+    desc: 'Simulated measuring instruments with realistic physics: rehearse the full certification workflow without hardware.',
+    href: '/sst/',
+  },
+  {
+    title: 'CNML',
+    desc: 'The certificate format: machine-readable, cryptographically signed, verifiable without phoning home.',
+    href: '/cnml/',
+  },
+  {
+    title: 'The identity federation',
+    desc: 'One account across the estate, federated to member deployments. The live identity service is the proof.',
+    href: 'https://id.oimlsmart.org/',
+  },
+  {
+    title: 'The trust registry',
+    desc: 'The public registry of who may sign what: issuing authorities, laboratories, and the keys their certificates ride.',
+  },
+  {
+    title: 'Dataspace & interop',
+    desc: 'The estate speaks the neighboring standards rather than replacing them: ISO/IEC SMART, ReqIF, RDF/SHACL, W3C Verifiable Credentials, DPP, AAS, OpenCDD, DSP/ODRL.',
+  },
+]
+---
+
+<Base
+  title="Technologies"
+  description="The technologies under the OIML SMART estate: SMART Recommendations, Primmel, the SMART Twin, the SST simulation, CNML, the identity federation, the trust registry, and dataspace interop."
+>
+  <PageHero
+    title="Technologies"
+    lede="Eight technologies carry the estate, from the language the Recommendations are modelled in to the services that carry the proofs. Every entry links a live artifact, never a brochure."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl">
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What you do today</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        A standard exists as prose. Every tool that touches it, the editor, the test-bench software, the certificate template, re-encodes the standard by hand, and every re-encoding drifts a little from the text.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What changes</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The standard is authored once, as data. The page you read, the form you fill, the verdict engine, and the certificate all derive from the same model, so they cannot drift apart. Each technology below is one piece of that chain, and each is open to inspection.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What you can try now</h2>
+      <ActionBox
+        href="/sst/"
+        label="Meet the simulated instruments"
+        description="The SST site: the simulated SMART twins the whole programme rehearses on."
+      />
+      <ActionBox
+        href="https://www.oimlsmart.org/studio/view/"
+        label="Open the studio viewer"
+        description="Read a SMART Recommendation package as a structured document, in your browser."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who to talk to</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Technical questions go to <a class="text-accent underline underline-offset-2" href="mailto:info@oimlsmart.org">info@oimlsmart.org</a> or to an issue on the relevant <a class="text-accent underline underline-offset-2" href="https://github.com/oimlsmart">GitHub repository</a>.
+      </p>
+    </div>
+
+    <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The technologies</h2>
+    <div class="grid grid-cols-2 gap-4 max-[960px]:grid-cols-1">
+      {technologies.map(t => (
+        t.href ? (
+          <a href={t.href} class="group border border-rule rounded-md bg-paper-soft p-6 no-underline text-inherit transition-colors hover:border-accent">
+            <h3 class="font-serif text-[1.25rem] mb-2 group-hover:text-accent">{t.title}</h3>
+            <p class="text-[0.9375rem] text-ink-soft">{t.desc}</p>
+          </a>
+        ) : (
+          <div class="border border-dashed border-rule rounded-md bg-paper-soft p-6">
+            <h3 class="font-serif text-[1.25rem] mb-2">{t.title}</h3>
+            <p class="text-[0.9375rem] text-ink-soft mb-3">{t.desc}</p>
+            <span class="text-ink-muted text-sm font-mono">Page in preparation</span>
+          </div>
+        )
+      ))}
+    </div>
+  </section>
+</Base>

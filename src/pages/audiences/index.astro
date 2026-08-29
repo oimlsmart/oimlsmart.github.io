@@ -1,0 +1,114 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+
+// The section's member pages land in TODO.promotion wave 02. Until then
+// the cards link the live pages that already carry each audience (the
+// About > Audiences pages and the OIML-CS page); audiences with no live
+// page are marked "in preparation", never linked to a dead route.
+const audiences = [
+  {
+    title: 'Member States',
+    desc: 'National law meets executable standards: adoption, monitoring, and verification under national custody.',
+    href: '/about/audiences/member-states',
+  },
+  {
+    title: 'Corresponding Members',
+    desc: 'Follow the programme without running infrastructure: the same reading access and the same evidence, with nothing to host.',
+  },
+  {
+    title: 'Issuing Authorities',
+    desc: 'The OIML-CS as a digital workflow: applications in, certificates out, every verdict computed from the model.',
+    href: '/about/audiences/issuing-authorities',
+  },
+  {
+    title: 'Test Laboratories',
+    desc: 'Structured test runs with evidence captured once at the bench; reports generated instead of written.',
+    href: '/about/audiences/laboratories',
+  },
+  {
+    title: 'Applicants (manufacturers)',
+    desc: 'Apply once against the model, follow the evaluation live, receive a certificate that software can verify.',
+    href: '/about/audiences/manufacturers',
+  },
+  {
+    title: 'Utilizers & Associates',
+    desc: 'The instruments you depend on, with their compliance state queryable instead of filed away.',
+    href: '/about/audiences/instrument-users',
+  },
+  {
+    title: 'BIML / OIML-CS',
+    desc: 'The scheme office view: the register, the participant registry, the oversight the System requires.',
+    href: '/oiml-cs',
+  },
+]
+---
+
+<Base
+  title="Audiences"
+  description="What OIML SMART changes for each role in legal metrology: Member States, Corresponding Members, Issuing Authorities, Test Laboratories, Applicants, Utilizers and Associates, and the BIML/OIML-CS office."
+>
+  <PageHero
+    title="Audiences"
+    lede="OIML SMART changes a different thing for every role in legal metrology. Pick your role below: each page answers what you do today, what changes, and what you can try now."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl">
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What you do today</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        You work from documents. The Recommendation is a PDF, the test report is a form, the certificate is a signed scan, and the workflow between applicant, laboratory, and authority runs over email. Every party keeps its own copy of the truth, and reconciling those copies is the job nobody budgeted for.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What changes</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The Recommendation becomes machine-actionable: one shared model drives the page you read, the forms you fill, the tests the laboratory runs, and the certificate the authority issues. Each role gets a workflow shaped for it, and every party reads the same record instead of exchanging copies.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        The text of the Recommendation stays. The model joins it; nothing you rely on today goes away.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What you can try now</h2>
+      <ActionBox
+        href="/tour"
+        label="Take the tour"
+        description="The interactive introduction for OIML members. Fifteen minutes, no account needed."
+      />
+      <ActionBox
+        href="https://demo.oimlsmart.org/"
+        label="Open the live demo"
+        description="A full platform deployment running the simulated load-cell pilot. Sign in with a demo account; request one via info@oimlsmart.org."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who to talk to</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Write to <a class="text-accent underline underline-offset-2" href="mailto:info@oimlsmart.org">info@oimlsmart.org</a>, the programme's front-door address, or use the <a class="text-accent underline underline-offset-2" href="/about/contact">contact page</a>. Every question reaches a person who works on the estate.
+      </p>
+    </div>
+
+    <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The roles</h2>
+    <div class="grid grid-cols-2 gap-4 max-[960px]:grid-cols-1">
+      {audiences.map(a => (
+        a.href ? (
+          <a href={a.href} class="group border border-rule rounded-md bg-paper-soft p-6 no-underline text-inherit transition-colors hover:border-accent">
+            <h3 class="font-serif text-[1.25rem] mb-2 group-hover:text-accent">{a.title}</h3>
+            <p class="text-[0.9375rem] text-ink-soft">{a.desc}</p>
+          </a>
+        ) : (
+          <div class="border border-dashed border-rule rounded-md bg-paper-soft p-6">
+            <h3 class="font-serif text-[1.25rem] mb-2">{a.title}</h3>
+            <p class="text-[0.9375rem] text-ink-soft mb-3">{a.desc}</p>
+            <span class="text-ink-muted text-sm font-mono">Page in preparation</span>
+          </div>
+        )
+      ))}
+    </div>
+  </section>
+</Base>

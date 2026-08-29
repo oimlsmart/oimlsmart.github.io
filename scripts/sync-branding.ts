@@ -23,30 +23,32 @@ const BRANDING = process.env.BRANDING_REPO ?? null
 const DEST = resolve(process.cwd(), 'public/img/components')
 const CHECK = process.argv.includes('--check')
 
-/** branding filename → canonical public name */
+/** branding filename → canonical public name (paths relative to the
+ *  branding repo root; the 2026-08 brand drop organizes them under logo/) */
 const MAP: Record<string, string> = {
-  'oiml-logo_smart-rec-light.svg': 'smart-rec-light.svg',
-  'oiml-logo_smart-rec-dark.svg': 'smart-rec-dark.svg',
-  'oiml-logo_smart-studio-light.svg': 'smart-studio-light.svg',
-  'oiml-logo_smart-studio-dark.svg': 'smart-studio-dark.svg',
-  'oiml-logo_cs-smart-light.svg': 'cs-smart-light.svg',
-  'oiml-logo_cs-smart-dark.svg': 'cs-smart-dark.svg',
-  'oiml-logo_smi-light.svg': 'smi-light.svg',
-  'oiml-logo_smi-dark.svg': 'smi-dark.svg',
-  'oiml-logo_sst-light.svg': 'sst-light.svg',
-  'oiml-logo_sst-dark.svg': 'sst-dark.svg',
-  'oiml-logo_cnml-box-light.svg': 'cnml-box-light.svg',
-  'oiml-logo_cnml-box-dark.svg': 'cnml-box-dark.svg',
+  'logo/oiml-logo_smart-rec-light.svg': 'smart-rec-light.svg',
+  'logo/oiml-logo_smart-rec-dark.svg': 'smart-rec-dark.svg',
+  'logo/oiml-logo_smart-studio-light.svg': 'smart-studio-light.svg',
+  'logo/oiml-logo_smart-studio-dark.svg': 'smart-studio-dark.svg',
+  'logo/oiml-logo_cs-smart-light.svg': 'cs-smart-light.svg',
+  'logo/oiml-logo_cs-smart-dark.svg': 'cs-smart-dark.svg',
+  'logo/oiml-logo_smi-light.svg': 'smi-light.svg',
+  'logo/oiml-logo_smi-dark.svg': 'smi-dark.svg',
+  'logo/oiml-logo_sst-light.svg': 'sst-light.svg',
+  'logo/oiml-logo_sst-dark.svg': 'sst-dark.svg',
+  'logo/oiml-logo_cnml-box-light.svg': 'cnml-box-light.svg',
+  'logo/oiml-logo_cnml-box-dark.svg': 'cnml-box-dark.svg',
+  'logo/oiml-logo_vocab-light.svg': 'vocab-light.svg',
+  'logo/oiml-logo_vocab-dark.svg': 'vocab-dark.svg',
   // SMART tier — OIML SMART Platform (member/NMI/TL deployment).
-  'oiml-logo_smart-platform-light.svg': 'smart-platform-light.svg',
-  'oiml-logo_smart-platform-dark.svg': 'smart-platform-dark.svg',
+  'logo/oiml-logo_smart-platform-light.svg': 'smart-platform-light.svg',
+  'logo/oiml-logo_smart-platform-dark.svg': 'smart-platform-dark.svg',
   // SMART+ tier — OIML SMART+ Platform (member deployment).
-  'oiml-logo_smartplus-light.svg': 'smartplus-light.svg',
-  'oiml-logo_smartplus-dark.svg': 'smartplus-dark.svg',
-  // SMART+ tier — OIML-CS SMART+ Platform (global). Brand ships only a
-  // light variant (-36 is the latest iteration); ComponentLogo's
-  // <picture>/<source> falls back to it in dark mode.
-  'oiml-logo_cs-smartplus-light-36.svg': 'cs-smartplus-light.svg',
+  'logo/oiml-logo_smartplus-light.svg': 'smartplus-light.svg',
+  'logo/oiml-logo_smartplus-dark.svg': 'smartplus-dark.svg',
+  // SMART+ tier — OIML-CS SMART+ Platform (global).
+  'logo/oiml-logo_cs-smartplus-light.svg': 'cs-smartplus-light.svg',
+  'logo/oiml-logo_cs-smartplus-dark.svg': 'cs-smartplus-dark.svg',
 }
 
 function sha(path: string): string {
