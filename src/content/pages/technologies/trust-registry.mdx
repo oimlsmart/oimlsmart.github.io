@@ -1,0 +1,88 @@
+---
+title: 'The trust registry'
+description: 'The public registry of who may sign what: each organization’s signing keys and its standing, resolvable in one anonymous request, so a verifier never has to trust a deployment.'
+eyebrow: 'Technologies · 07'
+---
+
+import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
+import ActionBox from '../../../components/ActionBox.astro'
+
+The trust registry publishes which organizations may sign what: each
+registered organization's public signing keys and its standing resolve in
+one anonymous, cacheable request. A verifier never trusts a deployment;
+it resolves the signer's key against the registry and reads the
+organization's standing.
+
+## Why it exists
+
+A valid signature answers "is this signature mathematically sound" but
+not "whose key is this, and was that organization in good standing when
+it signed". Without a registry, a certificate's signing key is a
+deployment detail, unattributed to any accountable organization, and
+verification degrades into phoning the issuer. Legal metrology needs the
+stronger answer, attributed and auditable.
+
+## How it works
+
+The estate divides the trust question cleanly: the
+[identity service](/technologies/identity-federation) is the root of
+trust for who signs, the platform is the record of what was signed, and
+[CNML](/technologies/cnml) is the signed artifact. An organization's
+signing keys are the organization's property on the identity service:
+registered, rotated, and revoked by the organization's own administrator,
+with every act on the audit chain. The [CNML](/technologies/cnml) signer
+block does not change shape; the binding is by reference, a key
+identifier plus an organization identifier, so the frozen format is
+untouched.
+
+The resolution contract is one endpoint: `/op/keys/<org>.json` on the
+identity service answers the organization's current public key set and
+its standing. The endpoint is anonymous, cache-bounded, and
+CORS-open, so any verifier, including one without an account or a
+network path back at verification time, can resolve a signer. Revocation
+is immediate and auditable, and the time anchor does the honest work: an
+artifact signed before a revocation still resolves, with the answer
+"valid at the time; the key since revoked, on a stated date".
+
+## Where it runs live
+
+The organization registry and the per-kind standing are live on the
+identity service today, and the resolution endpoint answers in
+production; organizations' key sets populate as organizations register
+their signing keys, the current work of the trust-registry program. The
+attributed-issuance half, the signing act recorded with its account, its
+organization, its key, and its authorization context, lands with it.
+
+<ActionBox
+  href="https://id.oimlsmart.org/op/keys/ms-de.json"
+  label="Resolve a member state's entry"
+  description="The live resolution contract, answered for a member state: the organization, its kind, its state, its standing, and its key set."
+/>
+<ActionBox
+  href="https://id.oimlsmart.org/"
+  label="Open the identity service"
+  description="The registry's home: organizations, memberships, and the signing-key administration console."
+/>
+
+## How it interops
+
+The registry is the identity plane of the estate's
+[dataspace](/technologies/dataspace-interop) work: no parallel trust
+framework is built, and the same resolution serves the CNML verify
+pipeline's signature and scope checks. Because resolution is one
+cacheable document, verifiers compose it into their own pipelines without
+an estate dependency at verify time.
+
+## Who may use it, and who may run it
+
+Member states register; issuing authorities and test laboratories hold
+their organization keys; verification resolves anonymously. The
+determination, quoted from the estate's single entitlement source:
+
+<ServiceEntitlement service="trust-registry" />
+
+## Who to talk to
+
+Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
+front-door address. Key registration for your organization starts with
+its presence in the [identity service](https://id.oimlsmart.org/).
