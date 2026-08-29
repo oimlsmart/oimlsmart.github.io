@@ -1,0 +1,93 @@
+---
+/**
+ * ServiceEntitlement.astro — quotes ONE service's row from the single
+ * entitlement source (src/data/entitlement-matrix.ts, TODO.promotion/09)
+ * across all five member categories. The service pages
+ * (TODO.promotion/04) render their entitlement block through this
+ * component; never a hand-copied table that drifts. The audience-page
+ * counterpart is EntitlementRow.astro (one category's column).
+ */
+import {
+  ENTITLEMENT_MATRIX,
+  ENTITLEMENT_LEGEND,
+  MEMBER_CATEGORIES,
+} from '../data/entitlement-matrix'
+
+interface Props {
+  /** The service whose row is quoted (its id in ENTITLEMENT_MATRIX). */
+  service: (typeof ENTITLEMENT_MATRIX)[number]['id']
+}
+
+const { service } = Astro.props
+const row = ENTITLEMENT_MATRIX.find((s) => s.id === service)
+if (!row) throw new Error(`ServiceEntitlement: unknown service id "${service}"`)
+const GLYPHS: Record<string, string> = Object.fromEntries(
+  ENTITLEMENT_LEGEND.map((l) => [l.mark, l.glyph]),
+)
+---
+
+<div class="service-entitlement">
+  <div class="overflow-x-auto border border-rule rounded-md mb-3">
+    <table class="w-full border-collapse text-sm min-w-[48rem]">
+      <thead>
+        <tr class="bg-paper-soft">
+          {MEMBER_CATEGORIES.map((c) => (
+            <th class="text-left font-medium p-3 border-b border-l border-rule first:border-l-0">{c.label}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="align-top">
+          {MEMBER_CATEGORIES.map((c) => {
+            const cell = row.cells[c.id]
+            return (
+              <td class="p-3 border-l border-rule first:border-l-0">
+                {cell.roadmap ? (
+                  <span class="text-ink-muted font-mono text-xs">roadmap</span>
+                ) : (
+                  <>
+                    {cell.marks.length > 0 && (
+                      <span class="whitespace-nowrap">
+                        {cell.marks.map((m) => GLYPHS[m]).join(' ')}
+                      </span>
+                    )}
+                    {cell.marks.length === 0 && !cell.note && (
+                      <span class="text-ink-muted">&mdash;</span>
+                    )}
+                    {cell.note && (
+                      <span class="text-ink-soft"> {cell.note}</span>
+                    )}
+                    {cell.proposed && (
+                      <span class="proposed-badge">proposed</span>
+                    )}
+                  </>
+                )}
+              </td>
+            )
+          })}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-sm text-ink-soft">
+    {row.name}, quoted from the estate's single entitlement source; the full
+    matrix, all services by all member categories, lives at
+    <a href="/services/who-can-run-what" class="text-accent underline underline-offset-2">Who can run what</a>.
+  </p>
+</div>
+
+<style>
+  .service-entitlement .proposed-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    padding: 0.25em 0.5em;
+    border: 1px dashed var(--ink-muted);
+    border-radius: 999px;
+    color: var(--ink-muted);
+    vertical-align: middle;
+    margin-left: 0.25rem;
+    white-space: nowrap;
+  }
+</style>
