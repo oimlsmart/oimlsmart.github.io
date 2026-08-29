@@ -1,0 +1,63 @@
+---
+/**
+ * AudienceShot.astro — one performed act's evidence figure
+ * (TODO.promotion/10): the screenshot the capture script
+ * (scripts/capture-audiences.ts) produced, its caption, and the audit
+ * line naming the act performed and the capture date. Where the surface
+ * supports dark mode the capture ships a dark twin and the pair swaps
+ * via the shell's logo-light/logo-dark theme contract — the figure is
+ * dark-mode correct by construction.
+ */
+interface Props {
+  /** Light-theme capture path under /img/audiences/. */
+  src: string
+  /** The same act captured in dark mode, when the surface supports it. */
+  dark?: string
+  alt: string
+  /** What the reader is looking at. */
+  caption: string
+  /** The audit line: the act performed + the capture date. */
+  performed: string
+}
+
+const { src, dark, alt, caption, performed } = Astro.props
+---
+
+<figure class="audience-shot">
+  <img src={src} alt={alt} loading="lazy" class:list={['audience-shot__img', dark && 'logo-light']} />
+  {dark && <img src={dark} alt={`${alt} (dark mode)`} loading="lazy" class="audience-shot__img logo-dark" />}
+  <figcaption class="audience-shot__caption">
+    <span>{caption}</span>
+    <span class="audience-shot__performed">{performed}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .audience-shot {
+    margin: 1.5rem 0 2.25rem;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--paper-soft);
+    overflow: hidden;
+  }
+  .audience-shot__img {
+    width: 100%;
+    display: block;
+  }
+  .audience-shot__caption {
+    padding: 0.75rem 1rem 0.9rem;
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--rule-soft);
+  }
+  .audience-shot__performed {
+    display: block;
+    margin-top: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+  }
+  /* The theme contract swaps the pair; inside a block figure the swap
+     must keep block layout. */
+  .dark .audience-shot__img.logo-dark { display: block; }
+</style>
