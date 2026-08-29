@@ -3,10 +3,10 @@ import Base from '../../layouts/Base.astro'
 import PageHero from '../../components/PageHero.astro'
 import ActionBox from '../../components/ActionBox.astro'
 
-// The section's member pages land in TODO.promotion wave 02. Until then
-// the cards link the live pages that already carry each audience (the
-// About > Audiences pages and the OIML-CS page); audiences with no live
-// page are marked "in preparation", never linked to a dead route.
+// The member pages live under About > Audiences (TODO.promotion wave 02
+// landed the Corresponding Members page and refreshed the five
+// pre-existing ones); audiences without a dedicated member page link the
+// live page that carries them (the OIML-CS page for the scheme office).
 const audiences = [
   {
     title: 'Member States',
@@ -16,6 +16,7 @@ const audiences = [
   {
     title: 'Corresponding Members',
     desc: 'Follow the programme without running infrastructure: the same reading access and the same evidence, with nothing to host.',
+    href: '/about/audiences/corresponding-members',
   },
   {
     title: 'Issuing Authorities',
