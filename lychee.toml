@@ -16,6 +16,10 @@ exclude = [
   "localhost",
   "127.0.0.1",
   "https://www.oiml.org",
+  # The trust-registry page cites the demo cast's honest refusal on
+  # production as evidence: the 404 IS the answer being demonstrated
+  # (production never seeds the demo organizations).
+  "https://id.oimlsmart.org/op/keys/EX1.json",
   # Sibling GitHub Pages sites on the same domain — checked live by CI.
   "/vocab",
   "/vocab/",
