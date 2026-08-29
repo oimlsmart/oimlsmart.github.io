@@ -1,0 +1,92 @@
+---
+title: 'SMART Recommendations'
+description: 'An OIML Recommendation as a structured, executable model: the page you read, the form the laboratory fills, and the verdict the platform computes all derive from one source, with provenance down to the clause.'
+eyebrow: 'Technologies · 01'
+---
+
+import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
+import ActionBox from '../../../components/ActionBox.astro'
+
+A SMART Recommendation is an OIML Recommendation rendered as a structured,
+executable model: the same source drives the page you read, the forms the
+laboratory fills, and the verdicts the platform computes. The published text
+stays authoritative, and the model is its machine-actionable companion, with
+every element traceable to the clause it came from.
+
+## Why it exists
+
+A Recommendation as published is prose. Every tool that touches it, the
+editor, the test-bench software, the certificate template, re-encodes the
+text by hand, and every re-encoding drifts a little from the document the
+committee adopted. Two laboratories reading the same clause can derive
+two different test procedures, and the divergence surfaces only when the
+results are compared.
+
+The model removes the re-encoding. Requirements, conformance tests, and
+report forms derive from one instrument model, so the reading, the testing,
+and the verdict cannot drift apart.
+
+## How it works
+
+Each Recommendation is authored as a Primmel package: the instrument as a
+subject with its anatomy, the requirements as constraints bound to the
+subject's aspects, the conformance tests that verify each requirement, and
+the report forms whose fields bind into the same graph. Every content
+element carries clause-level provenance naming its source document and
+clause (for example `urn:oiml:pub:r:60-1:2021`, clause 5.2), so any
+rendered statement can be walked back to the adopted text.
+
+The authority stays where the OIML process puts it. The committee's
+decision is the text; the model is derived from it and checked against it,
+never the reverse. The packages are the single source of truth: the data
+trees the platform serves are generated artifacts, and a drift guard proves
+both directions byte-clean, so what the platform runs is what was authored.
+
+## Where it runs live
+
+<ActionBox
+  href="/recommendations/r60"
+  label="Read OIML R 60 as a SMART Recommendation"
+  description="The pilot Recommendation: scope, the modelled requirement and test structure, and the clause-referenced content."
+/>
+<ActionBox
+  href="https://www.oimlsmart.org/recs/"
+  label="Open the SMART Recommendations site"
+  description="The component home for the modelled Recommendations, including the authoring documentation for new ones."
+/>
+<ActionBox
+  href="https://www.oimlsmart.org/studio/view/"
+  label="Open the Studio viewer"
+  description="Read a SMART Recommendation package as a structured document, in your browser."
+/>
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="See R 60 working in the demo"
+  description="The live demo certifies a simulated load cell against the modelled R 60. Sign in with a demo account; request one via info@oimlsmart.org."
+/>
+
+## How it interops
+
+The model exports to the formats neighboring tooling consumes: ReqIF for
+requirements-management systems, RDF/OWL with SHACL shapes for linked-data
+consumers, and OpenCDD back-references for attribute definitions. Every
+export is a generated projection of the model, never a second source, and
+each projection states what it carries and what it leaves behind. The
+[Dataspace and interoperability page](/technologies/dataspace-interop)
+maps the full set.
+
+## Who may use it, and who may run it
+
+The modelled Recommendations are published content: every member category
+reads them, and the public surfaces need no account. The determination,
+quoted from the estate's single entitlement source:
+
+<ServiceEntitlement service="smart-recs" />
+
+## Who to talk to
+
+Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
+front-door address, or open an issue on the relevant
+[GitHub repository](https://github.com/oimlsmart). Questions about modelling
+a specific Recommendation are welcome: the pilot set (R 60, R 91, R 129,
+R 144) is the worked example.

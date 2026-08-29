@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content'
+import ContentPage from '../../layouts/ContentPage.astro'
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages')
+  return pages
+    .filter(p => p.id.startsWith('technologies/'))
+    .map(entry => {
+      const slug = entry.id.replace('technologies/', '')
+      return { params: { slug }, props: { entry } }
+    })
+}
+
+const { entry } = Astro.props
+---
+
+<ContentPage entry={entry} />
