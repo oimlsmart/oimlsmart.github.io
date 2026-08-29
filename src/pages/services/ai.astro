@@ -4,6 +4,14 @@ import PageHero from '../../components/PageHero.astro'
 import ActionBox from '../../components/ActionBox.astro'
 import StatusRow from '../../components/StatusRow.astro'
 import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
+import ServiceShot from '../../components/ServiceShot.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
+
+// Every screenshot below is captured by scripts/capture-services.ts,
+// which performs the act (the ask, the refusal) and asserts the surface
+// before capturing; the date travels with each shot. Re-run the script
+// to refresh the evidence.
+const captured = '2026-08-29'
 ---
 
 <Base
@@ -18,40 +26,125 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
 
   <section class="px-8 pb-20 max-w-5xl">
     <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What it is</h2>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        A retrieval-augmented question-answering service over the OIML library: close to 900 publications (Recommendations, Documents, Basic publications, Guides, Expert reports), indexed along clause boundaries. Before the language model answers, it is given passages retrieved from that corpus, and it may only use those. Answers come back in your language (EN, FR, DE, ES, AR, PL, or auto-detected).
+      <ActionBox
+        href="https://ai.oimlsmart.org/"
+        label="Ask the OIML library"
+        description="The assistant. No account for the public corpus; sign in with your estate account for the member tier."
+      />
+      <ServiceShot
+        service="ai"
+        id="ai-ask-cited-answer"
+        alt="The AI service answering a question about class C load cell maximum permissible errors, with the SOURCES panel listing OIML R 60 clauses"
+        caption="A real question, a real answer: every claim cited to publication, edition, and clause"
+        date={captured}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What you can do</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-8">
+        Six acts, each performed against the live service before this page listed it; the dated capture is the audit artifact, re-produced by <span class="font-mono text-sm">scripts/capture-services.ts</span> on every refresh.
       </p>
+      <ol class="grid gap-10 list-none pl-0">
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">1. Ask a question and check the answer against its citations.</strong> Every claim carries an inline citation, and the SOURCES panel names the publication, edition, and clause, so the answer is the start of your check, not the end of it. The capture below is a real ask (the class C load-cell MPE), and the service itself flagged that the detailed table came from a superseded edition.
+          </p>
+          <ServiceShot
+            service="ai"
+            id="ai-ask-cited-answer"
+            alt="The cited answer to the class C load cell MPE question, with the honesty note about the superseded edition and ten listed sources"
+            caption="The citations and the honesty note, both live"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">2. Watch it refuse.</strong> An off-corpus question gets a plain refusal ("I don't have information on this in the indexed OIML publications"), and refusals are never cached. The service would rather say nothing than invent something.
+          </p>
+          <ServiceShot
+            service="ai"
+            id="ai-refusal"
+            alt="The AI service refusing a weather question: I don't have information on this in the indexed OIML publications"
+            caption="The off-corpus refusal, performed live"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">3. Answer in your language.</strong> Answers come back in English, French, German, Spanish, Arabic, or Polish, with auto-detection; the citations stay anchored to the source clause regardless of the answer's language.
+          </p>
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">4. See what it reads.</strong> The datasets list is on the surface: the OIML publications corpus (close to 900 documents) answers on the public tier, and the conformity-assessment corpus shows locked until you sign in with the estate account, the member tier.
+          </p>
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">5. Read its own account of itself.</strong> The <a href="https://ai.oimlsmart.org/how-it-works/" class="text-accent underline underline-offset-2">How it works</a> tab is the honest machinery: what happens between your question and the answer, including what the system does not do, and the reminder that language models can still get things wrong, which is why the citation is on every claim.
+          </p>
+          <ServiceShot
+            service="ai"
+            id="ai-how-it-works"
+            alt="The How it works tab: a plain account of what happens between your question and the answer, including what the system does not do"
+            caption="The service's own account, including its limits"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">6. Build on the API.</strong> The <a href="https://ai.oimlsmart.org/api/" class="text-accent underline underline-offset-2">API tab</a> documents the endpoints toolmakers call: anonymous asks (20 questions a day per address), the member tier (300 a day, the stronger model, conversation sync), and API keys, with SSE streaming or complete JSON.
+          </p>
+          <ServiceShot
+            service="ai"
+            id="ai-api"
+            alt="The API reference: POST /api/ask, the anonymous and member tiers with their daily allowances, SSE streaming"
+            caption="The API reference, with the honest tier limits"
+            date={captured}
+          />
+        </li>
+      </ol>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How it works</h2>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        The honesty posture is mechanical, not rhetorical: every claim carries an inline citation like <span class="font-mono text-sm">[OIML R 60-1:2021 §4.4.2]</span>; normative values are quoted verbatim so they can be checked against the cited clause; an off-corpus question gets a plain refusal, and refusals are never cached. The service itself tells you on every answer: verify normative values against the cited clause.
+        A retrieval-augmented question-answering service over the OIML library, indexed along clause boundaries. Before the language model answers, it is given passages retrieved from that corpus, and it may only use those; normative values are quoted verbatim so they can be checked against the cited clause.
       </p>
+      <FlowDiagram
+        caption="FIG. QUESTION TO CITED ANSWER"
+        steps={[
+          { label: 'Your question', sub: 'in your language', accent: 'amber' },
+          { label: 'The corpus', sub: 'close to 900 publications, clause-indexed', accent: 'brand' },
+          { label: 'The answer', sub: 'only from the retrieved passages', accent: 'teal' },
+          { label: 'The check', sub: 'clause citations, or a plain refusal', accent: 'slate' },
+        ]}
+        arrows={[
+          { label: 'retrieves', detail: 'passages, not vibes' },
+          { label: 'constrains', detail: 'verbatim normative values' },
+          { label: 'verify', detail: 'the citation is the check' },
+        ]}
+      />
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
         The full account of how it works and where it falls short is the programme's own write-up: <a href="/news/2026-08-27-oiml-smart-ai" class="text-accent underline underline-offset-2">OIML SMART AI: answers with citations from OIML publications</a>.
       </p>
     </div>
 
     <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who it's for</h2>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        The metrologist who needs the current edition's definition without knowing which document holds it; the committee delegate checking what a clause actually says before a vote; the authority officer scoping an application against the right requirements. It is the estate's member-tier assistant: the OIML publications corpus answers on the public surface, and the sign-in opens the member tier (the conformity-assessment corpus rides it, as the locked dataset on the surface shows).
-      </p>
-    </div>
-
-    <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where it lives</h2>
-      <ActionBox
-        href="https://ai.oimlsmart.org/"
-        label="ai.oimlsmart.org"
-        description="The assistant. The Ask tab is the conversation; How it works is the honest account; the API tab is for toolmakers."
-      />
-    </div>
-
-    <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
-      <ol class="list-decimal pl-6 text-[1.0625rem] leading-relaxed text-ink-soft grid gap-2">
-        <li>Open <a href="https://ai.oimlsmart.org/" class="text-accent underline underline-offset-2">ai.oimlsmart.org</a> and ask; the OIML publications corpus answers directly.</li>
-        <li>For the member tier, choose <em>Sign in</em> and use your estate account. No account yet: the join flow on <a href="/services/identity" class="text-accent underline underline-offset-2">the identity service page</a> is the path, and approval comes from your own organization.</li>
-      </ol>
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">SMART today, SMART+ next</h2>
+      <div class="border border-rule rounded-md bg-paper-soft p-6 mb-4">
+        <p class="font-mono text-xs tracking-[0.12em] text-ink-muted mb-2">SMART · LIVE TODAY</p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          The publications corpus, the cited answers, the refusals, the languages, the API: all live, all performed above. The member tier rides the estate account from <a href="/services/identity" class="text-accent underline underline-offset-2">the identity service</a>.
+        </p>
+      </div>
+      <div class="border border-dashed border-rule rounded-md p-6">
+        <p class="font-mono text-xs tracking-[0.12em] text-ink-muted mb-2">SMART+ · THE ROADMAP TIER</p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          The assistant is a SMART-tier service. As the SMART+ record grows (twin verdicts, signed measurements, continuous-compliance evidence, the <a href="/technologies/smart-twin" class="text-accent underline underline-offset-2">SMART Twin</a> story), the corpus it can cite grows with it, under the same discipline: cite the clause or say nothing. That extension is <strong class="text-ink font-semibold">roadmap</strong>; today the corpus is the publications library, and this page says so.
+        </p>
+      </div>
     </div>
 
     <div class="max-w-3xl mb-12">
@@ -64,9 +157,50 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
       <ServiceEntitlement service="ai-service" />
     </div>
 
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The honest questions</h2>
+      <div class="grid gap-4">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Can I trust the normative values it gives me?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Trust the citation, then check it. Normative values are quoted verbatim so you can hold them against the cited clause, and the service prints that reminder on every answer. For a certified evaluation, the cited publication is the authority, never the answer.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">What does it do when the library has no answer?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">It refuses, plainly, and the refusal is never cached. The capture above is a live refusal to a weather question; the same posture applies to metrology questions outside the indexed corpus.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">What does the member tier change?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The daily allowance (300 questions against the anonymous 20), the stronger model, conversation sync, and the locked conformity-assessment corpus. The account is the estate account; approval comes from your own organization, as <a href="/services/identity" class="text-accent underline underline-offset-2">the identity service page</a> walks through.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Does it read documents outside the OIML library?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No. The corpus is the OIML publications library (Recommendations, Documents, Basic publications, Guides, Expert reports), indexed along clause boundaries. A question it cannot ground in that corpus is a question it declines.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="https://ai.oimlsmart.org/"
+        label="Ask it something"
+        description="The public corpus answers without an account. The example questions on the Ask tab are a good first click."
+      />
+      <ActionBox
+        href="https://demo.oimlsmart.org/"
+        label="Try the demo"
+        description="The workflow the assistant answers questions about, running live. One-click demo accounts on the login page."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org, the programme's front-door address. Corpus coverage questions and API keys land here."
+      />
+    </div>
+
     <div class="border-t border-rule pt-8 max-w-3xl">
       <p class="text-sm text-ink-muted">
-        Verified 2026-08-29: the service answered live with the Ask, How it works, and API tabs; the datasets list (the OIML publications corpus plus the locked member-tier corpus); the citation and refusal posture stated on the surface; and the six answer languages.
+        Verified {captured}: the cited answer and the off-corpus refusal were both performed live against the service by scripts/capture-services.ts; the How it works and API tabs answered 200 with the stated tier limits. The captures and their assertions are in public/img/services/manifest.json.
       </p>
     </div>
   </section>
