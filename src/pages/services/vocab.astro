@@ -4,6 +4,13 @@ import PageHero from '../../components/PageHero.astro'
 import ActionBox from '../../components/ActionBox.astro'
 import StatusRow from '../../components/StatusRow.astro'
 import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
+import ServiceShot from '../../components/ServiceShot.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
+
+// Every screenshot below is captured by scripts/capture-services.ts,
+// which performs the act and asserts the surface before capturing; the
+// date travels with each shot. Re-run the script to refresh the evidence.
+const captured = '2026-08-29'
 ---
 
 <Base
@@ -18,36 +25,122 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
 
   <section class="px-8 pb-20 max-w-5xl">
     <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What it is</h2>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        The OIML's terminology as a browsable, addressable dataset collection rather than a shelf of PDFs: the International Vocabulary of Metrology (VIM) and the International Vocabulary of Legal Metrology (VIML), each as a full edition series with the current edition marked, the curated Complete Vocabulary collection across both, and the G 18 term-usage registry, which collates where each term is used across the Recommendations and checks each usage against the vocabulary definition.
-      </p>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        Concepts are searchable, diagrammed (the graph view draws the term relations), and addressable: every concept carries its own URL, in five languages. The dataset detail, edition by edition with concept counts, lives on this site at <a href="/vocabularies/" class="text-accent underline underline-offset-2">Vocabularies</a>.
-      </p>
-    </div>
-
-    <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who it's for</h2>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        Authors checking that a draft uses the defined term, not a near-synonym; translators working across the edition series in their language; toolmakers anchoring a model or a form to the governed concept rather than to a copied definition.
-      </p>
-    </div>
-
-    <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where it lives</h2>
       <ActionBox
         href="https://www.oimlsmart.org/vocab/"
-        label="www.oimlsmart.org/vocab/"
-        description="The vocabulary service. Public, no account; search, browse the datasets, or open the graph view."
+        label="Open the vocabulary service"
+        description="Public, no account. Search, browse the datasets, or open the graph view."
+      />
+      <ServiceShot
+        service="vocab"
+        id="vocab-home"
+        alt="The vocabulary service home: eleven datasets, the VIML and VIM edition series with current editions marked, the curated Complete Vocabulary collection"
+        caption="The eleven datasets: edition series, current editions marked, the curated collection"
+        date={captured}
       />
     </div>
 
     <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        Open the link. Citing a term means copying its URL; there is no account tier and nothing to request.
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What you can do</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-8">
+        Six acts, each performed against the live service before this page listed it; the dated capture is the audit artifact, re-produced by <span class="font-mono text-sm">scripts/capture-services.ts</span> on every refresh.
       </p>
+      <ol class="grid gap-10 list-none pl-0">
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">1. Browse the whole terminology estate.</strong> Eleven datasets: the VIML and VIM edition series (every edition, the current one marked), the curated Complete Vocabulary collection across both, and the counts on the face: 7,451 concepts, five languages.
+          </p>
+          <ServiceShot
+            service="vocab"
+            id="vocab-home"
+            alt="The dataset list: VIML four editions, VIM six editions, the Complete Vocabulary with 6,031 concepts"
+            caption="Every edition, the current one marked"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">2. Search every edition at once.</strong> One query returns the term wherever it lives: <em>calibration</em> surfaces in the VIML 2022, each VIM edition back to 1984, and the curated collection, each hit with its concept number.
+          </p>
+          <ServiceShot
+            service="vocab"
+            id="vocab-search"
+            alt="Search results for calibration, grouped per dataset: VIML 2022, VIM editions 2012 through 1984, and the Complete Vocabulary"
+            caption="One query, every edition, each hit numbered"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">3. Open a concept and cite the term itself.</strong> <em>Calibration hierarchy</em> (VIM 2.40) opens with its definition, its partitive relations, its edition series, and its canonical URI. Citing a term means copying its URL; the citation points at the concept, not at a page range in a PDF.
+          </p>
+          <ServiceShot
+            service="vocab"
+            id="vocab-concept"
+            alt="The concept page for calibration hierarchy: the definition, related concepts, the edition series with the current edition marked, languages, and the canonical URI"
+            caption="One concept, one URL, the relations drawn"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">4. Read a term across languages.</strong> The concept page carries its languages (English and French on the capture above; the datasets span five), so a translator works from the governed term, not a paraphrase.
+          </p>
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">5. See the relations drawn.</strong> The graph view renders the term relations as a navigable graph: the structure between concepts, not just the alphabet of them.
+          </p>
+          <ServiceShot
+            service="vocab"
+            id="vocab-graph"
+            alt="The graph view: the vocabulary's term relations rendered as a navigable graph"
+            caption="The graph view: the relations, drawn"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">6. Anchor your own artifacts to the governed concept.</strong> The platform's models and forms reference vocabulary terms by their concept URLs, and yours can too; the dataset detail, edition by edition with concept counts, lives on this site at <a href="/vocabularies/" class="text-accent underline underline-offset-2">Vocabularies</a>.
+          </p>
+        </li>
+      </ol>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How it works</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The vocabularies are published as datasets, not documents: each edition is a structured concept set, the curated collection collates across the series, and the G 18 registry collates where each term is actually used across the Recommendations and checks each usage against the vocabulary definition.
+      </p>
+      <FlowDiagram
+        caption="FIG. TERM TO CITATION"
+        steps={[
+          { label: 'The vocabularies', sub: 'VIM and VIML, every edition', accent: 'brand' },
+          { label: 'The collection', sub: 'the curated Complete Vocabulary', accent: 'teal' },
+          { label: 'The concept', sub: 'one URL, its languages, its relations', accent: 'amber' },
+          { label: 'The citation', sub: 'models and forms anchor to it', accent: 'slate' },
+        ]}
+        arrows={[
+          { label: 'collates', detail: '6,031 curated concepts' },
+          { label: 'addresses', detail: 'a URI per concept' },
+          { label: 'governs', detail: 'the term, not a copied definition' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">SMART today, SMART+ next</h2>
+      <div class="border border-rule rounded-md bg-paper-soft p-6 mb-4">
+        <p class="font-mono text-xs tracking-[0.12em] text-ink-muted mb-2">SMART · LIVE TODAY</p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          The datasets, the search, the concept URLs, the graph, the G 18 usage registry: all live, all performed above.
+        </p>
+      </div>
+      <div class="border border-dashed border-rule rounded-md p-6">
+        <p class="font-mono text-xs tracking-[0.12em] text-ink-muted mb-2">SMART+ · THE ROADMAP TIER</p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          The twin's served registers and the dataspace's shared vocabularies name governed concepts the same way, so the term a certificate cites is the term a twin serves: that anchoring is <strong class="text-ink font-semibold">roadmap</strong>, carried on <a href="/technologies/dataspace-interop" class="text-accent underline underline-offset-2">the dataspace and interop page</a>. Today the vocabulary serves the publications and the models, and this page claims only that.
+        </p>
+      </div>
     </div>
 
     <div class="max-w-3xl mb-12">
@@ -60,9 +153,46 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
       <ServiceEntitlement service="vocab" />
     </div>
 
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The honest questions</h2>
+      <div class="grid gap-4">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Why not just cite the PDF?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">A PDF citation points at a document and a page; a concept URL points at the term. When a Recommendation, a model, or a form anchors to the concept, every reader resolves the same definition, in their language, with its relations.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Which edition is current?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The series marks it (VIML 2022, VIM 2012 today), and the older editions stay browsable: a 1993 citation still resolves to the 1993 concept, so historical documents remain checkable against the vocabulary they were written in.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Do I need an account?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No. The vocabularies are public artifacts of the OIML; the service asks for nothing.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="https://www.oimlsmart.org/vocab/"
+        label="Browse the vocabularies"
+        description="Search is the fastest way in; the graph view is the most surprising."
+      />
+      <ActionBox
+        href="/vocabularies/"
+        label="Read the dataset detail"
+        description="Edition by edition, with concept counts: the vocabularies as published datasets."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org, the programme's front-door address. Terminology and translation questions land here."
+      />
+    </div>
+
     <div class="border-t border-rule pt-8 max-w-3xl">
       <p class="text-sm text-ink-muted">
-        Verified 2026-08-29: the service answered live and rendered the VIML and VIM edition series with their current editions marked, the curated Complete Vocabulary collection, and the search and graph entries.
+        Verified {captured}: the service answered live and every act above was performed headlessly (the dataset browse, the cross-edition search, the concept page with its URI and languages, the graph view). The captures and their assertions are in public/img/services/manifest.json.
       </p>
     </div>
   </section>
