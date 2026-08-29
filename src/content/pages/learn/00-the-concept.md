@@ -101,4 +101,4 @@ standard):
    standard, not the vendor?
 
 If you can answer all three with a straight face, tier 0 is done.
-[Tier 1, the hands-on](01-the-hands-on.md) makes them physical.
+[Tier 1, the hands-on](/learn/01-the-hands-on) makes them physical.

@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import NavDropdown from './NavDropdown.vue'
 import { NAV_DROPDOWNS, NAV_STANDALONE, isLinkActive, isDropdownActive } from '../data/nav-config'
+import { frontDoor } from '@oimlsmart/site-shell/data/site-meta.ts'
 
 describe('nav-config', () => {
   describe('NAV_DROPDOWNS', () => {
@@ -116,7 +117,10 @@ describe('NavDropdown', () => {
       props: { config: resourcesConfig, currentPath: '/' },
     })
     for (const link of resourcesConfig.links) {
-      expect(wrapper.find(`a[href="${link.href}"]`).exists()).toBe(true)
+      // Internal links render front-door absolute (ADR-0003: the chrome
+      // must resolve from any minisite origin); external links as given.
+      const expected = link.external ? link.href : frontDoor(link.href)
+      expect(wrapper.find(`a[href="${expected}"]`).exists()).toBe(true)
     }
   })
 

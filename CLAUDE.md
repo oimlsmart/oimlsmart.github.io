@@ -85,6 +85,7 @@ File-based routing in `src/pages/`:
 | `/platform` | `src/pages/platform.astro` |
 | `/architecture` | `src/pages/architecture.astro` |
 | `/programs/oiml-smart` | `src/pages/programs/oiml-smart.astro` |
+| `/audiences`, `/technologies`, `/use-cases`, `/services` | `src/pages/<section>/index.astro` (TODO.promotion sections) |
 | `/app/*` | `src/pages/app/` (migration in progress — `TODO.astro/`) |
 | `/oiml-cs` | `src/pages/oiml-cs.astro` |
 | `/404` | `src/pages/404.astro` |

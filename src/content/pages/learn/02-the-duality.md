@@ -102,6 +102,6 @@ standards side by side, no silent collision.
 Tier 3 follows the claim downstream: how a mapped requirement becomes
 a test, evidence, a verdict, and a certificate, with the Twin Lab as
 the hands-on environment. Depth if you want it now:
-[the multi-standard projection](../platform/04-multi-standard-projection.md).
+[the multi-standard projection](https://www.primmel.org/primmel-smart-docs/platform/04-multi-standard-projection/).
 
-*Next: [Tier 3, the chain](03-the-chain.md).*
+*Next: [Tier 3, the chain](/learn/03-the-chain).*

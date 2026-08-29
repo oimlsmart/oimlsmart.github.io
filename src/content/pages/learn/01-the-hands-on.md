@@ -113,5 +113,5 @@ Do all of this, then answer aloud:
 3. Why must the analogue dial be a rendering of *ground truth* and
    never a served value?
 
-Tier 1 done. [Tier 2 (planned)](README.md): author a product reference
+Tier 1 done. Tier 2 (planned): author a product reference
 package and get its twin certified.

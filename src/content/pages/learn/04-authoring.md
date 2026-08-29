@@ -115,7 +115,7 @@ is exactly such a log).
 - The package regenerates byte-clean through the SSOT loop
   (`npm run test:ssot` on the program side).
 
-Depth: [the authoring volume](https://www.oimlsmart.org/docs/oiml-rec/01-methodology)
+Depth: [the authoring volume](https://www.oimlsmart.org/recs/docs/oiml-rec/01-methodology)
 on the OIML SMART site, and the
 the classroom's own pattern (the `smart-classroom-r60` repo, private during the pilot).
 

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { readdirSync, existsSync, statSync } from 'node:fs'
 import { join } from 'node:path'
-import { NAV_DROPDOWNS, NAV_STANDALONE } from './nav-config'
+import { NAV_DROPDOWNS, NAV_STANDALONE, NAV_ITEMS, type NavItem } from './nav-config'
 
 const ROOT = join(import.meta.dirname, '..', '..')
 const PAGES_DIR = join(ROOT, 'src', 'pages')
@@ -61,9 +61,13 @@ describe('nav-config ↔ pages contract', () => {
   const pageRoutes = collectRoutes(PAGES_DIR)
   const contentSlugs = collectContentSlugs(CONTENT_PAGES_DIR)
 
+  // Dropdown links + the NAV_STANDALONE register + the standalone links
+  // sitting directly in NAV_ITEMS (News, the TODO.promotion/01 section
+  // entries): every surface renders from these, so every one must resolve.
   const allNavLinks = [
     ...NAV_DROPDOWNS.flatMap(d => d.links),
     ...NAV_STANDALONE,
+    ...NAV_ITEMS.filter((i): i is Extract<NavItem, { type: 'link' }> => i.type === 'link'),
   ]
 
   it('every nav link resolves to a page or is whitelisted as external', () => {
