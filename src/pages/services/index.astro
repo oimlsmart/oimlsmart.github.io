@@ -3,9 +3,10 @@ import Base from '../../layouts/Base.astro'
 import PageHero from '../../components/PageHero.astro'
 import ActionBox from '../../components/ActionBox.astro'
 
-// The services directory: every card links a live service (each URL
-// verified at authoring time; the lychee gate re-proves them on every
-// build). The per-service pages land in TODO.promotion wave 04.
+// The services directory: each card links its service page (TODO.promotion
+// wave 04); the service page carries the live link, the access path, the
+// status row, and the entitlement row. Every live URL is verified at
+// authoring time; the lychee gate re-proves them on every build.
 const services = [
   {
     title: 'Who can run what',
@@ -13,39 +14,39 @@ const services = [
     href: '/services/who-can-run-what',
   },
   {
-    title: 'The certification platform',
-    desc: 'The workflow itself: application, testing, evaluation, certificate. Runs on this site; sign in with your estate account.',
-    href: '/app/',
+    title: 'The SMART Platform',
+    desc: 'The certification workflow itself: application, testing, evaluation, certificate. The instance kinds, the role consoles, the access path.',
+    href: '/services/platform',
   },
   {
     title: 'The demo instance',
-    desc: 'A full platform deployment pre-loaded with the simulated load-cell pilot. Demo accounts on request.',
-    href: 'https://demo.oimlsmart.org/',
+    desc: 'A full platform deployment pre-loaded with the simulated load-cell pilot. One-click demo accounts; resets nightly.',
+    href: '/services/demo',
   },
   {
     title: 'The identity service',
     desc: 'One account for the whole estate; member deployments federate with it instead of running their own user directories.',
-    href: 'https://id.oimlsmart.org/',
+    href: '/services/identity',
   },
   {
     title: 'The studio viewer',
     desc: 'The read-only viewer over the published SMART models: tree, canvas, code, and mapping lenses, with diff and validation.',
-    href: 'https://www.oimlsmart.org/studio/view/',
+    href: '/services/studio-viewer',
   },
   {
     title: 'The vocabulary service',
     desc: 'The OIML SMART vocabularies, browsable and addressable: every term with its own URL.',
-    href: 'https://www.oimlsmart.org/vocab/',
+    href: '/services/vocab',
   },
   {
     title: 'The status service',
     desc: 'Live status of every service in the estate. No account needed.',
-    href: 'https://status.oimlsmart.org/',
+    href: '/services/status',
   },
   {
     title: 'The AI service',
     desc: 'Ask questions across the OIML library; every answer cites the publications it drew from.',
-    href: 'https://ai.oimlsmart.org/',
+    href: '/services/ai',
   },
 ]
 ---

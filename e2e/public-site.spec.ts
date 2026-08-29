@@ -96,6 +96,47 @@ test.describe('Public site — critical paths', () => {
     await expect(actionLink).toHaveAttribute('href', '/vocab/')
   })
 
+  test('the seven service pages render with access, status, and entitlement blocks', async ({ page }) => {
+    // TODO.promotion/04: each service page answers what-it-is / who-for /
+    // where-it-lives / how-to-get-access, quotes its status row, and quotes
+    // its entitlement row from the single matrix source (never a copy).
+    for (const [path, heading] of [
+      ['/services/platform', 'The SMART Platform'],
+      ['/services/identity', 'The identity service'],
+      ['/services/demo', 'The demo instance'],
+      ['/services/studio-viewer', 'The Studio viewer'],
+      ['/services/vocab', 'The Vocabulary'],
+      ['/services/status', 'The status service'],
+      ['/services/ai', 'The AI service'],
+    ] as const) {
+      await page.goto(path)
+      await expect(page.locator('h1')).toContainText(heading)
+      await expect(page.locator('h2', { hasText: 'What it is' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: "Who it's for" })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'Where it lives' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'How to get access' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'Status' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'Who can use it, who can run it' })).toBeVisible()
+      await expect(page.getByRole('link', { name: 'Who can run what' }).first()).toBeVisible()
+    }
+  })
+
+  test('the services index cards link the service pages', async ({ page }) => {
+    await page.goto('/services/')
+    for (const href of [
+      '/services/platform',
+      '/services/demo',
+      '/services/identity',
+      '/services/studio-viewer',
+      '/services/vocab',
+      '/services/status',
+      '/services/ai',
+      '/services/who-can-run-what',
+    ]) {
+      await expect(page.locator(`a[href="${href}"]`).first()).toBeVisible()
+    }
+  })
+
   test('docs page loads with sidebar and content', async ({ page }) => {
     await page.goto('/docs/')
     await expect(page.locator('h1')).toBeVisible()
