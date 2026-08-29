@@ -1,0 +1,128 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import StatusRow from '../../components/StatusRow.astro'
+import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
+---
+
+<Base
+  title="The SMART Platform"
+  description="The OIML SMART certification workflow service: application, testing, evaluation, certificate, registration. The instance kinds, the role consoles, and how to get access."
+>
+  <PageHero
+    eyebrow="Services"
+    title="The SMART Platform"
+    lede="The certification workflow as a running service: an application goes in, a signed, registered certificate comes out, and every verdict between is computed from the modelled Recommendation. One platform serves the OIML-CS centrally, and the same software runs as a member's own instance."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl">
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What it is</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The platform carries the OIML-CS type-evaluation workflow end to end: the applicant files against a modelled Recommendation, the issuing authority reviews and requests samples, the test laboratory receives a structured test request and captures evidence at the bench, the evaluation rolls the test reports up into computed verdicts, the certificate issues as a signed CNML document, and the BIML registration publishes to the same record the workflow wrote to all along.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        It runs in four instance kinds from one codebase, decided by the deployment profile: the <strong class="text-ink font-semibold">CS-operated hub</strong> (every role, the register built in), an <strong class="text-ink font-semibold">IA-only</strong> instance, a <strong class="text-ink font-semibold">TL-only</strong> instance, and the combined <strong class="text-ink font-semibold">IA+TL</strong> posture. Instances federate: an authority-operated instance submits its completed evaluation chains to the CS platform as signed packages, and the register verifies the signature chain on import. The deployment matrix summary:
+      </p>
+      <div class="overflow-x-auto border border-rule rounded-md mt-6 mb-4">
+        <table class="w-full border-collapse text-sm min-w-[40rem]">
+          <thead>
+            <tr class="bg-paper-soft">
+              <th class="text-left font-medium p-3 border-b border-rule">Instance kind</th>
+              <th class="text-left font-medium p-3 border-b border-l border-rule">Who operates it</th>
+              <th class="text-left font-medium p-3 border-b border-l border-rule">Live example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="align-top">
+              <th class="text-left font-medium p-3 border-b border-rule bg-paper-soft">CS-operated hub</th>
+              <td class="p-3 border-b border-l border-rule text-ink-soft">The OIML-CS, serving every authority, laboratory, and applicant as accounts</td>
+              <td class="p-3 border-b border-l border-rule"><a href="https://platform.oimlsmart.org/" class="text-accent">platform.oimlsmart.org</a></td>
+            </tr>
+            <tr class="align-top">
+              <th class="text-left font-medium p-3 border-b border-rule bg-paper-soft">IA+TL</th>
+              <td class="p-3 border-b border-l border-rule text-ink-soft">A member state's authority and its laboratory, under the member state's entitlement</td>
+              <td class="p-3 border-b border-l border-rule"><a href="https://nmi.oimlsmart.org/" class="text-accent">nmi.oimlsmart.org</a> <span class="text-ink-muted">(pilot)</span></td>
+            </tr>
+            <tr class="align-top">
+              <th class="text-left font-medium p-3 border-b border-rule bg-paper-soft">TL-only</th>
+              <td class="p-3 border-b border-l border-rule text-ink-soft">A test laboratory, under its proposing member state's entitlement</td>
+              <td class="p-3 border-b border-l border-rule"><a href="https://tl.oimlsmart.org/" class="text-accent">tl.oimlsmart.org</a> <span class="text-ink-muted">(pilot)</span></td>
+            </tr>
+            <tr class="align-top">
+              <th class="text-left font-medium p-3 border-b border-rule bg-paper-soft">IA-only</th>
+              <td class="p-3 border-b border-l border-rule text-ink-soft">An issuing authority, under its proposing member state's entitlement</td>
+              <td class="p-3 border-b border-l border-rule text-ink-soft">Same profile family; booted from the declared deployment profile</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        The full matrix, the two topologies (the shared platform; IA-operated with signed submission), and the rolling-upgrade runbook ship with the member repository's deployment volume. The component deep-dive is <a href="/smart" class="text-accent underline underline-offset-2">the OIML-CS SMART platform page</a>.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who it's for</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        Every role in the scheme works in its own console on the same record:
+      </p>
+      <ul class="grid gap-3">
+        <li class="border border-rule rounded-md bg-paper-soft p-4"><strong class="text-ink font-semibold">Applicant portal</strong> <span class="text-ink-muted">(<span class="font-mono text-sm">/app/portal</span>)</span><span class="text-ink-soft">: the manufacturer files the application, declares the model family, ships samples, and watches verdicts arrive.</span></li>
+        <li class="border border-rule rounded-md bg-paper-soft p-4"><strong class="text-ink font-semibold">IA console</strong> <span class="text-ink-muted">(<span class="font-mono text-sm">/app/ia</span>)</span><span class="text-ink-soft">: the issuing authority reviews, requests samples, dispatches test requests, judges the evaluation, signs and issues the certificate.</span></li>
+        <li class="border border-rule rounded-md bg-paper-soft p-4"><strong class="text-ink font-semibold">TL workbench</strong> <span class="text-ink-muted">(<span class="font-mono text-sm">/app/lab</span>)</span><span class="text-ink-soft">: the laboratory's inbox, the structured test run, evidence captured once at the bench, the test report generated from the run itself.</span></li>
+        <li class="border border-rule rounded-md bg-paper-soft p-4"><strong class="text-ink font-semibold">BIML console</strong> <span class="text-ink-muted">(<span class="font-mono text-sm">/app/biml</span>)</span><span class="text-ink-soft">: registration of issued certificates, the participant registry, the public record of the OIML-CS.</span></li>
+      </ul>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where it lives</h2>
+      <ActionBox
+        href="https://platform.oimlsmart.org/"
+        label="platform.oimlsmart.org"
+        description="The production certification hub: the published SMART Recommendations (R 60, R 91, R 129, R 144) and the entry to the workflow. Sign-in is through the estate identity service."
+      />
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        The workflow also runs on this site under <a href="/app/" class="text-accent underline underline-offset-2">/app/</a>, and the always-on sandbox is <a href="/services/demo" class="text-accent underline underline-offset-2">the demo instance</a>.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
+      <ol class="list-decimal pl-6 text-[1.0625rem] leading-relaxed text-ink-soft grid gap-2 mb-4">
+        <li>Request an estate account through the identity service's join flow: <a href="https://id.oimlsmart.org/" class="text-accent underline underline-offset-2">id.oimlsmart.org</a> → <em>Request an account</em> (<span class="font-mono text-sm">/op/join</span>). Pick your organization from the participants register; approval comes from your own organization's administrator. The full walk is on <a href="/services/identity" class="text-accent underline underline-offset-2">the identity service page</a>.</li>
+        <li>Sign in at <a href="https://platform.oimlsmart.org/" class="text-accent underline underline-offset-2">platform.oimlsmart.org</a> → <em>Enter App</em>. Your role's console is the one your organization's registration opens.</li>
+        <li>To try the workflow with no real evaluation at stake, use <a href="/services/demo" class="text-accent underline underline-offset-2">the demo instance</a>: one-click demo accounts, no request needed.</li>
+      </ol>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Running your own instance is the Member State self-host entitlement: the deployment runbook (topologies, rolling upgrades) ships with the member repository, and an authority or laboratory operates its instance under its proposing member state's entitlement.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Status</h2>
+      <StatusRow
+        rows={['platform-hub', 'nmi-instance', 'tl-instance']}
+        note="The demo hub is probed separately as its own row; see the demo instance page."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who can use it, who can run it</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        The hosted service and the self-host software carry different entitlements, quoted separately from the single source:
+      </p>
+      <h3 class="font-serif text-[1.25rem] mb-3">The hosted OIML-CS SMART Platform</h3>
+      <ServiceEntitlement service="cs-smart-platform" />
+      <h3 class="font-serif text-[1.25rem] mb-3 mt-8">The SMART Platform software (self-host)</h3>
+      <ServiceEntitlement service="smart-platform-software" />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified 2026-08-29: platform.oimlsmart.org, nmi.oimlsmart.org, and tl.oimlsmart.org all answered live; the sign-in path walked to the identity service's join flow; the role consoles and instance kinds match the deployment profile system the member repository documents.
+      </p>
+    </div>
+  </section>
+</Base>

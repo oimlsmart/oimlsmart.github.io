@@ -1,0 +1,54 @@
+---
+/**
+ * StatusRow.astro — a service page's status block (TODO.promotion/04):
+ * which probe row(s) the status service carries for this service, with
+ * the declared objectives as published, quoted from src/data/status-rows.ts.
+ * The live actuals always stay on the status page itself, linked, never
+ * copied.
+ */
+import { STATUS_ROWS, STATUS_PAGE } from '../data/status-rows'
+
+interface Props {
+  /** The status-row ids this service is probed under. */
+  rows: string[]
+  /** Optional honest qualifier, rendered below the table. */
+  note?: string
+}
+
+const { rows, note } = Astro.props
+const probes = rows.map((id) => {
+  const r = STATUS_ROWS.find((s) => s.id === id)
+  if (!r) throw new Error(`StatusRow: unknown status-row id "${id}"`)
+  return r
+})
+---
+
+<div class="status-row">
+  <div class="overflow-x-auto border border-rule rounded-md mb-3">
+    <table class="w-full border-collapse text-sm min-w-[36rem]">
+      <thead>
+        <tr class="bg-paper-soft">
+          <th class="text-left font-medium p-3 border-b border-rule">Status-page row</th>
+          <th class="text-left font-medium p-3 border-b border-l border-rule">Declared availability</th>
+          <th class="text-left font-medium p-3 border-b border-l border-rule">Declared latency</th>
+        </tr>
+      </thead>
+      <tbody>
+        {probes.map((r) => (
+          <tr class="align-top">
+            <th class="text-left font-medium p-3 border-b border-rule bg-paper-soft">{r.name}</th>
+            <td class="p-3 border-b border-l border-rule">{r.availability}</td>
+            <td class="p-3 border-b border-l border-rule">{r.latency}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  {note && <p class="text-sm text-ink-soft mb-3">{note}</p>}
+  <p class="text-sm text-ink-soft">
+    Probed once a minute with a content assertion per row; the live actuals
+    (30/90-day uptime, p95) are on
+    <a href={STATUS_PAGE} class="text-accent underline underline-offset-2">status.oimlsmart.org</a>,
+    a number is never rounded up to meet a target.
+  </p>
+</div>
