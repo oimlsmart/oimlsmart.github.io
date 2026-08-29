@@ -1,0 +1,78 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import StatusRow from '../../components/StatusRow.astro'
+import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
+---
+
+<Base
+  title="The demo instance"
+  description="The always-on OIML SMART sandbox: the full platform pre-loaded with the fictional demo cast, one-click demo accounts, the nightly reset, and the signed worked-example certificate as the canonical try-it path."
+>
+  <PageHero
+    eyebrow="Services"
+    title="The demo instance"
+    lede="A full platform deployment you can walk into today: the whole certification chain pre-loaded with a fictional cast, from a manufacturer's application to a signed, registered certificate. It resets nightly, so nothing you enter survives, which is exactly what makes it safe to try."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl">
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What it is</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The SMART Platform in demo posture: the same software as the production hub, seeded with the demonstration cast, the manufacturer ACME Measurement GmbH and its LC-500 load-cell line, the Example Issuing Authority, the Example Test Laboratory, and the BIML register. Every person and organization is fictional by design; every artifact they produce is real platform output.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        A persistent <em>Demonstration environment</em> banner marks every page: fictional data, resets nightly. The reset is a scheduled job that re-seeds the instance, so the demo is self-healing and anything you enter is gone by morning. Demo instances never carry real data, and production never carries the demo cast.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        The canonical try-it path is the signed worked-example certificate: the ACME LC-500's type-evaluation chain, carried through application, testing, and evaluation to a CNML certificate with its OpenTimestamps attestation, at <span class="font-mono text-sm">/app/standards/r60/certificates/crt-acme-lc</span>. The guided demo (any app page with <span class="font-mono text-sm">?demo=full-flow</span>) walks the same chain step by step with a presenter script.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who it's for</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Anyone who wants to see the workflow before asking for anything: a committee member preparing a position, an authority officer evaluating the console, a laboratory wondering what a structured test request looks like, a manufacturer rehearsing an application. No approval stands between you and a demo account.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where it lives</h2>
+      <ActionBox
+        href="https://demo.oimlsmart.org/"
+        label="demo.oimlsmart.org"
+        description="The demo hub. Enter the app; the login page carries the demo accounts as one-click buttons."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
+      <ol class="list-decimal pl-6 text-[1.0625rem] leading-relaxed text-ink-soft grid gap-2 mb-4">
+        <li>Open <a href="https://demo.oimlsmart.org/app/login" class="text-accent underline underline-offset-2">demo.oimlsmart.org/app/login</a>.</li>
+        <li>Under <em>demo accounts</em>, click the role you want: Applicant (the ACME manufacturer), Issuing Authority, Test Laboratory, BIML Officer, the laboratory's own named operators, and more. Clicking fills the account; the shared demo password is printed on the page.</li>
+        <li>Sign in. You land on that role's console with the pilot's applications, samples, test projects, and certificates already on the record.</li>
+        <li>For the end-to-end story, start the guided demo from the login page (or add <span class="font-mono text-sm">?demo=full-flow</span> to any app page) and follow the presenter script.</li>
+      </ol>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Remember the nightly reset: work you want to keep belongs on a real deployment, not here.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Status</h2>
+      <StatusRow rows={['demo-instance']} />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who can use it, who can run it</h2>
+      <ServiceEntitlement service="demo-instance" />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified 2026-08-29: the demo hub, the login page with its one-click demo accounts and printed shared password, the demonstration-environment banner, and the worked-example certificate page all answered live; the Applicant button was clicked and filled the manufacturer's account.
+      </p>
+    </div>
+  </section>
+</Base>
