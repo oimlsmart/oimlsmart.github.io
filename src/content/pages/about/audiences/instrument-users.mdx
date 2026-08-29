@@ -4,13 +4,25 @@ description: Continuous compliance for the measuring instruments your business d
 eyebrow: 'About · Audiences · 05'
 ---
 
-## The world today
+import EntitlementRow from '../../../../components/EntitlementRow.astro'
+import ActionBox from '../../../../components/ActionBox.astro'
+
+If your operation depends on measuring instruments, OIML SMART makes
+their compliance state something you can query instead of a sticker you
+trust. If your organization is a Utilizer or an Associate designated
+under the OIML-CS, the platform renders that designation as a fact and
+opens the evaluation-report and certificate surfaces it grants.
+
+## What you do today
 
 The instruments your operation depends on, the belt scale at the
 quarry, the gas meter at the custody-transfer point, are certified on
 a cycle. Between verifications you run on faith: a sticker, a date,
 and the hope that nothing drifted. When a dispute arises, you
-reconstruct the instrument's behavior from logs and memory.
+reconstruct the instrument's behavior from logs and memory. And when
+an OIML certificate or type evaluation report lands on your desk as
+the basis for a national approval, accepting it means reading a PDF
+and trusting its letterhead.
 
 ## What changes
 
@@ -24,6 +36,16 @@ so history is never rewritten. Your own implementation model can
 import the manufacturer's reference model as a standing promise, or
 plug the live twin directly into your operations monitoring.
 
+For designated bodies the change is just as concrete. A Utilizer or an
+Associate signs the Declaration the OIML-CS prescribes (PD-08),
+accepting OIML certificates and type evaluation reports as the basis
+for national or regional type approvals. On the platform that
+designation is a registry fact linked to your designating Member State
+or Corresponding Member, your personnel hold accounts against it, and
+the report and certificate surfaces open per the designation, with the
+evidence chain attached, so acceptance becomes verification instead of
+trust.
+
 ## What it looks like in practice
 
 Your quarry's belt scale answers queries through its twin interface;
@@ -34,7 +56,7 @@ degrades, visibly, immediately, with the probes that show it, instead
 of surfacing at next year's verification as a year of disputed
 invoices.
 
-## The proof
+## What you can try now
 
 The three-layer twin is the architecture's central idea: the physical
 device, the manufacturer's full twin, and the SMART twin as the
@@ -42,7 +64,30 @@ governed projection between them, with the standard itself declaring
 what is governed. The twin-cert demo shows a certificate issued for
 exactly this fidelity promise.
 
-## Your next step
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="Open the live demo"
+  description="The instrument twin, the compliance verdicts, the evidence history. Sign in with a demo account; request one via info@oimlsmart.org."
+/>
+<ActionBox
+  href="/smi"
+  label="See how the instrument twin works"
+  description="The three layers: the physical device, the full twin, and the governed projection between them."
+/>
 
-See [how the instrument twin works](/smi), then ask your instrument
-suppliers the only question that matters: *where is your SMART twin?*
+## What you can use, and what you can run
+
+Designated-body access is real access; what your designation opens is
+quoted below from the estate's single entitlement source, with the path
+to fuller participation spelled out.
+
+<EntitlementRow category="utilizer-associate" upsell="utilizer-associate" />
+
+## Who to talk to
+
+Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the
+programme's front-door address, or use the
+[contact page](/about/contact). For accounts, talk to your designating
+Member State or Corresponding Member; the designation you hold is what
+your access renders. And ask your instrument suppliers the only
+question that matters: *where is your SMART twin?*
