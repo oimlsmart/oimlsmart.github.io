@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+import EntitlementMatrix from '../components/EntitlementMatrix.astro'
+import { UPSELL_NARRATIVES, SOFTWARE_REPOS } from '../data/entitlement-matrix'
+---
+
+<Base
+  title="Who can run what — the service-entitlement matrix"
+  description="Which OIML SMART services each member category can use on the hosted estate, and which they may run themselves — one authoritative matrix, per service, per member category."
+>
+  <PageHero
+    eyebrow="Services · Entitlements"
+    title="Who can run what"
+    lede="Every member gets an account and uses the hosted estate; running the software yourself is a Member State entitlement, and bodies operate under theirs. One matrix, per service, per member category — quoted by every page that answers the entitlement question."
+  />
+
+  <section class="py-14 px-8">
+    <div class="max-w-5xl">
+      <div class="max-w-3xl mb-12">
+        <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The short answer</h2>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+          <strong class="text-ink font-semibold">Using is for everyone.</strong> Member States, Corresponding Members, their Issuing Authorities and Test Laboratories, Utilizers and Associates, applicants — everyone gets an account on the estate and everyone uses the hosted OIML-CS SMART Platform; the hosted path never requires running anything yourself.
+        </p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          <strong class="text-ink font-semibold">Running is a Member State entitlement.</strong> Self-deploying the SMART Platform (on-prem or cloud, with streaming updates on the rolling channel) attaches to the Member State category — an Issuing Authority or Test Laboratory operates its own instance under its proposing Member State's entitlement. The identity service software is the one piece any member may run on its own domain.
+        </p>
+      </div>
+
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The matrix</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
+        Per service, per member category. Cells badged <span class="font-mono text-xs border border-dashed border-ink-muted rounded-full px-2 py-0.5 text-ink-muted">proposed</span> are the programme coordinator's extrapolation, not yet confirmed policy.
+      </p>
+      <EntitlementMatrix />
+
+      <div class="max-w-3xl mt-16">
+        <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The paths upward</h2>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-8">
+          Three honest answers to the questions the matrix raises — never pushy, and the platform never sells what the OIML Convention governs.
+        </p>
+        <div class="grid gap-4">
+          {UPSELL_NARRATIVES.map((n) => (
+            <div class="border border-rule rounded-md bg-paper-soft p-6">
+              <div class="bp-coord mb-1">{n.id === 'cm-to-ms' ? '⬆️ Ratification' : n.id === 'body-to-ms' ? '⬆️ Under your Member State' : '⬆️ By designation'}</div>
+              <h3 class="font-serif text-[1.25rem] mb-2">{n.title}</h3>
+              <p class="text-[0.9375rem] leading-relaxed text-ink-soft">{n.body}</p>
+              {n.href && (
+                <a href={n.href} class="text-accent text-sm font-medium inline-block mt-3">{n.hrefLabel} →</a>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="max-w-3xl mt-16">
+        <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The software, honestly</h2>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+          Self-hosting runs on the estate's own repositories. Their availability today, checked against each repository's license file:
+        </p>
+        <ul class="grid gap-3 mb-6">
+          {SOFTWARE_REPOS.map((r) => (
+            <li class="border border-rule rounded-md bg-paper-soft p-4">
+              <span class="font-mono text-sm">{r.href ? <a href={r.href} class="text-accent">{r.repo}</a> : r.repo}</span>
+              <span class="text-ink-muted text-sm"> — {r.ships}; {r.visibility === 'public' ? 'public repo' : 'member repo'} — {r.license}</span>
+            </li>
+          ))}
+        </ul>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          Where a repository carries no open-source license yet, the honest wording is the one above — "source available", never "open source". The self-host runbooks are live: the identity service's <a href="https://github.com/oimlsmart/identity/blob/main/docs/deployment/identity-self-host.md" class="text-accent">self-host runbook</a> walks a member from a stock checkout to its own OP on its own domain, config-only; the SMART Platform's deployment runbook (topologies A and B, rolling upgrades) ships with the member repository.
+        </p>
+      </div>
+
+      <div class="border-t border-rule pt-8 max-w-3xl mt-16">
+        <p class="text-sm text-ink-muted">
+          Verified 2026-08-29: every linked service answered live (the identity service's discovery document, the demo instance, the AI service, the status service, the Studio, the Vocabulary, the Recommendations, the SST), the self-host runbooks exist, and each repository was checked for a license file. The determination rules are the programme owner's policy; cells badged "proposed" await confirmation.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
