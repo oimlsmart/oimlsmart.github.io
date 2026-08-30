@@ -1,15 +1,537 @@
 {
-  "generatedAt": "2026-08-29T11:28:54.659Z",
-  "date": "2026-08-29",
+  "generatedAt": "2026-08-30T18:58:56.684402+00:00",
+  "date": "2026-08-30",
   "captures": [
+    {
+      "audience": "instrument-users",
+      "name": "anr-registry",
+      "file": "instrument-users/anr-registry-dark.png",
+      "url": "(see run log)",
+      "theme": "dark",
+      "performed": "the Utilizer surface: the ANR declaration registry for your market plus the declare form (moderated; only APPROVED is live)",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "instrument-users",
+      "name": "anr-registry",
+      "file": "instrument-users/anr-registry-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "the Utilizer surface: the ANR declaration registry for your market plus the declare form (moderated; only APPROVED is live)",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "certificate-lifecycle",
+      "file": "issuing-authorities/certificate-lifecycle-dark.png",
+      "url": "(see run log)",
+      "theme": "dark",
+      "performed": "the certificate as the authority sees it: the BIML registration record, the lifecycle acts (annex, revise, replace, renew, suspend, withdraw), and the CNML sign panel",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "certificate-lifecycle",
+      "file": "issuing-authorities/certificate-lifecycle-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "the certificate as the authority sees it: the BIML registration record, the lifecycle acts (annex, revise, replace, renew, suspend, withdraw), and the CNML sign panel",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "certificates-issued",
+      "file": "issuing-authorities/certificates-issued-dark.png",
+      "url": "(see run log)",
+      "theme": "dark",
+      "performed": "the certificates desk: issue-from-evaluation plus the issued list with the BIML-registration acts",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "certificates-issued",
+      "file": "issuing-authorities/certificates-issued-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "the certificates desk: issue-from-evaluation plus the issued list with the BIML-registration acts",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "dispatch-builder",
+      "file": "issuing-authorities/dispatch-builder-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/dispatch/70b3abfb-d782-47d7-b5a6-ebea637f9f25",
+      "theme": "light",
+      "performed": "composed the dispatch: the test-forms \u00d7 samples matrix, one TestRequest to laboratory 21 (ETL)",
+      "capturedAt": "2026-08-30T17:31:10.875507+00:00"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "ia-console",
+      "file": "issuing-authorities/ia-console-dark.png",
+      "url": "(see run log)",
+      "theme": "dark",
+      "performed": "the IA console: the review queue, the twelve projects, the enter-for-client / import / offline-registration entries",
+      "capturedAt": "2026-08-30T18:15:33.595064+00:00"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "ia-console",
+      "file": "issuing-authorities/ia-console-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "the IA console: the review queue, the twelve projects, the enter-for-client / import / offline-registration entries",
+      "capturedAt": "2026-08-30T18:06:31.333963+00:00"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "issue-from-evaluation",
+      "file": "issuing-authorities/issue-from-evaluation-dark.png",
+      "url": "https://demo.oimlsmart.org/app/ia/certificates/",
+      "theme": "dark",
+      "performed": "opened the issuance form on a finalized evaluation: the certified scope, the scheme choice, the signing act (not signed \u2014 the register story stays the seeded one)",
+      "capturedAt": "2026-08-30T18:37:06.595826+00:00"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "issue-from-evaluation",
+      "file": "issuing-authorities/issue-from-evaluation-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/certificates/",
+      "theme": "light",
+      "performed": "opened the issuance form on a finalized evaluation: the certified scope, the scheme choice, the signing act (not signed \u2014 the register story stays the seeded one)",
+      "capturedAt": "2026-08-30T18:29:33.438164+00:00"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "project-hub",
+      "file": "issuing-authorities/project-hub-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/projects/70b3abfb-d782-47d7-b5a6-ebea637f9f25",
+      "theme": "light",
+      "performed": "accepted the application \u2014 the Evaluation Project 70b3abfb-d782-47d7-b5a6-ebea637f9f25 hub: samples, requests, verdicts, certificate",
+      "capturedAt": "2026-08-30T17:29:34.759581+00:00"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "project-hub-read",
+      "file": "issuing-authorities/project-hub-read-dark.png",
+      "url": "https://demo.oimlsmart.org/app/ia/projects/app-acme-lc",
+      "theme": "dark",
+      "performed": "the Evaluation Project app-acme-lc: application record, samples, test requests, verdicts, certificate \u2014 one hub",
+      "capturedAt": "2026-08-30T18:35:09.743214+00:00"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "project-hub-read",
+      "file": "issuing-authorities/project-hub-read-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/projects/app-acme-lc",
+      "theme": "light",
+      "performed": "the Evaluation Project app-acme-lc: application record, samples, test requests, verdicts, certificate \u2014 one hub",
+      "capturedAt": "2026-08-30T18:27:37.080462+00:00"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "review-queue-waiting",
+      "file": "issuing-authorities/review-queue-waiting-dark.png",
+      "url": "(see run log)",
+      "theme": "dark",
+      "performed": "the review queue with the waiting application, oldest first",
+      "capturedAt": "2026-08-30T18:17:23.046958+00:00"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "review-queue-waiting",
+      "file": "issuing-authorities/review-queue-waiting-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/",
+      "theme": "light",
+      "performed": "the review queue with the waiting application, oldest first",
+      "capturedAt": "2026-08-30T18:08:20.787165+00:00"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "review-whole-file",
+      "file": "issuing-authorities/review-whole-file-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/applications/70b3abfb-d782-47d7-b5a6-ebea637f9f25",
+      "theme": "light",
+      "performed": "opened the application 70b3abfb-d782-47d7-b5a6-ebea637f9f25 from the review queue \u2014 the whole file on one page",
+      "capturedAt": "2026-08-30T17:11:54.175498+00:00"
+    },
+    {
+      "audience": "issuing-authorities",
+      "name": "sample-request-form",
+      "file": "issuing-authorities/sample-request-form-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/applications/70b3abfb-d782-47d7-b5a6-ebea637f9f25",
+      "theme": "light",
+      "performed": "issued the sample request (R 60-3) from the review \u2014 particulars typed, confirm pending",
+      "capturedAt": "2026-08-30T17:11:54.269698+00:00"
+    },
+    {
+      "audience": "laboratories",
+      "name": "inbox-live-request",
+      "file": "laboratories/inbox-live-request-light.png",
+      "url": "https://demo.oimlsmart.org/app/lab/",
+      "theme": "light",
+      "performed": "the laboratory inbox with the dispatched request in the incoming bucket, landed live",
+      "capturedAt": "2026-08-30T17:35:34.549658+00:00"
+    },
+    {
+      "audience": "laboratories",
+      "name": "lab-inbox",
+      "file": "laboratories/lab-inbox-dark.png",
+      "url": "https://demo.oimlsmart.org/app/lab/",
+      "theme": "dark",
+      "performed": "the laboratory inbox: work assigned to laboratory 21",
+      "capturedAt": "2026-08-30T18:45:09.354236+00:00"
+    },
+    {
+      "audience": "laboratories",
+      "name": "lab-inbox",
+      "file": "laboratories/lab-inbox-light.png",
+      "url": "https://demo.oimlsmart.org/app/lab/",
+      "theme": "light",
+      "performed": "the laboratory inbox: work assigned to laboratory 21",
+      "capturedAt": "2026-08-30T18:41:06.607704+00:00"
+    },
+    {
+      "audience": "laboratories",
+      "name": "register-offline",
+      "file": "laboratories/register-offline-dark.png",
+      "url": "https://demo.oimlsmart.org/app/lab/register-offline/",
+      "theme": "dark",
+      "performed": "the records-mode bridge: register a report performed offline \u2014 marked registered-offline, never claiming platform evidence",
+      "capturedAt": "2026-08-29T13:05:52.723Z"
+    },
+    {
+      "audience": "laboratories",
+      "name": "register-offline",
+      "file": "laboratories/register-offline-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "the records-mode bridge: register a report performed offline \u2014 marked registered-offline, never claiming platform evidence",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "laboratories",
+      "name": "request-accepted",
+      "file": "laboratories/request-accepted-light.png",
+      "url": "https://demo.oimlsmart.org/app/lab/requests/254cd1c8-0bc3-40f7-9b10-af4473b5241e",
+      "theme": "light",
+      "performed": "accepted the assignment \u2014 the laboratory joins the Evaluation Project dataspace; the working panels reveal",
+      "capturedAt": "2026-08-30T17:36:20.164206+00:00"
+    },
+    {
+      "audience": "laboratories",
+      "name": "request-open",
+      "file": "laboratories/request-open-light.png",
+      "url": "https://demo.oimlsmart.org/app/lab/requests/254cd1c8-0bc3-40f7-9b10-af4473b5241e",
+      "theme": "light",
+      "performed": "opened the test request: the assigned forms, the samples, the accept/decline acts",
+      "capturedAt": "2026-08-30T17:36:18.850002+00:00"
+    },
+    {
+      "audience": "laboratories",
+      "name": "test-reports",
+      "file": "laboratories/test-reports-dark.png",
+      "url": "(see run log)",
+      "theme": "dark",
+      "performed": "the laboratory\u2019s authored reports with form-instance counts and acceptance status",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "laboratories",
+      "name": "test-reports",
+      "file": "laboratories/test-reports-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "the laboratory\u2019s authored reports with form-instance counts and acceptance status",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "laboratories",
+      "name": "twin-lab",
+      "file": "laboratories/twin-lab-dark.png",
+      "url": "(see run log)",
+      "theme": "dark",
+      "performed": "the twin-lab workbench: bind a live SMART twin to a Recommendation \u2014 the connect step",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "laboratories",
+      "name": "twin-lab",
+      "file": "laboratories/twin-lab-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "the twin-lab workbench: bind a live SMART twin to a Recommendation \u2014 the connect step",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "application-journey",
+      "file": "manufacturers/application-journey-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/app-acme-lc",
+      "theme": "dark",
+      "performed": "opened application app-acme-lc: the six-stage journey and the promise set with per-claim verification status",
+      "capturedAt": "2026-08-29T13:18:34.185Z"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "application-journey",
+      "file": "manufacturers/application-journey-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/app-acme-lc",
+      "theme": "light",
+      "performed": "opened application app-acme-lc: the six-stage journey and the promise set with per-claim verification status",
+      "capturedAt": "2026-08-30T16:59:04.820066+00:00"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "application-submitted",
+      "file": "manufacturers/application-submitted-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/70b3abfb-d782-47d7-b5a6-ebea637f9f25?submitted=1",
+      "theme": "light",
+      "performed": "submitted the application (70b3abfb-d782-47d7-b5a6-ebea637f9f25) \u2014 the journey opens at \"Application submitted\"",
+      "capturedAt": "2026-08-30T17:04:34.103296+00:00"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "certificate-downloads",
+      "file": "manufacturers/certificate-downloads-dark.png",
+      "url": "(see run log)",
+      "theme": "dark",
+      "performed": "the issued certificate R60/2021-A-EX1-26.01 in the OIML layout, with its serials and print view",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "certificate-downloads",
+      "file": "manufacturers/certificate-downloads-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/certificates/crt-acme-lc",
+      "theme": "light",
+      "performed": "the issued certificate R60/2021-A-EX1-26.01 in the OIML layout, with its serials and print view",
+      "capturedAt": "2026-08-30T16:59:04.822531+00:00"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "notifications",
+      "file": "manufacturers/notifications-dark.png",
+      "url": "(see run log)",
+      "theme": "dark",
+      "performed": "opened the notifications inbox \u2014 the stage events of your own applications",
+      "capturedAt": "2026-08-30T18:01:13.190870+00:00"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "notifications",
+      "file": "manufacturers/notifications-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "opened the notifications inbox \u2014 the stage events of your own applications",
+      "capturedAt": "2026-08-30T17:55:39.749142+00:00"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "portal-dashboard",
+      "file": "manufacturers/portal-dashboard-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/",
+      "theme": "dark",
+      "performed": "the applicant portal: every application with status and age, the certificates in force",
+      "capturedAt": "2026-08-29T13:16:07.825Z"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "portal-dashboard",
+      "file": "manufacturers/portal-dashboard-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/",
+      "theme": "light",
+      "performed": "the applicant portal: every application with status and age, the certificates in force",
+      "capturedAt": "2026-08-30T16:59:04.824182+00:00"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "wizard-step-1-recommendation",
+      "file": "manufacturers/wizard-step-1-recommendation-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "light",
+      "performed": "opened the new-application wizard: the Recommendation pick (R 60, R 91, R 129, R 144)",
+      "capturedAt": "2026-08-30T17:04:12.178546+00:00"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "wizard-step-3-instrument",
+      "file": "manufacturers/wizard-step-3-instrument-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "light",
+      "performed": "picked the model family and the models in scope \u2014 the instrument step the R 60 model derives",
+      "capturedAt": "2026-08-30T17:04:16.747955+00:00"
+    },
+    {
+      "audience": "manufacturers",
+      "name": "wizard-step-6-scheme-ia",
+      "file": "manufacturers/wizard-step-6-scheme-ia-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "light",
+      "performed": "chose the scheme (OIML-CS) and the Issuing Authority from the registered cards",
+      "capturedAt": "2026-08-30T17:04:20.514189+00:00"
+    },
+    {
+      "audience": "member-states",
+      "name": "cs-ia-registry",
+      "file": "member-states/cs-ia-registry-dark.png",
+      "url": "https://demo.oimlsmart.org/app/cs/issuing-authorities/",
+      "theme": "dark",
+      "performed": "the OIML-CS Issuing Authority registry as data \u2014 the real register entries (PTB, METAS, NIM, \u2026) with their scopes",
+      "capturedAt": "2026-08-29T13:54:00.722Z"
+    },
+    {
+      "audience": "member-states",
+      "name": "cs-ia-registry",
+      "file": "member-states/cs-ia-registry-light.png",
+      "url": "https://demo.oimlsmart.org/app/cs/issuing-authorities/",
+      "theme": "light",
+      "performed": "the OIML-CS Issuing Authority registry as data \u2014 the real register entries (PTB, METAS, NIM, \u2026) with their scopes",
+      "capturedAt": "2026-08-29T13:53:49.503Z"
+    },
+    {
+      "audience": "shared",
+      "name": "ai-answer-cited",
+      "file": "shared/ai-answer-cited-dark.png",
+      "url": "https://ai.oimlsmart.org/",
+      "theme": "dark",
+      "performed": "asked \"What is R 60?\" \u2014 the answer with clause-level citations from the OIML corpus",
+      "capturedAt": "2026-08-29T13:09:06.071Z"
+    },
+    {
+      "audience": "shared",
+      "name": "ai-answer-cited",
+      "file": "shared/ai-answer-cited-light.png",
+      "url": "https://ai.oimlsmart.org/",
+      "theme": "light",
+      "performed": "asked \"What is R 60?\" \u2014 the answer with clause-level citations from the OIML corpus",
+      "capturedAt": "2026-08-29T13:08:59.764Z"
+    },
+    {
+      "audience": "shared",
+      "name": "certificate-register",
+      "file": "shared/certificate-register-dark.png",
+      "url": "https://demo.oimlsmart.org/app/register/",
+      "theme": "dark",
+      "performed": "browsed the public Certificate Register \u2014 the BIML-registered entries with the validity doctrine",
+      "capturedAt": "2026-08-29T13:06:04.512Z"
+    },
+    {
+      "audience": "shared",
+      "name": "certificate-register",
+      "file": "shared/certificate-register-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "browsed the public Certificate Register \u2014 the BIML-registered entries with the validity doctrine",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "shared",
+      "name": "identity-join",
+      "file": "shared/identity-join-dark.png",
+      "url": "https://id.oimlsmart.org/op/join/",
+      "theme": "dark",
+      "performed": "opened the identity service join flow \u2014 accounts per organization, the member directory selectable",
+      "capturedAt": "2026-08-29T13:07:06.145Z"
+    },
+    {
+      "audience": "shared",
+      "name": "identity-join",
+      "file": "shared/identity-join-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "opened the identity service join flow \u2014 accounts per organization, the member directory selectable",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "shared",
+      "name": "library",
+      "file": "shared/library-dark.png",
+      "url": "https://demo.oimlsmart.org/app/library/",
+      "theme": "dark",
+      "performed": "browsed the Document Library: the OIML corpus (R 60/91/129/144, B 18, the PD/OD set)",
+      "capturedAt": "2026-08-29T13:51:05.039Z"
+    },
+    {
+      "audience": "shared",
+      "name": "library",
+      "file": "shared/library-light.png",
+      "url": "https://demo.oimlsmart.org/app/library/",
+      "theme": "light",
+      "performed": "browsed the Document Library: the OIML corpus (R 60/91/129/144, B 18, the PD/OD set)",
+      "capturedAt": "2026-08-29T13:50:55.093Z"
+    },
+    {
+      "audience": "shared",
+      "name": "r60-requirements",
+      "file": "shared/r60-requirements-dark.png",
+      "url": "(see run log)",
+      "theme": "dark",
+      "performed": "read R 60 as a model: 14 requirement classes, 180 requirements, clause-level structure",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "shared",
+      "name": "r60-requirements",
+      "file": "shared/r60-requirements-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "read R 60 as a model: 14 requirement classes, 180 requirements, clause-level structure",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "shared",
+      "name": "standards-catalog",
+      "file": "shared/standards-catalog-dark.png",
+      "url": "https://demo.oimlsmart.org/app/",
+      "theme": "dark",
+      "performed": "the Standards catalog: the four Recommendations with their model counts (R 60: 180 requirements, 62 tests, 61 forms)",
+      "capturedAt": "2026-08-29T14:10:40.247Z"
+    },
+    {
+      "audience": "shared",
+      "name": "standards-catalog",
+      "file": "shared/standards-catalog-light.png",
+      "url": "https://demo.oimlsmart.org/app/",
+      "theme": "light",
+      "performed": "the Standards catalog: the four Recommendations with their model counts (R 60: 180 requirements, 62 tests, 61 forms)",
+      "capturedAt": "2026-08-29T14:10:25.096Z"
+    },
     {
       "audience": "shared",
       "name": "verify-number-verdict",
-      "file": "shared/2026-08-29-verify-number-verdict-light.png",
+      "file": "shared/verify-number-verdict-dark.png",
+      "url": "https://demo.oimlsmart.org/app/verify/",
+      "theme": "dark",
+      "performed": "verified certificate R60/2021-A-EX1-26.01 by number \u2014 the verdict from the BIML-registered copy, no account",
+      "capturedAt": "2026-08-29T13:05:02.289Z"
+    },
+    {
+      "audience": "shared",
+      "name": "verify-number-verdict",
+      "file": "shared/verify-number-verdict-light.png",
       "url": "https://demo.oimlsmart.org/app/verify/",
       "theme": "light",
-      "performed": "verified certificate R60/2021-A-EX1-26.01 by number — the verdict from the BIML-registered copy, no account",
-      "capturedAt": "2026-08-29T11:28:54.536Z"
+      "performed": "verified certificate R60/2021-A-EX1-26.01 by number \u2014 the verdict from the BIML-registered copy, no account",
+      "capturedAt": "2026-08-29"
+    },
+    {
+      "audience": "shared",
+      "name": "verify-vc-verdict",
+      "file": "shared/verify-vc-verdict-dark.png",
+      "url": "https://demo.oimlsmart.org/app/verify/",
+      "theme": "dark",
+      "performed": "verified the certificate file (.vc.json) pasted into the credential panel \u2014 the issuer-DID check, no account",
+      "capturedAt": "2026-08-29T13:12:47.086Z"
+    },
+    {
+      "audience": "shared",
+      "name": "verify-vc-verdict",
+      "file": "shared/verify-vc-verdict-light.png",
+      "url": "(see run log)",
+      "theme": "light",
+      "performed": "verified the certificate file (.vc.json) pasted into the credential panel \u2014 the issuer-DID check, no account",
+      "capturedAt": "2026-08-29"
     }
   ]
 }

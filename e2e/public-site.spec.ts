@@ -128,6 +128,60 @@ test.describe('Public site — critical paths', () => {
     }
   })
 
+  test('the six audience pages render the page-depth anatomy', async ({ page }) => {
+    // TODO.promotion/10: each audience page carries the anatomy — the hero
+    // with a real capture, the performed capability inventory, the
+    // how-it-works diagram, the SMART/SMART+ split, the entitlement row
+    // quoted from the single matrix source (never a copy), the honest
+    // questions, and the journey CTAs.
+    for (const [path, heading] of [
+      ['/about/audiences/member-states', 'For Member States'],
+      ['/about/audiences/corresponding-members', 'For Corresponding Members'],
+      ['/about/audiences/issuing-authorities', 'For Issuing Authorities'],
+      ['/about/audiences/laboratories', 'For Test Laboratories'],
+      ['/about/audiences/manufacturers', 'For Manufacturers'],
+      ['/about/audiences/instrument-users', 'For Instrument Users'],
+    ] as const) {
+      await page.goto(path)
+      await expect(page.locator('h1')).toContainText(heading)
+      await expect(page.locator('h2', { hasText: 'What you can do' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'How it works' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'Today (SMART) and the vision (SMART+)' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'What you can use, and what you can run' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'The honest questions' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'Where to go next' })).toBeVisible()
+      // The performed evidence: dated captures from the scripted apparatus.
+      await expect(page.locator('figure.shot-figure img').first()).toBeVisible()
+      // The how-it-works diagram (inline SVG, house style).
+      await expect(page.locator('figure.tech-figure svg').first()).toBeVisible()
+      // The SMART/SMART+ split, first-class and visually separated.
+      await expect(page.locator('.smart-split')).toBeVisible()
+      // The entitlement row, quoted from the single matrix source.
+      await expect(page.locator('.entitlement-row table')).toBeVisible()
+      await expect(page.getByRole('link', { name: 'Who can run what' }).first()).toBeVisible()
+    }
+  })
+
+  test('the audiences index carries the seven seats, the split, and the matrix', async ({ page }) => {
+    await page.goto('/about/audiences/')
+    await expect(page.locator('h1')).toContainText('Who OIML SMART is for')
+    for (const href of [
+      '/about/audiences/member-states',
+      '/about/audiences/corresponding-members',
+      '/about/audiences/issuing-authorities',
+      '/about/audiences/laboratories',
+      '/about/audiences/manufacturers',
+      '/about/audiences/instrument-users',
+      '/about/audiences/educators',
+    ]) {
+      await expect(page.locator(`a[href="${href}"]`).first()).toBeVisible()
+    }
+    await expect(page.locator('figure.shot-figure img').first()).toBeVisible()
+    await expect(page.locator('figure.tech-figure svg').first()).toBeVisible()
+    await expect(page.locator('.smart-split')).toBeVisible()
+    await expect(page.locator('.entitlement-matrix')).toBeVisible()
+  })
+
   test('the services index cards link the service pages', async ({ page }) => {
     await page.goto('/services/')
     for (const href of [
