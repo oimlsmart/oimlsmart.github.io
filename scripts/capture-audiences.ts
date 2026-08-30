@@ -8,11 +8,15 @@
  * hand-snapped: the script drives the LIVE demo (demo.oimlsmart.org),
  * the identity console (id.oimlsmart.org) and the AI service
  * (ai.oimlsmart.org) headlessly, performs each act the pages list, and
- * saves the dated artifact under public/img/audiences/. The manifest it
- * writes (public/img/audiences/manifest.json) records per capture: the
- * audience, the act performed, the URL, the theme, the timestamp. An act
- * the script cannot perform does not get a capture — and per the anatomy
- * contract, does not list on a page.
+ * saves the artifact under public/img/audiences/<audience>/ as
+ * `<name>-<theme>.png` (stable names, the house convention: re-runs
+ * overwrite in place, so a freshness regeneration never touches the
+ * page sources). The manifest it writes (public/img/audiences/
+ * manifest.json) records per capture: the audience, the act performed,
+ * the URL, the theme, the timestamp — the capture DATE lives there and
+ * in each page's ShotFigure `captured` prop, not in the filenames. An
+ * act the script cannot perform does not get a capture — and per the
+ * anatomy contract, does not list on a page.
  *
  * Usage:
  *
@@ -40,7 +44,7 @@
  * demo); the viewport is 1440x900 (the documentation rule).
  */
 import { chromium, type Browser, type BrowserContext, type Page } from '@playwright/test'
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
 const DEMO = (process.env.DEMO_BASE ?? 'https://demo.oimlsmart.org').replace(/\/$/, '')
@@ -48,14 +52,25 @@ const ID = (process.env.ID_BASE ?? 'https://id.oimlsmart.org').replace(/\/$/, ''
 const AI = (process.env.AI_BASE ?? 'https://ai.oimlsmart.org').replace(/\/$/, '')
 const DATE = process.env.CAPTURE_DATE ?? new Date().toISOString().slice(0, 10)
 const OUT = resolve(import.meta.dirname, '..', 'public', 'img', 'audiences')
+const VC_CACHE_DIR = resolve(import.meta.dirname, '..', 'node_modules', '.cache', 'audience-captures')
+const VC_CACHE = join(VC_CACHE_DIR, 'certificate.vc.json')
 const DRIVE = process.argv.includes('--drive')
 const ONLY = process.argv.find(a => a.startsWith('--only='))?.slice('--only='.length)
+// Comma-separated substrings: --only=ia-,review-queue runs those legs.
+const ONLY_LIST = ONLY ? ONLY.split(',').map(s => s.trim()).filter(Boolean) : null
 const THEMES = process.argv.includes('--light') ? ['light'] as const
   : process.argv.includes('--dark') ? ['dark'] as const
   : ['light', 'dark'] as const
 
 const NAV_TIMEOUT = 60_000
-const SETTLE = 60_000
+// The demo's first island paint after a cold login measured ~115s
+// (2026-08-30): the boot spinner persists while the profile loads.
+// SETTLE must clear that comfortably; waits poll and return early.
+const SETTLE = 240_000
+// The demo-account sign-in ends in bootstrap({force: true}): the whole
+// entity profile downloads before the redirect lands. Measured at ~120s
+// on a cold context (2026-08-30); give the redirect wait real headroom.
+const LOGIN_SETTLE = 300_000
 
 // ── Harness (the smart repo's e2e pattern, ported to Playwright) ──────
 
@@ -123,13 +138,35 @@ async function loginAs(context: BrowserContext, page: Page, name: string, prefix
   await page.waitForFunction(
     (p) => window.location.pathname.startsWith(p) && window.location.pathname !== '/app/login',
     prefix,
-    { timeout: SETTLE, polling: 500 },
+    { timeout: LOGIN_SETTLE, polling: 500 },
   )
   await waitIslandSettled(page)
 }
 
 async function waitTestId(page: Page, testid: string) {
   await page.waitForSelector(`[data-testid="${testid}"]`, { timeout: SETTLE })
+}
+
+/** Wait for content, not just shell: the skeletons carry the testids, so
+ *  every capture additionally waits for a string only real data produces. */
+async function waitText(page: Page, text: string) {
+  await page.waitForFunction(
+    (t) => document.body.innerText.includes(t),
+    text,
+    { timeout: SETTLE, polling: 500 },
+  )
+}
+
+/** Wait until the Skeleton placeholders (.skel, the demo app's loading
+ *  shimmer) are gone. Several 2026-08-29 captures photographed the shimmer
+ *  because the page-level testids mount WITH the shell while the data
+ *  trails; a shot is only honest once no .skel remains. */
+async function waitSkeletonGone(page: Page) {
+  await page.waitForFunction(
+    () => !document.querySelector('.skel'),
+    undefined,
+    { timeout: SETTLE, polling: 500 },
+  )
 }
 
 async function clickTestId(page: Page, testid: string) {
@@ -166,13 +203,15 @@ interface CaptureRecord {
 const records: CaptureRecord[] = []
 
 function wants(name: string) {
-  return !ONLY || name.includes(ONLY)
+  return !ONLY_LIST || ONLY_LIST.some(o => name.includes(o))
 }
 
 async function shoot(page: Page, audience: string, name: string, theme: string, performed: string, opts?: { fullPage?: boolean }) {
   const dir = join(OUT, audience)
   mkdirSync(dir, { recursive: true })
-  const file = `${DATE}-${name}-${theme}.png`
+  // Stable names (no date prefix): re-runs overwrite in place; the capture
+  // date lives in the manifest record and the pages' ShotFigure props.
+  const file = `${name}-${theme}.png`
   await page.screenshot({ path: join(dir, file), fullPage: opts?.fullPage ?? false })
   records.push({
     audience, name, file: `${audience}/${file}`, url: page.url(), theme, performed,
@@ -282,6 +321,11 @@ async function submitWizardApplication(page: Page): Promise<string> {
     page.url().split('/app/portal/applications/')[1]!.split('?')[0]!.replace(/\/$/, ''),
   )
   if (!appId) throw new Error('wizard did not land on an application detail')
+  // The detail testid mounts with the shell; the shimmer trails it (both
+  // earlier drives photographed it). Wait for the skeleton to clear and
+  // for the data-only promise-set section before the shot.
+  await waitSkeletonGone(page)
+  await waitText(page, 'Promise set')
   await shoot(page, 'manufacturers', 'application-submitted', currentTheme, `submitted the application (${appId}) — the journey opens at "Application submitted"`)
   return appId
 }
@@ -289,6 +333,7 @@ async function submitWizardApplication(page: Page): Promise<string> {
 async function iaRequestsSamples(page: Page, appId: string) {
   await gotoApp(page, `/app/ia/applications/${encodeURIComponent(appId)}`)
   await waitTestId(page, 'ia-review-actions')
+  await waitSkeletonGone(page)
   await shoot(page, 'issuing-authorities', 'review-whole-file', currentTheme, `opened the application ${appId} from the review queue — the whole file on one page`, { fullPage: true })
   await clickTestId(page, 'ia-request-samples')
   await waitTestId(page, 'ia-sample-request-form')
@@ -340,29 +385,61 @@ async function iaRegisterAllReceipts(page: Page) {
 
 async function driveChain(browser: Browser) {
   console.log('\n═══ THE DRIVE — one application wizard → dispatch → TL accept ═══')
-  const context = await themedContext(browser, 'light')
-  const page = await context.newPage()
+  // A FRESH context per role leg: every demo-account sign-in re-bootstraps
+  // the whole profile store (bootstrap({force: true})), and a context that
+  // has already switched roles can carry a wedged profile into the next
+  // role's acts — the 2026-08-30 captures watched the accept's redirect
+  // never land in a twice-switched context while a fresh one lands in
+  // seconds. Isolation costs nothing: each leg re-bootstraps anyway.
+  const leg = async (name: string, prefix: string) => {
+    const context = await themedContext(browser, 'light')
+    const page = await context.newPage()
+    await loginAs(context, page, name, prefix)
+    return { context, page }
+  }
 
   // Applicant: the wizard.
-  await loginAs(context, page, 'Applicant', '/app/portal')
-  const appId = await submitWizardApplication(page)
+  const appId = await (async () => {
+    const { context, page } = await leg('Applicant', '/app/portal')
+    try {
+      return await submitWizardApplication(page)
+    } finally {
+      await context.close()
+    }
+  })()
 
-  // IA: the queue shows the waiting application.
-  await loginAs(context, page, 'Issuing Authority', '/app/ia')
-  await gotoApp(page, '/app/ia')
-  await page.waitForFunction(
-    () => !/No applications waiting/.test(document.body.innerText),
-    undefined,
-    { timeout: SETTLE, polling: 500 },
-  )
-  await shoot(page, 'issuing-authorities', 'review-queue-waiting', currentTheme, 'the review queue with the waiting application, oldest first')
-  await iaRequestsSamples(page, appId)
+  // IA: the queue shows the waiting application; the sample request.
+  {
+    const { context, page } = await leg('Issuing Authority', '/app/ia')
+    try {
+      await gotoApp(page, '/app/ia')
+      await waitSkeletonGone(page)
+      // The queue row testids are data-gated; the drive just submitted one,
+      // so a row must exist — and the "not the empty state" text check passes
+      // during the skeleton, which is how the first drive shot the shimmer.
+      await page.waitForSelector('[data-testid^="age-chip-review-"]', { timeout: SETTLE })
+      await shoot(page, 'issuing-authorities', 'review-queue-waiting', currentTheme, 'the review queue with the waiting application, oldest first')
+      await iaRequestsSamples(page, appId)
+    } finally {
+      await context.close()
+    }
+  }
 
-  // Applicant ships; IA registers the receipts and logs samples received.
-  await loginAs(context, page, 'Applicant', '/app/portal')
-  await applicantShips(page, appId)
-  await loginAs(context, page, 'Issuing Authority', '/app/ia')
-  await gotoApp(page, `/app/ia/applications/${encodeURIComponent(appId)}`)
+  // Applicant ships.
+  {
+    const { context, page } = await leg('Applicant', '/app/portal')
+    try {
+      await applicantShips(page, appId)
+    } finally {
+      await context.close()
+    }
+  }
+
+  // IA: the receipts, the samples-received act, the accept, the dispatch.
+  {
+    const { context, page } = await leg('Issuing Authority', '/app/ia')
+    try {
+      await gotoApp(page, `/app/ia/applications/${encodeURIComponent(appId)}`)
   await waitTestId(page, 'ia-sample-request-card')
   await iaRegisterAllReceipts(page)
   await waitTestId(page, 'ia-log-samples-received')
@@ -381,23 +458,44 @@ async function driveChain(browser: Browser) {
     { timeout: SETTLE, polling: 500 },
   )
 
-  // Accept → the Evaluation Project (the TEP hub).
-  await clickTestId(page, 'ia-accept')
-  await waitTestId(page, 'ia-accept-form')
-  await clickTestId(page, 'ia-confirm-accept')
-  await page.waitForFunction(
-    () => window.location.pathname.startsWith('/app/ia/projects/'),
-    undefined,
-    { timeout: SETTLE, polling: 500 },
-  )
+  // Accept → the Evaluation Project (the TEP hub). The act chains the
+  // review result, the ACCEPTED transition, and the TEP's DRAFT evaluation
+  // report; a transient failure leaves a toast and no redirect, so retry
+  // once. The reload distinguishes a partial landing (ACCEPTED, the act
+  // gone, the project URL answers under the application id) from a real
+  // refusal (the act still offered → click again).
+  for (let attempt = 0; attempt < 2; attempt++) {
+    await clickTestId(page, 'ia-accept')
+    await waitTestId(page, 'ia-accept-form')
+    await clickTestId(page, 'ia-confirm-accept')
+    const landed = await page.waitForFunction(
+      () => window.location.pathname.startsWith('/app/ia/projects/'),
+      undefined,
+      { timeout: SETTLE, polling: 500 },
+    ).then(() => true).catch(() => false)
+    if (landed) break
+    if (attempt === 1) throw new Error('accept never opened the Evaluation Project')
+    console.log('  · accept did not redirect; reloading to check for a partial landing')
+    await gotoApp(page, `/app/ia/applications/${encodeURIComponent(appId)}`)
+    await waitTestId(page, 'ia-review-actions')
+    const stillOpen = await page.evaluate(() => !!document.querySelector('[data-testid="ia-accept"]'))
+    if (!stillOpen) {
+      await gotoApp(page, `/app/ia/projects/${encodeURIComponent(appId)}`)
+      break
+    }
+  }
   await waitIslandSettled(page)
   await waitTestId(page, 'ia-project-hub')
-  await shoot(page, 'issuing-authorities', 'project-hub', currentTheme, `accepted the application — the Evaluation Project ${appId} hub: samples, requests, verdicts, certificate`, { fullPage: true })
-
-  // Select both registered samples for the evaluation (R 60-3, 4.7). The
-  // hub's island renders the samples card after the shell settles, so wait
-  // for a select chip before the loop.
+  // The hub testid mounts with the shell; the content (the Application
+  // record card) trails it — and the section headers render while the
+  // cards still shimmer, so header text is not proof (the 2026-08-30
+  // drive v3 shot the skeleton with the header already in the DOM). The
+  // proof is data: no .skel left and the sample-selection chips (rendered
+  // per registered sample) present.
+  await waitSkeletonGone(page)
   await page.waitForSelector('[data-testid^="tep-select-sample-"], [data-testid="tep-selected-count"]', { timeout: SETTLE })
+  await waitText(page, 'Application record')
+  await shoot(page, 'issuing-authorities', 'project-hub', currentTheme, `accepted the application — the Evaluation Project ${appId} hub: samples, requests, verdicts, certificate`, { fullPage: true })
   for (let i = 0; i < 4; i++) {
     const has = await page.evaluate(() => {
       const btn = document.querySelector('[data-testid^="tep-select-sample-"]')
@@ -453,15 +551,22 @@ async function driveChain(browser: Browser) {
   )
   await waitIslandSettled(page)
   await waitTestId(page, 'tep-test-requests')
+    } finally {
+      await context.close()
+    }
+  }
 
   // TL: the request lands in the inbox; open it; accept.
-  await loginAs(context, page, 'Test Laboratory', '/app/lab')
-  await gotoApp(page, '/app/lab')
+  {
+    const { context, page } = await leg('Test Laboratory', '/app/lab')
+    try {
+      await gotoApp(page, '/app/lab')
   await page.waitForFunction(
     () => !!document.querySelector('[data-testid^="lab-incoming-"]'),
     undefined,
     { timeout: SETTLE, polling: 500 },
   )
+  await waitSkeletonGone(page)
   await shoot(page, 'laboratories', 'inbox-live-request', currentTheme, 'the laboratory inbox with the dispatched request in the incoming bucket, landed live')
   await page.evaluate(() => {
     const btn = document.querySelector('button[data-testid^="lab-open-request-"]') as HTMLElement | null
@@ -473,16 +578,26 @@ async function driveChain(browser: Browser) {
     { timeout: SETTLE, polling: 500 },
   )
   await waitIslandSettled(page)
+  // The open-request click is a client-side router.push: the URL and the
+  // app shell both satisfy the naive waits instantly, and the shot then
+  // photographs the inbox it just left (both earlier drives). The request
+  // view is proven by its own acts: the accept testid exists only there.
+  await waitTestId(page, 'lab-request-accept')
+  await waitSkeletonGone(page)
   await shoot(page, 'laboratories', 'request-open', currentTheme, 'opened the test request: the assigned forms, the samples, the accept/decline acts', { fullPage: true })
   await clickTestId(page, 'lab-request-accept')
   // The accept reveals the working panels (samples, assignments, the
   // report panel) — that reveal is the act completed.
   await waitTestId(page, 'lab-request-samples')
   await waitTestId(page, 'lab-request-assignments')
+  await waitSkeletonGone(page)
   await page.waitForTimeout(1200)
   await shoot(page, 'laboratories', 'request-accepted', currentTheme, 'accepted the assignment — the laboratory joins the Evaluation Project dataspace; the working panels reveal', { fullPage: true })
+    } finally {
+      await context.close()
+    }
+  }
 
-  await context.close()
   console.log(`═══ DRIVE COMPLETE — application ${appId} dispatched and accepted ═══\n`)
   return appId
 }
@@ -492,6 +607,11 @@ async function driveChain(browser: Browser) {
 let currentTheme = 'light'
 
 async function capturePublic(browser: Browser, vcJson: string | null) {
+  if (!['verify-number', 'verify-vc', 'register', 'id-join', 'ai-answer'].some(wants)) return
+
+  // The VC the applicant capture downloaded this run, else the cached one
+  // from an earlier invocation (the file is the cross-role proof).
+  const vc = vcJson ?? (() => { try { return readFileSync(VC_CACHE, 'utf8') } catch { return null } })()
   for (const theme of THEMES) {
     currentTheme = theme
     const context = await themedContext(browser, theme)
@@ -510,10 +630,10 @@ async function capturePublic(browser: Browser, vcJson: string | null) {
       await shoot(page, 'shared', 'verify-number-verdict', theme, 'verified certificate R60/2021-A-EX1-26.01 by number — the verdict from the BIML-registered copy, no account', { fullPage: true })
     }
 
-    if (vcJson && wants('verify-vc')) {
+    if (vc && wants('verify-vc')) {
       await gotoApp(page, '/app/verify/')
       await page.waitForSelector('[data-testid="verify-vc-input"]', { timeout: SETTLE })
-      await page.fill('[data-testid="verify-vc-input"]', vcJson)
+      await page.fill('[data-testid="verify-vc-input"]', vc)
       await page.click('[data-testid="verify-vc-submit"]')
       await page.waitForFunction(
         () => /verif|valid|ACTIVE|issuer/i.test(document.body.innerText) && !/paste the credential/i.test(document.body.innerText.slice(-400)),
@@ -555,11 +675,13 @@ async function capturePublic(browser: Browser, vcJson: string | null) {
         return false
       })
       if (!clicked) throw new Error('ai: suggestion "What is R 60?" not found')
+      // The answer streams; the citations render last. Wait generously.
       await page.waitForFunction(
-        () => document.body.innerText.includes('SOURCES') && /R 60 is the OIML/.test(document.body.innerText),
+        () => document.body.innerText.includes('SOURCES') && /OIML R 60/.test(document.body.innerText),
         undefined,
-        { timeout: 60_000, polling: 1000 },
+        { timeout: 150_000, polling: 1500 },
       )
+      await page.waitForTimeout(1000)
       await shoot(page, 'shared', 'ai-answer-cited', theme, 'asked "What is R 60?" — the answer with clause-level citations from the OIML corpus', { fullPage: true })
     }
 
@@ -568,6 +690,8 @@ async function capturePublic(browser: Browser, vcJson: string | null) {
 }
 
 async function captureViewer(browser: Browser) {
+  if (!['standards-catalog', 'r60-requirements', 'library'].some(wants)) return
+
   for (const theme of THEMES) {
     currentTheme = theme
     const context = await themedContext(browser, theme)
@@ -576,11 +700,8 @@ async function captureViewer(browser: Browser) {
 
     if (wants('standards-catalog')) {
       await gotoApp(page, '/app/')
-      await page.waitForFunction(
-        () => document.body.innerText.includes('OIML Recommendations') && document.body.innerText.includes('R 60'),
-        undefined,
-        { timeout: SETTLE, polling: 500 },
-      )
+      await waitText(page, 'OIML Recommendations')
+      await waitText(page, 'Reqs')
       await shoot(page, 'shared', 'standards-catalog', theme, 'the Standards catalog: the four Recommendations with their model counts (R 60: 180 requirements, 62 tests, 61 forms)')
     }
     if (wants('r60-requirements')) {
@@ -594,21 +715,27 @@ async function captureViewer(browser: Browser) {
     }
     if (wants('library')) {
       await gotoApp(page, '/app/library')
-      await page.waitForFunction(
-        () => document.body.innerText.includes('Document Library'),
-        undefined,
-        { timeout: SETTLE, polling: 500 },
-      )
+      await waitText(page, 'Document Library')
+      await waitText(page, 'B 18')
       await shoot(page, 'shared', 'library', theme, 'browsed the Document Library: the OIML corpus (R 60/91/129/144, B 18, the PD/OD set)')
     }
+    await context.close()
+  }
+}
+
+async function captureCSAdmin(browser: Browser) {
+  if (!['cs-ia-registry'].some(wants)) return
+
+  for (const theme of THEMES) {
+    currentTheme = theme
+    const context = await themedContext(browser, theme)
+    const page = await context.newPage()
+    await loginAs(context, page, 'CS Admin', '/app/cs')
+
     if (wants('cs-ia-registry')) {
       await gotoApp(page, '/app/cs/issuing-authorities')
-      await page.waitForFunction(
-        () => document.body.innerText.includes('Issuing Authorities'),
-        undefined,
-        { timeout: SETTLE, polling: 500 },
-      )
-      await shoot(page, 'member-states', 'cs-ia-registry', theme, 'the OIML-CS Issuing Authority registry as data — the real register entries (PTB, METAS, NIM, …) with their scopes')
+      await waitText(page, 'Add Issuing Authority')
+      await shoot(page, 'member-states', 'cs-ia-registry', theme, 'the OIML-CS Issuing Authority registry as data — the real register entries (PTB, METAS, NIM, …) with their scopes', { fullPage: true })
     }
 
     await context.close()
@@ -616,6 +743,8 @@ async function captureViewer(browser: Browser) {
 }
 
 async function captureApplicant(browser: Browser, appId: string | null) {
+  if (!['portal-dashboard', 'application-detail', 'certificate-detail', 'notifications'].some(wants)) return
+
   let vcJson: string | null = null
   for (const theme of THEMES) {
     currentTheme = theme
@@ -626,13 +755,15 @@ async function captureApplicant(browser: Browser, appId: string | null) {
     if (wants('portal-dashboard')) {
       await gotoApp(page, '/app/portal/')
       await waitTestId(page, 'portal-dashboard')
-      await shoot(page, 'manufacturers', 'portal-dashboard', theme, 'the applicant portal: every application with status and age, the certificates in force')
+      await waitText(page, 'My applications')
+      await shoot(page, 'manufacturers', 'portal-dashboard', theme, 'the applicant portal: every application with status and age, the certificates in force', { fullPage: true })
     }
 
     const detailId = appId ?? 'app-acme-lc'
     if (wants('application-detail')) {
       await gotoApp(page, `/app/portal/applications/${encodeURIComponent(detailId)}`)
       await waitTestId(page, 'portal-application-detail')
+      await waitText(page, 'Promise set')
       await shoot(page, 'manufacturers', 'application-journey', theme, `opened application ${detailId}: the six-stage journey and the promise set with per-claim verification status`, { fullPage: true })
     }
 
@@ -665,7 +796,12 @@ async function captureApplicant(browser: Browser, appId: string | null) {
           ])
           const path = await download.path()
           vcJson = readFileSync(path, 'utf8')
-          console.log('  ✓ VC download performed (the file verifies on /app/verify)')
+          // Persist for later invocations (the verify-vc capture reads the
+          // cache when this run did not download). node_modules/.cache is
+          // local scratch, never shipped.
+          mkdirSync(VC_CACHE_DIR, { recursive: true })
+          writeFileSync(VC_CACHE, vcJson)
+          console.log('  ✓ VC download performed (cached for the verify-vc capture)')
           const [cnml] = await Promise.all([
             page.waitForEvent('download', { timeout: 30_000 }),
             page.evaluate(() => {
@@ -684,8 +820,10 @@ async function captureApplicant(browser: Browser, appId: string | null) {
 
     if (wants('notifications')) {
       await gotoApp(page, '/app/portal/')
+      await waitText(page, 'My applications')
       await clickTestId(page, 'notification-bell')
-      await page.waitForTimeout(1200)
+      await waitText(page, 'Notifications')
+      await page.waitForTimeout(800)
       await shoot(page, 'manufacturers', 'notifications', theme, 'opened the notifications inbox — the stage events of your own applications')
     }
 
@@ -695,22 +833,39 @@ async function captureApplicant(browser: Browser, appId: string | null) {
 }
 
 async function captureIA(browser: Browser, appId: string | null) {
+  if (!['ia-dashboard', 'review-queue', 'ia-project', 'ia-certificates', 'ia-issue-form', 'ia-cert-lifecycle'].some(wants)) return
+
   for (const theme of THEMES) {
     currentTheme = theme
     const context = await themedContext(browser, theme)
     const page = await context.newPage()
-    await loginAs(context, page, 'Issuing Authority', '/app/ia')
+    try {
+      await loginAs(context, page, 'Issuing Authority', '/app/ia')
 
-    if (wants('ia-dashboard')) {
+      if (wants('ia-dashboard')) {
       await gotoApp(page, '/app/ia/')
       await waitTestId(page, 'ia-dashboard')
-      await shoot(page, 'issuing-authorities', 'ia-console', theme, 'the IA console: the review queue, the twelve projects, the enter-for-client / import / offline-registration entries', { fullPage: true })
+      await waitText(page, 'Review queue')
+      await waitText(page, 'Type evaluation projects')
+      await waitSkeletonGone(page)
+      await shoot(page, 'issuing-authorities', 'ia-console', theme, 'the IA console: the review queue, the projects, the enter-for-client / import / offline-registration entries', { fullPage: true })
+    }
+
+    if (wants('review-queue')) {
+      await gotoApp(page, '/app/ia/')
+      await waitTestId(page, 'ia-dashboard')
+      await waitText(page, 'Review queue')
+      await waitSkeletonGone(page)
+      // a waiting row when the queue has one (the drive leaves several)
+      await page.waitForSelector('[data-testid^="age-chip-review-"]', { timeout: 20_000 }).catch(() => {})
+      await shoot(page, 'issuing-authorities', 'review-queue-waiting', theme, 'the review queue with the applications waiting on the authority, oldest first', { fullPage: true })
     }
 
     if (wants('ia-project')) {
       const projId = appId ?? 'app-acme-lc'
       await gotoApp(page, `/app/ia/projects/${encodeURIComponent(projId)}`)
       await waitTestId(page, 'ia-project-hub')
+      await waitText(page, 'Application record')
       await shoot(page, 'issuing-authorities', 'project-hub-read', theme, `the Evaluation Project ${projId}: application record, samples, test requests, verdicts, certificate — one hub`, { fullPage: true })
     }
 
@@ -731,18 +886,24 @@ async function captureIA(browser: Browser, appId: string | null) {
         undefined,
         { timeout: SETTLE, polling: 500 },
       )
-      // select the finalized evaluation in the picker
+      await waitSkeletonGone(page)
+      // select the finalized evaluation in the picker (the dedicated
+      // issuance select, not any select on the page), then wait for the
+      // issuance form itself: the signing panel when the gate allows, the
+      // blocked panel when it does not. A blind sleep here once captured
+      // the desk instead of the form.
       const picked = await page.evaluate(() => {
-        const select = document.querySelector('select') as HTMLSelectElement | null
+        const select = document.querySelector('[data-testid="ia-evaluation-select"]') as HTMLSelectElement | null
         if (!select) return false
-        const opt = Array.from(select.options).find(o => /APPROVED/i.test(o.textContent ?? '') || o.value)
-        if (!opt || !opt.value) return false
+        const opt = Array.from(select.options).find(o => o.value)
+        if (!opt) return false
         select.value = opt.value
         select.dispatchEvent(new Event('change', { bubbles: true }))
         return true
       })
       if (picked) {
-        await page.waitForTimeout(1500)
+        await page.waitForSelector('[data-testid="ia-signing-key"], [data-testid="ia-issuance-blocked"]', { timeout: SETTLE })
+        await page.waitForTimeout(800)
         await shoot(page, 'issuing-authorities', 'issue-from-evaluation', theme, 'opened the issuance form on a finalized evaluation: the certified scope, the scheme choice, the signing act (not signed — the register story stays the seeded one)', { fullPage: true })
       }
     }
@@ -757,9 +918,15 @@ async function captureIA(browser: Browser, appId: string | null) {
       await shoot(page, 'issuing-authorities', 'certificate-lifecycle', theme, 'the certificate as the authority sees it: the BIML registration record, the lifecycle acts (annex, revise, replace, renew, suspend, withdraw), and the CNML sign panel', { fullPage: true })
     }
 
-    await context.close()
+    } finally {
+      await context.close()
+    }
   }
 }
+
+async function captureLab(browser: Browser) {
+  if (!['lab-inbox', 'lab-test-reports', 'lab-register-offline', 'twin-lab'].some(wants)) return
+
   for (const theme of THEMES) {
     currentTheme = theme
     const context = await themedContext(browser, theme)
@@ -769,6 +936,17 @@ async function captureIA(browser: Browser, appId: string | null) {
     if (wants('lab-inbox')) {
       await gotoApp(page, '/app/lab/')
       await waitTestId(page, 'lab-inbox')
+      // Content, not the loading skeleton: a work section rendered, or the
+      // honest empty state. (The shell's "Work assigned to laboratory …"
+      // line renders before the island loads — waiting on it captured
+      // skeletons.)
+      await page.waitForFunction(
+        () => !!document.querySelector('[data-testid="lab-incoming"], [data-testid="lab-assignments-active"], [data-testid="lab-reports-pending"], [data-testid="lab-samples-awaiting"]')
+          || document.body.innerText.includes('Nothing waiting for your laboratory'),
+        undefined,
+        { timeout: SETTLE, polling: 500 },
+      )
+      await waitSkeletonGone(page)
       await shoot(page, 'laboratories', 'lab-inbox', theme, 'the laboratory inbox: work assigned to laboratory 21')
     }
     if (wants('lab-test-reports')) {
@@ -800,6 +978,8 @@ async function captureIA(browser: Browser, appId: string | null) {
 }
 
 async function captureUtilizer(browser: Browser) {
+  if (!['anr'].some(wants)) return
+
   for (const theme of THEMES) {
     currentTheme = theme
     const context = await themedContext(browser, theme)
@@ -837,10 +1017,24 @@ try {
   await captureLab(browser)
   await captureUtilizer(browser)
   await captureViewer(browser)
+  await captureCSAdmin(browser)
   await capturePublic(browser, vcJson)
 } finally {
   await browser.close()
 }
 
-writeFileSync(join(OUT, 'manifest.json'), JSON.stringify({ generatedAt: new Date().toISOString(), date: DATE, captures: records }, null, 2) + '\n')
-console.log(`\n${records.length} captures → public/img/audiences/ (manifest.json written)`)
+// Merge into the existing manifest (the drive and the read-only passes
+// run as separate invocations; the manifest is the union, keyed by file),
+// then prune entries whose file no longer exists — the manifest never
+// points at a deleted capture.
+const manifestPath = join(OUT, 'manifest.json')
+let prior: CaptureRecord[] = []
+try {
+  prior = (JSON.parse(readFileSync(manifestPath, 'utf8')).captures ?? []) as CaptureRecord[]
+} catch { /* first run */ }
+const merged = new Map<string, CaptureRecord>()
+for (const r of prior) merged.set(r.file, r)
+for (const r of records) merged.set(r.file, r)
+const live = [...merged.values()].filter(r => existsSync(join(OUT, r.file)))
+writeFileSync(manifestPath, JSON.stringify({ generatedAt: new Date().toISOString(), date: DATE, captures: live }, null, 2) + '\n')
+console.log(`\n${records.length} captures this run, ${live.length} live in the manifest → public/img/audiences/`)
