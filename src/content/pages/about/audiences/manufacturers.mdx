@@ -6,8 +6,9 @@ eyebrow: 'About · Audiences · 02'
 
 import EntitlementRow from '../../../../components/EntitlementRow.astro'
 import ActionBox from '../../../../components/ActionBox.astro'
-import AudienceShot from '../../../../components/AudienceShot.astro'
+import ShotFigure from '../../../../components/ShotFigure.astro'
 import SmartSplit from '../../../../components/SmartSplit.astro'
+import ApplicantJourney from '../../../../components/diagrams/audiences/ApplicantJourney.astro'
 
 **Apply once. Follow it live. Hold a certificate that answers for itself.**
 As an applicant you file against the Recommendation's model, watch every
@@ -21,29 +22,33 @@ and no phone call to anyone.
   description="Sign in with the one-click Applicant demo account (no registration; the instance resets nightly) and open the applications list below."
 />
 
-<AudienceShot
-  src="/img/audiences/manufacturers/2026-08-29-application-journey-light.png"
-  dark="/img/audiences/manufacturers/2026-08-29-application-journey-dark.png"
-  alt="The applicant portal's application detail: the six-stage journey from submission to decision, with the certificate and the promise set"
-  caption="One application, watched live: review, samples, dispatch, testing, evaluation, decision, and the certificate it produced."
-  performed="Performed on the live demo, 2026-08-29: signed in as the Applicant, opened the application record."
+<ShotFigure
+  section="audiences"
+  page="manufacturers"
+  stem="application-journey"
+  alt="One application watched live in the applicant portal: the six-stage journey from submission to decision, the certificate it produced, and the promise set with per-claim verification status."
+  source="https://demo.oimlsmart.org/app/portal/"
+  captured="2026-08-29"
 />
 
 ## What you can do
 
-Every act below was performed against the live demo before it was listed;
-the dated screenshot under each is the audit artifact.
+Every act below was performed against the live demo by the scripted
+capture apparatus before it was listed; each figure names its capture
+date and links the live surface. An act that cannot be performed does
+not list.
 
 **See every application your organization has filed, with its status and
 its age, oldest visible first.** No more searching inboxes for where a
 file stands.
 
-<AudienceShot
-  src="/img/audiences/manufacturers/2026-08-29-portal-dashboard-light.png"
-  dark="/img/audiences/manufacturers/2026-08-29-portal-dashboard-dark.png"
-  alt="The applicant portal dashboard: five applications with statuses and ages, three certificates in force"
-  caption="The portal dashboard: your applications, their states, your certificates in force."
-  performed="Performed on the live demo, 2026-08-29: the Applicant's landing console."
+<ShotFigure
+  section="audiences"
+  page="manufacturers"
+  stem="portal-dashboard"
+  alt="The applicant portal dashboard: the organization's applications with their states and ages, the certificates in force below."
+  source="https://demo.oimlsmart.org/app/portal/"
+  captured="2026-08-29"
 />
 
 **Open one application and get the whole file.** The six-stage journey,
@@ -56,22 +61,28 @@ from the evaluation's verdicts. An unlinked claim is never silently
 Pick R 60, R 91, R 129, or R 144 and everything downstream derives from
 that Recommendation's model.
 
-<AudienceShot
-  src="/img/audiences/manufacturers/2026-08-29-wizard-step-1-recommendation-light.png"
-  alt="The new-application wizard, step 1: the Recommendation cards"
-  caption="Step 1 of 6: the Recommendation you apply against drives the rest of the form."
-  performed="Performed on the live demo, 2026-08-29: opened the wizard as the Applicant."
+<ShotFigure
+  section="audiences"
+  page="manufacturers"
+  stem="wizard-step-1-recommendation"
+  alt="The new-application wizard, step 1 of 6: the Recommendation pick drives the rest of the form."
+  source="https://demo.oimlsmart.org/app/portal/applications/new"
+  captured="2026-08-30"
+  dark={false}
 />
 
 **Fill the instrument step the model derives.** Choose the model family,
 tick the models in scope; the attribute definitions and declaration
 forms come from the Recommendation, not from a free-text form.
 
-<AudienceShot
-  src="/img/audiences/manufacturers/2026-08-29-wizard-step-3-instrument-light.png"
-  alt="The wizard's instrument step: the model family select and the models-in-scope checkboxes"
-  caption="The instrument step is the Recommendation's model rendered as a form."
-  performed="Performed on the live demo, 2026-08-29: selected the LC-500i family and a model in scope."
+<ShotFigure
+  section="audiences"
+  page="manufacturers"
+  stem="wizard-step-3-instrument"
+  alt="The wizard's instrument step: the model family select and the models-in-scope checkboxes, derived from the Recommendation's model."
+  source="https://demo.oimlsmart.org/app/portal/applications/new"
+  captured="2026-08-30"
+  dark={false}
 />
 
 **Address the application to a real Issuing Authority.** The scheme step
@@ -79,11 +90,14 @@ offers the OIML-CS (with its Scheme A / Scheme B choice) and the
 registered authorities' cards: the same registry the OIML-CS publishes,
 not a typed-in name.
 
-<AudienceShot
-  src="/img/audiences/manufacturers/2026-08-29-wizard-step-6-scheme-ia-light.png"
-  alt="The wizard's scheme and review step: the OIML-CS scheme radios and the Issuing Authority cards"
-  caption="Scheme and review: the OIML-CS choice and the Issuing Authority pick from the live registry."
-  performed="Performed on the live demo, 2026-08-29: chose OIML-CS Scheme B, addressed to the Example Issuing Authority."
+<ShotFigure
+  section="audiences"
+  page="manufacturers"
+  stem="wizard-step-6-scheme-ia"
+  alt="The wizard's scheme and review step: the OIML-CS scheme choice and the Issuing Authority pick from the live registry."
+  source="https://demo.oimlsmart.org/app/portal/applications/new"
+  captured="2026-08-30"
+  dark={false}
 />
 
 **Submit and watch the journey open.** The application lands as
@@ -91,43 +105,50 @@ SUBMITTED with the Issuing Authority; every later stage (samples,
 dispatch, testing, evaluation, decision) updates the same page, and the
 notifications inbox carries each event.
 
-<AudienceShot
-  src="/img/audiences/manufacturers/2026-08-29-application-submitted-light.png"
-  alt="The application detail right after submission: SUBMITTED state, journey at step one"
-  caption="Submitted: the journey opens, and every stage from here is visible as it happens."
-  performed="Performed on the live demo, 2026-08-29: a full wizard submission (APP-OIML-2026 series, fictional cast)."
+<ShotFigure
+  section="audiences"
+  page="manufacturers"
+  stem="application-submitted"
+  alt="The application detail right after submission: SUBMITTED state, the journey open at step one, every later stage updating the same page."
+  source="https://demo.oimlsmart.org/app/portal/"
+  captured="2026-08-30"
+  dark={false}
 />
 
 **Download the certificate three ways.** Signed CNML (the
 machine-readable original), a W3C Verifiable Credential, or an AAS
-submodel for your digital-product-passport toolchain. Each was
-downloaded in the audit; the VC file verifies on the public verify page.
+submodel for your digital-product-passport toolchain. The downloads
+below were performed in the audit, and the downloaded VC file verifies
+on the public verify page.
 
-<AudienceShot
-  src="/img/audiences/manufacturers/2026-08-29-certificate-downloads-light.png"
-  dark="/img/audiences/manufacturers/2026-08-29-certificate-downloads-dark.png"
-  alt="The certificate page with its three download actions and the print view"
-  caption="R60/2021-A-EX1-26.01: the certificate is data. CNML, VC, AAS submodel, print."
-  performed="Performed on the live demo, 2026-08-29: opened the certificate and downloaded the CNML and VC artifacts."
+<ShotFigure
+  section="audiences"
+  page="manufacturers"
+  stem="certificate-downloads"
+  alt="The certificate R60/2021-A-EX1-26.01 in the OIML layout with its download actions: signed CNML, Verifiable Credential, AAS submodel, print."
+  source="https://demo.oimlsmart.org/app/portal/certificates/crt-acme-lc"
+  captured="2026-08-29"
 />
 
-**Get notified at every stage.** The bell and the inbox carry your
-applications' events; nothing moves silently.
+**Get notified at every stage.** The header bell carries the unread count
+the moment anything moves on your files (the submission figure above was
+captured seconds after filing and the badge already reads 2); the
+dropdown opens the inbox. In the audit capture the dropdown's own list
+reads its honest empty state — the count lives on the bell; the dropdown
+panel is the entry point.
 
-<AudienceShot
-  src="/img/audiences/manufacturers/2026-08-29-notifications-light.png"
-  dark="/img/audiences/manufacturers/2026-08-29-notifications-dark.png"
-  alt="The applicant notifications inbox opened from the header bell"
-  caption="The notifications inbox: the events of your own certification work."
-  performed="Performed on the live demo, 2026-08-29: opened the Applicant's inbox."
+<ShotFigure
+  section="audiences"
+  page="manufacturers"
+  stem="notifications"
+  alt="The notifications dropdown opened from the header bell: the entry to the inbox, with the bell carrying the unread count as stages advance."
+  source="https://demo.oimlsmart.org/app/portal/"
+  captured="2026-08-30"
 />
 
 ## How it works
 
-<figure style="margin: 1.5rem 0;">
-  <img src="/img/audiences/diagrams/manufacturers-light.svg" alt="The applicant's journey: apply, follow it live, receive, prove" class="logo-light" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
-  <img src="/img/audiences/diagrams/manufacturers-dark.svg" alt="The applicant's journey: apply, follow it live, receive, prove (dark)" class="logo-dark" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
-</figure>
+<ApplicantJourney />
 
 ## What this changes, and what it does not
 
@@ -139,20 +160,22 @@ yours to watch. What does not change: the Recommendation's text, the
 IA's decision, the legal meaning of the certificate. The model joins the
 text; it does not replace it.
 
-<SmartSplit>
-  <ul slot="today">
-    <li>The <a href="https://demo.oimlsmart.org/">applicant portal</a>: applications, the live journey, certificates, notifications.</li>
-    <li>The certificate as <a href="/technologies/cnml">signed CNML</a>, W3C Verifiable Credential, and AAS submodel.</li>
-    <li>The <a href="https://demo.oimlsmart.org/app/verify/">public verification</a> of your certificates by anyone, without an account.</li>
-    <li>The <a href="https://demo.oimlsmart.org/app/library">library</a> and the Recommendations as models your engineers can read.</li>
-  </ul>
-  <ul slot="vision">
-    <li>Ship a <a href="/technologies/smart-twin">SMART twin</a> with the instrument: the governed aspects served live (roadmap).</li>
-    <li>The <a href="/technologies/smart-twin">twin-certification program</a>: your twin's fidelity declared, probed, and signed (roadmap).</li>
-    <li>Continuous compliance between assessments: the compliance engine re-judges as evidence arrives (roadmap).</li>
-    <li>Rehearse your own certification on the <a href="/technologies/sst">SST simulator</a> before hardware exists (the simulator is local today; hosted is roadmap).</li>
-  </ul>
-</SmartSplit>
+## Today (SMART) and the vision (SMART+)
+
+<SmartSplit
+  today={[
+    { text: 'The applicant portal: applications, the live journey, certificates, notifications.', href: 'https://demo.oimlsmart.org/app/portal/', label: 'the portal' },
+    { text: 'The certificate as signed CNML, W3C Verifiable Credential, and AAS submodel.', href: '/technologies/cnml', label: 'the CNML page' },
+    { text: 'Public verification of your certificates by anyone, without an account.', href: 'https://demo.oimlsmart.org/app/verify/', label: 'verify' },
+    { text: 'The library and the Recommendations as models your engineers can read.', href: 'https://demo.oimlsmart.org/app/library', label: 'the library' },
+  ]}
+  vision={[
+    { text: 'Ship a SMART twin with the instrument: the governed aspects served live.', href: '/technologies/smart-twin' },
+    { text: 'The twin-certification program: your twin’s fidelity declared, probed, and signed.', href: '/technologies/smart-twin' },
+    { text: 'Continuous compliance between assessments: the compliance engine re-judges as evidence arrives.', href: '/technologies/smart-twin' },
+    { text: 'Rehearse your own certification on the SST simulator before hardware exists (the simulator is local today; hosted is roadmap).', href: '/technologies/sst' },
+  ]}
+/>
 
 ## What you can use, and what you can run
 
