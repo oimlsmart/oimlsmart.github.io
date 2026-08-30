@@ -9,13 +9,13 @@
 
 /** Gate numbers as stated by the SSOT architecture doc (for-agents.md). */
 export const GATE_NUMBERS = {
-  packages: 28,
-  vitestTests: 4106,
-  vitestFiles: 246,
-  e2e: '66/66',
+  packages: 29,
+  vitestTests: 5681,
+  vitestFiles: 377,
+  e2e: '312/315',
   validateErrors: 0,
   validateWarnings: 488,
-  kernel: '1062/1062',
+  kernel: '1132/1132',
   sim: '254/254',
 } as const
 
@@ -31,8 +31,9 @@ export const PLATFORM_REPOS: readonly PlatformRepo[] = [
   { repo: 'oimlsmart/smart', role: 'the platform: Primmel packages (SSOT), generated data trees, the app, the pipelines (private — cited, never linked)' },
   { repo: 'primmel/primmel-ts', role: 'the kernel: parser, linter (C1–C99), coverage calculus, diff', href: 'https://github.com/primmel/primmel-ts' },
   { repo: 'primmel/sst', role: 'the SST framework: kind-agnostic runtime, shell, bench, specs', href: 'https://github.com/primmel/sst' },
-  { repo: 'oimlsmart/sst-instruments', role: 'the OIML instrument library for the SST (kinds, instances, the composite)', href: 'https://github.com/oimlsmart/sst-instruments' },
+  { repo: 'oimlsmart/sst', role: 'the OIML instrument library for the SST (the D 11 base, the kinds, the ACME instances incl. the composite)', href: 'https://github.com/oimlsmart/sst' },
   { repo: 'oimlsmart/cnml', role: 'the OIML CNML project: the certificate format on Confium Mode 3', href: 'https://github.com/oimlsmart/cnml' },
+  { repo: 'oimlsmart/platform-server', role: 'the server kernel package: the store seam, D1 migrations, the instance profile, the mailer, RBAC, the OIDC cones (private — cited, never linked)' },
   {
     repo: 'primmel/primmel-smart-docs',
     role: 'the published docs federation (the platform volumes)',

@@ -9,6 +9,15 @@ import Shell from '@oimlsmart/site-shell/components/Base.astro'
 import SITE from '../data/site-meta'
 import '../styles/app.css'
 
+/** The AI assistant bubble (TODO.ai-platform/01) — the shared chrome's
+ *  ONE component (site-shell#35, vendor/site-shell riding main), never
+ *  a per-app copy. This const is the property's config flag: flip to
+ *  false to retract the surface without touching the layout. The
+ *  service origin defaults to https://ai.oimlsmart.org; anonymous
+ *  visitors get the public corpus tier honestly marked, member sign-in
+ *  rides the rag service's bubble bridge (rag#68). */
+const aiAssistant = true
+
 interface Props {
   title: string
   description?: string
@@ -16,6 +25,6 @@ interface Props {
 const { title, description } = Astro.props
 ---
 
-<Shell title={title} description={description} siteTitle={SITE.title} internal>
+<Shell title={title} description={description} siteTitle={SITE.title} internal aiAssistant={aiAssistant}>
   <slot />
 </Shell>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 680" font-family="ui-sans-serif, system-ui, sans-serif">
+  <rect width="980" height="680" fill="#ffffff"/>
+  <text x="490" y="32" text-anchor="middle" font-size="20" font-weight="600" fill="#1e293b">The identity service: one account, every instance</text>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+    <marker id="arrB" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#004996"/>
+    </marker>
+  </defs>
+
+  <!-- The upstream providers -->
+  <rect x="240" y="60" width="500" height="58" rx="10" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="490" y="84" text-anchor="middle" font-size="13" font-weight="600" fill="#1e293b">the upstream providers: GitHub · Google · Apple · Entra · any OIDC issuer</text>
+  <text x="490" y="102" text-anchor="middle" font-size="10.5" fill="#64748b">linked sign-in methods, never the account list (a provider is a registry row, never a code fork)</text>
+  <line x1="490" y1="118" x2="490" y2="148" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="640" y="138" text-anchor="middle" font-size="10.5" fill="#64748b">the match rule: (provider, account id), never email</text>
+
+  <!-- The OP -->
+  <rect x="180" y="150" width="620" height="220" rx="12" fill="#eff6ff" stroke="#004996" stroke-width="1.5"/>
+  <text x="490" y="176" text-anchor="middle" font-size="14" font-weight="700" fill="#004996">id.oimlsmart.org: the OIDC Provider (the identity deployment profile of the SAME build)</text>
+
+  <rect x="200" y="192" width="290" height="76" rx="8" fill="#ffffff" stroke="#3b82f6"/>
+  <text x="345" y="212" text-anchor="middle" font-size="12" font-weight="600" fill="#1d4ed8">the account registry</text>
+  <text x="345" y="230" text-anchor="middle" font-size="10.5" fill="#475569">invite-only password accounts (PBKDF2),</text>
+  <text x="345" y="246" text-anchor="middle" font-size="10.5" fill="#475569">linked identities, sessions, the audit chain</text>
+
+  <rect x="510" y="192" width="270" height="76" rx="8" fill="#ffffff" stroke="#3b82f6"/>
+  <text x="645" y="212" text-anchor="middle" font-size="12" font-weight="600" fill="#1d4ed8">the client registry</text>
+  <text x="645" y="230" text-anchor="middle" font-size="10.5" fill="#475569">one row per instance: the exact redirect URIs,</text>
+  <text x="645" y="246" text-anchor="middle" font-size="10.5" fill="#475569">the claims policy (which roles the token may carry)</text>
+
+  <rect x="200" y="282" width="290" height="70" rx="8" fill="#ffffff" stroke="#3b82f6"/>
+  <text x="345" y="302" text-anchor="middle" font-size="12" font-weight="600" fill="#1d4ed8">the OIDC endpoints</text>
+  <text x="345" y="320" text-anchor="middle" font-size="10.5" fill="#475569">discovery · JWKS (ES256) · authorize + consent</text>
+  <text x="345" y="336" text-anchor="middle" font-size="10.5" fill="#475569">token (code + PKCE) · userinfo</text>
+
+  <rect x="510" y="282" width="270" height="70" rx="8" fill="#ffffff" stroke="#3b82f6"/>
+  <text x="645" y="302" text-anchor="middle" font-size="12" font-weight="600" fill="#1d4ed8">delegated administration</text>
+  <text x="645" y="320" text-anchor="middle" font-size="10.5" fill="#475569">BIML manages organizations; each org manages</text>
+  <text x="645" y="336" text-anchor="middle" font-size="10.5" fill="#475569">its own people (the register is the source of truth)</text>
+
+  <!-- The RPs -->
+  <rect x="40" y="440" width="200" height="72" rx="10" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="140" y="464" text-anchor="middle" font-size="13" font-weight="600" fill="#1e293b">platform hub</text>
+  <text x="140" y="482" text-anchor="middle" font-size="10.5" fill="#64748b">an RP: OIDC_ISSUER + its client id</text>
+  <text x="140" y="498" text-anchor="middle" font-size="10.5" fill="#64748b">the full console set</text>
+
+  <rect x="280" y="440" width="200" height="72" rx="10" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="380" y="464" text-anchor="middle" font-size="13" font-weight="600" fill="#1e293b">the NMI instance</text>
+  <text x="380" y="482" text-anchor="middle" font-size="10.5" fill="#64748b">an RP: OIDC_ISSUER + its client id</text>
+  <text x="380" y="498" text-anchor="middle" font-size="10.5" fill="#64748b">its claim mapping, its approval queue</text>
+
+  <rect x="520" y="440" width="200" height="72" rx="10" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="620" y="464" text-anchor="middle" font-size="13" font-weight="600" fill="#1e293b">the laboratory instance</text>
+  <text x="620" y="482" text-anchor="middle" font-size="10.5" fill="#64748b">an RP: OIDC_ISSUER + its client id</text>
+  <text x="620" y="498" text-anchor="middle" font-size="10.5" fill="#64748b">tl_operator + viewer only</text>
+
+  <rect x="740" y="440" width="200" height="72" rx="10" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="840" y="464" text-anchor="middle" font-size="13" font-weight="600" fill="#1e293b">the demo instances</text>
+  <text x="840" y="482" text-anchor="middle" font-size="10.5" fill="#64748b">RPs too; the local demo cast stays</text>
+  <text x="840" y="498" text-anchor="middle" font-size="10.5" fill="#64748b">(a demo never depends on the service)</text>
+
+  <!-- RP → OP arrows -->
+  <line x1="140" y1="440" x2="320" y2="372" stroke="#004996" stroke-width="1.5" marker-end="url(#arrB)"/>
+  <line x1="380" y1="440" x2="420" y2="372" stroke="#004996" stroke-width="1.5" marker-end="url(#arrB)"/>
+  <line x1="620" y1="440" x2="560" y2="372" stroke="#004996" stroke-width="1.5" marker-end="url(#arrB)"/>
+  <line x1="840" y1="440" x2="680" y2="372" stroke="#004996" stroke-width="1.5" marker-end="url(#arrB)"/>
+
+  <!-- The flow legend -->
+  <text x="490" y="552" text-anchor="middle" font-size="12" font-weight="600" fill="#1e293b">One sign-in per instance, one account behind it (authorization code + PKCE)</text>
+  <text x="490" y="574" text-anchor="middle" font-size="11" fill="#334155">1. the administrator invites the account at the OP and assigns its roles PER CLIENT; the one-time setup link enrolls it</text>
+  <text x="490" y="592" text-anchor="middle" font-size="11" fill="#334155">2. “Sign in with oimlsmart” on the instance → the OP’s sign-in (password or a linked upstream) → the consent page names the roles THIS client receives</text>
+  <text x="490" y="610" text-anchor="middle" font-size="11" fill="#334155">3. the instance exchanges the one-time code at /op/token and validates the ES256 ID token against the OP’s JWKS; the claim mapping decides the console</text>
+  <text x="490" y="628" text-anchor="middle" font-size="11" fill="#334155">4. deactivation at the OP revokes the live sessions and tokens; the next sign-in anywhere refuses, honestly; reactivation restores it (the history was kept)</text>
+  <text x="490" y="660" text-anchor="middle" font-size="10.5" fill="#64748b">Proven end to end by browser/e2e/id-05-full.e2e.ts (two spawned stacks + the stub GitHub).</text>
+</svg>
