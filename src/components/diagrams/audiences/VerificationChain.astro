@@ -1,0 +1,72 @@
+---
+/**
+ * VerificationChain — the instrument user's arc in one diagram: a
+ * certificate presented in any form verifies against the BIML-registered
+ * copy (B 18 §15.8) or against its own issuer DID, the live status lists
+ * answer revocation and suspension, and acceptance becomes verification.
+ * The designated-body (PD-08) and ANR surfaces ride below. House style;
+ * dark-mode correct via the TechFigure palette. (TODO.promotion/10: one
+ * diagram per page.)
+ */
+import TechFigure from '../TechFigure.astro'
+---
+
+<TechFigure caption="Every verification is one lookup against the registered copy: no account, no phone call, no doubt.">
+  <svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="iu-chain-title">
+    <title id="iu-chain-title">From a presented certificate to verification: number lookup or file check against the registered copy, the live revocation and suspension status, and the decision, with the designation and ANR surfaces for designated bodies</title>
+
+    <defs>
+      <marker id="iu-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"/>
+      </marker>
+    </defs>
+
+    <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="var(--dg-text)">Accepting a certificate: from letterhead trust to verification</text>
+
+    <rect x="30" y="80" width="200" height="92" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="130" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">A certificate is presented</text>
+    <text x="130" y="128" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the paper, the PDF, the CNML</text>
+    <text x="130" y="144" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">file, or the Verifiable</text>
+    <text x="130" y="160" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">Credential, any form</text>
+
+    <rect x="270" y="80" width="200" height="92" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="370" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gen-text)">Verify it yourself</text>
+    <text x="370" y="128" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">by number against the public</text>
+    <text x="370" y="144" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">BIML register (B 18 &#167;15.8),</text>
+    <text x="370" y="160" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">or the file against the DID</text>
+
+    <rect x="510" y="80" width="200" height="92" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="610" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Read the live status</text>
+    <text x="610" y="128" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the W3C status lists answer</text>
+    <text x="610" y="144" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">revocation and suspension</text>
+    <text x="610" y="160" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">as of this second</text>
+
+    <rect x="720" y="80" width="150" height="92" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="795" y="108" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">Decide</text>
+    <text x="795" y="128" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">acceptance becomes</text>
+    <text x="795" y="144" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">verification, not</text>
+    <text x="795" y="160" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">trust in letterhead</text>
+
+    <line x1="230" y1="126" x2="262" y2="126" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#iu-arr)"/>
+    <line x1="470" y1="126" x2="502" y2="126" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#iu-arr)"/>
+    <line x1="710" y1="126" x2="712" y2="126" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#iu-arr)"/>
+
+    <rect x="30" y="230" width="410" height="100" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="60" y="258" font-size="14" font-weight="600" fill="var(--dg-text)">Designated under the OIML-CS (Utilizer / Associate)</text>
+    <text x="60" y="280" font-size="12" fill="var(--dg-text-soft)">Your Declaration (PD-08) is a registry fact linked to your designating</text>
+    <text x="60" y="298" font-size="12" fill="var(--dg-text-soft)">member. Your personnel hold accounts against it; the report and</text>
+    <text x="60" y="316" font-size="12" fill="var(--dg-text-soft)">certificate surfaces open per the designation, evidence attached.</text>
+
+    <rect x="470" y="230" width="400" height="100" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="500" y="258" font-size="14" font-weight="600" fill="var(--dg-text)">Your national requirements, declared</text>
+    <text x="500" y="280" font-size="12" fill="var(--dg-text-soft)">Additional National Requirements are declared per Recommendation</text>
+    <text x="500" y="298" font-size="12" fill="var(--dg-text-soft)">and market, moderated by the CS registry: applicants targeting</text>
+    <text x="500" y="316" font-size="12" fill="var(--dg-text-soft)">your market see them before they apply, not after.</text>
+
+    <rect x="30" y="360" width="840" height="70" rx="10" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" stroke-width="1.5"/>
+    <text x="60" y="386" font-size="14" font-weight="600" fill="var(--dg-gov-text)">On the roadmap (SMART+): the instruments you run</text>
+    <text x="60" y="410" font-size="12" fill="var(--dg-text-soft)">A SMART-twin-capable instrument serves its governed aspects live: compliance becomes a stream you read, not a sticker you trust. See the roadmap section below.</text>
+
+    <text x="450" y="464" text-anchor="middle" font-size="13" fill="var(--dg-text-muted)">Every verification is one lookup against the registered copy: no account, no phone call, no doubt.</text>
+  </svg>
+</TechFigure>
