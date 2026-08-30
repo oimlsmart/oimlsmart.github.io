@@ -2,10 +2,14 @@
 title: 'The SMART Twin'
 description: 'The Recommendation model as the running instrument’s digital twin: the standard declares the served interface, and the compliance engine judges the served evidence continuously.'
 eyebrow: 'Technologies · 03'
+captured: '2026-08-29'
 ---
 
 import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
 import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import TwinLoop from '../../../components/diagrams/technologies/TwinLoop.astro'
 
 A SMART twin is the running instrument's digital counterpart, shaped by
 the standard itself: the Recommendation declares which values the twin
@@ -13,15 +17,30 @@ serves and how fresh they must be, and the platform's compliance engine
 judges the served evidence continuously. The certificate stops being a
 point-in-time snapshot and becomes a live, re-computed state.
 
-## Why it exists
+<p>
+  <a class="btn btn-primary" href="https://demo.oimlsmart.org/">Watch the monitor run in the demo <span class="arrow">→</span></a>
+</p>
 
-Type evaluation today ends at issuance. The instrument then enters service,
-drifts, is recalibrated or repaired, and its conformity is re-established
-episodically, from paper records, at re-verification. Between those
-episodes the authority's record says nothing about the instrument's actual
-state. A twin that serves its governed registers turns surveillance into a
-continuous computation over evidence instead of a periodic excavation of
-files.
+<ShotFigure
+  page="smart-twin"
+  stem="twin-console"
+  alt="The demo's twin console: the real monitor and gateway runtimes judging the simulated twin feed against the modelled R 60 requirement"
+  source="https://demo.oimlsmart.org/app/twin"
+  captured="2026-08-29"
+/>
+
+This page is a SMART+ page: the twin is the vision tier, and the split
+below is honest about which parts run today (against the simulated fleet,
+in the demo) and which are roadmap (physical instruments, signed serves,
+member deployments).
+
+## What it does today
+
+- **Judges a live twin in the demo.** The [twin console](https://demo.oimlsmart.org/app/twin) wires the real monitor and gateway runtimes against the simulated feed, judging the modelled R 60 requirement `measuring-range-min` on every poll; sign in as Admin (one click) and provision the demo twin (the capture above).
+- **Degrades honestly.** A stale served value degrades the requirement's verdict to indeterminate rather than failing or passing silently; the freshness gate reads the twin's own timestamps.
+- **Introspects instead of assuming.** The [twin lab](https://demo.oimlsmart.org/app/twin-lab) connects to a served interface and reads its declared registers and operations, never a hard-coded shape.
+- **Keeps the evidence.** Facts, verdicts, and escalations accrue in append-only, version-pinned evidence streams; a stored window can be re-judged under new limits without querying the twin again (in the demo the store is in-memory and resets with the page, as the console itself states).
+- **Reads as an AAS submodel.** To an Asset Administration Shell consumer, served registers map to properties and commands to operations; the asymmetry is governance, documented on the [interoperability page](/technologies/dataspace-interop).
 
 ## How it works
 
@@ -33,56 +52,42 @@ and answering for itself. The second separates the twin's own declaration
 from its judgment: the Recommendation's twin declaration fixes the
 interface (which registers, through which operations, with which freshness
 windows), and the platform's monitor computes verdicts per requirement per
-twin against it.
+twin against it. The declarations are authored in
+[Primmel](/technologies/primmel), the open modelling language the program
+adopts, so the interface a twin serves is derived from the standard, never
+hand-designed per instrument.
 
-The compliance engine runs a scheduler over the declared monitoring
-program. Served values pass a freshness gate against the twin's own
-timestamps; a stale value degrades the verdict to indeterminate rather
-than failing or passing silently. Facts, verdicts, and escalations accrue
-in append-only, version-pinned evidence streams, and a stored window can
-be re-judged under new limits without querying the twin again. Physical
-evidence stays primary: the twin-certification program pairs served values
-with a probe channel (a reference instrument, an observer attestation, or
-simulator ground truth), so a lying twin is caught by physics rather than
-by signature checks.
+<TwinLoop />
 
-## Where it runs live
+Physical evidence stays primary: the twin-certification program pairs
+served values with a probe channel (a reference instrument, an observer
+attestation, or simulator ground truth), so a lying twin is caught by
+physics rather than by signature checks.
 
-The twin runtime operates today in the platform and the demo: the
-simulated instruments serve the governed interface, the monitor judges
-them, and the twin-certification program (its governing document TW-1)
-certifies twin fidelity with suspension and withdrawal semantics. The
-deployable client/server compliance engine and cryptographically signed
-serves are **roadmap** items, tracked as the deployment and provenance
-legs of the platform's future wave.
+## Today (SMART) and the vision (SMART+)
 
-<ActionBox
-  href="https://www.oimlsmart.org/smi/"
-  label="Visit the SMART Measuring Instruments site"
-  description="The component home for instruments that provide a SMART digital twin: the instrument is the API."
-/>
-<ActionBox
-  href="https://www.primmel.org/primmel-smart-docs/platform/"
-  label="Read the platform volume"
-  description="The twin runtime, the twin lab, the projection machinery, and the composite twin."
-/>
-<ActionBox
-  href="https://demo.oimlsmart.org/"
-  label="Watch the monitor run in the demo"
-  description="The twin lab and the monitored fleet run against the simulated instruments. Sign in with a demo account; request one via info@oimlsmart.org."
+<SmartSplit
+  today={[
+    { text: 'The monitor and gateway runtimes run today in the platform and the demo, against the simulated fleet; no OIML Recommendation ships a twin binding yet (the machinery is opt-in).', href: 'https://demo.oimlsmart.org/app/twin', label: 'the console' },
+    { text: 'The twin lab introspects any served interface from the browser.', href: 'https://demo.oimlsmart.org/app/twin-lab', label: 'open' },
+    { text: 'The SMI adoption programme documents what providing a SMART twin means for a manufacturer.', href: 'https://www.oimlsmart.org/smi/docs/', label: 'read' },
+  ]}
+  vision={[
+    { text: 'The deployable client/server compliance engine and cryptographically signed serves are roadmap items, the deployment and provenance legs of the platform’s future wave.', href: 'https://www.primmel.org/primmel-smart-docs/platform/', label: 'roadmap' },
+    { text: 'Twin certification under the TW-1 governing document, with suspension and withdrawal semantics, at member deployments.', href: 'https://www.oimlsmart.org/smi/', label: 'roadmap' },
+    { text: 'Continuous compliance as the surveillance default: the certificate as a live, re-computed state rather than a snapshot.', href: 'https://www.primmel.org/primmel-smart-docs/platform/', label: 'roadmap' },
+  ]}
 />
 
-## How it interops
+## Why it exists
 
-A SMART twin reads as an Asset Administration Shell submodel to an AAS
-consumer: served registers map to properties, commands map to operations.
-The asymmetry is the program's position: a submodel is whatever a vendor
-wrote, while a twin's governed projection is declared by the standard,
-identical across conforming instruments, with freshness semantics and
-certification machinery behind it. The same projection machinery serves
-the Digital Product Passport as a named, access-classed projection of the
-product model; the [interoperability page](/technologies/dataspace-interop)
-carries the full map.
+Type evaluation today ends at issuance. The instrument then enters
+service, drifts, is recalibrated or repaired, and its conformity is
+re-established episodically, from paper records, at re-verification.
+Between those episodes the authority's record says nothing about the
+instrument's actual state. A twin that serves its governed registers turns
+surveillance into a continuous computation over evidence instead of a
+periodic excavation of files.
 
 ## Who may use it, and who may run it
 
@@ -93,9 +98,46 @@ deployments follow the roadmap.
 
 <ServiceEntitlement service="smart-twin" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
-front-door address. The [SMART Measuring Instruments
-documentation](https://www.oimlsmart.org/smi/docs/) carries the adoption
-programme for legal-metrology authorities.
+**Is this live for physical instruments today?**
+No, and the page says so wherever it matters. Today the monitor and
+gateway runtimes run in the demo against the simulated fleet, judging a
+real modelled requirement. Physical-instrument bindings, the deployable
+compliance engine, and cryptographically signed serves are roadmap items,
+labeled roadmap above with their anchors.
+
+**How is a SMART twin different from the manufacturer's own dashboard?**
+A dashboard serves whatever the vendor chose to expose. A SMART twin
+serves the governed projection the Recommendation declares: identical
+across conforming instruments, with freshness semantics, standing behind
+a certification verdict.
+
+**What stops a twin from lying?**
+The probe channel. Served values are paired with physical evidence (a
+reference instrument, an observer attestation, simulator ground truth in
+rehearsal), so a twin that misreports is caught by physics, not by
+trusting its signature.
+
+**What happens when a twin goes silent?**
+The verdict degrades to indeterminate. The freshness gate reads the twin's
+own timestamps; the platform never upgrades silence into a pass, and never
+reports an outage as a failure it cannot distinguish.
+
+## Try it, read it, talk to us
+
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="Try the demo"
+  description="Sign in as Admin (one click, no password), open the twin console, and provision the demo twin: the monitor judges the simulated feed within seconds. Accounts reset nightly."
+/>
+<ActionBox
+  href="https://www.primmel.org/primmel-smart-docs/platform/"
+  label="Read the docs"
+  description="The platform volume: the twin runtime, the twin lab, the projection machinery, and the composite twin."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org, the programme's front-door address. The SMI documentation carries the adoption programme for legal-metrology authorities."
+/>

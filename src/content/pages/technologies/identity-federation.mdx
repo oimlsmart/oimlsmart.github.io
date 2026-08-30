@@ -2,10 +2,14 @@
 title: 'The identity federation'
 description: 'One account across the estate: the OIML SMART identity service is the single OpenID Provider, every platform instance is a relying party, and members may run their own provider from the same software.'
 eyebrow: 'Technologies · 06'
+captured: '2026-08-29'
 ---
 
 import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
 import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import OidcFederation from '../../../components/diagrams/technologies/OidcFederation.astro'
 
 The identity federation gives every participant one account for the whole
 estate: the identity service at id.oimlsmart.org is the single OpenID
@@ -15,6 +19,53 @@ the organization registry with the OIML member taxonomy, so a sign-in
 resolves to a member state, a corresponding member, an issuing authority,
 a test laboratory, or a designated body.
 
+<p>
+  <a class="btn btn-primary" href="https://id.oimlsmart.org/">Open the identity service <span class="arrow">→</span></a>
+</p>
+
+<ShotFigure
+  page="identity-federation"
+  stem="id-service"
+  alt="The identity service's sign-in page: GitHub and Google sign-in, passkeys, and the password form, with account recovery"
+  source="https://id.oimlsmart.org/"
+  captured="2026-08-29"
+/>
+
+## What you can do today
+
+- **Sign in with what you already hold.** GitHub and Google sign-in are linked today, passkeys and authenticator apps are first-class, and recovery codes cover the loss cases; SMS and voice one-time codes are a documented refusal, because SIM-swap and interception make them weak factors (the capture above).
+- **Request an account for your organization.** The [join flow](https://id.oimlsmart.org/op/join) offers the live OIML-CS participants register (the member states, corresponding members, issuing authorities, laboratories, and utilizers on the registry); approval comes from your own organization's administrator, or the BIML secretariat when the organization is not listed yet.
+- **Read the machine contract.** The [discovery document](https://id.oimlsmart.org/.well-known/openid-configuration) publishes the endpoints, the algorithms, and the claims every relying party consumes: OIDC Core 1.0, authorization code with PKCE, ES256 ID tokens.
+- **Administer your own people.** An organization administrator sets each member's data cone (org-wide, assigned, read-only, or assigned and read-only together), and the token carries the posture so any service learns it without a callback.
+- **Give an instrument an identity.** The device class issues each twin a per-device credential speaking the client-credentials grant only, bound to its organization and its instrument model; a re-key or a revocation is a console act with an audit trail.
+- **Run your own provider.** The same software runs on a member's own domain as a configuration act, with an executable proof in the repository's end-to-end suite; the [self-host runbook](https://github.com/oimlsmart/identity/blob/main/docs/deployment/identity-self-host.md) is public.
+
+## How it works
+
+<OidcFederation />
+
+Each registered service declares a claims policy and receives the least
+claims it needs. The organization registry and its signing keys double as
+the estate's [trust registry](/technologies/trust-registry), which is the
+identity plane the dataspace work builds on. The service is developed in
+the open at [oimlsmart/identity](https://github.com/oimlsmart/identity)
+(the source is available; the open-source license is pending, and the
+repository says so plainly).
+
+## Today (SMART) and the vision (SMART+)
+
+<SmartSplit
+  today={[
+    { text: 'The provider is live in production: discovery, sign-in, the join flow against the live participants register, and the per-organization consoles.', href: 'https://id.oimlsmart.org/.well-known/openid-configuration', label: 'the contract' },
+    { text: 'Every estate surface is a relying party: the demo, the studio, the vocab, the minisites hold no account lists of their own.', href: 'https://demo.oimlsmart.org/', label: 'the demo' },
+    { text: 'GitHub and Google sign-in are linked; the participants register is populated (63 member states, 66 corresponding members, the IAs, the laboratory associations, the utilizers, the associates).', href: 'https://id.oimlsmart.org/op/join', label: 'the join flow' },
+  ]}
+  vision={[
+    { text: 'Microsoft Entra and national or organizational providers join as configuration, not code; the member-state streaming update channel follows.', href: 'https://github.com/oimlsmart/identity/blob/main/docs/deployment/identity-self-host.md', label: 'roadmap' },
+    { text: 'The device class at member scale: every deployed twin holding its own credential under its organization, re-keyed and revoked as console acts.', href: 'https://www.oimlsmart.org/smi/', label: 'roadmap' },
+  ]}
+/>
+
 ## Why it exists
 
 A certification ecosystem that fragments accounts across services
@@ -23,60 +74,6 @@ attributed acts: who signed, for which organization, under which
 authorization. One provider makes attribution uniform, lets an
 organization administer its own people's access, and lets an instrument
 hold a machine identity of the same shape as its owner's.
-
-## How it works
-
-The service speaks OpenID Connect Core 1.0 with authorization code and
-PKCE, publishes its RFC 8414 discovery document, and issues ES256 ID
-tokens. Each registered service declares a claims policy, and receives
-the least claims it needs. An organization administrator sets each
-member's data cone: org-wide, assigned, read-only, or assigned and
-read-only together, and the token carries the posture so any service can
-learn it without a callback. Sign-in supports passkeys, authenticator
-apps, and recovery codes; SMS and voice one-time codes are a documented
-refusal, because SIM-swap and interception make them weak factors.
-
-Upstream sign-in lets a member use an identity they already hold: GitHub
-is linked today, Microsoft Entra and national or organizational providers
-come next, and adding a provider is a configuration act, not a code
-change. Instruments are first-class citizens through the device class:
-each twin holds a per-device credential, speaks the client-credentials
-grant only, and is bound to its organization and its instrument model, so
-a re-key or a revocation is a console act with an audit trail.
-
-## Where it runs live
-
-<ActionBox
-  href="https://id.oimlsmart.org/"
-  label="Open the identity service"
-  description="The live provider: sign in, manage your account, or start the join flow for your organization."
-/>
-<ActionBox
-  href="https://id.oimlsmart.org/.well-known/openid-configuration"
-  label="Read the discovery document"
-  description="The machine-readable contract every relying party consumes: the endpoints, the algorithms, the claims."
-/>
-<ActionBox
-  href="https://github.com/oimlsmart/identity"
-  label="Inspect the identity repository"
-  description="The public repository: the provider, the consoles, and the deployment runbooks (source available; the open-source license is pending)."
-/>
-<ActionBox
-  href="https://github.com/oimlsmart/identity/blob/main/docs/deployment/identity-self-host.md"
-  label="Read the self-host runbook"
-  description="Running the service as your own provider on your own domain is a configuration act, with an executable proof in the repository's end-to-end suite."
-/>
-
-## How it interops
-
-The federation is standards-bound: any OpenID Connect relying party can
-integrate, and any OpenID Provider built from the same software can serve
-a member's own domain. The estate's platform instances consume the same
-claims contract, so a member-state deployment authenticates against the
-estate provider or against the member's own without a code change. The
-organization registry and its signing keys double as the estate's
-[trust registry](/technologies/trust-registry), which is the identity
-plane the dataspace work builds on.
 
 ## Who may use it, and who may run it
 
@@ -89,8 +86,43 @@ estate's single entitlement source:
 
 <ServiceEntitlement service="identity-software" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
-front-door address. The first conversation about your organization's
-presence in the registry is the same address.
+**Does the estate hold our member list hostage?**
+No. The software is the same one the estate runs, the self-host runbook is
+public with an executable proof in the end-to-end suite, and a member
+running its own provider on its own domain is a configuration act. The
+platform instances consume the same claims contract either way, so a
+deployment authenticates against the estate provider or the member's own
+without a code change.
+
+**Why no SMS codes?**
+Because SIM-swap and interception attacks make SMS and voice one-time
+codes weak factors, and a certification ecosystem cannot afford weak
+attribution. Passkeys, authenticator apps, and recovery codes cover the
+same usability ground at a stronger posture; the refusal is documented in
+the repository.
+
+**What can a service learn about me?**
+Only what its declared claims policy needs. Each relying party receives
+the least claims it needs; your organization's administrator, not the
+estate, sets your data cone, and the token carries the posture so services
+enforce it without a callback to the provider.
+
+## Try it, read it, talk to us
+
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="Try the demo"
+  description="The demo federates through the same shape: one-click demo accounts stand in for the provider, so the consoles show the attributed workflow without touching the production registry."
+/>
+<ActionBox
+  href="https://id.oimlsmart.org/op/join"
+  label="Start the join flow"
+  description="Request your organization's account against the live participants register; approval comes from your own administrator."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org, the programme's front-door address. The first conversation about your organization's presence in the registry is the same address."
+/>

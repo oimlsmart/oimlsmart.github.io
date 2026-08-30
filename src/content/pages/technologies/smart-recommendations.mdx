@@ -2,78 +2,81 @@
 title: 'SMART Recommendations'
 description: 'An OIML Recommendation as a structured, executable model: the page you read, the form the laboratory fills, and the verdict the platform computes all derive from one source, with provenance down to the clause.'
 eyebrow: 'Technologies · 01'
+captured: '2026-08-29'
 ---
 
 import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
 import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import RecsDerivation from '../../../components/diagrams/technologies/RecsDerivation.astro'
 
 A SMART Recommendation is an OIML Recommendation rendered as a structured,
 executable model: the same source drives the page you read, the forms the
-laboratory fills, and the verdicts the platform computes. The published text
-stays authoritative, and the model is its machine-actionable companion, with
-every element traceable to the clause it came from.
+laboratory fills, and the verdicts the platform computes. The published
+text stays authoritative; the model is its machine-actionable companion,
+with every element traceable to the clause it came from.
 
-## Why it exists
+<p>
+  <a class="btn btn-primary" href="/recommendations/r60">Read OIML R 60 as a SMART Recommendation <span class="arrow">→</span></a>
+</p>
 
-A Recommendation as published is prose. Every tool that touches it, the
-editor, the test-bench software, the certificate template, re-encodes the
-text by hand, and every re-encoding drifts a little from the document the
-committee adopted. Two laboratories reading the same clause can derive
-two different test procedures, and the divergence surfaces only when the
-results are compared.
+<ShotFigure
+  page="smart-recommendations"
+  stem="studio-viewer"
+  alt="The studio viewer on the published OIML SMART models: the modelled certification workflow's process tree, with the submit_application process open in the inspector"
+  source="https://www.oimlsmart.org/studio/view/"
+  captured="2026-08-29"
+/>
 
-The model removes the re-encoding. Requirements, conformance tests, and
-report forms derive from one instrument model, so the reading, the testing,
-and the verdict cannot drift apart.
+## What you can do today
+
+- **Read a Recommendation as a structured document.** [OIML R 60](/recommendations/r60), [R 129](/recommendations/r129), and [R 144](/recommendations/r144) render on this site with their modelled requirement and test structure, clause-referenced throughout.
+- **Walk any statement back to the adopted text.** Every content element carries its source clause (for example `urn:oiml:pub:r:60-1:2021`, clause 5.2); the R 60 page shows the references inline.
+- **Browse the modelled set.** The [SMART Recommendations site](https://www.oimlsmart.org/recs/) lists the pilot Recommendation (R 60, load cells) and the demo models (R 91, R 129, R 144), with the authoring documentation for new ones.
+- **Open the package as data.** The [studio viewer](https://www.oimlsmart.org/studio/view/) renders the published models as a navigable tree: the roles, the processes, the requirements; click any element to inspect its properties (the capture above).
+- **Watch the model run a certification.** The [live demo](https://demo.oimlsmart.org/) certifies a simulated load cell against the modelled R 60, end to end; sign in with a one-click demo account, no password.
+- **Consume the model in your own tooling.** Every surface exports as generated projections: ReqIF for requirements-management tools, RDF/OWL with SHACL shapes for linked-data consumers, OpenCDD back-references for attribute definitions.
 
 ## How it works
 
 Each Recommendation is authored as a Primmel package: the instrument as a
 subject with its anatomy, the requirements as constraints bound to the
 subject's aspects, the conformance tests that verify each requirement, and
-the report forms whose fields bind into the same graph. Every content
-element carries clause-level provenance naming its source document and
-clause (for example `urn:oiml:pub:r:60-1:2021`, clause 5.2), so any
-rendered statement can be walked back to the adopted text.
+the report forms whose fields bind into the same graph. The packages are
+the single source of truth; the data trees the platform serves are
+generated artifacts, and a drift guard proves both directions byte-clean,
+so what the platform runs is what was authored.
+
+<RecsDerivation />
 
 The authority stays where the OIML process puts it. The committee's
 decision is the text; the model is derived from it and checked against it,
-never the reverse. The packages are the single source of truth: the data
-trees the platform serves are generated artifacts, and a drift guard proves
-both directions byte-clean, so what the platform runs is what was authored.
+never the reverse.
 
-## Where it runs live
+## Today (SMART) and the vision (SMART+)
 
-<ActionBox
-  href="/recommendations/r60"
-  label="Read OIML R 60 as a SMART Recommendation"
-  description="The pilot Recommendation: scope, the modelled requirement and test structure, and the clause-referenced content."
-/>
-<ActionBox
-  href="https://www.oimlsmart.org/recs/"
-  label="Open the SMART Recommendations site"
-  description="The component home for the modelled Recommendations, including the authoring documentation for new ones."
-/>
-<ActionBox
-  href="https://www.oimlsmart.org/studio/view/"
-  label="Open the Studio viewer"
-  description="Read a SMART Recommendation package as a structured document, in your browser."
-/>
-<ActionBox
-  href="https://demo.oimlsmart.org/"
-  label="See R 60 working in the demo"
-  description="The live demo certifies a simulated load cell against the modelled R 60. Sign in with a demo account; request one via info@oimlsmart.org."
+<SmartSplit
+  today={[
+    { text: 'Three modelled Recommendations render on this site (R 60, R 129, R 144); the modelled pilot set is four.', href: '/recommendations/', label: 'browse' },
+    { text: 'The studio viewer reads any published package as a structured document, account-free.', href: 'https://www.oimlsmart.org/studio/view/', label: 'open' },
+    { text: 'The demo certifies a simulated instrument against the modelled R 60 today.', href: 'https://demo.oimlsmart.org/', label: 'open' },
+  ]}
+  vision={[
+    { text: 'The Recommendation declares the running instrument’s twin interface, so surveillance becomes continuous computation over served evidence.', href: 'https://www.primmel.org/primmel-smart-docs/platform/', label: 'roadmap' },
+    { text: 'New Recommendations join the modelled set through the authoring programme, with the committee’s text still the gate.', href: 'https://www.oimlsmart.org/recs/', label: 'roadmap' },
+  ]}
 />
 
-## How it interops
+## Why it exists
 
-The model exports to the formats neighboring tooling consumes: ReqIF for
-requirements-management systems, RDF/OWL with SHACL shapes for linked-data
-consumers, and OpenCDD back-references for attribute definitions. Every
-export is a generated projection of the model, never a second source, and
-each projection states what it carries and what it leaves behind. The
-[Dataspace and interoperability page](/technologies/dataspace-interop)
-maps the full set.
+A Recommendation as published is prose. Every tool that touches it, the
+editor, the test-bench software, the certificate template, re-encodes the
+text by hand, and every re-encoding drifts a little from the document the
+committee adopted. Two laboratories reading the same clause can derive two
+different test procedures, and the divergence surfaces only when the
+results are compared. The model removes the re-encoding: the reading, the
+testing, and the verdict cannot drift apart.
 
 ## Who may use it, and who may run it
 
@@ -83,10 +86,44 @@ quoted from the estate's single entitlement source:
 
 <ServiceEntitlement service="smart-recs" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
-front-door address, or open an issue on the relevant
-[GitHub repository](https://github.com/oimlsmart). Questions about modelling
-a specific Recommendation are welcome: the pilot set (R 60, R 91, R 129,
-R 144) is the worked example.
+**Does the model replace the published Recommendation?**
+No. The published text stays authoritative; the model is its
+machine-actionable companion. Every modelled element carries its clause
+reference precisely so the derivation can be audited against the adopted
+text, and the platform's gates fail when the two drift apart.
+
+**Which Recommendations are covered?**
+R 60 (the pilot, load cells), with R 91, R 129, and R 144 as demo models.
+New Recommendations follow the authoring documentation on the
+[SMART Recommendations site](https://www.oimlsmart.org/recs/); the
+committee's adoption process does not change.
+
+**What happens when a Recommendation is revised?**
+Editions are first-class in the underlying language: the package pins its
+source edition, and the reference toolchain's model diff shows exactly
+what a revision changes, so downstream deployments regenerate rather than
+patch by hand.
+
+**Do I need an account, or software, to read one?**
+Neither. The pages render on the open web, and the studio viewer runs in
+the browser with no sign-in.
+
+## Try it, read it, talk to us
+
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="Try the demo"
+  description="The applicant portal opens with a one-click demo account (no password); the LC-500i file shows the modelled R 60 running the whole chain. Accounts reset nightly."
+/>
+<ActionBox
+  href="https://www.oimlsmart.org/recs/"
+  label="Read the authoring documentation"
+  description="How a Recommendation becomes a model: the package layout, the provenance discipline, the checks."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org, the programme's front-door address. Questions about modelling a specific Recommendation are welcome: the pilot set is the worked example."
+/>

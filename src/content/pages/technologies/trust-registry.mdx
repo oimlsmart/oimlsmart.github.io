@@ -2,10 +2,14 @@
 title: 'The trust registry'
 description: 'The public registry of who may sign what: each organization’s signing keys and its standing, resolvable in one anonymous request, so a verifier never has to trust a deployment.'
 eyebrow: 'Technologies · 07'
+captured: '2026-08-29'
 ---
 
 import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
 import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import TrustResolution from '../../../components/diagrams/technologies/TrustResolution.astro'
 
 The trust registry publishes which organizations may sign what: each
 registered organization's public signing keys and its standing resolve in
@@ -13,14 +17,26 @@ one anonymous, cacheable request. A verifier never trusts a deployment;
 it resolves the signer's key against the registry and reads the
 organization's standing.
 
-## Why it exists
+<p>
+  <a class="btn btn-primary" href="https://id.oimlsmart.org/op/keys/ms-de.json">Resolve a member state's entry <span class="arrow">→</span></a>
+</p>
 
-A valid signature answers "is this signature mathematically sound" but
-not "whose key is this, and was that organization in good standing when
-it signed". Without a registry, a certificate's signing key is a
-deployment detail, unattributed to any accountable organization, and
-verification degrades into phoning the issuer. Legal metrology needs the
-stronger answer, attributed and auditable.
+<ShotFigure
+  page="trust-registry"
+  stem="resolve-member-state"
+  alt="The registry's live answer for a member state: the organization, its kind, its state, its standing, and its key set (empty until the organization enrolls keys)"
+  source="https://id.oimlsmart.org/op/keys/ms-de.json"
+  captured="2026-08-29"
+  dark={false}
+/>
+
+## What it does today
+
+- **Resolves any registered organization, anonymously.** [GET /op/keys/ms-de.json](https://id.oimlsmart.org/op/keys/ms-de.json) answers the member state's entry: the organization, its kind, its state, its standing, and its key set. The key set is empty today: organizations' keys populate as their own administrators enroll them, which is the trust-registry program's current work (the capture above, dated, shows the honest empty set).
+- **Refuses unknown organizations honestly.** Asking for the demo cast on production, [GET /op/keys/EX1.json](https://id.oimlsmart.org/op/keys/EX1.json), answers 404 with `{"error":"organization 'EX1' is not on the organization registry"}`: production never seeds the demo organizations, and the endpoint says so rather than guessing.
+- **Signs with attributable keys on the demo stack.** The demo's seeded EX1 carries its demo signing key, and the demo certificate's VC and SD-JWT forms sign with the demo federation key, resolvable by did:web at [demo.oimlsmart.org/.well-known/did.json](https://demo.oimlsmart.org/.well-known/did.json), so the whole resolution story is exercisable end to end against the demo today.
+- **Scopes every key to its authorization.** Each authority's key is scoped to its authorized Recommendations by an X.509 v3 extension that the [CNML verifier](/technologies/cnml) enforces, so a key answers not only "whose" but "for what".
+- **Stays verifiable offline.** The resolution document is anonymous, cache-bounded, and CORS-open; a verifier with a downloaded copy resolves a signer without a network path back at verification time.
 
 ## How it works
 
@@ -30,39 +46,38 @@ trust for who signs, the platform is the record of what was signed, and
 [CNML](/technologies/cnml) is the signed artifact. An organization's
 signing keys are the organization's property on the identity service:
 registered, rotated, and revoked by the organization's own administrator,
-with every act on the audit chain. The [CNML](/technologies/cnml) signer
-block does not change shape; the binding is by reference, a key
-identifier plus an organization identifier, so the frozen format is
-untouched.
+with every act on the audit chain. The CNML signer block does not change
+shape; the binding is by reference, a key identifier plus an organization
+identifier, so the frozen format is untouched.
 
-The resolution contract is one endpoint: `/op/keys/<org>.json` on the
-identity service answers the organization's current public key set and
-its standing. The endpoint is anonymous, cache-bounded, and
-CORS-open, so any verifier, including one without an account or a
-network path back at verification time, can resolve a signer. Revocation
-is immediate and auditable, and the time anchor does the honest work: an
-artifact signed before a revocation still resolves, with the answer
-"valid at the time; the key since revoked, on a stated date".
+<TrustResolution />
 
-## Where it runs live
+Revocation is immediate and auditable, and the time anchor does the
+honest work: an artifact signed before a revocation still resolves, with
+the answer "valid at the time; the key since revoked, on a stated date".
 
-The organization registry and the per-kind standing are live on the
-identity service today, and the resolution endpoint answers in
-production; organizations' key sets populate as organizations register
-their signing keys, the current work of the trust-registry program. The
-attributed-issuance half, the signing act recorded with its account, its
-organization, its key, and its authorization context, lands with it.
+## Today (SMART) and the vision (SMART+)
 
-<ActionBox
-  href="https://id.oimlsmart.org/op/keys/ms-de.json"
-  label="Resolve a member state's entry"
-  description="The live resolution contract, answered for a member state: the organization, its kind, its state, its standing, and its key set."
+<SmartSplit
+  today={[
+    { text: 'The resolution contract answers in production today: the organization registry and the per-kind standing are live, anonymous, and cacheable.', href: 'https://id.oimlsmart.org/op/keys/ms-de.json', label: 'resolve' },
+    { text: 'The honest refusal is live too: unknown organizations get a named error, never a guess.', href: 'https://id.oimlsmart.org/op/keys/EX1.json', label: 'the refusal' },
+    { text: 'The demo stack carries the full attributed chain: EX1’s demo key signs the demo certificate’s VC and SD-JWT forms, resolvable by did:web.', href: 'https://demo.oimlsmart.org/.well-known/did.json', label: 'the demo key' },
+  ]}
+  vision={[
+    { text: 'Organizations’ signing keys populate as their administrators enroll them; the registry entry’s empty key set fills in. Roadmap, tracked in the identity program.', href: 'https://github.com/oimlsmart/identity', label: 'roadmap' },
+    { text: 'The attributed-issuance record: every signing act recorded with its account, its organization, its key, and its authorization context. Roadmap, landing with the key-registration program.', href: 'https://github.com/oimlsmart/identity', label: 'roadmap' },
+  ]}
 />
-<ActionBox
-  href="https://id.oimlsmart.org/"
-  label="Open the identity service"
-  description="The registry's home: organizations, memberships, and the signing-key administration console."
-/>
+
+## Why it exists
+
+A valid signature answers "is this signature mathematically sound" but
+not "whose key is this, and was that organization in good standing when
+it signed". Without a registry, a certificate's signing key is a
+deployment detail, unattributed to any accountable organization, and
+verification degrades into phoning the issuer. Legal metrology needs the
+stronger answer, attributed and auditable.
 
 ## How it interops
 
@@ -81,8 +96,38 @@ determination, quoted from the estate's single entitlement source:
 
 <ServiceEntitlement service="trust-registry" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
-front-door address. Key registration for your organization starts with
-its presence in the [identity service](https://id.oimlsmart.org/).
+**Why does the member state's entry show an empty key set?**
+Because that is the truth today. The registry and the resolution contract
+are live; organizations' keys arrive when their own administrators enroll
+them, and the page shows the dated capture rather than dressing the gap.
+The demo stack shows the populated shape end to end.
+
+**What happens to artifacts signed before a revocation?**
+They still resolve, honestly: the required time anchor proves when the
+artifact existed, and the answer reads "valid at the time; the key since
+revoked, on a stated date". Nothing is rewritten and nothing disappears.
+
+**Who controls an organization's keys?**
+The organization's own administrator, and nobody else. Registration,
+rotation, and revocation are the administrator's acts, each on the audit
+chain; the estate operates the registry but does not hold the keys.
+
+## Try it, read it, talk to us
+
+<ActionBox
+  href="https://id.oimlsmart.org/op/keys/ms-de.json"
+  label="Resolve an organization"
+  description="The live resolution contract in one anonymous request: no account, no callback, cache-bounded."
+/>
+<ActionBox
+  href="https://id.oimlsmart.org/"
+  label="Open the identity service"
+  description="The registry's home: organizations, memberships, and the signing-key administration console."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org, the programme's front-door address. Key registration for your organization starts with its presence in the identity service."
+/>

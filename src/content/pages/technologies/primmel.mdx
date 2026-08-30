@@ -1,96 +1,151 @@
 ---
 title: 'Primmel'
-description: 'The modelling language the SMART Recommendations are authored in: subjects, requirements, processes, and packages with executable semantics, so a modelled standard validates, queries, executes, and reasons.'
+description: 'The open modelling language the SMART Recommendations are authored in: subjects, requirements, processes, and packages with executable semantics, developed by Ribose and adopted by OIML SMART as its reference user.'
 eyebrow: 'Technologies · 02'
+captured: '2026-08-29'
 ---
 
 import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
 import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import PrimmelKernel from '../../../components/diagrams/technologies/PrimmelKernel.astro'
 
-Primmel is the modelling language underneath the SMART Recommendations:
-the language the models are authored in, checked in, and executed from.
-It exists because no established standards format carries machine-executable
-semantics, and the estate needed a standard that software can run, not
-only display.
+Primmel is the open modelling language underneath the SMART
+Recommendations: the language the models are authored in, checked in, and
+executed from. It is developed by [Ribose](https://www.ribose.com) and its
+partners as open work: the specification is published for comment, the
+conformance suite is public and versioned, and the reference tooling is
+MIT-licensed. OIML SMART is its reference adopter, the programme that
+proves the language on real standards; the language itself is not an OIML
+artifact and is locked to no organization.
 
-## Why it exists
+<p>
+  <a class="btn btn-primary" href="https://www.primmel.org/primmel-smart-docs/primmel/">Read the language volume <span class="arrow">→</span></a>
+</p>
 
-A conformance clause carries several machine-relevant facts fused into
-one sentence of prose. OIML R 60-1:2021, clause 5.2 names a subject (a
-load cell), an aspect under test (the largest applied load), a reference
-aspect (the maximum capacity), a constraint between them, and its own
-provenance. Document-centric tooling can tag the paragraph as a
-requirement, which makes the text findable. It does not make the
-semantics executable: no tagged database answers "does this instrument
-pass?" with a computed verdict. Primmel's claim is that a standard can
-be modelled so that all of these facts are first-class, typed, and
-related, and then the standard runs.
+<ShotFigure
+  page="primmel"
+  stem="studio-viewer"
+  alt="The studio viewer on a published Primmel package: the modelled certification workflow's submit_application process open in the inspector"
+  source="https://www.oimlsmart.org/studio/view/"
+  captured="2026-08-29"
+/>
+
+## What you can do today
+
+- **Read the language.** The [kernel volume](https://www.primmel.org/primmel-smart-docs/primmel/) covers subjects, processes, mappings, data and values, packages, provenance, and the interop projections; the [foundation volume](https://www.primmel.org/primmel-smart-docs/foundation/) carries the IS–HAS–DOES system with its proofs.
+- **Inspect the reference kernel.** [primmel-ts](https://github.com/primmel/primmel-ts) is MIT-licensed: the parser, the linter's rule catalog, the coverage calculus, and the model diff.
+- **Run the conformance suite against any implementation.** The [public suite](https://github.com/primmel/primmel-ts/tree/v1/conformance) pairs a versioned clause map with a corpus of valid and invalid documents; a documented adapter contract lets third-party implementations plug in.
+- **Edit a package in the open tooling.** The [Primmel editor](https://github.com/primmel/editor) is MIT-licensed: packages as the unit of work, with provenance on every save.
+- **See the language at work on a real standard.** The [studio viewer](https://www.oimlsmart.org/studio/view/) opens the modelled OIML Recommendations (the capture above); the models' content is Primmel packages all the way down.
+- **Audit the design against the alternatives.** The [alternatives audit](https://www.primmel.org/primmel-smart-docs/shared/alternatives-audit/) records what the language adopted from the standards-body answers and what it deliberately rejected.
+- **Export, never convert.** Models project to ReqIF, RDF/OWL with SHACL shapes, and OpenCDD back-references as generated artifacts for ecosystems that do not run a Primmel engine.
 
 ## How it works
 
 Every statement in a Primmel model is one of three relations over eight
-terms: a thing's identity (what it is), its attribution (what it has),
-and its behavior (what it does), over objects, properties, values,
-transitions, and processes. Requirements bind constraints to subject
-aspects; conformance tests carry acceptance criteria that derive from the
+terms: a thing's identity (what it is), its attribution (what it has), and
+its behavior (what it does), over objects, properties, values, transitions,
+and processes. Requirements bind constraints to subject aspects;
+conformance tests carry acceptance criteria that derive from the
 requirements they verify; report forms bind their fields into the same
 subject graph. Packages compose with explicit imports, editions, and
 version pins, and a rule catalog (the linter's C-rules) checks every
 package mechanically.
 
-A model that cannot be validated, queried, executed, and reasoned over
-is, in the language's own terms, a document in a costume. The claim is
+<PrimmelKernel />
+
+A model that cannot be validated, queried, executed, and reasoned over is,
+in the language's own terms, a document in a costume. The claim is
 falsifiable in public: the conformance suite pairs a versioned clause map
-with a corpus of valid and invalid documents, and any implementation,
-not only the reference toolchain, can run it through a documented
-adapter contract.
+with a corpus of valid and invalid documents, and any implementation, not
+only the reference toolchain, can run it through a documented adapter
+contract.
 
-## Where it runs live
+## Today (SMART) and the vision (SMART+)
 
-<ActionBox
-  href="https://www.primmel.org/primmel-smart-docs/primmel/"
-  label="Read the language volume"
-  description="The Primmel kernel volume: subjects, processes, mappings, data and values, packages, provenance, and the interop projections."
-/>
-<ActionBox
-  href="https://github.com/primmel/primmel-ts"
-  label="Inspect the reference kernel"
-  description="The public primmel-ts repository (MIT-licensed): the parser, the linter's rule catalog, the coverage calculus, and the model diff."
-/>
-<ActionBox
-  href="https://github.com/primmel/primmel-ts/tree/v1/conformance"
-  label="Run the conformance suite"
-  description="The public, versioned suite: the clause map, the corpus of valid and invalid documents, and the runner any third-party implementation can plug into."
-/>
-<ActionBox
-  href="https://www.primmel.org/primmel-smart-docs/foundation/"
-  label="Read the foundation volume"
-  description="The IS–HAS–DOES modelling system the language operationalizes, with the proofs."
+<SmartSplit
+  today={[
+    { text: 'The specification, the conformance suite, and the reference tooling are public; the kernel and the editor carry the MIT license.', href: 'https://github.com/primmel/primmel-ts', label: 'the kernel' },
+    { text: 'The four modelled OIML Recommendations are authored in Primmel packages and render in the studio viewer.', href: 'https://www.oimlsmart.org/studio/view/', label: 'open' },
+    { text: 'The language engages the neighboring standards work on the record: the alternatives audit covers the DIN DKE ReqIF profile and the IEC-ISO Core Ontology.', href: 'https://www.primmel.org/primmel-smart-docs/shared/alternatives-audit/', label: 'the audit' },
+  ]}
+  vision={[
+    { text: 'The language’s live-twin chapters declare the served interface the SMART+ twin surfaces are built on.', href: 'https://www.primmel.org/primmel-smart-docs/platform/', label: 'roadmap' },
+    { text: 'The specification progresses through its public comment rounds toward a formal standardization track.', href: 'https://www.primmel.org/primmel-smart-docs/primmel/', label: 'roadmap' },
+  ]}
 />
 
-## How it interops
+## Why it exists
 
-Primmel is the kernel, not a wire format. The models export to ReqIF,
-RDF/OWL with SHACL shapes, and OpenCDD back-references as generated
-projections for ecosystems that do not run a Primmel engine; the
-[interoperability page](/technologies/dataspace-interop) carries the map
-and the doctrine. The language's own specification is published as a
-draft for comment, and the conformance suite's clause identifiers re-key
-to it as it publishes.
+A conformance clause carries several machine-relevant facts fused into one
+sentence of prose. OIML R 60-1:2021, clause 5.2 names a subject (a load
+cell), an aspect under test (the largest applied load), a reference aspect
+(the maximum capacity), a constraint between them, and its own provenance.
+Document-centric tooling can tag the paragraph as a requirement, which
+makes the text findable. It does not make the semantics executable: no
+tagged database answers "does this instrument pass?" with a computed
+verdict. Primmel's claim is that a standard can be modelled so that all of
+these facts are first-class, typed, and related, and then the standard
+runs.
 
 ## Who may use it, and who may run it
 
-The language is a public artifact, not a hosted service: the
-specification and the conformance suite are published, the reference
-kernel is MIT-licensed, and reading, implementing, or running any of it
-attaches to no member category. Where members meet Primmel models on the
-estate, the surface is the Studio viewer, whose determination is quoted
-from the estate's single entitlement source:
+The language is a public artifact, not a hosted service, and not an
+OIML-locked one: the specification and the conformance suite are
+published, the reference kernel and the editor are MIT-licensed, and
+reading, implementing, or running any of it attaches to no member
+category. Where members meet Primmel models on the estate, the surface is
+the Studio viewer, whose determination is quoted from the estate's single
+entitlement source:
 
 <ServiceEntitlement service="studio-viewer" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
-front-door address. Language questions also land as issues on the
-[reference kernel repository](https://github.com/primmel/primmel-ts).
+**Why not an existing language?**
+The two serious standards-body answers were audited on their corpora, not
+their brochures: the DIN DKE SPEC 99200 ReqIF profile and the IEC-ISO Core
+Ontology. Both stop at the document's text; neither can say what a
+requirement constrains, whether something conforms, or how conformity is
+established. Primmel adopted what each does better and deliberately
+rejected the rest; the [audit record](https://www.primmel.org/primmel-smart-docs/shared/alternatives-audit/)
+is public, section by section.
+
+**Is Primmel an OIML invention?**
+No. Primmel is developed by Ribose and its partners as open work, with the
+specification, the conformance suite, and the MIT-licensed tooling public.
+OIML SMART is the reference adopter: the programme builds on open work
+rather than inventing a private one, which is the answer to the
+not-invented-here concern in both directions.
+
+**Does adopting it lock the programme to one vendor?**
+No. The specification is public, the conformance suite is
+implementation-neutral (any implementation runs it through the adapter
+contract), and the MIT license on the reference tooling permits every
+member category to run, fork, or re-implement without permission.
+
+**What does "executable" mean, concretely?**
+A model validates against the rule catalog, answers queries, runs its
+processes, and supports reasoning over its graph. The conformance suite's
+corpus of valid and invalid documents makes the claim falsifiable by
+anyone.
+
+## Try it, read it, talk to us
+
+<ActionBox
+  href="https://www.oimlsmart.org/studio/view/"
+  label="Open the studio viewer"
+  description="Read a SMART Recommendation package as a structured document, in your browser; no account."
+/>
+<ActionBox
+  href="https://www.primmel.org/primmel-smart-docs/primmel/"
+  label="Read the docs"
+  description="The language volume, the foundation volume with the proofs, and the alternatives audit."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org, the programme's front-door address. Language questions also land as issues on the reference kernel repository."
+/>

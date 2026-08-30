@@ -2,34 +2,51 @@
 title: 'Dataspace and interoperability'
 description: 'The estate speaks the neighboring standards rather than replacing them: the Dataspace Protocol, ODRL 2.2, and the IDS Reference Architecture Model, plus generated exports to ReqIF, RDF/SHACL, and OpenCDD.'
 eyebrow: 'Technologies · 08'
+captured: '2026-08-29'
 ---
 
 import ServiceEntitlement from '../../../components/ServiceEntitlement.astro'
 import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import DataspacePlanes from '../../../components/diagrams/technologies/DataspacePlanes.astro'
 
 The estate speaks the neighboring standards rather than replacing them:
 its federation machinery maps onto the planes the dataspace standards
 name, and its models export to the formats the requirements-management
 and linked-data ecosystems already consume. The starting point is the
 committee's adopted text, so every interop artifact is a projection
-outward from an authoritative model, never a competing source.
+outward from an authoritative model, never a competing source. The estate
+also builds on open work rather than inventing its own: the models are
+authored in [Primmel](/technologies/primmel) (the open language developed
+by Ribose, adopted by OIML SMART), and the certificate's trust chain is
+[Signatif](/technologies/cnml) (the CalConnect standard), so the two
+load-bearing technologies underneath this page are both open, named, and
+inspectable.
 
-## Why it exists
+<p>
+  <a class="btn btn-primary" href="https://www.primmel.org/primmel-smart-docs/primmel/12-interop/">Read the interop chapter <span class="arrow">→</span></a>
+</p>
 
-Certification data does not live in one organization. An evaluation's
-evidence belongs to a laboratory, the decision to an authority, the
-register to the BIML, and the instrument's service record to its owner.
-A central data lake would ask every party to surrender custody; a
-dataspace lets each party keep custody and exchange under declared
-policy. Interoperability is therefore a governance property first and a
-wire format second.
+<ShotFigure
+  page="dataspace-interop"
+  stem="interop-chapter"
+  alt="The interop chapter of the language volume: the export projections with their fidelity bookkeeping, what each format carries and what it loses"
+  source="https://www.primmel.org/primmel-smart-docs/primmel/12-interop/"
+  captured="2026-08-29"
+/>
+
+## What it does today
+
+- **Maps its planes onto the dataspace vocabulary.** Identity, data, policy, and catalog are named in dataspace terms below, aligned with the Dataspace Protocol (under standardization as ISO/IEC 20151), [ODRL 2.2](https://www.w3.org/TR/odrl-model/), and the [IDS Reference Architecture Model](https://docs.internationaldataspaces.org/ids-knowledgebase/ids-ram-4/).
+- **Serves the certificate to neighboring ecosystems today.** The demo's certificate answers as a W3C Verifiable Credential, an SD-JWT, a DPP conformity attestation, and an AAS submodel; the [CNML page](/technologies/cnml) carries the four live links with their honest caveat (the demo's nightly reseed can leave the certificate awaiting its signing pass).
+- **Exports the models, generated never authored.** ReqIF requirement rows (the DIN DKE SPEC 99200 profile, validated against the official OMG schema), RDF/OWL with SHACL shapes (the IEC-ISO Core Ontology projection, machine-checked), and OpenCDD back-references, each stating what it carries and what it leaves behind.
+- **Keeps custody with the parties.** An evaluation's evidence stays with its laboratory, the decision with its authority, the register with the BIML; evidence moves between instances under declared policy, never into a central data lake.
+- **Serves the catalog edge.** The catalog endpoint is the shipping edge of this work: each instance serves its offered artifact classes with their policy offers.
 
 ## How it works
 
-The estate's machinery names its planes in dataspace terms, aligned with
-the Dataspace Protocol under standardization as ISO/IEC 20151, the W3C
-[ODRL 2.2](https://www.w3.org/TR/odrl-model/) policy vocabulary, and the
-[IDS Reference Architecture Model](https://docs.internationaldataspaces.org/ids-knowledgebase/ids-ram-4/):
+The estate's machinery names its planes in dataspace terms:
 
 | Plane | The dataspace term | The estate's answer |
 |---|---|---|
@@ -38,31 +55,13 @@ the Dataspace Protocol under standardization as ISO/IEC 20151, the W3C
 | Policy | Usage control | Policies authored as model content, exported as ODRL 2.2 on the wire |
 | Catalog | The offer surface | Each instance serves its offered artifact classes with their policy offers |
 
+<DataspacePlanes />
+
 Policies are Primmel's own primitives: the semantics are self-contained
 in the model, and ODRL and the Dataspace Protocol are their exported
-expressions on the wire. The catalog endpoint is the shipping edge of
-this work; the contract-negotiation lifecycle and the conformance-suite
-legs are roadmap items in the dataspace program, tracked in the platform
-repository.
-
-## The exports, and what they cost
-
-The models export to the formats neighboring tooling consumes, under one
-doctrine: an export is generated, never authored; it regenerates on every
-build; and it states what it carries and what it leaves behind.
-Round-trip is deliberately not a goal, because information lost on the
-way out cannot come back, so nothing is re-imported into the kernel.
-
-- **ReqIF** (the OMG Requirements Interchange Format, in the DIN DKE
-  SPEC 99200 profile for public standards): the requirement rows for
-  requirements-management tools, validated against the official OMG
-  schema.
-- **RDF/OWL with SHACL shapes** (the IEC-ISO Core Ontology projection):
-  the linked-data form, machine-checked against the ontology's SHACL
-  shapes.
-- **OpenCDD back-references**: attribute definitions cite their OpenCDD
-  entries, so the vocabulary composes with the wider standards-data
-  ecosystem.
+expressions on the wire. The contract-negotiation lifecycle and the
+conformance-suite legs are roadmap items in the dataspace program,
+tracked in the platform repository.
 
 ## The alignment positions
 
@@ -79,20 +78,32 @@ property/operation duality, and derived submodel skeletons. The
 difference is governance: a submodel's content is whatever its vendor
 wrote, while a SMART twin's projection is declared by the standard,
 identical across conforming instruments, carrying freshness semantics and
-standing behind a certification verdict.
+standing behind a certification verdict. The demo's certificate already
+serves the `LegalMetrologyConformity` submodel form.
 
-## Where it runs live
+## Today (SMART) and the vision (SMART+)
 
-<ActionBox
-  href="https://www.primmel.org/primmel-smart-docs/primmel/12-interop/"
-  label="Read the interop chapter"
-  description="The export projections with their fidelity bookkeeping: what each format carries, what it loses, and why none of them is the kernel."
+<SmartSplit
+  today={[
+    { text: 'The certificate’s four carrier forms (VC, SD-JWT, DPP, AAS submodel) serve from the demo stack today.', href: 'https://demo.oimlsmart.org/api/certificates/crt-acme-lc/dpp', label: 'the DPP form' },
+    { text: 'The ReqIF, RDF/SHACL, and OpenCDD exports regenerate on every build as projections of the model, never a second source.', href: 'https://www.primmel.org/primmel-smart-docs/primmel/12-interop/', label: 'the doctrine' },
+    { text: 'The catalog endpoint ships: instances serve their offered artifact classes with policy offers.', href: 'https://demo.oimlsmart.org/', label: 'the demo' },
+  ]}
+  vision={[
+    { text: 'The DSP contract-negotiation lifecycle and the dataspace conformance suite are roadmap items in the dataspace program.', href: 'https://www.primmel.org/primmel-smart-docs/primmel/12-interop/', label: 'roadmap' },
+    { text: 'The passport as a live, access-classed projection of the product model plus its instance state, served by the instrument’s endpoint at member deployments. Roadmap; the demo’s passport UI currently reports its resolver unreachable, and this page will link it when it serves again.', href: 'https://www.primmel.org/primmel-smart-docs/platform/', label: 'roadmap' },
+  ]}
 />
-<ActionBox
-  href="https://demo.oimlsmart.org/"
-  label="See the passport served in the demo"
-  description="The pilot instrument's passport resolves from its data carrier, with the public and authority views. Sign in with a demo account; request one via info@oimlsmart.org."
-/>
+
+## Why it exists
+
+Certification data does not live in one organization. An evaluation's
+evidence belongs to a laboratory, the decision to an authority, the
+register to the BIML, and the instrument's service record to its owner.
+A central data lake would ask every party to surrender custody; a
+dataspace lets each party keep custody and exchange under declared
+policy. Interoperability is therefore a governance property first and a
+wire format second.
 
 ## Who may use it, and who may run it
 
@@ -106,9 +117,41 @@ narrative on the full matrix page.
 
 <ServiceEntitlement service="smart-platform-software" />
 
-## Who to talk to
+## The honest questions
 
-Write to [info@oimlsmart.org](mailto:info@oimlsmart.org), the programme's
-front-door address. Alignment conversations with standards bodies and
-dataspace initiatives are the programme's standing work, and they start
-at the same address.
+**Is this a competing trust framework?**
+No. The identity plane is the estate's own identity service and trust
+registry, and the certificate's trust chain is an open CalConnect
+standard (Signatif). The dataspace work names the estate's machinery in
+the dataspace vocabulary precisely so no parallel framework accretes.
+
+**Why generate exports instead of standardizing on ReqIF or RDF?**
+Because the exports are projections: they carry what the format can hold
+and say what they leave behind. Round-trip is deliberately not a goal,
+because information lost on the way out cannot come back, so nothing is
+re-imported into the kernel. The model stays the single source; the
+exports regenerate on every build.
+
+**What does a dataspace buy a member state over a portal?**
+Custody. A portal centralizes the evidence; a dataspace leaves the
+laboratory's evidence with the laboratory and the authority's decision
+with the authority, and exchanges under declared, machine-checkable
+policy. Sovereignty is the architecture, not a promise.
+
+## Try it, read it, talk to us
+
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="Try the demo"
+  description="The demo's certificate serves its VC, SD-JWT, DPP, and AAS carrier forms from the live stack. Sign in with a one-click demo account; the environment resets nightly."
+/>
+<ActionBox
+  href="https://www.primmel.org/primmel-smart-docs/primmel/12-interop/"
+  label="Read the interop chapter"
+  description="The export projections with their fidelity bookkeeping: what each format carries, what it loses, and why none of them is the kernel."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org, the programme's front-door address. Alignment conversations with standards bodies and dataspace initiatives are the programme's standing work."
+/>

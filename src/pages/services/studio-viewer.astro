@@ -4,6 +4,13 @@ import PageHero from '../../components/PageHero.astro'
 import ActionBox from '../../components/ActionBox.astro'
 import StatusRow from '../../components/StatusRow.astro'
 import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
+import ServiceShot from '../../components/ServiceShot.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
+
+// Every screenshot below is captured by scripts/capture-services.ts,
+// which performs the act and asserts the surface before capturing; the
+// date travels with each shot. Re-run the script to refresh the evidence.
+const captured = '2026-08-29'
 ---
 
 <Base
@@ -18,36 +25,134 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
 
   <section class="px-8 pb-20 max-w-5xl">
     <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What it is</h2>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        The read-only viewer over the published SMART models. Open a Recommendation and move between its lenses: the model tree and its code view, the registry of its artifacts, the mapping lens that aligns editions and related documents, the diff that shows exactly what changed, and a certificate preview. The viewer validates what it shows and says so (the <em>valid</em> marker is computed, not asserted), and it is honest about its posture: <em>read only</em>.
-      </p>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        Authoring is a separate program, the SMART Studio editor (TODO.editor in the platform program): the package as the unit of work, provenance-carrying saves, the authoring surfaces. When it ships, the Studio stops being read-only; until then, this page says viewer and means it.
-      </p>
-    </div>
-
-    <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Who it's for</h2>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        Recommendation authors checking their model as a reader will meet it; reviewers and committee members who want the requirement structure rather than the PDF; toolmakers confirming what the published model actually contains before they build on it.
-      </p>
-    </div>
-
-    <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where it lives</h2>
       <ActionBox
         href="https://www.oimlsmart.org/studio/view/"
-        label="www.oimlsmart.org/studio/view/"
-        description="The viewer. Public, no account; pick a model and switch lenses."
+        label="Open the Studio viewer"
+        description="Public, no account. The model tree of the published R 60 opens first; the lens bar takes it from there."
+      />
+      <ServiceShot
+        service="studio-viewer"
+        id="studio-tree"
+        alt="The Studio viewer on the published OIML R 60 model: the tree view listing 13 roles and 31 processes, with the read-only and valid markers"
+        caption="The published R 60 as a model: roles, processes, and the computed valid marker"
+        date={captured}
       />
     </div>
 
     <div class="max-w-3xl mb-12">
-      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How to get access</h2>
-      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        There is nothing to request: open the link and browse. The authoring surface's repository is public (<a href="https://github.com/primmel/editor" class="text-accent underline underline-offset-2">primmel/editor</a>, source available, license pending) for toolmakers who want to follow the editor program.
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">What you can do</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-8">
+        Seven acts, each performed against the live viewer before this page listed it; the dated capture is the audit artifact, re-produced by <span class="font-mono text-sm">scripts/capture-services.ts</span> on every refresh.
       </p>
+      <ol class="grid gap-10 list-none pl-0">
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">1. Read a Recommendation as a model tree.</strong> The published OIML R 60 opens as structure: 13 roles, 31 processes, the requirements and forms beneath them. This is the document a committee negotiates, rendered as the artifact the platform executes.
+          </p>
+          <ServiceShot
+            service="studio-viewer"
+            id="studio-tree"
+            alt="The model tree of R 60: roles including applicant, issuing authority, test laboratory, biml; processes including submit application, conduct tests, issue certificate"
+            caption="The tree view: the Recommendation as structure"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">2. Read the same model as source.</strong> The code view shows the Primmel package the tree renders from: the package id, the kind, the editions, the base URN, the modules it composes. The model is the source, not a copy of it.
+          </p>
+          <ServiceShot
+            service="studio-viewer"
+            id="studio-code"
+            alt="The code view: model.prl, the Primmel source of the R 60 package with its editions, base URN, and module composition"
+            caption="The code view: model.prl, the package itself"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">3. Trust the markers, because they are computed.</strong> The <em>read only</em> badge and the <em>valid</em> marker are the viewer's own computed state, not decoration: the viewer validates what it shows and says so, and it says <em>read only</em> because that is what it is.
+          </p>
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">4. Check the mapping lens.</strong> The mapping lens aligns editions and related documents where the model declares a mapping profile, and it is honest when the model does not: the current package declares none, and the lens says exactly that.
+          </p>
+          <ServiceShot
+            service="studio-viewer"
+            id="studio-mapping"
+            alt="The mapping lens: This model declares no mapping profiles; the mapping lenses appear when the model carries a map_profile"
+            caption="The mapping lens, honest about the current model"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">5. Diff two versions.</strong> The diff lens loads a second <span class="font-mono text-sm">.prl</span> version and runs the kernel's model-diff: added, removed, changed, and moved per element, facet-level before and after, plus the mapping diff.
+          </p>
+          <ServiceShot
+            service="studio-viewer"
+            id="studio-diff"
+            alt="The diff lens: load a second .prl version to compare against the working model, with the kernel's model-diff description"
+            caption="The diff lens: the kernel's model-diff, not a text diff"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">6. Preview the certificate the model implies.</strong> The certificate preview renders the instrument certificate from the model itself: the document the workflow will issue is a projection of the same source.
+          </p>
+          <ServiceShot
+            service="studio-viewer"
+            id="studio-certificate-preview"
+            alt="The certificate preview modal: INSTRUMENT CERTIFICATE, PREVIEW, rendered from the R 60 model"
+            caption="The certificate preview: the document as a projection of the model"
+            date={captured}
+          />
+        </li>
+        <li>
+          <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
+            <strong class="text-ink font-semibold">7. Follow the editor program.</strong> Authoring is a separate program, the SMART Studio editor (the package as the unit of work, provenance-carrying saves): the repository is public, <a href="https://github.com/primmel/editor" class="text-accent underline underline-offset-2">primmel/editor</a> (source available, license pending). When it ships, the Studio stops being read-only; until then, this page says viewer and means it.
+          </p>
+        </li>
+      </ol>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How it works</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The viewer reads the published Primmel packages, the same source of truth the platform executes, and projects them into the lenses. Nothing you see is a copy maintained by hand; a lens is a view over the package, and the validation marker is computed from it.
+      </p>
+      <FlowDiagram
+        caption="FIG. ONE PACKAGE, MANY LENSES"
+        steps={[
+          { label: 'The package', sub: 'the published .prl, the SSOT', accent: 'brand' },
+          { label: 'The lenses', sub: 'tree, code, inspect, compliance', accent: 'teal' },
+          { label: 'The checks', sub: 'validate, diff, certificate preview', accent: 'amber' },
+          { label: 'The editor', sub: 'roadmap: authoring with provenance', accent: 'slate' },
+        ]}
+        arrows={[
+          { label: 'projects', detail: 'views over the same source' },
+          { label: 'computes', detail: 'valid, not asserted' },
+          { label: 'will author', detail: 'the package as the unit of work' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">SMART today, SMART+ next</h2>
+      <div class="border border-rule rounded-md bg-paper-soft p-6 mb-4">
+        <p class="font-mono text-xs tracking-[0.12em] text-ink-muted mb-2">SMART · LIVE TODAY</p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          The viewer over the published SMART Recommendations: every lens and check in the inventory above, public, no account.
+        </p>
+      </div>
+      <div class="border border-dashed border-rule rounded-md p-6">
+        <p class="font-mono text-xs tracking-[0.12em] text-ink-muted mb-2">SMART+ · THE ROADMAP TIER</p>
+        <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+          The SMART+ instruments declare their served twin interface in the same package form, so the viewer is where a twin declaration will be read the way a requirement is read today; that content program is <strong class="text-ink font-semibold">roadmap</strong>, anchored on <a href="/technologies/smart-twin" class="text-accent underline underline-offset-2">the SMART Twin page</a>. The editor (SMART's own authoring surface) is likewise roadmap until the program ships.
+        </p>
+      </div>
     </div>
 
     <div class="max-w-3xl mb-12">
@@ -60,9 +165,50 @@ import ServiceEntitlement from '../../components/ServiceEntitlement.astro'
       <ServiceEntitlement service="studio-viewer" />
     </div>
 
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The honest questions</h2>
+      <div class="grid gap-4">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Can I edit a model here?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No, and the viewer says so on its face. Authoring is the editor program (the package as the unit of work, provenance-carrying saves), on the roadmap; the public repository is there for toolmakers who want to follow it.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">What does the valid marker actually mean?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The viewer runs validation over the package it renders and shows the result. It is computed from the model, not asserted in copy; a package that fails validation would show that instead.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Do I need an account?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No. The published models are public artifacts, and the viewer is a public surface; there is nothing to request.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Why does the mapping lens say the model declares no mappings?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Because that is the current package's honest state: the lens renders mapping profiles where the model declares them, and the published R 60 package declares none yet. When a profile lands, the lens has somewhere real to point.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="https://www.oimlsmart.org/studio/view/"
+        label="Open the viewer"
+        description="The model tree is the front door; the lens bar carries the rest. No account, nothing to install."
+      />
+      <ActionBox
+        href="/docs/"
+        label="Read the docs"
+        description="The developer quickstart and the Primmel language volumes: what a package is, how the lenses project it."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org, the programme's front-door address. Toolmaker questions and the editor program land here."
+      />
+    </div>
+
     <div class="border-t border-rule pt-8 max-w-3xl">
       <p class="text-sm text-ink-muted">
-        Verified 2026-08-29: the viewer answered live and rendered a published model with its read-only and valid markers, the lens bar (model, registry, mapping, diff, certificate preview), and the tree/code/inspect/compliance views.
+        Verified {captured}: the viewer answered live and every act above was performed headlessly (the tree, the code view, the mapping lens's honest empty state, the diff lens, the certificate preview, the computed read-only and valid markers). The captures and their assertions are in public/img/services/manifest.json.
       </p>
     </div>
   </section>

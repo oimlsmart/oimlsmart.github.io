@@ -1,0 +1,89 @@
+---
+/**
+ * CnmlChain — the CNML mechanism in one diagram: issuance runs the
+ * schema gate, the threshold signing ceremony, the composite signature,
+ * the time anchor, and the transparency log; verification is the fixed
+ * nine-check pipeline running in the verifier's browser, offline. The
+ * chain is the Signatif framework's graduated trust model at work.
+ * House style; dark-mode correct via the TechFigure palette.
+ */
+import TechFigure from './TechFigure.astro'
+---
+
+<TechFigure caption="Seal, then verify: the schema gate precedes the threshold ceremony; the time anchor and the transparency log are required parts of the document. Verification recomputes the nine checks locally, offline, account-free.">
+  <svg viewBox="0 0 860 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cnml-chain-title">
+    <title id="cnml-chain-title">CNML issuance seals the certificate through the schema gate, the threshold signing ceremony, the composite signature, the time anchor, and the transparency log; verification replays nine checks in the verifier's browser</title>
+
+    <defs>
+      <marker id="cnml-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"></path>
+      </marker>
+    </defs>
+
+    <text x="430" y="30" text-anchor="middle" font-size="17" font-weight="600" fill="var(--dg-text)">Seal and delegate, then verify, classify, accept (the Signatif chain)</text>
+
+    <!-- Issuance row -->
+    <text x="40" y="66" font-size="10" font-weight="700" letter-spacing="1.5" fill="var(--dg-text-muted)">ISSUANCE</text>
+
+    <rect x="30" y="78" width="150" height="72" rx="8" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" />
+    <text x="105" y="102" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dg-source-text)">The decision</text>
+    <text x="105" y="118" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">the evaluation record,</text>
+    <text x="105" y="130" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">model-native</text>
+
+    <rect x="212" y="78" width="150" height="72" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="287" y="102" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dg-gen-text)">The schema gate</text>
+    <text x="287" y="118" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">a document that fails its</text>
+    <text x="287" y="130" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">schema is never signed</text>
+
+    <rect x="394" y="78" width="150" height="72" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="469" y="102" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dg-gen-text)">The threshold ceremony</text>
+    <text x="469" y="118" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">no single party can sign;</text>
+    <text x="469" y="130" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">scope rides the key</text>
+
+    <rect x="576" y="78" width="124" height="72" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="638" y="102" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dg-gen-text)">The time anchor</text>
+    <text x="638" y="118" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">OpenTimestamps,</text>
+    <text x="638" y="130" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">required</text>
+
+    <rect x="724" y="78" width="116" height="72" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="782" y="102" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dg-gen-text)">The log</text>
+    <text x="782" y="118" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">transparency</text>
+    <text x="782" y="130" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">inclusion</text>
+
+    <line x1="180" y1="114" x2="204" y2="114" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#cnml-arr)" />
+    <line x1="362" y1="114" x2="386" y2="114" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#cnml-arr)" />
+    <line x1="544" y1="114" x2="568" y2="114" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#cnml-arr)" />
+    <line x1="700" y1="114" x2="716" y2="114" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#cnml-arr)" />
+
+    <!-- The artifact -->
+    <rect x="330" y="182" width="200" height="64" rx="10" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" stroke-width="1.5" />
+    <text x="430" y="208" text-anchor="middle" font-size="12" font-weight="700" fill="var(--dg-gov-text)">The CNML certificate</text>
+    <text x="430" y="226" text-anchor="middle" font-size="9" fill="var(--dg-text-soft)">data + co-signatures + proof of existence</text>
+
+    <line x1="782" y1="150" x2="534" y2="206" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#cnml-arr)" />
+    <line x1="469" y1="150" x2="438" y2="176" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#cnml-arr)" />
+
+    <!-- Verification row -->
+    <text x="40" y="292" font-size="10" font-weight="700" letter-spacing="1.5" fill="var(--dg-text-muted)">VERIFICATION (IN THE VERIFIER'S BROWSER, OFFLINE-CAPABLE)</text>
+
+    <rect x="30" y="304" width="180" height="72" rx="8" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" />
+    <text x="120" y="330" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dg-text)">Drop the file</text>
+    <text x="120" y="346" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">nothing leaves the machine;</text>
+    <text x="120" y="358" text-anchor="middle" font-size="8.5" fill="var(--dg-text-soft)">no account</text>
+
+    <rect x="242" y="304" width="330" height="72" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" />
+    <text x="407" y="328" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dg-gen-text)">The nine-check pipeline, in order</text>
+    <text x="258" y="348" font-size="8.5" fill="var(--dg-text-soft)">well-formed · schema · signature · co-signatures · issuer scope</text>
+    <text x="258" y="362" font-size="8.5" fill="var(--dg-text-soft)">revocation · report binding · timestamp proof · log inclusion</text>
+
+    <rect x="604" y="304" width="236" height="72" rx="8" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" />
+    <text x="722" y="328" text-anchor="middle" font-size="11" font-weight="700" fill="var(--dg-source-text)">The graduated verdict</text>
+    <text x="620" y="348" font-size="8.5" fill="var(--dg-text-soft)">the coverage report is objective; the label is</text>
+    <text x="620" y="360" font-size="8.5" fill="var(--dg-text-soft)">the scheme's policy; the decision is the verifier's</text>
+
+    <line x1="210" y1="340" x2="234" y2="340" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#cnml-arr)" />
+    <line x1="572" y1="340" x2="596" y2="340" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#cnml-arr)" />
+    <line x1="430" y1="246" x2="120" y2="296" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#cnml-arr)" />
+    <text x="330" y="258" text-anchor="middle" font-size="8.5" fill="var(--dg-text-muted)">the verifier needs the file, the anchors bundle, nothing else</text>
+  </svg>
+</TechFigure>

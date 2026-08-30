@@ -1,0 +1,91 @@
+---
+/**
+ * TechFigure.astro — the frame for the technology pages' diagrams
+ * (TODO.promotion/10: one SVG diagram per page, dark-mode correct, the
+ * house style). The bespoke SVG rides the slot; this frame carries the
+ * blueprint-paper treatment and the caption. Diagram colors use the
+ * semantic tokens (var(--ink), var(--paper-soft), var(--accent), ...),
+ * so one source renders correct in light and dark — the same mechanism
+ * as the shell's inline diagrams, never a prefers-color-scheme media
+ * query (it would ignore the manual theme toggle).
+ */
+interface Props {
+  /** The figure's caption, rendered under the diagram. */
+  caption: string
+}
+const { caption } = Astro.props
+---
+
+<figure class="tech-figure">
+  <div class="tech-figure-canvas">
+    <slot />
+  </div>
+  <figcaption class="tech-figure-caption">{caption}</figcaption>
+</figure>
+
+<style>
+  /* The diagram palette: light values mirror the house diagrams
+     (docs/architecture/diagrams); the dark set keeps the same semantic
+     roles readable on the dark paper. Diagram components reference the
+     --dg-* vars, so one SVG source is correct in both modes. */
+  .tech-figure {
+    --dg-panel: var(--paper-soft);
+    --dg-panel-stroke: var(--rule);
+    --dg-text: var(--ink);
+    --dg-text-soft: var(--ink-soft);
+    --dg-text-muted: var(--ink-muted);
+    --dg-arrow: var(--ink-muted);
+    --dg-source-fill: #f0fdf4;
+    --dg-source-stroke: #86efac;
+    --dg-source-text: #166534;
+    --dg-gen-fill: #eff6ff;
+    --dg-gen-stroke: #93c5fd;
+    --dg-gen-text: #1e40af;
+    --dg-warn-fill: #fef2f2;
+    --dg-warn-stroke: #fca5a5;
+    --dg-warn-text: #b91c1c;
+    --dg-gov-fill: #fefce8;
+    --dg-gov-stroke: #ca8a04;
+    --dg-gov-text: #854d0e;
+    margin: 2rem 0;
+    border: 1px solid var(--rule);
+    border-radius: var(--bp-radius-md, 6px);
+    background: var(--paper);
+    overflow: hidden;
+  }
+  :global(.dark) .tech-figure {
+    --dg-panel: var(--paper-soft);
+    --dg-source-fill: rgba(34, 197, 94, 0.10);
+    --dg-source-stroke: #4ade80;
+    --dg-source-text: #86efac;
+    --dg-gen-fill: rgba(59, 130, 246, 0.12);
+    --dg-gen-stroke: #60a5fa;
+    --dg-gen-text: #93c5fd;
+    --dg-warn-fill: rgba(239, 68, 68, 0.12);
+    --dg-warn-stroke: #f87171;
+    --dg-warn-text: #fca5a5;
+    --dg-gov-fill: rgba(202, 138, 4, 0.14);
+    --dg-gov-stroke: #facc15;
+    --dg-gov-text: #fde047;
+  }
+  .tech-figure-canvas {
+    padding: 1rem 1.25rem;
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .tech-figure-canvas :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .tech-figure-caption {
+    padding: 0.625rem 1.25rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+</style>

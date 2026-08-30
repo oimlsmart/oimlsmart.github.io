@@ -1,0 +1,219 @@
+{
+  "captured": "2026-08-29",
+  "pages": {
+    "smart-recommendations": {
+      "files": [
+        {
+          "file": "smart-recommendations/studio-viewer-light.png",
+          "source": "https://www.oimlsmart.org/studio/view/"
+        },
+        {
+          "file": "smart-recommendations/studio-viewer-dark.png",
+          "source": "https://www.oimlsmart.org/studio/view/"
+        },
+        {
+          "file": "smart-recommendations/r60-page-light.png",
+          "source": "https://www.oimlsmart.org/recommendations/r60/"
+        },
+        {
+          "file": "smart-recommendations/r60-page-dark.png",
+          "source": "https://www.oimlsmart.org/recommendations/r60/"
+        }
+      ],
+      "probes": {
+        "https://www.oimlsmart.org/recommendations/r60/": 200,
+        "https://www.oimlsmart.org/recs/": 200,
+        "https://www.oimlsmart.org/studio/view/": 200,
+        "https://demo.oimlsmart.org/": 200
+      }
+    },
+    "primmel": {
+      "files": [
+        {
+          "file": "primmel/studio-viewer-light.png",
+          "source": "https://www.oimlsmart.org/studio/view/"
+        },
+        {
+          "file": "primmel/studio-viewer-dark.png",
+          "source": "https://www.oimlsmart.org/studio/view/"
+        },
+        {
+          "file": "primmel/language-volume-light.png",
+          "source": "https://www.primmel.org/primmel-smart-docs/primmel/"
+        },
+        {
+          "file": "primmel/language-volume-dark.png",
+          "source": "https://www.primmel.org/primmel-smart-docs/primmel/"
+        }
+      ],
+      "probes": {
+        "https://www.primmel.org/primmel-smart-docs/primmel/": 200,
+        "https://www.primmel.org/primmel-smart-docs/shared/alternatives-audit/": 200,
+        "https://github.com/primmel/primmel-ts": 200,
+        "https://github.com/primmel/primmel-ts/tree/v1/conformance": 200,
+        "https://github.com/primmel/editor": 200,
+        "https://www.primmel.org/primmel-smart-docs/foundation/": 200
+      }
+    },
+    "smart-twin": {
+      "files": [
+        {
+          "file": "smart-twin/twin-console-light.png",
+          "source": "https://demo.oimlsmart.org/app/twin",
+          "demoRole": "Admin"
+        },
+        {
+          "file": "smart-twin/twin-console-dark.png",
+          "source": "https://demo.oimlsmart.org/app/twin",
+          "demoRole": "Admin"
+        },
+        {
+          "file": "smart-twin/twin-lab-light.png",
+          "source": "https://demo.oimlsmart.org/app/twin-lab",
+          "demoRole": "Admin"
+        },
+        {
+          "file": "smart-twin/twin-lab-dark.png",
+          "source": "https://demo.oimlsmart.org/app/twin-lab",
+          "demoRole": "Admin"
+        },
+        {
+          "file": "smart-twin/smi-site-light.png",
+          "source": "https://www.oimlsmart.org/smi/"
+        },
+        {
+          "file": "smart-twin/smi-site-dark.png",
+          "source": "https://www.oimlsmart.org/smi/"
+        }
+      ],
+      "probes": {
+        "https://www.oimlsmart.org/smi/": 200,
+        "https://www.oimlsmart.org/smi/docs/": 200,
+        "https://www.primmel.org/primmel-smart-docs/platform/": 200,
+        "https://demo.oimlsmart.org/": 200
+      }
+    },
+    "sst": {
+      "files": [
+        {
+          "file": "sst/sim-bench-light.png",
+          "source": "https://demo.oimlsmart.org/app/sim",
+          "demoRole": "Admin"
+        },
+        {
+          "file": "sst/sim-bench-dark.png",
+          "source": "https://demo.oimlsmart.org/app/sim",
+          "demoRole": "Admin"
+        },
+        {
+          "file": "sst/sst-site-light.png",
+          "source": "https://www.oimlsmart.org/sst/"
+        },
+        {
+          "file": "sst/sst-site-dark.png",
+          "source": "https://www.oimlsmart.org/sst/"
+        }
+      ],
+      "probes": {
+        "https://www.oimlsmart.org/sst/": 200,
+        "https://demo.oimlsmart.org/": 200,
+        "https://github.com/primmel/sst": 200,
+        "https://github.com/oimlsmart/sst-instruments": 200
+      }
+    },
+    "cnml": {
+      "files": [
+        {
+          "file": "cnml/verify-light.png",
+          "source": "https://www.oimlsmart.org/cnml/verify"
+        },
+        {
+          "file": "cnml/verify-dark.png",
+          "source": "https://www.oimlsmart.org/cnml/verify"
+        },
+        {
+          "file": "cnml/cnml-site-light.png",
+          "source": "https://www.oimlsmart.org/cnml/"
+        },
+        {
+          "file": "cnml/cnml-site-dark.png",
+          "source": "https://www.oimlsmart.org/cnml/"
+        }
+      ],
+      "probes": {
+        "https://www.oimlsmart.org/cnml/": 200,
+        "https://www.oimlsmart.org/cnml/verify": 200,
+        "https://github.com/oimlsmart/cnml": 200,
+        "https://demo.oimlsmart.org/": 200,
+        "https://demo.oimlsmart.org/api/certificates/crt-acme-lc/vc": 409,
+        "https://demo.oimlsmart.org/api/certificates/crt-acme-lc/vc?format=sd-jwt": 409,
+        "https://demo.oimlsmart.org/api/certificates/crt-acme-lc/dpp": 409,
+        "https://demo.oimlsmart.org/api/certificates/crt-acme-lc/aas-submodel": 409,
+        "https://www.oimlsmart.org/cnml/docs/specifications/composition": 200,
+        "https://www.signatif.org/": 200
+      }
+    },
+    "identity-federation": {
+      "files": [
+        {
+          "file": "identity-federation/id-service-light.png",
+          "source": "https://id.oimlsmart.org/"
+        },
+        {
+          "file": "identity-federation/id-service-dark.png",
+          "source": "https://id.oimlsmart.org/"
+        },
+        {
+          "file": "identity-federation/join-flow-light.png",
+          "source": "https://id.oimlsmart.org/op/join"
+        },
+        {
+          "file": "identity-federation/join-flow-dark.png",
+          "source": "https://id.oimlsmart.org/op/join"
+        }
+      ],
+      "probes": {
+        "https://id.oimlsmart.org/": 200,
+        "https://id.oimlsmart.org/.well-known/openid-configuration": 200,
+        "https://github.com/oimlsmart/identity": 200,
+        "https://github.com/oimlsmart/identity/blob/main/docs/deployment/identity-self-host.md": 200
+      }
+    },
+    "trust-registry": {
+      "files": [
+        {
+          "file": "trust-registry/resolve-member-state-light.png",
+          "source": "https://id.oimlsmart.org/op/keys/ms-de.json"
+        },
+        {
+          "file": "trust-registry/resolve-unknown-org-light.png",
+          "source": "https://id.oimlsmart.org/op/keys/EX1.json"
+        }
+      ],
+      "probes": {
+        "https://id.oimlsmart.org/op/keys/ms-de.json": 200,
+        "https://id.oimlsmart.org/": 200,
+        "https://demo.oimlsmart.org/.well-known/did.json": 200
+      }
+    },
+    "dataspace-interop": {
+      "files": [
+        {
+          "file": "dataspace-interop/interop-chapter-light.png",
+          "source": "https://www.primmel.org/primmel-smart-docs/primmel/12-interop/"
+        },
+        {
+          "file": "dataspace-interop/interop-chapter-dark.png",
+          "source": "https://www.primmel.org/primmel-smart-docs/primmel/12-interop/"
+        }
+      ],
+      "probes": {
+        "https://www.primmel.org/primmel-smart-docs/primmel/12-interop/": 200,
+        "https://demo.oimlsmart.org/": 200,
+        "https://demo.oimlsmart.org/api/certificates/crt-acme-lc/dpp": 409,
+        "https://www.w3.org/TR/odrl-model/": 200,
+        "https://docs.internationaldataspaces.org/ids-knowledgebase/ids-ram-4/": 200
+      }
+    }
+  }
+}
