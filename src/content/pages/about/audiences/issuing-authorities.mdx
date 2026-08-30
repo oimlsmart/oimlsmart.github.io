@@ -6,8 +6,9 @@ eyebrow: 'About · Audiences · 04'
 
 import EntitlementRow from '../../../../components/EntitlementRow.astro'
 import ActionBox from '../../../../components/ActionBox.astro'
-import AudienceShot from '../../../../components/AudienceShot.astro'
+import ShotFigure from '../../../../components/ShotFigure.astro'
 import SmartSplit from '../../../../components/SmartSplit.astro'
+import CertificationArc from '../../../../components/diagrams/audiences/CertificationArc.astro'
 
 **Your certification workflow, run the way B 18 describes it.** Applications
 in, samples tracked, test work dispatched, evaluations synthesized,
@@ -21,37 +22,46 @@ not widen; the platform does digitally what your authority does today.
   description="Sign in with the one-click Issuing Authority demo account (no registration; the instance resets nightly) and the review queue below is yours."
 />
 
-<AudienceShot
-  src="/img/audiences/issuing-authorities/2026-08-29-project-hub-light.png"
-  alt="The Evaluation Project hub: application record, samples, test requests, verdicts, certificate"
-  caption="The Evaluation Project hub: the application record, the samples, the dispatches, the verdicts, the certificate, on one page."
-  performed="Performed on the live demo, 2026-08-29: accepted an application and opened its Evaluation Project as the Issuing Authority."
+<ShotFigure
+  section="audiences"
+  page="issuing-authorities"
+  stem="project-hub-read"
+  alt="The Evaluation Project hub as the Issuing Authority sees it: the application record, the samples, the test requests, the verdicts, and the certificate, on one page."
+  source="https://demo.oimlsmart.org/app/ia"
+  captured="2026-08-30"
 />
 
 ## What you can do
 
-Every act below was performed against the live demo before it was listed;
-the dated screenshot under each is the audit artifact.
+Every act below was performed against the live demo by the scripted
+capture apparatus before it was listed; each figure names its capture
+date and links the live surface. An act that cannot be performed does
+not list.
 
 **See every application waiting on you, oldest first.** The review queue
 is a queue, not an inbox folder; nothing waits silently.
 
-<AudienceShot
-  src="/img/audiences/issuing-authorities/2026-08-29-review-queue-waiting-light.png"
-  alt="The IA console with the review queue holding waiting applications"
-  caption="The IA console: the review queue, the projects, the cards for what needs you."
-  performed="Performed on the live demo, 2026-08-29: opened the console with applications waiting in the queue."
+<ShotFigure
+  section="audiences"
+  page="issuing-authorities"
+  stem="review-queue-waiting"
+  alt="The IA console's review queue holding the applications waiting on the authority, oldest first."
+  source="https://demo.oimlsmart.org/app/ia/"
+  captured="2026-08-30"
 />
 
 **Open one and the whole file is there.** The applicant, the instrument
 with its classified attributes, the documentation, the review notes, and
 the acts the state machine currently allows, and only those.
 
-<AudienceShot
-  src="/img/audiences/issuing-authorities/2026-08-29-review-whole-file-light.png"
-  alt="The IA review of a submitted application: the timeline, the subject chain, the documentation, the review actions"
-  caption="The review page: the whole application file, with the open acts (request samples, request changes) and the closed ones explained."
-  performed="Performed on the live demo, 2026-08-29: opened a submitted application's review page."
+<ShotFigure
+  section="audiences"
+  page="issuing-authorities"
+  stem="review-whole-file"
+  alt="The IA review of a submitted application: the timeline, the subject chain, the documentation, and the open and closed review acts."
+  source="https://demo.oimlsmart.org/app/ia/"
+  captured="2026-08-30"
+  dark={false}
 />
 
 **Issue the sample request from the review.** Type evaluation needs
@@ -59,44 +69,89 @@ physical samples (PD-05 §4.3); the request, the shipment, and the
 receipts are tracked records, and the decision actions stay closed until
 the samples are received. No silent hop over the sample states.
 
-<AudienceShot
-  src="/img/audiences/issuing-authorities/2026-08-29-sample-request-form-light.png"
-  alt="The sample request form on the IA review page"
-  caption="The sample request: particulars typed, the act recorded, the decision gate honestly closed until receipts."
-  performed="Performed on the live demo, 2026-08-29: issued a sample request on a live application."
+<ShotFigure
+  section="audiences"
+  page="issuing-authorities"
+  stem="sample-request-form"
+  alt="The sample request form on the IA review page: particulars typed, the act recorded, the decision gate honestly closed until receipts."
+  source="https://demo.oimlsmart.org/app/ia/"
+  captured="2026-08-30"
+  dark={false}
 />
 
 **Accept, and the Evaluation Project opens.** The project is the shared
 dataspace the laboratory joins on dispatch: samples, test requests,
 reports, verdicts, and the certificate-to-be share one record.
 
+<ShotFigure
+  section="audiences"
+  page="issuing-authorities"
+  stem="project-hub"
+  alt="The Evaluation Project the accept opened: one record for the samples, the test requests, the verdicts, and the certificate-to-be."
+  source="https://demo.oimlsmart.org/app/ia/"
+  captured="2026-08-30"
+  dark={false}
+/>
+
 **Select the samples for the evaluation, with the justification.**
-R 60-3 §4.7 with the §4.7.2 note, as a recorded act; only the selected
-samples ever enter the dispatch pool.
+R 60-3 §4.7 with the §4.7.2 note, as a recorded act on the project hub
+(the hub above carries the per-sample selection); only the selected
+samples ever enter the dispatch pool the matrix below draws from.
 
 **Dispatch test work on a matrix.** Test forms crossed with samples,
 assigned per laboratory; one TestRequest per laboratory; out-of-round
 rows are reported, never silently dropped.
 
-<AudienceShot
-  src="/img/audiences/issuing-authorities/2026-08-29-dispatch-builder-light.png"
-  alt="The dispatch builder: the test-forms by samples matrix with per-laboratory assignment"
-  caption="The dispatch builder: the matrix, the per-laboratory composition, the issue act."
-  performed="Performed on the live demo, 2026-08-29: composed and issued a TestRequest to the Example Test Laboratory."
+<ShotFigure
+  section="audiences"
+  page="issuing-authorities"
+  stem="dispatch-builder"
+  alt="The dispatch builder: the test-forms by samples matrix with per-laboratory assignment, one TestRequest per laboratory."
+  source="https://demo.oimlsmart.org/app/ia/"
+  captured="2026-08-30"
+  dark={false}
 />
 
 **Issue certificates from finalized evaluations.** The certificates desk
-lists what is ready, carries the issued set with its register acts, and
-the issuance form reviews the certified scope and the scheme before the
-signature. Registering with the BIML is one act, and the registered copy
-is the validity reference the public verify page answers from.
+lists what is ready and carries the issued set with its register acts.
+Registering with the BIML is one act, and the registered copy is the
+validity reference the public verify page answers from.
 
-<AudienceShot
-  src="/img/audiences/issuing-authorities/2026-08-29-certificates-issued-light.png"
-  dark="/img/audiences/issuing-authorities/2026-08-29-certificates-issued-dark.png"
-  alt="The IA certificates desk: issue-from-evaluation picker and the issued certificates with BIML registration acts"
-  caption="The certificates desk: issue from a finalized evaluation, register with the BIML, print."
-  performed="Performed on the live demo, 2026-08-29: opened the certificates desk and the issuance form on a finalized evaluation (not signed; the register story stays the seeded one)."
+<ShotFigure
+  section="audiences"
+  page="issuing-authorities"
+  stem="certificates-issued"
+  alt="The certificates desk: the issue-from-evaluation picker and the issued certificates with their BIML registration acts."
+  source="https://demo.oimlsmart.org/app/ia/certificates"
+  captured="2026-08-29"
+/>
+
+**Review the certified scope before the signature.** Picking a finalized
+evaluation opens the issuance form: the certified scope from the
+evaluation's verdicts, the scheme, the signing key. The signature is
+your act, and the record says so.
+
+<ShotFigure
+  section="audiences"
+  page="issuing-authorities"
+  stem="issue-from-evaluation"
+  alt="The issuance form on a finalized evaluation: the certified scope the evaluation supports, the scheme choice, the signing key, reviewed before the signature."
+  source="https://demo.oimlsmart.org/app/ia/certificates"
+  captured="2026-08-30"
+/>
+
+**Follow the certificate's whole lifecycle.** Issue annex, revise,
+issue parallel, renew, suspend, withdraw: each a recorded act on the
+certificate as the authority sees it, with the BIML registration record
+and the CNML sign state on the same page.
+
+<ShotFigure
+  section="audiences"
+  page="issuing-authorities"
+  stem="certificate-lifecycle"
+  alt="The certificate as the authority sees it: the BIML registration record, the lifecycle acts (annex, revise, replace, renew, suspend, withdraw), the CNML sign state."
+  source="https://demo.oimlsmart.org/app/standards/r60/certificates/crt-acme-lc"
+  captured="2026-08-29"
 />
 
 **Bridge the paper world without lying about it.** Enter an application
@@ -104,20 +159,18 @@ for a client, import records, register an offline evaluation: the
 records-mode entries exist, and what entered offline is marked as such,
 never dressed as platform evidence.
 
-<AudienceShot
-  src="/img/audiences/issuing-authorities/2026-08-29-ia-console-light.png"
-  dark="/img/audiences/issuing-authorities/2026-08-29-ia-console-dark.png"
-  alt="The IA console header with the enter-for-client, import-records, and offline-evaluation entries"
-  caption="The console's records-mode entries: for a client, from files, from offline work."
-  performed="Performed on the live demo, 2026-08-29: the IA console's entry points."
+<ShotFigure
+  section="audiences"
+  page="issuing-authorities"
+  stem="ia-console"
+  alt="The IA console header with the records-mode entry points: enter an application for a client, import records, register an offline evaluation."
+  source="https://demo.oimlsmart.org/app/ia/"
+  captured="2026-08-30"
 />
 
 ## How it works
 
-<figure style="margin: 1.5rem 0;">
-  <img src="/img/audiences/diagrams/issuing-authorities-light.svg" alt="The certification arc: review, samples, dispatch, evaluation, issue, register, verified anywhere" class="logo-light" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
-  <img src="/img/audiences/diagrams/issuing-authorities-dark.svg" alt="The certification arc: review, samples, dispatch, evaluation, issue, register, verified anywhere (dark)" class="logo-dark" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
-</figure>
+<CertificationArc />
 
 ## What this changes, and what it does not
 
@@ -130,19 +183,21 @@ evidence chain. What does not change: your review, your evaluation, your
 decision, your signature. The verdict engine computes; the authority
 decides.
 
-<SmartSplit>
-  <ul slot="today">
-    <li>The <a href="https://demo.oimlsmart.org/">IA console</a>: the review queue, the Evaluation Projects, the certificates desk.</li>
-    <li>The dispatch builder and the laboratory negotiation-evidence record.</li>
-    <li><a href="/technologies/cnml">CNML certificates</a> signed over the verdict chain, registered with the BIML, publicly verified.</li>
-    <li>Records mode: offline evaluations and client-entered applications, honestly marked.</li>
-  </ul>
-  <ul slot="vision">
-    <li>Verifying another authority's evaluation cryptographically, chain and all, instead of re-reading prose (the inter-authority verification legs are roadmap).</li>
-    <li>The twin-backed evaluation: evidence arriving from the instrument's <a href="/technologies/smart-twin">SMART twin</a> between bench sessions (roadmap).</li>
-    <li>Suspension and withdrawal propagated to every verifiable copy the moment you act (the status-list distribution is roadmap).</li>
-  </ul>
-</SmartSplit>
+## Today (SMART) and the vision (SMART+)
+
+<SmartSplit
+  today={[
+    { text: 'The IA console: the review queue, the Evaluation Projects, the certificates desk.', href: 'https://demo.oimlsmart.org/app/ia/', label: 'the console' },
+    { text: 'The dispatch builder and the laboratory negotiation-evidence record.', href: 'https://demo.oimlsmart.org/app/ia/', label: 'see it live' },
+    { text: 'CNML certificates signed over the verdict chain, registered with the BIML, publicly verified.', href: '/technologies/cnml', label: 'the CNML page' },
+    { text: 'Records mode: offline evaluations and client-entered applications, honestly marked.', href: 'https://demo.oimlsmart.org/app/ia/', label: 'the entries' },
+  ]}
+  vision={[
+    { text: 'Verifying another authority’s evaluation cryptographically, chain and all, instead of re-reading prose.', href: '/technologies/dataspace-interop' },
+    { text: 'The twin-backed evaluation: evidence arriving from the instrument’s SMART twin between bench sessions.', href: '/technologies/smart-twin' },
+    { text: 'Suspension and withdrawal propagated to every verifiable copy the moment you act (the status-list distribution).', href: '/technologies/trust-registry' },
+  ]}
+/>
 
 ## What you can use, and what you can run
 
