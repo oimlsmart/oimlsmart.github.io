@@ -58,7 +58,7 @@ npm run test:e2e # playwright
 [Astro v7](https://astro.build/) with Content Collections.
 
 - `astro.config.mjs` — site config, sitemap integration, Shiki markdown highlighting.
-- `src/layouts/Base.astro` — the global layout (nav, footer, dark-mode script, font loading).
+- `src/layouts/Base.astro` — the global layout (nav, footer, dark-mode script, font loading); also the AI-assistant flag (`aiAssistant`, TODO.ai-platform/01 — the shared chrome's bubble; flip to retract).
 - `src/layouts/DocsPage.astro` — docs pages with sidebar + prev/next navigation.
 - `src/layouts/MarkdownPage.astro` — generic markdown page wrapper (unused by current routes).
 
