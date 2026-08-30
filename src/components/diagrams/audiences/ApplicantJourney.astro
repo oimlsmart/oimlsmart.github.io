@@ -1,0 +1,72 @@
+---
+/**
+ * ApplicantJourney — the manufacturer's arc in one diagram: apply once
+ * (the wizard derives the form from the Recommendation's model), follow
+ * the evaluation live, receive the certificate as data, and let any
+ * customer or authority prove it without an account. House style;
+ * dark-mode correct via the TechFigure palette. (TODO.promotion/10: one
+ * diagram per page.)
+ */
+import TechFigure from '../TechFigure.astro'
+---
+
+<TechFigure caption="One application, watched live to the decision, and a certificate that keeps answering for you.">
+  <svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="mfr-journey-title">
+    <title id="mfr-journey-title">The applicant's journey: apply once, follow every stage live, receive the certificate as signed CNML, Verifiable Credential, or AAS submodel, and anyone can prove it without an account</title>
+
+    <defs>
+      <marker id="mfr-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"/>
+      </marker>
+    </defs>
+
+    <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="var(--dg-text)">The applicant&#8217;s journey: apply once, follow it live, hold the proof</text>
+
+    <rect x="40" y="80" width="190" height="92" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="135" y="108" text-anchor="middle" font-size="14" font-weight="600" fill="var(--dg-gen-text)">Apply</text>
+    <text x="135" y="128" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the six-step wizard derives</text>
+    <text x="135" y="144" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the instrument form from</text>
+    <text x="135" y="160" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the Recommendation&#8217;s model</text>
+
+    <rect x="270" y="80" width="190" height="92" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="365" y="108" text-anchor="middle" font-size="14" font-weight="600" fill="var(--dg-text)">Follow it live</text>
+    <text x="365" y="128" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">review &#183; samples &#183; dispatch</text>
+    <text x="365" y="144" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">&#183; testing &#183; evaluation &#183;</text>
+    <text x="365" y="160" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">decision, each stage visible</text>
+
+    <rect x="500" y="80" width="190" height="92" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="595" y="108" text-anchor="middle" font-size="14" font-weight="600" fill="var(--dg-text)">Receive</text>
+    <text x="595" y="128" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the certificate as signed CNML,</text>
+    <text x="595" y="144" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">as a Verifiable Credential,</text>
+    <text x="595" y="160" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">as an AAS submodel</text>
+
+    <rect x="720" y="80" width="150" height="92" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="795" y="108" text-anchor="middle" font-size="14" font-weight="600" fill="var(--dg-source-text)">Prove</text>
+    <text x="795" y="128" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">any customer or</text>
+    <text x="795" y="144" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">authority verifies it,</text>
+    <text x="795" y="160" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">no account needed</text>
+
+    <line x1="230" y1="126" x2="262" y2="126" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#mfr-arr)"/>
+    <line x1="460" y1="126" x2="492" y2="126" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#mfr-arr)"/>
+    <line x1="690" y1="126" x2="712" y2="126" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#mfr-arr)"/>
+
+    <rect x="40" y="230" width="400" height="96" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="70" y="258" font-size="14" font-weight="600" fill="var(--dg-text)">The promise set</text>
+    <text x="70" y="280" font-size="12" fill="var(--dg-text-soft)">Your declared scope reads as claims, each carrying its</text>
+    <text x="70" y="298" font-size="12" fill="var(--dg-text-soft)">verification status from the evaluation&#8217;s verdicts:</text>
+    <text x="70" y="316" font-size="12" fill="var(--dg-text-soft)">an unlinked claim is never silently &#8220;verified&#8221;.</text>
+
+    <rect x="470" y="230" width="400" height="96" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="500" y="258" font-size="14" font-weight="600" fill="var(--dg-text)">Variants share the spine</text>
+    <text x="500" y="280" font-size="12" fill="var(--dg-text-soft)">A family member or variant reuses the model&#8217;s common</text>
+    <text x="500" y="298" font-size="12" fill="var(--dg-text-soft)">spine instead of re-opening the whole file: the delta</text>
+    <text x="500" y="316" font-size="12" fill="var(--dg-text-soft)">is what gets evaluated.</text>
+
+    <rect x="40" y="356" width="830" height="76" rx="10" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" stroke-width="1.5"/>
+    <text x="70" y="384" font-size="14" font-weight="600" fill="var(--dg-gov-text)">On the roadmap (SMART+): the shipped twin</text>
+    <text x="70" y="408" font-size="12" fill="var(--dg-text-soft)">Your instrument serves its governed aspects live, and conformity becomes continuous between</text>
+    <text x="70" y="424" font-size="12" fill="var(--dg-text-soft)">assessments, certified faithful by the twin-certification program. See the roadmap section below.</text>
+
+    <text x="450" y="464" text-anchor="middle" font-size="13" fill="var(--dg-text-muted)">One application, watched live to the decision, and a certificate that keeps answering for you.</text>
+  </svg>
+</TechFigure>
