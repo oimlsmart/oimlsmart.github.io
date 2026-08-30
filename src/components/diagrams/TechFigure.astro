@@ -1,13 +1,15 @@
 ---
 /**
- * TechFigure.astro — the frame for the technology pages' diagrams
+ * TechFigure.astro — the frame for the depth pages' diagrams
  * (TODO.promotion/10: one SVG diagram per page, dark-mode correct, the
  * house style). The bespoke SVG rides the slot; this frame carries the
  * blueprint-paper treatment and the caption. Diagram colors use the
  * semantic tokens (var(--ink), var(--paper-soft), var(--accent), ...),
  * so one source renders correct in light and dark — the same mechanism
  * as the shell's inline diagrams, never a prefers-color-scheme media
- * query (it would ignore the manual theme toggle).
+ * query (it would ignore the manual theme toggle). Used by the
+ * technology and the audience diagram sets (diagrams/technologies/,
+ * diagrams/audiences/).
  */
 interface Props {
   /** The figure's caption, rendered under the diagram. */
