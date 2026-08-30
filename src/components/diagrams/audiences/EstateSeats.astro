@@ -1,0 +1,71 @@
+---
+/**
+ * EstateSeats — the audiences index diagram: one estate, seven seats,
+ * who touches which surface. The center is the OIML SMART estate (the
+ * Recommendations as models, the certification workflow, the register,
+ * the verification); the six role pages plus the educators' classroom
+ * sit around it. House style; dark-mode correct via the TechFigure
+ * palette. (TODO.promotion/10: one diagram per page.)
+ */
+import TechFigure from '../TechFigure.astro'
+---
+
+<TechFigure caption="Every page separates what is live today (SMART) from the vision (SMART+): the twin, the simulation, signed measurements, continuous compliance, each future item anchored to the roadmap, never blurred into the present.">
+  <svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="seats-title">
+    <title id="seats-title">One estate, seven seats: member states, corresponding members, issuing authorities, test laboratories, manufacturers, instrument users, and educators around the OIML SMART estate</title>
+
+    <defs>
+      <marker id="seats-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"/>
+      </marker>
+    </defs>
+
+    <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="var(--dg-text)">One estate, seven seats: who touches which surface</text>
+
+    <rect x="330" y="190" width="240" height="110" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="450" y="222" text-anchor="middle" font-size="15" font-weight="600" fill="var(--dg-gen-text)">OIML SMART</text>
+    <text x="450" y="244" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the Recommendations as models,</text>
+    <text x="450" y="260" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the certification workflow,</text>
+    <text x="450" y="276" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the register, the verification</text>
+
+    <rect x="30" y="70" width="210" height="64" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="135" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Member states &#38; NMIs</text>
+    <text x="135" y="112" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">custody, designation, self-host</text>
+
+    <rect x="30" y="160" width="210" height="64" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="135" y="184" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Corresponding Members</text>
+    <text x="135" y="202" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">every hosted service, no hosting</text>
+
+    <rect x="30" y="250" width="210" height="64" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="135" y="274" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Issuing authorities</text>
+    <text x="135" y="292" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the OIML-CS as a workflow</text>
+
+    <rect x="30" y="340" width="210" height="64" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="135" y="364" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Test laboratories</text>
+    <text x="135" y="382" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">evidence captured at the bench</text>
+
+    <rect x="660" y="70" width="210" height="64" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="765" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Manufacturers</text>
+    <text x="765" y="112" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">apply once, follow it live</text>
+
+    <rect x="660" y="160" width="210" height="64" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="765" y="184" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Instrument users</text>
+    <text x="765" y="202" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">verify, never trust letterhead</text>
+
+    <rect x="660" y="250" width="210" height="64" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="765" y="274" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Educators &#38; students</text>
+    <text x="765" y="292" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the classroom on the simulator</text>
+
+    <line x1="240" y1="102" x2="350" y2="196" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#seats-arr)"/>
+    <line x1="240" y1="192" x2="322" y2="216" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#seats-arr)"/>
+    <line x1="240" y1="282" x2="322" y2="262" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#seats-arr)"/>
+    <line x1="240" y1="372" x2="350" y2="292" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#seats-arr)"/>
+    <line x1="660" y1="102" x2="550" y2="196" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#seats-arr)"/>
+    <line x1="660" y1="192" x2="578" y2="216" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#seats-arr)"/>
+    <line x1="660" y1="282" x2="578" y2="262" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#seats-arr)"/>
+
+    <rect x="30" y="430" width="840" height="52" rx="10" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" stroke-width="1.5"/>
+    <text x="450" y="451" text-anchor="middle" font-size="12" fill="var(--dg-gov-text)">Every page separates what is live today (SMART) from the vision (SMART+): the twin, the simulation,</text>
+    <text x="450" y="468" text-anchor="middle" font-size="12" fill="var(--dg-gov-text)">signed measurements, continuous compliance, each future item anchored to the roadmap, never blurred into the present.</text>
+  </svg>
+</TechFigure>

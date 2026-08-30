@@ -4,25 +4,120 @@ description: Seven audiences, seven concrete answers, what OIML SMART changes fo
 eyebrow: 'About · Audiences'
 ---
 
-OIML SMART is not one product with one user. It is a program that
-touches every role in legal metrology, and for each role, it changes
-something specific. Pick your seat:
+import EntitlementMatrix from '../../../../components/EntitlementMatrix.astro'
+import ActionBox from '../../../../components/ActionBox.astro'
+import ShotFigure from '../../../../components/ShotFigure.astro'
+import SmartSplit from '../../../../components/SmartSplit.astro'
+import EstateSeats from '../../../../components/diagrams/audiences/EstateSeats.astro'
 
-| Audience | What changes for you |
-|---|---|
-| [Member states & NMIs](/about/audiences/member-states) | national law meets executable standards: monitorable, verifiable, continuously compliant by construction |
-| [Corresponding Members](/about/audiences/corresponding-members) | the same information and the same evidence as Member States, the hosted platform with nothing to run |
-| [Manufacturers](/about/audiences/manufacturers) | publish a reference model of your instrument, ship a SMART twin, certify continuously instead of episodically |
-| [Test laboratories](/about/audiences/laboratories) | structured test runs, evidence captured once, reports generated, rehearsed on the simulator first |
-| [Issuing authorities](/about/audiences/issuing-authorities) | the OIML-CS as a digital workflow: applications to certificates, every verdict computed |
-| [Instrument users](/about/audiences/instrument-users) | continuous compliance for the instruments you depend on, query the twin, read the evidence |
-| [Educators & students](/about/audiences/educators) | the classroom: certify a simulated load cell before you ever touch a real one |
+**One estate, seven seats.** OIML SMART is not one product with one user:
+it is the OIML's certification work rendered as data, and for each role
+in legal metrology it changes something specific. The six role pages
+show the acts you can perform today, each one performed and
+screenshotted against the live demo before it was listed; the educators
+page carries the classroom curriculum.
 
-Each page names the pain as it exists today, the mechanism that removes
-it, what the system looks like in practice, the proof you can check
-yourself, and the next step to take.
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="Open the live demo"
+  description="A full platform deployment running the fictional load-cell pilot. The one-click demo accounts need no registration; the instance resets nightly."
+/>
 
-<figure style="margin: 2rem 0; padding: 1.5rem; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper-soft);">
-  <img src="/diagrams/shared/three-layer-twin.svg" alt="The three layers: the physical instrument, the full digital twin, and the SMART twin as the governed projection between them" style="width: 100%; max-width: 48rem; margin: 0 auto; display: block;" />
-  <figcaption style="text-align: center; font-size: 0.875rem; color: var(--ink-muted); margin-top: 0.75rem;">The idea every audience page builds on: the SMART twin as the governed projection of the physical instrument.</figcaption>
-</figure>
+<ShotFigure
+  section="audiences"
+  page="shared"
+  stem="standards-catalog"
+  alt="The estate's shared ground on the live demo: the Standards catalog with the Recommendations as models, the counts derived from the models themselves."
+  source="https://demo.oimlsmart.org/app/"
+  captured="2026-08-29"
+/>
+
+## What you can do, by seat
+
+Each row is one audience. The six role pages list six to ten concrete
+acts with their performed-evidence captures; the educators row opens the
+classroom curriculum.
+
+| Seat | What changes for you | The page |
+|---|---|---|
+| Member states & NMIs | national law meets executable standards: monitorable, verifiable, custody intact | [Member states](/about/audiences/member-states) |
+| Corresponding Members | every hosted service with nothing to run, the honest path upward | [Corresponding Members](/about/audiences/corresponding-members) |
+| Issuing authorities | the OIML-CS as a digital workflow: applications to certificates, every verdict computed | [Issuing authorities](/about/audiences/issuing-authorities) |
+| Test laboratories | dispatches in the inbox, evidence captured once, reports generated | [Test laboratories](/about/audiences/laboratories) |
+| Manufacturers | apply once, follow it live, hold a certificate that answers for itself | [Manufacturers](/about/audiences/manufacturers) |
+| Instrument users | verify any certificate in seconds, no account; designations rendered as facts | [Instrument users](/about/audiences/instrument-users) |
+| Educators & students | the classroom: certify a simulated load cell before you ever touch a real one | [Educators](/about/audiences/educators) |
+
+## How the estate fits together
+
+<EstateSeats />
+
+## Today (SMART) and the vision (SMART+)
+
+One rule holds every page: today versus the vision. Every audience page
+separates what is live now from what is coming, and the split is the
+estate's own taxonomy:
+
+<SmartSplit
+  today={[
+    { text: 'Recommendations as models, the certification platform, the Vocabulary, the Studio, CNML certificates.', href: '/technologies/cnml', label: 'CNML' },
+    { text: 'Public verification and the register: no account, no phone call.', href: 'https://demo.oimlsmart.org/app/verify/', label: 'verify' },
+    { text: 'The AI service answering the OIML corpus with citations.', href: 'https://ai.oimlsmart.org/', label: 'ask' },
+  ]}
+  vision={[
+    { text: 'The SMART twin: instruments serving their governed aspects live.', href: '/technologies/smart-twin' },
+    { text: 'The SST simulation: rehearse an evaluation before hardware exists (hosted rehearsal is roadmap).', href: '/technologies/sst' },
+    { text: 'Signed measurements and continuous compliance between assessments.', href: '/technologies/smart-twin' },
+  ]}
+/>
+
+## Who can use what, and who can run what
+
+One matrix, one source; the audience pages quote their rows from it and
+never paraphrase it:
+
+<EntitlementMatrix />
+
+## The honest questions
+
+### Is any of this live, or is it a rendering?
+
+Live. Every capability screenshot on these pages was captured from the
+running demo estate on the date the caption names, by a script
+(`scripts/capture-audiences.ts` in this repository) that performs the
+act before it photographs it. An act that cannot be performed does not
+list.
+
+### Where is the line between SMART and SMART+?
+
+SMART is what you can click today: the Recommendations as models, the
+platform, the CNML certificates, the public verification. SMART+ is the
+vision: the instrument twin, the simulation, signed measurements,
+continuous compliance. The vision items carry the word "roadmap" and a
+link to the page that tracks them; nothing future is stated as present.
+
+### We are several of these audiences at once. Where do we start?
+
+Start with the role that hurts most this quarter. The estate is one
+account and one login; an Issuing Authority officer and a laboratory
+manager in the same organization each get their own console. The demo's
+one-click accounts let you sit in every seat before you ask for
+anything.
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/login"
+  label="Open the demo and pick a seat"
+  description="Applicant, Issuing Authority, Test Laboratory, BIML, Utilizer, Viewer: one click each, no registration."
+/>
+<ActionBox
+  href="/tour"
+  label="Take the tour"
+  description="The interactive introduction for OIML members. Fifteen minutes, no account needed."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: the programme's front-door address for every audience."
+/>
