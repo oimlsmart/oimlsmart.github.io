@@ -6,8 +6,9 @@ eyebrow: 'About · Audiences · 05'
 
 import EntitlementRow from '../../../../components/EntitlementRow.astro'
 import ActionBox from '../../../../components/ActionBox.astro'
-import AudienceShot from '../../../../components/AudienceShot.astro'
+import ShotFigure from '../../../../components/ShotFigure.astro'
 import SmartSplit from '../../../../components/SmartSplit.astro'
+import VerificationChain from '../../../../components/diagrams/audiences/VerificationChain.astro'
 
 **Stop trusting the sticker; start reading the record.** Any certificate
 presented to you verifies against the public register in seconds, with no
@@ -22,47 +23,74 @@ applying, not after.
   description="The public verification surface: enter R60/2021-A-EX1-26.01 and read the verdict yourself."
 />
 
-<AudienceShot
-  src="/img/audiences/shared/2026-08-29-verify-number-verdict-light.png"
-  dark="/img/audiences/shared/2026-08-29-verify-number-verdict-dark.png"
-  alt="The public verify page answering ACTIVE for R60/2021-A-EX1-26.01 with the register reference and the live status lists"
-  caption="The verdict: ACTIVE, with the BIML registration, the registered copy, and the revocation and suspension lists checked live."
-  performed="Performed on the live demo, 2026-08-29: verified R60/2021-A-EX1-26.01 by number, no account."
+<ShotFigure
+  section="audiences"
+  page="shared"
+  stem="verify-number-verdict"
+  alt="The public verify page answering ACTIVE for R60/2021-A-EX1-26.01: the BIML registration, the registered copy, and the revocation and suspension lists checked live, no account."
+  source="https://demo.oimlsmart.org/app/verify/"
+  captured="2026-08-29"
 />
 
 ## What you can do
 
-Every act below was performed against the live demo before it was listed;
-the dated screenshot under each is the audit artifact.
+Every act below was performed against the live estate by the scripted
+capture apparatus before it was listed; each figure names its capture
+date and links the live surface. An act that cannot be performed does
+not list.
 
 **Verify any certificate by its number.** The answer comes from the
 public register (B 18:2025 §15.8): the particulars, the classifications,
 the validity window, and the live revocation and suspension status from
-the W3C status lists, with the check's own timestamp.
+the W3C status lists, with the check's own timestamp. The figure above
+is that act, performed.
 
 **Verify the certificate file itself.** A certificate downloaded as a
 Verifiable Credential (the .vc.json file) verifies against its issuer's
 DID document: the same verdict, straight from the file, no lookup
-needed. We downloaded the demo certificate's VC and verified it in the
-audit for this page.
+needed. In the audit we downloaded the demo certificate's VC from the
+applicant portal and pasted it here: the signature verified against the
+issuer's did:web document and the embedded CNML passed the native check
+pipeline.
+
+<ShotFigure
+  section="audiences"
+  page="shared"
+  stem="verify-vc-verdict"
+  alt="The credential verification verdict for the downloaded .vc.json file: ACTIVE, the issuer-DID signature check, the CNML check pipeline itemized."
+  source="https://demo.oimlsmart.org/app/verify/"
+  captured="2026-08-29"
+/>
 
 **Browse the register.** Every certificate the instance publishes, per
 scheme, with the export and the print view; the registered copy is the
 validity reference, and a presented document checks against it field by
 field.
 
-<AudienceShot
-  src="/img/audiences/shared/2026-08-29-certificate-register-light.png"
-  dark="/img/audiences/shared/2026-08-29-certificate-register-dark.png"
-  alt="The public certificate register listing the registered certificates with their schemes and validity"
-  caption="The public register: the OIML-CS entries the BIML has registered, browsable by anyone."
-  performed="Performed on the live demo, 2026-08-29: browsed the register, no account."
+<ShotFigure
+  section="audiences"
+  page="shared"
+  stem="certificate-register"
+  alt="The public certificate register: the OIML-CS entries the BIML has registered, browsable by anyone, with export and print."
+  source="https://demo.oimlsmart.org/app/register/"
+  captured="2026-08-29"
 />
 
 **Where you are designated, see the designation rendered.** A Utilizer or
 Associate signs the Declaration the OIML-CS prescribes (PD-08). On the
 platform that designation is a registry fact linked to your designating
-member; your personnel hold accounts against it.
+member, and your personnel hold accounts against it: the identity
+service's join flow knows the real member directory, and your own
+administrator approves each request.
+
+<ShotFigure
+  section="audiences"
+  page="shared"
+  stem="identity-join"
+  alt="The identity service join flow with the organization directory open: accounts against your designation, your administrator's approval."
+  source="https://id.oimlsmart.org/op/join/"
+  captured="2026-08-29"
+/>
 
 **Declare your Additional National Requirements as data.** ANRs are
 declared per Recommendation and per market, moderated by the CS
@@ -70,32 +98,31 @@ registry, and only an APPROVED declaration is live. Applicants targeting
 your market see the requirement before they apply, not in a finding
 after.
 
-<AudienceShot
-  src="/img/audiences/instrument-users/2026-08-29-anr-registry-light.png"
-  dark="/img/audiences/instrument-users/2026-08-29-anr-registry-dark.png"
-  alt="The ANR provisions page: the declaration registry and the declare form"
-  caption="The ANR surface: your market's declarations, and the declare form with its moderation doctrine."
-  performed="Performed on the live demo, 2026-08-29: signed in as the demo's Utilizer officer and opened the ANR registry."
+<ShotFigure
+  section="audiences"
+  page="instrument-users"
+  stem="anr-registry"
+  alt="The ANR provisions page: the declaration registry (the NL damp-heat declaration, APPROVED) and the declare form with its moderation doctrine."
+  source="https://demo.oimlsmart.org/app/cs/anr/"
+  captured="2026-08-29"
 />
 
 **Ask the OIML corpus, with citations.** The AI service answers questions
 about OIML publications with clause-level citations; if the corpus has
 no answer, it says so.
 
-<AudienceShot
-  src="/img/audiences/shared/2026-08-29-ai-answer-cited-light.png"
-  dark="/img/audiences/shared/2026-08-29-ai-answer-cited-dark.png"
-  alt="The OIML SMART AI answering 'What is R 60?' with numbered clause-level sources"
-  caption="The AI service: every claim carries a citation you can check."
-  performed="Performed on the live AI service, 2026-08-29: asked 'What is R 60?' and read the cited answer."
+<ShotFigure
+  section="audiences"
+  page="shared"
+  stem="ai-answer-cited"
+  alt="The OIML SMART AI answering 'What is R 60?' with numbered clause-level sources; every claim carries a citation you can check."
+  source="https://ai.oimlsmart.org/"
+  captured="2026-08-29"
 />
 
 ## How it works
 
-<figure style="margin: 1.5rem 0;">
-  <img src="/img/audiences/diagrams/instrument-users-light.svg" alt="From a presented certificate to verification: number lookup or file check, live status, decided" class="logo-light" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
-  <img src="/img/audiences/diagrams/instrument-users-dark.svg" alt="From a presented certificate to verification: number lookup or file check, live status, decided (dark)" class="logo-dark" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
-</figure>
+<VerificationChain />
 
 ## What this changes, and what it does not
 
@@ -108,19 +135,21 @@ the live status. What does not change: your national requirements and
 your approvals remain yours; the platform informs them, it does not
 pre-empt them.
 
-<SmartSplit>
-  <ul slot="today">
-    <li><a href="https://demo.oimlsmart.org/app/verify/">Public verification</a> by number or by credential file, no account.</li>
-    <li>The <a href="https://demo.oimlsmart.org/app/register/">public register</a> with the registered copies.</li>
-    <li>The ANR declaration surface for designated Utilizers and Associates.</li>
-    <li>The <a href="https://ai.oimlsmart.org/">AI service</a> answering from the OIML corpus with citations.</li>
-  </ul>
-  <ul slot="vision">
-    <li>The instruments you run serving their governed aspects live: compliance as a stream you read, not a sticker you trust (the <a href="/technologies/smart-twin">SMART twin</a> is roadmap).</li>
-    <li>A verdict that degrades visibly when the instrument drifts, with the probes that show it (continuous compliance is roadmap).</li>
-    <li>Your operations monitoring reading the twin directly (the <a href="/technologies/dataspace-interop">dataspace bindings</a> are roadmap).</li>
-  </ul>
-</SmartSplit>
+## Today (SMART) and the vision (SMART+)
+
+<SmartSplit
+  today={[
+    { text: 'Public verification by number or by credential file, no account.', href: 'https://demo.oimlsmart.org/app/verify/', label: 'verify' },
+    { text: 'The public register with the registered copies.', href: 'https://demo.oimlsmart.org/app/register/', label: 'the register' },
+    { text: 'The ANR declaration surface for designated Utilizers and Associates.', href: 'https://demo.oimlsmart.org/app/cs/anr/', label: 'the ANR surface' },
+    { text: 'The AI service answering from the OIML corpus with citations.', href: 'https://ai.oimlsmart.org/', label: 'ask' },
+  ]}
+  vision={[
+    { text: 'The instruments you run serving their governed aspects live: compliance as a stream you read, not a sticker you trust.', href: '/technologies/smart-twin' },
+    { text: 'A verdict that degrades visibly when the instrument drifts, with the probes that show it: continuous compliance.', href: '/technologies/smart-twin' },
+    { text: 'Your operations monitoring reading the twin directly (the dataspace bindings).', href: '/technologies/dataspace-interop' },
+  ]}
+/>
 
 ## What you can use, and what you can run
 
