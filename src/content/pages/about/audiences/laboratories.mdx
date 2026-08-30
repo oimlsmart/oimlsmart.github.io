@@ -6,8 +6,9 @@ eyebrow: 'About · Audiences · 03'
 
 import EntitlementRow from '../../../../components/EntitlementRow.astro'
 import ActionBox from '../../../../components/ActionBox.astro'
-import AudienceShot from '../../../../components/AudienceShot.astro'
+import ShotFigure from '../../../../components/ShotFigure.astro'
 import SmartSplit from '../../../../components/SmartSplit.astro'
+import LaboratoryArc from '../../../../components/diagrams/audiences/LaboratoryArc.astro'
 
 **Evidence captured once, at the moment of work.** The Recommendation's
 test procedures become a workbench your operators follow step by step;
@@ -21,31 +22,48 @@ metrologists' time goes into measurement instead of paperwork mechanics.
   description="Sign in with the one-click Test Laboratory demo account (no registration; the instance resets nightly) and the inbox below is yours."
 />
 
-<AudienceShot
-  src="/img/audiences/laboratories/2026-08-29-inbox-live-request-light.png"
-  alt="The laboratory inbox with a dispatched test request in the incoming bucket"
-  caption="The laboratory inbox: the Issuing Authority's dispatch lands here, live."
-  performed="Performed on the live demo, 2026-08-29: a real dispatch issued by the IA minutes earlier, received in laboratory 21's inbox."
+<ShotFigure
+  section="audiences"
+  page="laboratories"
+  stem="inbox-live-request"
+  alt="The laboratory inbox with the Issuing Authority's dispatched test request in the incoming bucket, landed live minutes after the dispatch."
+  source="https://demo.oimlsmart.org/app/lab/"
+  captured="2026-08-30"
+  dark={false}
 />
 
 ## What you can do
 
-Every act below was performed against the live demo before it was listed;
-the dated screenshot under each is the audit artifact.
+Every act below was performed against the live demo by the scripted
+capture apparatus before it was listed; each figure names its capture
+date and links the live surface. An act that cannot be performed does
+not list.
 
-**Receive the dispatch in your inbox, live.** The IA's TestRequest names
-the forms, the samples, and the terms; it appears in your incoming
-bucket the moment it is issued, no email to notice.
+**Between dispatches, the same inbox carries your state honestly.** The
+incoming bucket shows exactly what waits on you — and when nothing waits,
+the page says so plainly instead of paging stale noise.
+
+<ShotFigure
+  section="audiences"
+  page="laboratories"
+  stem="lab-inbox"
+  alt="The laboratory inbox between dispatches: the incoming bucket honestly empty ('Nothing waiting for your laboratory'), the ANR test-capability axis below."
+  source="https://demo.oimlsmart.org/app/lab/"
+  captured="2026-08-30"
+/>
 
 **Open the request and see exactly your share.** The scope, the samples
 with their serials, the issuing authority's context. Accept, or decline
 with a reason; silence is not a state the record allows.
 
-<AudienceShot
-  src="/img/audiences/laboratories/2026-08-29-request-open-light.png"
-  alt="The test request view: the assigned forms and samples with the accept and decline acts"
-  caption="The request, opened: the assigned forms, the samples, the decision."
-  performed="Performed on the live demo, 2026-08-29: opened the dispatched request as the laboratory."
+<ShotFigure
+  section="audiences"
+  page="laboratories"
+  stem="request-open"
+  alt="The test request opened: the assigned forms, the samples, the accept and decline acts."
+  source="https://demo.oimlsmart.org/app/lab/"
+  captured="2026-08-30"
+  dark={false}
 />
 
 **Accept, and join the project's dataspace.** Accepting the assignment
@@ -53,23 +71,27 @@ joins your laboratory to the Evaluation Project: the working panels
 (samples, assignments, the report) reveal, and what you produce accrues
 to the same record the IA evaluates.
 
-<AudienceShot
-  src="/img/audiences/laboratories/2026-08-29-request-accepted-light.png"
-  alt="The test request after acceptance: the working panels revealed"
-  caption="Accepted: the samples, the assignments, and the report panel open for work."
-  performed="Performed on the live demo, 2026-08-29: accepted the assignment as the laboratory."
+<ShotFigure
+  section="audiences"
+  page="laboratories"
+  stem="request-accepted"
+  alt="The test request after acceptance: the samples, the assignments, and the report panel revealed for work."
+  source="https://demo.oimlsmart.org/app/lab/"
+  captured="2026-08-30"
+  dark={false}
 />
 
 **See every report your laboratory has authored, with its status.** Form
 instances, samples, acceptance state; your output is a list you manage,
 not a file share you search.
 
-<AudienceShot
-  src="/img/audiences/laboratories/2026-08-29-test-reports-light.png"
-  dark="/img/audiences/laboratories/2026-08-29-test-reports-dark.png"
-  alt="The laboratory's test reports list with form-instance counts and acceptance status"
-  caption="The reports your laboratory authored, each row tracing to its forms and samples."
-  performed="Performed on the live demo, 2026-08-29: opened the laboratory's reports list."
+<ShotFigure
+  section="audiences"
+  page="laboratories"
+  stem="test-reports"
+  alt="The laboratory's authored test reports, each row tracing to its form instances and samples, with acceptance status."
+  source="https://demo.oimlsmart.org/app/lab/test-reports"
+  captured="2026-08-29"
 />
 
 **Register a report you performed offline, marked as what it is.**
@@ -77,12 +99,13 @@ Records mode: a report issued outside the platform enters as submitted
 to the IA, marked registered-offline; it never claims platform test-run
 evidence, and the IA's review stays a real act.
 
-<AudienceShot
-  src="/img/audiences/laboratories/2026-08-29-register-offline-light.png"
-  dark="/img/audiences/laboratories/2026-08-29-register-offline-dark.png"
-  alt="The register-offline test report form"
-  caption="The records-mode bridge: offline work enters the record honestly marked."
-  performed="Performed on the live demo, 2026-08-29: opened the offline-registration form as the laboratory."
+<ShotFigure
+  section="audiences"
+  page="laboratories"
+  stem="register-offline"
+  alt="The register-offline test report form: the records-mode bridge, offline work entering the record honestly marked."
+  source="https://demo.oimlsmart.org/app/lab/register-offline"
+  captured="2026-08-29"
 />
 
 **Read the procedure the Recommendation actually requires.** The test
@@ -90,12 +113,13 @@ procedures are the Recommendation's model, not a retyped PDF: the work
 instructions your bench follows derive from the same clauses the report
 traces to.
 
-<AudienceShot
-  src="/img/audiences/shared/2026-08-29-r60-requirements-light.png"
-  dark="/img/audiences/shared/2026-08-29-r60-requirements-dark.png"
-  alt="R 60 read as a model: the requirement classes with their counts and clause structure"
-  caption="R 60 as data: the requirements and test procedures with clause-level structure."
-  performed="Performed on the live demo, 2026-08-29: opened the R 60 model's reference surfaces."
+<ShotFigure
+  section="audiences"
+  page="shared"
+  stem="r60-requirements"
+  alt="R 60 read as a model: the requirement classes and test procedures with clause-level structure, the same clauses the report traces to."
+  source="https://demo.oimlsmart.org/app/standards/r60/requirements"
+  captured="2026-08-29"
 />
 
 **Bind a twin in the twin-lab workbench.** Where a SMART-twin-capable
@@ -104,20 +128,18 @@ introspection and runs the guided conformance test against it; the
 twin's readings auto-record. (Today the demo's simulator runs locally;
 see the roadmap section.)
 
-<AudienceShot
-  src="/img/audiences/laboratories/2026-08-29-twin-lab-light.png"
-  dark="/img/audiences/laboratories/2026-08-29-twin-lab-dark.png"
-  alt="The twin-lab workbench: pick a Recommendation, give a twin endpoint, discover its served surface"
-  caption="The twin-lab: the bind surface. The Recommendation declares the interface; the endpoint is read, never assumed."
-  performed="Performed on the live demo, 2026-08-29: opened the twin-lab workbench."
+<ShotFigure
+  section="audiences"
+  page="laboratories"
+  stem="twin-lab"
+  alt="The twin-lab workbench: pick a Recommendation, give a twin endpoint, discover its served surface; the endpoint is read, never assumed."
+  source="https://demo.oimlsmart.org/app/twin-lab"
+  captured="2026-08-29"
 />
 
 ## How it works
 
-<figure style="margin: 1.5rem 0;">
-  <img src="/img/audiences/diagrams/laboratories-light.svg" alt="The laboratory's arc: dispatch, accept, guided run, generated report" class="logo-light" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
-  <img src="/img/audiences/diagrams/laboratories-dark.svg" alt="The laboratory's arc: dispatch, accept, guided run, generated report (dark)" class="logo-dark" style="width: 100%; border: 1px solid var(--rule); border-radius: 6px;" />
-</figure>
+<LaboratoryArc />
 
 ## What this changes, and what it does not
 
@@ -130,18 +152,20 @@ INDETERMINATE, never a silent pass. What does not change: your
 measurement, your competence, your responsibility for the result. The
 platform removes the transcription, not the metrology.
 
-<SmartSplit>
-  <ul slot="today">
-    <li>The <a href="https://demo.oimlsmart.org/">laboratory workbench</a>: the inbox, the request, the reports, the offline bridge.</li>
-    <li>The Recommendation's procedures as the model your work derives from.</li>
-    <li>The twin-lab bind surface for SMART-twin-capable instruments.</li>
-  </ul>
-  <ul slot="vision">
-    <li>Rehearse every procedure on the <a href="/technologies/sst">SST simulator</a> before a real instrument enters the lab: the simulator runs locally today, hosted rehearsal is roadmap.</li>
-    <li>The guided run with the twin's readings auto-recorded end to end (the deployable evidence pipeline is roadmap).</li>
-    <li><a href="/technologies/smart-twin">Signed measurements</a>: the instrument's served values carrying their own provenance (roadmap).</li>
-  </ul>
-</SmartSplit>
+## Today (SMART) and the vision (SMART+)
+
+<SmartSplit
+  today={[
+    { text: 'The laboratory workbench: the inbox, the request, the reports, the offline bridge.', href: 'https://demo.oimlsmart.org/app/lab/', label: 'the workbench' },
+    { text: 'The Recommendation’s procedures as the model your work derives from.', href: 'https://demo.oimlsmart.org/app/standards/r60/requirements', label: 'R 60 as data' },
+    { text: 'The twin-lab bind surface for SMART-twin-capable instruments.', href: 'https://demo.oimlsmart.org/app/twin-lab', label: 'the twin lab' },
+  ]}
+  vision={[
+    { text: 'Rehearse every procedure on the SST simulator before a real instrument enters the lab: the simulator runs locally today, hosted rehearsal is roadmap.', href: '/technologies/sst' },
+    { text: 'The guided run with the twin’s readings auto-recorded end to end (the deployable evidence pipeline).', href: '/technologies/smart-twin' },
+    { text: 'Signed measurements: the instrument’s served values carrying their own provenance.', href: '/technologies/smart-twin' },
+  ]}
+/>
 
 ## What you can use, and what you can run
 
