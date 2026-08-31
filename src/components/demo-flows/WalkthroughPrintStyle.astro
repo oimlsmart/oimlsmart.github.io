@@ -1,0 +1,25 @@
+---
+/**
+ * WalkthroughPrintStyle.astro — the print stylesheet for the demo-flow
+ * walkthrough pages (TODO.promotion/06: the presenter scripts are
+ * printable). Printing a walkthrough page yields the flow's title and
+ * its two presenter scripts, clean: the site chrome and the rest of the
+ * page hide, the scripts keep their beat grid, and a print-only header
+ * names the flow. Include once per walkthrough page; the page wraps its
+ * content in .walkthrough-body and its scripts in .presenter-scripts.
+ */
+---
+
+<style is:global>
+  .print-only { display: none; }
+  @media print {
+    body > *:not(main) { display: none !important; }
+    main .walkthrough-body > *:not(.presenter-scripts) { display: none !important; }
+    main .walkthrough-body .print-only { display: block !important; }
+    .presenter-scripts { padding: 0 !important; max-width: none !important; }
+    .presenter-script { border: none !important; background: transparent !important; padding: 0 0 1rem !important; }
+    .presenter-script__beat { font-size: 10.5pt !important; }
+    .print-only h1 { font-size: 16pt; margin: 0 0 4pt; }
+    .print-only p { font-size: 9.5pt; color: #444; margin: 0 0 14pt; }
+  }
+</style>
