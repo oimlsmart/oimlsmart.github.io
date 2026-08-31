@@ -1,0 +1,202 @@
+---
+title: 'The deployment-mode matrix'
+description: 'One codebase, four postures: the CS-operated platform, an IA-only instance, a TL-only instance, and the combined IA+TL instance. What each runs, who signs in, what federates where, and the start-small path.'
+eyebrow: 'Use Cases · 02'
+captured: '2026-08-31'
+---
+
+import ActionBox from '../../../components/ActionBox.astro'
+import EntitlementRow from '../../../components/EntitlementRow.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import DeploymentPostures from '../../../components/diagrams/usecases/DeploymentPostures.astro'
+
+**Start where you are; grow when you are ready.** Your institute's IT
+director gets the question every national body eventually asks: can we
+run this ourselves, and how small can we start? The honest answer is a
+matrix, not a sales call: one codebase boots in four postures, decided
+by a declared deployment profile, and a laboratory can join with the
+smallest one and grow. Two member instances are running in the pilot
+today, captured below as they serve.
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/login"
+  label="See the hub posture live"
+  description="The demo is the CS-operated posture: every role on one deployment. The one-click accounts need no registration; the instance resets nightly."
+/>
+
+<ShotFigure
+  section="usecases"
+  page="deployment-modes"
+  stem="hub-login"
+  alt="The CS-operated hub posture: the demo instance's sign-in with the one-click demo accounts, every role on one deployment."
+  source="https://demo.oimlsmart.org/app/login"
+  captured="2026-08-31"
+/>
+
+## The four postures, rendered plain
+
+The matrix's facts were verified against the deployment documentation
+(the deployment runbook that ships with the member repository: the two
+topologies, the profile system, the operations section) on 2026-08-31.
+
+<div class="overflow-x-auto border border-rule rounded-md mb-8">
+  <table class="w-full border-collapse text-sm min-w-[44rem]">
+    <thead>
+      <tr class="bg-paper-soft">
+        <th class="text-left font-medium p-3 border-b border-rule">Posture</th>
+        <th class="text-left font-medium p-3 border-b border-l border-rule">What it runs</th>
+        <th class="text-left font-medium p-3 border-b border-l border-rule">Who signs in</th>
+        <th class="text-left font-medium p-3 border-b border-l border-rule">What federates where</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="align-top">
+        <th class="text-left font-medium p-3 border-b border-rule bg-paper-soft">CS-operated platform (the hub)</th>
+        <td class="p-3 border-b border-l border-rule">The whole scheme: the applicant portal, the authority consoles, the laboratory workbenches, the BIML register. Topology A of the runbook: one durable store, one provisioning seed.</td>
+        <td class="p-3 border-b border-l border-rule">Everyone: applicants, IA officers, TL operators, the scheme's own roles.</td>
+        <td class="p-3 border-b border-l border-rule">Nothing to federate inward; member instances submit to it. Live as the hosted platform and as <a href="https://demo.oimlsmart.org/" class="text-accent">the demo</a>.</td>
+      </tr>
+      <tr class="align-top">
+        <th class="text-left font-medium p-3 border-b border-rule bg-paper-soft">IA-only instance</th>
+        <td class="p-3 border-b border-l border-rule">The authority's own deployment: the intake, the evaluation projects, the certificates desk. Topology B of the runbook.</td>
+        <td class="p-3 border-b border-l border-rule">The authority's officers, its applicants, its associated laboratories.</td>
+        <td class="p-3 border-b border-l border-rule">Completed evaluation chains travel to the CS platform as signed submission packages; the register validates and imports them, idempotently (a repeat submission returns the same registration reference). An export-download fallback covers the case where no submission URL is set. No public pilot instance today; the profile is the same one the pilots boot.</td>
+      </tr>
+      <tr class="align-top">
+        <th class="text-left font-medium p-3 border-b border-rule bg-paper-soft">TL-only instance</th>
+        <td class="p-3 border-b border-l border-rule">The laboratory's own deployment: the test-request inbox, the model-driven test runs, the report authoring. A disabled module's routes simply do not exist (no applicant portal to run).</td>
+        <td class="p-3 border-b border-l border-rule">The laboratory's operators and managers.</td>
+        <td class="p-3 border-b border-l border-rule">Receives dispatched test work from the authority's instance and returns the report as data. Live in the pilot at <a href="https://tl.oimlsmart.org/" class="text-accent">tl.oimlsmart.org</a>.</td>
+      </tr>
+      <tr class="align-top">
+        <th class="text-left font-medium p-3 border-b border-rule bg-paper-soft">IA+TL instance</th>
+        <td class="p-3 border-b border-l border-rule">An authority and its laboratory under one roof: the national metrology institute's classical shape, both role sets enabled.</td>
+        <td class="p-3 border-b border-l border-rule">The institute's officers and operators, its applicants.</td>
+        <td class="p-3 border-b border-l border-rule">The same signed-chain submission to the CS platform's register. Live in the pilot at <a href="https://nmi.oimlsmart.org/" class="text-accent">nmi.oimlsmart.org</a>.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## The pilot instances, captured as they serve
+
+<ShotFigure
+  section="usecases"
+  page="deployment-modes"
+  stem="nmi-instance"
+  alt="The IA+TL pilot instance at nmi.oimlsmart.org: the same software booted under the member deployment profile."
+  source="https://nmi.oimlsmart.org/"
+  captured="2026-08-31"
+/>
+
+<ShotFigure
+  section="usecases"
+  page="deployment-modes"
+  stem="tl-instance"
+  alt="The TL-only pilot instance at tl.oimlsmart.org: the laboratory posture of the same codebase."
+  source="https://tl.oimlsmart.org/"
+  captured="2026-08-31"
+/>
+
+## How it works
+
+One codebase, and a declared profile decides the shape: the instance's
+identity (which organization this deployment IS), its role set (hub,
+IA, TL, or IA+TL), the module toggles, the federation peers, and the
+per-profile seed. The navigation, the console switcher, and the route
+table follow the enabled modules; a disabled module's routes answer 404
+honestly rather than pretending. The federation is the scheme's own:
+an authority-operated instance submits its completed evaluation chains
+to the CS platform as signed packages, and the register verifies the
+signature chain on import, so the validity reference stays single.
+
+<DeploymentPostures />
+
+## What this changes, and what it does not
+
+Today the choice is framed as all-or-nothing: join a central system and
+cede the keyboard, or stay out and keep the filing cabinet. The
+postures dissolve that: the hosted platform needs no operations from
+you at all, and the self-hosted postures are one service-class
+deployment each, not a new kind of infrastructure. What does not
+change: whose acts are whose. The authority decides and signs on its
+own instance exactly as on the hosted one; the scheme's register
+remains the single validity reference either way.
+
+## Today (SMART) and the vision (SMART+)
+
+<SmartSplit
+  today={[
+    { text: 'The hub posture: the hosted OIML-CS SMART Platform, with the demo as its public rehearsal.', href: 'https://demo.oimlsmart.org/', label: 'the demo' },
+    { text: 'The IA+TL and TL-only pilot instances serving today, captured above.', href: 'https://nmi.oimlsmart.org/', label: 'nmi' },
+    { text: 'The signed-chain submission: completed evaluations travel to the register as signed packages, verified on import.', href: '/technologies/trust-registry', label: 'the trust machinery' },
+  ]}
+  vision={[
+    { text: 'The SMART+ tier (the twin, the continuous monitor) deploys under the same postures as the roadmap lands.', href: '/technologies/smart-twin', label: 'roadmap' },
+    { text: 'Dataspace federation between member instances and national systems, the negotiation and conformance legs named there.', href: '/technologies/dataspace-interop', label: 'roadmap' },
+  ]}
+/>
+
+## Who may run what
+
+The self-host entitlement attaches to the Member State; an authority or
+laboratory operates its instance under its proposing Member State's
+entitlement. Quoted from the estate's single entitlement source, with
+the path spelled out:
+
+<EntitlementRow category="member-state" upsell="body-to-ms" />
+
+## The honest questions
+
+### Must we self-host to stay sovereign?
+
+No. The hosted platform serves every member category, and using it
+never requires running anything. Self-hosting is the Member State
+entitlement for those who want their own data residency; the
+federation means the register story is identical either way. The
+matrix above quotes the determination from the single source.
+
+### What does running our own instance actually cost?
+
+The postures are deliberately minimal-ops: one service, one durable
+store (a SQLite volume or a DynamoDB table), the rolling update
+channel. The runbook's operations section is the honest headline:
+backups are a file snapshot, upgrades are rolling and
+forward-compatible, health is two endpoints. It is operations a
+national metrology institute's IT already runs.
+
+### Can a laboratory really start alone?
+
+Yes, that is what the TL-only posture is for. The laboratory's instance
+receives dispatched work from the authority's platform and returns
+reports as data; when the authority later stands up its own instance,
+or joins the hosted one, the laboratory's posture does not change. The
+pilot at tl.oimlsmart.org is this shape, serving today.
+
+### If everyone can run their own, whose register is true?
+
+The scheme's. Member instances submit their completed chains to the CS
+platform; the register validates the signature chain on import and
+publishes the single validity reference. A repeat submission is
+idempotent: it returns the same registration reference and never
+double-registers. Federation multiplies the keyboards, never the
+truths.
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/login"
+  label="Compare the postures live"
+  description="The demo is the hub; nmi.oimlsmart.org is the IA+TL pilot; tl.oimlsmart.org is the TL-only pilot. Same software, three profiles."
+/>
+<ActionBox
+  href="/services/who-can-run-what"
+  label="Read the full entitlement matrix"
+  description="Every member category by every service, from the estate's single source."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: which posture fits your organization, and what the first deployment looks like."
+/>
