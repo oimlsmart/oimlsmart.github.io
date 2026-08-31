@@ -1,0 +1,492 @@
+{
+  "generatedAt": "2026-08-31T23:30:57.198Z",
+  "captureDate": "2026-08-31",
+  "records": [
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "register",
+      "file": "type-evaluation-end-to-end/register-light.png",
+      "url": "https://demo.oimlsmart.org/app/register/",
+      "theme": "light",
+      "performed": "browsed the public Certificate Register to the published R60/2021-A-EX1-26.01 row — no account",
+      "capturedAt": "2026-08-31T21:09:09.045Z"
+    },
+    {
+      "page": "member-state-view",
+      "name": "register",
+      "file": "member-state-view/register-light.png",
+      "url": "https://demo.oimlsmart.org/app/register/",
+      "theme": "light",
+      "performed": "the public register your regime reads as the validity reference — no account",
+      "capturedAt": "2026-08-31T21:09:09.095Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "verify-verdict",
+      "file": "type-evaluation-end-to-end/verify-verdict-light.png",
+      "url": "https://demo.oimlsmart.org/app/verify/",
+      "theme": "light",
+      "performed": "typed the certificate number R60/2021-A-EX1-26.01 and read the verdict: ACTIVE from the BIML-registered copy, no account",
+      "capturedAt": "2026-08-31T21:09:14.832Z"
+    },
+    {
+      "page": "member-state-view",
+      "name": "verify-verdict",
+      "file": "member-state-view/verify-verdict-light.png",
+      "url": "https://demo.oimlsmart.org/app/verify/",
+      "theme": "light",
+      "performed": "typed the certificate number R60/2021-A-EX1-26.01 and read the verdict: ACTIVE from the BIML-registered copy, no account",
+      "capturedAt": "2026-08-31T21:09:20.061Z"
+    },
+    {
+      "page": "deployment-modes",
+      "name": "hub-login",
+      "file": "deployment-modes/hub-login-light.png",
+      "url": "https://demo.oimlsmart.org/app/login/",
+      "theme": "light",
+      "performed": "the CS-operated hub posture: the demo instance’s login with the one-click demo accounts, every role on one deployment",
+      "capturedAt": "2026-08-31T21:09:20.767Z"
+    },
+    {
+      "page": "deployment-modes",
+      "name": "nmi-instance",
+      "file": "deployment-modes/nmi-instance-light.png",
+      "url": "https://nmi.oimlsmart.org/",
+      "theme": "light",
+      "performed": "opened the IA+TL pilot instance at nmi.oimlsmart.org — the same software booted under the member deployment profile",
+      "capturedAt": "2026-08-31T21:09:24.445Z"
+    },
+    {
+      "page": "deployment-modes",
+      "name": "tl-instance",
+      "file": "deployment-modes/tl-instance-light.png",
+      "url": "https://tl.oimlsmart.org/",
+      "theme": "light",
+      "performed": "opened the TL-only pilot instance at tl.oimlsmart.org — the laboratory posture of the same codebase",
+      "capturedAt": "2026-08-31T21:09:28.101Z"
+    },
+    {
+      "page": "training-on-the-sst",
+      "name": "sst-site",
+      "file": "training-on-the-sst/sst-site-light.png",
+      "url": "https://www.oimlsmart.org/sst/",
+      "theme": "light",
+      "performed": "met the simulated instruments on the SST site: the consoles, the bench, the scenario library",
+      "capturedAt": "2026-08-31T21:09:32.031Z"
+    },
+    {
+      "page": "member-state-view",
+      "name": "identity-join",
+      "file": "member-state-view/identity-join-light.png",
+      "url": "https://id.oimlsmart.org/op/join/",
+      "theme": "light",
+      "performed": "opened the identity service join flow: accounts per organization, the member directory selectable",
+      "capturedAt": "2026-08-31T21:09:35.167Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "register",
+      "file": "type-evaluation-end-to-end/register-dark.png",
+      "url": "https://demo.oimlsmart.org/app/register/",
+      "theme": "dark",
+      "performed": "browsed the public Certificate Register to the published R60/2021-A-EX1-26.01 row — no account",
+      "capturedAt": "2026-08-31T21:09:39.430Z"
+    },
+    {
+      "page": "member-state-view",
+      "name": "register",
+      "file": "member-state-view/register-dark.png",
+      "url": "https://demo.oimlsmart.org/app/register/",
+      "theme": "dark",
+      "performed": "the public register your regime reads as the validity reference — no account",
+      "capturedAt": "2026-08-31T21:09:39.479Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "verify-verdict",
+      "file": "type-evaluation-end-to-end/verify-verdict-dark.png",
+      "url": "https://demo.oimlsmart.org/app/verify/",
+      "theme": "dark",
+      "performed": "typed the certificate number R60/2021-A-EX1-26.01 and read the verdict: ACTIVE from the BIML-registered copy, no account",
+      "capturedAt": "2026-08-31T21:09:44.692Z"
+    },
+    {
+      "page": "member-state-view",
+      "name": "verify-verdict",
+      "file": "member-state-view/verify-verdict-dark.png",
+      "url": "https://demo.oimlsmart.org/app/verify/",
+      "theme": "dark",
+      "performed": "typed the certificate number R60/2021-A-EX1-26.01 and read the verdict: ACTIVE from the BIML-registered copy, no account",
+      "capturedAt": "2026-08-31T21:09:49.396Z"
+    },
+    {
+      "page": "deployment-modes",
+      "name": "hub-login",
+      "file": "deployment-modes/hub-login-dark.png",
+      "url": "https://demo.oimlsmart.org/app/login/",
+      "theme": "dark",
+      "performed": "the CS-operated hub posture: the demo instance’s login with the one-click demo accounts, every role on one deployment",
+      "capturedAt": "2026-08-31T21:09:51.059Z"
+    },
+    {
+      "page": "deployment-modes",
+      "name": "nmi-instance",
+      "file": "deployment-modes/nmi-instance-dark.png",
+      "url": "https://nmi.oimlsmart.org/",
+      "theme": "dark",
+      "performed": "opened the IA+TL pilot instance at nmi.oimlsmart.org — the same software booted under the member deployment profile",
+      "capturedAt": "2026-08-31T21:09:54.678Z"
+    },
+    {
+      "page": "deployment-modes",
+      "name": "tl-instance",
+      "file": "deployment-modes/tl-instance-dark.png",
+      "url": "https://tl.oimlsmart.org/",
+      "theme": "dark",
+      "performed": "opened the TL-only pilot instance at tl.oimlsmart.org — the laboratory posture of the same codebase",
+      "capturedAt": "2026-08-31T21:09:58.259Z"
+    },
+    {
+      "page": "training-on-the-sst",
+      "name": "sst-site",
+      "file": "training-on-the-sst/sst-site-dark.png",
+      "url": "https://www.oimlsmart.org/sst/",
+      "theme": "dark",
+      "performed": "met the simulated instruments on the SST site: the consoles, the bench, the scenario library",
+      "capturedAt": "2026-08-31T21:10:01.898Z"
+    },
+    {
+      "page": "member-state-view",
+      "name": "identity-join",
+      "file": "member-state-view/identity-join-dark.png",
+      "url": "https://id.oimlsmart.org/op/join/",
+      "theme": "dark",
+      "performed": "opened the identity service join flow: accounts per organization, the member directory selectable",
+      "capturedAt": "2026-08-31T21:10:05.043Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "wizard-recommendation",
+      "file": "type-evaluation-end-to-end/wizard-recommendation-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "light",
+      "performed": "opened the new-application wizard: step 1 is the explicit Recommendation pick (R 60, R 91, R 129, R 144 cards)",
+      "capturedAt": "2026-08-31T21:15:51.283Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "application-journey",
+      "file": "type-evaluation-end-to-end/application-journey-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/app-acme-lc",
+      "theme": "light",
+      "performed": "followed the application’s six-stage journey: every stage notified, the promise set with per-claim verification status",
+      "capturedAt": "2026-08-31T21:17:54.815Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "certificate-issued",
+      "file": "type-evaluation-end-to-end/certificate-issued-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/certificates/crt-acme-lc",
+      "theme": "light",
+      "performed": "downloaded-view of the issued certificate R60/2021-A-EX1-26.01 in the OIML layout — the end of the arc",
+      "capturedAt": "2026-08-31T21:19:52.292Z"
+    },
+    {
+      "page": "additional-national-requirements",
+      "name": "wizard-anr-step",
+      "file": "additional-national-requirements/wizard-anr-step-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "light",
+      "performed": "drove the application wizard to the scheme/ANR step (step 6): the target countries' declared ANRs as checkboxes, the application naming what the evaluation must cover",
+      "capturedAt": "2026-08-31T21:22:02.771Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "wizard-recommendation",
+      "file": "type-evaluation-end-to-end/wizard-recommendation-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "dark",
+      "performed": "opened the new-application wizard: step 1 is the explicit Recommendation pick (R 60, R 91, R 129, R 144 cards)",
+      "capturedAt": "2026-08-31T21:27:45.522Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "application-journey",
+      "file": "type-evaluation-end-to-end/application-journey-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/app-acme-lc",
+      "theme": "dark",
+      "performed": "followed the application’s six-stage journey: every stage notified, the promise set with per-claim verification status",
+      "capturedAt": "2026-08-31T21:29:48.292Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "certificate-issued",
+      "file": "type-evaluation-end-to-end/certificate-issued-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/certificates/crt-acme-lc",
+      "theme": "dark",
+      "performed": "downloaded-view of the issued certificate R60/2021-A-EX1-26.01 in the OIML layout — the end of the arc",
+      "capturedAt": "2026-08-31T21:31:50.793Z"
+    },
+    {
+      "page": "additional-national-requirements",
+      "name": "wizard-anr-step",
+      "file": "additional-national-requirements/wizard-anr-step-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "dark",
+      "performed": "drove the application wizard to the scheme/ANR step (step 6): the target countries' declared ANRs as checkboxes, the application naming what the evaluation must cover",
+      "capturedAt": "2026-08-31T21:33:55.757Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "review-queue",
+      "file": "type-evaluation-end-to-end/review-queue-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/",
+      "theme": "light",
+      "performed": "the authority’s intake: the review queue with the applications waiting, oldest first",
+      "capturedAt": "2026-08-31T21:39:52.520Z"
+    },
+    {
+      "page": "additional-national-requirements",
+      "name": "anr-capability",
+      "file": "additional-national-requirements/anr-capability-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/",
+      "theme": "light",
+      "performed": "the authority’s ANR test-capability card on its own console: the declared ANR tests it can perform (the NL damp-heat declaration, tier 2 declared-simple)",
+      "capturedAt": "2026-08-31T21:41:47.482Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "review-file",
+      "file": "type-evaluation-end-to-end/review-file-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/applications/app-acme-lc",
+      "theme": "light",
+      "performed": "opened the canonical application file (accepted long ago): the review record with its closed acts, the whole file on one page",
+      "capturedAt": "2026-08-31T21:45:35.435Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "project-hub",
+      "file": "type-evaluation-end-to-end/project-hub-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/projects/app-acme-lc",
+      "theme": "light",
+      "performed": "the Evaluation Project hub: samples, test requests, reports, verdicts, and the certificate-to-be share one record",
+      "capturedAt": "2026-08-31T21:47:30.412Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "certificates-desk",
+      "file": "type-evaluation-end-to-end/certificates-desk-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/certificates/",
+      "theme": "light",
+      "performed": "the certificates desk: issue-from-evaluation plus the issued set with the BIML registration acts",
+      "capturedAt": "2026-08-31T21:49:27.421Z"
+    },
+    {
+      "page": "continuous-compliance",
+      "name": "certificate-lifecycle",
+      "file": "continuous-compliance/certificate-lifecycle-light.png",
+      "url": "https://demo.oimlsmart.org/app/standards/r60/certificates/crt-acme-lc",
+      "theme": "light",
+      "performed": "the certificate’s lifecycle acts as the authority sees them: annex, revise, renew, suspend, withdraw — the suspension semantics continuous compliance triggers",
+      "capturedAt": "2026-08-31T21:51:12.935Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "review-queue",
+      "file": "type-evaluation-end-to-end/review-queue-dark.png",
+      "url": "https://demo.oimlsmart.org/app/ia/",
+      "theme": "dark",
+      "performed": "the authority’s intake: the review queue with the applications waiting, oldest first",
+      "capturedAt": "2026-08-31T21:57:01.231Z"
+    },
+    {
+      "page": "additional-national-requirements",
+      "name": "anr-capability",
+      "file": "additional-national-requirements/anr-capability-dark.png",
+      "url": "https://demo.oimlsmart.org/app/ia/",
+      "theme": "dark",
+      "performed": "the authority’s ANR test-capability card on its own console: the declared ANR tests it can perform (the NL damp-heat declaration, tier 2 declared-simple)",
+      "capturedAt": "2026-08-31T21:58:53.715Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "review-file",
+      "file": "type-evaluation-end-to-end/review-file-dark.png",
+      "url": "https://demo.oimlsmart.org/app/ia/applications/app-acme-lc",
+      "theme": "dark",
+      "performed": "opened the canonical application file (accepted long ago): the review record with its closed acts, the whole file on one page",
+      "capturedAt": "2026-08-31T22:02:47.710Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "project-hub",
+      "file": "type-evaluation-end-to-end/project-hub-dark.png",
+      "url": "https://demo.oimlsmart.org/app/ia/projects/app-acme-lc",
+      "theme": "dark",
+      "performed": "the Evaluation Project hub: samples, test requests, reports, verdicts, and the certificate-to-be share one record",
+      "capturedAt": "2026-08-31T22:04:42.680Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "certificates-desk",
+      "file": "type-evaluation-end-to-end/certificates-desk-dark.png",
+      "url": "https://demo.oimlsmart.org/app/ia/certificates/",
+      "theme": "dark",
+      "performed": "the certificates desk: issue-from-evaluation plus the issued set with the BIML registration acts",
+      "capturedAt": "2026-08-31T22:06:37.185Z"
+    },
+    {
+      "page": "continuous-compliance",
+      "name": "certificate-lifecycle",
+      "file": "continuous-compliance/certificate-lifecycle-dark.png",
+      "url": "https://demo.oimlsmart.org/app/standards/r60/certificates/crt-acme-lc",
+      "theme": "dark",
+      "performed": "the certificate’s lifecycle acts as the authority sees them: annex, revise, renew, suspend, withdraw — the suspension semantics continuous compliance triggers",
+      "capturedAt": "2026-08-31T22:08:31.230Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "lab-inbox",
+      "file": "type-evaluation-end-to-end/lab-inbox-light.png",
+      "url": "https://demo.oimlsmart.org/app/lab/",
+      "theme": "light",
+      "performed": "the laboratory’s chapter: the test-request inbox, the dispatched work with its samples and assigned forms",
+      "capturedAt": "2026-08-31T23:19:44.944Z"
+    },
+    {
+      "page": "continuous-compliance",
+      "name": "twin-lab",
+      "file": "continuous-compliance/twin-lab-light.png",
+      "url": "https://demo.oimlsmart.org/app/twin-lab/",
+      "theme": "light",
+      "performed": "the twin lab: connect to a served twin interface and read its declared registers — introspection, never a hard-coded shape",
+      "capturedAt": "2026-08-31T23:20:50.965Z"
+    },
+    {
+      "page": "type-evaluation-end-to-end",
+      "name": "lab-inbox",
+      "file": "type-evaluation-end-to-end/lab-inbox-dark.png",
+      "url": "https://demo.oimlsmart.org/app/lab/",
+      "theme": "dark",
+      "performed": "the laboratory’s chapter: the test-request inbox, the dispatched work with its samples and assigned forms",
+      "capturedAt": "2026-08-31T23:24:57.054Z"
+    },
+    {
+      "page": "continuous-compliance",
+      "name": "twin-lab",
+      "file": "continuous-compliance/twin-lab-dark.png",
+      "url": "https://demo.oimlsmart.org/app/twin-lab/",
+      "theme": "dark",
+      "performed": "the twin lab: connect to a served twin interface and read its declared registers — introspection, never a hard-coded shape",
+      "capturedAt": "2026-08-31T23:26:01.349Z"
+    },
+    {
+      "page": "continuous-compliance",
+      "name": "twin-console",
+      "file": "continuous-compliance/twin-console-light.png",
+      "url": "https://demo.oimlsmart.org/app/twin/",
+      "theme": "light",
+      "performed": "opened the twin console with the monitor judging the provisioned demo twin’s feed against the modelled requirement",
+      "capturedAt": "2026-08-31T23:26:43.108Z"
+    },
+    {
+      "page": "training-on-the-sst",
+      "name": "sim-bench",
+      "file": "training-on-the-sst/sim-bench-light.png",
+      "url": "https://demo.oimlsmart.org/app/sim/",
+      "theme": "light",
+      "performed": "the sim bench: the standalone pairing surface — the hosted demo keeps it unpaired and prints the one-command boot for a locally booted SST",
+      "capturedAt": "2026-08-31T23:27:01.253Z"
+    },
+    {
+      "page": "continuous-compliance",
+      "name": "twin-console",
+      "file": "continuous-compliance/twin-console-dark.png",
+      "url": "https://demo.oimlsmart.org/app/twin/",
+      "theme": "dark",
+      "performed": "opened the twin console with the monitor judging the provisioned demo twin’s feed against the modelled requirement",
+      "capturedAt": "2026-08-31T23:27:42.242Z"
+    },
+    {
+      "page": "training-on-the-sst",
+      "name": "sim-bench",
+      "file": "training-on-the-sst/sim-bench-dark.png",
+      "url": "https://demo.oimlsmart.org/app/sim/",
+      "theme": "dark",
+      "performed": "the sim bench: the standalone pairing surface — the hosted demo keeps it unpaired and prints the one-command boot for a locally booted SST",
+      "capturedAt": "2026-08-31T23:28:00.393Z"
+    },
+    {
+      "page": "member-state-view",
+      "name": "cs-ia-registry",
+      "file": "member-state-view/cs-ia-registry-light.png",
+      "url": "https://demo.oimlsmart.org/app/cs/issuing-authorities/",
+      "theme": "light",
+      "performed": "the designation chain as data: the OIML-CS Issuing Authority registry (PTB, METAS, NIM and the rest) with the scopes your designations belong to",
+      "capturedAt": "2026-08-31T23:28:34.880Z"
+    },
+    {
+      "page": "member-state-view",
+      "name": "cs-participants",
+      "file": "member-state-view/cs-participants-light.png",
+      "url": "https://demo.oimlsmart.org/app/cs/participants/",
+      "theme": "light",
+      "performed": "the scheme’s participant registry: the issuing authorities, the test laboratories, the utilizers and associates — the chain the register answers for",
+      "capturedAt": "2026-08-31T23:28:46.182Z"
+    },
+    {
+      "page": "member-state-view",
+      "name": "cs-ia-registry",
+      "file": "member-state-view/cs-ia-registry-dark.png",
+      "url": "https://demo.oimlsmart.org/app/cs/issuing-authorities/",
+      "theme": "dark",
+      "performed": "the designation chain as data: the OIML-CS Issuing Authority registry (PTB, METAS, NIM and the rest) with the scopes your designations belong to",
+      "capturedAt": "2026-08-31T23:29:20.708Z"
+    },
+    {
+      "page": "member-state-view",
+      "name": "cs-participants",
+      "file": "member-state-view/cs-participants-dark.png",
+      "url": "https://demo.oimlsmart.org/app/cs/participants/",
+      "theme": "dark",
+      "performed": "the scheme’s participant registry: the issuing authorities, the test laboratories, the utilizers and associates — the chain the register answers for",
+      "capturedAt": "2026-08-31T23:29:32.554Z"
+    },
+    {
+      "page": "additional-national-requirements",
+      "name": "anr-registry",
+      "file": "additional-national-requirements/anr-registry-light.png",
+      "url": "https://demo.oimlsmart.org/app/cs/anr/",
+      "theme": "light",
+      "performed": "the ANR declaration registry for your market: the declared provisions with their moderation states (only APPROVED is live)",
+      "capturedAt": "2026-08-31T23:30:13.679Z"
+    },
+    {
+      "page": "additional-national-requirements",
+      "name": "anr-declare-form",
+      "file": "additional-national-requirements/anr-declare-form-light.png",
+      "url": "https://demo.oimlsmart.org/app/cs/anr/",
+      "theme": "light",
+      "performed": "the declare form on the registry page: the acting utilizer, the market, the content-tier radios (tier 2 declared-simple / tier 1 Primmel-defined), the procedure as text, the reference document; the draft files for moderation",
+      "capturedAt": "2026-08-31T23:30:14.917Z"
+    },
+    {
+      "page": "additional-national-requirements",
+      "name": "anr-registry",
+      "file": "additional-national-requirements/anr-registry-dark.png",
+      "url": "https://demo.oimlsmart.org/app/cs/anr/",
+      "theme": "dark",
+      "performed": "the ANR declaration registry for your market: the declared provisions with their moderation states (only APPROVED is live)",
+      "capturedAt": "2026-08-31T23:30:55.912Z"
+    },
+    {
+      "page": "additional-national-requirements",
+      "name": "anr-declare-form",
+      "file": "additional-national-requirements/anr-declare-form-dark.png",
+      "url": "https://demo.oimlsmart.org/app/cs/anr/",
+      "theme": "dark",
+      "performed": "the declare form on the registry page: the acting utilizer, the market, the content-tier radios (tier 2 declared-simple / tier 1 Primmel-defined), the procedure as text, the reference document; the draft files for moderation",
+      "capturedAt": "2026-08-31T23:30:57.151Z"
+    }
+  ]
+}
