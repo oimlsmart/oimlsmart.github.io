@@ -198,6 +198,57 @@ test.describe('Public site — critical paths', () => {
     }
   })
 
+  test('the six use-case pages render the page-depth anatomy', async ({ page }) => {
+    // TODO.promotion/05 under 10's anatomy: the day-in-the-life hero with
+    // a real capture, the walkthrough of performed acts with their dated
+    // evidence, the how-it-works diagram, the SMART/SMART+ split, the
+    // objections FAQ, and the journey CTAs. The deployment-modes page
+    // additionally quotes the entitlement determination from the single
+    // matrix source (never a copy).
+    for (const [path, heading, walkthrough] of [
+      ['/use-cases/type-evaluation-end-to-end', 'Type evaluation, end to end', 'The story, chapter by chapter'],
+      ['/use-cases/deployment-modes', 'The deployment-mode matrix', 'The four postures, rendered plain'],
+      ['/use-cases/continuous-compliance', 'Continuous compliance via the twin', 'What you can do today'],
+      ['/use-cases/training-on-the-sst', 'Training on the SST', 'What you can do today'],
+      ['/use-cases/member-state-view', 'The member-state view', 'What you can do today'],
+      ['/use-cases/additional-national-requirements', 'The additional-national-requirements flow', 'What you can do today'],
+    ] as const) {
+      await page.goto(path)
+      await expect(page.locator('h1')).toContainText(heading)
+      await expect(page.locator('h2', { hasText: walkthrough })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'How it works' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'Today (SMART) and the vision (SMART+)' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'The honest questions' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'Where to go next' })).toBeVisible()
+      // The performed evidence: dated captures from the scripted apparatus.
+      await expect(page.locator('figure.shot-figure img').first()).toBeVisible()
+      // The how-it-works diagram (inline SVG, house style).
+      await expect(page.locator('figure.tech-figure svg').first()).toBeVisible()
+      // The SMART/SMART+ split, first-class and visually separated.
+      await expect(page.locator('.smart-split')).toBeVisible()
+    }
+  })
+
+  test('the deployment-modes page quotes the entitlement source', async ({ page }) => {
+    await page.goto('/use-cases/deployment-modes')
+    await expect(page.locator('.entitlement-row table')).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Who can run what' }).first()).toBeVisible()
+  })
+
+  test('the use-cases index cards link the six stories', async ({ page }) => {
+    await page.goto('/use-cases/')
+    for (const href of [
+      '/use-cases/type-evaluation-end-to-end',
+      '/use-cases/deployment-modes',
+      '/use-cases/continuous-compliance',
+      '/use-cases/training-on-the-sst',
+      '/use-cases/member-state-view',
+      '/use-cases/additional-national-requirements',
+    ]) {
+      await expect(page.locator(`a[href="${href}"]`).first()).toBeVisible()
+    }
+  })
+
   test('docs page loads with sidebar and content', async ({ page }) => {
     await page.goto('/docs/')
     await expect(page.locator('h1')).toBeVisible()
