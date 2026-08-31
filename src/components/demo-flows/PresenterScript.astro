@@ -1,0 +1,103 @@
+---
+/**
+ * PresenterScript.astro — one presenter script for a demo-flow
+ * walkthrough (TODO.promotion/06): the 5-minute version (the committee
+ * slot) or the 20-minute version (the working visit), keyed to the
+ * walkthrough's step ids (S1, S2, ...). The block is printable: the
+ * walkthrough pages' print stylesheet keeps the .presenter-scripts
+ * region and hides the rest of the page, so printing the page yields
+ * the scripts clean.
+ */
+interface Beat {
+  /** The running time marker ("0:00", "1:30"). */
+  at: string
+  /** The step ids this beat covers ("S1-S2" or "S4"); empty for
+   *  framing beats (the opening, the close). */
+  steps?: string
+  /** What the presenter says and does. */
+  text: string
+}
+
+interface Props {
+  minutes: 5 | 20
+  /** Who this length is for ("the committee slot"). */
+  audience: string
+  beats: Beat[]
+}
+
+const { minutes, audience, beats } = Astro.props
+---
+
+<div class="presenter-script">
+  <p class="presenter-script__eyebrow">The {minutes}-minute presenter script · {audience}</p>
+  <ol class="presenter-script__beats">
+    {beats.map((b) => (
+      <li class:list={['presenter-script__beat', { 'presenter-script__beat--nosteps': !b.steps }]}>
+        <span class="presenter-script__at">{b.at}</span>
+        {b.steps && (
+          <a class="presenter-script__steps" href={`#${b.steps.split('-')[0].toLowerCase()}`}>{b.steps}</a>
+        )}
+        <span class="presenter-script__text">{b.text}</span>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .presenter-script {
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--paper-soft);
+    padding: 1.25rem 1.5rem;
+    margin: 0 0 1.5rem;
+    break-inside: auto;
+  }
+  .presenter-script__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0 0 0.875rem;
+  }
+  .presenter-script__beats {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.625rem;
+  }
+  .presenter-script__beat {
+    display: grid;
+    grid-template-columns: 3rem 3.25rem 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    break-inside: avoid;
+  }
+  .presenter-script__at {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    text-align: right;
+  }
+  .presenter-script__steps {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .presenter-script__steps:hover { text-decoration: underline; }
+  .presenter-script__text :global(strong) { color: var(--ink); }
+  /* Framing beats (no step ref): the text spans the steps + text columns. */
+  .presenter-script__beat--nosteps .presenter-script__text { grid-column: 2 / -1; }
+  @media (max-width: 40rem) {
+    .presenter-script__beat { grid-template-columns: 2.5rem 1fr; }
+    .presenter-script__steps { grid-column: 2; grid-row: 2; }
+    .presenter-script__text { grid-column: 2; }
+  }
+</style>

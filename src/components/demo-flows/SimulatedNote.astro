@@ -1,0 +1,62 @@
+---
+/**
+ * SimulatedNote.astro — the SIMULATED honesty panel every demo-flow
+ * walkthrough carries (TODO.promotion/06): the CIML reader must never
+ * mistake the demo for production data. One component, one wording, so
+ * the six walkthroughs can never drift apart on the honesty line.
+ */
+---
+
+<aside class="simulated-note" role="note" aria-label="Simulated data notice">
+  <p class="simulated-note__chip">SIMULATED</p>
+  <div class="simulated-note__body">
+    <p>
+      Everything these walkthroughs show is <strong>simulated</strong>. The demo instance
+      at <a href="https://demo.oimlsmart.org">demo.oimlsmart.org</a> runs the real platform
+      software, but the cast is fictional by design: the manufacturer ACME Measurement GmbH and
+      its LC-500 load-cell line, the Example Issuing Authority (EX1), the Example Test
+      Laboratory (ETL), and the BIML officer are demonstration identities, never real
+      organizations. The instance re-seeds nightly, so anything entered there is gone by
+      morning. No production data, no real applicant, no real certificate appears anywhere on
+      these pages; the artifacts are real platform output produced by the fictional cast.
+    </p>
+  </div>
+</aside>
+
+<style>
+  .simulated-note {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    border: 1px dashed var(--color-amber-warm, #d97706);
+    border-left: 4px solid var(--color-amber-warm, #d97706);
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--color-amber-warm, #d97706) 6%, var(--paper));
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0 2rem;
+  }
+  .simulated-note__chip {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #fff;
+    background: var(--color-amber-warm, #d97706);
+    border-radius: 3px;
+    padding: 0.2rem 0.45rem;
+    margin: 0.15rem 0 0;
+    white-space: nowrap;
+  }
+  .simulated-note__body p {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .simulated-note__body strong { color: var(--ink); }
+  .simulated-note__body a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

@@ -1,0 +1,135 @@
+---
+/**
+ * FlowStep.astro — one walkthrough step on a demo-flow page
+ * (TODO.promotion/06): the keyed step chip the presenter scripts
+ * reference (S1, S2, ...), the plain-language narration (slot), the
+ * scripted capture or the live link (never a stale hand snap), and the
+ * "try it yourself" line naming the exact demo account and console.
+ */
+import ShotFigure from '../ShotFigure.astro'
+
+interface Props {
+  /** The step key the presenter scripts cite ("S1"). */
+  sid: string
+  title: string
+  /** The demo account the step is performed with ("Applicant"). */
+  account: string
+  /** The console the account lands in ("/app/portal"). */
+  console: string
+  /** The live URL of the step's surface on the demo instance. */
+  live: string
+  /** The capture stem under /img/walkthroughs/<page>/, when the step
+   *  carries a scripted screenshot. Omit for a live-link-only step. */
+  stem?: string
+  /** The page folder under /img/walkthroughs/ (defaults per flow). */
+  page?: string
+  /** False when the capture has no dark variant (drive captures are
+   *  light-only, the house convention). */
+  dark?: boolean
+  /** The capture date (the freshness discipline). */
+  captured: string
+  /** One sentence stating what the capture shows (the alt + caption). */
+  alt?: string
+}
+
+const { sid, title, account, console: consolePath, live, stem, page = 'shared', dark = true, captured, alt } = Astro.props
+---
+
+<section class="flow-step" id={sid.toLowerCase()}>
+  <header class="flow-step__head">
+    <span class="flow-step__chip">{sid}</span>
+    <h3 class="flow-step__title">{title}</h3>
+  </header>
+  <div class="flow-step__body">
+    <slot />
+  </div>
+  <p class="flow-step__try">
+    <span class="flow-step__try-label">Try it:</span>
+    sign in as <strong>{account}</strong>, then work in
+    <a href={live} target="_blank" rel="noopener noreferrer"><code>{consolePath}</code></a>
+    on the demo instance.
+  </p>
+  {stem && alt && (
+    <ShotFigure
+      section="walkthroughs"
+      page={page}
+      stem={stem}
+      alt={alt}
+      source={live}
+      captured={captured}
+      dark={dark}
+    />
+  )}
+  {!stem && (
+    <p class="flow-step__liveonly">
+      <a href={live} target="_blank" rel="noopener noreferrer">Open this step's live surface on the demo ↗</a>
+    </p>
+  )}
+</section>
+
+<style>
+  .flow-step {
+    margin: 0 0 2.75rem;
+    scroll-margin-top: 5rem;
+  }
+  .flow-step__head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .flow-step__chip {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 3px;
+    padding: 0.1rem 0.45rem;
+    white-space: nowrap;
+  }
+  .flow-step__title {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .flow-step__body :global(p) {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 0.75rem;
+  }
+  .flow-step__body :global(strong) { color: var(--ink); }
+  .flow-step__try {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    border-left: 3px solid var(--rule);
+    padding-left: 0.875rem;
+    margin: 0.5rem 0 0;
+  }
+  .flow-step__try strong { color: var(--ink-soft); font-weight: 600; }
+  .flow-step__try-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-right: 0.25rem;
+  }
+  .flow-step__try a, .flow-step__liveonly a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .flow-step__try code {
+    font-size: 0.8125rem;
+  }
+  .flow-step__liveonly {
+    margin: 0.75rem 0 0;
+    font-size: 0.9375rem;
+  }
+</style>
