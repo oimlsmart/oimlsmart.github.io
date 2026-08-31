@@ -1,0 +1,95 @@
+---
+/**
+ * ContinuousComplianceLoop — the SMART+ story in one diagram: the
+ * instrument's twin serves its governed registers, the monitor judges
+ * the served evidence against the Recommendation's promises, the
+ * evidence accumulates for audit, and a broken promise drives the
+ * certificate's suspension semantics. The probe channel band keeps
+ * physical evidence primary. House style; dark-mode correct via the
+ * TechFigure palette. (TODO.promotion/10: one diagram per page.)
+ */
+import TechFigure from '../TechFigure.astro'
+---
+
+<TechFigure caption="The certificate stops being a point-in-time snapshot: the monitor re-computes conformance over the served evidence, and the lifecycle acts carry the consequences.">
+  <svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="uc-loop-title">
+    <title id="uc-loop-title">Continuous compliance: the instrument's SMART twin serves its governed registers through the gateway; the monitor judges every requirement against the Recommendation's promises; verdicts and evidence accumulate in the append-only stream; a broken promise drives the certificate's suspension act and the public status lists; the probe channel pairs served values with physical evidence</title>
+
+    <defs>
+      <marker id="uc-larr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"/>
+      </marker>
+    </defs>
+
+    <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="var(--dg-text)">Continuous compliance, the loop</text>
+
+    <rect x="30" y="80" width="200" height="100" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="130" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">The instrument&#8217;s twin</text>
+    <text x="130" y="126" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">serves the governed registers</text>
+    <text x="130" y="142" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the Recommendation declares,</text>
+    <text x="130" y="158" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">with freshness semantics</text>
+
+    <rect x="280" y="80" width="180" height="100" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="370" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">The gateway</text>
+    <text x="370" y="126" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the standard connector</text>
+    <text x="370" y="142" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">registry reads the</text>
+    <text x="370" y="158" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">served channel</text>
+
+    <rect x="510" y="80" width="180" height="100" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="600" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">The monitor</text>
+    <text x="600" y="126" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">judges every requirement</text>
+    <text x="600" y="142" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">per twin against its</text>
+    <text x="600" y="158" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">promise, on every poll</text>
+
+    <rect x="740" y="80" width="140" height="100" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="810" y="106" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">The evidence</text>
+    <text x="810" y="126" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">append-only streams,</text>
+    <text x="810" y="142" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">re-judgeable under</text>
+    <text x="810" y="158" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">new limits</text>
+
+    <line x1="230" y1="130" x2="272" y2="130" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-larr)"/>
+    <line x1="460" y1="130" x2="502" y2="130" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-larr)"/>
+    <line x1="690" y1="130" x2="732" y2="130" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-larr)"/>
+    <line x1="600" y1="180" x2="600" y2="226" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-larr)"/>
+
+    <!-- verdicts -->
+    <rect x="180" y="234" width="250" height="76" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="305" y="260" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">Promise holds</text>
+    <text x="305" y="280" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the certificate&#8217;s state stays ACTIVE,</text>
+    <text x="305" y="296" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">re-computed, never assumed</text>
+
+    <rect x="475" y="234" width="250" height="76" rx="10" fill="var(--dg-warn-fill)" stroke="var(--dg-warn-stroke)" stroke-width="1.5"/>
+    <text x="600" y="260" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-warn-text)">Promise breaks</text>
+    <text x="600" y="280" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the verdict escalates; silence degrades</text>
+    <text x="600" y="296" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">to indeterminate, never to a silent fail</text>
+
+    <line x1="600" y1="310" x2="600" y2="356" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-larr)"/>
+
+    <!-- suspension semantics -->
+    <rect x="330" y="364" width="270" height="76" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="465" y="390" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gen-text)">The suspension act</text>
+    <text x="465" y="410" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the authority&#8217;s lifecycle act, recorded</text>
+    <text x="465" y="426" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">with its reason and its evidence</text>
+
+    <rect x="640" y="364" width="230" height="76" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="755" y="390" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">The world sees it</text>
+    <text x="755" y="410" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the status lists update; verify</text>
+    <text x="755" y="426" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">answers SUSPENDED at once</text>
+
+    <line x1="600" y1="402" x2="632" y2="402" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-larr)"/>
+
+    <!-- the probe band -->
+    <rect x="30" y="234" width="120" height="206" rx="10" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" stroke-width="1.5"/>
+    <text x="90" y="260" text-anchor="middle" font-size="12" font-weight="600" fill="var(--dg-gov-text)">The probe</text>
+    <text x="90" y="278" text-anchor="middle" font-size="12" font-weight="600" fill="var(--dg-gov-text)">channel</text>
+    <text x="90" y="306" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">served values pair</text>
+    <text x="90" y="322" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">with physical</text>
+    <text x="90" y="338" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">evidence: a lying</text>
+    <text x="90" y="354" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">twin is caught by</text>
+    <text x="90" y="370" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">physics, not by</text>
+    <text x="90" y="386" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">trusting its own</text>
+    <text x="90" y="402" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">signature</text>
+
+    <text x="450" y="480" text-anchor="middle" font-size="13" fill="var(--dg-text-muted)">In the demo today: the monitor and gateway judge the simulated fleet live. Physical twins and signed serves: the roadmap legs the page names.</text>
+  </svg>
+</TechFigure>

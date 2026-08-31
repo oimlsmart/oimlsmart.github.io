@@ -1,0 +1,176 @@
+---
+title: 'Continuous compliance via the twin'
+description: 'The SMART+ story: the instrument’s live twin monitored against its Recommendation’s promises, evidence accumulating for audit, and the certificate’s suspension semantics when a promise breaks. Roadmap-anchored throughout.'
+eyebrow: 'Use Cases · 03'
+captured: '2026-08-31'
+---
+
+import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import ContinuousComplianceLoop from '../../../components/diagrams/usecases/ContinuousComplianceLoop.astro'
+
+**The certificate that keeps answering after it is issued.** Today a
+type evaluation ends at issuance; the instrument enters service,
+drifts, is recalibrated or repaired, and its conformity is
+re-established episodically, from paper records, at re-verification.
+Between those episodes the record says nothing about the instrument's
+actual state. This page is the SMART+ story of what replaces that
+silence: the instrument's live twin, monitored against its
+Recommendation's promises, with the certificate's suspension semantics
+when a promise breaks. It is labeled vision wherever it is vision; the
+parts that run today run against the simulated fleet in the demo, and
+say so.
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/twin"
+  label="Watch the monitor run in the demo"
+  description="Sign in with the one-click Admin demo account and provision the demo twin: the real monitor and gateway runtimes judge the simulated feed within seconds."
+/>
+
+<ShotFigure
+  section="usecases"
+  page="continuous-compliance"
+  stem="twin-console"
+  alt="The demo's twin console: the monitor judging the simulated twin feed against the modelled R 60 requirement, verdicts computed per poll."
+  source="https://demo.oimlsmart.org/app/twin"
+  captured="2026-08-31"
+/>
+
+## The story
+
+A surveillance officer's morning, as the vision runs it. The certified
+instruments in her market serve their governed registers: the values
+the Recommendation declares, with the freshness the Recommendation
+fixes. The platform's monitor reads each twin through the standard
+connector registry and judges every requirement per twin, on every
+poll. The evidence, facts, verdicts, escalations, accumulates in
+append-only streams, so an audit reads the window it asks about and a
+stored window can be re-judged under new limits without querying the
+instrument again. When a promise breaks, the verdict escalates; when a
+twin goes silent, the verdict degrades to indeterminate, never to a
+silent pass and never to a failure the platform cannot distinguish. And
+when the authority acts on it, the certificate's lifecycle carries the
+consequence: suspension is a recorded act with its reason, the status
+lists update, and the public verify page answers SUSPENDED at once.
+
+## What you can do today
+
+Every act below was performed against the live demo by the scripted
+capture apparatus before it was listed; each figure names its capture
+date and links the live surface. What runs today runs against the
+simulated fleet; no OIML Recommendation ships a twin binding yet, and
+the machinery is opt-in where it exists.
+
+**Watch the monitor judge a live twin.** The twin console wires the
+real monitor and gateway runtimes against the simulated feed, judging
+the modelled R 60 requirement on every poll; sign in as Admin and
+provision the demo twin (the capture above is that act, performed).
+
+**Connect to a served interface and read what it declares.** The twin
+lab introspects: the declared registers and operations, never a
+hard-coded shape. The [twin lab](https://demo.oimlsmart.org/app/twin-lab)
+opens to any served interface.
+
+<ShotFigure
+  section="usecases"
+  page="continuous-compliance"
+  stem="twin-lab"
+  alt="The twin lab workbench: connect to a served twin interface and read its declared registers."
+  source="https://demo.oimlsmart.org/app/twin-lab"
+  captured="2026-08-31"
+/>
+
+**Read the suspension semantics where they already live.** The
+certificate's lifecycle acts (annex, revise, renew, suspend, withdraw)
+are first-class today, each recorded with its reason; the public
+verification reads the live revocation and suspension lists. Continuous
+compliance does not invent new consequences; it gives the existing ones
+continuous evidence.
+
+<ShotFigure
+  section="usecases"
+  page="continuous-compliance"
+  stem="certificate-lifecycle"
+  alt="The certificate as the authority sees it: the BIML registration record and the lifecycle acts, suspend and withdraw among them."
+  source="https://demo.oimlsmart.org/app/standards/r60/certificates/crt-acme-lc"
+  captured="2026-08-31"
+/>
+
+## How it works
+
+<ContinuousComplianceLoop />
+
+Two honest limits carry the design. The first: served values are never
+the whole truth, so the twin-certification program pairs them with a
+probe channel (a reference instrument, an observer attestation,
+simulator ground truth in rehearsal); a lying twin is caught by
+physics, not by trusting its own signature. The second: in the demo the
+evidence store is in-memory and resets with the page, as the console
+itself states; the durable, deployable evidence engine is a named
+roadmap leg.
+
+## Today (SMART) and the vision (SMART+)
+
+<SmartSplit
+  today={[
+    { text: 'The monitor and gateway runtimes run in the demo against the simulated fleet, judging a real modelled requirement; no Recommendation ships a twin binding yet.', href: 'https://demo.oimlsmart.org/app/twin', label: 'the console' },
+    { text: 'The certificate’s lifecycle acts and the live status lists: the suspension semantics continuous compliance triggers.', href: 'https://demo.oimlsmart.org/app/verify/', label: 'verify' },
+    { text: 'The twin lab introspects any served interface from the browser.', href: 'https://demo.oimlsmart.org/app/twin-lab', label: 'open' },
+  ]}
+  vision={[
+    { text: 'Physical SMART instruments serving the same governed interface at member deployments.', href: 'https://www.oimlsmart.org/smi/', label: 'roadmap' },
+    { text: 'The deployable client/server compliance engine with durable evidence stores, and cryptographically signed serves.', href: 'https://www.primmel.org/primmel-smart-docs/platform/', label: 'roadmap' },
+    { text: 'Twin certification under the TW-1 governing document, with suspension and withdrawal at member deployments.', href: '/technologies/smart-twin', label: 'roadmap' },
+  ]}
+/>
+
+## The honest questions
+
+### Is any of this live for physical instruments?
+
+No, and the page says so wherever it matters. Today the runtimes judge
+the simulated fleet in the demo; physical-instrument bindings, the
+deployable evidence engine, and signed serves are roadmap items with
+their anchors above. The certificate lifecycle and the public status
+lists, the consequences, are live today.
+
+### Who acts when a promise breaks?
+
+The authority, exactly as today. The monitor computes and escalates;
+the suspension is the authority's recorded act with its reason.
+Continuous compliance changes the evidence, not the legal actor: the
+liability surface is the existing one, with the silence between
+episodes removed.
+
+### What stops a twin from lying?
+
+The probe channel. Served values pair with physical evidence (a
+reference instrument, an observer attestation, simulator ground truth),
+so misreporting is caught by physics. A device key certifies the twin's
+identity, never the instrument's honesty; the honest limits are the
+point.
+
+### Does this replace periodical re-verification?
+
+It changes what re-verification starts from. Today the episode begins
+by excavating files; with continuous evidence it begins by reading a
+computed window. The physical assessment stays; the archaeology goes.
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/twin"
+  label="Watch the monitor in the demo"
+  description="The one-click Admin account, then provision the demo twin: verdicts against the simulated feed within seconds. The instance resets nightly."
+/>
+<ActionBox
+  href="/technologies/smart-twin"
+  label="Read the SMART Twin technology page"
+  description="The machinery in depth: the governed projection, the declarations, the judgment, the probe channel."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: the surveillance conversation starts with which Recommendation and which fleet."
+/>
