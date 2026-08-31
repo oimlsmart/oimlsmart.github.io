@@ -1,0 +1,200 @@
+---
+title: 'The additional-national-requirements flow'
+description: 'An IA applying ANRs on top of the Recommendation: the Utilizer declares by the Primmel-defined path or the tick-a-box path, moderation keeps only APPROVED live, and the dispatch, evaluation, and certificate cover the declared set.'
+eyebrow: 'Use Cases · 06'
+captured: '2026-08-31'
+---
+
+import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import AnrLifecycle from '../../../components/diagrams/usecases/AnrLifecycle.astro'
+
+**Your market's extra rules, declared as data instead of annexes.** A
+Utilizer's officer knows the problem by heart: her market's regulation
+adds requirements the Recommendation does not cover, and today those
+live as an annex table in a PDF that every applicant, authority, and
+laboratory re-reads and re-interprets on their own. On the platform the
+Additional National Requirements are declared content: the scheme's own
+rule applies (Utilizers and Associates may specify ANRs, and when they
+do, the relevant test procedures must also be defined), the declaration
+is moderated before it is live, and the workflow carries the declared
+set into the dispatch, the evaluation, and the certificate.
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/cs/anr/"
+  label="See the ANR registry on the demo"
+  description="Sign in with the one-click Utilizer Officer (NL) demo account: the declaration registry for your market and the declare form. The instance resets nightly."
+/>
+
+<ShotFigure
+  section="usecases"
+  page="additional-national-requirements"
+  stem="anr-registry"
+  alt="The ANR provisions surface: the declaration registry with the APPROVED NL damp-heat declaration (tier 2 declared-simple), the declare form, and the pre-modelled DE provision pack (tier 1 Primmel-defined)."
+  source="https://demo.oimlsmart.org/app/cs/anr/"
+  captured="2026-08-31"
+/>
+
+## The story
+
+The lifecycle, as one market runs it. The Utilizer's officer declares
+her market's additional requirement, with its test procedure, because
+the scheme requires both together. She picks the path that fits her
+organization today: where the market can model, the requirement is a
+Primmel constraint and the procedure a Primmel process, dispatchable
+and evaluable exactly like a conformance test; where it cannot yet, the
+declared-simple path takes the title, the description, the procedure as
+text, and the reference document, and never blocks on modelling. A
+registry officer reviews the declaration; only APPROVED is live. The
+authorities and their laboratories then declare which ANR tests they
+can perform. When an applicant targets her market, the wizard names the
+country and the declared ANRs ride the application chain; the dispatch
+covers the ANR tests alongside the Recommendation's own; the
+certificate records the coverage per country. And where an evaluation
+honestly does not cover one, the record says so, with the reason: never
+a silent gap.
+
+## What you can do today
+
+Every act below was performed against the live demo by the scripted
+capture apparatus before it was listed; each figure names its capture
+date and links the live surface.
+
+**Read your market's ANR registry.** The [ANR
+provisions](https://demo.oimlsmart.org/app/cs/anr/) surface carries the
+declaration registry with its moderation states: today's live example
+is the Dutch declaration, a damp-heat cyclic test (10 cycles) per the
+national regulation NL-2024-7 for load cells in automatic weighing
+instruments, declared by the Example Metrology Authority (Netherlands),
+decided by the Executive Secretary, APPROVED for schemes A + B. The
+same page carries the pre-modelled provision packs, the tier-1 form:
+Germany's additional requirements for R 60 per MessEG/MessEV, authored
+in Primmel and shipped with the Recommendation's data tree. Sign in
+with the one-click **Utilizer Officer (NL)** demo account.
+
+**Open the declare form.** Both paths start here, and the form says so:
+the content-tier radio offers tier 2, declared-simple (the procedure as
+text plus the reference document), and tier 1, Primmel-defined (the
+modelled requirement and test). The draft files into the registry list;
+submit for review sends it to the CS registry; only APPROVED is live.
+
+<ShotFigure
+  section="usecases"
+  page="additional-national-requirements"
+  stem="anr-declare-form"
+  alt="The ANR declare form: the acting utilizer, the market, the content-tier radios (tier 2 declared-simple, tier 1 Primmel-defined), the procedure as text, the reference document."
+  source="https://demo.oimlsmart.org/app/cs/anr/"
+  captured="2026-08-31"
+/>
+
+**Declare capability where your authority stands.** The authority's own
+console carries the ANR test-capability card: mark every ANR test your
+authority can perform, per Recommendation and country, and the CS
+registry pages show the declaration as the ANR axis of your scope. Sign
+in with the one-click **Issuing Authority** account for [the
+console](https://demo.oimlsmart.org/app/ia/).
+
+<ShotFigure
+  section="usecases"
+  page="additional-national-requirements"
+  stem="anr-capability"
+  alt="The IA console's ANR test-capability card: the declared ANR tests the authority can perform, per Recommendation and country."
+  source="https://demo.oimlsmart.org/app/ia/"
+  captured="2026-08-31"
+/>
+
+**Target a market in the application wizard.** The scheme step names
+the target countries, and the declared ANRs for those countries appear
+exactly where the applicant makes the commitment: for R 60 today the
+fieldset carries DE and NL, resolved exactly as the registry carries
+them. Sign in with the one-click **Applicant** account and [start an
+application](https://demo.oimlsmart.org/app/portal/applications/new).
+
+<ShotFigure
+  section="usecases"
+  page="additional-national-requirements"
+  stem="wizard-anr-step"
+  alt="The application wizard's scheme and review step: the target countries' declared ANRs as checkboxes, DE and NL carried for R 60 today."
+  source="https://demo.oimlsmart.org/app/portal/applications/new"
+  captured="2026-08-31"
+/>
+
+## How it works
+
+<AnrLifecycle />
+
+The three tiers are a migration path, not a caste system: a
+declared-simple (tier 2) provision gains its modelled reference when
+the model lands, and the coverage history keeps both forms' provenance.
+Tier 1 provisions dispatch their modelled steps like any conformance
+test; tier 2 provisions dispatch the generic evidence-collection shape,
+the operator reads the declared procedure and the platform collects the
+evidence against it; tier 0 is the honest bypass, recorded per country
+with its reason, so the certificate's ANR section never hides a gap.
+
+## Today (SMART) and the vision (SMART+)
+
+<SmartSplit
+  today={[
+    { text: 'The ANR declaration registry with moderation: only APPROVED provisions are live.', href: 'https://demo.oimlsmart.org/app/cs/anr/', label: 'the registry' },
+    { text: 'The application wizard resolves the declared ANRs for the targeted countries; the set rides the chain.', href: 'https://demo.oimlsmart.org/app/portal/applications/new', label: 'the wizard' },
+    { text: 'The utilizer surfaces for designated markets, scoped per designation.', href: '/about/audiences/instrument-users', label: 'the audience page' },
+  ]}
+  vision={[
+    { text: 'Per-country Primmel packages as the shared tier-1 library: a market models once, every authority and laboratory reuses.', href: '/technologies/primmel', label: 'roadmap' },
+    { text: 'ANR coverage verified chain-level by the receiving market, not re-read from the certificate prose.', href: '/technologies/dataspace-interop', label: 'roadmap' },
+  ]}
+/>
+
+## The honest questions
+
+### Who decides an ANR is real?
+
+Your market does, exactly as today; the platform never invents
+requirements. The declaration carries the legislation reference and the
+test procedure, and the scheme's moderation reviews it before it is
+live. The platform's discipline is that what applies is declared, and
+what is declared is visible to exactly the parties it applies to.
+
+### We cannot model our requirements in Primmel yet. Are we locked out?
+
+No; that is what the declared-simple path is for. Tick the known
+archetype or enter the requirement and the procedure as text, upload
+the reference document, and the declaration works: dispatchable,
+evaluable, recorded. When the model lands later, the provision is
+promoted and the coverage history keeps both forms' provenance. Never
+blocked on modelling.
+
+### Does an ANR change the Recommendation?
+
+No. The Recommendation's own conformance model stays exactly what the
+OIML publishes; ANR classes live alongside it as additional,
+country-scoped content. The certificate's ANR section records the
+coverage per country, so what was evaluated against the Recommendation
+and what was evaluated against a market's addition is never blurred.
+
+### What if an evaluation does not cover a declared ANR?
+
+Then the record says so, per country, with the reason: the tier-0
+bypass. The certificate's ANR section reads covered or not evaluated,
+honestly, for each targeted market. A silent gap is the one outcome the
+flow is built to make impossible.
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/cs/anr/"
+  label="Open the ANR registry on the demo"
+  description="The one-click Utilizer Officer (NL) account: the registry, the declare form, the moderation states."
+/>
+<ActionBox
+  href="/about/audiences/instrument-users"
+  label="Read the Instrument Users page"
+  description="The Utilizer and Associate picture: what designation opens, the ANR surface among it."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: your market's ANR table is the conversation; bring the annex PDF and we will show you its declared form."
+/>

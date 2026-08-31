@@ -1,0 +1,79 @@
+---
+/**
+ * AnrLifecycle — the Additional National Requirements flow in one
+ * diagram: the Utilizer declares (the Primmel-defined path or the
+ * declared-simple, tick-a-box path), moderation keeps only APPROVED
+ * live, authorities and laboratories declare capability, the
+ * application names its target countries, the dispatch covers the ANR
+ * tests, the certificate records the coverage per country; the tier-0
+ * bypass is honest, never a silent gap. House style; dark-mode correct
+ * via the TechFigure palette. (TODO.promotion/10: one diagram per
+ * page.)
+ */
+import TechFigure from '../TechFigure.astro'
+---
+
+<TechFigure caption="Two declaration paths into one lifecycle: modelled where a country can model, simple where it cannot yet, honest everywhere.">
+  <svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="uc-anr-title">
+    <title id="uc-anr-title">The ANR lifecycle: the Utilizer declares an Additional National Requirement by the Primmel-defined path or the declared-simple path; moderation approves; authorities and laboratories declare capability; the application names its target countries; the dispatch covers the ANR tests; the certificate records coverage per country; the tier-0 bypass records not-evaluated with its reason</title>
+
+    <defs>
+      <marker id="uc-aarr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"/>
+      </marker>
+    </defs>
+
+    <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="var(--dg-text)">The Additional National Requirements flow</text>
+
+    <!-- the two declaration paths -->
+    <rect x="30" y="70" width="400" height="96" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="230" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">Tier 1 &#183; the Primmel-defined path</text>
+    <text x="230" y="114" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the requirement as a modelled constraint, the test procedure as a</text>
+    <text x="230" y="130" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">modelled process: dispatchable and evaluable like any conformance test</text>
+    <text x="230" y="150" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">the target form &#183; authored in the Studio or a per-country package</text>
+
+    <rect x="470" y="70" width="400" height="96" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="670" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">Tier 2 &#183; the declared-simple path</text>
+    <text x="670" y="114" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">tick the known archetype or enter it: title, description, the procedure</text>
+    <text x="670" y="130" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">as text, the reference document uploaded; promoted to tier 1 anytime</text>
+    <text x="670" y="150" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">for the not-yet-migrated authority &#183; never blocks on modelling</text>
+
+    <line x1="230" y1="166" x2="230" y2="212" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-aarr)"/>
+    <line x1="670" y1="166" x2="670" y2="212" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-aarr)"/>
+
+    <!-- moderation -->
+    <rect x="230" y="220" width="440" height="66" rx="10" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" stroke-width="1.5"/>
+    <text x="450" y="246" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gov-text)">Moderation: the scheme approves every declaration</text>
+    <text x="450" y="266" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">a registry officer reviews before a declaration is live; only APPROVED provisions apply</text>
+
+    <line x1="450" y1="286" x2="450" y2="330" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-aarr)"/>
+
+    <!-- capability + application -->
+    <rect x="30" y="338" width="270" height="86" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="165" y="364" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Capability</text>
+    <text x="165" y="384" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">authorities and their laboratories declare</text>
+    <text x="165" y="400" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">which ANR tests they can perform</text>
+
+    <rect x="330" y="338" width="270" height="86" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="465" y="364" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">The application</text>
+    <text x="465" y="384" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the wizard names the target countries;</text>
+    <text x="465" y="400" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">their declared ANRs ride the chain</text>
+
+    <rect x="630" y="338" width="240" height="86" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="750" y="364" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">The dispatch covers them</text>
+    <text x="750" y="384" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">tier 1 as modelled steps, tier 2 as the</text>
+    <text x="750" y="400" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">guided evidence-collection shape</text>
+
+    <line x1="165" y1="424" x2="165" y2="466" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-aarr)"/>
+    <line x1="750" y1="424" x2="750" y2="466" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-aarr)"/>
+
+    <!-- certificate + bypass -->
+    <rect x="30" y="474" width="400" height="52" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="230" y="496" text-anchor="middle" font-size="12" font-weight="600" fill="var(--dg-gen-text)">The certificate records the coverage</text>
+    <text x="230" y="514" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">per country: covered, with the evidence chain behind it</text>
+
+    <rect x="470" y="474" width="400" height="52" rx="10" fill="var(--dg-warn-fill)" stroke="var(--dg-warn-stroke)" stroke-width="1.5"/>
+    <text x="670" y="496" text-anchor="middle" font-size="12" font-weight="600" fill="var(--dg-warn-text)">Tier 0 &#183; the honest bypass</text>
+    <text x="670" y="514" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">not evaluated in this evaluation, the reason recorded: never a silent gap</text>
+  </svg>
+</TechFigure>
