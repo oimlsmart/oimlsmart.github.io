@@ -1,0 +1,300 @@
+---
+title: 'Type evaluation, end to end'
+description: 'The canonical OIML-CS arc as one continuous story: the manufacturer applies, the authority reviews and dispatches, the laboratory tests, the authority evaluates and decides, the certificate issues and publishes to the register.'
+eyebrow: 'Use Cases · 01'
+captured: '2026-08-31'
+---
+
+import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import TypeEvaluationArc from '../../../components/diagrams/usecases/TypeEvaluationArc.astro'
+
+**One application, walked from the wizard to the public register.** A
+manufacturer's certification manager starts the morning with a new load
+cell to certify; by the end of the story the authority's officers have
+reviewed, sampled, dispatched, evaluated, and decided, the laboratory's
+operators have tested against the Recommendation's own model, and the
+certificate sits on the public register where anyone can verify it.
+Every stage below is a real act on the live demo, performed by the
+scripted capture apparatus on the date each figure names.
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/login"
+  label="Walk the arc yourself on the live demo"
+  description="The one-click demo accounts need no registration (the instance resets nightly). The chapters below name the account each step belongs to; the register and the verify page need no account at all."
+/>
+
+<ShotFigure
+  section="usecases"
+  page="type-evaluation-end-to-end"
+  stem="wizard-recommendation"
+  alt="The new-application wizard's first step: the explicit Recommendation pick, R 60, R 91, R 129, R 144 as cards."
+  source="https://demo.oimlsmart.org/app/portal/applications/new"
+  captured="2026-08-31"
+/>
+
+## The story, chapter by chapter
+
+The five demo flows are not five stories; they are one story told from
+five chairs. The per-role chapters (the applicant's, the authority's,
+the laboratory's) each have their own page on this site, linked as the
+arc passes their chair. The thread that ties the chapters together on
+the demo is the canonical worked example: the ACME LC-500 load cell's
+application, its evaluation project, and certificate
+R60/2021-A-EX1-26.01.
+
+### Chapter 1 · The application (flow 01)
+
+**Start the application; the wizard's first question is the
+Recommendation.** No silent default: the applicant picks R 60 (or R 91,
+R 129, R 144) from cards, then the instrument step derives from that
+Recommendation's model, the samples and documentation follow, and the
+Issuing Authority is picked from cards that only show authorities able
+to take the selected Recommendation. The draft saves; the steps are
+individually navigable. Sign in with the one-click **Applicant** demo
+account and [open the wizard](https://demo.oimlsmart.org/app/portal/applications/new).
+
+**Follow the application's journey from the first minute.** The
+applicant's own page carries the six-stage journey with the promise set
+and per-claim verification status; the notifications arrive at every
+stage. This is flow 05 running underneath all the others.
+
+<ShotFigure
+  section="usecases"
+  page="type-evaluation-end-to-end"
+  stem="application-journey"
+  alt="The applicant's view of the canonical application: the six-stage journey and the promise set with per-claim verification status."
+  source="https://demo.oimlsmart.org/app/portal/applications/app-acme-lc"
+  captured="2026-08-31"
+/>
+
+The applicant's chair has its own page: [For Manufacturers](/about/audiences/manufacturers).
+
+### Chapter 2 · The authority's intake (flow 02)
+
+**See the application land in the review queue, oldest first.** The
+authority's morning starts here: a queue, not an inbox folder, so
+nothing waits silently. Sign in with the one-click **Issuing
+Authority** account and the [review queue](https://demo.oimlsmart.org/app/ia/)
+is yours.
+
+<ShotFigure
+  section="usecases"
+  page="type-evaluation-end-to-end"
+  stem="review-queue"
+  alt="The Issuing Authority console's review queue with the applications waiting on the authority, oldest first."
+  source="https://demo.oimlsmart.org/app/ia/"
+  captured="2026-08-31"
+/>
+
+**Open one and the whole file is there.** The applicant, the instrument
+with its classified attributes, the subject chain, the documentation,
+the review notes, and every act the arc recorded, open and closed, with
+the project hub and the evaluation workspace one click away. The honest
+outcomes at review are reject-with-reason (required, audited, the
+applicant notified) or accept. The sample request, the shipment, and
+the receipts are tracked records; the decision actions stay closed
+until the samples are received.
+
+<ShotFigure
+  section="usecases"
+  page="type-evaluation-end-to-end"
+  stem="review-file"
+  alt="The authority's review of the canonical application: the whole file on one page with the open and closed review acts."
+  source="https://demo.oimlsmart.org/app/ia/applications/app-acme-lc"
+  captured="2026-08-31"
+/>
+
+**Accept, and the Evaluation Project opens.** The project is the shared
+dataspace the laboratory joins on dispatch: samples, test requests,
+reports, verdicts, and the certificate-to-be share one record. The fee
+negotiation's evidence (the contract document, its attested hash) files
+onto the project; the applicant gains the project view with the
+restricted fields honestly restricted. The dispatch itself is a matrix:
+test forms crossed with samples, assigned per laboratory.
+
+<ShotFigure
+  section="usecases"
+  page="type-evaluation-end-to-end"
+  stem="project-hub"
+  alt="The Evaluation Project hub: the application record, the samples, the test requests, the verdicts, and the certificate-to-be on one page."
+  source="https://demo.oimlsmart.org/app/ia/projects/app-acme-lc"
+  captured="2026-08-31"
+/>
+
+The authority's chair has its own page: [For Issuing Authorities](/about/audiences/issuing-authorities).
+
+### Chapter 3 · The laboratory's work (flow 03)
+
+**The test request lands in the laboratory's inbox.** The laboratory
+reviews, rejects with reason or accepts, and accepting joins it to the
+Evaluation Project's dataspace. Sign in with the one-click **Test
+Laboratory** account for the [inbox](https://demo.oimlsmart.org/app/lab/).
+
+<ShotFigure
+  section="usecases"
+  page="type-evaluation-end-to-end"
+  stem="lab-inbox"
+  alt="The laboratory inbox: the dispatched test requests with their samples and assigned forms."
+  source="https://demo.oimlsmart.org/app/lab/"
+  captured="2026-08-31"
+/>
+
+Then the substantial work: each assigned test runs model-driven, the
+procedure, its parameters, and its acceptance criteria all from the
+Recommendation's model, the measured values judged against the limits
+the model computes. The test report is authored on the model's own form
+and submitted to the authority through the project, as data, not as a
+PDF. The laboratory's chair has its own page: [For Test
+Laboratories](/about/audiences/laboratories).
+
+### Chapter 4 · The evaluation and the certificate (flow 04)
+
+**The authority validates the evidence and decides.** Every test-report
+row validates against the model's acceptance rules; the verdicts are
+computed, never hand-tallied; the review period's comments resolve
+before finalization. The certificates desk then lists what is ready:
+the certified scope comes from the evaluation's verdicts, and the
+signature is the officer's own attributed act.
+
+<ShotFigure
+  section="usecases"
+  page="type-evaluation-end-to-end"
+  stem="certificates-desk"
+  alt="The certificates desk: the issue-from-evaluation picker and the issued certificates with their BIML registration acts."
+  source="https://demo.oimlsmart.org/app/ia/certificates"
+  captured="2026-08-31"
+/>
+
+**Registering with the BIML is one act, and the register
+auto-publishes.** The certificate goes to the OIML-CS register as a
+signed, receipt-tracked submission; the registered copy becomes the
+validity reference. The applicant downloads the certificate in the OIML
+layout, a document software can verify.
+
+<ShotFigure
+  section="usecases"
+  page="type-evaluation-end-to-end"
+  stem="certificate-issued"
+  alt="The issued certificate R60/2021-A-EX1-26.01 in the OIML layout, as the applicant downloads it."
+  source="https://demo.oimlsmart.org/app/portal/certificates/crt-acme-lc"
+  captured="2026-08-31"
+/>
+
+### Chapter 5 · The register and the verification (flows 04 + 05, public)
+
+**Anyone can read the register.** No account: the published
+certificates, per scheme, with the validity doctrine stated. This is
+where the arc ends for the world: [the public
+register](https://demo.oimlsmart.org/app/register/).
+
+<ShotFigure
+  section="usecases"
+  page="type-evaluation-end-to-end"
+  stem="register"
+  alt="The public Certificate Register with the BIML-registered entries, browsable by anyone."
+  source="https://demo.oimlsmart.org/app/register/"
+  captured="2026-08-31"
+/>
+
+**Anyone can verify.** Type the number, read the verdict: ACTIVE from
+the BIML-registered copy, with the live revocation and suspension
+checks and the CNML signature pipeline. No account, no phone call to
+the authority: [the verify page](https://demo.oimlsmart.org/app/verify/).
+
+<ShotFigure
+  section="usecases"
+  page="type-evaluation-end-to-end"
+  stem="verify-verdict"
+  alt="The verify page answering ACTIVE for R60/2021-A-EX1-26.01: the BIML registration, the live status checks, the signature pipeline."
+  source="https://demo.oimlsmart.org/app/verify/"
+  captured="2026-08-31"
+/>
+
+## How it works
+
+<TypeEvaluationArc />
+
+## What this changes, and what it does not
+
+Today this arc runs on email and document stores: the application as a
+scanned form, the test schedule as a spreadsheet, the reports as PDFs,
+the type evaluation report assembled by hand, and progress tracked by
+asking. On the platform every stage is an act with a record, the forms
+derive from the Recommendation's model, and the certificate carries its
+evidence chain. What does not change: the authority's review,
+evaluation, decision, and signature; the laboratory's judgment at the
+bench; the applicant's responsibility for the instrument. The verdict
+engine computes; the people decide.
+
+## Today (SMART) and the vision (SMART+)
+
+<SmartSplit
+  today={[
+    { text: 'The whole arc is live on the demo today: the wizard, the queues, the dispatch, the evaluation, the certificates desk, the register, the verify page.', href: 'https://demo.oimlsmart.org/', label: 'the demo' },
+    { text: 'CNML certificates signed over the verdict chain, registered with the BIML, verified publicly by number or by file.', href: '/technologies/cnml', label: 'the CNML page' },
+    { text: 'Records mode for the paper world: offline evaluations and client-entered applications, honestly marked.', href: '/about/audiences/issuing-authorities', label: 'the IA page' },
+  ]}
+  vision={[
+    { text: 'The evaluation continues after issuance: the instrument’s SMART twin serves evidence between bench sessions, and conformance re-computes continuously.', href: '/use-cases/continuous-compliance', label: 'roadmap' },
+    { text: 'Chain-level verification of another authority’s whole evaluation, not only its certificate.', href: '/technologies/dataspace-interop', label: 'roadmap' },
+    { text: 'Suspension and withdrawal propagated to every verifiable copy the moment the authority acts.', href: '/technologies/trust-registry', label: 'roadmap' },
+  ]}
+/>
+
+## The honest questions
+
+### Is this a real workflow or a mock-up?
+
+Every capture on this page was taken on the live demo by the scripted
+apparatus on the date the caption names; each figure links the exact
+surface it came from. The demo runs the same software as the member
+instances, in demo posture, against a fictional cast (the ACME load
+cell, the example authorities and laboratories), and it resets nightly.
+The guided-demo entry on the login page walks the same arc with a
+presenter script.
+
+### Does the platform decide the outcome?
+
+No. The verdict engine computes the Recommendation's arithmetic and
+states what the evidence supports, including INDETERMINATE where
+evidence is missing. The review, the evaluation, the issuance, and the
+signature are the authority's acts, recorded as theirs; the
+laboratory's readings and judgments are the laboratory's.
+
+### Our applicants still send paper. Is this all-or-nothing?
+
+No. Records mode exists for the transition: the authority can enter an
+application for a client, register an offline evaluation, import
+records. What came from paper is marked as coming from paper; the audit
+trail never pretends otherwise. Certificates keep their paper meaning
+throughout; the CNML original and the public verification are
+additions.
+
+### What happens after the certificate issues?
+
+The lifecycle is first-class: annex, revise, replace, renew, suspend,
+withdraw, each a recorded act, and the public verification reads the
+live status. What today ends at issuance is where the SMART+ vision
+continues: [continuous compliance](/use-cases/continuous-compliance)
+keeps judging the instrument in service, roadmap-labeled where it is
+not yet live.
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/login"
+  label="Walk the arc on the live demo"
+  description="The one-click accounts: Applicant for chapter 1, Issuing Authority for chapters 2 and 4, Test Laboratory for chapter 3. The register and the verify page need no account."
+/>
+<ActionBox
+  href="/oiml-cs"
+  label="Read the OIML-CS overview"
+  description="The scheme behind the arc on B 18:2025: the roles, the documents, the decision chain."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: walk this arc with the programme team against your own Recommendation and your own cast."
+/>
