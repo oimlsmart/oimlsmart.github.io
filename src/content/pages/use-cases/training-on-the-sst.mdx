@@ -1,0 +1,177 @@
+---
+title: 'Training on the SST'
+description: 'A laboratory rehearses the full test program on the simulated instrument before touching hardware: realistic physics behind the governed twin interface, the platform driving the simulation directly.'
+eyebrow: 'Use Cases · 04'
+captured: '2026-08-31'
+---
+
+import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import SstRehearsal from '../../../components/diagrams/usecases/SstRehearsal.astro'
+
+**Fail on purpose, learn the workflow, then touch hardware.** A
+laboratory's training lead has three new test engineers and one
+expensive load cell they are not allowed to break. On the SST she
+hands them a simulated instrument instead: realistic physics behind
+exactly the served interface a physical SMART instrument presents, the
+full certification workflow running against it, and a bench that shows
+the truth with its own eyes. The platform drives the simulation
+directly; from the served side, software, and people, cannot tell the
+difference until they are told.
+
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="Rehearse on the live demo"
+  description="The demo's whole certification chain runs on SST instruments. Sign in with a one-click demo account, no registration; the instance resets nightly."
+/>
+
+<ShotFigure
+  section="usecases"
+  page="training-on-the-sst"
+  stem="sst-site"
+  alt="The SST site: the simulated measuring instruments, their consoles, and the scenario library."
+  source="https://www.oimlsmart.org/sst/"
+  captured="2026-08-31"
+/>
+
+## The story
+
+The rehearsal week, as a laboratory runs it. Monday: the new engineers
+open the applicant's and the laboratory's consoles against the
+simulated ACME LC-500 and walk the whole arc, application to decision,
+exactly as the [end-to-end story](/use-cases/type-evaluation-end-to-end)
+tells it, because the demo certifies the simulation, not a mock-up.
+Tuesday: the trainer places loads and sweeps the chamber on the world
+channel while the engineers run the model-driven test program, and the
+class reads the bench's dial against the served values: the API reports
+what it reports, the needle shows what is true. Wednesday: the
+deliberately drifting cell, and the verdict chain shows what failure
+looks like. Thursday: the outage scenario, and the monitor degrades to
+indeterminate, honestly, instead of inventing a verdict. Friday: the
+same consoles, the same workflow, pointed at the physical instrument,
+and nothing is new except the hardware.
+
+## What you can do today
+
+Every act below was performed against the live estate by the scripted
+capture apparatus before it was listed; each figure names its capture
+date and links the live surface.
+
+**Run the whole certification workflow against a simulated
+instrument.** The [live demo](https://demo.oimlsmart.org/) certifies
+the simulated LC-500 against the modelled R 60, application to
+decision; the one-click accounts are the rehearsal's cast.
+
+**Drive the world channel at the sim bench.** Place loads, set the
+chamber, inject faults, advance the virtual clock; the bench renders
+the physical scene beside the served values. Sign in as Admin and open
+the [sim bench](https://demo.oimlsmart.org/app/sim).
+
+<ShotFigure
+  section="usecases"
+  page="training-on-the-sst"
+  stem="sim-bench"
+  alt="The sim bench: the operator's world channel into the simulated instrument, loads, chamber conditions, faults, the virtual clock."
+  source="https://demo.oimlsmart.org/app/sim"
+  captured="2026-08-31"
+/>
+
+**Watch a simulated quarter's surveillance.** The demo's [twin
+console](https://demo.oimlsmart.org/app/twin) monitors the served feed:
+drift flags the certificate, an outage degrades verdicts to
+indeterminate, a served fault opens a service case.
+
+**Meet the four instruments.** A strain-gauge load cell (OIML R 60;
+creep and thermal hysteresis), a continuous gas monitor (OIML R 144;
+drift classes and cross-sensitivity), a Doppler speed meter (OIML R 91;
+cosine error and rain fade), and an optical conveyor dimensioner (OIML
+R 129; sampling, reflectance, ambient-light noise), on the [SST
+site](https://www.oimlsmart.org/sst/).
+
+**Inspect the machinery.** The framework
+([primmel/sst](https://github.com/primmel/sst): the kind-agnostic
+runtime, the shell, the bench, the specifications) and the OIML
+instrument library
+([oimlsmart/sst-instruments](https://github.com/oimlsmart/sst-instruments):
+the kinds, the instances, the composites) are public repositories.
+
+## How it works
+
+<SstRehearsal />
+
+Each simulated instrument presents two channels. The /twin channel is
+the governed projection, its schema generated from the manufacturer's
+product reference package; a startup conformance check stops the
+instrument if the served interface drifts from the package. The /world
+channel is the physical world: the operator's loads, faults, and clock.
+An epistemic wall separates the two: certification logic reads only the
+served channel, and the wall is what makes the classroom's central
+lesson teachable. The simulation is driven from the platform, not
+beside it: the platform's gateway consumes the /twin channel through
+its standard connector registry, the same path a physical twin takes.
+
+## Today (SMART) and the vision (SMART+)
+
+<SmartSplit
+  today={[
+    { text: 'The whole demo rehearses on SST instruments today: the LC-500 application, evaluation, and certificate all run against the simulation.', href: 'https://demo.oimlsmart.org/', label: 'the demo' },
+    { text: 'The sim bench and the twin console: the world channel and the monitored feed, repeatable on demand.', href: 'https://demo.oimlsmart.org/app/sim', label: 'the bench' },
+    { text: 'The framework and the instrument library are public and inspectable.', href: 'https://github.com/oimlsmart/sst-instruments', label: 'the library' },
+  ]}
+  vision={[
+    { text: 'The classroom programme: named scenarios (the creep-honest cell, the deliberately drifting cell) as the standing curriculum for laboratories and authorities.', href: 'https://www.oimlsmart.org/sst/', label: 'roadmap' },
+    { text: 'The same /twin channel served by physical SMART instruments at member deployments.', href: 'https://www.oimlsmart.org/smi/', label: 'roadmap' },
+  ]}
+/>
+
+## The honest questions
+
+### Does a simulation prove anything about real instruments?
+
+It proves the workflow and the supply chain, not the physics of a
+specific device: the served schema is generated from the same product
+reference packages the platform reads, so an edit that changes the
+interface fails the instrument's own startup check. What the simulation
+certifies is the certification machinery itself, which is exactly what
+training needs.
+
+### Can a simulated instrument lie?
+
+Yes, and that is the point. The bench shows the physical scene beside
+the served values; the classroom's central lesson is reading the dial
+against the API. The twin-certification program's probe channel exists
+because served values alone are never the whole truth.
+
+### Why not train on production instruments?
+
+Because production instruments are busy being evidence. The rehearsal
+space must be free to fail: drift on purpose, outage on schedule, fault
+injection on demand, reset in seconds. Skills are learned where failing
+is cheap; the SST makes failing free.
+
+### What does a training deployment cost us?
+
+Nothing to start: the demo rehearses the whole chain with one-click
+accounts, and the SST framework and instrument library are public
+repositories your own trainers can boot standalone (one command, every
+surface open, no platform checkout). The hosted simulation's member
+entitlements are quoted on the [technology page](/technologies/sst).
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/"
+  label="Start the rehearsal on the demo"
+  description="The one-click demo accounts, no registration. Applicant, Issuing Authority, Test Laboratory: the whole cast, the whole arc, on the simulated instrument."
+/>
+<ActionBox
+  href="https://www.oimlsmart.org/sst/"
+  label="Visit the SST site"
+  description="The instruments, the consoles, the bench, the scenario library, and the standalone quickstart."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: training scenarios and classroom use are the commonest requests; the scenario library is built for that conversation."
+/>
