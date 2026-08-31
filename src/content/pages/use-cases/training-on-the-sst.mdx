@@ -42,10 +42,11 @@ open the applicant's and the laboratory's consoles against the
 simulated ACME LC-500 and walk the whole arc, application to decision,
 exactly as the [end-to-end story](/use-cases/type-evaluation-end-to-end)
 tells it, because the demo certifies the simulation, not a mock-up.
-Tuesday: the trainer places loads and sweeps the chamber on the world
-channel while the engineers run the model-driven test program, and the
-class reads the bench's dial against the served values: the API reports
-what it reports, the needle shows what is true. Wednesday: the
+Tuesday: the trainer boots the standalone SST beside the bench (one
+command, every surface open) and places loads and sweeps the chamber on
+the world channel while the engineers run the model-driven test
+program, and the class reads the bench's dial against the served
+values: the API reports what it reports, the needle shows what is true. Wednesday: the
 deliberately drifting cell, and the verdict chain shows what failure
 looks like. Thursday: the outage scenario, and the monitor degrades to
 indeterminate, honestly, instead of inventing a verdict. Friday: the
@@ -63,16 +64,18 @@ instrument.** The [live demo](https://demo.oimlsmart.org/) certifies
 the simulated LC-500 against the modelled R 60, application to
 decision; the one-click accounts are the rehearsal's cast.
 
-**Drive the world channel at the sim bench.** Place loads, set the
-chamber, inject faults, advance the virtual clock; the bench renders
-the physical scene beside the served values. Sign in as Admin and open
-the [sim bench](https://demo.oimlsmart.org/app/sim).
+**Pair the sim bench with your own instrument.** The demo's [sim
+bench](https://demo.oimlsmart.org/app/sim) is the pairing point for a
+locally booted SST: one command (the page prints it) boots an
+instrument side by side with your own checkout, and the world channel
+opens there: loads, chamber, faults, the clock. The hosted demo keeps
+the bench unpaired, and the page says so honestly.
 
 <ShotFigure
   section="usecases"
   page="training-on-the-sst"
   stem="sim-bench"
-  alt="The sim bench: the operator's world channel into the simulated instrument, loads, chamber conditions, faults, the virtual clock."
+  alt="The sim bench on the demo: the standalone pairing surface, honestly unpaired on the hosted instance, printing the one-command boot for a local instrument."
   source="https://demo.oimlsmart.org/app/sim"
   captured="2026-08-31"
 />
@@ -116,7 +119,7 @@ its standard connector registry, the same path a physical twin takes.
 <SmartSplit
   today={[
     { text: 'The whole demo rehearses on SST instruments today: the LC-500 application, evaluation, and certificate all run against the simulation.', href: 'https://demo.oimlsmart.org/', label: 'the demo' },
-    { text: 'The sim bench and the twin console: the world channel and the monitored feed, repeatable on demand.', href: 'https://demo.oimlsmart.org/app/sim', label: 'the bench' },
+    { text: 'The sim bench pairs with a locally booted instrument (the page prints the one command); the twin console monitors the demo’s simulated feed.', href: 'https://demo.oimlsmart.org/app/sim', label: 'the bench' },
     { text: 'The framework and the instrument library are public and inspectable.', href: 'https://github.com/oimlsmart/sst-instruments', label: 'the library' },
   ]}
   vision={[
