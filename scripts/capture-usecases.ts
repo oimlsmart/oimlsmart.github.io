@@ -82,7 +82,16 @@ async function waitIslandSettled(page: Page) {
 
 async function gotoApp(page: Page, path: string) {
   await gotoCommit(page, `${DEMO}${path}`)
-  await waitIslandSettled(page)
+  try {
+    await waitIslandSettled(page)
+  } catch {
+    // A long role context can wedge a settle on a later navigation (the
+    // boot spinner persists). One honest reload unsticks it; a second
+    // wedge fails the leg for real.
+    console.log(`  · settle wedged on ${path}; reloading once`)
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT }).catch(() => {})
+    await waitIslandSettled(page)
+  }
 }
 
 async function signOut(context: BrowserContext) {
@@ -113,11 +122,31 @@ async function loginAs(context: BrowserContext, page: Page, name: string, prefix
       .find(b => b.querySelector('span')?.textContent?.trim() === wanted)
     ;(btn as HTMLElement).click()
   }, name)
-  await page.waitForFunction(
-    (p) => window.location.pathname.startsWith(p) && window.location.pathname !== '/app/login',
-    prefix,
-    { timeout: LOGIN_SETTLE, polling: 500 },
-  )
+  // The redirect trails bootstrap({force: true}); a wedged bootstrap
+  // (the demo under load) is retried once from a clean sign-out.
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const landed = await page.waitForFunction(
+      (p) => window.location.pathname.startsWith(p) && window.location.pathname !== '/app/login',
+      prefix,
+      { timeout: LOGIN_SETTLE, polling: 500 },
+    ).then(() => true).catch(() => false)
+    if (landed) break
+    if (attempt === 1) throw new Error(`login as "${name}" never redirected`)
+    console.log(`  · login as "${name}" wedged before the redirect; retrying once`)
+    await signOut(context)
+    await gotoCommit(page, `${DEMO}/app/login`)
+    await page.waitForFunction(
+      (wanted) => Array.from(document.querySelectorAll('button'))
+        .some(b => b.querySelector('span')?.textContent?.trim() === wanted),
+      name,
+      { timeout: SETTLE, polling: 500 },
+    )
+    await page.evaluate((wanted) => {
+      const btn = Array.from(document.querySelectorAll('button'))
+        .find(b => b.querySelector('span')?.textContent?.trim() === wanted)
+      ;(btn as HTMLElement).click()
+    }, name)
+  }
   await waitIslandSettled(page)
 }
 
@@ -172,6 +201,22 @@ function wants(name: string) {
   return !ONLY_LIST || ONLY_LIST.some(o => name.includes(o))
 }
 
+// The manifest flushes after EVERY shot (partial runs and crashes kept
+// their records: the 2026-08-31 run watched a single bad leg discard a
+// run's worth of audit trail). Merge is file-keyed; the manifest is the
+// dated audit record for ALL captures.
+interface Manifest { generatedAt: string; captureDate: string; records: CaptureRecord[] }
+function flushManifest() {
+  let existing: CaptureRecord[] = []
+  try {
+    existing = (JSON.parse(readFileSync(MANIFEST, 'utf8')) as Manifest).records ?? []
+  } catch { /* first run */ }
+  const fresh = new Set(records.map(r => r.file))
+  const merged = [...existing.filter(r => !fresh.has(r.file)), ...records]
+  mkdirSync(OUT, { recursive: true })
+  writeFileSync(MANIFEST, JSON.stringify({ generatedAt: new Date().toISOString(), captureDate: DATE, records: merged }, null, 2) + '\n')
+}
+
 async function shoot(page: Page, pageFolder: string, name: string, theme: string, performed: string, opts?: { fullPage?: boolean }) {
   const dir = join(OUT, pageFolder)
   mkdirSync(dir, { recursive: true })
@@ -181,6 +226,7 @@ async function shoot(page: Page, pageFolder: string, name: string, theme: string
     page: pageFolder, name, file: `${pageFolder}/${file}`, url: page.url(), theme, performed,
     capturedAt: new Date().toISOString(),
   })
+  flushManifest()
   console.log(`  📷 ${pageFolder}/${file} — ${performed}`)
 }
 
@@ -394,7 +440,7 @@ async function captureApplicant(browser: Browser) {
 // ── The Issuing Authority legs ────────────────────────────────────────
 
 async function captureIA(browser: Browser) {
-  if (!['review-queue', 'review-file', 'project-hub', 'certificates-desk', 'certificate-lifecycle'].some(wants)) return
+  if (!['review-queue', 'review-file', 'project-hub', 'certificates-desk', 'certificate-lifecycle', 'anr-capability'].some(wants)) return
 
   for (const theme of THEMES) {
     currentTheme = theme
@@ -411,11 +457,50 @@ async function captureIA(browser: Browser) {
       await shoot(page, 'type-evaluation-end-to-end', 'review-queue', theme, 'the authority\u2019s intake: the review queue with the applications waiting, oldest first', { fullPage: true })
     }
 
-    if (wants('review-file')) {
-      await gotoApp(page, '/app/ia/applications/app-acme-lc')
-      await waitTestId(page, 'ia-review-actions')
+    if (wants('anr-capability')) {
+      // The IA console's ANR test-capability card: the authority declares
+      // which ANR tests it can perform, per Recommendation and country
+      // (the lifecycle's capability leg).
+      await gotoApp(page, '/app/ia/')
+      await waitTestId(page, 'ia-dashboard')
       await waitSkeletonGone(page)
-      await shoot(page, 'type-evaluation-end-to-end', 'review-file', theme, 'opened the application the authority reviewed: the whole file (the instrument, the documentation, the review acts) on one page', { fullPage: true })
+      await page.waitForSelector('[data-testid="anr-capability-card"]', { timeout: SETTLE })
+      await shoot(page, 'additional-national-requirements', 'anr-capability', theme, 'the authority\u2019s ANR test-capability card on its own console: the declared ANR tests it can perform (the NL damp-heat declaration, tier 2 declared-simple)', { fullPage: true })
+    }
+
+    if (wants('review-file')) {
+      // Open the application the queue is actually waiting on (its row is
+      // a router button, not an anchor; the id changes with the nightly
+      // reset). Fallback: the canonical file (accepted long ago; its
+      // review record with the closed acts is the same "whole file"
+      // surface, honestly labeled).
+      await gotoApp(page, '/app/ia/')
+      await waitTestId(page, 'ia-dashboard')
+      await waitSkeletonGone(page)
+      const clicked = await page.evaluate(() => {
+        const btn = Array.from(document.querySelectorAll('button'))
+          .find(b => /SAMPLES_REQUESTED|SUBMITTED/.test(b.textContent ?? '') && /APP-|EX-/.test(b.textContent ?? ''))
+        if (btn) { (btn as HTMLElement).click(); return true }
+        return false
+      })
+      if (clicked) {
+        await page.waitForFunction(
+          () => /\/app\/ia\/applications\//.test(window.location.pathname),
+          undefined,
+          { timeout: SETTLE, polling: 500 },
+        )
+        await waitIslandSettled(page)
+        await page.waitForSelector('[data-testid="ia-review-actions"]', { timeout: 60_000 }).catch(() => {})
+        await waitSkeletonGone(page)
+        await page.waitForTimeout(1500)
+        await shoot(page, 'type-evaluation-end-to-end', 'review-file', theme, 'opened the application waiting in the review queue: the whole file (the instrument, the documentation, the review acts) on one page', { fullPage: true })
+      } else {
+        console.log('  · no application waiting in the queue; shooting the canonical file instead')
+        await gotoApp(page, '/app/ia/applications/app-acme-lc')
+        await waitSkeletonGone(page)
+        await page.waitForTimeout(2000)
+        await shoot(page, 'type-evaluation-end-to-end', 'review-file', theme, 'opened the canonical application file (accepted long ago): the review record with its closed acts, the whole file on one page', { fullPage: true })
+      }
     }
 
     if (wants('project-hub')) {
@@ -521,7 +606,7 @@ async function captureAdmin(browser: Browser) {
     if (wants('sim-bench')) {
       await gotoApp(page, '/app/sim')
       await page.waitForTimeout(8000)
-      await shoot(page, 'training-on-the-sst', 'sim-bench', theme, 'the sim bench: the operator\u2019s world channel into the simulated instrument — loads, chamber conditions, faults, the virtual clock', { fullPage: true })
+      await shoot(page, 'training-on-the-sst', 'sim-bench', theme, 'the sim bench: the standalone pairing surface — the hosted demo keeps it unpaired and prints the one-command boot for a locally booted SST', { fullPage: true })
     }
 
     await context.close()
@@ -552,7 +637,7 @@ async function captureCSAdmin(browser: Browser) {
         undefined,
         { timeout: SETTLE, polling: 500 },
       )
-      await shoot(page, 'member-state-view', 'cs-participants', theme, 'the scheme\u2019s participant registry: the authorities, the laboratories, the manufacturers, the utilizers — the chain the register answers for', { fullPage: true })
+      await shoot(page, 'member-state-view', 'cs-participants', theme, 'the scheme\u2019s participant registry: the issuing authorities, the test laboratories, the utilizers and associates — the chain the register answers for', { fullPage: true })
     }
 
     await context.close()
@@ -581,15 +666,17 @@ async function captureUtilizer(browser: Browser) {
         await shoot(page, 'additional-national-requirements', 'anr-registry', theme, 'the ANR declaration registry for your market: the declared provisions with their moderation states (only APPROVED is live)', { fullPage: true })
       }
       if (wants('anr-declare-form')) {
-        const opened = await page.evaluate(() => {
-          const btn = Array.from(document.querySelectorAll('button, a'))
-            .find(b => b.textContent?.trim().includes('Declare an ANR'))
-          if (btn) { (btn as HTMLElement).click(); return true }
+        // "Declare an ANR" is a section of the registry page (there is no
+        // button to open): scroll it into frame and shoot the viewport.
+        const scrolled = await page.evaluate(() => {
+          const h = Array.from(document.querySelectorAll('h1, h2, h3'))
+            .find(e => e.textContent?.trim() === 'Declare an ANR')
+          if (h) { h.scrollIntoView({ block: 'start' }); return true }
           return false
         })
-        if (!opened) throw new Error('ANR: the declare entry did not open')
-        await page.waitForTimeout(2000)
-        await shoot(page, 'additional-national-requirements', 'anr-declare-form', theme, 'opened the declare form: the declared-simple path — title, description, the test procedure as text, the reference document — moderated before it is live', { fullPage: true })
+        if (!scrolled) throw new Error('ANR: the declare section never rendered')
+        await page.waitForTimeout(1200)
+        await shoot(page, 'additional-national-requirements', 'anr-declare-form', theme, 'the declare form on the registry page: the acting utilizer, the market, the content-tier radios (tier 2 declared-simple / tier 1 Primmel-defined), the procedure as text, the reference document; the draft files for moderation')
       }
     }
 
@@ -614,15 +701,6 @@ try {
   await browser.close()
 }
 
-// Partial runs merge into the existing manifest (the dated audit record
-// for ALL captures), keyed per file.
-interface Manifest { generatedAt: string; captureDate: string; records: CaptureRecord[] }
-let existing: CaptureRecord[] = []
-try {
-  existing = (JSON.parse(readFileSync(MANIFEST, 'utf8')) as Manifest).records ?? []
-} catch { /* first run */ }
-const fresh = new Set(records.map(r => r.file))
-const merged = [...existing.filter(r => !fresh.has(r.file)), ...records]
-mkdirSync(OUT, { recursive: true })
-writeFileSync(MANIFEST, JSON.stringify({ generatedAt: new Date().toISOString(), captureDate: DATE, records: merged }, null, 2) + '\n')
-console.log(`\n✓ ${records.length} capture(s) this run; manifest carries ${merged.length} → ${MANIFEST}`)
+// The manifest flushed per shot; report the final tally.
+const finalCount = (JSON.parse(readFileSync(MANIFEST, 'utf8')) as Manifest).records.length
+console.log(`\n✓ ${records.length} capture(s) this run; manifest carries ${finalCount} → ${MANIFEST}`)
