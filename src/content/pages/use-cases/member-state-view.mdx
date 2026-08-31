@@ -1,0 +1,202 @@
+---
+title: 'The member-state view'
+description: 'A member state’s officers follow their country’s designations, their authority’s issued work, and the utilizers’ access: the registry as the honest chain, every certificate answering to it.'
+eyebrow: 'Use Cases · 05'
+captured: '2026-08-31'
+---
+
+import ActionBox from '../../../components/ActionBox.astro'
+import ShotFigure from '../../../components/ShotFigure.astro'
+import SmartSplit from '../../../components/SmartSplit.astro'
+import DesignationChain from '../../../components/diagrams/usecases/DesignationChain.astro'
+
+**Your designations, kept as data you can read.** A member state's
+officer opens the registry the way she opens any official record: which
+authority carries her country's designations, with what scopes; which
+laboratories associate to it; what the utilizers may see. The
+difference is that the chain is data, not a filing cabinet: every
+certificate her regime relies on answers to it, and anyone, her
+inspectors included, can verify against it without an account and
+without a phone call.
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/verify/"
+  label="Verify a certificate now, no account"
+  description="The public surface your regime's certificates live on: enter R60/2021-A-EX1-26.01 and read the verdict from the registered copy."
+/>
+
+<ShotFigure
+  section="usecases"
+  page="member-state-view"
+  stem="cs-ia-registry"
+  alt="The OIML-CS Issuing Authority registry as data: the real register entries with their scopes, the chain designations belong to."
+  source="https://demo.oimlsmart.org/app/cs/issuing-authorities"
+  captured="2026-08-31"
+/>
+
+## The story
+
+The officer's quarterly review, as the platform runs it. She starts at
+the participant registry: her country's Issuing Authority entry, its
+scopes per Recommendation, the associated Test Laboratories, kept as
+registry data the scheme maintains, not as letters in a drawer. She
+follows the authority's issued work where it actually lives: the public
+register, where every certificate the chain issues publishes as the
+validity reference. She checks one the way her market inspectors would:
+the number into the verify page, the verdict back from the registered
+copy, the live revocation and suspension lists consulted in the same
+answer. She onboards a new colleague through the identity service:
+accounts per organization, approved by her own administrator, the real
+member directory selectable. And the utilizers her country designates
+see exactly what their designation opens, the reports and certificates
+their access covers, honestly scoped, never broader.
+
+## What you can do today
+
+Every act below was performed against the live estate by the scripted
+capture apparatus before it was listed; each figure names its capture
+date and links the live surface. The registry surfaces sign in with the
+one-click **CS Admin** demo account; the register, the verify page, and
+the join flow need no account.
+
+**Read the designation chain as data.** The [Issuing Authority
+registry](https://demo.oimlsmart.org/app/cs/issuing-authorities): the
+real register entries (PTB, METAS, NIM, and the rest) with their
+scopes, the chain your designations belong to.
+
+**See the whole participant registry.** The authorities, the
+laboratories, the manufacturers, the utilizers: the [participant
+registry](https://demo.oimlsmart.org/app/cs/participants) is the chain
+the register answers for.
+
+<ShotFigure
+  section="usecases"
+  page="member-state-view"
+  stem="cs-participants"
+  alt="The scheme's participant registry: the authorities, the laboratories, the manufacturers, the utilizers."
+  source="https://demo.oimlsmart.org/app/cs/participants"
+  captured="2026-08-31"
+/>
+
+**Follow your authority's issued work on the public register.** The
+certificates the instance publishes, per scheme, browsable by anyone;
+the registered copy is what verification answers from. No account: [the
+register](https://demo.oimlsmart.org/app/register/).
+
+<ShotFigure
+  section="usecases"
+  page="member-state-view"
+  stem="register"
+  alt="The public certificate register: the BIML-registered entries, browsable by anyone, with the validity doctrine stated."
+  source="https://demo.oimlsmart.org/app/register/"
+  captured="2026-08-31"
+/>
+
+**Verify the way your inspectors would.** The number in, the verdict
+out: ACTIVE from the BIML-registered copy, the live status lists
+checked in the same answer. No account, no phone call to the authority:
+[the verify page](https://demo.oimlsmart.org/app/verify/).
+
+<ShotFigure
+  section="usecases"
+  page="member-state-view"
+  stem="verify-verdict"
+  alt="The verify page answering ACTIVE for R60/2021-A-EX1-26.01: the BIML registration and the live revocation and suspension checks."
+  source="https://demo.oimlsmart.org/app/verify/"
+  captured="2026-08-31"
+/>
+
+**Give your personnel accounts under your organization.** The identity
+service issues accounts per organization, approved by your own
+administrator; the [join flow](https://id.oimlsmart.org/op/join/) knows
+the real member directory.
+
+<ShotFigure
+  section="usecases"
+  page="member-state-view"
+  stem="identity-join"
+  alt="The identity service's join flow: accounts per organization, the OIML member directory selectable."
+  source="https://id.oimlsmart.org/op/join/"
+  captured="2026-08-31"
+/>
+
+## How it works
+
+<DesignationChain />
+
+## What this changes, and what it does not
+
+Today the chain lives in designations letters, scope annexes, and the
+register's periodic publications; following it means asking, and
+verifying means phoning the authority that issued. On the platform the
+chain is data and the register answers continuously. What does not
+change: your legal responsibility, your designations, your custody. The
+member state proposes and designates exactly as before; the platform
+keeps the chain readable.
+
+## Today (SMART) and the vision (SMART+)
+
+<SmartSplit
+  today={[
+    { text: 'The registries as data, the public register, the account-free verification: live on the estate today.', href: 'https://demo.oimlsmart.org/app/register/', label: 'the register' },
+    { text: 'Accounts per organization on the identity service, approved by your own administrator.', href: 'https://id.oimlsmart.org/op/join/', label: 'the join flow' },
+    { text: 'Self-host under the Member State entitlement, with streaming updates; custody never has to move.', href: '/use-cases/deployment-modes', label: 'the postures' },
+  ]}
+  vision={[
+    { text: 'Monitorable compliance between assessments: your market’s instruments serving their governed aspects through SMART twins.', href: '/use-cases/continuous-compliance', label: 'roadmap' },
+    { text: 'Market surveillance reading live verdicts instead of sampling blindly.', href: '/technologies/smart-twin', label: 'roadmap' },
+    { text: 'Dataspace federation with your national systems, the roadmap legs named there.', href: '/technologies/dataspace-interop', label: 'roadmap' },
+  ]}
+/>
+
+## The honest questions
+
+### Does our data leave our custody?
+
+No. The self-host entitlement attaches to your category exactly so
+custody never has to move: your own instance, your data residency, the
+streaming update channel. The hosted official platform exists for the
+members who choose it; the architecture never requires it. The
+[deployment matrix](/use-cases/deployment-modes) renders the postures
+plain.
+
+### Does the platform decide anything legally ours?
+
+No. Designation, acceptance, issuance, withdrawal stay exactly where
+your law puts them; the platform computes verdicts and records who
+decided what. The liability surface is your existing one, with better
+evidence.
+
+### What does adopting this commit us to?
+
+Reading costs nothing (the public surfaces are public), participating
+costs accounts (issued per organization, approved by your own
+administrator), and self-hosting is one service-class deployment with
+the rolling update channel. Nothing is retired until your regime is
+satisfied; the text of every Recommendation stays.
+
+### Our market relies on certificates from other member states. What changes for them?
+
+The verify page answers from the registered copy regardless of which
+authority issued, by number or by file, and the certificate downloads
+as CNML, as a Verifiable Credential, and as an AAS submodel. The
+[interop positions](/technologies/dataspace-interop) are public and
+boring on purpose.
+
+## Where to go next
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/register/"
+  label="Read the register, then verify one"
+  description="No account: browse the register, then enter R60/2021-A-EX1-26.01 on the verify page and read the verdict your inspectors would get."
+/>
+<ActionBox
+  href="/about/audiences/member-states"
+  label="Read the Member States audience page"
+  description="The full entitlement picture for your category, quoted from the estate's single source."
+/>
+<ActionBox
+  href="mailto:info@oimlsmart.org"
+  label="Talk to us"
+  description="info@oimlsmart.org: your member organization's onboarding starts with a conversation about which Recommendation first."
+/>

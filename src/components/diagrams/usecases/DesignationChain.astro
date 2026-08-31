@@ -1,0 +1,72 @@
+---
+/**
+ * DesignationChain — the member-state view in one diagram: the state's
+ * designation of its Issuing Authority, the authority's associated
+ * Test Laboratories, the utilizers' access per designation, all kept
+ * as registry data the certificates trace back to; the register and
+ * the public verify at the edge. House style; dark-mode correct via
+ * the TechFigure palette. (TODO.promotion/10: one diagram per page.)
+ */
+import TechFigure from '../TechFigure.astro'
+---
+
+<TechFigure caption="The honest chain: every certificate answers to a designation chain that is data, not a filing cabinet.">
+  <svg viewBox="0 0 900 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="uc-chain-title">
+    <title id="uc-chain-title">The designation chain: the member state designates its Issuing Authority with its scopes; the authority works with its associated Test Laboratories; utilizers receive access per designation; the chain is kept as registry data; certificates publish to the register and verify publicly against it</title>
+
+    <defs>
+      <marker id="uc-carr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"/>
+      </marker>
+    </defs>
+
+    <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="var(--dg-text)">The designation chain, as the member state reads it</text>
+
+    <rect x="30" y="90" width="220" height="100" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="140" y="116" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">The Member State</text>
+    <text x="140" y="136" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">proposes and designates;</text>
+    <text x="140" y="152" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">its officers follow the chain</text>
+    <text x="140" y="168" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">their country stands behind</text>
+
+    <rect x="340" y="90" width="240" height="100" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="460" y="116" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">The Issuing Authority</text>
+    <text x="460" y="136" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">a registry entry with its scopes:</text>
+    <text x="460" y="152" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the Recommendations it may</text>
+    <text x="460" y="168" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">certify, as data</text>
+
+    <rect x="340" y="230" width="240" height="90" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="460" y="256" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">The Test Laboratories</text>
+    <text x="460" y="276" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">associated to the authority, their</text>
+    <text x="460" y="292" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">scopes on the same registry</text>
+
+    <rect x="30" y="230" width="220" height="90" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="140" y="256" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Utilizers / Associates</text>
+    <text x="140" y="276" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">access per the designation:</text>
+    <text x="140" y="292" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the reports and certificates open</text>
+
+    <rect x="660" y="90" width="210" height="100" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="765" y="116" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gen-text)">The register</text>
+    <text x="765" y="136" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">every certificate the chain</text>
+    <text x="765" y="152" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">issues publishes here, the</text>
+    <text x="765" y="168" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">validity reference</text>
+
+    <rect x="660" y="230" width="210" height="90" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="765" y="256" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">The public verify</text>
+    <text x="765" y="276" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">anyone checks a certificate</text>
+    <text x="765" y="292" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">against the chain, no account</text>
+
+    <line x1="250" y1="140" x2="332" y2="140" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-carr)"/>
+    <text x="291" y="132" text-anchor="middle" font-size="10" fill="var(--dg-text-muted)">designates</text>
+    <line x1="460" y1="190" x2="460" y2="222" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-carr)"/>
+    <text x="530" y="210" text-anchor="middle" font-size="10" fill="var(--dg-text-muted)">associates</text>
+    <line x1="250" y1="275" x2="332" y2="275" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#uc-carr)"/>
+    <line x1="580" y1="140" x2="652" y2="140" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-carr)"/>
+    <text x="616" y="132" text-anchor="middle" font-size="10" fill="var(--dg-text-muted)">publishes</text>
+    <line x1="765" y1="190" x2="765" y2="222" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-carr)"/>
+
+    <rect x="30" y="360" width="840" height="76" rx="10" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" stroke-width="1.5"/>
+    <text x="60" y="388" font-size="13" font-weight="600" fill="var(--dg-gov-text)">Custody never moves</text>
+    <text x="60" y="408" font-size="11.5" fill="var(--dg-text-soft)">The chain is data your systems read, on the hosted estate or on your own instance under the Member State</text>
+    <text x="60" y="424" font-size="11.5" fill="var(--dg-text-soft)">self-host entitlement; the designations, the scopes, and the legal acts stay exactly where your law puts them.</text>
+  </svg>
+</TechFigure>
