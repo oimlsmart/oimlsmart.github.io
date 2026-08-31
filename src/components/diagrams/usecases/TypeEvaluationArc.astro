@@ -1,0 +1,100 @@
+---
+/**
+ * TypeEvaluationArc — the canonical arc in one diagram: the applicant
+ * applies, the authority reviews and dispatches, the laboratory tests,
+ * the authority evaluates and decides, the certificate issues and
+ * publishes to the register, verified anywhere. The five demo flows
+ * (01–05) ride the arc as chapters; the applicant is notified at every
+ * stage. House style; dark-mode correct via the TechFigure palette.
+ * (TODO.promotion/10: one diagram per page.)
+ */
+import TechFigure from '../TechFigure.astro'
+---
+
+<TechFigure caption="One continuous story from application to registration: the five demo flows are the same arc from five viewpoints.">
+  <svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="uc-arc-title">
+    <title id="uc-arc-title">Type evaluation end to end: apply, review, samples, dispatch, test and report, evaluate and decide, issue, register, verified anywhere; the five demo flows marked as chapters; the applicant notified at every stage</title>
+
+    <defs>
+      <marker id="uc-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"/>
+      </marker>
+    </defs>
+
+    <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="var(--dg-text)">Type evaluation, end to end</text>
+
+    <!-- row 1 -->
+    <rect x="30" y="70" width="260" height="88" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="160" y="96" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">1 &#183; Apply</text>
+    <text x="160" y="116" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the applicant&#8217;s guided wizard, the explicit</text>
+    <text x="160" y="132" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">Recommendation pick, the IA cards</text>
+    <text x="160" y="150" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">flow 01 &#183; the application</text>
+
+    <rect x="330" y="70" width="260" height="88" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="460" y="96" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">2 &#183; Review</text>
+    <text x="460" y="116" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the authority&#8217;s queue, oldest first; reject</text>
+    <text x="460" y="132" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">with reason or accept: the project opens</text>
+    <text x="460" y="150" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">flow 02 &#183; the authority&#8217;s intake</text>
+
+    <rect x="630" y="70" width="240" height="88" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="750" y="96" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">3 &#183; Samples + dispatch</text>
+    <text x="750" y="116" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">samples tracked, tests &#215; samples</text>
+    <text x="750" y="132" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">assigned per laboratory, sent</text>
+    <text x="750" y="150" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">flow 02, continued</text>
+
+    <line x1="290" y1="114" x2="322" y2="114" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-arr)"/>
+    <line x1="590" y1="114" x2="622" y2="114" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-arr)"/>
+    <line x1="750" y1="158" x2="750" y2="206" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-arr)"/>
+
+    <!-- row 2 (right to left) -->
+    <rect x="630" y="214" width="240" height="88" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="750" y="240" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">4 &#183; Test + report</text>
+    <text x="750" y="260" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the laboratory&#8217;s model-driven runs,</text>
+    <text x="750" y="276" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the test report submitted as data</text>
+    <text x="750" y="294" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">flow 03 &#183; the laboratory&#8217;s work</text>
+
+    <rect x="330" y="214" width="260" height="88" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="460" y="240" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">5 &#183; Evaluate + decide</text>
+    <text x="460" y="260" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the authority validates every TR row;</text>
+    <text x="460" y="276" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the verdicts computed, never tallied</text>
+    <text x="460" y="294" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">flow 04 &#183; the evaluation</text>
+
+    <rect x="30" y="214" width="260" height="88" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="160" y="240" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gen-text)">6 &#183; Issue + register</text>
+    <text x="160" y="260" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the CNML certificate signed over the</text>
+    <text x="160" y="276" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">verdict chain; the BIML act publishes</text>
+    <text x="160" y="294" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">flow 04, completed</text>
+
+    <line x1="630" y1="258" x2="598" y2="258" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-arr)"/>
+    <line x1="330" y1="258" x2="298" y2="258" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-arr)"/>
+    <line x1="160" y1="302" x2="160" y2="350" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-arr)"/>
+
+    <!-- row 3 -->
+    <rect x="30" y="358" width="260" height="88" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="160" y="384" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gen-text)">7 &#183; Published</text>
+    <text x="160" y="404" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the registered copy is the validity</text>
+    <text x="160" y="420" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">reference, browsable by anyone</text>
+    <text x="160" y="438" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">B 18:2025 &#167;15.8</text>
+
+    <rect x="330" y="358" width="260" height="88" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="460" y="384" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">8 &#183; The applicant&#8217;s journey</text>
+    <text x="460" y="404" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">notified at every stage; downloads</text>
+    <text x="460" y="420" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the certificate software can verify</text>
+    <text x="460" y="438" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">flow 05 &#183; the journey</text>
+
+    <rect x="630" y="358" width="240" height="88" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="750" y="384" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">9 &#183; Verified anywhere</text>
+    <text x="750" y="404" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">by number or by file, no account,</text>
+    <text x="750" y="420" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">no phone call to the authority</text>
+    <text x="750" y="438" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">the public verify page</text>
+
+    <line x1="290" y1="402" x2="322" y2="402" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-arr)"/>
+    <line x1="590" y1="402" x2="622" y2="402" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#uc-arr)"/>
+
+    <!-- the notification ribbon -->
+    <path d="M 460 446 L 460 496 L 160 496 L 160 166" fill="none" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#uc-arr)"/>
+    <text x="310" y="488" text-anchor="middle" font-size="11" fill="var(--dg-text-muted)">the applicant is notified at every stage</text>
+
+    <text x="450" y="540" text-anchor="middle" font-size="13" fill="var(--dg-text-muted)">One record carries the whole arc: nothing is re-typed, and the record itself is the audit trail.</text>
+  </svg>
+</TechFigure>
