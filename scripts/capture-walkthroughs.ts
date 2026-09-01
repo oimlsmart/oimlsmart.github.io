@@ -1632,6 +1632,16 @@ async function captureWizardTheme(browser: Browser, theme: string) {
     }
     if (wants('wizard-stepper-jump')) {
       try {
+        // The long-lived wizard page's SPA swap hangs under the sick
+        // stream; a reload boots a fresh island and the draft store
+        // restores the fill (the resume banner's offer taken), and the
+        // jump then works on a healthy page.
+        await gotoApp(page, '/app/portal/applications/new')
+        await waitTestId(page, 'portal-wizard')
+        const banner = await page.waitForSelector('[data-testid="wizard-resume-banner"]', { timeout: 60_000 })
+          .then(() => true).catch(() => false)
+        if (banner) await clickTestId(page, 'wizard-resume-draft')
+        await page.waitForSelector('[data-testid="wizard-step-3"]', { timeout: SETTLE })
         await page.evaluate(() => {
           (document.querySelector('[data-testid="wizard-step-nav-1"]') as HTMLElement | null)?.click()
         })
@@ -1742,17 +1752,21 @@ async function captureEvaluation(browser: Browser) {
       await loginAs(context, page, 'Issuing Authority', '/app/ia')
 
       if (wants('tr-review') || wants('review-period') || wants('examinations') || wants('er-synopsis')) {
-        // The seeded worked example's surfaces link from the project's
-        // hub (the IA console has no TR/evaluation list routes; the hub
-        // is the one record they hang from).
-        await gotoApp(page, '/app/ia/projects/app-acme-lc')
-        await waitTestId(page, 'ia-project-hub')
-        await waitText(page, 'Application record')
-        await waitSkeletonGone(page)
-        const links = await page.evaluate(() =>
-          Array.from(document.querySelectorAll('a[href]')).map(a => a.getAttribute('href') ?? ''))
-        const trHref = links.find(h => /\/app\/ia\/test-reports\/.+/.test(h)) ?? null
-        const erHref = links.find(h => /\/app\/ia\/evaluations\/.+/.test(h)) ?? null
+        // The seeded worked example's surfaces by their direct paths (the
+        // hub's links are router.push buttons, never anchors; the seeded
+        // ids are verified against the API first, honestly).
+        const seeded = await page.evaluate(async () => {
+          const get = async (u: string) => {
+            const r = await fetch(u, { credentials: 'include' })
+            return r.ok
+          }
+          return {
+            tr: await get('/api/entities/testReports/trp-acme-lc'),
+            er: await get('/api/entities/evaluationReports/app-acme-lc'),
+          }
+        })
+        const trHref = seeded.tr ? '/app/ia/test-reports/trp-acme-lc' : null
+        const erHref = seeded.er ? '/app/ia/evaluations/app-acme-lc' : null
 
         if ((wants('tr-review') || wants('review-period')) && trHref) {
           await gotoApp(page, trHref)
