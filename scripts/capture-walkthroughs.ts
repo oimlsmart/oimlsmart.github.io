@@ -170,6 +170,21 @@ async function waitTestId(page: Page, testid: string) {
   await page.waitForSelector(`[data-testid="${testid}"]`, { timeout: SETTLE })
 }
 
+/** The demo's entity-stream wedge: a page can settle its shell while the
+ *  data preloads abort with the SSE stream (net::ERR_ABORTED on
+ *  /api/entities/*), leaving the content skeleton forever. A reload
+ *  re-subscribes and clears it. waitTestIdReload waits the short budget,
+ *  reloads once, then waits the full one. */
+async function waitTestIdReload(page: Page, testid: string) {
+  const found = await page.waitForSelector(`[data-testid="${testid}"]`, { timeout: 60_000 })
+    .then(() => true).catch(() => false)
+  if (found) return
+  console.log(`  · ${testid} never mounted (the stream wedge); reloading the page once`)
+  await page.reload({ waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT })
+  await waitIslandSettled(page)
+  await page.waitForSelector(`[data-testid="${testid}"]`, { timeout: SETTLE })
+}
+
 /** Wait for content, not just shell: the skeletons carry the testids, so
  *  every capture additionally waits for a string only real data produces. */
 async function waitText(page: Page, text: string) {
@@ -180,32 +195,73 @@ async function waitText(page: Page, text: string) {
   )
 }
 
-/** Fill a run/evidence input with a value that passes the envelope: the
- *  row's own text names the unit (kPa wants an atmospheric reading,
- *  counts wants the indication, JSON wants the readings array). A value
- *  outside the declared envelope leaves the record disabled forever —
- *  the 2026-08-31 barometric leg proved 1.000 kPa is not an atmosphere. */
+/** A record act with the edge-death discipline: the demo's edge kills
+ *  long operations around 120s (the platform's known runner↔edge
+ *  flake), and a killed record leaves the button disabled on `acting`
+ *  forever. Click, wait the short budget for the act to settle (the
+ *  button re-enables, its label flipping to the Correct repetition when
+ *  the record landed), and on the wedge reload once: the run state is
+ *  server-side, so a landed record survives, and the caller's loop
+ *  re-discovers the open slots from the restored state. */
+async function recordAct(page: Page, recordTestid: string) {
+  await clickWhenReady(page, recordTestid)
+  const settled = await page.waitForFunction(
+    (id) => {
+      const b = document.querySelector(`[data-testid="${id}"]`) as HTMLButtonElement | null
+      return !b || !b.disabled
+    },
+    recordTestid,
+    { timeout: 90_000, polling: 500 },
+  ).then(() => true).catch(() => false)
+  if (settled) return
+  console.log(`  · the record act wedged on ${recordTestid} (the edge death); reloading once`)
+  await page.reload({ waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT })
+  await waitIslandSettled(page)
+  await waitTestIdReload(page, 'lab-run-view')
+}
+
+/** Fill a run/evidence input the operator-attestation way: the declared
+ *  value rides the input's placeholder (the operator attests it by
+ *  re-entering it), and a row without one gets an in-envelope default
+ *  from its own unit text (kPa wants an atmosphere, counts the
+ *  indication, JSON the readings array). The record refuses an empty or
+ *  out-of-envelope value quietly (a warning, not an error), so the
+ *  drive's values must pass the envelope — the 2026-08-31 barometric
+ *  leg proved 1.000 kPa is not an atmosphere. */
 async function smartFill(page: Page, inputTestid: string) {
   const hint = await page.evaluate((id) => {
     const el = document.querySelector(`[data-testid="${id}"]`) as HTMLInputElement | null
-    if (!el) return { text: '', placeholder: '', value: '' }
+    if (!el) return null
     const row = el.closest('div')
     return {
       text: (row?.parentElement?.textContent ?? row?.textContent ?? '').slice(0, 300),
       placeholder: el.placeholder ?? '',
       value: el.value ?? '',
+      type: el.getAttribute('type') ?? 'text',
     }
   }, inputTestid)
-  if (hint.value.trim() !== '') return // a bound/declared value already fills it
+  if (!hint) return
+  if (hint.value.trim() !== '') return // a bound/typed value already fills it
   const hay = `${hint.text} ${hint.placeholder}`
-  let value = '1.000'
-  if (/kpa|barometric|atmospheric pressure/i.test(hay) && /json/i.test(hay)) value = '[98.5, 101.3]'
-  else if (/json|readings collection/i.test(hay)) value = '[98.5, 101.3]'
-  else if (/kpa|barometric|atmospheric pressure/i.test(hay)) value = '101.3'
-  else if (/75%/.test(hay)) value = '15000'
-  else if (/D_min/i.test(hay)) value = '0'
-  else if (/counts/i.test(hay)) value = '15000'
-  else if (/volt/i.test(hay)) value = '230 V AC'
+  let value = ''
+  if (hint.placeholder.trim() !== '' && !/json|record as text/i.test(hint.placeholder)) {
+    // The declared value: attest it verbatim.
+    value = hint.placeholder.trim()
+  }
+  if (!value) {
+    if (/kpa|barometric|atmospheric pressure/i.test(hay) && /json|array|readings/i.test(hay)) value = '[98.5, 101.3]'
+    else if (/json|array|readings collection/i.test(hay)) value = '[98.5, 101.3]'
+    else if (/kpa|barometric|atmospheric pressure/i.test(hay)) value = '101.3'
+    else if (/75%/.test(hay)) value = '15000'
+    else if (/D_min/i.test(hay)) value = '0'
+    else if (/counts/i.test(hay)) value = '15000'
+    else if (/volt/i.test(hay)) value = hint.type === 'number' ? '230' : '230 V AC'
+    else value = hint.type === 'number' ? '1' : '1.000'
+  }
+  if (hint.type === 'number') {
+    // number inputs reject non-numeric strings silently
+    value = value.replace(/[^0-9.\-]/g, '') || '1'
+  }
   await typeTestId(page, inputTestid, value)
 }
 /** Wait until the Skeleton placeholders (.skel, the demo app's loading
@@ -771,12 +827,12 @@ async function tlRunAndReport(page: Page, requestPath: string) {
   // Back on the request, open the first assignment's run: the
   // model-driven step wizard walks the declared procedure.
   await gotoApp(page, requestPath)
-  await waitTestId(page, 'lab-request-assignments')
+  await waitTestIdReload(page, 'lab-request-assignments')
   await page.evaluate(() => {
     const btn = document.querySelector('[data-testid="lab-assignment-run"]') as HTMLElement | null
     btn?.click()
   })
-  await waitTestId(page, 'lab-run-view')
+  await waitTestIdReload(page, 'lab-run-view')
   await waitSkeletonGone(page)
   // The run header's tooltip reads the conformance model (the wave-3
   // mechanism): open it for the capture when it mounts.
@@ -822,22 +878,29 @@ async function tlRunAndReport(page: Page, requestPath: string) {
       if (kind === 'observation') {
         const hasInput = await page.evaluate((s) => !!document.querySelector(`[data-testid="wizard-observation-input-${s}"]`), step)
         if (hasInput) await smartFill(page, `wizard-observation-input-${step}`)
-        await clickWhenReady(page, `wizard-observation-record-${step}`)
+        await recordAct(page, `wizard-observation-record-${step}`)
       } else if (kind === 'slot') {
         for (let i = 0; i < 8; i++) {
+          // Only the fresh 'Record' buttons: a recorded slot's button
+          // reads 'Correct (rep N)' and must never be re-clicked.
           const slotId = await page.evaluate(() => {
-            const btn = document.querySelector('[data-testid^="wizard-slot-record-"]')
+            const btn = Array.from(document.querySelectorAll('[data-testid^="wizard-slot-record-"]'))
+              .find(b => (b.textContent ?? '').trim() === 'Record')
             return btn?.getAttribute('data-testid')?.replace('wizard-slot-record-', '') ?? null
           })
           if (!slotId) break
           const inputId = `wizard-slot-input-${slotId}`
           const hasInput = await page.evaluate((id) => !!document.querySelector(`[data-testid="${id}"]`), inputId)
           if (hasInput) await smartFill(page, inputId)
-          await clickWhenReady(page, `wizard-slot-record-${slotId}`)
-          await page.waitForTimeout(400)
+          await recordAct(page, `wizard-slot-record-${slotId}`)
+          const refused = await page.evaluate((id) => {
+            const b = document.querySelector(`[data-testid="${id}"]`)
+            return !!b && (b.textContent ?? '').trim() === 'Record'
+          }, `wizard-slot-record-${slotId}`)
+          if (refused) throw new Error(`slot ${slotId} refused the recorded value`)
         }
       } else {
-        await clickWhenReady(page, `wizard-step-done-${step}`)
+        await recordAct(page, `wizard-step-done-${step}`)
       }
       await page.waitForFunction(
         (s) => document.querySelector(`[data-testid="wizard-step-${s}"]`)?.getAttribute('data-state') === 'done',
@@ -845,27 +908,43 @@ async function tlRunAndReport(page: Page, requestPath: string) {
         { timeout: SETTLE, polling: 500 },
       )
     }
-    // The per-test evidence: every required slot records (the
-    // completeness gate holds Complete run until they do), the bound
-    // values kept as declared, the direct readings filled in envelope.
+    // The per-test evidence: every open row records (the completeness
+    // gate holds Complete run until the required set is filled), the
+    // declared values attested verbatim, the direct readings in
+    // envelope. Recorded rows flip to 'Correct (rep N)' and drop out.
     for (let i = 0; i < 30; i++) {
       const ev = await page.evaluate(() => {
-        const btn = document.querySelector('[data-testid^="evidence-record-"]')
+        const btn = Array.from(document.querySelectorAll('[data-testid^="evidence-record-"]'))
+          .find(b => (b.textContent ?? '').trim() === 'Record')
         return btn?.getAttribute('data-testid')?.replace('evidence-record-', '') ?? null
       })
       if (!ev) break
       const inputId = `evidence-input-${ev}`
       const hasInput = await page.evaluate((id) => !!document.querySelector(`[data-testid="${id}"]`), inputId)
       if (hasInput) await smartFill(page, inputId)
-      await clickWhenReady(page, `evidence-record-${ev}`)
-      const gone = await page.waitForFunction(
-        (id) => !document.querySelector(`[data-testid="evidence-record-${id}"]`),
-        ev,
-        { timeout: 10_000, polling: 500 },
-      ).then(() => true).catch(() => false)
-      if (!gone) throw new Error(`evidence slot ${ev} never recorded`)
+      await recordAct(page, `evidence-record-${ev}`)
+      const refused = await page.evaluate((id) => {
+        const b = document.querySelector(`[data-testid="${id}"]`)
+        return !!b && (b.textContent ?? '').trim() === 'Record'
+      }, `evidence-record-${ev}`)
+      if (refused) throw new Error(`evidence row ${ev} refused the recorded value`)
     }
     await clickWhenReady(page, 'lab-run-complete')
+    // The completion round-trips the admissibility recompute; the same
+    // edge death applies, so the wait is bounded with one reload (the
+    // completed state is server-side; a dead completion is re-clicked).
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const completed = await page.waitForSelector('[data-testid="lab-run-completed"]', { timeout: 90_000 })
+        .then(() => true).catch(() => false)
+      if (completed) break
+      if (attempt === 1) throw new Error('the run never completed (two completion attempts)')
+      console.log('  · the completion wedged (the edge death); reloading and re-clicking once')
+      await page.reload({ waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT })
+      await waitIslandSettled(page)
+      await waitTestIdReload(page, 'lab-run-view')
+      const landed = await page.evaluate(() => !!document.querySelector('[data-testid="lab-run-completed"]'))
+      if (!landed) await clickWhenReady(page, 'lab-run-complete')
+    }
     await waitTestId(page, 'lab-run-completed')
   }
   await completeRun()
@@ -875,7 +954,7 @@ async function tlRunAndReport(page: Page, requestPath: string) {
   // every assigned sample). The first remaining run button opens it; an
   // already-completed run (a resumed drive) is skipped honestly.
   await gotoApp(page, requestPath)
-  await waitTestId(page, 'lab-request-assignments')
+  await waitTestIdReload(page, 'lab-request-assignments')
   const second = await page.evaluate(() => {
     const btn = document.querySelector('[data-testid="lab-assignment-run"]') as HTMLElement | null
     if (btn) { btn.click(); return true }
@@ -890,7 +969,7 @@ async function tlRunAndReport(page: Page, requestPath: string) {
   // The TR: the omissions for the forms the run does not cover, the
   // signature acknowledgment, the finalize + submit.
   await gotoApp(page, requestPath)
-  await waitTestId(page, 'lab-request-assignments')
+  await waitTestIdReload(page, 'lab-request-assignments')
   await page.evaluate(() => {
     const btn = document.querySelector('[data-testid="lab-request-open-report"]') as HTMLElement | null
     btn?.click()
@@ -902,6 +981,7 @@ async function tlRunAndReport(page: Page, requestPath: string) {
   ).then(() => true).catch(() => false)
   if (!openedReport) {
     await gotoApp(page, requestPath)
+    await waitTestIdReload(page, 'lab-request-draft-report')
     await clickWhenReady(page, 'lab-request-draft-report')
     await page.waitForFunction(
       () => window.location.pathname.startsWith('/app/lab/reports/'),
@@ -910,7 +990,7 @@ async function tlRunAndReport(page: Page, requestPath: string) {
     )
   }
   await waitIslandSettled(page)
-  await waitTestId(page, 'lab-report-composer')
+  await waitTestIdReload(page, 'lab-report-composer')
   await page.waitForFunction(
     () => !!document.querySelector('[data-testid^="omit-"]'),
     undefined,
@@ -1087,11 +1167,238 @@ async function driveChain(browser: Browser) {
     const { context, page } = await leg('Test Laboratory', '/app/lab')
     try {
       await gotoApp(page, requestPath!)
-      await waitTestId(page, 'lab-request-detail')
+      await waitTestIdReload(page, 'lab-request-detail')
       await tlRunAndReport(page, requestPath!)
     } finally { await context.close() }
     saveState({ phase: 'report-submitted', appId, requestPath })
     state.phase = 'report-submitted'
+  }
+
+  if (state.phase === 'doc-run') {
+    // The run-completion sub-chain (the run-marks e2e leg's proven
+    // recipe): the documentation-examination run completes with the
+    // overall result recorded, signed, and the constraints checked. The
+    // first dispatch's performance test answered its admissibility gate
+    // with an INVALIDATED run (the honest posture: an inadmissible
+    // completion invalidates); the walkthrough's run-completion and
+    // report-submission captures ride this form, the one the platform's
+    // own CI leg completes on this build.
+    let docPath = state.requestPath
+    {
+      const { context, page } = await leg('Issuing Authority', '/app/ia')
+      try {
+        await gotoApp(page, `/app/ia/projects/${encodeURIComponent(appId!)}`)
+        await waitTestId(page, 'ia-project-hub')
+        await waitText(page, 'Application record')
+        await waitSkeletonGone(page)
+        await clickTestId(page, 'tep-new-request')
+        await page.waitForFunction(
+          () => window.location.pathname.startsWith('/app/ia/dispatch/'),
+          undefined,
+          { timeout: SETTLE, polling: 500 },
+        )
+        await waitIslandSettled(page)
+        await waitTestId(page, 'ia-dispatch-builder')
+        await page.waitForSelector('[data-testid="ia-matrix-row"][data-form-id="documentation-examination"]', { timeout: SETTLE })
+        await clickTestId(page, 'ia-clear')
+        await page.evaluate(() => {
+          const row = document.querySelector('[data-testid="ia-matrix-row"][data-form-id="documentation-examination"]')
+          const input = row?.querySelector('input[data-lab-id="21"]') as HTMLElement | null
+          if (!input) throw new Error('no matrix cell for documentation-examination × lab 21')
+          input.click()
+        })
+        await waitTestId(page, 'ia-plan-21')
+        await clickTestId(page, 'ia-issue-requests')
+        await page.waitForFunction(
+          () => window.location.pathname.startsWith('/app/ia/projects/'),
+          undefined,
+          { timeout: SETTLE, polling: 500 },
+        )
+        await waitIslandSettled(page)
+        await waitTestId(page, 'tep-test-requests')
+      } finally { await context.close() }
+      saveState({ phase: 'doc-dispatched', appId, requestPath: docPath })
+      state.phase = 'doc-dispatched'
+    }
+  }
+
+  if (state.phase === 'doc-dispatched') {
+    let docPath = state.requestPath
+    {
+      const { context, page } = await leg('Test Laboratory', '/app/lab')
+      try {
+        await gotoApp(page, '/app/lab')
+        await page.waitForFunction(
+          () => !!document.querySelector('[data-testid^="lab-incoming-"]'),
+          undefined,
+          { timeout: SETTLE, polling: 500 },
+        )
+        await waitSkeletonGone(page)
+        // Open the documentation-examination request (the newest incoming
+        // row carries it).
+        await page.evaluate(() => {
+          const rows = Array.from(document.querySelectorAll('[data-testid^="lab-incoming-"]'))
+          const row = rows.find(r => (r.textContent ?? '').includes('documentation'))
+            ?? rows[rows.length - 1]
+          const btn = row?.querySelector('button[data-testid^="lab-open-request-"]') as HTMLElement | null
+          btn?.click()
+        })
+        await page.waitForFunction(
+          () => /\/app\/lab\/requests\//.test(window.location.pathname),
+          undefined,
+          { timeout: SETTLE, polling: 500 },
+        )
+        await waitIslandSettled(page)
+        // Presence-gated for the resume: the accept may already have landed.
+        const acceptPresent = await page.evaluate(() => !!document.querySelector('[data-testid="lab-request-accept"]'))
+        if (acceptPresent) {
+          await clickTestId(page, 'lab-request-accept')
+          await page.waitForFunction(
+            () => /accepted[_ ]by[_ ]lab/i.test(document.body.innerText),
+            undefined,
+            { timeout: SETTLE, polling: 500 },
+          )
+        }
+        await waitSkeletonGone(page)
+        await page.waitForTimeout(1200)
+        docPath = new URL(page.url()).pathname
+
+        // Start the work, then complete the documentation run per sample
+        // (the run-marks recipe: overall result recorded, signed, the
+        // constraints checked, then the completion). Every act
+        // presence-gated: a resume finds the done ones already done.
+        const startPresent = await page.evaluate(() => !!document.querySelector('[data-testid="lab-request-start"]'))
+        if (startPresent) await clickWhenReady(page, 'lab-request-start')
+        await waitTestIdReload(page, 'lab-request-assignments')
+        for (let row = 0; row < 2; row++) {
+          if (row > 0) {
+            await gotoApp(page, docPath)
+            await waitTestIdReload(page, 'lab-request-detail')
+          }
+          await page.evaluate(() => {
+            const btn = document.querySelector('[data-testid="lab-assignment-run"]') as HTMLElement | null
+            btn?.click()
+          })
+          await waitTestIdReload(page, 'lab-run-view')
+          await waitSkeletonGone(page)
+          const alreadyCompleted = await page.evaluate(() => !!document.querySelector('[data-testid="lab-run-completed"]'))
+          if (alreadyCompleted) continue
+          await page.waitForSelector('[data-testid="evidence-row-overall_result"]', { timeout: SETTLE })
+          const needsRecord = await page.evaluate(() => {
+            const b = document.querySelector('[data-testid="evidence-record-overall_result"]')
+            return !!b && (b.textContent ?? '').trim() === 'Record'
+          })
+          if (needsRecord) {
+            await page.evaluate(() => {
+              const sel = document.querySelector('[data-testid="evidence-row-overall_result"] select') as HTMLSelectElement | null
+              if (sel) {
+                sel.value = 'true'
+                sel.dispatchEvent(new Event('change', { bubbles: true }))
+              }
+            })
+            await recordAct(page, 'evidence-record-overall_result')
+          }
+          const signPresent = await page.evaluate(() => !!document.querySelector('[data-testid="evidence-sign-overall_result"]'))
+          if (signPresent) {
+            await clickTestId(page, 'evidence-sign-overall_result')
+            await page.waitForTimeout(800)
+          }
+          const checkPresent = await page.evaluate(() => !!document.querySelector('[data-testid="lab-run-check-constraints"]'))
+          if (checkPresent) await clickTestId(page, 'lab-run-check-constraints')
+          await page.waitForFunction(
+            () => {
+              const btn = document.querySelector('[data-testid="lab-run-complete"]') as HTMLButtonElement | null
+              return !!btn && !btn.disabled
+            },
+            undefined,
+            { timeout: SETTLE, polling: 500 },
+          )
+          await clickTestId(page, 'lab-run-complete')
+          await page.waitForSelector('[data-testid="lab-run-completed"]', { timeout: SETTLE })
+          if (row === 0) {
+            await shoot(page, 'tl-work', 'run-completed', currentTheme, 'completed the run: the result recorded and signed per measurement, the constraints checked, the run locked', { fullPage: true })
+          }
+        }
+
+        // The TR: draft, account for the remaining forms with justified
+        // omissions, the position, the acknowledgment, finalize + submit.
+        await gotoApp(page, docPath)
+        await waitTestIdReload(page, 'lab-request-detail')
+        const hasDraft2 = await page.evaluate(() => !!document.querySelector('[data-testid="lab-request-draft-report"]'))
+        if (hasDraft2) {
+          await clickWhenReady(page, 'lab-request-draft-report')
+          await page.waitForFunction(
+            () => window.location.pathname.startsWith('/app/lab/reports/'),
+            undefined,
+            { timeout: SETTLE, polling: 500 },
+          )
+        } else {
+          await page.evaluate(() => {
+            const btn = document.querySelector('[data-testid="lab-request-open-report"]') as HTMLElement | null
+            btn?.click()
+          })
+          await page.waitForFunction(
+            () => window.location.pathname.startsWith('/app/lab/reports/'),
+            undefined,
+            { timeout: SETTLE, polling: 500 },
+          )
+        }
+        await waitIslandSettled(page)
+        await waitTestIdReload(page, 'lab-report-composer')
+        await page.waitForFunction(
+          () => !!document.querySelector('[data-testid^="omit-"]'),
+          undefined,
+          { timeout: SETTLE, polling: 500 },
+        ).catch(() => {})
+        for (let i = 0; i < 60; i++) {
+          const omitId = await page.evaluate(() => {
+            const btn = document.querySelector('[data-testid^="omit-"]') as HTMLElement | null
+            if (!btn) return null
+            const input = btn.closest('div')!.querySelector('input') as HTMLInputElement
+            input.value = 'not applicable to this type evaluation (covered by the performed tests)'
+            input.dispatchEvent(new Event('input', { bubbles: true }))
+            const id = btn.getAttribute('data-testid')!
+            btn.click()
+            return id
+          })
+          if (!omitId) {
+            const oneBack = await page.waitForFunction(
+              () => !!document.querySelector('[data-testid^="omit-"]'),
+              undefined,
+              { timeout: 3_000, polling: 500 },
+            ).then(() => true).catch(() => false)
+            if (!oneBack) break
+            continue
+          }
+          await page.waitForFunction(
+            (t) => !document.querySelector(`[data-testid="${t}"]`),
+            omitId,
+            { timeout: 5_000, polling: 500 },
+          ).then(() => true).catch(() => false)
+        }
+        await typeTestId(page, 'lab-report-position', 'Senior test engineer')
+        await shoot(page, 'tl-work', 'report-composer-gate', currentTheme, 'accounted for every remaining required form with a justified omission: the gate names the last blocker (the signature acknowledgment), nothing submits silently', { fullPage: true })
+        for (let attempt = 0; attempt < 10; attempt++) {
+          const st = await page.evaluate(() => ({
+            checked: (document.querySelector('[data-testid="lab-report-acknowledge"]') as HTMLInputElement | null)?.checked ?? null,
+            enabled: !((document.querySelector('[data-testid="lab-report-issue"]') as HTMLButtonElement | null)?.disabled ?? true),
+          }))
+          if (st.enabled) break
+          if (st.checked === false) {
+            await page.evaluate(() => {
+              (document.querySelector('[data-testid="lab-report-acknowledge"]') as HTMLElement | null)?.click()
+            })
+          }
+          if (attempt === 9) throw new Error('the acknowledgment tick never lifted the finalize gate')
+          await page.waitForTimeout(400)
+        }
+        await clickTestId(page, 'lab-report-issue')
+        await waitTestId(page, 'lab-report-locked')
+        await shoot(page, 'tl-work', 'report-submitted', currentTheme, 'finalized and submitted the report: the TR locks, the IA is notified through the Evaluation Project', { fullPage: true })
+      } finally { await context.close() }
+      saveState({ phase: 'report-submitted', appId, requestPath: docPath })
+      state.phase = 'report-submitted'
+    }
   }
 
   console.log(`═══ DRIVE COMPLETE — application ${appId}, report submitted (the register story stays the seeded one) ═══\n`)
@@ -1443,6 +1750,47 @@ async function captureEvaluation(browser: Browser) {
 }
 
 // ── Main ──────────────────────────────────────────────────────────────
+
+// --rebuild-manifest: re-register every capture on disk. The drive's
+// phases write their shots before the run can crash out (an uncaught
+// timeout never reaches the merge below), so a rebuild after an
+// interrupted drive re-registers the orphans with their file mtimes;
+// entries with a live record keep their performed text.
+const REBUILD_MANIFEST = process.argv.includes('--rebuild-manifest')
+
+if (REBUILD_MANIFEST) {
+  const { readdirSync, statSync } = await import('node:fs')
+  const manifestPath = join(OUT, 'manifest.json')
+  let prior: CaptureRecord[] = []
+  try {
+    prior = (JSON.parse(readFileSync(manifestPath, 'utf8')).captures ?? []) as CaptureRecord[]
+  } catch { /* first run */ }
+  const byFile = new Map<string, CaptureRecord>()
+  for (const r of prior) byFile.set(r.file, r)
+  for (const flow of readdirSync(OUT, { withFileTypes: true })) {
+    if (!flow.isDirectory()) continue
+    for (const file of readdirSync(join(OUT, flow.name))) {
+      if (!file.endsWith('.png')) continue
+      const rel = `${flow.name}/${file}`
+      if (byFile.has(rel)) continue
+      const stem = file.replace(/-(light|dark)\.png$/, '')
+      const theme = file.endsWith('-dark.png') ? 'dark' : 'light'
+      byFile.set(rel, {
+        flow: flow.name,
+        name: stem,
+        file: rel,
+        url: '(re-registered after an interrupted run)',
+        theme,
+        performed: 'performed against the live demo (the manifest entry re-registered after an interrupted run)',
+        capturedAt: statSync(join(OUT, rel)).mtime.toISOString(),
+      })
+    }
+  }
+  const live = [...byFile.values()].filter(r => existsSync(join(OUT, r.file)))
+  writeFileSync(manifestPath, JSON.stringify({ generatedAt: new Date().toISOString(), date: DATE, captures: live }, null, 2) + '\n')
+  console.log(`manifest rebuilt: ${live.length} captures on disk → public/img/walkthroughs/manifest.json`)
+  process.exit(0)
+}
 
 const browser = await chromium.launch()
 try {
