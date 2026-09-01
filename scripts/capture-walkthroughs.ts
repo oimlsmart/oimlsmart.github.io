@@ -1313,16 +1313,32 @@ async function driveChain(browser: Browser) {
           }
           const checkPresent = await page.evaluate(() => !!document.querySelector('[data-testid="lab-run-check-constraints"]'))
           if (checkPresent) await clickTestId(page, 'lab-run-check-constraints')
-          await page.waitForFunction(
-            () => {
-              const btn = document.querySelector('[data-testid="lab-run-complete"]') as HTMLButtonElement | null
-              return !!btn && !btn.disabled
-            },
-            undefined,
-            { timeout: SETTLE, polling: 500 },
-          )
-          await clickTestId(page, 'lab-run-complete')
-          await page.waitForSelector('[data-testid="lab-run-completed"]', { timeout: SETTLE })
+          // The admissibility recompute reaches the button over the entity
+          // stream; when the stream wedges the server knows admissible and
+          // the client never re-renders. One reload fetches the truth.
+          for (let attempt = 0; attempt < 2; attempt++) {
+            const enabled = await page.waitForFunction(
+              () => {
+                const btn = document.querySelector('[data-testid="lab-run-complete"]') as HTMLButtonElement | null
+                return !!btn && !btn.disabled
+              },
+              undefined,
+              { timeout: 60_000, polling: 500 },
+            ).then(() => true).catch(() => false)
+            if (enabled) break
+            if (attempt === 1) throw new Error('the completion button never enabled (two reads of the admissibility)')
+            console.log('  · the admissibility echo wedged; reloading to re-read it')
+            await page.reload({ waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT })
+            await waitIslandSettled(page)
+            await waitTestIdReload(page, 'lab-run-view')
+            const done = await page.evaluate(() => !!document.querySelector('[data-testid="lab-run-completed"]'))
+            if (done) break
+          }
+          const doneAlready = await page.evaluate(() => !!document.querySelector('[data-testid="lab-run-completed"]'))
+          if (!doneAlready) {
+            await clickTestId(page, 'lab-run-complete')
+            await page.waitForSelector('[data-testid="lab-run-completed"]', { timeout: SETTLE })
+          }
           if (row === 0) {
             await shoot(page, 'tl-work', 'run-completed', currentTheme, 'completed the run: the result recorded and signed per measurement, the constraints checked, the run locked', { fullPage: true })
           }
