@@ -1,0 +1,263 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import SmartSplit from '../../components/SmartSplit.astro'
+import ShotFigure from '../../components/ShotFigure.astro'
+import SimulatedNote from '../../components/demo-flows/SimulatedNote.astro'
+import PresenterScript from '../../components/demo-flows/PresenterScript.astro'
+import WalkthroughPrintStyle from '../../components/demo-flows/WalkthroughPrintStyle.astro'
+
+// Flow 06 of the demo-flow walkthroughs (TODO.promotion/06): the audit
+// findings, per the smart repo's DEMO_FLOWS/06-audit-findings.md (agent-
+// 595, 2026-08-28, origin/v2 = 4be01f98) with each item's current state
+// checked against the platform's integration line this wave.
+const captured = '2026-09-01'
+
+const gaps = [
+  {
+    n: '1',
+    title: 'The review-period comment facility',
+    audit: 'The largest net-new build the audit named: no comment entity, thread, or review-period state existed anywhere; the evaluation machine ran DRAFT to terminal with no consultation.',
+    now: 'ANSWERED, LIVE. The comment facility ships with cone-gated threads on the reports, the resolution-before-finalization gate, and the notifications. Flow 04, S3 walks it on the demo.',
+    state: 'live',
+  },
+  {
+    n: '2',
+    title: 'The authority picker as cards with logos',
+    audit: 'The picker was a plain radio list and the organization registry carried no logo field; the filter answered only by kind, not by Recommendation.',
+    now: 'ANSWERED, LIVE. The registry carries the optional logo with the honest monogram fallback, and the wizard renders the cards with the scope summary and the per-Recommendation filter. Flow 01, S5 walks it.',
+    state: 'live',
+  },
+  {
+    n: '3',
+    title: 'The model-fed tooltip',
+    audit: 'No tooltip component existed in the platform, only scattered native title attributes; the flows want guidance that derives from the model, never hand-written vocabulary.',
+    now: 'ANSWERED, LIVE. One model-fed tooltip component reads the model\'s descriptions, clauses, and units; every flow\'s guidance rides it. Flow 03, S5 opens one on the run surface.',
+    state: 'live',
+  },
+  {
+    n: '4',
+    title: 'The lifecycle closure: the completion gate',
+    audit: 'The test project had a terminal state but the evaluation project had none; a project could read finished while fees stood unmarked and samples\' custody stood open.',
+    now: 'THE DOCTRINE IS DECIDED, THE SURFACE IN REVIEW. The settling gate (fees paid, custody closed, threads resolved, reports finalized, certificate issued and registered, with the refusal naming the open items) is decided doctrine with its model landed; the gate\'s surface ships with the platform wave now in review on the integration branch. Flow 05, S4 names this on its page.',
+    state: 'in review',
+  },
+]
+
+const shapeNotes = [
+  {
+    title: 'The wizard\'s any-order navigation',
+    text: 'The audit found the stepper\'s items never clicked. The build landed the click-to-jump with the per-step validation posture honest (complete, current, open) and the submit gate enforcing completeness; flow 01, S3 performs the jump.',
+  },
+  {
+    title: 'The negotiation evidence\'s anchor',
+    text: 'The agreement-evidence upload anchored on the pre-application engagement at audit time. The project-anchored facility (the agreement evidence on the Evaluation Project itself) rides the same in-review wave as the completion gate; the doctrine (the negotiation outside, the evidence on the record with its attested hash) never depended on the anchor.',
+  },
+  {
+    title: 'The laboratory\'s project join',
+    text: 'The cone opened at dispatch at audit time; the storyline wants the join at the acceptance act. The built posture moved the cone\'s opening to the acceptance, and the laboratory\'s scoped view (no evaluation workspace) is what flow 03, S3 captures.',
+  },
+  {
+    title: 'Who creates the test project',
+    text: 'The flow text framed the laboratory as the creator; the built shape creates the test project from the authority\'s dispatch, one per laboratory, and the laboratory\'s first act is the acceptance. A doctrine naming decision, recorded here as the audit recorded it, and flow 03 names it on its page.',
+  },
+  {
+    title: 'The out-of-envelope honesty',
+    text: 'Run-time refusal covers setup constraints (the wrong sequence, the missing equipment); a measured value outside the MPE is judged at the evaluation, never refused at the bench. The demo asserts exactly this honest posture, and flow 03, S6 says it in plain words.',
+  },
+  {
+    title: 'The notification coverage',
+    text: 'Four of the storyline\'s eight stages were applicant-facing at audit time; the catalog gained the applicant-facing marks for the rest (the self-act rule and the minus-actor posture unchanged), and the email channel carries the applicant-facing set.',
+  },
+]
+---
+
+<Base
+  title="The audit findings: the engineering record behind the demo flows"
+  description="Demo-flow walkthrough 06: the audit behind the five demo flows, rendered honestly. The step-by-step verdict, the four gap clusters and what answered them, the doctrine decisions taken in the open, and the e2e discipline that keeps the demo provable, with the presenter scripts."
+>
+  <WalkthroughPrintStyle />
+  <PageHero
+    eyebrow="The demo flows · 06"
+    title="The audit findings"
+    lede="The five walkthroughs are not marketing copy; they are the public rendering of an engineering program that audits itself first. This page is the audit record: what was found step by step, what the build answered, what is still in review, and the doctrine decisions taken in the open. Honesty is the brand, so the gaps are published too."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl walkthrough-body">
+    <div class="max-w-3xl mb-12">
+      <SimulatedNote />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The method: audit first, then build, then prove</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The demo-flows program began with an audit, not with a demo: on 2026-08-28 the engineering record pinned the platform's state (origin/v2 at 4be01f98) and walked every storyline step of the five flows against it. The honest total at that pin: <strong>about 24 of about 33 storyline steps fully existed (about 72%)</strong>. The whole workflow spine was built, cone-gated, and e2e-proven; the gaps were a named cluster, and the build answered the cluster, item by item.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        Two disciplines keep the record honest. First, every flow is proven by its own end-to-end leg that boots the demo stack and drives the full arc, asserting the user-visible steps (the cards, the queue rows, the tooltips' content against the model), never the API alone. Second, the demo carries its own presenter script (the guided demo's 24 steps) as a single machine-readable definition that the demo presents and the e2e consumes, so the walkthrough can never silently drift from the proof.
+      </p>
+      <ShotFigure
+        section="walkthroughs"
+        page="shared"
+        stem="guided-demo"
+        alt="The guided demo panel: the full certification flow as a 24-step machine-readable presenter script, the same definition the e2e legs assert."
+        source="https://demo.oimlsmart.org/app/login"
+        captured={captured}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The gap cluster, and what answered it</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        Four gaps the audit named, each with its state as checked this wave ({captured}).
+      </p>
+      <div class="grid gap-4">
+        {gaps.map(g => (
+          <div class="border border-rule rounded-md bg-paper-soft p-6">
+            <div class="flex items-baseline gap-3 mb-2">
+              <span class="font-mono text-xs font-bold text-accent tracking-[0.08em]">GAP {g.n}</span>
+              <h3 class="font-serif text-[1.125rem] m-0">{g.title}</h3>
+              <span class={`ml-auto font-mono text-xs whitespace-nowrap ${g.state === 'live' ? 'text-green-700 dark:text-green-400' : 'text-amber-700 dark:text-amber-400'}`}>{g.state === 'live' ? '● LIVE' : '◐ IN REVIEW'}</span>
+            </div>
+            <p class="text-[0.9375rem] leading-relaxed text-ink-soft mb-2"><strong class="text-ink font-semibold">The audit found:</strong> {g.audit}</p>
+            <p class="text-[0.9375rem] leading-relaxed text-ink-soft m-0"><strong class="text-ink font-semibold">Now:</strong> {g.now}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The doctrine decision, taken in the open</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The audit's sharpest finding was not a gap but a conflict: flow 04's text said the BIML register auto-publishes, while the built posture gated publication on a human registrar act, per the scheme's minimum-liability doctrine. The program owner decided on 2026-08-28, recorded verbatim in the engineering record: <strong>auto-publish on receipt</strong>. The register publishes the signed, verified, receipt-tracked submission with no human gate; the trust rests on the signature and the receipt machinery (the intake verification checks the signed package against the authority's registered organization key and its standing); the published record is exactly what the authority signed and sent; and the human review surfaces remain as the operator's read postures, never a gate.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        Where that decision stands today, honestly: the register's model carries the auto-publish doctrine (ANNOUNCED to SUBMITTED to PUBLISHED, no human state between), and the capstone wave lands the surface on the federated register shape. The demo's single-instance posture presents the officer's register act, which is what flow 04, S7 shows, and both pages name the decision and the current posture side by side. The decision's record is the point: doctrine changes are written down, dated, and attributed, never smuggled into a build.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The partial-shape notes, settled</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        The audit also named the places where the built shape and the flow text disagreed in detail. Each is settled one way or the other: the build adjusted, or the flow text adjusted to the built shape, and the walkthrough pages carry the outcome.
+      </p>
+      <div class="grid gap-4">
+        {shapeNotes.map(s => (
+          <div class="border border-rule rounded-md p-6">
+            <h3 class="font-serif text-[1.125rem] mb-2">{s.title}</h3>
+            <p class="text-[0.9375rem] leading-relaxed text-ink-soft m-0">{s.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The proof legs, as they stand</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The e2e discipline the flows ride, itemized honestly at {captured}: the full-arc leg (cs-e2e-12) walks the whole certification chain in one run and the guided demo's smoke leg navigates every param-free step route as its persona; the demo-flow-01 leg proves the application's arc on its own; the demo-flow-02 and demo-flow-03 legs ride the in-review wave alongside the completion gate's surface; and the demo-flow-04 and demo-flow-05 legs land with the capstone wave. On the public side, this site's own capture script (scripts/capture-walkthroughs.ts) re-performs every walkthrough step against the live demo and refuses to capture a surface it cannot perform, which is why the walkthroughs can claim what they claim.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12 presenter-scripts">
+      <div class="print-only">
+        <h1>The audit findings (demo flow 06): the presenter scripts</h1>
+        <p>OIML SMART demo walkthrough, printed from www.oimlsmart.org/demo/audit-findings. Everything the scripts present is simulated: the demo instance resets nightly and the cast is fictional.</p>
+      </div>
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The presenter scripts</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        Two lengths, for the moment a committee asks "how do you know the demo does what you say?". Print this page for a clean copy.
+      </p>
+      <PresenterScript
+        minutes={5}
+        audience="the committee slot"
+        beats={[
+          { at: '0:00', text: 'Every demo claims it works. Ours is audited first, and the audit is public. That is the whole pitch of this page.' },
+          { at: '0:45', text: 'The method: the flows were written as storylines, then an audit walked all 33 steps against the pinned platform and found about 72 percent built. The spine was already e2e-proven; the gaps were named, not discovered later by a member.' },
+          { at: '1:45', text: 'The four gaps and their answers: the review-period comments, the authority cards, the model-fed tooltips, all live; the completion gate\'s doctrine decided with its surface in review. We publish the in-review items as in review.' },
+          { at: '2:45', text: 'The doctrine decision: the register\'s auto-publish was a genuine conflict between the flow text and the build. It was decided by the program owner, dated, and recorded verbatim, and the pages carry both the decision and today\'s posture.' },
+          { at: '3:45', text: 'The proof: each flow has its own e2e leg that drives the real arc; the guided demo is one machine-readable script the demo presents and the tests assert; and this site re-performs every walkthrough step before it may show a screenshot.' },
+          { at: '4:30', text: 'The invitation: read the gaps, then open the demo and check us. The accounts are one click, the register needs none.' },
+        ]}
+      />
+      <PresenterScript
+        minutes={20}
+        audience="the working visit"
+        beats={[
+          { at: '0:00', text: 'Frame: this session is for the members who ask how the sausage is made. The answer is an engineering program that audits itself and publishes the audit.' },
+          { at: '1:00', text: 'The audit\'s shape: the pin (the exact platform revision), the storyline steps, the per-step verdicts, the honest 24-of-33. Why audit first: a demo built on assumed coverage teaches the viewer the wrong lesson about readiness.' },
+          { at: '3:30', text: 'Gap one, the review period: why consultation had to be a first-class, cone-gated part of the record (the scheme consults at finalization; an email thread is not an audit trail). The build: threads, the resolution gate, the notifications. Show flow 04, S3.' },
+          { at: '6:00', text: 'Gaps two and three, the cards and the tooltips: the organization registry\'s logos with the monogram fallback, and the one tooltip component whose content derives from the model. The vocabulary rule: guidance can never drift from the Recommendation because it is read from it.' },
+          { at: '8:30', text: 'Gap four, the completion gate: the settling doctrine in full (fees, custody, threads, reports, the certificate), the refusal that names the open items and their owners, and the honest status: the model landed, the surface in review. Show how flow 05, S4 names it rather than hiding it.' },
+          { at: '11:00', text: 'The auto-publish decision, read verbatim: the conflict, the minimum-liability doctrine, the decision, the trust basis (the signature plus the receipt machinery), the read-posture human surfaces. Then the current state: the model carries it, the capstone wave lands it, the demo shows the officer\'s act meanwhile.' },
+          { at: '13:30', text: 'The partial-shape notes as doctrine work: each disagreement between flow text and build was settled explicitly (the stepper jump, the join timing, the test project\'s creator, the out-of-envelope honesty, the notification coverage). Nothing was left as a quiet inconsistency.' },
+          { at: '15:30', text: 'The proof machinery: the per-flow e2e legs, the full-arc leg, the guided demo\'s single script shared by presenter and test, and this site\'s capture script that re-performs every published act. The chain of custody from claim to evidence.' },
+          { at: '18:00', text: 'The freshness rule: the walkthroughs match the engineering record for flow facts, the captures match the live demo, and where the two disagree the page names both. Re-run the capture script and every screenshot regenerates at its date.' },
+          { at: '19:15', text: 'Questions. The usual: when do the in-review items land (tracked on this page and the progress record) and can members see the legs run (the e2e suite and the capture script are in the repositories). Close on the try-it paths.' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Today (SMART) and the vision (SMART+)</h2>
+      <SmartSplit
+        today={[
+          { text: 'The five flows live end to end on the demo: application, intake, bench work, evaluation, the applicant\'s journey.', href: '/demo/', label: 'the walkthroughs' },
+          { text: 'The audit-answered builds shipped: the review period, the authority cards, the model-fed tooltips.', href: '/demo/ia-evaluation', label: 'see the review period' },
+          { text: 'The proof machinery: the per-flow e2e legs, the full-arc leg, the guided demo\'s asserted script.', href: 'https://demo.oimlsmart.org/app/login', label: 'the guided demo' },
+        ]}
+        vision={[
+          { text: 'The completion gate\'s surface and the project-anchored agreement evidence (in review on the integration branch).', href: '/demo/applicant-journey' },
+          { text: 'The register\'s auto-publish surface on the federated shape (the capstone wave; the doctrine decided 2026-08-28).', href: '/demo/ia-evaluation' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The honest questions</h2>
+      <div class="grid gap-4">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Why publish the gaps at all?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Because the audience is the scheme's membership, and a member who finds a gap we did not name trusts nothing else we say. The audit-first rule exists so the demo teaches the right lesson: what is built is provable, what is in review is labeled, and what is decided is dated and attributed.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">What did the 72 percent figure mean?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">At the audit's pin (2026-08-28), about 24 of about 33 storyline steps fully existed on the platform: the whole spine, cone-gated and e2e-proven. The missing cluster was four named items with their builds scoped; three of the four are live today and the fourth (the completion gate's surface) is in review. The figure is historical, and it is published because it is the audit's honest starting point.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Who decided the auto-publish, and can it be revisited?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The program owner, on 2026-08-28, recorded verbatim in the engineering record. Doctrine decisions in this program are written down with their reasoning precisely so they can be revisited in the open: the register's trust basis (the signature plus the receipt machinery) is stated, and the read-posture human surfaces remain for the operator's visibility.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">How do I check any of this myself?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Three ways: walk the demo (the accounts are one click), read the captures' manifest on this site (every published act with its assertion and timestamp), or run the proof (the e2e legs in the platform repository, the capture script in the site repository). The walkthrough pages never ask to be taken on faith.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="/demo/"
+        label="Back to the five walkthroughs"
+        description="The flows themselves, step by step, with the live captures and the try-it paths."
+      />
+      <ActionBox
+        href="https://demo.oimlsmart.org/"
+        label="Open the live demo"
+        description="Check the audit's claims yourself: the one-click accounts, the guided demo, the public register."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org for the engineering record behind any claim on these pages."
+      />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified {captured}: the audit record (DEMO_FLOWS/06, the smart repository) was re-checked against the platform's integration line this wave (the comment facility, the authority cards, and the tooltips live; the completion gate's surface and the project-anchored evidence in review; the auto-publish doctrine recorded with its model landed), and the live captures are produced by scripts/capture-walkthroughs.ts with their assertion records in public/img/walkthroughs/manifest.json.
+      </p>
+    </div>
+  </section>
+</Base>

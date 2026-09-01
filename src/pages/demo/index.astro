@@ -1,0 +1,213 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
+import SimulatedNote from '../../components/demo-flows/SimulatedNote.astro'
+import ShotFigure from '../../components/ShotFigure.astro'
+
+// The demo-flow walkthroughs (TODO.promotion/06): the smart repo's
+// DEMO_FLOWS/ program rendered for the public reader. Every capture is
+// produced by scripts/capture-walkthroughs.ts against the live demo;
+// re-run the script to refresh the evidence.
+const captured = '2026-09-01'
+
+const flows = [
+  {
+    href: '/demo/application',
+    n: '01',
+    title: 'The application',
+    desc: 'The manufacturer applies against a SMART Recommendation: the explicit Recommendation pick, the model-derived instrument step, the authority chosen from cards, the submit.',
+    account: 'Applicant',
+    console: '/app/portal',
+    steps: '6 steps',
+  },
+  {
+    href: '/demo/ia-intake',
+    n: '02',
+    title: "The authority's intake",
+    desc: 'The review queue at the issuing authority: the honest reject-or-accept, the evaluation project as the shared dataspace, the samples, the dispatch to the laboratory.',
+    account: 'Issuing Authority',
+    console: '/app/ia',
+    steps: '8 steps',
+  },
+  {
+    href: '/demo/tl-work',
+    n: '03',
+    title: "The laboratory's work",
+    desc: 'The test laboratory accepts the assignment, joins the project dataspace, runs the model-driven tests at the bench, and submits the test report.',
+    account: 'Test Laboratory',
+    console: '/app/lab',
+    steps: '6 steps',
+  },
+  {
+    href: '/demo/ia-evaluation',
+    n: '04',
+    title: 'The evaluation and the certificate',
+    desc: 'The authority validates the test reports against the model, runs the review period, issues the signed certificate, and registers it with the BIML.',
+    account: 'Issuing Authority · BIML Officer',
+    console: '/app/ia · /app/biml',
+    steps: '8 steps',
+  },
+  {
+    href: '/demo/applicant-journey',
+    n: '05',
+    title: "The applicant's journey",
+    desc: 'The manufacturer follows every stage, notified at each, downloads the certificate, and anyone can verify it against the public register.',
+    account: 'Applicant',
+    console: '/app/portal',
+    steps: '5 steps',
+  },
+  {
+    href: '/demo/audit-findings',
+    n: '06',
+    title: 'The audit findings',
+    desc: 'The engineering record behind the flows: what the step-by-step audit found, what the build answered, and the doctrine decisions taken in the open.',
+    account: 'The engineering record',
+    console: 'DEMO_FLOWS/',
+    steps: '4 gap clusters',
+  },
+]
+
+const cast = [
+  { account: 'Applicant', who: 'Dr. Anna Meyer', org: 'ACME Measurement GmbH (the manufacturer)', console: '/app/portal' },
+  { account: 'Issuing Authority', who: 'Ms. Emily Irving', org: 'Example Issuing Authority (EX1)', console: '/app/ia' },
+  { account: 'Test Laboratory', who: 'Ms. Petra Horvat · Mr. Martin Berger', org: 'Example Test Laboratory (ETL)', console: '/app/lab' },
+  { account: 'BIML Officer', who: 'The BIML registration officer (a role, not an invented person)', org: 'the BIML register', console: '/app/biml' },
+]
+---
+
+<Base
+  title="The demo flows, walked"
+  description="Guided walkthroughs of the OIML SMART demo: the five canonical certification flows plus the audit findings, each step narrated in plain language with scripted captures of the live demo, the exact demo account and console to try it yourself, and the presenter scripts in two lengths."
+>
+  <PageHero
+    eyebrow="The demo flows"
+    title="The demo, walked"
+    lede="Six guided walkthroughs of the live demo: the whole OIML-CS certification chain told as five flows, from the manufacturer's application to the registered certificate, plus the audit record behind them. Every step names its console, shows the live surface, and tells you exactly how to try it yourself."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl walkthrough-body">
+    <div class="max-w-3xl mb-12">
+      <SimulatedNote />
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The walkthroughs below are the readable companion to the demo instance: each flow is narrated step by step in plain language, every step carries a scripted capture of the live demo taken this wave (never a stale screenshot), and every step ends with the exact demo account and console to reproduce it. Each flow also carries its presenter script in two lengths, the 5-minute committee slot and the 20-minute working visit, printable from the page.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The arc in one picture</h2>
+      <FlowDiagram
+        caption="FIG. THE FIVE FLOWS, ONE CHAIN"
+        steps={[
+          { label: 'Applicant', sub: 'the manufacturer (ACME)', accent: 'amber' },
+          { label: 'Issuing Authority', sub: 'review + dispatch (EX1)', accent: 'brand' },
+          { label: 'Test Laboratory', sub: 'the bench work (ETL)', accent: 'teal' },
+          { label: 'Issuing Authority', sub: 'evaluation + issuance', accent: 'brand' },
+          { label: 'BIML + public', sub: 'registration + verification', accent: 'slate' },
+        ]}
+        arrows={[
+          { label: 'flow 01', detail: 'the application' },
+          { label: 'flow 02', detail: 'intake + dispatch' },
+          { label: 'flow 03', detail: 'tests + report' },
+          { label: 'flow 04', detail: 'evaluation + register' },
+        ]}
+      />
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Flow 05 is the same chain from the applicant's seat: the notifications, the progress, the certificate, the public verification. The Evaluation Project is the shared dataspace the three parties work in: the authority owns it, the applicant views it, the laboratory joins it on the accepted assignment.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The walkthroughs</h2>
+      <div class="grid gap-4">
+        {flows.map(f => (
+          <a href={f.href} class="block border border-rule rounded-md bg-paper-soft p-6 no-underline hover:border-accent transition-colors">
+            <div class="flex items-baseline gap-3 mb-2">
+              <span class="font-mono text-xs font-bold text-accent tracking-[0.08em]">{f.n}</span>
+              <h3 class="font-serif text-[1.25rem] text-ink m-0">{f.title}</h3>
+              <span class="ml-auto font-mono text-xs text-ink-muted whitespace-nowrap">{f.steps}</span>
+            </div>
+            <p class="text-[0.9375rem] text-ink-soft mb-3 m-0">{f.desc}</p>
+            <p class="font-mono text-xs text-ink-muted m-0">try it: {f.account} · {f.console}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The cast, plainly fictional</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        Four demo accounts carry the five flows. Each is a one-click button on the demo's login page; the shared demo password is printed there too. Every person and organization is invented for the demonstration; the instrument is ACME's fictional LC-500 load-cell line evaluated against OIML R 60.
+      </p>
+      <div class="grid gap-3 mb-8">
+        {cast.map(c => (
+          <div class="border border-rule rounded-md p-4 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+            <strong class="text-ink font-semibold">{c.account}</strong>
+            <span class="text-[0.9375rem] text-ink-soft">{c.who}</span>
+            <span class="text-[0.9375rem] text-ink-muted">{c.org}</span>
+            <span class="ml-auto font-mono text-xs text-ink-muted">{c.console}</span>
+          </div>
+        ))}
+      </div>
+      <ShotFigure
+        section="walkthroughs"
+        page="shared"
+        stem="login-accounts"
+        alt="The demo login page: the fictional cast as one-click accounts with their roles, the shared demo password, and the guided-demo entry."
+        source="https://demo.oimlsmart.org/app/login"
+        captured={captured}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Two ways to walk it</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        <strong class="text-ink font-semibold">Walk it yourself, freehand.</strong> Pick a walkthrough below, sign in with the account each step names, and work the consoles at your own pace. The instance resets nightly, so nothing you enter survives: try the reject, type the odd value, watch the gates refuse.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        <strong class="text-ink font-semibold">Or let the demo present itself.</strong> The login page's <em>Start the guided demo</em> button (or <span class="font-mono text-sm">?demo=full-flow</span> on any app page) opens the built-in presenter script: the whole chain in 24 steps, each naming its account, its page, and what to do. The walkthroughs on this site are the same chain, narrated for reading.
+      </p>
+      <ShotFigure
+        section="walkthroughs"
+        page="shared"
+        stem="guided-demo"
+        alt="The guided demo panel on the demo login page: the full certification flow in 24 steps, step 1 presented by the applicant persona."
+        source="https://demo.oimlsmart.org/app/login"
+        captured={captured}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">How the evidence is made</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
+        Every capture on these pages is produced by <span class="font-mono text-sm">scripts/capture-walkthroughs.ts</span> in the site repository: the script drives the live demo headlessly, performs each act the pages narrate (one real application from the wizard to the laboratory's submitted report, plus the seeded worked example's surfaces), asserts the surface before capturing, and records the act, the URL, and the timestamp in <span class="font-mono text-sm">public/img/walkthroughs/manifest.json</span>. An act the script cannot perform produces no capture and lists on no page. Re-running the script regenerates every screenshot at its run date, dark and light.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="https://demo.oimlsmart.org/"
+        label="Open the live demo"
+        description="Enter the app and click a demo account on the login page. The Applicant and the Issuing Authority are the two seats to take first."
+      />
+      <ActionBox
+        href="https://www.oimlsmart.org/recs/docs/oiml-rec/13-running-the-demo"
+        label="Read the demo manual"
+        description="The step-by-step operator's guide to running the whole certification chain yourself."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org: guided walkthroughs for committees and working visits are the commonest request."
+      />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified {captured}: the login page, the guided-demo entry, and every step surface on the six walkthroughs was performed headlessly against the live demo by scripts/capture-walkthroughs.ts; each capture carries its assertion record in public/img/walkthroughs/manifest.json.
+      </p>
+    </div>
+  </section>
+</Base>
