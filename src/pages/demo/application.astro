@@ -1,0 +1,262 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import SmartSplit from '../../components/SmartSplit.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
+import SimulatedNote from '../../components/demo-flows/SimulatedNote.astro'
+import FlowStep from '../../components/demo-flows/FlowStep.astro'
+import PresenterScript from '../../components/demo-flows/PresenterScript.astro'
+import WalkthroughPrintStyle from '../../components/demo-flows/WalkthroughPrintStyle.astro'
+
+// Flow 01 of the demo-flow walkthroughs (TODO.promotion/06): the
+// application, per the smart repo's DEMO_FLOWS/01-application.md. The
+// captures are produced by scripts/capture-walkthroughs.ts (the drive's
+// submit leg and the read-only wizard pass).
+const captured = '2026-09-01'
+---
+
+<Base
+  title="The application: the manufacturer applies"
+  description="Demo-flow walkthrough 01: a manufacturer applies for OIML type evaluation against a SMART Recommendation. The explicit Recommendation pick, the model-derived instrument step, the any-order wizard, the authority chosen from cards, the submit, with the exact demo account to try it and the presenter scripts."
+>
+  <WalkthroughPrintStyle />
+  <PageHero
+    eyebrow="The demo flows · 01"
+    title="The application"
+    lede="A manufacturer applies for type evaluation against OIML R 60. What is a scanned form and an email today becomes a guided wizard whose instrument form is derived from the Recommendation's own model: six steps, fillable in any order, submitted to the authority picked from cards. Fifteen minutes to walk it yourself."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl walkthrough-body">
+    <div class="max-w-3xl mb-12">
+      <SimulatedNote />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow now"
+        description="Sign in with the one-click Applicant demo account (no registration; the instance resets nightly) and open the new-application wizard from the portal."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The flow at a glance</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        One actor, one console: the applicant (Dr. Anna Meyer of ACME Measurement GmbH, a fictional manufacturer) works in the applicant portal at <span class="font-mono text-sm">/app/portal</span>. The wizard's six steps are Recommendation, Applicant, Instrument, Samples, Documentation, and Scheme &amp; review. At the submit, the application lands in the issuing authority's review queue, which is where <a href="/demo/ia-intake" class="text-accent underline underline-offset-2">flow 02</a> picks it up.
+      </p>
+      <FlowDiagram
+        caption="FIG. THE APPLICATION"
+        steps={[
+          { label: 'Recommendation', sub: 'the explicit pick: R 60', accent: 'brand' },
+          { label: 'Instrument', sub: 'derived from the model', accent: 'teal' },
+          { label: 'Samples + docs', sub: 'serials, the checklist', accent: 'amber' },
+          { label: 'Authority + submit', sub: 'picked from cards', accent: 'slate' },
+        ]}
+        arrows={[
+          { label: 'derives', detail: 'the model authors the form' },
+          { label: 'binds', detail: 'never re-typed' },
+          { label: 'addresses', detail: 'only scoped IAs show' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The walkthrough</h2>
+
+      <FlowStep
+        sid="S1"
+        title="Pick the Recommendation, explicitly"
+        account="Applicant"
+        console="/app/portal/applications/new"
+        live="https://demo.oimlsmart.org/app/portal/applications/new"
+        page="application"
+        stem="wizard-recommendation"
+        captured={captured}
+        alt="The new-application wizard's first step: the Recommendation cards, with OIML R 60 picked for the demo."
+      >
+        <p>
+          The wizard opens on the Recommendation pick, and it is a pick: each Recommendation the platform carries shows as a card with its publication id, its title, and the instrument category it covers. Nothing is pre-selected and nothing defaults silently, because everything downstream (the instrument form, the tests, the verdicts) derives from this choice. For the demo, pick <strong>OIML R 60</strong>, the load-cell Recommendation the LC-500 line is evaluated against.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S2"
+        title="Meet the model-derived instrument step"
+        account="Applicant"
+        console="/app/portal/applications/new"
+        live="https://demo.oimlsmart.org/app/portal/applications/new"
+        page="application"
+        stem="wizard-instrument"
+        captured={captured}
+        alt="The wizard's instrument step: the LC-500 family picked and a model placed in scope, on the form the R 60 model authors."
+      >
+        <p>
+          The instrument step is not a form a programmer designed; the Recommendation's model authors it. Pick the LC-500 family and place the LC-500i model in scope, and the step renders the applicant declaration that R 60-3 §4.5 asks for, with the classification dimensions the model declares. A registered product reference can prefill the whole chain (the third mode the step offers), and every field's guidance reads the model's own descriptions, never hand-written vocabulary.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S3"
+        title="Fill the steps in any order"
+        account="Applicant"
+        console="/app/portal/applications/new"
+        live="https://demo.oimlsmart.org/app/portal/applications/new"
+        captured={captured}
+      >
+        <p>
+          Real applicants gather an application the way the paperwork arrives: the serial number today, the documentation next week. The stepper jumps to any reached step directly (each reached step is a button), and each step's validation is honest about what is missing without blocking the jump. The submit gate is where completeness is enforced, and it names what it is missing rather than refusing silently.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S4"
+        title="Leave and return: the draft waits"
+        account="Applicant"
+        console="/app/portal/applications/new"
+        live="https://demo.oimlsmart.org/app/portal/applications/new"
+        page="application"
+        stem="portal-draft"
+        captured={captured}
+        alt="The wizard's resume banner on return: the stored draft offered, the fill round-trips across the leave."
+      >
+        <p>
+          Close the browser tab mid-application if you like. The wizard saves the draft as you fill (per account and Recommendation), and the next visit opens with the resume banner offering the stored fill. The draft is a working posture, never an application: nothing is persisted to the record, and nothing reaches the authority, before the submit.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S5"
+        title="Samples, documentation, and the authority's card"
+        account="Applicant"
+        console="/app/portal/applications/new"
+        live="https://demo.oimlsmart.org/app/portal/applications/new"
+        page="application"
+        stem="wizard-scheme-ia"
+        captured={captured}
+        alt="The wizard's scheme and review step: the OIML-CS scheme picked and the Issuing Authority cards, each with its logo or monogram and its scope."
+      >
+        <p>
+          The samples step takes the serials; the documentation step walks the checklist R 60-2 §2.5 declares. Then the scheme step: the OIML-CS scheme, and the issuing authority picked from cards. Each card carries the authority's logo (or the honest monogram fallback), its name, and its scope summary, and the picker never shows an authority that cannot take the Recommendation you picked in S1. The demo applies to the Example Issuing Authority (EX1).
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S6"
+        title="Review the whole file and submit"
+        account="Applicant"
+        console="/app/portal/applications/…"
+        live="https://demo.oimlsmart.org/app/portal"
+        page="application"
+        stem="application-submitted"
+        dark={false}
+        captured={captured}
+        alt="The submitted application's detail page: the journey opens at Application submitted and the authority's queue receives it."
+      >
+        <p>
+          The review step shows the whole application before anything leaves your hands: the Recommendation, your organization, the instrument chain, the samples, the documentation, the scheme, the authority. Submit, and the application's own page opens at the first stage of its journey. At the same moment it appears in the authority's review queue, oldest first, which is the first scene of <a href="/demo/ia-intake" class="text-accent underline underline-offset-2">flow 02</a>. The applicant is notified at every stage from here on; <a href="/demo/applicant-journey" class="text-accent underline underline-offset-2">flow 05</a> is that story.
+        </p>
+      </FlowStep>
+    </div>
+
+    <div class="max-w-3xl mb-12 presenter-scripts">
+      <div class="print-only">
+        <h1>The application (demo flow 01): the presenter scripts</h1>
+        <p>OIML SMART demo walkthrough, printed from www.oimlsmart.org/demo/application. Everything the scripts present is simulated: the demo instance resets nightly and the cast is fictional.</p>
+      </div>
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The presenter scripts</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        Two lengths, keyed to the steps above (S1 to S6). Print this page for a clean copy of the scripts.
+      </p>
+      <PresenterScript
+        minutes={5}
+        audience="the committee slot"
+        beats={[
+          { at: '0:00', text: 'What you are about to see is a manufacturer applying for OIML type evaluation. Today that is a scanned form, an email, and a spreadsheet. Everything here is simulated: the demo cast is fictional and the instance resets nightly.' },
+          { at: '0:30', steps: 'S1', text: 'The first pick is the Recommendation itself, as a card, with its edition. R 60 for load cells. Nothing defaults silently, because everything downstream derives from this pick.' },
+          { at: '1:30', steps: 'S2', text: 'This instrument form was not designed by a programmer. The R 60 model authors it: the declaration the Recommendation asks for, clause and all. Change the Recommendation and the form changes.' },
+          { at: '2:30', steps: 'S3-S4', text: 'The steps fill in any order and the draft survives leaving. Real life interrupts applications; the wizard is built for that.' },
+          { at: '3:30', steps: 'S5', text: 'The authority is picked from cards: the logo, the scope, and only the authorities that can actually take R 60.' },
+          { at: '4:15', steps: 'S6', text: 'Review the whole file, submit. The application is now in the authority\'s queue, and nothing was printed or emailed.' },
+          { at: '4:45', text: 'Try it yourself tonight: demo.oimlsmart.org, the Applicant account, one click. The password is printed on the login page.' },
+        ]}
+      />
+      <PresenterScript
+        minutes={20}
+        audience="the working visit"
+        beats={[
+          { at: '0:00', text: 'Frame the visit: the application is the scheme\'s front door. The promise: by the end of this flow the room believes the form is the Recommendation, not a transcription of it. Simulated cast, nightly reset, say it once up front.' },
+          { at: '1:00', steps: 'S1', text: 'Open the wizard. Dwell on the Recommendation cards: the publication id, the title, the instrument category. Ask the room who still receives applications naming the wrong edition; this pick pins the edition for everything that follows.' },
+          { at: '3:00', steps: 'S1', text: 'Show that changing the Recommendation re-derives the instrument step. The wizard is model-driven, not hard-coded per Recommendation: R 60, R 91, R 129, R 144 all ride the same machinery.' },
+          { at: '5:00', steps: 'S2', text: 'The instrument step in depth: the family pick, the model in scope, the classification dimensions. The declaration form is the one R 60-3 §4.5 declares; the guidance on every field reads the model\'s descriptions, so the vocabulary can never drift from the Recommendation.' },
+          { at: '7:30', steps: 'S2', text: 'The product-reference prefill: a registered product reference fills the whole chain. For a manufacturer with a catalogue, the application becomes a review, not a data-entry task.' },
+          { at: '9:30', steps: 'S3', text: 'Jump the stepper between reached steps. The per-step validation is honest about what is missing without blocking navigation; the submit gate enforces completeness and names what it wants.' },
+          { at: '11:30', steps: 'S4', text: 'Perform the draft: fill, close, return, take the resume banner\'s offer. The draft is client-side working state; the record starts at submit, which is exactly the honesty the audit chain needs.' },
+          { at: '13:30', steps: 'S5', text: 'The samples and the documentation checklist (R 60-2 §2.5): the checklist is the model\'s, so two authorities cannot invent different documentation demands for the same Recommendation.' },
+          { at: '15:30', steps: 'S5', text: 'The authority cards: the logo or the honest monogram, the scope summary, and the per-Recommendation filter. The picker cannot route an R 60 application to an authority that does not cover R 60.' },
+          { at: '17:30', steps: 'S6', text: 'Review and submit. Open the application\'s page: the journey begins. Tease the next flow: at this moment the row is already in the authority\'s review queue, which is where we go next.' },
+          { at: '19:00', text: 'Questions. The two that always come: editions (pinned at S1, carried by the model) and paper (records mode exists for the transition; the audience pages cover it). Close on the try-it path: the Applicant account, /app/portal.' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Today (SMART) and the vision (SMART+)</h2>
+      <SmartSplit
+        today={[
+          { text: 'The model-driven application wizard over R 60, R 91, R 129, R 144: the instrument form derives from the Recommendation.', href: 'https://demo.oimlsmart.org/app/portal/applications/new', label: 'open the wizard' },
+          { text: 'The authority picked from scoped cards; the draft that survives leaving; the submit that lands in the IA queue.', href: 'https://demo.oimlsmart.org/app/portal', label: 'the portal' },
+          { text: 'The application page as the journey\'s spine: state, samples, promise set.', href: '/demo/applicant-journey', label: 'flow 05' },
+        ]}
+        vision={[
+          { text: 'The product-reference prefill at catalogue scale: the manufacturer\'s registered products fill applications in one pick (roadmap, the product-supply-chain program).', href: '/technologies/dataspace-interop' },
+          { text: 'The twin-backed application: the instrument\'s SMART twin attesting its own characteristics into the declaration (roadmap).', href: '/technologies/smart-twin' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The honest questions</h2>
+      <div class="grid gap-4">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Is the form really the Recommendation?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Yes, structurally: the wizard's instrument step renders the declaration form the R 60 package authors in its model, the guidance reads the model's descriptions, and the same machinery serves every modelled Recommendation. There is no per-Recommendation hand-coded form to drift from the text.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">What stops a sloppy submission?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The submit gate: it enforces the model's completeness and names what is missing. What it does not do is judge quality; that is the authority's review in flow 02, where the honest reject-with-reason lives. The wizard's discipline is completeness, never silent acceptance.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">We still receive paper applications. Does this replace them?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Gradually, and honestly: an authority can enter an application on a client's behalf (records mode), and what came from paper is marked as coming from paper. The applicant-filed wizard is the target posture; the transition is designed, not forced.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Is any of this data real?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No. The manufacturer, the instruments, the authority, and the application itself are the demo's fictional cast, and the instance re-seeds nightly. What is real is the software: the same codebase runs the production hub, and the walkthrough's captures are taken against the live demo this wave.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="/demo/ia-intake"
+        label="Flow 02: the authority's intake"
+        description="The other side of the submit: the review queue, the accept that opens the evaluation project, the dispatch to the laboratory."
+      />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow on the demo"
+        description="The one-click Applicant account, then /app/portal/applications/new. The instance resets nightly, so experiment freely."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org for a guided session with your committee or your authority."
+      />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified {captured}: every step above was performed headlessly against the live demo by scripts/capture-walkthroughs.ts (the wizard walked in both themes, one real application submitted in the drive) and each capture carries its assertion record in public/img/walkthroughs/manifest.json. The step names and machine states match the engineering record (DEMO_FLOWS/01) in the smart repository.
+      </p>
+    </div>
+  </section>
+</Base>

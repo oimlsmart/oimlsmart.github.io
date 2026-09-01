@@ -1307,8 +1307,8 @@ async function driveChain(browser: Browser) {
             const req = await (await fetch(`/api/entities/testRequests/${reqId}`, { credentials: 'include' })).json()
             const runs = await (await fetch('/api/entities/testRuns', { credentials: 'include' })).json()
             const runList = Array.isArray(runs) ? runs : (runs.entities ?? runs.items ?? [])
-            const doneIds = new Set(runList.filter((r: { status: string }) => r.status === 'COMPLETED').map((r: { test_assignment_id: string }) => r.test_assignment_id))
-            const ids: string[] = req.assignments ?? []
+            const doneIds = new Set(runList.filter((r) => r.status === 'COMPLETED').map((r) => r.test_assignment_id))
+            const ids = req.assignments ?? []
             return ids.find(id => !doneIds.has(id)) ?? null
           })
           if (!nextAssignment) break
@@ -1756,7 +1756,7 @@ async function captureEvaluation(browser: Browser) {
         // hub's links are router.push buttons, never anchors; the seeded
         // ids are verified against the API first, honestly).
         const seeded = await page.evaluate(async () => {
-          const get = async (u: string) => {
+          const get = async (u) => {
             const r = await fetch(u, { credentials: 'include' })
             return r.ok
           }
