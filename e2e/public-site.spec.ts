@@ -249,6 +249,69 @@ test.describe('Public site — critical paths', () => {
     }
   })
 
+  test('the demo-flow walkthroughs render the walkthrough anatomy', async ({ page }) => {
+    // TODO.promotion/06: each walkthrough carries the SIMULATED honesty
+    // note, the at-a-glance flow diagram, the keyed steps with their
+    // scripted captures and try-it lines, the two presenter scripts
+    // (printable, keyed to the steps), the SMART/SMART+ split, the honest
+    // questions, and the journey CTAs.
+    for (const [path, heading, steps] of [
+      ['/demo/application', 'The application', 6],
+      ['/demo/ia-intake', "The authority's intake", 8],
+      ['/demo/tl-work', "The laboratory's work", 6],
+      ['/demo/ia-evaluation', 'The evaluation and the certificate', 8],
+      ['/demo/applicant-journey', "The applicant's journey", 5],
+    ] as const) {
+      await page.goto(path)
+      // .first(): the print-only script header carries a second h1
+      // (display:none on screen, the printed sheet's title).
+      await expect(page.locator('h1').first()).toContainText(heading)
+      // The SIMULATED honesty note on every walkthrough page.
+      await expect(page.locator('.simulated-note')).toBeVisible()
+      // The at-a-glance diagram (inline SVG, house style).
+      await expect(page.locator('figure.flow-diagram svg').first()).toBeVisible()
+      // The keyed steps, each with its try-it line.
+      expect(await page.locator('.flow-step').count()).toBe(steps)
+      await expect(page.locator('.flow-step__try').first()).toBeVisible()
+      // The performed evidence: dated captures from the scripted apparatus.
+      await expect(page.locator('figure.shot-figure img').first()).toBeVisible()
+      // The presenter scripts in two lengths, keyed to the steps.
+      await expect(page.locator('.presenter-script')).toHaveCount(2)
+      await expect(page.locator('.presenter-script__steps').first()).toBeVisible()
+      // The SMART/SMART+ split, first-class and visually separated.
+      await expect(page.locator('.smart-split')).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'The honest questions' })).toBeVisible()
+      await expect(page.locator('h2', { hasText: 'Where to go next' })).toBeVisible()
+    }
+  })
+
+  test('the walkthroughs index and the audit-findings page render', async ({ page }) => {
+    await page.goto('/demo/')
+    await expect(page.locator('h1')).toContainText('The demo, walked')
+    for (const href of [
+      '/demo/application',
+      '/demo/ia-intake',
+      '/demo/tl-work',
+      '/demo/ia-evaluation',
+      '/demo/applicant-journey',
+      '/demo/audit-findings',
+    ]) {
+      await expect(page.locator(`a[href="${href}"]`).first()).toBeVisible()
+    }
+    await expect(page.locator('.simulated-note')).toBeVisible()
+    await expect(page.locator('figure.shot-figure img').first()).toBeVisible()
+
+    await page.goto('/demo/audit-findings')
+    await expect(page.locator('h1').first()).toContainText('The audit findings')
+    await expect(page.locator('.simulated-note')).toBeVisible()
+    await expect(page.locator('.presenter-script')).toHaveCount(2)
+    await expect(page.locator('.smart-split')).toBeVisible()
+    // The gap clusters carry their honest state markers.
+    await expect(page.getByText('GAP 4')).toBeVisible()
+    await expect(page.getByText('◐ IN REVIEW')).toBeVisible()
+    await expect(page.locator('h2', { hasText: 'The honest questions' })).toBeVisible()
+  })
+
   test('docs page loads with sidebar and content', async ({ page }) => {
     await page.goto('/docs/')
     await expect(page.locator('h1')).toBeVisible()
