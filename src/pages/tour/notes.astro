@@ -1,0 +1,241 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import { TOUR_SLIDES, FIVE_MINUTE_CUT, TOUR_REHEARSED } from '../../data/tour-slides'
+
+// The CIML tour's presenter notes (TODO.promotion/07): the mechanics,
+// the two cuts (the 5-minute committee slot and the 20-minute working
+// visit) with their beat timings, the per-slide talk track, and the
+// rehearsal record. Everything here reads the same source as the deck
+// (src/data/tour-slides.ts), so the notes can never drift from the
+// slides. The page prints clean: the presenter carries it on paper.
+
+const slides = TOUR_SLIDES
+const five = FIVE_MINUTE_CUT.map(id => slides.find(s => s.id === id)!)
+---
+
+<Base
+  title="The CIML tour: the presenter notes"
+  description="The presenter notes for the CIML tour: the mechanics (navigation, deep links, offline), the 5-minute and 20-minute cuts with beat timings, the per-slide talk track, and the recorded rehearsal walks with the live-link verification."
+>
+  <PageHero
+    eyebrow="The CIML tour · presenter notes"
+    title="The presenter notes"
+    lede="Everything the person at the lectern needs: how the deck works, the two timed cuts, what to say and click on every slide, and the rehearsal record proving every live link answered when the tour was walked. Print this page and carry it."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl tour-notes-body">
+    <div class="print-only notes-print-head">
+      <h1>The CIML tour: the presenter notes</h1>
+      <p>Printed from www.oimlsmart.org/tour/notes. The deck lives at www.oimlsmart.org/tour; every demo surface is simulated (a fictional cast, a nightly reset). Rehearsed and link-verified {TOUR_REHEARSED}.</p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Before you present</h2>
+      <ul class="notes-list">
+        <li><strong>The deck is at <a href="/tour">/tour</a>.</strong> Nineteen slides. Arrow keys, the on-screen buttons, PageUp/PageDown, space, Home/End all navigate; a clicker presents as arrow keys and works untouched.</li>
+        <li><strong>Every slide has a stable address.</strong> <span class="font-mono text-sm">/tour#s07</span> opens the seventh slide directly; send a committee member to an exact slide with that URL. The slide's own footer shows its address.</li>
+        <li><strong>The demo moments are links, never recordings.</strong> Each flow slide's <em>Open the live step</em> button opens demo.oimlsmart.org at the exact console and step, in a new tab, so the deck waits where you left it. Sign in with the one-click account the slide names.</li>
+        <li><strong>The no-network room is covered.</strong> Every demo moment carries its dated capture ({TOUR_REHEARSED}) on the same slide; the chip at the top of the deck says honestly which mode you are in.</li>
+        <li><strong>Say the honesty rules once, up front.</strong> The demo is simulated (the cast is fictional, the instance resets nightly), and the futures are labeled SMART+ on their slides (the twin is the one future slide; say so when you land on it).</li>
+        <li><strong>The leave-behind prints itself.</strong> The seven one-pagers at <a href="/about/audiences/one-pagers/">/about/audiences/one-pagers/</a> print one sheet each; hand them out at the ask (slide s19), not before.</li>
+      </ul>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The 5-minute cut · the committee slot</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        Eight slides, two live moments (s04 and s08; skip every other link), the governance slide said slowly, the ask at the bell. The timings below are the rehearsed allocations from the two recorded walks.
+      </p>
+      <div class="overflow-x-auto border border-rule rounded-md">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-paper-soft">
+              <th class="text-left font-medium p-3 border-b border-rule">At</th>
+              <th class="text-left font-medium p-3 border-b border-l border-rule">Slide</th>
+              <th class="text-left font-medium p-3 border-b border-l border-rule">The beat</th>
+            </tr>
+          </thead>
+          <tbody>
+            {five.map(s => (
+              <tr class="align-top">
+                <td class="p-3 border-b border-rule font-mono text-xs whitespace-nowrap">{s.fiveMin}</td>
+                <td class="p-3 border-b border-l border-rule whitespace-nowrap"><a href={`/tour#${s.id}`} class="text-accent font-mono text-xs">{s.id}</a> {s.title}</td>
+                <td class="p-3 border-b border-l border-rule text-ink-soft">{s.lede}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The 20-minute cut · the working visit</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        All nineteen slides, all five flows live if the network holds, the technologies at one minute each (they are the depth, not the story), questions inside s17 to s19. The last minute of the visit is the room's, not yours.
+      </p>
+      <div class="overflow-x-auto border border-rule rounded-md">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-paper-soft">
+              <th class="text-left font-medium p-3 border-b border-rule">At</th>
+              <th class="text-left font-medium p-3 border-b border-l border-rule">Slide</th>
+              <th class="text-left font-medium p-3 border-b border-l border-rule">The beat</th>
+            </tr>
+          </thead>
+          <tbody>
+            {slides.map(s => (
+              <tr class="align-top">
+                <td class="p-3 border-b border-rule font-mono text-xs whitespace-nowrap">{s.twentyMin}</td>
+                <td class="p-3 border-b border-l border-rule whitespace-nowrap"><a href={`/tour#${s.id}`} class="text-accent font-mono text-xs">{s.id}</a> {s.title}{s.chip === 'SMART+' && <span class="text-ink-muted"> (SMART+: the labeled future)</span>}</td>
+                <td class="p-3 border-b border-l border-rule text-ink-soft">{s.lede}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The per-slide notes</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        The talk track for every slide, what to click, and what carries the moment when the network does not.
+      </p>
+      <div class="grid gap-4">
+        {slides.map((s, i) => (
+          <div class="border border-rule rounded-md bg-paper-soft p-5">
+            <div class="flex items-baseline gap-3 mb-2 flex-wrap">
+              <a href={`/tour#${s.id}`} class="font-mono text-xs font-bold text-accent no-underline">{s.id}</a>
+              <h3 class="font-serif text-[1.125rem] text-ink m-0">{s.title}</h3>
+              <span class="ml-auto font-mono text-xs text-ink-muted">
+                {s.fiveMin ? `5-min cut at ${s.fiveMin} · ` : ''}20-min cut at {s.twentyMin}
+              </span>
+            </div>
+            <p class="text-[0.9375rem] leading-relaxed text-ink-soft mb-2 m-0">{s.note}</p>
+            {s.live && (
+              <p class="text-[0.875rem] text-ink-muted m-0">
+                <span class="font-mono text-xs uppercase tracking-[0.08em] text-accent">Live:</span> {s.live.action} <span class="font-mono text-xs uppercase tracking-[0.08em] text-accent">Fallback:</span> the dated capture on the slide ({TOUR_REHEARSED}).
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The rehearsal record</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The full tour was walked end to end <strong>twice</strong> on {TOUR_REHEARSED} against the built site and the live estate: all nineteen slides rendered at their deep links, and every live URL the slides carry answered 200 on both walks (GET, following redirects; the earlier HEAD pass agreed). Nothing broke; nothing was fixed between the walks.
+      </p>
+      <div class="overflow-x-auto border border-rule rounded-md mb-6">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-paper-soft">
+              <th class="text-left font-medium p-3 border-b border-rule">The live link</th>
+              <th class="text-left font-medium p-3 border-b border-l border-rule">The slide's moment</th>
+              <th class="text-left font-medium p-3 border-b border-l border-rule">Walk 1</th>
+              <th class="text-left font-medium p-3 border-b border-l border-rule">Walk 2</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ['https://demo.oimlsmart.org/', 'the demo instance (s19)', '200 · 429ms', '200 · 94ms'],
+              ['https://demo.oimlsmart.org/app/login', 'the one-click accounts (s01)', '200 · 346ms*', '200 · 44ms'],
+              ['https://demo.oimlsmart.org/app/portal/applications/new', 'the wizard (s04)', '200 · 176ms', '200 · 41ms'],
+              ['https://demo.oimlsmart.org/app/ia', 'the authority console (s05)', '200 · 171ms', '200 · 80ms'],
+              ['https://demo.oimlsmart.org/app/lab', 'the laboratory console (s06)', '200 · 170ms', '200 · 52ms'],
+              ['https://demo.oimlsmart.org/app/register', 'the public register (s07)', '200 · 63ms', '200 · 55ms'],
+              ['https://demo.oimlsmart.org/app/verify', 'the verification (s08)', '200 · 65ms', '200 · 51ms'],
+              ['https://tl.oimlsmart.org/', 'the TL-only pilot (s16)', '200 · 92ms', '200 · 70ms'],
+              ['https://nmi.oimlsmart.org/', 'the IA+TL pilot (s16)', '200 · 102ms', '200 · 83ms'],
+            ].map(([url, what, w1, w2]) => (
+              <tr class="align-top">
+                <td class="p-3 border-b border-rule font-mono text-xs break-all"><a href={url} class="text-accent">{url.replace('https://', '')}</a></td>
+                <td class="p-3 border-b border-l border-rule text-ink-soft">{what}</td>
+                <td class="p-3 border-b border-l border-rule font-mono text-xs whitespace-nowrap">{w1}</td>
+                <td class="p-3 border-b border-l border-rule font-mono text-xs whitespace-nowrap">{w2}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-[0.9375rem] leading-relaxed text-ink-muted mb-4">
+        * the login URL's walk-1 reading is the cold first hit of the run; the HEAD pass measured it at 111ms. The section pages the slides link (the technology pages, the deployment matrix, the walkthroughs, the entitlement matrix) were verified 200 against www.oimlsmart.org in the same session, and the tour's own pages are asserted by the site's e2e suite on every build. The seven one-pagers were print-verified in the same rehearsal: each renders exactly one A4 page under the browser's print.
+      </p>
+      <p class="text-[0.9375rem] leading-relaxed text-ink-muted">
+        The scripted walk itself: every slide addressed at its <span class="font-mono text-sm">/tour#sNN</span> deep link, the active-slide state asserted, the live URLs collected from the slides' own markup (never a re-typed list), then fetched. Walk 1 total 13.8s, walk 2 total 2.3s; zero failures on both.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where the pieces live</h2>
+      <ActionBox
+        href="/tour"
+        label="The deck"
+        description="Nineteen slides at /tour; /tour#s07 addresses slide 7 directly."
+      />
+      <ActionBox
+        href="/about/audiences/one-pagers/"
+        label="The leave-behind"
+        description="The seven per-audience one-pagers; each prints exactly one sheet."
+      />
+      <ActionBox
+        href="/demo/"
+        label="The walkthroughs"
+        description="The five flows narrated step by step, with their own presenter scripts, when a flow needs more than its one slide."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="The feedback channel"
+        description="info@oimlsmart.org: the address the ask slide gives the room."
+      />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        The notes read the same source as the deck (src/data/tour-slides.ts in the site repository): slide titles, ledes, talk tracks, and cut timings can never drift apart. Rehearsed and link-verified {TOUR_REHEARSED}.
+      </p>
+    </div>
+  </section>
+
+  <style is:global>
+    .notes-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.625rem;
+    }
+    .notes-list li {
+      position: relative;
+      padding-left: 1.25rem;
+      font-size: 1.0625rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+    .notes-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6em;
+      width: 0.5rem;
+      height: 2px;
+      background: var(--accent);
+    }
+    .notes-list strong { color: var(--ink); }
+    .notes-list a { color: var(--accent); }
+    .notes-print-head { display: none; }
+    @media print {
+      body > *:not(main) { display: none !important; }
+      main > *:not(.tour-notes-body) { display: none !important; }
+      .tour-notes-body { max-width: none !important; padding: 0 !important; }
+      .tour-notes-body .notes-print-head { display: block !important; }
+      .notes-print-head h1 { font-size: 16pt; margin: 0 0 4pt; }
+      .notes-print-head p { font-size: 9pt; color: #444; margin: 0 0 14pt; }
+      .tour-notes-body h2 { font-size: 12pt !important; margin: 10pt 0 4pt !important; }
+      .tour-notes-body p, .tour-notes-body li, .tour-notes-body td, .tour-notes-body th { font-size: 8.5pt !important; }
+      .tour-notes-body .border { border-color: #999 !important; }
+    }
+  </style>
+</Base>
