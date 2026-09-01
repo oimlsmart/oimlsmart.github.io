@@ -1,0 +1,244 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import SmartSplit from '../../components/SmartSplit.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
+import SimulatedNote from '../../components/demo-flows/SimulatedNote.astro'
+import FlowStep from '../../components/demo-flows/FlowStep.astro'
+import PresenterScript from '../../components/demo-flows/PresenterScript.astro'
+import WalkthroughPrintStyle from '../../components/demo-flows/WalkthroughPrintStyle.astro'
+
+// Flow 05 of the demo-flow walkthroughs (TODO.promotion/06): the
+// applicant's journey, per the smart repo's DEMO_FLOWS/05-applicant-
+// journey.md. The captures are produced by scripts/capture-walkthroughs.ts
+// (the seeded worked example and the public surfaces).
+const captured = '2026-09-01'
+---
+
+<Base
+  title="The applicant's journey: notified, tracking, verified"
+  description="Demo-flow walkthrough 05: the manufacturer's journey across the whole certification. Notified at every stage, the honest progress view, the certificate download as signed data, the settle-before-completion doctrine, and the public verification anyone can run, with the exact demo account to try it and the presenter scripts."
+>
+  <WalkthroughPrintStyle />
+  <PageHero
+    eyebrow="The demo flows · 05"
+    title="The applicant's journey"
+    lede="The same chain as flows 01 to 04, from the manufacturer's seat: notified at every stage, progress visible throughout without ever leaking the other parties' workspaces, the certificate downloaded as verifiable data, and a completion that is earned by the record rather than ceremonially closed."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl walkthrough-body">
+    <div class="max-w-3xl mb-12">
+      <SimulatedNote />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow now"
+        description="Sign in with the one-click Applicant demo account (no registration; the instance resets nightly). The portal shows the worked example end state: the issued certificate, the journey, the notifications."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The flow at a glance</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The actor is the applicant again (ACME Measurement GmbH) in the portal at <span class="font-mono text-sm">/app/portal</span>, plus anyone at the public verify page. This flow is the applicant's viewpoint over the whole arc: the notifications as each stage lands, the progress projection on the application's own page, the certificate at the end, and the settling doctrine that governs what "done" means.
+      </p>
+      <FlowDiagram
+        caption="FIG. THE JOURNEY"
+        steps={[
+          { label: 'Notified', sub: 'every stage, its reason', accent: 'amber' },
+          { label: 'Progress', sub: 'the honest projection', accent: 'brand' },
+          { label: 'Certificate', sub: 'downloaded as data', accent: 'teal' },
+          { label: 'Settled', sub: 'completion is earned', accent: 'slate' },
+        ]}
+        arrows={[
+          { label: 'follows', detail: 'the same record' },
+          { label: 'receives', detail: 'signed at issue' },
+          { label: 'closes', detail: 'the gate names what is open' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The walkthrough</h2>
+
+      <FlowStep
+        sid="S1"
+        title="Notified at every stage"
+        account="Applicant"
+        console="/app/portal"
+        live="https://demo.oimlsmart.org/app/portal"
+        page="applicant-journey"
+        stem="notifications"
+        captured={captured}
+        alt="The applicant's notifications inbox: the stage events of their own applications, each with its reason."
+      >
+        <p>
+          The application received, the project created, the samples requested and received, the dispatch to the laboratory, the test reports' submission, the evaluation's completion, the certificate's issuance, the registration's publication: each stage lands in the applicant's inbox with its reason, and the email channel carries the applicant-facing ones. Nobody phones the authority to ask where things stand; the record says it, stage by stage.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S2"
+        title="The progress view, cone-honest"
+        account="Applicant"
+        console="/app/portal/applications/…"
+        live="https://demo.oimlsmart.org/app/portal"
+        page="applicant-journey"
+        stem="application-journey"
+        captured={captured}
+        alt="The application's page as the applicant sees it: the journey stages and the promise set with per-claim verification status."
+      >
+        <p>
+          The application's own page carries the journey: the stages and where the file stands, with the promise set underneath (the claims the record makes and their per-claim verification status). The projection is honest in both directions: it never inflates progress, and it never leaks the other parties' in-flight workspaces. The applicant sees everything the scheme entitles them to (their project, their certificate-to-be), and the restricted fields stay hidden, per the same cone machinery that governs the laboratory's view in flow 03.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S3"
+        title="The certificate, downloaded as verifiable data"
+        account="Applicant"
+        console="/app/portal/certificates/…"
+        live="https://demo.oimlsmart.org/app/portal"
+        page="applicant-journey"
+        stem="certificate-view"
+        captured={captured}
+        alt="The issued certificate in the applicant's portal: the full OIML document with its serials, dates, ACTIVE state, and downloads."
+      >
+        <p>
+          When the evaluation completes and the certificate issues (flow 04), it appears in the applicant's portal: the full OIML document with its classification table, its conditions, its serials, its dates, its ACTIVE state. It prints as the document the market knows, and underneath it is signed data (the CNML record with its VC, SD-JWT, DPP, and AAS carrier forms when the signing pass has sealed them; the demo's nightly signing keeps the worked example sealed, and the pages say honestly when a form is awaiting it). The manufacturer's software can consume the certificate directly; the PDF era's re-typing ends here.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S4"
+        title="Completion is earned: the settling doctrine"
+        account="Applicant"
+        console="/app/portal"
+        live="https://demo.oimlsmart.org/app/portal"
+        captured={captured}
+      >
+        <p>
+          A project is marked Completed only when everything is settled: every fee marked paid (the authority-to-applicant fee, the authority-to-laboratory fees), every sample's custody closed (returned, retained, or disposed), the review threads resolved, the reports finalized, the certificate issued and registered. A premature attempt refuses with the named open items and who owes them; the terminal state lands on the audit chain and the participants' access ends per the cone. Named honestly: the gate's model is decided doctrine in the engineering record, and its surface ships with the platform wave now in review (the audit page tracks it); the demo today shows the certificate ACTIVE and the projects' states reading their truth, and this page will carry the gate's capture when the wave lands.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S5"
+        title="Anyone can verify: the public check"
+        account="no account needed"
+        console="/app/verify"
+        live="https://demo.oimlsmart.org/app/verify"
+        page="applicant-journey"
+        stem="verify-number"
+        captured={captured}
+        alt="The public verify page: the certificate number checked against the BIML-registered copy, ACTIVE, not revoked, not suspended."
+      >
+        <p>
+          The journey's last step belongs to everyone: a buyer, a market-surveillance officer, another authority. The verify page checks the certificate number against the BIML-registered copy with no account at all: the verdict, the registration record, and the revocation and suspension checks against the W3C Status List with their check timestamp. The certificate the applicant downloaded in S3 is the same data this page verifies; the loop from application to public trust closes here.
+        </p>
+      </FlowStep>
+    </div>
+
+    <div class="max-w-3xl mb-12 presenter-scripts">
+      <div class="print-only">
+        <h1>The applicant's journey (demo flow 05): the presenter scripts</h1>
+        <p>OIML SMART demo walkthrough, printed from www.oimlsmart.org/demo/applicant-journey. Everything the scripts present is simulated: the demo instance resets nightly and the cast is fictional.</p>
+      </div>
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The presenter scripts</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        Two lengths, keyed to the steps above (S1 to S5). Print this page for a clean copy of the scripts.
+      </p>
+      <PresenterScript
+        minutes={5}
+        audience="the committee slot"
+        beats={[
+          { at: '0:00', text: 'We have walked the chain from three desks. Now the fourth view: the manufacturer who started it all, watching their application cross the scheme. Simulated cast, nightly reset.' },
+          { at: '0:30', steps: 'S1', text: 'Every stage notifies: the inbox carries each event with its reason. Nobody phones to ask where the file is.' },
+          { at: '1:15', steps: 'S2', text: 'The progress view: the stages, the promise set with its per-claim verification. Honest in both directions: no inflated progress, no leaked workspaces.' },
+          { at: '2:15', steps: 'S3', text: 'The certificate: the full OIML document in the portal, and underneath it signed data the manufacturer\'s software can consume. No more re-typing from PDFs.' },
+          { at: '3:15', steps: 'S4', text: 'And completion means settled: fees marked paid, custody closed, threads resolved, the certificate registered. A premature close refuses and names what is open. The terminal state is earned.' },
+          { at: '4:00', steps: 'S5', text: 'The closer needs no account: anyone types the certificate number and gets the verdict against the registered copy, revocation and suspension checks included. That is what public trust looks like as a web page.' },
+          { at: '4:40', text: 'Try it: the Applicant account, /app/portal; then the verify page without any account at all.' },
+        ]}
+      />
+      <PresenterScript
+        minutes={20}
+        audience="the working visit"
+        beats={[
+          { at: '0:00', text: 'Frame: the applicant is the scheme\'s customer, and this flow is the customer experience of trust. Simulated cast, nightly reset.' },
+          { at: '1:00', steps: 'S1', text: 'The notifications inbox: walk the stages of the worked example and match each to the act that produced it (the sample request from flow 02, the report from flow 03, the issuance from flow 04). The record narrates itself.' },
+          { at: '3:30', steps: 'S1', text: 'The honest coverage: which stages notify the applicant today and which are authority-facing; the catalog grows by declared need, never by noise. The email channel carries the applicant-facing set.' },
+          { at: '5:30', steps: 'S2', text: 'The progress projection and the promise set: every claim the record makes carries its verification status. Compare with the status spreadsheet every manufacturer keeps today.' },
+          { at: '7:30', steps: 'S2', text: 'The cone, from the applicant side: their project, their certificate-to-be, and the authority\'s and laboratory\'s internal fields hidden. One shared record, three honest views; this is what makes the dataspace safe.' },
+          { at: '9:30', steps: 'S3', text: 'The certificate page: the document, the conditions, the serials, the revision history. Then the data forms: CNML signed, with the VC, SD-JWT, DPP, and AAS carriers, and the honest note for when a form awaits the signing pass.' },
+          { at: '12:00', steps: 'S3', text: 'Why data matters to a manufacturer: the certificate feeds their quality system, their customers\' procurement systems, and market surveillance directly. The verification is offline-capable; trust does not phone home.' },
+          { at: '14:00', steps: 'S4', text: 'The settling doctrine: walk the open-items list the gate checks (fees, custody, threads, reports, the certificate). Completion as an earned state is the audit answer to projects that linger half-closed for years. Name the surface\'s in-review status honestly.' },
+          { at: '16:30', steps: 'S5', text: 'The verify page, performed: the number, the verdict, the registration record, the status-list checks with their timestamp. Then the pointer: the same check runs by file drop on the CNML verify page, offline.' },
+          { at: '18:30', text: 'Questions. The usual: access after completion (ends per the cone, the record stays) and corrections (the lifecycle acts on the certificate page: annex, revise, renew, suspend, withdraw). Close on the try-it paths.' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Today (SMART) and the vision (SMART+)</h2>
+      <SmartSplit
+        today={[
+          { text: 'The stage notifications, the journey projection, the promise set with per-claim verification.', href: 'https://demo.oimlsmart.org/app/portal', label: 'the portal' },
+          { text: 'The certificate as the full OIML document and as signed data, with the public verify page (no account).', href: 'https://demo.oimlsmart.org/app/verify', label: 'verify now' },
+          { text: 'The certificate lifecycle: annex, revise, renew, suspend, withdraw, each a recorded act.', href: 'https://demo.oimlsmart.org/app/portal', label: 'the certificate' },
+        ]}
+        vision={[
+          { text: 'The completion gate\'s surface: settle-first completion with the named open items (in review on the integration branch; the audit page tracks it).', href: '/demo/audit-findings' },
+          { text: 'The twin chapter of the journey: the certified instrument reporting its own in-service conformance back to the manufacturer (roadmap).', href: '/technologies/smart-twin' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The honest questions</h2>
+      <div class="grid gap-4">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">What can the applicant actually see?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Everything the scheme entitles them to: their application, their project's record, the stages, the notifications, and the certificate. What stays hidden is the other parties' internal work (the authority's review notes, the laboratory's in-flight runs), per the same cone machinery every party sits behind.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Does completion lock the manufacturer out?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The project's working access ends per the cone when it completes; the record stays, and the certificate stays verifiable forever. The lifecycle acts that follow (annex, revise, renew, suspend, withdraw) are new recorded acts on the certificate, not a reopening of the settled project.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Why should a manufacturer trust the gate?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Because it refuses in the open: a premature completion attempt names exactly what stands open and who owes it (a fee unmarked, a sample's custody, an unresolved thread). Nothing closes by ceremony, and the terminal state lands on the audit chain where every party can read how it was earned.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Is any of this journey real?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The manufacturer, the application, and the certificate are the demo's fictional worked example, and the instance re-seeds nightly. The machinery is real: the notifications, the projection, the cone, the signed certificate, and the public verify page are the same code that runs the production hub, captured live this wave.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="/demo/audit-findings"
+        label="Flow 06: the audit findings"
+        description="The engineering record behind all five flows: what the audit found, what the build answered, the doctrine decisions."
+      />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow on the demo"
+        description="The one-click Applicant account, then /app/portal: the worked example's journey and certificate are already there."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org for a walkthrough with your manufacturers' association or your quality team."
+      />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified {captured}: every step above was performed headlessly against the live demo by scripts/capture-walkthroughs.ts (the worked example's inbox, journey, and certificate; the public verify page with no account) and each capture carries its assertion record in public/img/walkthroughs/manifest.json. The step names and machine states match the engineering record (DEMO_FLOWS/05) in the smart repository; where a surface is still in flight, the step says so (S4).
+      </p>
+    </div>
+  </section>
+</Base>
