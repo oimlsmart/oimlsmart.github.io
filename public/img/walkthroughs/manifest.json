@@ -1,6 +1,7 @@
 {
-  "generatedAt": "2026-09-01T06:42:32.566Z",
+  "generatedAt": "2026-09-01T12:13:52.315Z",
   "date": "2026-09-01",
+  "regenerate": "npx tsx scripts/capture-walkthroughs.ts (the read-only passes, both themes); add --drive for the state-changing arc first; per-page subsets ride src/data/proof-map.ts (TODO.promotion/08)",
   "captures": [
     {
       "flow": "shared",
