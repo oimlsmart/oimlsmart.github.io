@@ -1777,17 +1777,37 @@ async function captureEvaluation(browser: Browser) {
           if (wants('tr-review')) {
             await shoot(page, 'ia-evaluation', 'tr-review', theme, 'opened the worked example\'s test report as the IA: the sections with their provenance, the per-section review acts, the verdicts the model computed', { fullPage: true })
           }
-          if (wants('review-period')) {
-            const hasConsultation = await page.evaluate(() =>
-              /review period|consultation|comment/i.test(document.body.innerText))
-            if (hasConsultation) {
-              await shoot(page, 'ia-evaluation', 'review-period', theme, 'the review period on the report: the participants\' comment round, the threads that resolve before the decision', { fullPage: true })
-            } else {
-              console.log('  · review-period: no consultation surface on the seeded TR — not captured (the page will carry the live link)')
-            }
-          }
-        } else if (wants('tr-review') || wants('review-period')) {
+        } else if (wants('tr-review')) {
           console.log('  · tr-review: the seeded project links no TR — not captured')
+        }
+
+        if (wants('review-period')) {
+          // The consultation panel stands on an UNDECIDED report (the
+          // seeded TR was decided before the facility shipped): the
+          // drive's own submitted report carries it. Resolved from the
+          // API, never typed by hand.
+          const drivenTr = await page.evaluate(async () => {
+            const res = await fetch('/api/entities/testReports', { credentials: 'include' })
+            const list = await res.json()
+            const rows = Array.isArray(list) ? list : (list.entities ?? list.items ?? [])
+            const open = rows.filter((r) => r.status === 'SUBMITTED')
+            return open.length > 0 ? open[open.length - 1].id : null
+          })
+          if (drivenTr) {
+            await gotoApp(page, `/app/ia/test-reports/${encodeURIComponent(drivenTr)}`)
+            await waitIslandSettled(page)
+            const consultation = await page.waitForSelector('[data-testid="ia-tr-consultation"], [data-testid="ia-tr-consultation-gate"]', { timeout: 90_000 })
+              .then(() => true).catch(() => false)
+            if (consultation) {
+              await waitSkeletonGone(page)
+              await page.waitForTimeout(800)
+              await shoot(page, 'ia-evaluation', 'review-period', theme, 'the review period on the drive\'s submitted report: the participants\' comment round, the threads that resolve before the decision', { fullPage: true })
+            } else {
+              console.log('  · review-period: no consultation panel on the drive\'s submitted TR — not captured (the page will carry the live link)')
+            }
+          } else {
+            console.log('  · review-period: no undecided report on the demo — not captured')
+          }
         }
 
         if ((wants('examinations') || wants('er-synopsis')) && erHref) {
