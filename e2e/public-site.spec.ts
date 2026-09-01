@@ -312,6 +312,128 @@ test.describe('Public site — critical paths', () => {
     await expect(page.locator('h2', { hasText: 'The honest questions' })).toBeVisible()
   })
 
+  test('the CIML tour deck renders and navigates', async ({ page }) => {
+    // TODO.promotion/07: the deck at /tour — 19 slides from one source,
+    // keyboard/clicker navigation, the hash as the shareable per-slide
+    // address, the estate map as the one diagram, SMART+ labeled.
+    await page.goto('/tour/')
+    expect(await page.locator('.tour-slide').count()).toBe(19)
+    await expect(page.locator('.tour-slide.is-active')).toHaveCount(1)
+    await expect(page.locator('.tour-slide.is-active .tour-slide__title')).toContainText('The Digital OIML, live')
+    await expect(page.locator('[data-pos]')).toHaveText('1 / 19')
+    // Keyboard navigation advances, and the hash becomes the address.
+    await page.keyboard.press('ArrowRight')
+    await expect(page.locator('.tour-slide.is-active')).toHaveAttribute('id', 's02')
+    expect(page.url()).toContain('#s02')
+    // The deep link lands on the addressed slide directly.
+    await page.goto('/tour/#s07')
+    await expect(page.locator('.tour-slide.is-active')).toHaveAttribute('id', 's07')
+    // The on-screen buttons navigate too (the clicker path).
+    await page.getByRole('button', { name: 'Next slide' }).click()
+    await expect(page.locator('.tour-slide.is-active')).toHaveAttribute('id', 's08')
+    await expect(page.locator('[data-pos]')).toHaveText('8 / 19')
+    // Every slide carries its shareable anchor.
+    expect(await page.locator('.tour-slide__anchor').count()).toBe(19)
+    // The estate map is the one diagram on s03; the twin slide is the
+    // labeled SMART+ future.
+    await expect(page.locator('#s03 figure.tech-figure svg')).toBeAttached()
+    await expect(page.locator('#s10 .tour-chip--plus')).toContainText('SMART+')
+  })
+
+  test('the tour demo moments carry the live link and the dated fallback', async ({ page }) => {
+    // TODO.promotion/07: every demo moment is a LINK into
+    // demo.oimlsmart.org at the exact console/step (the walkthrough
+    // vocabulary from 06), with the dated capture for the no-network
+    // room — never a recording.
+    await page.goto('/tour/')
+    for (const [id, live] of [
+      ['s04', 'https://demo.oimlsmart.org/app/portal/applications/new'],
+      ['s05', 'https://demo.oimlsmart.org/app/ia'],
+      ['s06', 'https://demo.oimlsmart.org/app/lab'],
+      ['s07', 'https://demo.oimlsmart.org/app/register'],
+      ['s08', 'https://demo.oimlsmart.org/app/verify'],
+    ] as const) {
+      const slide = page.locator(`#${id}`)
+      await expect(slide.locator('.tour-live__cta')).toHaveAttribute('href', live)
+      await expect(slide.locator('figure.shot-figure img').first()).toBeAttached()
+      await expect(slide.locator('.shot-caption').first()).toContainText('captured 2026-09-01')
+      // The whole flow's narration is one click from the slide.
+      await expect(slide.locator('.tour-live__walk a')).toHaveAttribute('href', /\/demo\//)
+    }
+  })
+
+  test('the presenter notes carry the two cuts and the rehearsal record', async ({ page }) => {
+    // TODO.promotion/07: the notes surface — the mechanics, the 5-minute
+    // and 20-minute cuts with beat timings, the per-slide talk track,
+    // and the recorded rehearsal walks with the link verification.
+    await page.goto('/tour/notes/')
+    // .first(): the print-only header carries a second h1 (display:none
+    // on screen, the printed notes' title).
+    await expect(page.locator('h1').first()).toContainText('The presenter notes')
+    await expect(page.locator('h2', { hasText: 'Before you present' })).toBeVisible()
+    await expect(page.locator('h2', { hasText: 'The 5-minute cut' })).toBeVisible()
+    await expect(page.locator('h2', { hasText: 'The 20-minute cut' })).toBeVisible()
+    await expect(page.locator('h2', { hasText: 'The per-slide notes' })).toBeVisible()
+    await expect(page.locator('h2', { hasText: 'The rehearsal record' })).toBeVisible()
+    // The cuts: 8 slides ride the 5-minute cut, all 19 the 20-minute.
+    const cut5 = page.locator('h2', { hasText: 'The 5-minute cut' }).locator('xpath=..').locator('tbody tr')
+    expect(await cut5.count()).toBe(8)
+    const cut20 = page.locator('h2', { hasText: 'The 20-minute cut' }).locator('xpath=..').locator('tbody tr')
+    expect(await cut20.count()).toBe(19)
+    // The talk track exists per slide, linked back to the deck.
+    expect(await page.locator('a[href^="/tour#s"]').count()).toBeGreaterThanOrEqual(19)
+    // The rehearsal record: two walks, the live links verified 200.
+    await expect(page.getByText('walked end to end').first()).toBeVisible()
+    expect(await page.getByText('200 ·', { exact: false }).count()).toBeGreaterThanOrEqual(9)
+  })
+
+  test('the seven one-pagers render the sheet anatomy and print clean', async ({ page }) => {
+    // TODO.promotion/07: the leave-behind — each audience page condensed
+    // to one printable sheet: the pitch, today, the changes, the try-it
+    // links, the entitlement line pointing at the single matrix source,
+    // the contact, and the honesty footer. On screen the print-only
+    // sheet header hides; under print media it shows (the print contract).
+    for (const [path, heading] of [
+      ['/about/audiences/one-pagers/member-states', 'For Member States & NMIs'],
+      ['/about/audiences/one-pagers/corresponding-members', 'For Corresponding Members'],
+      ['/about/audiences/one-pagers/issuing-authorities', 'For Issuing Authorities'],
+      ['/about/audiences/one-pagers/laboratories', 'For Test Laboratories'],
+      ['/about/audiences/one-pagers/manufacturers', 'For Manufacturers'],
+      ['/about/audiences/one-pagers/instrument-users', 'For Instrument Users'],
+      ['/about/audiences/one-pagers/educators', 'For Educators & Students'],
+    ] as const) {
+      await page.goto(path)
+      await expect(page.locator('h1').first()).toContainText(heading)
+      for (const section of ['What you do today', 'What changes', 'Try it now', 'Who to talk to']) {
+        await expect(page.locator('h2', { hasText: section })).toBeVisible()
+      }
+      // The entitlement line points at the single matrix source.
+      await expect(page.locator('.one-pager-sheet').getByText('/services/who-can-run-what')).toBeAttached()
+      // The honesty footer names the demo simulated and dates the sheet.
+      await expect(page.locator('.one-pager-foot')).toContainText('simulated')
+      await expect(page.locator('.one-pager-foot')).toContainText('2026-09-01')
+      // The print contract: the sheet header shows under print media.
+      await expect(page.locator('.one-pager-print-only.one-pager-title')).toBeHidden()
+      await page.emulateMedia({ media: 'print' })
+      await expect(page.locator('.one-pager-print-only.one-pager-title')).toBeVisible()
+      await page.emulateMedia({ media: 'screen' })
+    }
+    // The index links all seven sheets.
+    await page.goto('/about/audiences/one-pagers/')
+    await expect(page.locator('h1')).toContainText('The leave-behind')
+    for (const slug of [
+      'member-states',
+      'corresponding-members',
+      'issuing-authorities',
+      'laboratories',
+      'manufacturers',
+      'instrument-users',
+      'educators',
+    ]) {
+      await expect(page.locator(`a[href="/about/audiences/one-pagers/${slug}"]`).first()).toBeVisible()
+    }
+  })
+
   test('docs page loads with sidebar and content', async ({ page }) => {
     await page.goto('/docs/')
     await expect(page.locator('h1')).toBeVisible()
