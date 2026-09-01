@@ -1296,14 +1296,23 @@ async function driveChain(browser: Browser) {
         if (startPresent) await clickWhenReady(page, 'lab-request-start')
         await waitTestIdReload(page, 'lab-request-assignments')
         for (let row = 0; row < 2; row++) {
-          if (row > 0) {
-            await gotoApp(page, docPath)
-            await waitTestIdReload(page, 'lab-request-detail')
-          }
-          await page.evaluate(() => {
-            const btn = document.querySelector('[data-testid="lab-assignment-run"]') as HTMLElement | null
-            btn?.click()
+          // Direct navigation to the next incomplete assignment's run: the
+          // SPA push plus the auto-open wedges under a sick stream, a full
+          // document load rides the SSR boot instead. The remaining
+          // assignment resolves from the API (the completed one's run is
+          // COMPLETED and drops out).
+          const nextAssignment = await page.evaluate(async () => {
+            const pathParts = window.location.pathname.split('/')
+            const reqId = pathParts[pathParts.length - 1]
+            const req = await (await fetch(`/api/entities/testRequests/${reqId}`, { credentials: 'include' })).json()
+            const runs = await (await fetch('/api/entities/testRuns', { credentials: 'include' })).json()
+            const runList = Array.isArray(runs) ? runs : (runs.entities ?? runs.items ?? [])
+            const doneIds = new Set(runList.filter((r: { status: string }) => r.status === 'COMPLETED').map((r: { test_assignment_id: string }) => r.test_assignment_id))
+            const ids: string[] = req.assignments ?? []
+            return ids.find(id => !doneIds.has(id)) ?? null
           })
+          if (!nextAssignment) break
+          await gotoApp(page, `/app/lab/run/${encodeURIComponent(nextAssignment)}`)
           await waitTestIdReload(page, 'lab-run-view')
           await waitSkeletonGone(page)
           const alreadyCompleted = await page.evaluate(() => !!document.querySelector('[data-testid="lab-run-completed"]'))
