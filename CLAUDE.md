@@ -50,6 +50,9 @@ npm run test:e2e # playwright
 - **CI:** `.github/workflows/gates.yml` runs both gates when repo variable
   `SMART_REPO_AVAILABLE=true` + secret `SMART_REPO_PAT` are configured (the smart repo
   is private; until then the gates run locally wherever both repos are checked out).
+- **The promotion doctrine** (claim→evidence map, screenshot freshness, the
+  model-content rule, the demo-liveness smoke) lives in `AGENTS.md` —
+  TODO.promotion/08's honesty machinery.
 
 ## Architecture
 

@@ -1,0 +1,101 @@
+name: freshness
+
+# The honesty machinery's nightly legs (TODO.promotion/08; the doctrine
+# lives in AGENTS.md). Declared cadence, per leg:
+#
+#   shot-freshness   a dated capture older than its page's declared TTL
+#                    fails here, never an unrelated push (the per-push
+#                    leg proves the declarations exist; this leg proves
+#                    they are kept). The failure prints the page's
+#                    regeneration command.
+#   proof-map-live   every `live` anchor in src/data/proof-map.ts is
+#                    fetched: status in `expect`, the probe carried.
+#                    Honest skips print their reason.
+#   demo-liveness    the playwright smoke against the live demo: the
+#                    public surfaces anonymously, every deep link the
+#                    walkthroughs/tour publish, the cheap signed-in
+#                    consoles, the model-content allowlist's live pins.
+#                    The demo reseeds nightly; this leg is why the tour
+#                    never silently breaks on that reset.
+#
+# The per-push gates stay as they were: build + lychee + the hermetic
+# playwright suite + the vitest legs (the proof-map structure and the
+# model-content tripwire ride `npm test`).
+
+on:
+  schedule:
+    - cron: '23 4 * * *' # nightly, off the herd marks
+  workflow_dispatch:
+
+jobs:
+  shot-freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the shell package (the chrome SSOT)
+        uses: actions/checkout@v6
+        with:
+          repository: oimlsmart/site-shell
+          path: vendor/site-shell
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Dated captures within their declared TTLs
+        run: npx tsx scripts/check-shot-freshness.ts
+
+  proof-map-live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the shell package (the chrome SSOT)
+        uses: actions/checkout@v6
+        with:
+          repository: oimlsmart/site-shell
+          path: vendor/site-shell
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Every live anchor resolves and still shows the claim
+        run: npx tsx scripts/check-proof-map.ts --live
+
+  demo-liveness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the shell package (the chrome SSOT)
+        uses: actions/checkout@v6
+        with:
+          repository: oimlsmart/site-shell
+          path: vendor/site-shell
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx playwright install --with-deps chromium
+
+      - name: The walkthrough/tour deep links into the live demo
+        run: npx playwright test -c playwright.demo.config.ts
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: demo-liveness-report
+          path: test-results/
+          retention-days: 14
