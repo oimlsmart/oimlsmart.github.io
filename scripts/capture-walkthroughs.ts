@@ -1428,6 +1428,16 @@ async function driveChain(browser: Browser) {
         // omissions, the position, the acknowledgment, finalize + submit.
         await gotoApp(page, docPath)
         await waitTestIdReload(page, 'lab-request-detail')
+        // The buttons trail the shell: wait for either report act before
+        // branching (the 2026-09-01 run branched on the skeleton and
+        // clicked a nonexistent open-report).
+        await page.waitForSelector('[data-testid="lab-request-draft-report"], [data-testid="lab-request-open-report"]', { timeout: 90_000 })
+          .catch(async () => {
+            console.log('  · the report acts never mounted (the stream wedge); reloading')
+            await page.reload({ waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT })
+            await waitIslandSettled(page)
+          })
+        await page.waitForSelector('[data-testid="lab-request-draft-report"], [data-testid="lab-request-open-report"]', { timeout: SETTLE })
         const hasDraft2 = await page.evaluate(() => !!document.querySelector('[data-testid="lab-request-draft-report"]'))
         if (hasDraft2) {
           await clickWhenReady(page, 'lab-request-draft-report')
