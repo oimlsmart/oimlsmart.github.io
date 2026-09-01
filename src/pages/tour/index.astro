@@ -393,7 +393,9 @@ const n = (i: number) => String(i + 1).padStart(2, '0')
   <script>
     // The deck driver: hash deep links (/tour#s07 is the shareable
     // address of slide 7), keyboard/clicker navigation, the offline
-    // indicator. No network calls; the page is fully static.
+    // indicator. No network calls; the page is fully static. The window
+    // listeners bind once and resolve the CURRENT deck at event time, so
+    // soft navigation (the shell's ClientRouter) never stacks handlers.
     function initTour() {
       const deck = document.querySelector('.tour-deck')
       if (!deck) return
@@ -431,13 +433,7 @@ const n = (i: number) => String(i + 1).padStart(2, '0')
         }
       }
 
-      deck.classList.add('is-live')
-      show(indexFromHash(), false, true)
-
-      prevBtn?.addEventListener('click', () => { show(current - 1, true, true); prevBtn.blur() })
-      nextBtn?.addEventListener('click', () => { show(current + 1, true, true); nextBtn.blur() })
-
-      document.addEventListener('keydown', (e) => {
+      function onKey(e) {
         const t = e.target
         const tag = t && t.tagName ? t.tagName : ''
         if (['A', 'BUTTON', 'INPUT', 'TEXTAREA', 'SELECT'].includes(tag)) return
@@ -451,9 +447,7 @@ const n = (i: number) => String(i + 1).padStart(2, '0')
         } else if (e.key === 'End') {
           e.preventDefault(); show(slides.length - 1, true, true)
         }
-      })
-
-      window.addEventListener('hashchange', () => show(indexFromHash(), false, true))
+      }
 
       function netState() {
         if (!net) return
@@ -464,8 +458,24 @@ const n = (i: number) => String(i + 1).padStart(2, '0')
           ? 'offline: the dated captures carry the demo moments'
           : 'online: the demo moments link into demo.oimlsmart.org'
       }
-      window.addEventListener('online', netState)
-      window.addEventListener('offline', netState)
+
+      deck.classList.add('is-live')
+      show(indexFromHash(), false, true)
+
+      prevBtn?.addEventListener('click', () => { show(current - 1, true, true); prevBtn.blur() })
+      nextBtn?.addEventListener('click', () => { show(current + 1, true, true); nextBtn.blur() })
+
+      // The one binding site for window-level events; each resolves the
+      // live deck's API, so a soft-navigated page replaces it cleanly.
+      const api = { key: onKey, hash: () => show(indexFromHash(), false, true), net: netState }
+      window.__tourDeck = api
+      if (!window.__tourDeckBound) {
+        window.__tourDeckBound = true
+        document.addEventListener('keydown', (e) => window.__tourDeck?.key(e))
+        window.addEventListener('hashchange', () => window.__tourDeck?.hash())
+        window.addEventListener('online', () => window.__tourDeck?.net())
+        window.addEventListener('offline', () => window.__tourDeck?.net())
+      }
       netState()
     }
     document.addEventListener('astro:page-load', initTour)
