@@ -1217,7 +1217,7 @@ async function driveChain(browser: Browser) {
         await waitIslandSettled(page)
         await waitTestId(page, 'tep-test-requests')
       } finally { await context.close() }
-      saveState({ phase: 'doc-dispatched', appId, requestPath: docPath })
+      saveState({ phase: 'doc-dispatched', appId })
       state.phase = 'doc-dispatched'
     }
   }
@@ -1227,28 +1227,36 @@ async function driveChain(browser: Browser) {
     {
       const { context, page } = await leg('Test Laboratory', '/app/lab')
       try {
-        await gotoApp(page, '/app/lab')
-        await page.waitForFunction(
-          () => !!document.querySelector('[data-testid^="lab-incoming-"]'),
-          undefined,
-          { timeout: SETTLE, polling: 500 },
-        )
-        await waitSkeletonGone(page)
-        // Open the documentation-examination request (the newest incoming
-        // row carries it).
-        await page.evaluate(() => {
-          const rows = Array.from(document.querySelectorAll('[data-testid^="lab-incoming-"]'))
-          const row = rows.find(r => (r.textContent ?? '').includes('documentation'))
-            ?? rows[rows.length - 1]
-          const btn = row?.querySelector('button[data-testid^="lab-open-request-"]') as HTMLElement | null
-          btn?.click()
-        })
-        await page.waitForFunction(
-          () => /\/app\/lab\/requests\//.test(window.location.pathname),
-          undefined,
-          { timeout: SETTLE, polling: 500 },
-        )
-        await waitIslandSettled(page)
+        // Path-first when the request is known (a resume after the accept
+        // landed: the incoming bucket no longer holds it, and the inbox
+        // ride the same wedged stream as every list page).
+        if (docPath) {
+          await gotoApp(page, docPath)
+          await waitIslandSettled(page)
+        } else {
+          await gotoApp(page, '/app/lab')
+          await page.waitForFunction(
+            () => !!document.querySelector('[data-testid^="lab-incoming-"]'),
+            undefined,
+            { timeout: SETTLE, polling: 500 },
+          )
+          await waitSkeletonGone(page)
+          // Open the documentation-examination request (the newest incoming
+          // row carries it).
+          await page.evaluate(() => {
+            const rows = Array.from(document.querySelectorAll('[data-testid^="lab-incoming-"]'))
+            const row = rows.find(r => (r.textContent ?? '').includes('documentation'))
+              ?? rows[rows.length - 1]
+            const btn = row?.querySelector('button[data-testid^="lab-open-request-"]') as HTMLElement | null
+            btn?.click()
+          })
+          await page.waitForFunction(
+            () => /\/app\/lab\/requests\//.test(window.location.pathname),
+            undefined,
+            { timeout: SETTLE, polling: 500 },
+          )
+          await waitIslandSettled(page)
+        }
         // Presence-gated for the resume: the accept may already have landed.
         const acceptPresent = await page.evaluate(() => !!document.querySelector('[data-testid="lab-request-accept"]'))
         if (acceptPresent) {
