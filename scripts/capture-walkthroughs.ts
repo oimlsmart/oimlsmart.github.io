@@ -1807,13 +1807,22 @@ async function captureEvaluation(browser: Browser) {
             await waitIslandSettled(page)
             // The review period opens by the IA's explicit act (the
             // ia_opens_consultation transition): perform it, then the
-            // panel renders.
-            const openAct = await page.evaluate(() => {
-              const b = document.querySelector('[data-testid="ia-tr-open-consultation"]') as HTMLElement | null
-              if (b) { b.click(); return true }
-              return false
-            })
-            if (openAct) await page.waitForTimeout(2000)
+            // panel renders. The button trails the skeleton like every
+            // data-gated control, so it gets the reload discipline.
+            let openAct = await page.waitForSelector('[data-testid="ia-tr-open-consultation"]', { timeout: 90_000 })
+              .then(() => true).catch(() => false)
+            if (!openAct) {
+              await page.reload({ waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT })
+              await waitIslandSettled(page)
+              openAct = await page.waitForSelector('[data-testid="ia-tr-open-consultation"]', { timeout: SETTLE })
+                .then(() => true).catch(() => false)
+            }
+            if (openAct) {
+              await clickTestId(page, 'ia-tr-open-consultation')
+              await page.waitForTimeout(2000)
+            } else {
+              console.log('  · review-period: the open-consultation act never mounted')
+            }
             const consultation = await page.waitForSelector('[data-testid="ia-tr-consultation"], [data-testid="ia-tr-consultation-gate"]', { timeout: 90_000 })
               .then(() => true).catch(() => false)
             if (consultation) {
