@@ -1,0 +1,74 @@
+---
+/**
+ * TourEstateMap — the CIML tour's one estate diagram (TODO.promotion/07,
+ * slide s03): the Recommendation models as the single source at the
+ * center, the platform deriving every surface from them, the services
+ * beside, the member postures federating in, and the public surfaces
+ * answering without an account. House style; dark-mode correct via the
+ * TechFigure palette. The slide carries this ONE diagram by design.
+ */
+import TechFigure from './TechFigure.astro'
+---
+
+<TechFigure caption="The estate at a glance: the Recommendation models are the single source; the platform derives the workflow, the verdicts, and the certificates from them; member instances run the same codebase in their own postures; the register and the verification answer without an account.">
+  <svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="estate-title">
+    <title id="estate-title">The OIML SMART estate map: the Recommendation models at the center, the platform deriving every surface, the services beside, the member instances federating in, the public surfaces answering without an account</title>
+
+    <defs>
+      <marker id="estate-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"/>
+      </marker>
+    </defs>
+
+    <text x="450" y="30" text-anchor="middle" font-size="18" font-weight="600" fill="var(--dg-text)">One source, every surface derived</text>
+
+    {/* The source: the Recommendation models */}
+    <rect x="300" y="52" width="300" height="86" rx="8" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="450" y="78" text-anchor="middle" font-size="14" font-weight="600" fill="var(--dg-gen-text)">The Recommendations as models</text>
+    <text x="450" y="97" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">R 60 · R 91 · R 129 · R 144, authored in Primmel</text>
+    <text x="450" y="114" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">provenance down to the clause; the text stays the gate</text>
+
+    {/* The platform */}
+    <rect x="300" y="212" width="300" height="96" rx="8" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="450" y="238" text-anchor="middle" font-size="14" font-weight="600" fill="var(--dg-source-text)">The SMART platform</text>
+    <text x="450" y="257" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">applications · evaluation projects · dispatch</text>
+    <text x="450" y="274" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">model-driven tests · verdicts · CNML certificates</text>
+    <text x="450" y="293" text-anchor="middle" font-size="10.5" font-style="italic" fill="var(--dg-text-muted)">the demo runs this box</text>
+
+    {/* The services */}
+    <rect x="30" y="212" width="220" height="96" rx="8" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="140" y="238" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">The services</text>
+    <text x="140" y="257" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">identity · vocabularies · AI · status</text>
+    <text x="140" y="274" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">studio viewer · trust registry</text>
+    <text x="140" y="293" text-anchor="middle" font-size="10.5" font-style="italic" fill="var(--dg-text-muted)">accounts per organization</text>
+
+    {/* The member instances */}
+    <rect x="650" y="212" width="220" height="96" rx="8" fill="var(--dg-gov-fill)" stroke="var(--dg-gov-stroke)" stroke-width="1.5"/>
+    <text x="760" y="238" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gov-text)">Member instances</text>
+    <text x="760" y="257" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">IA-only · TL-only · IA+TL</text>
+    <text x="760" y="274" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">one codebase, four postures</text>
+    <text x="760" y="293" text-anchor="middle" font-size="10.5" font-style="italic" fill="var(--dg-text-muted)">tl. and nmi. pilots live today</text>
+
+    {/* The public surfaces */}
+    <rect x="300" y="392" width="300" height="86" rx="8" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="450" y="418" text-anchor="middle" font-size="14" font-weight="600" fill="var(--dg-text)">The public surfaces</text>
+    <text x="450" y="437" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the certificate register · the verification</text>
+    <text x="450" y="454" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">no account, no phone call</text>
+
+    {/* Arrows */}
+    <line x1="450" y1="138" x2="450" y2="204" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#estate-arr)"/>
+    <text x="462" y="178" font-size="10.5" fill="var(--dg-text-muted)" font-family="var(--font-mono)">derives</text>
+
+    <line x1="250" y1="260" x2="292" y2="260" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#estate-arr)"/>
+    <text x="271" y="248" text-anchor="middle" font-size="10.5" fill="var(--dg-text-muted)" font-family="var(--font-mono)">accounts</text>
+
+    <line x1="608" y1="260" x2="650" y2="260" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#estate-arr)"/>
+    <line x1="650" y1="284" x2="608" y2="284" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#estate-arr)"/>
+    <text x="629" y="248" text-anchor="middle" font-size="10.5" fill="var(--dg-text-muted)" font-family="var(--font-mono)">signed chains</text>
+
+    <line x1="450" y1="308" x2="450" y2="384" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#estate-arr)"/>
+    <text x="462" y="352" font-size="10.5" fill="var(--dg-text-muted)" font-family="var(--font-mono)">publishes</text>
+
+    <text x="450" y="506" text-anchor="middle" font-size="11" font-style="italic" fill="var(--dg-text-muted)">everything else on this tour is one of these boxes, opened</text>
+  </svg>
+</TechFigure>
