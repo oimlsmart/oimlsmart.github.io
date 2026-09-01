@@ -1,0 +1,456 @@
+{
+  "generatedAt": "2026-09-01T06:42:32.566Z",
+  "date": "2026-09-01",
+  "captures": [
+    {
+      "flow": "shared",
+      "name": "login-accounts",
+      "file": "shared/login-accounts-light.png",
+      "url": "https://demo.oimlsmart.org/app/login/",
+      "theme": "light",
+      "performed": "the demo login page: the fictional cast as one-click accounts, the shared demo password, the guided-demo entry",
+      "capturedAt": "2026-08-31T19:02:39.097Z"
+    },
+    {
+      "flow": "shared",
+      "name": "guided-demo",
+      "file": "shared/guided-demo-light.png",
+      "url": "https://demo.oimlsmart.org/app/login/",
+      "theme": "light",
+      "performed": "started the guided demo: the presenter script walks the full certification flow, step 1 of 24, from the login page",
+      "capturedAt": "2026-08-31T19:02:42.342Z"
+    },
+    {
+      "flow": "shared",
+      "name": "login-accounts",
+      "file": "shared/login-accounts-dark.png",
+      "url": "https://demo.oimlsmart.org/app/login/",
+      "theme": "dark",
+      "performed": "the demo login page: the fictional cast as one-click accounts, the shared demo password, the guided-demo entry",
+      "capturedAt": "2026-08-31T19:02:44.880Z"
+    },
+    {
+      "flow": "shared",
+      "name": "guided-demo",
+      "file": "shared/guided-demo-dark.png",
+      "url": "https://demo.oimlsmart.org/app/login/",
+      "theme": "dark",
+      "performed": "started the guided demo: the presenter script walks the full certification flow, step 1 of 24, from the login page",
+      "capturedAt": "2026-08-31T19:02:50.098Z"
+    },
+    {
+      "flow": "application",
+      "name": "application-submitted",
+      "file": "application/application-submitted-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T19:10:01.978Z"
+    },
+    {
+      "flow": "application",
+      "name": "wizard-instrument",
+      "file": "application/wizard-instrument-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "light",
+      "performed": "picked the LC-500 family and a model in scope: the instrument step the R 60 model derives (the model-authored declaration form)",
+      "capturedAt": "2026-09-01T03:17:26.119Z"
+    },
+    {
+      "flow": "application",
+      "name": "wizard-recommendation",
+      "file": "application/wizard-recommendation-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "light",
+      "performed": "opened the new-application wizard: the explicit Recommendation pick (the R 60 card), never a silent default",
+      "capturedAt": "2026-09-01T03:17:21.546Z"
+    },
+    {
+      "flow": "application",
+      "name": "wizard-scheme-ia",
+      "file": "application/wizard-scheme-ia-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "light",
+      "performed": "chose the scheme and the Issuing Authority from the cards (logo or honest monogram, the scope summary, the per-Recommendation filter)",
+      "capturedAt": "2026-09-01T03:18:29.870Z"
+    },
+    {
+      "flow": "ia-intake",
+      "name": "accept-tep-hub",
+      "file": "ia-intake/accept-tep-hub-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T19:35:43.869Z"
+    },
+    {
+      "flow": "ia-intake",
+      "name": "custody-shipped",
+      "file": "ia-intake/custody-shipped-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T20:00:18.565Z"
+    },
+    {
+      "flow": "ia-intake",
+      "name": "dispatch-builder",
+      "file": "ia-intake/dispatch-builder-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T19:37:23.959Z"
+    },
+    {
+      "flow": "ia-intake",
+      "name": "review-queue",
+      "file": "ia-intake/review-queue-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T19:15:32.038Z"
+    },
+    {
+      "flow": "ia-intake",
+      "name": "review-whole-file",
+      "file": "ia-intake/review-whole-file-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T19:17:23.496Z"
+    },
+    {
+      "flow": "ia-intake",
+      "name": "sample-request-form",
+      "file": "ia-intake/sample-request-form-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T19:17:23.576Z"
+    },
+    {
+      "flow": "ia-intake",
+      "name": "tep-samples-selected",
+      "file": "ia-intake/tep-samples-selected-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T19:35:48.992Z"
+    },
+    {
+      "flow": "tl-work",
+      "name": "lab-inbox-incoming",
+      "file": "tl-work/lab-inbox-incoming-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T20:04:23.209Z"
+    },
+    {
+      "flow": "tl-work",
+      "name": "project-view-cone",
+      "file": "tl-work/project-view-cone-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T20:06:21.406Z"
+    },
+    {
+      "flow": "tl-work",
+      "name": "report-draft-completeness",
+      "file": "tl-work/report-draft-completeness-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T20:13:27.392Z"
+    },
+    {
+      "flow": "tl-work",
+      "name": "request-accepted",
+      "file": "tl-work/request-accepted-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T20:05:10.071Z"
+    },
+    {
+      "flow": "tl-work",
+      "name": "request-open",
+      "file": "tl-work/request-open-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T20:05:08.774Z"
+    },
+    {
+      "flow": "tl-work",
+      "name": "run-wizard",
+      "file": "tl-work/run-wizard-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T23:26:08.113Z"
+    },
+    {
+      "flow": "tl-work",
+      "name": "samples-received",
+      "file": "tl-work/samples-received-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-08-31T20:08:26.632Z"
+    },
+    {
+      "flow": "tl-work",
+      "name": "report-composer-gate",
+      "file": "tl-work/report-composer-gate-light.png",
+      "url": "https://demo.oimlsmart.org/app/lab/reports/98618d2a-ce41-41e8-97f4-afe324e14344",
+      "theme": "light",
+      "performed": "accounted for every remaining required form with a justified omission: the gate names the last blocker (the signature acknowledgment), nothing submits silently",
+      "capturedAt": "2026-09-01T02:55:19.352Z"
+    },
+    {
+      "flow": "tl-work",
+      "name": "report-submitted",
+      "file": "tl-work/report-submitted-light.png",
+      "url": "https://demo.oimlsmart.org/app/lab/reports/98618d2a-ce41-41e8-97f4-afe324e14344",
+      "theme": "light",
+      "performed": "finalized and submitted the report: the TR locks, the IA is notified through the Evaluation Project",
+      "capturedAt": "2026-09-01T02:55:25.144Z"
+    },
+    {
+      "flow": "tl-work",
+      "name": "run-completed",
+      "file": "tl-work/run-completed-light.png",
+      "url": "(re-registered after an interrupted run)",
+      "theme": "light",
+      "performed": "performed against the live demo (the manifest entry re-registered after an interrupted run)",
+      "capturedAt": "2026-09-01T02:41:11.599Z"
+    },
+    {
+      "flow": "application",
+      "name": "portal-draft",
+      "file": "application/portal-draft-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "light",
+      "performed": "left the wizard unsubmitted and returned: the resume banner offers the stored draft (leave and return, the fill round-trips)",
+      "capturedAt": "2026-09-01T03:22:22.995Z"
+    },
+    {
+      "flow": "application",
+      "name": "wizard-recommendation",
+      "file": "application/wizard-recommendation-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "dark",
+      "performed": "opened the new-application wizard: the explicit Recommendation pick (the R 60 card), never a silent default",
+      "capturedAt": "2026-09-01T03:28:20.648Z"
+    },
+    {
+      "flow": "application",
+      "name": "wizard-instrument",
+      "file": "application/wizard-instrument-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "dark",
+      "performed": "picked the LC-500 family and a model in scope: the instrument step the R 60 model derives (the model-authored declaration form)",
+      "capturedAt": "2026-09-01T03:28:25.210Z"
+    },
+    {
+      "flow": "application",
+      "name": "wizard-scheme-ia",
+      "file": "application/wizard-scheme-ia-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "dark",
+      "performed": "chose the scheme and the Issuing Authority from the cards (logo or honest monogram, the scope summary, the per-Recommendation filter)",
+      "capturedAt": "2026-09-01T03:29:28.933Z"
+    },
+    {
+      "flow": "application",
+      "name": "portal-draft",
+      "file": "application/portal-draft-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/new/",
+      "theme": "dark",
+      "performed": "left the wizard unsubmitted and returned: the resume banner offers the stored draft (leave and return, the fill round-trips)",
+      "capturedAt": "2026-09-01T03:33:27.578Z"
+    },
+    {
+      "flow": "applicant-journey",
+      "name": "notifications",
+      "file": "applicant-journey/notifications-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/",
+      "theme": "light",
+      "performed": "opened the notifications inbox: the stage events of the applicant's own applications, each with its reason",
+      "capturedAt": "2026-09-01T03:39:17.720Z"
+    },
+    {
+      "flow": "applicant-journey",
+      "name": "application-journey",
+      "file": "applicant-journey/application-journey-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/app-acme-lc",
+      "theme": "light",
+      "performed": "opened the worked-example application: the six-stage journey and the promise set with the per-claim verification status, never leaking the in-flight stores",
+      "capturedAt": "2026-09-01T03:41:19.758Z"
+    },
+    {
+      "flow": "applicant-journey",
+      "name": "certificate-view",
+      "file": "applicant-journey/certificate-view-light.png",
+      "url": "https://demo.oimlsmart.org/app/portal/certificates/crt-acme-lc",
+      "theme": "light",
+      "performed": "opened the issued certificate R60/2021-A-EX1-26.01: the full OIML document with its serials, the dates, the ACTIVE state, and the downloads",
+      "capturedAt": "2026-09-01T03:43:21.262Z"
+    },
+    {
+      "flow": "applicant-journey",
+      "name": "verify-number",
+      "file": "applicant-journey/verify-number-light.png",
+      "url": "https://demo.oimlsmart.org/app/verify/",
+      "theme": "light",
+      "performed": "verified the certificate by number against the public register, no account: ACTIVE, the BIML registration record, the revocation and suspension checks",
+      "capturedAt": "2026-09-01T03:43:27.695Z"
+    },
+    {
+      "flow": "applicant-journey",
+      "name": "notifications",
+      "file": "applicant-journey/notifications-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/",
+      "theme": "dark",
+      "performed": "opened the notifications inbox: the stage events of the applicant's own applications, each with its reason",
+      "capturedAt": "2026-09-01T03:49:22.667Z"
+    },
+    {
+      "flow": "applicant-journey",
+      "name": "application-journey",
+      "file": "applicant-journey/application-journey-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/applications/app-acme-lc",
+      "theme": "dark",
+      "performed": "opened the worked-example application: the six-stage journey and the promise set with the per-claim verification status, never leaking the in-flight stores",
+      "capturedAt": "2026-09-01T03:51:26.758Z"
+    },
+    {
+      "flow": "applicant-journey",
+      "name": "certificate-view",
+      "file": "applicant-journey/certificate-view-dark.png",
+      "url": "https://demo.oimlsmart.org/app/portal/certificates/crt-acme-lc",
+      "theme": "dark",
+      "performed": "opened the issued certificate R60/2021-A-EX1-26.01: the full OIML document with its serials, the dates, the ACTIVE state, and the downloads",
+      "capturedAt": "2026-09-01T03:53:25.804Z"
+    },
+    {
+      "flow": "applicant-journey",
+      "name": "verify-number",
+      "file": "applicant-journey/verify-number-dark.png",
+      "url": "https://demo.oimlsmart.org/app/verify/",
+      "theme": "dark",
+      "performed": "verified the certificate by number against the public register, no account: ACTIVE, the BIML registration record, the revocation and suspension checks",
+      "capturedAt": "2026-09-01T03:53:31.439Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "issuance-form",
+      "file": "ia-evaluation/issuance-form-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/certificates/",
+      "theme": "light",
+      "performed": "opened the issuance form on the finalized evaluation: the certified scope from the verdicts, the scheme, the signing act, reviewed before the signature (not signed: the register story stays the seeded one)",
+      "capturedAt": "2026-09-01T04:01:04.105Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "tep-test-reports",
+      "file": "ia-evaluation/tep-test-reports-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/projects/app-acme-lc",
+      "theme": "light",
+      "performed": "the project's test reports card: the laboratory's submitted reports landed on the shared record, the IA notified",
+      "capturedAt": "2026-09-01T04:03:00.232Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "certificate-card",
+      "file": "ia-evaluation/certificate-card-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/projects/app-acme-lc",
+      "theme": "light",
+      "performed": "the project's certificate card: the issued certificate with its BIML registration record, the registration act's state on the hub",
+      "capturedAt": "2026-09-01T04:03:00.869Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "biml-inbox",
+      "file": "ia-evaluation/biml-inbox-light.png",
+      "url": "https://demo.oimlsmart.org/app/biml/",
+      "theme": "light",
+      "performed": "the BIML console: the registration inbox and the recently registered worked-example certificate (the register act as a first-class act)",
+      "capturedAt": "2026-09-01T04:03:24.100Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "public-register",
+      "file": "ia-evaluation/public-register-light.png",
+      "url": "https://demo.oimlsmart.org/app/register/",
+      "theme": "light",
+      "performed": "the public Certificate Register, no sign-in: the ACTIVE worked-example row anyone can read (market surveillance, buyers)",
+      "capturedAt": "2026-09-01T04:03:28.238Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "issuance-form",
+      "file": "ia-evaluation/issuance-form-dark.png",
+      "url": "https://demo.oimlsmart.org/app/ia/certificates/",
+      "theme": "dark",
+      "performed": "opened the issuance form on the finalized evaluation: the certified scope from the verdicts, the scheme, the signing act, reviewed before the signature (not signed: the register story stays the seeded one)",
+      "capturedAt": "2026-09-01T04:11:17.760Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "tep-test-reports",
+      "file": "ia-evaluation/tep-test-reports-dark.png",
+      "url": "https://demo.oimlsmart.org/app/ia/projects/app-acme-lc",
+      "theme": "dark",
+      "performed": "the project's test reports card: the laboratory's submitted reports landed on the shared record, the IA notified",
+      "capturedAt": "2026-09-01T04:13:15.766Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "certificate-card",
+      "file": "ia-evaluation/certificate-card-dark.png",
+      "url": "https://demo.oimlsmart.org/app/ia/projects/app-acme-lc",
+      "theme": "dark",
+      "performed": "the project's certificate card: the issued certificate with its BIML registration record, the registration act's state on the hub",
+      "capturedAt": "2026-09-01T04:13:16.396Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "biml-inbox",
+      "file": "ia-evaluation/biml-inbox-dark.png",
+      "url": "https://demo.oimlsmart.org/app/biml/",
+      "theme": "dark",
+      "performed": "the BIML console: the registration inbox and the recently registered worked-example certificate (the register act as a first-class act)",
+      "capturedAt": "2026-09-01T04:13:41.336Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "public-register",
+      "file": "ia-evaluation/public-register-dark.png",
+      "url": "https://demo.oimlsmart.org/app/register/",
+      "theme": "dark",
+      "performed": "the public Certificate Register, no sign-in: the ACTIVE worked-example row anyone can read (market surveillance, buyers)",
+      "capturedAt": "2026-09-01T04:13:45.122Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "tr-review",
+      "file": "ia-evaluation/tr-review-light.png",
+      "url": "https://demo.oimlsmart.org/app/ia/test-reports/trp-acme-lc",
+      "theme": "light",
+      "performed": "opened the worked example's test report as the IA: the sections with their provenance, the per-section review acts, the verdicts the model computed",
+      "capturedAt": "2026-09-01T04:57:15.749Z"
+    },
+    {
+      "flow": "ia-evaluation",
+      "name": "tr-review",
+      "file": "ia-evaluation/tr-review-dark.png",
+      "url": "https://demo.oimlsmart.org/app/ia/test-reports/trp-acme-lc",
+      "theme": "dark",
+      "performed": "opened the worked example's test report as the IA: the sections with their provenance, the per-section review acts, the verdicts the model computed",
+      "capturedAt": "2026-09-01T05:02:51.292Z"
+    }
+  ]
+}
