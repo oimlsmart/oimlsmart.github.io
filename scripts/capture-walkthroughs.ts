@@ -173,16 +173,19 @@ async function waitTestId(page: Page, testid: string) {
 /** The demo's entity-stream wedge: a page can settle its shell while the
  *  data preloads abort with the SSE stream (net::ERR_ABORTED on
  *  /api/entities/*), leaving the content skeleton forever. A reload
- *  re-subscribes and clears it. waitTestIdReload waits the short budget,
- *  reloads once, then waits the full one. */
+ *  re-subscribes; when the stream is sick the sync itself takes ~150s,
+ *  so the loop gives three reads at 90s before failing loudly. */
 async function waitTestIdReload(page: Page, testid: string) {
-  const found = await page.waitForSelector(`[data-testid="${testid}"]`, { timeout: 60_000 })
-    .then(() => true).catch(() => false)
-  if (found) return
-  console.log(`  · ${testid} never mounted (the stream wedge); reloading the page once`)
-  await page.reload({ waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT })
-  await waitIslandSettled(page)
-  await page.waitForSelector(`[data-testid="${testid}"]`, { timeout: SETTLE })
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const found = await page.waitForSelector(`[data-testid="${testid}"]`, { timeout: 90_000 })
+      .then(() => true).catch(() => false)
+    if (found) return
+    if (attempt === 2) break
+    console.log(`  · ${testid} never mounted (the stream wedge, attempt ${attempt + 1}); reloading`)
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT })
+    await waitIslandSettled(page)
+  }
+  throw new Error(`waitTestIdReload: ${testid} never mounted (three reads)`)
 }
 
 /** Wait for content, not just shell: the skeletons carry the testids, so
