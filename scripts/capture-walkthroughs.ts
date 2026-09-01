@@ -1764,7 +1764,10 @@ async function captureEvaluation(browser: Browser) {
           return { tr: trRes.ok, er: erRes.ok }
         })
         const trHref = seeded.tr ? '/app/ia/test-reports/trp-acme-lc' : null
-        const erHref = seeded.er ? '/app/ia/evaluations/app-acme-lc' : null
+        // The evaluation workspace resolves by APPLICATION id (the seeded
+        // evaluation's own id is eva-acme-lc); the workspace's own
+        // testids prove the mount, never the route alone.
+        const erHref = '/app/ia/evaluations/app-acme-lc'
 
         if ((wants('tr-review') || wants('review-period')) && trHref) {
           await gotoApp(page, trHref)
@@ -1790,12 +1793,15 @@ async function captureEvaluation(browser: Browser) {
         if ((wants('examinations') || wants('er-synopsis')) && erHref) {
           await gotoApp(page, erHref)
           await waitIslandSettled(page)
+          const erMounted = await page.waitForSelector('[data-testid="ia-examinations"]', { timeout: 90_000 })
+            .then(() => true).catch(() => false)
+          if (!erMounted) console.log('  · examinations: the seeded evaluation workspace never mounted — not captured')
           await waitSkeletonGone(page)
           await page.waitForTimeout(1000)
-          if (wants('examinations')) {
+          if (erMounted && wants('examinations')) {
             await shoot(page, 'ia-evaluation', 'examinations', theme, 'the evaluation workspace: the IA examinations with the pre-filled authority information (the binding machinery never asks twice)', { fullPage: true })
           }
-          if (wants('er-synopsis')) {
+          if (erMounted && wants('er-synopsis')) {
             const hasSynopsis = await page.evaluate(() => !!document.querySelector('[data-testid="ia-er-synopsis"]') || /synopsis/i.test(document.body.innerText))
             if (hasSynopsis) {
               await page.evaluate(() => {
