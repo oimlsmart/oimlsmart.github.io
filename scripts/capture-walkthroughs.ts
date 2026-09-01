@@ -1764,10 +1764,16 @@ async function captureEvaluation(browser: Browser) {
           return { tr: trRes.ok, er: erRes.ok }
         })
         const trHref = seeded.tr ? '/app/ia/test-reports/trp-acme-lc' : null
-        // The evaluation workspace resolves by APPLICATION id (the seeded
-        // evaluation's own id is eva-acme-lc); the workspace's own
-        // testids prove the mount, never the route alone.
-        const erHref = '/app/ia/evaluations/app-acme-lc'
+        // The evaluation workspace resolves by APPLICATION id. The
+        // drive's own evaluation (DRAFT, the examinations pre-filled and
+        // ready) is the honest subject; the seeded worked example's
+        // finalized workspace is the fallback.
+        let drivenApp = null
+        try {
+          const st = JSON.parse(readFileSync(STATE_FILE, 'utf8'))
+          drivenApp = st.appId ?? null
+        } catch { /* no drive state */ }
+        const erHref = drivenApp ? `/app/ia/evaluations/${encodeURIComponent(drivenApp)}` : '/app/ia/evaluations/app-acme-lc'
 
         if ((wants('tr-review') || wants('review-period')) && trHref) {
           await gotoApp(page, trHref)
