@@ -1756,14 +1756,11 @@ async function captureEvaluation(browser: Browser) {
         // hub's links are router.push buttons, never anchors; the seeded
         // ids are verified against the API first, honestly).
         const seeded = await page.evaluate(async () => {
-          const get = async (u) => {
-            const r = await fetch(u, { credentials: 'include' })
-            return r.ok
-          }
-          return {
-            tr: await get('/api/entities/testReports/trp-acme-lc'),
-            er: await get('/api/entities/evaluationReports/app-acme-lc'),
-          }
+          // No variable-assigned arrows in an evaluate: esbuild wraps them
+          // in its __name helper, undefined in the browser.
+          const trRes = await fetch('/api/entities/testReports/trp-acme-lc', { credentials: 'include' })
+          const erRes = await fetch('/api/entities/evaluationReports/app-acme-lc', { credentials: 'include' })
+          return { tr: trRes.ok, er: erRes.ok }
         })
         const trHref = seeded.tr ? '/app/ia/test-reports/trp-acme-lc' : null
         const erHref = seeded.er ? '/app/ia/evaluations/app-acme-lc' : null
