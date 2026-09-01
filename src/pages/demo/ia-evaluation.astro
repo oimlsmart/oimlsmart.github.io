@@ -1,0 +1,302 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import SmartSplit from '../../components/SmartSplit.astro'
+import ShotFigure from '../../components/ShotFigure.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
+import SimulatedNote from '../../components/demo-flows/SimulatedNote.astro'
+import FlowStep from '../../components/demo-flows/FlowStep.astro'
+import PresenterScript from '../../components/demo-flows/PresenterScript.astro'
+import WalkthroughPrintStyle from '../../components/demo-flows/WalkthroughPrintStyle.astro'
+
+// Flow 04 of the demo-flow walkthroughs (TODO.promotion/06): the IA's
+// evaluation, per the smart repo's DEMO_FLOWS/04-ia-evaluation.md. The
+// captures are produced by scripts/capture-walkthroughs.ts (the seeded
+// worked example's surfaces; the drive never issues or registers).
+const captured = '2026-09-01'
+---
+
+<Base
+  title="The evaluation and the certificate"
+  description="Demo-flow walkthrough 04: the issuing authority's evaluation. The test reports validated against the model, the review period with the participants' comments, the examinations and the computed verdict, the certificate signed at issue, and the BIML registration with the public register, with the exact demo accounts to try it and the presenter scripts."
+>
+  <WalkthroughPrintStyle />
+  <PageHero
+    eyebrow="The demo flows · 04"
+    title="The evaluation and the certificate"
+    lede="The laboratory's reports are in. The authority validates every row against the same model the laboratory ran, opens the review period for the participants' comments, composes the evaluation, and signs the certificate, which is then registered with the BIML and readable by anyone on the public register. The verdicts are computed, never hand-tallied."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl walkthrough-body">
+    <div class="max-w-3xl mb-12">
+      <SimulatedNote />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow now"
+        description="Sign in with the one-click Issuing Authority demo account for the evaluation and issuance, and the BIML Officer account for the registration. The public register and the verify page need no account at all."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The flow at a glance</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        Three seats: the authority's certification officer in <span class="font-mono text-sm">/app/ia</span>, the BIML officer in <span class="font-mono text-sm">/app/biml</span>, and anyone at the public register (no sign-in). The arc: the reports land, the validation, the review period, the examinations and the evaluation report, the issuance, the registration, the public row. The captures below show the demo's seeded worked example (the walkthrough's drive deliberately stops before issuance, so the register's story stays the seeded one).
+      </p>
+      <FlowDiagram
+        caption="FIG. THE EVALUATION"
+        steps={[
+          { label: 'Reports in', sub: 'via the project', accent: 'brand' },
+          { label: 'Validation', sub: 'rows vs the model', accent: 'teal' },
+          { label: 'Review period', sub: 'the comment round', accent: 'amber' },
+          { label: 'Certificate', sub: 'signed at issue', accent: 'brand' },
+          { label: 'Registered', sub: 'BIML + public', accent: 'slate' },
+        ]}
+        arrows={[
+          { label: 'computes', detail: 'never hand-tallied' },
+          { label: 'consults', detail: 'threads resolve' },
+          { label: 'signs', detail: 'the attributed act' },
+          { label: 'publishes', detail: 'anyone can check' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The walkthrough</h2>
+
+      <FlowStep
+        sid="S1"
+        title="The reports land on the shared record"
+        account="Issuing Authority"
+        console="/app/ia/projects/…"
+        live="https://demo.oimlsmart.org/app/ia"
+        page="ia-evaluation"
+        stem="tep-test-reports"
+        captured={captured}
+        alt="The evaluation project's test reports card: the laboratory's submitted reports on the shared record."
+      >
+        <p>
+          The laboratory's submission (flow 03, S6) does not arrive as an email attachment: it lands on the evaluation project's reports card, and the authority is notified. One project, one place to look. When every dispatched request stands fulfilled, the evaluation can begin.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S2"
+        title="Validate the evidence, section by section"
+        account="Issuing Authority"
+        console="/app/ia/test-reports/…"
+        live="https://demo.oimlsmart.org/app/ia"
+        page="ia-evaluation"
+        stem="tr-review"
+        captured={captured}
+        alt="The authority reviewing the test report: every section with its provenance, the per-section review acts, the verdicts the model computed."
+      >
+        <p>
+          This is the substantial model-driven work of the evaluation. Each test report opens section by section (two samples times the assigned forms in the walkthrough's example), every row carrying its provenance: which sample, which run, which reading. The acceptance rules are the Recommendation's own, and the derived verdicts are <strong>computed from the model, never hand-tallied</strong>. The officer reviews and passes each section with its evidence in view; a row that fails the model's rule says so, in the open.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S3"
+        title="The review period: the participants' comment round"
+        account="Issuing Authority"
+        console="/app/ia/test-reports/…"
+        live="https://demo.oimlsmart.org/app/ia"
+        captured={captured}
+      >
+        <p>
+          Before the report is accepted, the review period opens: the project's participants (the laboratory, the applicant) can raise comment threads on the report, the parties are notified, and the threads must resolve before the decision completes. An open thread refuses the finalization with the thread named. Consultation is no longer a side channel of phone calls; it is a first-class, cone-gated part of the record. This surface is the newest build in the flows program, and the seeded worked example's report predates it, so the step carries the live link: open the submitted report of the walkthrough's own drive (the laboratory's submission in flow 03) and the review-period panel stands there.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S4"
+        title="The examinations, pre-filled from the record"
+        account="Issuing Authority"
+        console="/app/ia/evaluations/…"
+        live="https://demo.oimlsmart.org/app/ia"
+        page="ia-evaluation"
+        stem="examinations"
+        captured={captured}
+        alt="The evaluation workspace: the authority's examinations with the application number and details pre-filled from the shared record."
+      >
+        <p>
+          The evaluation report's basic information pre-fills from what the applicant, the authority, and the laboratory already entered; the binding machinery never asks twice. The authority's own examinations (the authority information with the application number bound from the record, the synopsis, the inscriptions, the marking, the software, the documentation) are recorded from the workspace, each an act with its own evidence.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S5"
+        title="The synopsis composes; the verdict is computed"
+        account="Issuing Authority"
+        console="/app/ia/evaluations/…"
+        live="https://demo.oimlsmart.org/app/ia"
+        captured={captured}
+      >
+        <p>
+          The synopsis composes itself from the authority's section verdicts and the accepted reports. Re-executing the verdicts re-runs the model's arithmetic over the evidence (the arithmetic authority), and the suggested verdict is exactly what the model computes. The officer finalizes at the suggested verdict with the mandatory rationale: the decision is the authority's, and the record shows what it was computed from. Where the evidence is missing, the machinery says INDETERMINATE rather than guessing.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S6"
+        title="Issue the certificate: the attributed signing act"
+        account="Issuing Authority"
+        console="/app/ia/certificates"
+        live="https://demo.oimlsmart.org/app/ia/certificates"
+        page="ia-evaluation"
+        stem="issuance-form"
+        captured={captured}
+        alt="The issuance form on the finalized evaluation: the certified scope from the verdicts, the scheme choice, the signing key, reviewed before the signature."
+      >
+        <p>
+          The certificates desk lists the finalized evaluations ready to issue. The issuance form shows exactly what the signature will cover (the certified scope the evaluation's verdicts support, the scheme, the expiry, the remarks, the rendered preview) before the officer types the signer passphrase. The signature is the officer's attributed act over the organization's key, on the audit chain, and the certificate is CNML-signed at issue: data, not a scanned PDF. The walkthrough's capture stops at the form; the signing itself is the one act the scripted drive never performs, so the demo's register story stays the seeded one.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S7"
+        title="Register with the BIML"
+        account="BIML Officer"
+        console="/app/biml"
+        live="https://demo.oimlsmart.org/app/biml"
+        page="ia-evaluation"
+        stem="biml-inbox"
+        captured={captured}
+        alt="The BIML console: the registration inbox for pending certificates and the recently registered worked-example certificate."
+      >
+        <p>
+          From the project's certificate card the authority submits the certificate for BIML registration (PD-05 §6); it walks to PENDING_REGISTRATION and lands in the BIML officer's registration inbox. The officer reviews the particulars and the evidence chain and registers: the certificate is ACTIVE and the registration record feeds the public register. The scheme's recorded direction (decided by the program on 2026-08-28) is auto-publish on verified intake, the register's trust resting on the signature and receipt machinery with the human surfaces as read postures; the demo's single-instance posture today presents the officer's register act, and this page names both honestly.
+        </p>
+        <ShotFigure
+          section="walkthroughs"
+          page="ia-evaluation"
+          stem="certificate-card"
+          alt="The evaluation project's certificate card: the issued certificate with its BIML registration record on the shared hub."
+          source="https://demo.oimlsmart.org/app/ia"
+          captured={captured}
+        />
+      </FlowStep>
+
+      <FlowStep
+        sid="S8"
+        title="The public register: anyone can read it"
+        account="no account needed"
+        console="/app/register"
+        live="https://demo.oimlsmart.org/app/register"
+        page="ia-evaluation"
+        stem="public-register"
+        captured={captured}
+        alt="The public Certificate Register: the ACTIVE worked-example certificate readable by anyone, no sign-in."
+      >
+        <p>
+          The register's public face needs no sign-in: the ACTIVE certificate's number, dates, and status are readable by anyone (market surveillance, buyers, other authorities), per B 18:2025 §15.8. The number resolves against the BIML-registered copy, and the same public posture backs the verify page in <a href="/demo/applicant-journey" class="text-accent underline underline-offset-2">flow 05</a>. The certificate's loop is closed: applied, tested, evaluated, signed, registered, and publicly checkable.
+        </p>
+      </FlowStep>
+    </div>
+
+    <div class="max-w-3xl mb-12 presenter-scripts">
+      <div class="print-only">
+        <h1>The evaluation and the certificate (demo flow 04): the presenter scripts</h1>
+        <p>OIML SMART demo walkthrough, printed from www.oimlsmart.org/demo/ia-evaluation. Everything the scripts present is simulated: the demo instance resets nightly and the cast is fictional.</p>
+      </div>
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The presenter scripts</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        Two lengths, keyed to the steps above (S1 to S8). Print this page for a clean copy of the scripts.
+      </p>
+      <PresenterScript
+        minutes={5}
+        audience="the committee slot"
+        beats={[
+          { at: '0:00', text: 'The reports are in. This is the flow where the authority\'s judgment meets the model\'s arithmetic, and where the certificate is born as data. Simulated cast, nightly reset.' },
+          { at: '0:30', steps: 'S1-S2', text: 'The reports land on the shared record, and the validation reads them section by section, every row with its provenance, the verdicts computed from the model. Nobody tallies a spreadsheet here.' },
+          { at: '1:30', steps: 'S3', text: 'The review period: the laboratory and the applicant comment on the record, and an open thread blocks the decision. Consultation is part of the audit chain now.' },
+          { at: '2:15', steps: 'S4-S5', text: 'The evaluation report pre-fills from everything already entered; the synopsis composes; the suggested verdict is what the model computes, and the officer finalizes with the mandatory rationale.' },
+          { at: '3:15', steps: 'S6', text: 'The issuance: the scope, the preview, the passphrase. The signature is the officer\'s attributed act, and the certificate is signed data at the moment of issue.' },
+          { at: '4:00', steps: 'S7-S8', text: 'Registration: the BIML inbox, the register act, and the public register anyone can read without an account. The loop closes: applied, tested, evaluated, signed, registered, checkable.' },
+          { at: '4:40', text: 'Try it: the Issuing Authority and BIML Officer accounts, and the public register at /app/register with no account at all.' },
+        ]}
+      />
+      <PresenterScript
+        minutes={20}
+        audience="the working visit"
+        beats={[
+          { at: '0:00', text: 'Frame: evaluation is where liability lives, so this flow is built to show its working. The promise: every verdict shows what it was computed from. Simulated cast, nightly reset.' },
+          { at: '1:00', steps: 'S1', text: 'The reports card: the submissions land on the project, the authority is notified, and the evaluation waits for every dispatched request to be fulfilled.' },
+          { at: '3:00', steps: 'S2', text: 'The validation, in depth: the sections, the provenance per row, the acceptance rules as the Recommendation\'s own. Compute a verdict live: change nothing, re-execute, watch the model\'s arithmetic return the same answer. That reproducibility is the point.' },
+          { at: '5:30', steps: 'S2', text: 'The honesty cases: a row against the model\'s rule fails in the open; missing evidence reads INDETERMINATE, never a guess. The officer still decides; the machinery shows its working.' },
+          { at: '7:30', steps: 'S3', text: 'The review period: open a thread as a participant, resolve it, and show the refusal when one stands open. Consultation with a record, cone-gated so exactly the parties take part.' },
+          { at: '9:30', steps: 'S4', text: 'The examinations: the pre-filled authority information (the application number bound from the record), the inscriptions, the marking, the software, the documentation. Never asked twice is a design rule, not a courtesy.' },
+          { at: '11:30', steps: 'S5', text: 'The synopsis and the suggested verdict: the composition from the officer\'s own section verdicts, the re-execution as the arithmetic authority, the mandatory rationale at finalize. Judgment stays human; arithmetic stays the model\'s.' },
+          { at: '13:30', steps: 'S6', text: 'The issuance form: what the signature covers, reviewed before the passphrase. The attributed act, the org key, the audit chain, the CNML-signed artifact. Be explicit that the scripted drive never signs: the seeded certificate is the demo\'s register story.' },
+          { at: '15:30', steps: 'S7', text: 'The registration: the PENDING_REGISTRATION walk, the BIML inbox, the officer\'s act. Then the doctrine, honestly: the recorded decision is auto-publish on verified intake; the demo shows the human act today; the page names both.' },
+          { at: '17:30', steps: 'S8', text: 'The public register: no account, the number, the dates, the status. Then the verify page as the closer: anyone can check a certificate against the registered copy, with the revocation and suspension checks.' },
+          { at: '19:00', text: 'Questions. The usual: liability (the same Declaration, stronger evidence, never a wider act) and acceptance of other authorities\' work (the chain is verifiable; full cross-authority chain verification is the roadmap leg). Close on the try-it paths.' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Today (SMART) and the vision (SMART+)</h2>
+      <SmartSplit
+        today={[
+          { text: 'The per-report validation with computed verdicts, the review period with its resolution gate, the examinations, the composed synopsis.', href: 'https://demo.oimlsmart.org/app/ia', label: 'the IA console' },
+          { text: 'The issuance as the attributed signing act, the CNML-signed certificate, the BIML registration, the public register and verify page.', href: 'https://demo.oimlsmart.org/app/register', label: 'the register' },
+          { text: 'The certificate as verifiable data: the VC, SD-JWT, DPP, and AAS carrier forms on the same record.', href: '/technologies/cnml', label: 'the CNML page' },
+        ]}
+        vision={[
+          { text: 'Auto-publish on verified register intake (the recorded doctrine decision; the register\'s model carries it, the capstone wave lands the surface).', href: '/demo/audit-findings' },
+          { text: 'The twin-fed evaluation: evidence arriving from the instrument\'s twin between bench sessions (roadmap).', href: '/technologies/smart-twin' },
+          { text: 'Suspension and withdrawal propagated to every verifiable copy the moment the authority acts (roadmap).', href: '/technologies/trust-registry' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The honest questions</h2>
+      <div class="grid gap-4">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Who decides, the model or the officer?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The officer. The model computes the Recommendation's arithmetic and states what the evidence supports, including INDETERMINATE where evidence is missing. The review, the evaluation, the finalization with its mandatory rationale, and the signature are the authority's acts, recorded as theirs. The machinery's discipline is that it shows its working.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Does the BIML registration widen anyone's liability?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No. The registration is the act the scheme already requires (PD-05 §6); the platform makes it a signed, receipt-tracked submission instead of an emailed PDF. The published record is exactly what the authority signed and sent. The recorded auto-publish direction keeps the same trust basis (the signature and the receipt machinery) with the human surfaces as read postures, and it is named openly wherever it is described.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Can participants really comment on the record?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Yes: the review period opens at each report's finalization, the comment threads are cone-gated to the project's participants (and the scheme's oversight), everyone is notified, and an unresolved thread refuses the finalization with the thread named. The consultation is part of the audit chain, not a side channel.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Is the certificate still a PDF?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The human rendering exists and prints (the PDF never dies), but the certificate of record is signed data: schema-validated against the Recommendation, verifiable by anyone without an account, and carried in the VC, SD-JWT, DPP, and AAS forms for software consumers. The verification story is on the CNML technology page.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="/demo/applicant-journey"
+        label="Flow 05: the applicant's journey"
+        description="The same chain from the manufacturer's seat: the notifications, the progress, the certificate download, the public verification."
+      />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow on the demo"
+        description="The Issuing Authority account for the evaluation, the BIML Officer account for the registration, and /app/register with no account for the public face."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org for a working visit with your authority's certification officers."
+      />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified {captured}: every surface above was opened headlessly against the live demo by scripts/capture-walkthroughs.ts (the seeded worked example's report, evaluation, issuance form, BIML inbox, and public register; the scripted drive never signs or registers) and each capture carries its assertion record in public/img/walkthroughs/manifest.json. The step names and machine states match the engineering record (DEMO_FLOWS/04) in the smart repository; where the built posture differs from the flow text, the step says so (S7).
+      </p>
+    </div>
+  </section>
+</Base>
