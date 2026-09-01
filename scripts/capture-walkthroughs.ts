@@ -1790,7 +1790,10 @@ async function captureEvaluation(browser: Browser) {
             const res = await fetch('/api/entities/testReports', { credentials: 'include' })
             const list = await res.json()
             const rows = Array.isArray(list) ? list : (list.entities ?? list.items ?? [])
-            const open = rows.filter((r) => r.status === 'SUBMITTED')
+            // The issued state rides submitted_date (the status field
+            // stays DRAFT); the consultation gate stands while no review
+            // decision is recorded.
+            const open = rows.filter((r) => r.submitted_date && !r.review_decision && !r.decided_date)
             return open.length > 0 ? open[open.length - 1].id : null
           })
           if (drivenTr) {
