@@ -1568,6 +1568,24 @@ async function captureLoginAndGuided(browser: Browser) {
 async function captureWizard(browser: Browser) {
   if (!['wizard-recommendation', 'wizard-instrument', 'wizard-scheme-ia', 'wizard-stepper-jump', 'portal-draft'].some(wants)) return
   for (const theme of THEMES) {
+    // One retry per theme: the wizard rides the same wedged stream as
+    // every island page, and the draft store resumes a reload mid-fill.
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        await captureWizardTheme(browser, theme)
+        break
+      } catch (err) {
+        if (attempt === 1) {
+          console.error(`  ✗ wizard pass [${theme}] failed twice: ${(err as Error).message?.slice(0, 200)}`)
+        } else {
+          console.log(`  · wizard pass [${theme}] failed (${(err as Error).message?.slice(0, 120)}); one retry`)
+        }
+      }
+    }
+  }
+}
+
+async function captureWizardTheme(browser: Browser, theme: string) {
     currentTheme = theme
     const context = await themedContext(browser, theme)
     const page = await context.newPage()
@@ -1613,17 +1631,21 @@ async function captureWizard(browser: Browser) {
       await shoot(page, 'application', 'wizard-instrument', theme, 'picked the LC-500 family and a model in scope: the instrument step the R 60 model derives (the model-authored declaration form)')
     }
     if (wants('wizard-stepper-jump')) {
-      await page.evaluate(() => {
-        (document.querySelector('[data-testid="wizard-step-nav-1"]') as HTMLElement | null)?.click()
-      })
-      await page.waitForSelector('[data-testid="wizard-step-1"]', { timeout: SETTLE })
-      await page.waitForTimeout(900)
-      await shoot(page, 'application', 'wizard-stepper-jump', theme, 'jumped the stepper back to a reached step: the steps are individually navigable, the validation posture honest per step')
-      await page.evaluate(() => {
-        (document.querySelector('[data-testid="wizard-step-nav-3"]') as HTMLElement | null)?.click()
-      })
-      await page.waitForSelector('[data-testid="wizard-step-3"]', { timeout: SETTLE })
-      await page.waitForTimeout(900)
+      try {
+        await page.evaluate(() => {
+          (document.querySelector('[data-testid="wizard-step-nav-1"]') as HTMLElement | null)?.click()
+        })
+        await page.waitForSelector('[data-testid="wizard-step-1"]', { timeout: 60_000 })
+        await page.waitForTimeout(900)
+        await shoot(page, 'application', 'wizard-stepper-jump', theme, 'jumped the stepper back to a reached step: the steps are individually navigable, the validation posture honest per step')
+        await page.evaluate(() => {
+          (document.querySelector('[data-testid="wizard-step-nav-3"]') as HTMLElement | null)?.click()
+        })
+        await page.waitForSelector('[data-testid="wizard-step-3"]', { timeout: SETTLE })
+        await page.waitForTimeout(900)
+      } catch (err) {
+        console.log(`  · wizard-stepper-jump [${theme}]: the jump never settled (${(err as Error).message?.slice(0, 120)}) — not captured`)
+      }
     }
     await cont(4)
     await page.type('[data-testid="wizard-sample-serial"]', `SN-WALK-${DATE.replace(/-/g, '')}-${theme}`)
@@ -1641,7 +1663,7 @@ async function captureWizard(browser: Browser) {
       await waitText(page, 'My applications')
       await gotoApp(page, '/app/portal/applications/new')
       await waitTestId(page, 'portal-wizard')
-      const hasBanner = await page.waitForSelector('[data-testid="wizard-resume-banner"]', { timeout: 20_000 })
+      const hasBanner = await page.waitForSelector('[data-testid="wizard-resume-banner"]', { timeout: 60_000 })
         .then(() => true).catch(() => false)
       if (hasBanner) {
         await shoot(page, 'application', 'portal-draft', theme, 'left the wizard unsubmitted and returned: the resume banner offers the stored draft (leave and return, the fill round-trips)')
@@ -1656,7 +1678,6 @@ async function captureWizard(browser: Browser) {
       }
     }
     await context.close()
-  }
 }
 
 async function captureApplicantJourney(browser: Browser) {
