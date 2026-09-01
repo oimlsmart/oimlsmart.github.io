@@ -102,14 +102,10 @@ const captured = '2026-09-01'
         account="Issuing Authority"
         console="/app/ia/applications/…"
         live="https://demo.oimlsmart.org/app/ia"
-        page="ia-intake"
-        stem="reject-requires-reason"
-        dark={false}
         captured={captured}
-        alt="The rejection form refusing a reasonless reject: the reason is required (PD-05 §4.2.2), the form stays open."
       >
         <p>
-          Rejection is a first-class act, not a deletion. Try to reject without a reason and the act refuses: the scheme requires the reason (PD-05 §4.2.2), the form stays open, and nothing happens silently. With the reason typed, the rejection lands on the audit chain and the applicant is notified with the reason attached. The capture shows the refusal; the walkthrough's application survives it because the officer cancelled out, as the honest posture intends.
+          Rejection is a first-class act, not a deletion. Try to reject without a reason and the act refuses: the scheme requires the reason (PD-05 §4.2.2), the form stays open, and nothing happens silently. With the reason typed, the rejection lands on the audit chain and the applicant is notified with the reason attached. Try it on the demo: open any waiting application from the queue, choose Reject, and try to confirm empty; the warning names the clause.
         </p>
       </FlowStep>
 
