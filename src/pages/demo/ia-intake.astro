@@ -1,0 +1,300 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import SmartSplit from '../../components/SmartSplit.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
+import SimulatedNote from '../../components/demo-flows/SimulatedNote.astro'
+import FlowStep from '../../components/demo-flows/FlowStep.astro'
+import PresenterScript from '../../components/demo-flows/PresenterScript.astro'
+import WalkthroughPrintStyle from '../../components/demo-flows/WalkthroughPrintStyle.astro'
+
+// Flow 02 of the demo-flow walkthroughs (TODO.promotion/06): the IA's
+// intake, per the smart repo's DEMO_FLOWS/02-ia-intake.md. The captures
+// are produced by scripts/capture-walkthroughs.ts (the drive's IA legs).
+const captured = '2026-09-01'
+---
+
+<Base
+  title="The authority's intake: the queue, the review, the project"
+  description="Demo-flow walkthrough 02: the issuing authority's intake. The review queue, the honest reject-or-accept, the evaluation project as the shared dataspace, the samples, the test assignment on a matrix, the routing decision, with the exact demo account to try it and the presenter scripts."
+>
+  <WalkthroughPrintStyle />
+  <PageHero
+    eyebrow="The demo flows · 02"
+    title="The authority's intake"
+    lede="The application has landed. At the issuing authority it enters a review queue, not an inbox folder: reviewed, honestly rejected or accepted, and on acceptance it becomes the evaluation project, the shared dataspace the samples, the dispatch, the reports, and the certificate all live on. Twenty minutes to walk it yourself."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl walkthrough-body">
+    <div class="max-w-3xl mb-12">
+      <SimulatedNote />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow now"
+        description="Sign in with the one-click Issuing Authority demo account (no registration; the instance resets nightly) and the review queue below is yours."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The flow at a glance</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The actor is the authority's officer (Ms. Emily Irving of the Example Issuing Authority, EX1, a fictional authority) in the IA console at <span class="font-mono text-sm">/app/ia</span>. The arc: the queue, the review, the acceptance that opens the Type Evaluation Project (the TEP), the samples, the test assignment, the routing decision, and the send that lands the request in the laboratory's inbox, where <a href="/demo/tl-work" class="text-accent underline underline-offset-2">flow 03</a> begins.
+      </p>
+      <FlowDiagram
+        caption="FIG. THE INTAKE"
+        steps={[
+          { label: 'Review queue', sub: 'oldest first', accent: 'brand' },
+          { label: 'The review', sub: 'reject or accept', accent: 'amber' },
+          { label: 'Evaluation Project', sub: 'the shared dataspace', accent: 'teal' },
+          { label: 'Dispatch', sub: 'tests × samples × labs', accent: 'brand' },
+          { label: 'To the lab', sub: 'the routing decision', accent: 'slate' },
+        ]}
+        arrows={[
+          { label: 'opens', detail: 'the whole file' },
+          { label: 'creates', detail: 'one record' },
+          { label: 'assigns', detail: 'one request per lab' },
+          { label: 'sends', detail: 'custody recorded' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The walkthrough</h2>
+
+      <FlowStep
+        sid="S1"
+        title="The review queue, oldest first"
+        account="Issuing Authority"
+        console="/app/ia"
+        live="https://demo.oimlsmart.org/app/ia"
+        page="ia-intake"
+        stem="review-queue"
+        dark={false}
+        captured={captured}
+        alt="The IA console's review queue holding the waiting application, oldest first, with its Recommendation, applicant, and age."
+      >
+        <p>
+          The moment the applicant submits (flow 01, S6), the application appears here: the Recommendation it cites, the applicant, a summary, and how long it has waited. The queue is ordered oldest first, so nothing waits silently at the bottom of a pile. This is the authority's desk at its most honest: every application that needs a decision, visible, with its age on the row.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S2"
+        title="Open it: the whole file, and only the acts the state allows"
+        account="Issuing Authority"
+        console="/app/ia/applications/…"
+        live="https://demo.oimlsmart.org/app/ia"
+        page="ia-intake"
+        stem="review-whole-file"
+        dark={false}
+        captured={captured}
+        alt="The application review page: the applicant, the instrument chain, the documentation, the timeline, and the review acts the state machine currently allows."
+      >
+        <p>
+          One click and the whole file is there: the applicant, the instrument with its classified attributes, the samples declared, the documentation checklist as submitted, and the timeline of every act so far. The action bar offers exactly the acts the state machine allows at this moment (request samples, accept, reject), never a button the record would refuse. Nothing is re-typed anywhere in this flow: what the applicant bound in the wizard is what the officer reviews.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S3"
+        title="The honest reject: the reason is required"
+        account="Issuing Authority"
+        console="/app/ia/applications/…"
+        live="https://demo.oimlsmart.org/app/ia"
+        page="ia-intake"
+        stem="reject-requires-reason"
+        dark={false}
+        captured={captured}
+        alt="The rejection form refusing a reasonless reject: the reason is required (PD-05 §4.2.2), the form stays open."
+      >
+        <p>
+          Rejection is a first-class act, not a deletion. Try to reject without a reason and the act refuses: the scheme requires the reason (PD-05 §4.2.2), the form stays open, and nothing happens silently. With the reason typed, the rejection lands on the audit chain and the applicant is notified with the reason attached. The capture shows the refusal; the walkthrough's application survives it because the officer cancelled out, as the honest posture intends.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S4"
+        title="The samples: requested, shipped, received, before any acceptance"
+        account="Issuing Authority"
+        console="/app/ia/applications/…"
+        live="https://demo.oimlsmart.org/app/ia"
+        page="ia-intake"
+        stem="sample-request-form"
+        dark={false}
+        captured={captured}
+        alt="The sample request form on the review page: particulars typed, the decision acts honestly closed until the samples are received."
+      >
+        <p>
+          Type evaluation needs physical samples (PD-05 §4.3), so the officer issues the sample request from the review with its particulars. The applicant ships (their side of this act is in <a href="/demo/applicant-journey" class="text-accent underline underline-offset-2">flow 05</a>), the officer registers each arriving receipt with its serial and condition, and the accept act stays closed until the samples are received: the pre-acceptance sample stop, so no application is ever accepted on paper alone.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S5"
+        title="Accept: the Evaluation Project opens"
+        account="Issuing Authority"
+        console="/app/ia/projects/…"
+        live="https://demo.oimlsmart.org/app/ia"
+        page="ia-intake"
+        stem="accept-tep-hub"
+        dark={false}
+        captured={captured}
+        alt="The Evaluation Project hub after acceptance: one record linking the application, the samples, the test requests, the reports, the verdicts, and the certificate-to-be."
+      >
+        <p>
+          The accept is the pivot of the whole scheme. It creates the <strong>Evaluation Project</strong>, the shared dataspace every later act lives on: the application record, the samples, the laboratories, the test requests, the test reports, the evaluation, and at the end the certificate. The applicant gains the view of their project's record at this moment (the cone: their own project, the restricted fields honestly hidden), and the laboratory will join it on the accepted assignment in flow 03. One project, three parties, no parallel copies.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S6"
+        title="The fee agreement's evidence goes on the record"
+        account="Issuing Authority"
+        console="/app/ia/engagements"
+        live="https://demo.oimlsmart.org/app/ia/engagements"
+        captured={captured}
+      >
+        <p>
+          The fee negotiation between the authority and the applicant runs outside the system, as it does today: by email, by phone, by procurement. What the platform keeps is the <strong>evidence of the agreement</strong>: the signed contract or quotation uploads to the record as a document with its attested SHA-256, marked as the agreement's evidence, visible to exactly the parties and the scheme's oversight. Today the upload anchors on the pre-application engagement; the project-anchored upload (the agreement evidence on the Evaluation Project itself) is built and in review on the platform's integration branch, and this page will carry its capture when it ships. The doctrine never changes either way: the negotiation stays human, the evidence stays on the record.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S7"
+        title="Assign the tests on a matrix"
+        account="Issuing Authority"
+        console="/app/ia/dispatch/…"
+        live="https://demo.oimlsmart.org/app/ia"
+        page="ia-intake"
+        stem="dispatch-builder"
+        dark={false}
+        captured={captured}
+        alt="The dispatch builder: the test-forms by samples matrix with per-laboratory assignment, one test request composed for the Example Test Laboratory."
+      >
+        <p>
+          Which tests, on which samples, at which laboratory: the dispatch builder crosses the model's test forms with the samples selected for the evaluation (R 60-3 §4.7, the selection recorded with its justification) and assigns each cell to a laboratory. One test request is composed per laboratory, the plan names every assignment it makes, and out-of-round rows are reported, never silently dropped. The laboratory picker answers from the laboratories' scopes, so a request cannot land where it cannot be performed.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S8"
+        title="The routing decision, then send"
+        account="Issuing Authority"
+        console="/app/ia/projects/…"
+        live="https://demo.oimlsmart.org/app/ia"
+        page="ia-intake"
+        stem="custody-shipped"
+        dark={false}
+        captured={captured}
+        alt="The project's laboratories card: the selected samples shipped to the laboratory, the custody chain recording who shipped what."
+      >
+        <p>
+          The samples have to travel too, and the scheme is honest about who carries them: the authority ships them to the laboratory, or the applicant ships them directly. The decision is a recorded act on the project (who ships, with what custody), and the custody chain then tracks every hop: shipped, in transit, received at the bench. With the request issued and the samples in transit, the laboratory's inbox has the work, which is the first scene of <a href="/demo/tl-work" class="text-accent underline underline-offset-2">flow 03</a>.
+        </p>
+      </FlowStep>
+    </div>
+
+    <div class="max-w-3xl mb-12 presenter-scripts">
+      <div class="print-only">
+        <h1>The authority's intake (demo flow 02): the presenter scripts</h1>
+        <p>OIML SMART demo walkthrough, printed from www.oimlsmart.org/demo/ia-intake. Everything the scripts present is simulated: the demo instance resets nightly and the cast is fictional.</p>
+      </div>
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The presenter scripts</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        Two lengths, keyed to the steps above (S1 to S8). Print this page for a clean copy of the scripts.
+      </p>
+      <PresenterScript
+        minutes={5}
+        audience="the committee slot"
+        beats={[
+          { at: '0:00', text: 'The application the manufacturer submitted is now the authority\'s problem. Watch how an authority works when the file is one record instead of an email thread. Simulated cast, nightly reset.' },
+          { at: '0:30', steps: 'S1', text: 'The review queue: every application waiting on you, oldest first, with its age on the row. Nothing sinks.' },
+          { at: '1:15', steps: 'S2-S3', text: 'Open one: the whole file, and only the acts the state allows. And watch the reject: no reason, no rejection. The scheme\'s due process is enforced by the software, not by a procedure manual.' },
+          { at: '2:15', steps: 'S4', text: 'Samples first: the request, the shipment, the receipts, and the accept stays closed until the samples physically arrive. No paper acceptances.' },
+          { at: '3:00', steps: 'S5', text: 'Accept, and the Evaluation Project opens: one shared dataspace for the samples, the requests, the reports, the certificate-to-be. The applicant sees their project; the laboratory joins it on assignment.' },
+          { at: '3:45', steps: 'S7-S8', text: 'The dispatch: tests crossed with samples on a matrix, one request per laboratory, and the routing decision recorded (who ships the samples, with what custody). Send, and the laboratory has the work.' },
+          { at: '4:30', text: 'Try it: the Issuing Authority account on demo.oimlsmart.org, /app/ia. The queue is real work you can do.' },
+        ]}
+      />
+      <PresenterScript
+        minutes={20}
+        audience="the working visit"
+        beats={[
+          { at: '0:00', text: 'Frame: this is the authority\'s own desk, the console an IA officer would live in. The promise: by the end the room believes intake is a workflow, not a correspondence. Simulated cast, nightly reset.' },
+          { at: '1:00', steps: 'S1', text: 'The queue: ordering, aging, the summary. Contrast with the shared mailbox. Ask how applications are triaged today and who knows what is waiting.' },
+          { at: '3:00', steps: 'S2', text: 'The whole file: the instrument chain as bound by the model, the checklist as submitted, the timeline. Point at the action bar: the state machine offers only the acts the record allows, which is the end of invalid-state mistakes.' },
+          { at: '5:00', steps: 'S3', text: 'Perform the reject posture: open the form, try to confirm empty, watch the refusal name PD-05 §4.2.2. The reason is required, it lands on the audit chain, the applicant is notified with it. Due process as software behavior.' },
+          { at: '7:00', steps: 'S4', text: 'The sample leg: the request with particulars, the applicant\'s shipment act, the receipts registered with serial and condition, and the pre-acceptance stop. The physical world is tracked with the same rigor as the data.' },
+          { at: '9:30', steps: 'S5', text: 'The accept: the Evaluation Project as the shared dataspace. Walk the hub cards. The cone: the applicant views their project now, restricted fields hidden; the laboratory joins on assignment. One record, three parties, no copies to reconcile.' },
+          { at: '12:00', steps: 'S6', text: 'The fee evidence: the negotiation stays outside the system (as today), the agreement document goes on the record with its attested hash, visible to exactly the parties. Be honest about the current anchor (the engagement) and the project-anchored upload in review.' },
+          { at: '14:00', steps: 'S7', text: 'The dispatch builder in depth: the test set comes from the model\'s conformance classes, the matrix crosses forms with the selected samples, one request per laboratory. Change the Recommendation and the test set changes; the authority cannot dispatch a test the Recommendation does not declare.' },
+          { at: '16:30', steps: 'S8', text: 'The routing decision and the custody chain: who ships, tracked hops, received at the bench. Then send, and preview the laboratory\'s inbox for flow 03.' },
+          { at: '18:30', text: 'Questions. The usual two: liability (the platform does digitally what the authority does today; the decision and the signature stay human) and partial adoption (records mode for paper, covered on the audience pages). Close on the try-it path.' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Today (SMART) and the vision (SMART+)</h2>
+      <SmartSplit
+        today={[
+          { text: 'The review queue, the whole-file review, the reasoned reject, the samples gate, the acceptance that opens the Evaluation Project.', href: 'https://demo.oimlsmart.org/app/ia', label: 'the IA console' },
+          { text: 'The dispatch builder: the model\'s test set crossed with the selected samples, one request per laboratory, the routing decision recorded.', href: 'https://demo.oimlsmart.org/app/ia', label: 'see it live' },
+          { text: 'The agreement-evidence doctrine: the negotiation outside, the attested document on the record (the project-anchored upload in review).', href: 'https://demo.oimlsmart.org/app/ia/engagements', label: 'the engagements' },
+        ]}
+        vision={[
+          { text: 'The completion gate\'s surface on the project: settle-first completion with the named open items (in review on the integration branch; the audit page tracks it).', href: '/demo/audit-findings' },
+          { text: 'Cross-authority evaluation intake: verifying another authority\'s evidence chain cryptographically instead of trusting letterhead (roadmap).', href: '/technologies/dataspace-interop' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The honest questions</h2>
+      <div class="grid gap-4">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Does the platform decide for the authority?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No. The review, the acceptance, the assignment, and every rejection are human acts, recorded as such with the officer's name. The software's discipline is narrower: it refuses invalid acts (the reasonless reject, the acceptance before the samples) and it never lets work wait invisibly.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">What does the applicant see of all this?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Their own project, per the cone: the record of their application and its stages, with the authority's internal fields honestly hidden. They are notified at every stage. The cone is the mechanism that makes one shared dataspace safe: everybody sees exactly what the scheme entitles them to, no more.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Can a dispatch be wrong?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The test set comes from the Recommendation's model, so the builder cannot offer a test the Recommendation does not declare, and the laboratory picker filters by scope. What remains is judgment: which samples, which laboratory. That judgment is the officer's, and the record carries it with the justification.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Is the negotiation really outside the system?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Yes, deliberately: fees are commercial and the scheme does not fix them. What the record holds is the evidence that agreement was reached (the attested document, the parties-only visibility), so the audit chain never depends on someone's inbox. The completion doctrine later refuses to close a project with fees unmarked; flow 05 tells that half.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="/demo/tl-work"
+        label="Flow 03: the laboratory's work"
+        description="The request lands at the bench: the acceptance that joins the dataspace, the model-driven test runs, the test report."
+      />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow on the demo"
+        description="The one-click Issuing Authority account, then /app/ia. The review queue, the dispatch, the whole desk."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org for a working visit with your authority's officers."
+      />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified {captured}: every step above was performed headlessly against the live demo by scripts/capture-walkthroughs.ts (one real application reviewed, sampled, accepted, and dispatched in the drive; the reject posture proven and cancelled) and each capture carries its assertion record in public/img/walkthroughs/manifest.json. The step names and machine states match the engineering record (DEMO_FLOWS/02) in the smart repository; where the built shape differs from the flow text, the step says so (S6).
+      </p>
+    </div>
+  </section>
+</Base>
