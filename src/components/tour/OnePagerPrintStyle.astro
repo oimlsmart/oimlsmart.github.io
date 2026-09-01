@@ -1,0 +1,64 @@
+---
+/**
+ * OnePagerPrintStyle.astro — the print stylesheet for the per-audience
+ * one-pagers (TODO.promotion/07: the CIML leave-behind). Printing a
+ * one-pager yields exactly one sheet: the site chrome hides, the hero
+ * compacts to a header line, the prose tightens to sheet type, and the
+ * screen-only entitlement quote folds to a pointer line (the full
+ * quoted row stays on screen, where there is no page budget; the sheet
+ * points at the single source instead). The page wraps its sheet in
+ * .one-pager-sheet and its screen-only extras in .one-pager-screen.
+ */
+---
+
+<style is:global>
+  .one-pager-print-only { display: none; }
+  @media print {
+    @page { margin: 1.4cm; }
+    body > *:not(main) { display: none !important; }
+    main .bp-noise > *:not(.prose-enhanced) { display: none !important; }
+    main .bp-ticks { display: none !important; }
+    .prose-enhanced {
+      max-width: none !important;
+      padding: 0 !important;
+      font-size: 9.5pt !important;
+      line-height: 1.45 !important;
+    }
+    .prose-enhanced .one-pager-print-only { display: block !important; }
+    .prose-enhanced .one-pager-screen { display: none !important; }
+    .prose-enhanced h1.one-pager-title {
+      font-size: 15pt !important;
+      margin: 0 0 2pt !important;
+      padding: 0 !important;
+    }
+    .prose-enhanced h1.one-pager-title::before { display: none !important; }
+    .prose-enhanced .one-pager-kicker {
+      font-size: 7.5pt !important;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #555;
+      margin: 0 0 6pt !important;
+    }
+    .prose-enhanced h2 {
+      font-size: 10pt !important;
+      margin: 8pt 0 3pt !important;
+      padding: 0 !important;
+    }
+    .prose-enhanced h2::before { display: none !important; }
+    .prose-enhanced p, .prose-enhanced li {
+      font-size: 9.5pt !important;
+      line-height: 1.45 !important;
+      margin: 0 0 4pt !important;
+    }
+    .prose-enhanced ul { margin: 0 0 4pt !important; padding-left: 14pt !important; }
+    .prose-enhanced li { margin: 0 0 1.5pt !important; }
+    .prose-enhanced .one-pager-foot {
+      border-top: 1px solid #999;
+      margin-top: 8pt !important;
+      padding-top: 4pt;
+      font-size: 7.5pt !important;
+      color: #444;
+    }
+    .prose-enhanced .one-pager-foot p { font-size: 7.5pt !important; margin: 0 0 2pt !important; }
+  }
+</style>
