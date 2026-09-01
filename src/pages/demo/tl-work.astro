@@ -1,0 +1,269 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import SmartSplit from '../../components/SmartSplit.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
+import SimulatedNote from '../../components/demo-flows/SimulatedNote.astro'
+import FlowStep from '../../components/demo-flows/FlowStep.astro'
+import PresenterScript from '../../components/demo-flows/PresenterScript.astro'
+import WalkthroughPrintStyle from '../../components/demo-flows/WalkthroughPrintStyle.astro'
+
+// Flow 03 of the demo-flow walkthroughs (TODO.promotion/06): the TL's
+// work, per the smart repo's DEMO_FLOWS/03-tl-work.md. The captures are
+// produced by scripts/capture-walkthroughs.ts (the drive's TL legs).
+const captured = '2026-09-01'
+---
+
+<Base
+  title="The laboratory's work: the queue, the runs, the report"
+  description="Demo-flow walkthrough 03: the test laboratory's work. The dispatch inbox, the acceptance that joins the evaluation project's dataspace, the model-driven test runs with per-step evidence, and the test report that accounts for every required form, with the exact demo account to try it and the presenter scripts."
+>
+  <WalkthroughPrintStyle />
+  <PageHero
+    eyebrow="The demo flows · 03"
+    title="The laboratory's work"
+    lede="The authority's dispatch lands at the bench. The laboratory reviews, accepts, and joins the evaluation project's dataspace; the test runs walk the Recommendation's declared procedure step by step, evidence captured as the work happens; and the test report accounts for every required form before it can be submitted. This is the flow where the model does the heavy lifting."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl walkthrough-body">
+    <div class="max-w-3xl mb-12">
+      <SimulatedNote />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow now"
+        description="Sign in with the one-click Test Laboratory demo account (no registration; the instance resets nightly) and the dispatch inbox below is yours. Petra Horvat and Martin Berger are the laboratory's named operators if you want the operator's own seat."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The flow at a glance</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The actor is the laboratory's operator (Ms. Petra Horvat and Mr. Martin Berger of the Example Test Laboratory, ETL, a fictional laboratory) in the lab workbench at <span class="font-mono text-sm">/app/lab</span>. The arc: the inbox, the accept that joins the dataspace, the samples received at the bench, the model-driven runs, the test report submitted back to the authority, where <a href="/demo/ia-evaluation" class="text-accent underline underline-offset-2">flow 04</a> picks it up.
+      </p>
+      <FlowDiagram
+        caption="FIG. THE BENCH WORK"
+        steps={[
+          { label: 'The inbox', sub: 'the request lands', accent: 'brand' },
+          { label: 'Accept + join', sub: 'the dataspace opens', accent: 'teal' },
+          { label: 'The runs', sub: 'model-driven, per sample', accent: 'amber' },
+          { label: 'The report', sub: 'every form accounted', accent: 'slate' },
+        ]}
+        arrows={[
+          { label: 'reviews', detail: 'decline wants the reason' },
+          { label: 'performs', detail: 'the declared procedure' },
+          { label: 'submits', detail: 'the completeness gate' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The walkthrough</h2>
+
+      <FlowStep
+        sid="S1"
+        title="The dispatch inbox: the request lands"
+        account="Test Laboratory"
+        console="/app/lab"
+        live="https://demo.oimlsmart.org/app/lab"
+        page="tl-work"
+        stem="lab-inbox-incoming"
+        dark={false}
+        captured={captured}
+        alt="The laboratory's inbox with the dispatched request in the incoming bucket: the project, the subject, the assigned tests."
+      >
+        <p>
+          The authority's send (flow 02, S8) lands here, in the incoming bucket of the laboratory's workbench: the request with its project, the subject instrument, the assigned test forms, and the samples on their way. The laboratory sees only what the scheme shares: the request and its context, not the authority's whole desk.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S2"
+        title="Review: the decline wants a reason, the accept joins the dataspace"
+        account="Test Laboratory"
+        console="/app/lab/requests/…"
+        live="https://demo.oimlsmart.org/app/lab"
+        page="tl-work"
+        stem="request-open"
+        dark={false}
+        captured={captured}
+        alt="The test request opened at the laboratory: the assigned forms, the samples, and the accept and decline acts."
+      >
+        <p>
+          The laboratory's review mirrors the authority's: two honest outcomes. Decline, and the reason is required, audited, and the authority is notified. Accept, and the laboratory <strong>joins the evaluation project's dataspace</strong>: the working panels reveal with the chain context (the authority, the applicant, the instrument, the request) shared per the laboratory's cone. The record of who joined what, and when, is the audit chain doing its job.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S3"
+        title="The laboratory's own view of the shared project"
+        account="Test Laboratory"
+        console="/app/lab/projects/…"
+        live="https://demo.oimlsmart.org/app/lab"
+        page="tl-work"
+        stem="project-view-cone"
+        dark={false}
+        captured={captured}
+        alt="The laboratory's scoped view of the evaluation project: the instrument and the samples shared, the evaluation workspace absent."
+      >
+        <p>
+          The joined laboratory reads the shared project through its cone: the instrument and its characteristics, the laboratory's own samples and assignments, the shared context. What is honestly absent is the authority's evaluation workspace; the laboratory never sees the verdicts being formed against its own work. The cone is what makes one shared record safe for three parties. (The built shape, named honestly: the test project the laboratory works is created by the authority's dispatch, one per laboratory; the laboratory's first act is the acceptance, not the creation.)
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S4"
+        title="The samples arrive at the bench"
+        account="Test Laboratory"
+        console="/app/lab/requests/…"
+        live="https://demo.oimlsmart.org/app/lab"
+        page="tl-work"
+        stem="samples-received"
+        dark={false}
+        captured={captured}
+        alt="The laboratory receiving the samples: the first registered with dimensions and photograph, the custody chain closed at the bench."
+      >
+        <p>
+          The custody chain ends at the bench: the laboratory registers the receipt of each shipped sample (the first with the full registration: serial, dimensions, photograph; the rest with the bare received mark) and the samples stand ready. The work's start stays closed while any sample is in transit, so testing never begins on samples that have not physically arrived.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S5"
+        title="The runs walk the declared procedure"
+        account="Test Laboratory"
+        console="/app/lab/run/…"
+        live="https://demo.oimlsmart.org/app/lab"
+        page="tl-work"
+        stem="run-wizard"
+        dark={false}
+        captured={captured}
+        alt="The model-driven test run: the step wizard walks the declared procedure, the header tooltip reads the test's purpose and clause from the model."
+      >
+        <p>
+          This is the substantial model-driven work. Open an assignment and the run's step wizard walks the test's <strong>declared procedure from the model</strong>: each step in the order the Recommendation declares (the MDLO-first sequence is the model's own gate, R 60-2 2.10/2.11), each parameter defined by the model, each acceptance criterion read from it. The header's tooltip is the proof: it quotes the test's purpose and clause from the conformance model, never hand-written text. Every step's evidence is recorded as the work happens, onto the attested record. Where a simulated instrument is bound (the SST), the twin's read prefills the record; without one the same run completes with manual entry, honestly.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S6"
+        title="The report accounts for everything, then submits"
+        account="Test Laboratory"
+        console="/app/lab/reports/…"
+        live="https://demo.oimlsmart.org/app/lab"
+        page="tl-work"
+        stem="report-composer-gate"
+        dark={false}
+        captured={captured}
+        alt="The test report composer: every remaining required form carries a justified omission, the signature acknowledgment is the named last blocker."
+      >
+        <p>
+          The test report is drafted first (before any run: the runs backfill the standing draft), and it cannot submit until it is complete. The completeness gate names what stands open: every run completed against its sample, every remaining required form carrying a <strong>justified omission</strong> (not applicable to this type evaluation, with the reason recorded), the signer's position given, the signature acknowledgment ticked. Only then does the report lock and travel to the authority through the shared project, landing in <a href="/demo/ia-evaluation" class="text-accent underline underline-offset-2">flow 04</a>. A measured value outside the limits is never refused at the bench; it is recorded honestly and judged at the evaluation, by the verdict machinery, in the open.
+        </p>
+      </FlowStep>
+    </div>
+
+    <div class="max-w-3xl mb-12 presenter-scripts">
+      <div class="print-only">
+        <h1>The laboratory's work (demo flow 03): the presenter scripts</h1>
+        <p>OIML SMART demo walkthrough, printed from www.oimlsmart.org/demo/tl-work. Everything the scripts present is simulated: the demo instance resets nightly and the cast is fictional.</p>
+      </div>
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The presenter scripts</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        Two lengths, keyed to the steps above (S1 to S6). Print this page for a clean copy of the scripts.
+      </p>
+      <PresenterScript
+        minutes={5}
+        audience="the committee slot"
+        beats={[
+          { at: '0:00', text: 'Now the bench. The authority dispatched the work; the laboratory is where the Recommendation stops being text and becomes a procedure the software walks. Simulated cast, nightly reset.' },
+          { at: '0:30', steps: 'S1', text: 'The dispatch inbox: the request with its tests and its samples, landed from the authority\'s send.' },
+          { at: '1:15', steps: 'S2-S3', text: 'Accept, and the laboratory joins the shared project: the instrument, the samples, the assignments. What it does not see is the authority\'s evaluation workspace; the cone keeps three parties honest on one record.' },
+          { at: '2:15', steps: 'S4', text: 'The samples: received at the bench, custody closed. Testing cannot start on samples still in transit.' },
+          { at: '2:45', steps: 'S5', text: 'The run: the step wizard walks the procedure the R 60 model declares, in the model\'s own order, and this tooltip quotes the test\'s purpose and clause from the model itself. Evidence is captured as the work happens, not reassembled after.' },
+          { at: '4:00', steps: 'S6', text: 'The report: drafted first, backfilled by the runs, and it cannot submit until every required form is performed or carries a justified omission. Then it locks and goes to the authority.' },
+          { at: '4:40', text: 'Try it: the Test Laboratory account on demo.oimlsmart.org, /app/lab. Run one test yourself; the wizard carries you.' },
+        ]}
+      />
+      <PresenterScript
+        minutes={20}
+        audience="the working visit"
+        beats={[
+          { at: '0:00', text: 'Frame: this flow is where the model earns its keep. Laboratories do not need another portal; they need the procedure, the evidence discipline, and no re-typing. Simulated cast, nightly reset.' },
+          { at: '1:00', steps: 'S1-S2', text: 'The inbox and the review: the decline-with-reason posture mirrors the authority\'s. Accept, and read the chain context aloud: the authority, the applicant, the instrument, the request. One record.' },
+          { at: '3:00', steps: 'S3', text: 'The cone, demonstrated: the laboratory\'s project view shows the instrument and its own samples, and the evaluation workspace is absent. Name the built shape honestly: the test project is created by the dispatch, the laboratory\'s first act is the acceptance.' },
+          { at: '5:00', steps: 'S4', text: 'The custody chain\'s end: the full registration on the first sample (serial, dimensions, photograph), the bare mark on the rest, and the start gate while anything is in transit.' },
+          { at: '6:30', steps: 'S5', text: 'The run, in depth: open the wizard, walk a step, record an observation. The procedure, the parameters, and the acceptance criteria all come from the model; the MDLO-first order is the model\'s declared sequence (R 60-2 2.10/2.11), not a UI preference.' },
+          { at: '9:00', steps: 'S5', text: 'The tooltip: open it and read the clause. Every guidance text on this surface derives from the model, so a laboratory in two countries reads the same procedure for the same Recommendation.' },
+          { at: '11:00', steps: 'S5', text: 'The honesty about verdicts: a measured value outside the MPE is recorded, not refused at the bench. Setup constraints refuse (you cannot run the wrong sequence); the verdict belongs to the evaluation, computed at flow 04, never to a red box mid-run.' },
+          { at: '13:00', steps: 'S5', text: 'The simulated-instrument option: where the SST is bound, the twin\'s read prefills the attested record. Without it the same run completes by hand. This is the SMART+ rehearsal, and it is labeled as such; the walkthrough claims nothing future as present.' },
+          { at: '15:00', steps: 'S6', text: 'The report composer: the draft-first order, the completeness gate naming the unrun assignments, the justified omissions (PD-05: the report accounts for every required form), the signature acknowledgment.' },
+          { at: '17:30', steps: 'S6', text: 'Submit: the report locks and lands on the authority\'s project with the notification. Preview flow 04: the authority now validates this evidence against the same model the laboratory ran.' },
+          { at: '18:45', text: 'Questions. The usual: calibration status (the laboratory\'s own scopes govern what it can accept) and twin binding (roadmap-tier, shown as rehearsal only). Close on the try-it path: the Test Laboratory account, /app/lab.' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Today (SMART) and the vision (SMART+)</h2>
+      <SmartSplit
+        today={[
+          { text: 'The dispatch inbox, the reasoned decline, the acceptance that joins the project dataspace per the TL cone.', href: 'https://demo.oimlsmart.org/app/lab', label: 'the workbench' },
+          { text: 'The model-driven runs: the declared procedure as a step wizard, per-step evidence, the model-fed tooltips, the attested record.', href: 'https://demo.oimlsmart.org/app/lab', label: 'run a test' },
+          { text: 'The completeness-gated report: justified omissions, the signature acknowledgment, the locked submission to the authority.', href: 'https://demo.oimlsmart.org/app/lab/test-reports', label: 'the reports' },
+        ]}
+        vision={[
+          { text: 'The SST-bound run: the simulated instrument\'s twin read prefilling the attested record and driving the chamber (roadmap-tier; piloted on the demo as rehearsal).', href: '/technologies/sst' },
+          { text: 'Signed measurements: the run\'s evidence signed at the instrument, verifiable by the authority without re-trust (roadmap).', href: '/technologies/smart-twin' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The honest questions</h2>
+      <div class="grid gap-4">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Does the software judge the measurements?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">At the bench, no: the run records the evidence and enforces the procedure's setup constraints (order, parameters), and a value outside the limits is recorded honestly. The verdict is computed at the evaluation (flow 04) from the same model, in the open, by the authority's machinery. The laboratory performs; the authority evaluates.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">What keeps a report honest?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The completeness gate: every assigned run accounted for, every required form either performed or carrying a justified omission with its reason, the signer's position, and the signature acknowledgment. The report locks at submission, so what the authority reviews is exactly what the laboratory signed.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Our laboratory already has a LIMS. Is this a replacement?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No: it is the scheme-facing half of the work. The request, the shared project, the model-driven procedure, and the report the authority can compute against are what the platform carries; the laboratory's internal systems stay internal. The records-mode bridge (register a report performed offline, honestly marked) exists for the transition.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Is the simulated instrument required?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No. Where a twin is bound, its read prefills the record as a rehearsal of the SMART+ tier; the same run completes with manual entry and says so. The walkthrough's claims stand without the simulator, and the pages never present the rehearsal as a shipped capability.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="/demo/ia-evaluation"
+        label="Flow 04: the evaluation and the certificate"
+        description="The report's other side: the authority validates the evidence against the model, runs the review period, and issues the certificate."
+      />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow on the demo"
+        description="The one-click Test Laboratory account, then /app/lab. The named operators (Petra Horvat, Martin Berger) are the operator seats."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org for a working visit with your laboratory's team."
+      />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified {captured}: every step above was performed headlessly against the live demo by scripts/capture-walkthroughs.ts (one real assignment accepted, samples received, runs completed, and a report submitted in the drive) and each capture carries its assertion record in public/img/walkthroughs/manifest.json. The step names and machine states match the engineering record (DEMO_FLOWS/03) in the smart repository; where the built shape differs from the flow text, the step says so (S3, S6).
+      </p>
+    </div>
+  </section>
+</Base>
