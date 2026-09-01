@@ -1805,6 +1805,15 @@ async function captureEvaluation(browser: Browser) {
           if (drivenTr) {
             await gotoApp(page, `/app/ia/test-reports/${encodeURIComponent(drivenTr)}`)
             await waitIslandSettled(page)
+            // The review period opens by the IA's explicit act (the
+            // ia_opens_consultation transition): perform it, then the
+            // panel renders.
+            const openAct = await page.evaluate(() => {
+              const b = document.querySelector('[data-testid="ia-tr-open-consultation"]') as HTMLElement | null
+              if (b) { b.click(); return true }
+              return false
+            })
+            if (openAct) await page.waitForTimeout(2000)
             const consultation = await page.waitForSelector('[data-testid="ia-tr-consultation"], [data-testid="ia-tr-consultation-gate"]', { timeout: 90_000 })
               .then(() => true).catch(() => false)
             if (consultation) {
