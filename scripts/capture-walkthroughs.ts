@@ -1098,6 +1098,7 @@ async function driveChain(browser: Browser) {
       await gotoApp(page, `/app/ia/applications/${encodeURIComponent(appId!)}`)
       await waitTestId(page, 'ia-review-actions')
       await waitSkeletonGone(page)
+      await waitTestIdReload(page, 'ia-reject')
       await clickTestId(page, 'ia-reject')
       await waitTestId(page, 'ia-rejection-input')
       await clickTestId(page, 'ia-confirm-reject')
