@@ -241,10 +241,24 @@ async function smartFill(page: Page, inputTestid: string) {
       placeholder: el.placeholder ?? '',
       value: el.value ?? '',
       type: el.getAttribute('type') ?? 'text',
+      tag: el.tagName,
     }
   }, inputTestid)
   if (!hint) return
   if (hint.value.trim() !== '') return // a bound/typed value already fills it
+  if (hint.tag === 'SELECT') {
+    // A boolean/enum slot chooses: prefer the affirmative option, else the
+    // first non-empty one.
+    await page.evaluate((id) => {
+      const sel = document.querySelector(`[data-testid="${id}"]`) as HTMLSelectElement
+      const opt = Array.from(sel.options).find(o => o.value === 'true') ?? Array.from(sel.options).find(o => o.value)
+      if (opt) {
+        sel.value = opt.value
+        sel.dispatchEvent(new Event('change', { bubbles: true }))
+      }
+    }, inputTestid)
+    return
+  }
   const hay = `${hint.text} ${hint.placeholder}`
   let value = ''
   if (hint.placeholder.trim() !== '' && !/json|record as text/i.test(hint.placeholder)) {
@@ -1295,6 +1309,56 @@ async function driveChain(browser: Browser) {
           const alreadyCompleted = await page.evaluate(() => !!document.querySelector('[data-testid="lab-run-completed"]'))
           if (alreadyCompleted) continue
           await page.waitForSelector('[data-testid="evidence-row-overall_result"]', { timeout: SETTLE })
+          // The documentation run carries its own two-step wizard (the live
+          // page's gate: the procedure is not finished until both steps are
+          // done — the run-marks leg's flat recipe predates the wizard). Do
+          // the steps first, the generic per-kind drive.
+          for (let step = 1; step <= 12; step++) {
+            const hasNav = await page.evaluate((st) => !!document.querySelector(`[data-testid="wizard-step-${st}"]`), step)
+            if (!hasNav) break
+            await clickTestId(page, `wizard-step-${step}`)
+            await page.waitForTimeout(600)
+            const kind = await page.evaluate((st) => {
+              if (document.querySelector(`[data-testid="wizard-observation-record-${st}"]`)) return 'observation'
+              if (document.querySelector('[data-testid^="wizard-slot-record-"]')) return 'slot'
+              if (document.querySelector(`[data-testid="wizard-step-done-${st}"]`)) return 'done'
+              if (document.querySelector(`[data-testid="wizard-step-${st}"]`)?.getAttribute('data-state') === 'done') return 'complete'
+              return 'unknown'
+            }, step)
+            if (kind === 'complete') continue
+            if (kind === 'unknown') break
+            if (kind === 'observation') {
+              const hasInput = await page.evaluate((st) => !!document.querySelector(`[data-testid="wizard-observation-input-${st}"]`), step)
+              if (hasInput) await smartFill(page, `wizard-observation-input-${step}`)
+              await recordAct(page, `wizard-observation-record-${step}`)
+            } else if (kind === 'slot') {
+              for (let i = 0; i < 8; i++) {
+                const slotId = await page.evaluate(() => {
+                  const btn = Array.from(document.querySelectorAll('[data-testid^="wizard-slot-record-"]'))
+                    .find(b => (b.textContent ?? '').trim() === 'Record')
+                  return btn?.getAttribute('data-testid')?.replace('wizard-slot-record-', '') ?? null
+                })
+                if (!slotId) break
+                const inputId = `wizard-slot-input-${slotId}`
+                const hasInput = await page.evaluate((id) => !!document.querySelector(`[data-testid="${id}"]`), inputId)
+                if (hasInput) await smartFill(page, inputId)
+                await recordAct(page, `wizard-slot-record-${slotId}`)
+                const refused = await page.evaluate((id) => {
+                  const b = document.querySelector(`[data-testid="${id}"]`)
+                  return !!b && (b.textContent ?? '').trim() === 'Record'
+                }, `wizard-slot-record-${slotId}`)
+                if (refused) throw new Error(`slot ${slotId} refused the recorded value`)
+              }
+            } else {
+              await recordAct(page, `wizard-step-done-${step}`)
+            }
+            await page.waitForFunction(
+              (st) => document.querySelector(`[data-testid="wizard-step-${st}"]`)?.getAttribute('data-state') === 'done',
+              step,
+              { timeout: SETTLE, polling: 500 },
+            )
+          }
+          // The overall result: recorded and signed per measurement.
           const needsRecord = await page.evaluate(() => {
             const b = document.querySelector('[data-testid="evidence-record-overall_result"]')
             return !!b && (b.textContent ?? '').trim() === 'Record'
@@ -1334,6 +1398,10 @@ async function driveChain(browser: Browser) {
             await page.reload({ waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT })
             await waitIslandSettled(page)
             await waitTestIdReload(page, 'lab-run-view')
+            // The shell mounts long before the content: the button's
+            // disabled state computes from the loaded run, so wait for a
+            // content marker, never just the shell.
+            await page.waitForSelector('[data-testid="evidence-row-overall_result"], [data-testid="lab-run-completed"]', { timeout: SETTLE })
             const done = await page.evaluate(() => !!document.querySelector('[data-testid="lab-run-completed"]'))
             if (done) break
           }
