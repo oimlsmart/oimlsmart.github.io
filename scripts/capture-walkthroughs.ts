@@ -80,6 +80,12 @@ const THEMES = process.argv.includes('--light') ? ['light'] as const
   : ['light', 'dark'] as const
 
 const NAV_TIMEOUT = 60_000
+
+// The regeneration command recorded into the manifest (TODO.promotion/08:
+// the command rides next to the captures it produced; the per-page
+// commands live in src/data/proof-map.ts, walked by the freshness leg).
+const MANIFEST_REGENERATE =
+  'npx tsx scripts/capture-walkthroughs.ts (the read-only passes, both themes); add --drive for the state-changing arc first; per-page subsets ride src/data/proof-map.ts (TODO.promotion/08)'
 // The demo's first island paint after a cold login measured ~115s
 // (2026-08-30, capture-audiences): the boot spinner persists while the
 // profile loads. SETTLE must clear that comfortably; waits poll and
@@ -1994,7 +2000,7 @@ if (REBUILD_MANIFEST) {
     }
   }
   const live = [...byFile.values()].filter(r => existsSync(join(OUT, r.file)))
-  writeFileSync(manifestPath, JSON.stringify({ generatedAt: new Date().toISOString(), date: DATE, captures: live }, null, 2) + '\n')
+  writeFileSync(manifestPath, JSON.stringify({ generatedAt: new Date().toISOString(), date: DATE, regenerate: MANIFEST_REGENERATE, captures: live }, null, 2) + '\n')
   console.log(`manifest rebuilt: ${live.length} captures on disk → public/img/walkthroughs/manifest.json`)
   process.exit(0)
 }
@@ -2025,5 +2031,5 @@ const merged = new Map<string, CaptureRecord>()
 for (const r of prior) merged.set(r.file, r)
 for (const r of records) merged.set(r.file, r)
 const live = [...merged.values()].filter(r => existsSync(join(OUT, r.file)))
-writeFileSync(manifestPath, JSON.stringify({ generatedAt: new Date().toISOString(), date: DATE, captures: live }, null, 2) + '\n')
+writeFileSync(manifestPath, JSON.stringify({ generatedAt: new Date().toISOString(), date: DATE, regenerate: MANIFEST_REGENERATE, captures: live }, null, 2) + '\n')
 console.log(`\n${records.length} captures this run, ${live.length} live in the manifest → public/img/walkthroughs/`)
