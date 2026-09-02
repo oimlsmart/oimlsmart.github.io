@@ -63,6 +63,14 @@ export interface TourSlideDef {
   readonly diagram?: 'estate-map'
   /** The presenter note: the talk track, what to click, the fallback. */
   readonly note: string
+  /** The fast-forward beat (TODO.demo-ops/07, the audience fast-forward):
+   *  the flow slides' waiting states carry the demo instance's Advance
+   *  control, which drives the OTHER role's real act through the platform
+   *  when the story would stall on it. The presenter line names the beat
+   *  in the control's own words; the notes page renders it per slide and
+   *  per cut. Demo instances only — a production instance never renders
+   *  the control. */
+  readonly fastForward?: string
   /** The at-time in the 5-minute cut, when the slide rides it. */
   readonly fiveMin?: string
   /** The at-time in the 20-minute cut. */
@@ -145,6 +153,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
       walkthrough: { href: '/demo/application', label: 'Walkthrough 01', desc: 'the application, six steps narrated' },
     },
     note: 'The tour\'s first live moment. Click into the wizard as the Applicant and dwell on the instrument step: the form was not designed by a programmer, the R 60 model authors it, clause and all. No network: the dated capture shows exactly that step. The full narration is walkthrough 01.',
+    fastForward: 'The submit lands the story on the authority\'s desk, and the application\'s page never stalls there: its waiting card\'s Advance control drives the authority\'s real act — "the Issuing Authority reviews the application and requests the samples" — the audit trail naming you, the presenter, with the role advanced.',
     fiveMin: '2:00',
     twentyMin: '3:30',
   },
@@ -173,6 +182,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
       walkthrough: { href: '/demo/ia-intake', label: 'Walkthrough 02', desc: 'the intake, eight steps narrated' },
     },
     note: 'The same submit from the other side of the desk. Live: the Issuing Authority account, the review queue, and if the room wants it, the reject-with-reason (the instance resets nightly, so perform it freely). The evaluation project is the word to land: the shared dataspace, not an email thread.',
+    fastForward: 'Once the samples are requested, the review waits on the applicant\'s shipment; the review page\'s Advance control drives it — "the applicant ships the requested samples" — and the authority\'s story continues from the same screen.',
     twentyMin: '5:00',
   },
   {
@@ -200,6 +210,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
       walkthrough: { href: '/demo/tl-work', label: 'Walkthrough 03', desc: 'the laboratory\'s work, six steps narrated' },
     },
     note: 'The metrologist\'s slide. Live: the laboratory console, the model-driven run; the point is that the bench software reads the same model the Recommendation authors, so two laboratories cannot run two different R 60s. The report is generated from the captured evidence, which ends transcription at the hand-off.',
+    fastForward: 'If the samples still sit with the authority, the request page\'s Advance control drives the custody move — "the Issuing Authority dispatches the samples to the laboratory" — and the run starts. For the authority-watching lane, the project page carries the counterpart: "the laboratory completes the work and returns its test report".',
     twentyMin: '6:30',
   },
   {
@@ -227,6 +238,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
       walkthrough: { href: '/demo/ia-evaluation', label: 'Walkthrough 04', desc: 'the evaluation and the certificate, eight steps narrated' },
     },
     note: 'Two acts, two truths: the platform computes the verdict from the model, and the authority decides; the certificate is data, signed, and the register is public. Live: open the register with no account at all. Governance-sensitive rooms: this slide is where you say the legal acts never moved.',
+    fastForward: 'A stalled review period closes live from the participants\' side: the project\'s Advance control resolves the open threads and takes the authority\'s decision — "the Issuing Authority resolves the review threads and accepts the test report" (the evaluation report\'s own beat reads the same way).',
     fiveMin: '3:00',
     twentyMin: '8:00',
   },
@@ -255,6 +267,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
       walkthrough: { href: '/demo/applicant-journey', label: 'Walkthrough 05', desc: 'the applicant\'s journey, five steps narrated' },
     },
     note: 'The payoff slide, and the 5-minute cut\'s second live moment. Verification is the surface every constituency shares: the manufacturer\'s customer, the inspector, the member state. Live: the verify page, the demo certificate number, the ACTIVE verdict. If you show only two live moments all day, make them s04 and this one.',
+    fastForward: 'The journey\'s spine never waits on the authority in a demo: the application page\'s Advance control drives the receipt and the acceptance — "the Issuing Authority receives the samples and accepts — the Evaluation Project opens".',
     fiveMin: '3:45',
     twentyMin: '9:30',
   },

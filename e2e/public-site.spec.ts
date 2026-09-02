@@ -385,6 +385,12 @@ test.describe('Public site — critical paths', () => {
     // The rehearsal record: two walks, the live links verified 200.
     await expect(page.getByText('walked end to end').first()).toBeVisible()
     expect(await page.getByText('200 ·', { exact: false }).count()).toBeGreaterThanOrEqual(9)
+    // TODO.demo-ops/07: the fast-forward beats named per cut — the
+    // accelerator bullet in the mechanics, and the five flow slides'
+    // per-slide Advance lines quoting the control's own words.
+    await expect(page.getByText('never stalls on the other role').first()).toBeVisible()
+    expect(await page.locator('span', { hasText: /^Advance:$/ }).count()).toBe(5)
+    await expect(page.getByText('the applicant ships the requested samples').first()).toBeVisible()
   })
 
   test('the seven one-pagers render the sheet anatomy and print clean', async ({ page }) => {

@@ -934,6 +934,15 @@ export const PROOF_MAP: readonly ProofPage[] = [
           { kind: 'site', route: '/tour', probe: 'The CIML tour' },
         ],
       },
+      {
+        id: 'tour-notes-fast-forward',
+        says: 'the notes name the waiting-state fast-forward beats per cut: the demo instance’s Advance control drives the other role’s real act (TODO.demo-ops/07 in the smart repo)',
+        anchors: [
+          { kind: 'source', path: 'src/data/tour-slides.ts', probe: 'fastForward' },
+          { kind: 'source', path: 'src/pages/tour/notes.astro', probe: 'never stalls on the other role' },
+          { kind: 'smart', path: 'browser/src/demo/fast-forward-beats.ts', probe: 'the applicant ships the requested samples' },
+        ],
+      },
     ],
   },
 ]
