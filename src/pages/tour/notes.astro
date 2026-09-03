@@ -39,6 +39,7 @@ const five = FIVE_MINUTE_CUT.map(id => slides.find(s => s.id === id)!)
         <li><strong>The demo moments are links, never recordings.</strong> Each flow slide's <em>Open the live step</em> button opens demo.oimlsmart.org at the exact console and step, in a new tab, so the deck waits where you left it. Sign in with the one-click account the slide names.</li>
         <li><strong>The no-network room is covered.</strong> Every demo moment carries its dated capture ({TOUR_REHEARSED}) on the same slide; the chip at the top of the deck says honestly which mode you are in.</li>
         <li><strong>Say the honesty rules once, up front.</strong> The demo is simulated (the cast is fictional, the instance resets nightly), and the futures are labeled SMART+ on their slides (the twin is the one future slide; say so when you land on it).</li>
+        <li><strong>The demo never stalls on the other role.</strong> The five flows' waiting cards on the demo instance carry an <em>Advance</em> control — demo instances only, a production instance never renders it — that performs the other role's real act through the platform, in seconds; the audit trail names you with the role you advanced, and a refusal names its blocker honestly. The per-slide notes name each beat.</li>
         <li><strong>The leave-behind prints itself.</strong> The seven one-pagers at <a href="/about/audiences/one-pagers/">/about/audiences/one-pagers/</a> print one sheet each; hand them out at the ask (slide s19), not before.</li>
       </ul>
     </div>
@@ -46,7 +47,7 @@ const five = FIVE_MINUTE_CUT.map(id => slides.find(s => s.id === id)!)
     <div class="max-w-3xl mb-12">
       <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The 5-minute cut · the committee slot</h2>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        Eight slides, two live moments (s04 and s08; skip every other link), the governance slide said slowly, the ask at the bell. The timings below are the rehearsed allocations from the two recorded walks.
+        Eight slides, two live moments (s04 and s08; skip every other link), the governance slide said slowly, the ask at the bell. The timings below are the rehearsed allocations from the two recorded walks. When a live moment would stall on the other role's act, ride the accelerator: the waiting card's Advance control performs that act live (the per-slide notes name the beat at each stall point) — the chain between the submit (s04) and the verify (s08) is exactly where it earns its keep.
       </p>
       <div class="overflow-x-auto border border-rule rounded-md">
         <table class="w-full border-collapse text-sm">
@@ -73,7 +74,7 @@ const five = FIVE_MINUTE_CUT.map(id => slides.find(s => s.id === id)!)
     <div class="max-w-3xl mb-12">
       <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The 20-minute cut · the working visit</h2>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        All nineteen slides, all five flows live if the network holds, the technologies at one minute each (they are the depth, not the story), questions inside s17 to s19. The last minute of the visit is the room's, not yours.
+        All nineteen slides, all five flows live if the network holds, the technologies at one minute each (they are the depth, not the story), questions inside s17 to s19. The last minute of the visit is the room's, not yours. The full, unabbreviated flows are the story here — each flow's walkthrough (linked from its slide) narrates every step; the Advance control stays the fallback for a room that stalls, never the route.
       </p>
       <div class="overflow-x-auto border border-rule rounded-md">
         <table class="w-full border-collapse text-sm">
@@ -116,6 +117,11 @@ const five = FIVE_MINUTE_CUT.map(id => slides.find(s => s.id === id)!)
             {s.live && (
               <p class="text-[0.875rem] text-ink-muted m-0">
                 <span class="font-mono text-xs uppercase tracking-[0.08em] text-accent">Live:</span> {s.live.action} <span class="font-mono text-xs uppercase tracking-[0.08em] text-accent">Fallback:</span> the dated capture on the slide ({TOUR_REHEARSED}).
+              </p>
+            )}
+            {s.fastForward && (
+              <p class="text-[0.875rem] text-ink-muted m-0 mt-1">
+                <span class="font-mono text-xs uppercase tracking-[0.08em] text-accent">Advance:</span> {s.fastForward}
               </p>
             )}
           </div>
