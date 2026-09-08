@@ -111,10 +111,13 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
   },
   {
     file: 'src/content/pages/about/audiences/issuing-authorities.mdx',
-    literal: '§3.2.5',
-    fact: 'type evaluation needs physical samples; the IA informs the number required (PD-05 §3.2.5)',
+    literal: '§4.2.5',
+    fact: 'type evaluation needs physical samples; the IA informs the number required (PD-05 §4.2.5)',
     added: ADDED,
     verify: [
+      /* published §4.2.5; the tree's presentation XML autonums it 3.2.5 —
+       * the off-by-one artifact, see the PD-05 note above the ia-intake
+       * entries below */
       { kind: 'ssot-clause', path: PD05, clause: '3.2.5', text: 'number of samples of the type that are required' },
     ],
   },
@@ -224,12 +227,13 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
     ],
   },
   /* PD-05's published numbering (Ed 6 + Amd 1, urn:oiml:pub:cs:pd-05:2024) is
-   * authoritative: the refusal grounds are §4.2.2 a–d and the written-reason
-   * duty is §4.2.4. The smart tree's presentation XML autonums them 3.2.2 /
-   * 3.2.4 — an off-by-one artifact (the build drops the Introduction clause;
-   * doctrine: smart repo analysis/pd05-ed6-cite-reconciliation.md, task E14 —
-   * never cite the local XMLs' internal numbers). The pages cite the
-   * published numbers; the pins below read the tree's internal ones. */
+   * authoritative: the refusal grounds are §4.2.2 a–d, the written-reason
+   * duty is §4.2.4, and the sample-count notice is §4.2.5. The smart tree's
+   * presentation XML autonums them 3.2.2 / 3.2.4 / 3.2.5 — an off-by-one
+   * artifact (the build drops the Introduction clause; doctrine: smart repo
+   * analysis/pd05-ed6-cite-reconciliation.md, task E14 — never cite the
+   * local XMLs' internal numbers). The pages cite the published numbers;
+   * the pins below read the tree's internal ones. */
   {
     file: 'src/pages/demo/ia-intake.astro',
     literal: '§4.2.2',
@@ -246,8 +250,8 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
   },
   {
     file: 'src/pages/demo/ia-intake.astro',
-    literal: '§3.2.5',
-    fact: 'the IA informs the applicant of the samples required for testing (PD-05 §3.2.5)',
+    literal: '§4.2.5',
+    fact: 'the IA informs the applicant of the samples required for testing (PD-05 §4.2.5)',
     added: ADDED,
     verify: [
       { kind: 'ssot-clause', path: PD05, clause: '3.2.5', text: 'number of samples of the type that are required' },
