@@ -51,7 +51,7 @@ export interface ModelContentEntry {
 /** The only-shrinks pin: entries.length must stay at or below this.
  *  Bump it only in the commit that adds the entry, with the reason in
  *  the commit message. */
-export const MODEL_CONTENT_CEILING = 25
+export const MODEL_CONTENT_CEILING = 26
 
 const B018 = 'data/oiml-b018-e25/document.presentation.xml'
 const PD05 = 'data/oiml-cs-pd-05/document.presentation.xml'
@@ -223,12 +223,26 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
       },
     ],
   },
+  /* PD-05's published numbering (Ed 6 + Amd 1, urn:oiml:pub:cs:pd-05:2024) is
+   * authoritative: the refusal grounds are §4.2.2 a–d and the written-reason
+   * duty is §4.2.4. The smart tree's presentation XML autonums them 3.2.2 /
+   * 3.2.4 — an off-by-one artifact (the build drops the Introduction clause;
+   * doctrine: smart repo analysis/pd05-ed6-cite-reconciliation.md, task E14 —
+   * never cite the local XMLs' internal numbers). The pages cite the
+   * published numbers; the pins below read the tree's internal ones. */
   {
     file: 'src/pages/demo/ia-intake.astro',
-    literal: '§3.2.2',
-    fact: 'the refusal grounds require clearly identified reasons (PD-05 §3.2.2)',
+    literal: '§4.2.2',
+    fact: 'the refusal grounds require clearly identified reasons (PD-05 §4.2.2)',
     added: ADDED,
     verify: [{ kind: 'ssot-clause', path: PD05, clause: '3.2.2', text: 'may refuse the application' }],
+  },
+  {
+    file: 'src/pages/demo/ia-intake.astro',
+    literal: '§4.2.4',
+    fact: 'a refused application is answered in writing with the reason (PD-05 §4.2.4)',
+    added: '2026-09-08',
+    verify: [{ kind: 'ssot-clause', path: PD05, clause: '3.2.4', text: 'the reason shall be given' }],
   },
   {
     file: 'src/pages/demo/ia-intake.astro',

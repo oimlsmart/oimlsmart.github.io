@@ -826,7 +826,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
     claims: [
       {
         id: 'ia-intake-due-process',
-        says: 'rejection requires the reason (PD-05 §3.2.2) and acceptance waits for the physical samples (PD-05 §3.2.5)',
+        says: 'rejection requires the reason (PD-05 §4.2.2/§4.2.4) and acceptance waits for the physical samples (PD-05 §3.2.5)',
         anchors: [
           { kind: 'smart', path: 'DEMO_FLOWS/02-ia-intake.md', probe: 'ia_officer' },
           { kind: 'smart', path: 'data/oiml-cs-pd-05/document.presentation.xml', probe: 'other clearly identified reasons' },
