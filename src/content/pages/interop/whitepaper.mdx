@@ -1,0 +1,213 @@
+---
+title: 'The Interoperability Whitepaper'
+description: 'This whitepaper presents the OIML-CS certificate in the Verifiable Credentials, Digital Product Passport, Asset Administration Shell, and data-space ecosystems: the architecture, the shipped surfaces, and the working examples.'
+eyebrow: 'Program publication · 2026-08'
+---
+
+| | |
+| --- | --- |
+| **Version** | 1.0 |
+| **Status** | Program publication. Every mapping this document presents is authored and published by the OIML SMART program against the named ecosystem's published conventions. None of them is a publication of an ecosystem body, and adoption by one is neither claimed nor awaited: comments arrive through each ecosystem's normal public channels, the same as any reviewer's, and no external review gates a release. |
+| **Publisher** | The OIML SMART program (oimlsmart.org) |
+| **Date** | 2026-08 |
+| **The evidence** | Every working example links the public demonstration instance at [demo.oimlsmart.org](https://demo.oimlsmart.org), a fictional world that resets nightly (its own banner says so). Each link in this document was exercised against that instance on 2026-08-21, and the full set was re-exercised on 2026-08-22. |
+
+## 1. Why this document exists
+
+A member-body review of the program in 2026-08 raised a class of questions that every evaluating body will raise again: why the platform signs its certificates with its own electronic-signature machinery rather than W3C Verifiable Credentials; how the certificate travels inside a digital product passport without being duplicated; how a verifier learns that a certificate has been suspended or withdrawn without holding an account; how the certificate's format interoperates with the Asset Administration Shell specifications that industrial digital twins run on; where the semantics join shared concept systems; and whether an Issuing Authority's instance can join a Gaia-X or Catena-X style data space without a redesign.
+
+The program answered each question with a shipped surface, not a paragraph: the interoperability program's seven technical items are merged on the platform's trunk, each with its tests and its documentation. This whitepaper is the permanent public answer to the whole class. It presents the architecture once, devotes one chapter to each ecosystem, and grounds every claim in what exists today: the route, the module, the mapping document, and a working example on the live demonstration instance. The few things that are not built are marked as roadmap where they arise.
+
+The document closes with the checklist the acceptance criterion demands: each question of the review's class, mapped to the chapter that answers it.
+
+## 2. The architecture: one payload, three layers
+
+The certificate's normative artifact is the signed CNML record: the certificate content projected into the Certification Markup Language, validated against the Recommendation's CNML schema, and signed at issuance, by the Issuing Authority's officer or, on the threshold path, by the quorum ceremony's officers with its attestation. Everything this document describes carries or references that one payload. The platform's design separates three layers, and the rule for each is that the platform's own artifact stays canonical.
+
+- **The payload** is the CNML certificate JSON: the certificate, the issuing authority, the certified type, the characteristics, the Recommendation and edition, the report references. There is exactly one certificate content model. No carrier re-formats it, and no ecosystem receives a second, diverging representation of it.
+- **The proof** layer carries the signatures. Each carrier brings its own proof that stock tooling validates (the Verifiable Credential's envelope JWS, resolvable through the issuer's did:web document), and the platform-native chain rides alongside it: the signed CNML document itself, with the required OpenTimestamps time attestation embedded at issuance (the proof binds the signing time to a Bitcoin block; until a calendar anchors it, it verifies as pending, honestly), and with the quorum ceremony's attestation on the threshold path. The native chain never replaces the carrier's proof; aware verifiers re-run the native check pipeline on it.
+- **The carrier** is the ecosystem's own shape: a W3C Verifiable Credential, an AAS submodel, a DPP conformity-attestation reference, or the signed federation package that a data-space connector serves. Carriers are modes of the canonical payload, never new content.
+
+![The three layers of the OIML SMART interoperability architecture. The payload is the signed CNML certificate JSON, one content model, held by the register. The proof layer carries the signatures: the platform-native CNML signature with its quorum attestation, and each carrier's own proof. The carrier layer holds the four supported modes: the W3C Verifiable Credential envelope, the AAS submodel, the DPP conformity-attestation reference, and the federation package a data-space connector serves. Beside them, the register: it holds the signed payload and its lifecycle, serves every carrier account-free, and publishes the live status lists.](/interop/three-layers.svg)
+
+*Reading the figure.* The innermost band is the payload, the signed CNML certificate, one content model. Around it the proof layer: the carrier's own proof on the left, the platform-native chain on the right. The outer band holds the four carriers this document walks through. The register stands to the side because it is not a layer: it is the source every carrier is served from, and the authority every reference resolves back to. The rule band at the bottom states the two invariants the whole architecture hangs on.
+
+### The authority thesis
+
+The register is the single source. The OIML-CS framework (OIML B 18:2025) makes the register the public record of what is certified; the ecosystems this document walks through are distribution channels for that record, never rivals to it. Two rules follow. **Reference, never replicate:** a passport, a shell, or a wallet holds the certificate's reference and its status anchors, and the platform never copies ecosystem data into its own stores either; each side holds what it is authoritative for. **Envelope, never re-format:** every carrier wraps or references the same signed bytes, so a certificate carried anywhere remains the register's certificate.
+
+The posture is deliberately symmetric and member-neutral: the modes exist so that any member body can cover its own national or regional projects on its own side, integrating with the register rather than adopting any one member's home stack as canon. And optionality is earned, never conceded: every optional surface this document presents names its consumer, and the platform adds no switch without one.
+
+## 3. Live status everywhere
+
+A certificate on the register can change state after issuance: the Issuing Authority can suspend it, reinstate it, or withdraw it, and it eventually expires. Every external carriage of the certificate needs one account-free answer to the question of current validity, and the platform publishes that answer in the VC ecosystem's standard shape: the W3C Bitstring Status List.
+
+At issuance each certificate is assigned a position on two lists for the calendar quarter of its issue date: a revocation list and a suspension list. Each list is itself a signed Verifiable Credential, served at a well-known address of the issuing instance and cacheable for one minute. The lifecycle write is the bit flip: the served list is a projection of the same register store the lifecycle acts on, computed at serve time, so the published answer can never lag the register or diverge from it. Lists rotate quarterly, which keeps each list bounded, and old quarters stay served: a certificate issued in one year still verifies against the same lists years later.
+
+![The live status story in three columns. At the issuer: issuance records the certificate's cohort and bit index, the lifecycle acts write to the same register store, and the write is the flip. The published lists: one revocation list and one suspension list per quarter cohort, each a signed W3C Bitstring Status List credential at a well-known address, with the fragment naming the certificate's bit; lists rotate quarterly and old quarters stay served. Every verifier: a wallet, a market-surveillance tool, a passport platform, an AAS consumer, or the instance's own verify page fetches the list with no account, verifies its signature against the issuer's did:web document, and reads the bit, with the check time, list id, and bit position stated as provenance.](/interop/status-lists.svg)
+
+*Reading the figure.* The left column is the issuer's side: the position is recorded at issuance, and the lifecycle acts (suspend, reinstate, withdraw, expire) write to the same store the lists are projected from. The middle column is the published artifact: two signed lists per cohort at the well-known address. The right column is what every verifier does, regardless of which carrier brought the certificate: fetch the list, verify its signature, read the bit. The provenance line is part of the answer, so a reader can always say when the read happened and against which list.
+
+> **The working example, on the demonstration instance**
+>
+> The demonstration register's certificate `R60/2021-A-EX1-26.01` (the ACME LC-500i load cell) carries its status position on the 2025Q4 cohort. The raw, signed lists answer account-free:
+>
+> - [`/.well-known/oiml-smart-status/revocation-2025Q4`](https://demo.oimlsmart.org/.well-known/oiml-smart-status/revocation-2025Q4)
+> - [`/.well-known/oiml-smart-status/suspension-2025Q4`](https://demo.oimlsmart.org/.well-known/oiml-smart-status/suspension-2025Q4)
+>
+> The number lookup resolves the certificate's two entries against those lists: [`/api/verify/status?number=R60/2021-A-EX1-26.01`](https://demo.oimlsmart.org/api/verify/status?number=R60%2F2021-A-EX1-26.01), and the public [verify page](https://demo.oimlsmart.org/app/verify) renders the same answer with its provenance lines, as the figure below shows.
+
+![The demonstration instance's verify page answering the number lookup for R60/2021-A-EX1-26.01: the certificate summary with its ACTIVE lifecycle state, the live status section with the two rows (Revocation: NOT REVOKED, Suspension: NOT SUSPENDED) each with its provenance line naming the check time, the list id, and the bit position, and the CNML signature section with the SIGNATURE VERIFIED chip and the per-check results.](/interop/img/demo-verify-number.png)
+
+*The demonstration instance's verify page, 2026-08-21: the live status rows name the list and the bit position each answer was read from.*
+
+The shipped surfaces: the list machinery in `browser/server/certificates/status-list.ts`, the well-known route in `browser/server/routes/certificates.ts`, the bit flips inside the lifecycle service's own transactions, and the end-to-end proof that issues, suspends, reads suspended on both the page and the raw list, reinstates, and reads clear (`browser/e2e/interop-02-status-list.e2e.ts`). The reader's guide is the verification guide's status-list section (`docs/guides/biml-admin/verifying-a-certificate.md`).
+
+## 4. Verifiable Credentials
+
+The review's first question asked why the platform signs with its own electronic-signature machinery rather than W3C Verifiable Credentials. The answer is the three-layer separation: the platform's signed CNML payload and its trust model stay canonical, and the VC form is a carrier of them, issuable and verifiable by stock VC tooling. The credential is an Enveloped Verifiable Credential under the W3C VC Data Model 2.0, secured per the JOSE recommendation: the secured form is a compact ES256 JWS, and the envelope references it by its `data:` URL.
+
+Three design decisions carry the weight. The `credentialSubject` is the CNML payload verbatim: one content model, and the envelope never re-formats it. The issuer is a `did:web` naming the issuing instance, whose DID document serves the same federation signing key the instance's federation descriptor publishes: one key source, two projections, so any stock verifier resolves the key and validates the envelope, while the platform-native CNML chain rides in the `cnmlSignature` member for aware verifiers. And the credential's `credentialStatus` entries are the status anchors of chapter 3, so the credential's live status resolves everywhere it is carried. A selective-disclosure form, the SD-JWT, exposes only the public subset (the certificate number, the instrument type, the Recommendation and edition, the accuracy class where the payload carries one, the status reference, the validity window, the issuing authority); evaluation-report linkage and manufacturer-confidential particulars are not claims of that form at all, so a holder can never disclose them from it.
+
+The wallet story completes the carrier: the manufacturer, as holder, downloads the credential at issuance from the certificate page or from the public route, and the platform never custodies a holder's copy. The one context document the carrier defines is served, versioned, from the issuing instance itself.
+
+![The Verifiable Credential carrier end to end. At issuance: the holder downloads the credential from the certificate page or the public route, the selective-disclosure form exposes only the public subset, and the platform never custodies a holder's copy; the issuer is the instance's did:web. The credential: its id is the certificate URN, its subject the CNML payload verbatim, its credentialStatus the two status anchors, the native chain in the cnmlSignature member, the envelope an ES256 JWS. Every verifier: a stock verifier resolves the did:web document, validates the envelope, and reads the live status; an aware verifier adds the embedded CNML check pipeline; the instance's own verify page is one such verifier.](/interop/vc-carrier.svg)
+
+*Reading the figure.* The left column is the issuance side: the two downloads and the custody rule. The middle column is the credential's anatomy: the URN it shares with every other carrier, the verbatim payload, the status anchors, the native chain. The right column is the verifier side, split deliberately between what any stock verifier does and what an aware verifier adds. The rule band states the chapter's thesis: the carrier is the ecosystem's standard shape; the payload and the trust model stay ours.
+
+> **The working example, on the demonstration instance**
+>
+> - Download the credential: [`/api/certificates/crt-acme-lc/vc`](https://demo.oimlsmart.org/api/certificates/crt-acme-lc/vc)
+> - The selective-disclosure form: [`/api/certificates/crt-acme-lc/vc?format=sd-jwt`](https://demo.oimlsmart.org/api/certificates/crt-acme-lc/vc?format=sd-jwt)
+> - The issuer's DID document: [`/.well-known/did.json`](https://demo.oimlsmart.org/.well-known/did.json)
+> - The versioned context document: [`/contexts/oiml-cs-certificate/v1`](https://demo.oimlsmart.org/contexts/oiml-cs-certificate/v1)
+>
+> The credential id is `urn:oiml:cs:cert:R60/2021-A-EX1-26.01`, the same URN the passport reference and the AAS submodel carry. The envelope verifies with stock tooling against the DID document alone (the platform's own end-to-end proof runs the stock `did-jwt` library against a running instance, with no platform code in the verification path); the same check was run against the demonstration instance's document on 2026-08-21. The demonstration's public [verify page](https://demo.oimlsmart.org/app/verify) answers the number lookup with the register state, the live status, and the CNML check pipeline — and it verifies the credential itself: present the downloaded `.vc.json` file (or paste it) under "…or verify a Verifiable Credential" and the answer is the envelope signature against the issuer's DID document, the register cross-check, and the same check pipeline, with no account needed. The account-free endpoint behind the form is `POST /api/verify/vc`.
+
+![The demonstration instance's certificate page for the LC-500i certificate after signing: the signed CNML record with its timestamp and key fingerprint, the Download .cnml.xml action, the Download as Verifiable Credential and Download selective-disclosure VC actions, the Download AAS submodel (JSON) action, and the CNML check pipeline's per-check results below.](/interop/img/demo-certificate-carriers.png)
+
+*The certificate page on the demonstration instance, 2026-08-21: the three carrier downloads beside the CNML download, above the check pipeline.*
+
+The shipped surfaces: the pure envelope mapping in `browser/server/certificates/vc.ts`, the SD-JWT form in `browser/server/certificates/sd-jwt.ts`, the public route and the account-free verification endpoint (`POST /api/verify/vc`) in `browser/server/routes/certificates.ts`, and the end-to-end leg (`browser/e2e/vc-envelope.e2e.ts`) that issues, downloads, verifies on the public page, and verifies with the stock library. The operator-facing walkthroughs are the issuance guide's carrier section and the verification guide (`docs/guides/issuing-authority/issuing-the-certificate.md`, `docs/guides/biml-admin/verifying-a-certificate.md`). The honest status: the VC Data Model 2.0 and the JOSE securing are W3C Recommendations; the context document that names the credential's own terms is the program's, versioned per instance; no ecosystem body's adoption is claimed or required for any of it.
+
+## 5. Digital Product Passports
+
+When a measuring-instrument product group enters the ESPR delegated acts, its passport needs a conformity attestation, and for legal metrology that attestation is the OIML-CS certificate. The review's duplication complaint has a one-rule answer: **the passport references the register; it never embeds a copy.** A certificate later suspended would otherwise keep circulating as a valid copy inside every passport that embedded it.
+
+The reference is one member on the passport record, in the shape the published mapping specifies (`oiml-smart/dpp-conformity-attestation/v1`):
+
+```json
+"conformityAttestation": {
+  "schema": "oiml-smart/dpp-conformity-attestation/v1",
+  "scheme": "OIML-CS",
+  "certificateUrn": "urn:oiml:cs:cert:R60/2021-A-EX1-26.01",
+  "url": "https://demo.oimlsmart.org/api/certificates/crt-acme-lc",
+  "statusUrl": "https://demo.oimlsmart.org/.well-known/oiml-smart-status/revocation-2025Q4#<index>",
+  "suspensionUrl": "https://demo.oimlsmart.org/.well-known/oiml-smart-status/suspension-2025Q4#<index>"
+}
+```
+
+(The members are the demonstration instance's real answers; the `#<index>` fragment names the certificate's recorded bit position.) The `certificateUrn` is the credential id of chapter 4, so a passport and a wallet naming the same certificate always agree. The `url` negotiates content in the GS1 Digital Link pattern: a machine asking with `Accept: application/json` receives the signed CNML payload verbatim, and a person is redirected to the public register entry. A serialized GTIN resolves to the same URL through a Digital Link resolver, and the resolver is the passport side's own infrastructure: the platform mints URLs in the pattern, operates no resolver, and issues no GTIN. The access tiers align by publication: the passport's public tier is the public register and the verify page, its authority tier is the Utilizer surface's restricted evaluation-report access, and its proprietary tier is the parties' working records, which the register never publishes (`docs/deployment/dpp-access-tiers.md`). For passport platforms that poll rather than read the lists, the instance answers the certificate's current lifecycle event, signed, at the endpoint the federation contract declares (`/api/federation/status-events/<id>`, contract version 1.3.0, additive): one event, two subscribers.
+
+![The passport carrier in three columns. The DPP record carries the conformityAttestation member, the scheme, the certificate URN, the resolvable URL, and the two status anchors, and never the certificate content. The certificate URL answers content negotiation on the register: the signed CNML payload for a machine, a redirect to the public register entry for a person, the reference object itself at the dpp suffix; a serialized GTIN resolves to the same URL through a resolver the passport side operates; the access tiers align, public to the public register, authority to the Utilizer surface, proprietary never published. Live status: the anchors point into the signed status lists, and the signed status event serves platforms that poll; the passport's status reading is the register's own at the moment of reading.](/interop/dpp-carrier.svg)
+
+*Reading the figure.* The left column is the passport's side: the reference members and the rule that no certificate content crosses. The middle column is the register's answer to each kind of read, with the GS1 posture and the access-tier alignment stated underneath. The right column is the status story the anchors buy. The dashed flow under the boxes is the passport platform's direct, account-free status read.
+
+> **The working example, on the demonstration instance**
+>
+> - Fetch the reference object itself: [`/api/certificates/crt-acme-lc/dpp`](https://demo.oimlsmart.org/api/certificates/crt-acme-lc/dpp)
+> - The machine read: `curl -H "Accept: application/json" https://demo.oimlsmart.org/api/certificates/crt-acme-lc` answers the signed CNML payload.
+> - The person read: the same URL with `Accept: text/html` redirects to the [public register entry](https://demo.oimlsmart.org/app/register?q=R60%2F2021-A-EX1-26.01).
+
+![The demonstration instance's public certificate register, narrowed by the deep link to R60/2021-A-EX1-26.01: the register's heading and access-tier note, the presented-certificate verification block, and the one matching row with the certificate number, the LC-500i type designation, the manufacturer, the classifications, and the validity window.](/interop/img/demo-register-entry.png)
+
+*The person-facing half of the content-negotiating URL: the demonstration register's entry for the worked-example certificate, 2026-08-21.*
+
+The shipped surfaces: the pure mapping in `browser/server/certificates/dpp.ts` (the reference builder, the URL and anchor mints, the URN-to-URL-to-URN round-trip drift check, the Accept decision), the routes in `browser/server/routes/certificates.ts`, the signed status event in `browser/src/services/federation-status-event.ts`, the published mapping document (`docs/interop/dpp-conformity-attestation.md`), and the committee-facing position note on the certificate as the passport's legal-metrology attestation (`docs/adoption/dpp-legal-metrology-attestation.md`), which is honest about the regulatory boundary: the reference works today between consenting systems, and it matters in law when a delegated act names the attestation.
+
+## 6. The Asset Administration Shell
+
+The review's twin question observed that industrial digital twins often use the Asset Administration Shell specifications, and asked how the certificate's format interoperates. The program's answer is two shipped surfaces.
+
+The first is the submodel template **Legal Metrology Conformity**, authored in the document shape the Industrial Digital Twin Association's published templates use and published with its full element table (`docs/interop/aas-legal-metrology-conformity-submodel.md`). An instance of it, attached to the shell of a certified instrument, carries the certificate reference (the URN every carrier shares, plus the resolvable read), the scheme and the Recommendation with its edition, the issuing authority, the certified type and accuracy class, the validity window, the live status anchors as reference elements, and the report references with their recorded digests. It carries references, never copies: party identities stay in the shell's own Nameplate submodel and in the CNML record, and the submodel is unsigned by design, because authenticity runs through the reference back to the signed document. The template's omissions are named in its document so a reviewer can contest them on purpose. The exporter is a pure, tested function (`browser/server/certificates/aas-submodel.ts`), and the same document answers on the public route and on the certificate page's download.
+
+The second surface is the twin adapter: a bound measuring-instrument twin, projected through the AAS Part 2 HTTP API profile so that AAS registries and engineering tools address it. The adapter is a projection service, never a second twin: every AAS request becomes reads of the platform's twin endpoint, and the conformity submodel it serves is byte-identical to the certificate route's answer. Version 1 is reads only, and the surface is config-gated: an instance that fronts no twin binding answers nothing. The aspect bridge maps the twin's identity to the Nameplate template (IDTA-02006-3-0), its characteristics to the Technical Data frame (IDTA-02003), its certificate to the conformity submodel, and its live behavior to an Operational Data submodel in the program's own namespace, marked as ours because the ecosystem has no settled template there. The mapping document is `docs/interop/aas-twin-adapter.md`; the implementation is `browser/src/gateway/aas-adapter.ts` with its route mount in `browser/server/routes/aas.ts`, proven by contract tests against the Part 2 shapes and by the live-simulation end-to-end leg. Stated plainly: the public demonstration instance declares no twin binding, so the adapter is not served there; its captured demonstration, both views of the same simulated instrument side by side, is in the mapping document's section 6.
+
+![The AAS carriers in three groups. The shell: one per measuring instrument, carrying the Nameplate, Handover Documentation, and DPP bridge templates, and beside them the Legal Metrology Conformity submodel, whose certificate reference and status anchors point at the register and never copy; the export answers on the certificate page and the public route. The twin adapter: a projection answering the AAS Part 2 read profile, mapping the twin's IS to the Nameplate, HAS to Technical Data, certificates to the conformity submodel, and DOES to an Operational Data submodel in the program's marked namespace; reads only, config-gated. The register and the semantic join: the register holds the signed certificate, its VC envelope, and the live status lists; element semantics resolve to the IEC CDD where the vocabulary binds the concept, and to the program's own namespace everywhere else.](/interop/aas-carrier.svg)
+
+*Reading the figure.* The left group is the shell: the neighboring IDTA templates keep describing the asset, and the conformity submodel arrives as a reference to the authority's register. The middle group is the adapter: the aspect bridge and its boundaries. The right column stacks the register above the semantic join, because both AAS surfaces lean on them: the violet legs are the references that point at the register, and the green leg is the concept resolution chapter 8 presents.
+
+> **The working example, on the demonstration instance**
+>
+> Read the submodel export for the worked-example certificate: [`/api/certificates/crt-acme-lc/aas-submodel`](https://demo.oimlsmart.org/api/certificates/crt-acme-lc/aas-submodel). Three things to notice in the JSON: the submodel's `id` is the certificate's URN, one identity across carriers; the `status` collection carries reference elements into the demonstration's status lists, not values; and the certified type's category carries the CDD concept's IRDI `0112/2///61987#ABA872` as a `supplementalSemanticId`, the semantic join of chapter 8, live in the export.
+
+The honest status, stated in both mapping documents: the template and the adapter mapping are program publications per IDTA's published conventions; that is their state until an ecosystem body chooses to adopt them, and no such adoption is claimed or awaited. The named roadmap items: AASX package wrapping for the export (the container adds no semantics; the template document states the scope), the AAS write and operation-invocation profiles (a documented later step, not a stub), and IEC 61360 concept descriptions carrying the BIPM SI Digital Framework unit IRIs for served quantities.
+
+## 7. Data spaces
+
+The review's data-space question asked whether an Issuing Authority's instance can join a Gaia-X or Catena-X style data space, and whether it takes a redesign. The program answered with an evaluation, not a commitment: one Eclipse EDC connector was placed in front of one IA-profile instance, sharing exactly one asset kind (the evaluation-report evidence package) under one usage policy, and the exchange was walked end to end and recorded. The fit report is the deliverable (`docs/interop/data-space-fit.md`); the spike rig lives outside the product tree and its gates (`interop/edc/`).
+
+What held: the federation contract and the IDS contract model share a shape, and the report demonstrates it structurally. Identified parties, explicit consent before any byte moves, terms traveling with the consent, tamper-evident content, and a recorded answer: an evaluation-report package was negotiated and transferred under its usage policy through the IDS contract model without touching the product, and the bytes arrived byte-identical to the document store's attestation, still signed. What differed prices the mode: the IDS catalog's brokering has no counterpart in a contract of explicit addressed sends; the ODRL policy engine evaluates at negotiation time, so the usage policy rides the agreement as declared terms whose post-transfer enforcement is organizational, which is exactly the status usage constraints have in the federation contract; the IDS model carries no payload lifecycle and no trust revocation, so a shared package must keep pointing back at the live register for status; and a full data space's DCP identity framework is the largest cost a real membership would add.
+
+The recommendation, exactly as the fit report states it: **join via a connector at the deployment's edge; do not implement the IDS contract endpoints natively in the platform.** The canonical contract loses nothing and the mode gains everything it needs; the native-endpoint path buys nothing the program wants; and the connector path keeps optionality honestly earned. The boundary is stated with it: this was a spike against EDC 0.18.0 with mock identity and one asset kind, not a pilot against a governed data space. The priced gaps a commissioned membership would work through are the named roadmap: a scoped, revocable service credential for the connector's fetches (the one product-side enabler), the offerings projection that generates curated asset definitions from the instance's own records, the DCP identity evaluation against the target data space's trust framework, and the connector's operational runbook, which is the deployment's own.
+
+![The data-space mode in three columns. The IA instance runs the canonical federation contract, signed packages, explicit user-initiated sends, signed receipts, trust revocation, and holds the evaluation-report evidence package in its document store. The connector: stock Eclipse EDC at the deployment's edge, publishing the one asset kind under the usage policy, its data plane fetching the package through the instance's own download gate. The data space: the partner's connector reads the catalog, negotiates to a contract agreement carrying the policy verbatim, and pulls the bytes through the provider's data plane; what arrived was byte-identical to the store's attestation, still signed, and the package keeps pointing back at the live register for status. The boundary band states the spike's scope: one connector, one asset kind, mock identity, EDC 0.18.0; an evaluation, not a commitment.](/interop/data-space-edge.svg)
+
+*Reading the figure.* The left column is the product, untouched. The middle column is the mode's entire cost center: a stock connector, curated offerings, and the one named product seam. The right column is what the data space sees and what the recorded run proved about the bytes. The band at the bottom carries the verdict and its boundary in one place, because both halves of that sentence are the answer.
+
+> **The working example, on the demonstration instance**
+>
+> The canonical contract's self-description answers account-free at every instance's well-known address; the demonstration instance's is [`/.well-known/oiml-smart-federation`](https://demo.oimlsmart.org/.well-known/oiml-smart-federation): the descriptor a peer fetches, validates, and pins before any exchange, keys and declared endpoints included. The evaluation's evidence is the fit report and the recorded walkthrough of the negotiated transfer (`interop/edc/walkthrough/`), every request and response captured. The connector rig is a development spike by declaration; it is not deployed on the demonstration instance, and this chapter's claims rest on the recorded run, not on a live data-space endpoint.
+
+## 8. The semantic join: IEC CDD
+
+The carriers move bytes and status; the remaining question is what the bytes mean. AAS submodels reference IEC CDD concept identifiers, passport attributes align to shared concept systems, and the ISO and IEC SMART programs ask how vocabularies join. The join point is the concept layer, and the program already operates the infrastructure: the OpenCDD network carrying the IEC CDD, beside the platform's own vocabulary component. Vocabulary terms bind to CDD concepts by their full IRDI; the binding is authored in the Recommendation's Primmel package with an expert review note naming the CDD entry, version, and revision it was reviewed against; and the build proves it: a linker rule resolves every binding against the pinned OpenCDD snapshot on every checkout, and an integrity test resolves them against a declared live mirror, failing the build on a dangling IRDI. The authoring and review mechanics are the vocabulary guide's subject (`docs/guides/vocabulary/cdd-concept-bindings.md`).
+
+The initial binding set is the reviewed R 60 one: six load-cell vocabulary terms whose CDD correspondence is exact, the load cell itself (`0112/2///61987#ABA872`) among them; every other term stays unbound until a correspondence survives review. The consumers read the bindings from the one source: the AAS exporter places the IRDI as a `supplementalSemanticId` (visible in the demonstration export linked in chapter 6), and the vocabulary browser's term page shows the CDD concept card beside the term's own definition. The OpenCDD network's browser is public at [opencdd.github.io](https://opencdd.github.io/).
+
+Two postures are stated for the record. The canonical semantic anchor is the IEC CDD through the program's OpenCDD instance, the international concept system: ECLASS and national or sector concept systems are not carried, and a member body that needs one maps it on its own side, because CDD correspondences are that ecosystem's concern. And the platform authors no CDD concepts and performs no automatic concept matching: bindings are expert-authored, each with its review note, and a term without a defensible concept says so rather than implying one.
+
+## 9. Non-goals
+
+The integrate-never-absorb principle has a list, and the list is part of the answer to the review's class: each entry is a scope capture the program declines on purpose.
+
+- No wallet, no DID methods beyond did:web, no EBSI, and no JSON-LD context hosting beyond the one versioned context document each instance serves.
+- No OCSP and no CRL distribution points beyond the status lists, and no status aggregation across instances: a certificate's status lives at its issuer, and the register links to it.
+- No DPP service operation, no GTIN issuance, and no sector DPP ontology authorship; where the mapping's attributes touch the CIRPASS core ontology's style it aligns to it and never extends it unilaterally.
+- No AAS server and no AAS registry operation; no AAS submodel write path, eventing, AASX serving, or MQTT and OPC-UA bindings in the adapter's first version.
+- No CDD authorship and no automatic concept matching; no ECLASS carriage.
+- No production data-space connector, no Gaia-X membership claims, no Catena-X-specific profiles, and no policy-engine implementation; the evaluation recommends the connector at the edge precisely because the product absorbs nothing.
+
+## 10. Publication and the comment channels
+
+Everything that touches an external ecosystem is authored by this program to that ecosystem's published conventions and published on oimlsmart.org. Each publication names where comments go: the ecosystem's normal public channel, the same channel any member body's comments use. The program answers in the open; no external body's review gates a release; and joint refinement with an ecosystem body or a member body happens when it is technically productive, never as a condition of publication.
+
+| The published artifact | Its status | Comments go to |
+| --- | --- | --- |
+| The VC context document (`OimlCsCertificate`, `cnmlSignature`), served versioned per instance | Program publication on the W3C VC Data Model 2.0 and JOSE securing, both W3C Recommendations | The W3C Verifiable Credentials Working Group's normal public channels |
+| The DPP conformity-attestation reference schema (`oiml-smart/dpp-conformity-attestation/v1`) | Program publication against the ESPR delegated-act model, the CIRPASS core ontology's attribute style, and the GS1 Digital Link pattern | The DPP ecosystem's normal public channels: the CIRPASS lineage's public consultations for the attribute style, GS1's public Digital Link channels for the resolver pattern |
+| The AAS submodel template Legal Metrology Conformity (`urn:oiml:smart:aas:legal-metrology-conformity:1:0`) | Program publication per IDTA's submodel-template conventions; versioned by its template URN, old versions stay published | The IDTA template process's normal public channels |
+| The twin-to-AAS adapter mapping (the Part 2 read profile; the Operational Data namespace `urn:oiml:smart:aas:operational-data:1:0`) | Program publication per IDTA-01002 and the cited template conventions | The IDTA's normal public channels |
+| The vocabulary-to-CDD bindings (the reviewed R 60 set) | Program review records inside the Primmel packages, the single source of truth | The OpenCDD network's public channels; a proposed correspondence is reviewed and authored into the package, never merged downstream |
+| The data-space fit report | An evaluation record, not a specification; nothing in it is offered for adoption | Connector-level observations belong to the Eclipse Dataspace Components project's normal public channels |
+
+One governance sentence, because the review's class includes it implicitly: these mappings are the program's publications, and their normative artifacts remain CNML, the Primmel models, and the federation contract. External processes may comment on the published mappings; they do not govern them, and the program never blocks a release waiting on them.
+
+## 11. The review questions, mapped
+
+The acceptance criterion for this document, applied in writing: each question of the 2026-08 review's class, stated as the program recorded it, mapped to the chapter that answers it and the shipped surface the answer rests on.
+
+| The question | The chapter | The shipped surface |
+| --- | --- | --- |
+| Why electronic signatures instead of W3C Verifiable Credentials? | 2 (the three layers) and 4 (the VC carrier) | `vc.ts`, the `/vc` route, the did:web serving, the stock-verifier end-to-end leg |
+| How does the certificate work with the VC ecosystem's wallets and verifiers? | 4 | the envelope, the SD-JWT form, `POST /api/verify/vc` |
+| How does a verifier learn a certificate is suspended or withdrawn, without an account? | 3 | `status-list.ts`, the well-known lists, the anchors in every carrier |
+| Does a product passport duplicate the certificate (the duplication complaint)? | 2 (the authority thesis) and 5 (the DPP carrier) | `dpp.ts`, the reference schema, the content-negotiating URL |
+| Digital twins in industry often use the AAS specifications; how can CNML be made interoperable? | 6 | the Legal Metrology Conformity template and its exporter (`aas-submodel.ts`) |
+| Is the digital twin addressable in AAS infrastructure? | 6 (the adapter) | `aas-adapter.ts` and its mapping document; the contract tests and the live-simulation leg |
+| Where do the semantics join shared concept systems (the ISO/IEC SMART interop question)? | 8 | `cdd_ref` bindings, linker rule R46, the integrity test, the vocabulary browser's concept card |
+| Why the IEC CDD and not a national or sector concept system? | 8 (the postures) | the OpenCDD carriage; member-side mappings stay on the member's side |
+| Can an Issuing Authority join a data space without a redesign? | 7 | the fit report's verdict and its recorded walkthrough |
+| Who governs these mappings, and where do comments go? | 10 | the publication table; each mapping document's own publication note |
+
+This document is revised when the shipped surfaces move, and its working examples are re-exercised against the live demonstration instance at each revision. Comments on the document itself arrive through the program's normal public channel, the same as any other program publication.

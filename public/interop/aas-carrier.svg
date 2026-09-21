@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" width="960" height="500" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title>The Asset Administration Shell chapter in one figure. Left: one Asset Administration Shell per measuring instrument carries the neighboring IDTA templates, the Nameplate, the Handover Documentation, and the DPP bridge, and beside them the program's Legal Metrology Conformity submodel, whose certificate reference and status anchors point at the register and never copy from it; the submodel exports from the certificate page and from the public route. Center: the twin-to-AAS adapter, a read-only projection service that answers the AAS Part 2 read profile for a bound twin, translating every AAS request into twin-endpoint reads; the conformity submodel through the adapter is the register's own answer, byte-identical to the certificate route's. Right: the register holds the signed CNML certificate with its VC envelope and serves the live status lists account-free; the element semantics resolve to the IEC CDD through the OpenCDD network where the Recommendation's vocabulary binds a concept, and to the program's own template namespace everywhere else.</title>
+  <defs>
+    <marker id="aasc-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="500" fill="#ffffff"/>
+
+  <text x="20" y="26" font-size="11" font-weight="600" fill="#475569">THE AAS CARRIERS: the certificate as a submodel any shell can carry, and the twin projected through the AAS Part 2 read profile.</text>
+
+  <!-- THE SHELL -->
+  <g>
+    <rect x="30" y="50" width="290" height="360" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="175" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">THE SHELL</text>
+    <text x="175" y="90" text-anchor="middle" font-size="10" fill="#475569">one per measuring instrument</text>
+    <rect x="46" y="106" width="258" height="34" rx="7" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+    <text x="58" y="127" font-size="10" fill="#334155">Nameplate (IDTA-02006) · the asset's own facts</text>
+    <rect x="46" y="148" width="258" height="34" rx="7" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+    <text x="58" y="169" font-size="10" fill="#334155">Handover Documentation (IDTA-02004)</text>
+    <rect x="46" y="190" width="258" height="34" rx="7" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+    <text x="58" y="211" font-size="10" fill="#334155">the DPP bridge (IDTA-02099)</text>
+    <rect x="46" y="232" width="258" height="64" rx="7" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="58" y="252" font-size="10.5" font-weight="600" fill="#7c3aed">Legal Metrology Conformity</text>
+    <text x="58" y="267" font-size="9.5" fill="#475569">the program's template; the reference, the scheme,</text>
+    <text x="58" y="280" font-size="9.5" fill="#475569">the validity, the live status anchors, the reports</text>
+    <text x="46" y="318" font-size="10" fill="#334155">References, never copies: party identities stay</text>
+    <text x="46" y="332" font-size="10" fill="#334155">in the Nameplate and the CNML record; the</text>
+    <text x="46" y="346" font-size="10" fill="#334155">submodel is unsigned; authenticity runs</text>
+    <text x="46" y="360" font-size="10" fill="#334155">through the reference.</text>
+    <text x="46" y="388" font-size="9.5" fill="#64748b">Export: the certificate page, or</text>
+    <text x="46" y="402" font-size="9.5" fill="#64748b">GET /api/certificates/&lt;id&gt;/aas-submodel (public).</text>
+  </g>
+
+  <!-- THE ADAPTER -->
+  <g>
+    <rect x="370" y="50" width="270" height="360" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+    <text x="505" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#1d4ed8">THE TWIN ADAPTER</text>
+    <text x="505" y="90" text-anchor="middle" font-size="10" fill="#475569">the AAS Part 2 read profile at /aas</text>
+    <text x="386" y="118" font-size="10" font-weight="600" fill="#334155">A projection, never a second twin:</text>
+    <text x="394" y="136" font-size="10" fill="#475569">every AAS request becomes</text>
+    <text x="394" y="150" font-size="10" fill="#475569">twin-endpoint reads</text>
+    <text x="386" y="174" font-size="10" font-weight="600" fill="#334155">The aspect bridge:</text>
+    <text x="394" y="192" font-size="10" fill="#475569">IS → Nameplate (IDTA-02006-3-0)</text>
+    <text x="394" y="206" font-size="10" fill="#475569">HAS → Technical Data (IDTA-02003)</text>
+    <text x="394" y="220" font-size="10" fill="#475569">certificates → Legal Metrology Conformity</text>
+    <text x="394" y="234" font-size="10" fill="#475569">DOES → Operational Data (ours, marked:</text>
+    <text x="394" y="248" font-size="10" fill="#475569">no settled AAS template yet)</text>
+    <line x1="386" y1="264" x2="624" y2="264" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="386" y="286" font-size="10" fill="#334155">Reads only in v1; writes and control stay</text>
+    <text x="386" y="300" font-size="10" fill="#334155">on the twin endpoint. Config-gated: an</text>
+    <text x="386" y="314" font-size="10" fill="#334155">instance fronts no twin, answers no /aas.</text>
+    <text x="386" y="342" font-size="9.5" fill="#64748b">The conformity submodel through the adapter is</text>
+    <text x="386" y="356" font-size="9.5" fill="#64748b">the register's own answer, byte-identical to the</text>
+    <text x="386" y="370" font-size="9.5" fill="#64748b">certificate route's (the e2e asserts the equality).</text>
+  </g>
+
+  <!-- THE REGISTER + THE SEMANTIC JOIN -->
+  <g>
+    <rect x="690" y="50" width="240" height="200" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="810" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">THE REGISTER</text>
+    <text x="810" y="90" text-anchor="middle" font-size="10" fill="#475569">the single source, account-free</text>
+    <text x="706" y="118" font-size="10" fill="#475569">the signed CNML certificate</text>
+    <text x="706" y="136" font-size="10" fill="#475569">its Verifiable Credential envelope</text>
+    <text x="706" y="154" font-size="10" fill="#475569">the live status lists</text>
+    <line x1="706" y1="172" x2="914" y2="172" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="706" y="194" font-size="10" fill="#334155">The violet legs point at the register;</text>
+    <text x="706" y="208" font-size="10" fill="#334155">nothing copies out of it.</text>
+  </g>
+  <g>
+    <rect x="690" y="266" width="240" height="144" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="810" y="290" text-anchor="middle" font-size="13" font-weight="600" fill="#166534">THE SEMANTIC JOIN</text>
+    <text x="706" y="316" font-size="10" fill="#475569">Element semantics resolve to the IEC CDD</text>
+    <text x="706" y="332" font-size="10" fill="#475569">(through the OpenCDD network) where the</text>
+    <text x="706" y="346" font-size="10" fill="#475569">vocabulary binds the concept: the CDD</text>
+    <text x="706" y="360" font-size="10" fill="#475569">IRDI rides as a supplementalSemanticId.</text>
+    <text x="706" y="382" font-size="10" fill="#475569">Everywhere else: our own namespace,</text>
+    <text x="706" y="396" font-size="10" fill="#475569">marked as ours.</text>
+  </g>
+
+  <!-- FLOWS -->
+  <line x1="322" y1="264" x2="366" y2="264" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#aasc-arrow)"/>
+  <line x1="642" y1="150" x2="686" y2="150" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#aasc-arrow)"/>
+  <line x1="642" y1="330" x2="686" y2="330" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#aasc-arrow)"/>
+
+  <!-- THE RULE -->
+  <rect x="30" y="440" width="900" height="44" rx="10" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="480" y="459" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">The same signed payload, addressed in the twin infrastructure factories already run.</text>
+  <text x="480" y="476" text-anchor="middle" font-size="10" fill="#475569">The template and the mapping are program publications per IDTA's conventions; adoption is the ecosystem's own decision.</text>
+</svg>
