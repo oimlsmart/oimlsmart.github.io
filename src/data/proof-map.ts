@@ -241,7 +241,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
         says: 'the classroom: a layered curriculum where you certify a simulated load cell before touching a real instrument',
         anchors: [
           { kind: 'live', url: 'https://www.oimlsmart.org/recs/docs/oiml-rec/13-running-the-demo', probe: 'Running the Demo' },
-          { kind: 'live', url: 'https://primmel.github.io/primmel-smart-docs/learn/', probe: 'curriculum' },
+          { kind: 'live', url: 'https://www.primmel.org/primmel-smart-docs/learn/', probe: 'curriculum' },
         ],
       },
     ],
