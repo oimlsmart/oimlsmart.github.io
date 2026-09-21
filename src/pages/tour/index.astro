@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro'
 import ShotFigure from '../../components/ShotFigure.astro'
-import TourEstateMap from '../../components/diagrams/TourEstateMap.astro'
+import TourServiceMap from '../../components/diagrams/TourServiceMap.astro'
 import { TOUR_SLIDES, TOUR_CAPTURED } from '../../data/tour-slides'
 
 // The CIML tour (TODO.promotion/07): the interactive "Digital OIML"
@@ -50,7 +50,7 @@ const n = (i: number) => String(i + 1).padStart(2, '0')
                 </ul>
               )}
 
-              {s.diagram === 'estate-map' && <TourEstateMap />}
+              {s.diagram === 'service-map' && <TourServiceMap />}
 
               {s.live && (
                 <div class="tour-live">

@@ -60,7 +60,7 @@ export interface TourSlideDef {
   /** The demo moment (flow slides): the live step + the dated fallback. */
   readonly live?: TourLiveStep
   /** The one diagram, where the slide carries one. */
-  readonly diagram?: 'estate-map'
+  readonly diagram?: 'service-map'
   /** The presenter note: the talk track, what to click, the fallback. */
   readonly note: string
   /** The fast-forward beat (TODO.demo-ops/07, the audience fast-forward):
@@ -119,7 +119,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
     kicker: 'The estate, one picture',
     title: 'The estate map',
     lede: 'One model at the center, everything else derived: the page you read, the form you fill, the verdict computed, the certificate signed, the register that answers.',
-    diagram: 'estate-map',
+    diagram: 'service-map',
     links: [
       { href: '/architecture', label: 'The component map', desc: 'the repositories, the SSOT flow, the live gate numbers' },
       { href: '/services/', label: 'The services directory', desc: 'each service with its live proof' },
