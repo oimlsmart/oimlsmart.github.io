@@ -31,11 +31,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-      - name: Checkout the shell package (the chrome SSOT)
-        uses: actions/checkout@v6
-        with:
-          repository: oimlsmart/site-shell
-          path: vendor/site-shell
 
       - name: Setup Pages
         id: pages
@@ -52,6 +47,9 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Nav completeness gate
+        run: npm run check:nav
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
