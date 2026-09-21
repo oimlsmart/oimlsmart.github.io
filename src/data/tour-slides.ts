@@ -367,7 +367,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
     chip: 'SMART',
     bullets: [
       'A verifier never has to trust a deployment; it resolves the signer against the registry.',
-      'The demo proves the negative honestly: production refuses the demo organizations, and the 404 is the answer being demonstrated.',
+      'The registry proves the negative honestly: an unregistered organization is refused with a named error, and the 404 is the answer being demonstrated.',
     ],
     links: [
       { href: '/technologies/trust-registry', label: 'The trust registry', desc: 'the technology page' },

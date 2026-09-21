@@ -507,10 +507,10 @@ export const PROOF_MAP: readonly ProofPage[] = [
           { kind: 'live', url: 'https://id.oimlsmart.org/op/keys/ms-de.json', probe: '"org_id":"ms-de"' },
           {
             kind: 'live',
-            url: 'https://id.oimlsmart.org/op/keys/EX1.json',
+            url: 'https://id.oimlsmart.org/op/keys/no-such-organization.json',
             expect: [404],
             probe: 'not on the organization registry',
-            skip: 'the honest refusal IS the proof here: production never seeds the demo organizations and the 404 body says so (lychee.toml carries the same exclusion)',
+            skip: 'the honest refusal IS the proof here: an unregistered organization is refused with a named error and the 404 body says so (lychee.toml carries the same exclusion)',
           },
           { kind: 'live', url: `${DEMO}/.well-known/did.json`, probe: 'verificationMethod' },
         ],
