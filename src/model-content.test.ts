@@ -58,9 +58,9 @@ describe('the model-content rule (TODO.promotion/08)', () => {
       console.warn('clause-pin legs SKIP: SMART_REPO undeclared')
       return
     }
-    expect(checkClausePin(join(smart.path, 'data/oiml-b018-e25/document.presentation.xml'), '14.8', 'The only valid version of an OIML certificate')).toBeNull()
-    expect(checkClausePin(join(smart.path, 'data/oiml-b018-e25/document.presentation.xml'), '15.8', 'The only valid version')).toMatch(/clause 15.8 not found/)
-    expect(checkClausePin(join(smart.path, 'data/oiml-cs-pd-05/document.presentation.xml'), '5.1', 'send a copy of each OIML certificate')).toBeNull()
+    expect(checkClausePin(join(smart.path, 'reference-docs/corpus/oiml-b018-e25/document.presentation.xml'), '14.8', 'The only valid version of an OIML certificate')).toBeNull()
+    expect(checkClausePin(join(smart.path, 'reference-docs/corpus/oiml-b018-e25/document.presentation.xml'), '15.8', 'The only valid version')).toMatch(/clause 15.8 not found/)
+    expect(checkClausePin(join(smart.path, 'reference-docs/corpus/oiml-cs-pd-05/document.presentation.xml'), '5.1', 'send a copy of each OIML certificate')).toBeNull()
   })
 
   it('the allowlist is dated, pinned, and at or under its ceiling', () => {

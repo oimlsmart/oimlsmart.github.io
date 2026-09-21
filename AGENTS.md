@@ -25,8 +25,9 @@ page, and per page its claims with their proof anchors:
 - `source` — a file in this repo (a data file a page renders from; the
   probe pins the row the page quotes, e.g. the entitlement matrix's
   named cells).
-- `smart` — a file in the smart repo (the SSOT: DEMO_FLOWS, the data
-  trees). Checked when `SMART_REPO` is declared — the gates.yml
+- `smart` — a file in the smart repo (the SSOT: DEMO_FLOWS, the
+  publication corpus, the baked generated registries, the tracked
+  AsciiDoc sources). Checked when `SMART_REPO` is declared — the gates.yml
   posture: declared ⇒ verified; undeclared ⇒ a loud skip, never a
   false green.
 - `live` — a URL on a running surface. Lychee proves resolution
@@ -81,10 +82,12 @@ derives it from the SSOT at build time or carries a dated allowlist
 entry. The tripwire (`scripts/check-model-content.ts`, ridden by
 `src/model-content.test.ts` in `npm test`) flags the literal shapes and
 fails on any without an entry; the entry's pins are re-verified against
-the smart repo's trees whenever `SMART_REPO` is declared (the clause
-pins read the publications' presentation XMLs by their autonum
-numbering), and the `live` pins are exercised signed-in by the nightly
-demo smoke. The list ONLY SHRINKS: the ceiling pin
+the smart repo's trees whenever `SMART_REPO` is declared (the B 18 and
+PD clause pins read the publications' presentation XMLs under
+`reference-docs/corpus/` by their autonum numbering; the R-series pins
+read the baked generated registries' clause-URN fragments and the
+tracked AsciiDoc sources), and the `live` pins are exercised signed-in
+by the nightly demo smoke. The list ONLY SHRINKS: the ceiling pin
 (`MODEL_CONTENT_CEILING`) makes growth a deliberate commit, and a stale
 entry (its literal no longer on the page) fails the gate. Scope boundary
 said honestly: the rule covers the promotion surfaces; the ladder pages
