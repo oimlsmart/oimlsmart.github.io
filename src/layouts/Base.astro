@@ -25,6 +25,6 @@ interface Props {
 const { title, description } = Astro.props
 ---
 
-<Shell title={title} description={description} siteTitle={SITE.title} internal aiAssistant={aiAssistant}>
+<Shell title={title} description={description} siteTitle={SITE.title} signInHref="https://id.oimlsmart.org/" internal aiAssistant={aiAssistant}>
   <slot />
 </Shell>
