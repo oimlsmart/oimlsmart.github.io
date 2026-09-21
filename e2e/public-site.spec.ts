@@ -21,18 +21,32 @@ test.describe('Public site — critical paths', () => {
     await expect(dropdownContainer.locator('a[href="https://www.oimlsmart.org/docs/"]')).toHaveCount(1)
   })
 
-  test('the tier dropdowns carry the component entries', async ({ page }) => {
+  test('the components dropdown carries both tiers, SMART first', async ({ page }) => {
     await page.goto('/')
-    // The SMART tier: published artifacts + the Type-approval level.
-    const smart = page.getByTestId('nav-dropdown-smart').locator('xpath=..')
-    for (const href of ['/recs', '/vocab', '/publications', '/studio', '/cnml', '/smart', '/platform']) {
-      await expect(smart.locator(`a[href="https://www.oimlsmart.org${href}"]`)).toHaveCount(1)
+    // The consolidated Components dropdown: the SMART tier's entries
+    // followed by the SMART+ tier's, straight from the one registry
+    // (track 02 narrowed the top level to five; no href was lost).
+    const components = page.getByTestId('nav-dropdown-components').locator('xpath=..')
+    // Tier-paired routes (/cnml, /smart, /platform) legitimately appear
+    // twice — once per tier — distinguished by the tier toggle on the
+    // destination page; the rest appear once.
+    for (const [href, count] of [
+      ['/recs', 1],
+      ['/vocab', 1],
+      ['/publications', 1],
+      ['/studio', 1],
+      ['/cnml', 2],
+      ['/smart', 2],
+      ['/platform', 2],
+      ['/smi', 1],
+      ['/sst', 1],
+    ] as const) {
+      await expect(components.locator(`a[href="https://www.oimlsmart.org${href}"]`)).toHaveCount(count)
     }
-    // The SMART+ tier: the full Type-instance + measurement lifecycle.
-    const smartplus = page.getByTestId('nav-dropdown-smartplus').locator('xpath=..')
-    for (const href of ['/cnml', '/smi', '/sst', '/smart', '/platform']) {
-      await expect(smartplus.locator(`a[href="https://www.oimlsmart.org${href}"]`)).toHaveCount(1)
-    }
+    // R 60's primacy: SMART Recommendations is the dropdown's first link.
+    const firstLink = components.locator('a').first()
+    await expect(firstLink).toHaveAttribute('href', 'https://www.oimlsmart.org/recs')
+    await expect(firstLink).toContainText('SMART Recommendations')
   })
 
   test('about dropdown trigger is present', async ({ page }) => {
@@ -53,18 +67,21 @@ test.describe('Public site — critical paths', () => {
 
   test('the OIML-CS SMART platform is the /smart component entry', async ({ page }) => {
     await page.goto('/')
-    // The standalone top-level link folded into the SMART tier dropdown
-    // (the nav contract: one href, one home).
-    const trigger = page.getByTestId('nav-dropdown-smart')
+    // The standalone top-level link folded into the components dropdown
+    // (the nav contract: one href, one home; the tier pair carries the
+    // href twice — SMART and SMART+).
+    const trigger = page.getByTestId('nav-dropdown-components')
     const dropdownContainer = trigger.locator('xpath=..')
-    await expect(dropdownContainer.locator('a[href="https://www.oimlsmart.org/smart"]')).toHaveCount(1)
+    await expect(dropdownContainer.locator('a[href="https://www.oimlsmart.org/smart"]')).toHaveCount(2)
   })
 
   test('the four promotion sections sit in the nav and render', async ({ page }) => {
     // TODO.promotion/01: Audiences / Technologies / Use Cases / Services
-    // are first-class standalone nav entries (front-door absolute).
+    // are first-class nav entries (front-door absolute; since track 02
+    // they ride the consolidated Discover dropdown).
     await page.goto('/')
     const nav = page.locator('#nav-menu')
+    await expect(page.getByTestId('nav-dropdown-discover')).toBeVisible()
     for (const [label, href] of [
       ['Audiences', '/audiences/'],
       ['Technologies', '/technologies/'],

@@ -13,3 +13,28 @@ export const SITE = {
 } as const
 
 export default SITE
+
+/** The canonical legal pages (the footer's Privacy/Terms targets). */
+export const LEGAL = {
+  privacy: `${SITE.url}/privacy`,
+  terms: `${SITE.url}/terms`,
+}
+
+/** Programme partners referenced by the footer's bottom bar. */
+export const PARTNERS = {
+  oiml: 'https://www.oiml.org',
+  ribose: 'https://www.ribose.com',
+  github: 'https://github.com/oimlsmart',
+}
+
+/** The service surfaces the chrome reads. The status service and the AI
+ *  service live on their own origins, so the links are literal here,
+ *  never front-door derived. The AI assistant reads `ai` when the
+ *  layout's assistant flag carries no explicit origin. */
+export const SERVICES = {
+  status: 'https://status.oimlsmart.org',
+  ai: 'https://ai.oimlsmart.org',
+}
+
+/** The canonical component-logo asset base (override only for staging). */
+export const COMPONENT_ASSET_BASE = `${SITE.url}/img/components`
