@@ -406,7 +406,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
     claims: [
       {
         id: 'dataspace-standards-map',
-        says: 'the estate speaks the neighboring standards: the Dataspace Protocol, ODRL 2.2, the IDS Reference Architecture Model',
+        says: 'the program speaks the neighboring standards: the Dataspace Protocol, ODRL 2.2, the IDS Reference Architecture Model',
         anchors: [
           { kind: 'live', url: 'https://www.w3.org/TR/odrl-model/', probe: 'ODRL' },
           {
@@ -425,7 +425,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
     claims: [
       {
         id: 'identity-one-account',
-        says: 'one account across the estate: the identity service is the single OpenID Provider, discoverable anonymously',
+        says: 'one account across the services: the identity service is the single OpenID Provider, discoverable anonymously',
         anchors: [
           { kind: 'live', url: 'https://id.oimlsmart.org/.well-known/openid-configuration', probe: 'issuer' },
         ],
@@ -694,7 +694,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
     claims: [
       {
         id: 'services-identity-service',
-        says: 'the identity service: the estate’s accounts, the join flow, the member directory',
+        says: 'the identity service: the program’s accounts, the join flow, the member directory',
         anchors: [
           { kind: 'live', url: 'https://id.oimlsmart.org/', probe: 'Sign in' },
           { kind: 'live', url: 'https://id.oimlsmart.org/op/join', probe: 'OIML' },
@@ -724,7 +724,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
     claims: [
       {
         id: 'services-status-board',
-        says: 'the status service publishes the estate’s live state',
+        says: 'the status service publishes the program’s live state',
         anchors: [
           { kind: 'live', url: 'https://status.oimlsmart.org/', probe: 'OIML' },
         ],

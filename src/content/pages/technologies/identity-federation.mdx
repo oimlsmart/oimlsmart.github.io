@@ -1,6 +1,6 @@
 ---
 title: 'The identity federation'
-description: 'One account across the estate: the OIML SMART identity service is the single OpenID Provider, every platform instance is a relying party, and members may run their own provider from the same software.'
+description: 'One account across the services: the OIML SMART identity service is the single OpenID Provider, every platform instance is a relying party, and members may run their own provider from the same software.'
 eyebrow: 'Technologies · 06'
 captured: '2026-08-29'
 ---
@@ -12,7 +12,7 @@ import SmartSplit from '../../../components/SmartSplit.astro'
 import OidcFederation from '../../../components/diagrams/technologies/OidcFederation.astro'
 
 The identity federation gives every participant one account for the whole
-estate: the identity service at id.oimlsmart.org is the single OpenID
+program: the identity service at id.oimlsmart.org is the single OpenID
 Provider, and every platform instance is a relying party that runs no
 login form and holds no account list of its own. Behind the account sits
 the organization registry with the OIML member taxonomy, so a sign-in
@@ -57,7 +57,7 @@ repository says so plainly).
 <SmartSplit
   today={[
     { text: 'The provider is live in production: discovery, sign-in, the join flow against the live participants register, and the per-organization consoles.', href: 'https://id.oimlsmart.org/.well-known/openid-configuration', label: 'the contract' },
-    { text: 'Every estate surface is a relying party: the demo, the studio, the vocab, the minisites hold no account lists of their own.', href: 'https://demo.oimlsmart.org/', label: 'the demo' },
+    { text: 'Every surface is a relying party: the demo, the studio, the vocab, the minisites hold no account lists of their own.', href: 'https://demo.oimlsmart.org/', label: 'the demo' },
     { text: 'GitHub and Google sign-in are linked; the participants register is populated (63 member states, 66 corresponding members, the IAs, the laboratory associations, the utilizers, the associates).', href: 'https://id.oimlsmart.org/op/join', label: 'the join flow' },
   ]}
   vision={[
@@ -77,23 +77,23 @@ hold a machine identity of the same shape as its owner's.
 
 ## Who may use it, and who may run it
 
-Everyone gets an account on the estate, and any member may run the
+Everyone gets an account on the services, and any member may run the
 identity software as its own provider; member states additionally receive
 the streaming update channel. The determinations, quoted from the
 program's single entitlement source:
 
-<ServiceEntitlement service="estate-account" />
+<ServiceEntitlement service="program-account" />
 
 <ServiceEntitlement service="identity-software" />
 
 ## The honest questions
 
-**Does the estate hold our member list hostage?**
-No. The software is the same one the estate runs, the self-host runbook is
+**Does the program hold our member list hostage?**
+No. The software is the same one the program runs, the self-host runbook is
 public with an executable proof in the end-to-end suite, and a member
 running its own provider on its own domain is a configuration act. The
 platform instances consume the same claims contract either way, so a
-deployment authenticates against the estate provider or the member's own
+deployment authenticates against the program provider or the member's own
 without a code change.
 
 **Why no SMS codes?**
@@ -106,7 +106,7 @@ the repository.
 **What can a service learn about me?**
 Only what its declared claims policy needs. Each relying party receives
 the least claims it needs; your organization's administrator, not the
-estate, sets your data cone, and the token carries the posture so services
+program, sets your data cone, and the token carries the posture so services
 enforce it without a callback to the provider.
 
 ## Try it, read it, talk to us

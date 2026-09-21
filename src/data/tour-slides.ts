@@ -82,7 +82,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
     id: 's01',
     kicker: 'The CIML tour',
     title: 'The Digital OIML, live',
-    lede: 'The OIML SMART estate as a guided tour: every claim one click from a running proof, every demo moment playable live or read from a dated capture.',
+    lede: 'OIML SMART as a guided tour: every claim one click from a running proof, every demo moment playable live or read from a dated capture.',
     bullets: [
       'Nineteen slides, two cuts: the 5-minute committee slot and the 20-minute working visit. The presenter notes carry both, with the recorded rehearsal timings.',
       'Navigate with the arrow keys, the on-screen buttons, or a clicker. Every slide has a stable address: /tour#s07 goes straight to the seventh slide.',
@@ -116,8 +116,8 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
   },
   {
     id: 's03',
-    kicker: 'The estate, one picture',
-    title: 'The estate map',
+    kicker: 'The services, one picture',
+    title: 'The service map',
     lede: 'One model at the center, everything else derived: the page you read, the form you fill, the verdict computed, the certificate signed, the register that answers.',
     diagram: 'service-map',
     links: [
@@ -298,7 +298,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
     bullets: [
       'Labeled honestly: this is the SMART+ vision, anchored to the roadmap, not a shipped surface.',
       'The twin serves the instrument\'s governed aspects; compliance becomes monitorable between assessments, not only at them.',
-      'The simulation below (the SST) is how the estate rehearses that future today.',
+      'The simulation below (the SST) is how the program rehearses that future today.',
     ],
     links: [
       { href: '/technologies/smart-twin', label: 'The SMART Twin', desc: 'the technology page, with the roadmap anchors' },
@@ -346,7 +346,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
     id: 's13',
     kicker: 'The technologies · 5 of 7',
     title: 'The identity federation',
-    lede: 'One account across the estate: a single OpenID Provider, every platform instance a relying party, and members may run their own provider from the same software.',
+    lede: 'One account across the services: a single OpenID Provider, every platform instance a relying party, and members may run their own provider from the same software.',
     chip: 'SMART',
     bullets: [
       'Accounts issue per organization, approved by the organization\'s own administrator; the join flow knows the real OIML member directory.',
@@ -372,14 +372,14 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
     links: [
       { href: '/technologies/trust-registry', label: 'The trust registry', desc: 'the technology page' },
     ],
-    note: 'The quiet slide that makes verification work: keys and standing, public, anonymous to resolve. The negative proof is worth saying aloud; it is the estate\'s honesty doctrine in miniature.',
+    note: 'The quiet slide that makes verification work: keys and standing, public, anonymous to resolve. The negative proof is worth saying aloud; it is the program\'s honesty doctrine in miniature.',
     twentyMin: '16:00',
   },
   {
     id: 's15',
     kicker: 'The technologies · 7 of 7',
     title: 'Dataspace and interop: the standards map',
-    lede: 'The estate speaks the neighboring standards rather than replacing them. Every interop artifact is a projection outward from the authoritative model, never a competing source.',
+    lede: 'The program speaks the neighboring standards rather than replacing them. Every interop artifact is a projection outward from the authoritative model, never a competing source.',
     chip: 'SMART',
     bullets: [
       'The federation planes map onto the dataspace vocabulary: the Dataspace Protocol (ISO/IEC 20151), ODRL 2.2, the IDS Reference Architecture Model.',

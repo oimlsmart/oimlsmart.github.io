@@ -1,13 +1,13 @@
 // ─────────────────────────────────────────────────────────────────────
 // entitlement-matrix.ts — the ONE source for the service-entitlement
 // matrix (TODO.promotion/09): which services each member category may
-// USE on the hosted estate and which they may RUN themselves. Every
+// USE on the hosted services and which they may RUN themselves. Every
 // page that answers the entitlement question renders or quotes from
 // here — never a hand-copied table that drifts.
 //
 // The determination rules are the program owner's verbatim policy
 // (2026-08-29, TODO.promotion/09 in oimlsmart/smart):
-//   - EVERYONE gets an account on the estate.
+//   - EVERYONE gets an account on the services.
 //   - The identity service software may be self-hosted by any member
 //     (and, the repo being public, inspected by any organization).
 //   - The SMART Platform self-deploy entitlement attaches to the
@@ -74,8 +74,8 @@ const ROADMAP: EntitlementCell = { marks: [], roadmap: true }
 
 export const ENTITLEMENT_MATRIX: readonly EntitlementService[] = [
   {
-    id: 'estate-account',
-    name: 'Estate account (the identity service)',
+    id: 'program-account',
+    name: 'OIML SMART account (the identity service)',
     href: 'https://id.oimlsmart.org',
     hrefLabel: 'live',
     cells: {
@@ -248,7 +248,7 @@ export const ENTITLEMENT_MATRIX: readonly EntitlementService[] = [
 
 /** The legend, rendered with the matrix. */
 export const ENTITLEMENT_LEGEND = [
-  { mark: 'use', glyph: '✅', label: 'Use — hosted, on the official estate' },
+  { mark: 'use', glyph: '✅', label: 'Use — hosted, on the official services' },
   { mark: 'self-host', glyph: '🏠', label: 'Self-host — on-prem/cloud, under the category’s own entitlement' },
   { mark: 'streaming', glyph: '🔄', label: 'Streaming updates — the rolling channel the deployment runbook names' },
   { mark: 'upsell', glyph: '⬆️', label: 'The upsell note — see the narratives below the matrix' },

@@ -33,7 +33,7 @@ export const STATUS_ROWS: readonly StatusProbeRow[] = [
   {
     id: 'identity-sign-in',
     name: 'Identity: sign-in page',
-    desc: 'The estate single sign-on page, asserted to carry its interactive island, not just any 200.',
+    desc: "The program's single sign-on page, asserted to carry its interactive island, not just any 200.",
     availability: '99.9% / 30d',
     latency: 'p95 ≤ 2 s',
   },
@@ -68,14 +68,14 @@ export const STATUS_ROWS: readonly StatusProbeRow[] = [
   {
     id: 'ai-service',
     name: 'OIML SMART AI',
-    desc: 'The estate AI assistant over the OIML library, at ai.oimlsmart.org.',
+    desc: "The program's AI assistant over the OIML library, at ai.oimlsmart.org.",
     availability: '99.5% / 30d',
     latency: 'p95 ≤ 3 s',
   },
   {
     id: 'public-site',
     name: 'Public site',
-    desc: 'The estate front door at www.oimlsmart.org.',
+    desc: "The program's front door at www.oimlsmart.org.",
     availability: '99.9% / 30d',
     latency: 'p95 ≤ 2 s',
   },
