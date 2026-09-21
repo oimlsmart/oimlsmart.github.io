@@ -1,35 +1,48 @@
 ---
 title: 'URN Specification'
 shortTitle: 'URN'
+description: 'OIML SMART assigns a Uniform Resource Name (URN) in the urn:oiml namespace to every publication, SMART model element, certificate, and organizational body it identifies.'
+eyebrow: 'Reference · Identifiers'
 ---
 
-OIML SMART uses Uniform Resource Names (URNs) as persistent identifiers for OIML entities, Recommendations, requirements, tests, forms, terms, and certificates.
+OIML SMART assigns a Uniform Resource Name (URN) as the persistent identifier of every entity it publishes: OIML publications and their clauses, the elements of a SMART model, certificates of conformity, and organizational bodies. URNs are location-independent, so they survive repository moves, redesigns, and changes to the publishing infrastructure, and a URN can be resolved through different services over time.
 
-## URN namespace
+## The namespace
 
-The OIML URN namespace is `urn:oiml:`. Sub-namespaces identify the entity type:
+The OIML URN namespace is `urn:oiml:`. A sub-namespace identifies the entity class:
 
-| Namespace | Example |
-| --- | --- |
-| `urn:oiml:recommendation:` | `urn:oiml:recommendation:r60:2021` |
-| `urn:oiml:requirement:` | `urn:oiml:requirement:r60:met:error-within-mpe` |
-| `urn:oiml:test:` | `urn:oiml:test:r60:measurement-error-mdlo` |
-| `urn:oiml:form:` | `urn:oiml:form:r60:measurement-error-mdlo` |
-| `urn:oiml:term:` | `urn:oiml:term:r60:accuracy-class` |
-| `urn:oiml:certificate:` | `urn:oiml:certificate:r60-a-de1-2024-001` |
+| Sub-namespace | Identifies | Example |
+| --- | --- | --- |
+| `pub` | A publication, a part, a clause, or a vocabulary term | `urn:oiml:pub:r:60-1:2021#clause-5.4` |
+| `pub` … `:req:` | An element of a SMART model | `urn:oiml:pub:r:60:2021:req:/metrological/mpe` |
+| `cs:cert` | An OIML-CS certificate | `urn:oiml:cs:cert:r:60:2021:a:de1:26.01` |
+| `group` | An organizational body | `urn:oiml:group:tc:3` |
+| `bulletin` | An OIML Bulletin issue | `urn:oiml:bulletin:2026-01` |
 
-## Why URNs
-
-URNs are persistent, location-independent identifiers. Unlike URLs, they survive repository moves, redesigns, and changes to the publishing infrastructure. A URN can be resolved through different services over time.
+All values are lower-case, empty fields between colons are omitted, and multi-part publications embed the part number in the document-number field (`60-1` for OIML R 60-1).
 
 ## Resolution
 
-Resolution services are maintained by BIML and the OIML SMART platform. A URN resolver returns the current canonical location of the identified entity (its metadata, its source YAML, its published PDF section, etc.).
+A URN transforms into a valid HTTP URI by replacing the namespace prefix with the web domain of the resolving service and mapping the resource class to the URL path. Publication references resolve against the OIML web site, and the elements of a SMART model resolve against the SMART platform.
+
+```txt
+urn:oiml:pub:r:60:2021
+  → https://www.oiml.org/pub/r/60/2021
+
+urn:oiml:pub:r:60:2021:req:/metrological/mpe
+  → https://platform.oimlsmart.org/pub/r/60/2021/req/metrological/mpe
+
+urn:oiml:cs:cert:r:60:2021:a:de1:26.01
+  → https://www.oiml.org/cs/cert/r/60/2021/a/de1/26.01
+
+urn:oiml:group:tc:3
+  → https://www.oiml.org/group/tc/3
+```
 
 ## Cross-references
 
-Within a SMART Recommendation, every cross-reference is encoded as a URN. The build pipeline validates that every referenced URN resolves to a declared entity, no dangling references.
+Within a SMART Recommendation every cross-reference is encoded as a URN, and the build validates that each referenced URN resolves to a declared entity, so a dangling reference fails the build. Human-readable citations derive from URNs: `urn:oiml:pub:r:60-1:2021` cites as OIML R 60-1:2021, and `urn:oiml:pub:r:60-1:2021#clause-5.4` cites as R 60-1, 5.4.
 
 ## Compatibility
 
-The OIML URN scheme is designed to be compatible with the IEC-ISO SMART identifier system where applicable, so cross-organization references are unambiguous.
+The OIML URN scheme is designed to be compatible with the IEC-ISO SMART identifier system where applicable, so that a cross-organization reference is unambiguous.

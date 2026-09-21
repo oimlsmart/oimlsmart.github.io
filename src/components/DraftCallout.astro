@@ -1,14 +1,14 @@
 ---
 const path = Astro.url.pathname
 let variant = 'default'
-if (path.startsWith('/docs/specifications/')) variant = 'specs'
+if (path.startsWith('/docs/specifications')) variant = 'specs'
 else if (path.startsWith('/news/')) variant = 'compact'
 
 const title = 'DRAFT. Pilot programme'
 const body = variant === 'compact'
   ? 'This page is part of the OIML SMART pilot. Content is a draft and may change without notice.'
   : variant === 'specs'
-    ? 'This document is part of the SMART_REQS specification set for the OIML SMART pilot. It is a draft and may change without notice as the pilot evolves.'
+    ? 'This page concerns the SMART_REQS specification set, which is superseded: it describes the first design of the OIML SMART pilot platform, and the current design may change without notice as the pilot evolves.'
     : 'This page documents the OIML SMART pilot programme. Every requirement, test, form, ontology entity, and specification described here is a draft and may change without notice as the pilot evolves. OIML Member States and Corresponding Members seeking engagement should contact OIML through official channels. Not for external distribution.'
 ---
 
