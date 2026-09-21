@@ -3,7 +3,7 @@
 // (TODO.promotion/08). The walkthrough and tour pages deep-link the
 // live demo; the demo reseeds nightly; this leg is the guarantee the
 // tour never silently breaks on that reset. Declared cadence: NIGHTLY
-// (.github/workflows/freshness.yml), never the per-push path — the
+// (.github/workflows/freshness-sentinel.yml), never the per-push path — the
 // per-push suite stays hermetic, and this spec lives behind its own
 // config (playwright.demo.config.ts) so `npm run test:e2e` never picks
 // it up.

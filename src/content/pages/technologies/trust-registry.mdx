@@ -33,7 +33,7 @@ organization's standing.
 ## What it does today
 
 - **Resolves any registered organization, anonymously.** [GET /op/keys/ms-de.json](https://id.oimlsmart.org/op/keys/ms-de.json) answers the member state's entry: the organization, its kind, its state, its standing, and its key set. The key set is empty today: organizations' keys populate as their own administrators enroll them, which is the trust-registry program's current work (the capture above, dated, shows the honest empty set).
-- **Refuses unknown organizations honestly.** Asking for the demo cast on production, [GET /op/keys/EX1.json](https://id.oimlsmart.org/op/keys/EX1.json), answers 404 with `{"error":"organization 'EX1' is not on the organization registry"}`: production never seeds the demo organizations, and the endpoint says so rather than guessing.
+- **Refuses unknown organizations honestly.** Asking for an organization that was never registered, [GET /op/keys/no-such-organization.json](https://id.oimlsmart.org/op/keys/no-such-organization.json), answers 404 with `{"error":"organization 'no-such-organization' is not on the organization registry"}`: the registry says so rather than guessing.
 - **Signs with attributable keys on the demo stack.** The demo's seeded EX1 carries its demo signing key, and the demo certificate's VC and SD-JWT forms sign with the demo federation key, resolvable by did:web at [demo.oimlsmart.org/.well-known/did.json](https://demo.oimlsmart.org/.well-known/did.json), so the whole resolution story is exercisable end to end against the demo today.
 - **Scopes every key to its authorization.** Each authority's key is scoped to its authorized Recommendations by an X.509 v3 extension that the [CNML verifier](/technologies/cnml) enforces, so a key answers not only "whose" but "for what".
 - **Stays verifiable offline.** The resolution document is anonymous, cache-bounded, and CORS-open; a verifier with a downloaded copy resolves a signer without a network path back at verification time.
@@ -61,7 +61,7 @@ the answer "valid at the time; the key since revoked, on a stated date".
 <SmartSplit
   today={[
     { text: 'The resolution contract answers in production today: the organization registry and the per-kind standing are live, anonymous, and cacheable.', href: 'https://id.oimlsmart.org/op/keys/ms-de.json', label: 'resolve' },
-    { text: 'The honest refusal is live too: unknown organizations get a named error, never a guess.', href: 'https://id.oimlsmart.org/op/keys/EX1.json', label: 'the refusal' },
+    { text: 'The honest refusal is live too: unregistered organizations get a named error, never a guess.', href: 'https://id.oimlsmart.org/op/keys/no-such-organization.json', label: 'the refusal' },
     { text: 'The demo stack carries the full attributed chain: EX1’s demo key signs the demo certificate’s VC and SD-JWT forms, resolvable by did:web.', href: 'https://demo.oimlsmart.org/.well-known/did.json', label: 'the demo key' },
   ]}
   vision={[

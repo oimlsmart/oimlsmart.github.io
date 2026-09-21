@@ -1,0 +1,269 @@
+name: freshness-sentinel
+
+# The public site's nightly freshness sentinel (track05). The per-push
+# gates (build, lychee, the hermetic suites) stay green while TIME-class
+# rot accumulates, because a push validates a build and never the week
+# that follows it: captures age past their TTLs, the demo reseeds under
+# a published tour, a host leaves the registry, a deployed route dies,
+# or the vendored shell falls behind its published channel. The studio
+# repo's freshness-sentinel is the model; this workflow adapts it to
+# the public site. The legs, one job each so a red leg cannot mask the
+# others:
+#
+#   1. PACKAGES PIN       the vendored house shell (@oimlsmart/
+#                         site-shell, file:vendor/site-shell) is not
+#                         behind npm's published channel, and the pin
+#                         still rides the vendored channel at all.
+#   2. PROVENANCE PROBES  the proof-map's live anchors still show what
+#                         the promotion pages claim, and every dated
+#                         capture sits inside its declared TTL (the
+#                         freshness.yml legs, moved in).
+#   3. DEMO LIVENESS      the playwright smoke against demo.oimlsmart.
+#                         org; the demo reseeds nightly and the tour
+#                         must survive that reset (moved in).
+#   4. LIVE SMOKE         the key public routes of the DEPLOYED site
+#                         answer 200; the half a push-time build cannot
+#                         see.
+#   5. CROSS-HOST LINKS   every host in the canonical host registry
+#                         (the footer's "The sites" set) answers 200,
+#                         and the built site passes the lychee sweep on
+#                         a schedule; links.yml keeps its per-push post.
+#
+# The report half rides the studio's standing-issue pattern, extracted
+# into scripts/sentinel-issue.mjs: any red leg opens or updates ONE
+# issue ("Freshness sentinel: red") carrying the run link and the leg
+# evidence, and the first fully green night after a red CLOSES it with
+# the recovery evidence, so a self-healed failure never goes stale.
+
+on:
+  schedule:
+    # Nightly at 05:37 UTC. The minute sits off the herd marks, and the
+    # hour is staggered from the studio sentinel's 03:41 slot so the
+    # two sentinels never compete for the same window.
+    - cron: '37 5 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: freshness-sentinel
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  packages-pin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the shell package (the chrome SSOT)
+        uses: actions/checkout@v6
+        with:
+          repository: oimlsmart/site-shell
+          path: vendor/site-shell
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: The vendored shell is not behind npm's published channel
+        run: node scripts/check-shell-pin.mjs
+
+  provenance-probes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the shell package (the chrome SSOT)
+        uses: actions/checkout@v6
+        with:
+          repository: oimlsmart/site-shell
+          path: vendor/site-shell
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Every live anchor resolves and still shows the claim
+        run: npx tsx scripts/check-proof-map.ts --live
+
+      - name: Dated captures within their declared TTLs
+        run: npx tsx scripts/check-shot-freshness.ts
+
+  demo-liveness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the shell package (the chrome SSOT)
+        uses: actions/checkout@v6
+        with:
+          repository: oimlsmart/site-shell
+          path: vendor/site-shell
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx playwright install --with-deps chromium
+
+      - name: The walkthrough/tour deep links into the live demo
+        run: npx playwright test -c playwright.demo.config.ts
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: demo-liveness-report
+          path: test-results/
+          retention-days: 14
+
+  live-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: The deployed site's key public routes answer 200
+        run: |
+          set -euo pipefail
+          # Every route below was verified against a local build's dist/
+          # at sentinel authoring time, except the two sibling
+          # minisites /studio/ and /recs/: their own Pages sites serve
+          # them (the split lychee.toml documents), so they exist only
+          # on the live host, which is exactly what this leg probes.
+          for route in \
+            / \
+            /docs/ \
+            /docs/arch/ \
+            /recommendations/ \
+            /use-cases/type-evaluation-end-to-end/ \
+            /interop/whitepaper/ \
+            /ontology/ \
+            /studio/ \
+            /recs/; do
+            url="https://www.oimlsmart.org${route}"
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L "$url")
+            echo "$url → HTTP $code"
+            if [ "$code" != "200" ]; then
+              echo "::error::live smoke: $url returned HTTP $code"
+              exit 1
+            fi
+          done
+
+  cross-host-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Checkout the shell package (the chrome SSOT)
+        uses: actions/checkout@v6
+        with:
+          repository: oimlsmart/site-shell
+          path: vendor/site-shell
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Every canonical host answers 200
+        run: node scripts/check-host-registry.mjs
+
+      - name: Build
+        run: npm run build
+
+      - name: Check if site was built
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "Error: dist directory not created"
+            exit 1
+          fi
+          echo "Site built successfully"
+          ls dist/ | head -10
+
+      - name: Restore lychee cache
+        uses: actions/cache@v4
+        with:
+          path: .lycheecache
+          key: cache-lychee-${{ github.sha }}
+          restore-keys: cache-lychee-
+
+      # The links.yml invocation shape, unmodified: the same config
+      # carries the sibling-path exclusions another track owns.
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --verbose
+            --no-progress
+            --config lychee.toml
+            --root-dir ${{ github.workspace }}/dist
+            dist/**/*.html
+          fail: true
+          output: link-check-results.md
+          format: markdown
+
+      - name: Upload link check results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sentinel-link-check-results
+          path: link-check-results.md
+          retention-days: 30
+
+  report-failure:
+    # One standing issue per red episode: the first failing run opens
+    # it, and every later red run appends its evidence as a comment.
+    if: failure()
+    needs: [packages-pin, provenance-probes, demo-liveness, live-smoke, cross-host-links]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Open or update the standing issue
+        run: node scripts/sentinel-issue.mjs failure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SENTINEL_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SENTINEL_EVIDENCE: |-
+            packages-pin: ${{ needs.packages-pin.result }}
+            provenance-probes: ${{ needs.provenance-probes.result }}
+            demo-liveness: ${{ needs.demo-liveness.result }}
+            live-smoke: ${{ needs.live-smoke.result }}
+            cross-host-links: ${{ needs.cross-host-links.result }}
+
+  report-recovery:
+    # The recovery half: the first fully green run after a red episode
+    # closes the standing issue with the evidence, and a green run
+    # never opens one.
+    if: success()
+    needs: [packages-pin, provenance-probes, demo-liveness, live-smoke, cross-host-links]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Close the standing issue with the recovery evidence
+        run: node scripts/sentinel-issue.mjs recovery
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SENTINEL_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SENTINEL_RECOVERY: all five legs green (packages-pin, provenance-probes, demo-liveness, live-smoke, cross-host-links)

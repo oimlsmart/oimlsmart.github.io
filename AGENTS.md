@@ -40,7 +40,8 @@ page, and per page its claims with their proof anchors:
 The per-push leg (`src/proof-map.test.ts`, ridden by `npm test`) proves
 the map complete (a new promotion page without an entry fails the
 build), the offline anchors carried, and the published captures on
-disk. The nightly leg (`.github/workflows/freshness.yml`) walks the
+disk. The nightly leg (`.github/workflows/freshness-sentinel.yml`, the
+freshness sentinel) walks the
 live anchors: `npx tsx scripts/check-proof-map.ts --live`.
 
 ### How to regenerate a screenshot
@@ -117,6 +118,9 @@ DEMO_BASE=http://localhost:3000 npx playwright test -c playwright.demo.config.ts
 | proof-map structure + offline anchors | per-push (`npm test`) | automatic |
 | model-content tripwire + SSOT pins | per-push (`npm test`; pins need `SMART_REPO`) | `npx tsx scripts/check-model-content.ts` |
 | shot declarations + published captures | per-push (`npm test`) | automatic |
-| live anchor content probes | nightly | `npx tsx scripts/check-proof-map.ts --live` |
-| screenshot staleness vs TTL | nightly | `npx tsx scripts/check-shot-freshness.ts` |
-| demo-link liveness smoke | nightly | `npx playwright test -c playwright.demo.config.ts` |
+| live anchor content probes | nightly (`freshness-sentinel`) | `npx tsx scripts/check-proof-map.ts --live` |
+| screenshot staleness vs TTL | nightly (`freshness-sentinel`) | `npx tsx scripts/check-shot-freshness.ts` |
+| demo-link liveness smoke | nightly (`freshness-sentinel`) | `npx playwright test -c playwright.demo.config.ts` |
+| vendored shell pin vs the npm channel | nightly (`freshness-sentinel`) | `node scripts/check-shell-pin.mjs` |
+| key public routes answer 200 | nightly (`freshness-sentinel`) | automatic (curl against www.oimlsmart.org) |
+| canonical hosts + the built site's links | nightly (`freshness-sentinel`; the per-push lychee stays in `links.yml`) | `node scripts/check-host-registry.mjs` |
