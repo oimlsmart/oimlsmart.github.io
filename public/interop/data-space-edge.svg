@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title>The data-space chapter in one figure: the evaluation's recommendation. Left: the Issuing Authority's instance runs the canonical federation contract (signed packages, explicit user-initiated sends, receipts, trust revocation) and holds the evaluation report evidence package in its document store. Center: a stock Eclipse EDC connector at the deployment's edge publishes that one asset kind under a usage policy; the connector is the deployment's own runtime, never part of the product. Right: the data space: a partner's connector reads the catalog over the Dataspace Protocol, negotiates to a contract agreement carrying the policy verbatim, and pulls the package through the provider's data plane; the bytes arrive still signed, byte-identical to the store's attestation, and the package keeps pointing back at the live register for status. The boundary band states the spike's scope: one connector, one asset kind, mock identity, EDC 0.18.0; an evaluation, not a commitment.</title>
+  <defs>
+    <marker id="dse-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="470" fill="#ffffff"/>
+
+  <text x="20" y="26" font-size="11" font-weight="600" fill="#475569">THE DATA-SPACE MODE: join via a connector at the deployment's edge; the product implements nothing natively.</text>
+
+  <!-- THE INSTANCE -->
+  <g>
+    <rect x="30" y="50" width="280" height="310" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="170" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">THE IA INSTANCE</text>
+    <text x="170" y="90" text-anchor="middle" font-size="10" fill="#475569">the canonical contract, untouched</text>
+    <text x="46" y="118" font-size="10" font-weight="600" fill="#334155">The federation contract:</text>
+    <text x="54" y="136" font-size="10" fill="#475569">signed ES256 packages</text>
+    <text x="54" y="152" font-size="10" fill="#475569">explicit, user-initiated sends</text>
+    <text x="54" y="168" font-size="10" fill="#475569">signed receipts; trust revocation</text>
+    <line x1="46" y1="184" x2="294" y2="184" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="46" y="206" font-size="10" font-weight="600" fill="#334155">The shared asset:</text>
+    <text x="54" y="224" font-size="10" fill="#475569">the evaluation-report evidence package</text>
+    <text x="54" y="240" font-size="10" fill="#475569">(the signed registration package with the</text>
+    <text x="54" y="254" font-size="10" fill="#475569">full evidence chain), archived in the</text>
+    <text x="54" y="268" font-size="10" fill="#475569">document store; every read re-verifies</text>
+    <text x="54" y="282" font-size="10" fill="#475569">the attested digest.</text>
+    <text x="46" y="310" font-size="9.5" fill="#64748b">Zero product changes: the spike proved the</text>
+    <text x="46" y="324" font-size="9.5" fill="#64748b">mapping with the product as it shipped.</text>
+  </g>
+
+  <!-- THE CONNECTOR -->
+  <g>
+    <rect x="360" y="50" width="270" height="310" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+    <text x="495" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#1d4ed8">THE CONNECTOR</text>
+    <text x="495" y="90" text-anchor="middle" font-size="10" fill="#475569">stock Eclipse EDC, at the edge</text>
+    <text x="376" y="118" font-size="10" font-weight="600" fill="#334155">The deployment's own runtime:</text>
+    <text x="384" y="136" font-size="10" fill="#475569">curated offerings (one asset kind,</text>
+    <text x="384" y="150" font-size="10" fill="#475569">one usage policy, declared by hand)</text>
+    <text x="376" y="174" font-size="10" font-weight="600" fill="#334155">The usage policy, in ODRL:</text>
+    <text x="384" y="192" font-size="10" fill="#475569">"reference only, no onward distribution":</text>
+    <text x="384" y="206" font-size="10" fill="#475569">declared terms; post-transfer enforcement</text>
+    <text x="384" y="220" font-size="10" fill="#475569">is organizational, as in our contract</text>
+    <line x1="376" y1="236" x2="614" y2="236" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="376" y="258" font-size="10" fill="#334155">The data plane fetches the package from</text>
+    <text x="376" y="272" font-size="10" fill="#334155">the instance's document store through</text>
+    <text x="376" y="286" font-size="10" fill="#334155">its own download gate.</text>
+    <text x="376" y="314" font-size="9.5" fill="#64748b">The one product-side enabler named by the</text>
+    <text x="376" y="328" font-size="9.5" fill="#64748b">evaluation: a scoped, revocable service</text>
+    <text x="376" y="342" font-size="9.5" fill="#64748b">credential for these fetches (roadmap).</text>
+  </g>
+
+  <!-- THE DATA SPACE -->
+  <g>
+    <rect x="680" y="50" width="250" height="310" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="805" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">THE DATA SPACE</text>
+    <text x="805" y="90" text-anchor="middle" font-size="10" fill="#475569">the partner's connector, DSP 2025-1</text>
+    <text x="696" y="118" font-size="10" fill="#475569">catalog: the offer, the policy verbatim</text>
+    <text x="696" y="140" font-size="10" fill="#475569">negotiation → agreement (the consent</text>
+    <text x="696" y="154" font-size="10" fill="#475569">record; both state machines close)</text>
+    <text x="696" y="178" font-size="10" fill="#475569">transfer: a one-time endpoint + token;</text>
+    <text x="696" y="192" font-size="10" fill="#475569">the partner pulls the bytes</text>
+    <line x1="696" y1="210" x2="914" y2="210" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="696" y="232" font-size="10" font-weight="600" fill="#334155">What arrived (the recorded run):</text>
+    <text x="704" y="250" font-size="10" fill="#475569">byte-identical to the store's attestation,</text>
+    <text x="704" y="264" font-size="10" fill="#475569">still signed, the evidence chain intact:</text>
+    <text x="704" y="278" font-size="10" fill="#475569">integrity lives in the payload</text>
+    <text x="696" y="306" font-size="10" fill="#334155">The package keeps pointing at the live</text>
+    <text x="696" y="320" font-size="10" fill="#334155">register; the data space adds no status</text>
+    <text x="696" y="334" font-size="10" fill="#334155">channel and never supersedes ours.</text>
+  </g>
+
+  <!-- FLOWS -->
+  <line x1="312" y1="200" x2="356" y2="200" stroke="#334155" stroke-width="1.5" marker-end="url(#dse-arrow)"/>
+  <text x="334" y="188" text-anchor="middle" font-size="9.5" fill="#334155">serves</text>
+  <line x1="632" y1="200" x2="676" y2="200" stroke="#334155" stroke-width="1.5" marker-end="url(#dse-arrow)"/>
+  <text x="654" y="188" text-anchor="middle" font-size="9.5" fill="#334155">DSP</text>
+
+  <!-- THE BOUNDARY -->
+  <rect x="30" y="390" width="900" height="62" rx="10" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="480" y="410" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">The evaluation's verdict: join via a connector at the deployment's edge; do not implement the IDS contract endpoints natively.</text>
+  <text x="480" y="427" text-anchor="middle" font-size="10" fill="#475569">The spike's boundary, stated: one connector, one asset kind, mock identity, EDC 0.18.0; an evaluation, not a commitment.</text>
+  <text x="480" y="443" text-anchor="middle" font-size="10" fill="#475569">A governed membership prices the named gaps: the service credential, the DCP identity framework, the offerings projection, the runtime.</text>
+</svg>

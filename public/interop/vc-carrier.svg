@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title>The Verifiable Credential carrier, end to end. At issuance the holder downloads the credential from the certificate page or from the public route; the platform never custodies a holder's copy. The credential is an Enveloped Verifiable Credential: the secured form is a compact ES256 JWS, its issuer the instance's did:web, its subject the CNML payload verbatim, and its credentialStatus entries the two status anchors; the platform-native CNML chain rides in the cnmlSignature member for aware verifiers. A selective-disclosure form, the SD-JWT, exposes only the public subset of claims. Any wallet holds it and any stock verifier validates the envelope against the issuer's did:web document and reads the live status from the published lists; the instance's own verify page is one such verifier, answering the same verdict panel as the number lookup.</title>
+  <defs>
+    <marker id="vcj-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="470" fill="#ffffff"/>
+
+  <text x="20" y="26" font-size="11" font-weight="600" fill="#475569">THE VERIFIABLE CREDENTIAL CARRIER: the holder downloads at issuance; any stock verifier checks it, with live status, and no account anywhere.</text>
+
+  <!-- ISSUANCE -->
+  <g>
+    <rect x="30" y="50" width="270" height="330" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="165" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">AT ISSUANCE</text>
+    <text x="165" y="90" text-anchor="middle" font-size="10" fill="#475569">the register's certificate page</text>
+    <text x="46" y="118" font-size="10" font-weight="600" fill="#334155">Download as Verifiable Credential</text>
+    <text x="54" y="136" font-size="10" fill="#475569">GET /api/certificates/&lt;id&gt;/vc</text>
+    <text x="54" y="150" font-size="10" fill="#475569">public: the certificate id is the capability</text>
+    <text x="46" y="174" font-size="10" font-weight="600" fill="#334155">Download selective-disclosure VC</text>
+    <text x="54" y="192" font-size="10" fill="#475569">the SD-JWT form: only the public subset</text>
+    <text x="54" y="206" font-size="10" fill="#475569">is disclosable (number, type, edition,</text>
+    <text x="54" y="220" font-size="10" fill="#475569">accuracy class, status ref, validity, IA)</text>
+    <line x1="46" y1="238" x2="284" y2="238" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="46" y="260" font-size="10" fill="#334155">The manufacturer (the holder) keeps the</text>
+    <text x="46" y="274" font-size="10" fill="#334155">credential. The platform never custodies</text>
+    <text x="46" y="288" font-size="10" fill="#334155">a holder's copy.</text>
+    <text x="46" y="316" font-size="9.5" fill="#64748b">The issuer is did:web:&lt;instance host&gt;; the DID</text>
+    <text x="46" y="330" font-size="9.5" fill="#64748b">document serves at /.well-known/did.json, the</text>
+    <text x="46" y="344" font-size="9.5" fill="#64748b">same federation key, a second projection of it.</text>
+  </g>
+
+  <!-- THE CREDENTIAL -->
+  <g>
+    <rect x="350" y="50" width="280" height="330" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+    <text x="490" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#1d4ed8">THE CREDENTIAL</text>
+    <text x="490" y="90" text-anchor="middle" font-size="10" fill="#475569">EnvelopedVerifiableCredential (VC 2.0, JOSE)</text>
+    <text x="366" y="118" font-size="10" font-weight="600" fill="#334155">id: urn:oiml:cs:cert:&lt;number&gt;</text>
+    <text x="366" y="136" font-size="10" fill="#475569">the same URN the DPP reference and the</text>
+    <text x="366" y="150" font-size="10" fill="#475569">AAS submodel carry: one identity</text>
+    <text x="366" y="174" font-size="10" font-weight="600" fill="#334155">credentialSubject: the CNML payload, verbatim</text>
+    <text x="366" y="198" font-size="10" font-weight="600" fill="#334155">credentialStatus: the revocation and</text>
+    <text x="366" y="212" font-size="10" font-weight="600" fill="#334155">suspension anchors (the live status read)</text>
+    <text x="366" y="236" font-size="10" font-weight="600" fill="#334155">cnmlSignature: the native chain, for aware</text>
+    <text x="366" y="250" font-size="10" font-weight="600" fill="#334155">verifiers; it never replaces the envelope</text>
+    <line x1="366" y1="268" x2="614" y2="268" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="366" y="290" font-size="10" fill="#334155">The envelope is an ES256 JWS (vc+jwt); the</text>
+    <text x="366" y="304" font-size="10" fill="#334155">one context document it adds is served,</text>
+    <text x="366" y="318" font-size="10" fill="#334155">versioned, from the issuing instance.</text>
+  </g>
+
+  <!-- VERIFICATION -->
+  <g>
+    <rect x="680" y="50" width="250" height="330" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="805" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">EVERY VERIFIER</text>
+    <text x="805" y="90" text-anchor="middle" font-size="10" fill="#475569">wallets and verifier tooling, unchanged</text>
+    <text x="696" y="118" font-size="10" font-weight="600" fill="#334155">A stock verifier:</text>
+    <text x="704" y="136" font-size="10" fill="#475569">resolves the issuer's did:web document</text>
+    <text x="704" y="152" font-size="10" fill="#475569">validates the envelope JWS (ES256)</text>
+    <text x="704" y="168" font-size="10" fill="#475569">reads the live status from the lists</text>
+    <text x="696" y="196" font-size="10" font-weight="600" fill="#334155">An aware verifier adds:</text>
+    <text x="704" y="214" font-size="10" fill="#475569">the embedded CNML check pipeline</text>
+    <text x="704" y="228" font-size="10" fill="#475569">(well-formedness, schema, signature,</text>
+    <text x="704" y="242" font-size="10" fill="#475569">the evaluation-report binding)</text>
+    <line x1="696" y1="260" x2="914" y2="260" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="696" y="282" font-size="10" fill="#334155">The instance's own verify page is one</text>
+    <text x="696" y="296" font-size="10" fill="#334155">such verifier: the same verdict panel</text>
+    <text x="696" y="310" font-size="10" fill="#334155">as the number lookup, answered from</text>
+    <text x="696" y="324" font-size="10" fill="#334155">the file alone.</text>
+  </g>
+
+  <!-- FLOWS -->
+  <line x1="302" y1="215" x2="346" y2="215" stroke="#334155" stroke-width="1.5" marker-end="url(#vcj-arrow)"/>
+  <text x="324" y="203" text-anchor="middle" font-size="9.5" fill="#334155">issued as</text>
+  <line x1="632" y1="215" x2="676" y2="215" stroke="#334155" stroke-width="1.5" marker-end="url(#vcj-arrow)"/>
+  <text x="654" y="203" text-anchor="middle" font-size="9.5" fill="#334155">presented</text>
+
+  <!-- THE RULE -->
+  <rect x="30" y="408" width="900" height="44" rx="10" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="480" y="427" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">The carrier is the ecosystem's standard shape; the payload and the trust model stay ours.</text>
+  <text x="480" y="444" text-anchor="middle" font-size="10" fill="#475569">No wallet is built here, no DID method beyond did:web: integrate, never absorb.</text>
+</svg>

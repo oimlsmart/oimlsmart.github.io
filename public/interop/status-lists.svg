@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="960" height="440" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title>The live status story. At the issuer, the certificate is issued with its status-list position recorded: the calendar-quarter cohort of its issue date and a bit index within it. The lifecycle acts, suspend and reinstate, withdraw and expire, write to the same register store the lists are projected from, so the write is the flip and no list state can lag or diverge. The instance serves two signed W3C Bitstring Status List credentials per cohort, one revocation list and one suspension list, at a well-known address, and old quarters stay served. Any verifier, a wallet, a market-surveillance tool, a passport platform, or the instance's own verify page, fetches the list with no account, verifies the list's signature against the issuer's did:web document, and reads the certificate's bit, with the check time, the list id, and the bit position as provenance.</title>
+  <defs>
+    <marker id="sl-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="440" fill="#ffffff"/>
+
+  <text x="20" y="26" font-size="11" font-weight="600" fill="#475569">THE LIVE STATUS STORY: the lifecycle write is the bit flip; every verifier reads the current answer with no account.</text>
+
+  <!-- THE ISSUER -->
+  <g>
+    <rect x="30" y="50" width="300" height="300" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="180" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">AT THE ISSUER</text>
+    <text x="180" y="90" text-anchor="middle" font-size="10" fill="#475569">the register's own store</text>
+    <text x="46" y="118" font-size="10" font-weight="600" fill="#334155">Issuance records the position:</text>
+    <text x="54" y="136" font-size="10" fill="#475569">cohort = the issue date's quarter</text>
+    <text x="54" y="152" font-size="10" fill="#475569">index = the certificate's bit</text>
+    <line x1="46" y1="168" x2="314" y2="168" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="46" y="190" font-size="10" font-weight="600" fill="#334155">The lifecycle acts on the store:</text>
+    <text x="54" y="208" font-size="10" fill="#475569">suspend sets the suspension bit</text>
+    <text x="54" y="224" font-size="10" fill="#475569">reinstate clears it</text>
+    <text x="54" y="240" font-size="10" fill="#475569">withdraw · expire set the revocation bit</text>
+    <line x1="46" y1="256" x2="314" y2="256" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="46" y="278" font-size="10" fill="#334155">The write IS the flip: the served list is</text>
+    <text x="46" y="292" font-size="10" fill="#334155">a serve-time projection of this store.</text>
+    <text x="46" y="306" font-size="10" fill="#334155">There is no side channel to go stale.</text>
+  </g>
+
+  <!-- THE LISTS -->
+  <g>
+    <rect x="380" y="50" width="260" height="300" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+    <text x="510" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#1d4ed8">THE PUBLISHED LISTS</text>
+    <text x="510" y="90" text-anchor="middle" font-size="10" fill="#475569">signed, account-free, one-minute cache</text>
+    <text x="396" y="118" font-size="10" font-weight="600" fill="#334155">/.well-known/oiml-smart-status/</text>
+    <rect x="396" y="130" width="228" height="44" rx="8" fill="#ffffff" stroke="#1d4ed8" stroke-width="1"/>
+    <text x="408" y="148" font-size="10.5" font-weight="600" fill="#0f172a">revocation-&lt;cohort&gt;</text>
+    <text x="408" y="163" font-size="9.5" fill="#475569">the validity answer (withdrawn, expired)</text>
+    <rect x="396" y="184" width="228" height="44" rx="8" fill="#ffffff" stroke="#1d4ed8" stroke-width="1"/>
+    <text x="408" y="202" font-size="10.5" font-weight="600" fill="#0f172a">suspension-&lt;cohort&gt;</text>
+    <text x="408" y="217" font-size="9.5" fill="#475569">the temporary-hold answer (reinstatable)</text>
+    <text x="396" y="252" font-size="10" fill="#475569">Each list is a signed W3C Bitstring Status</text>
+    <text x="396" y="266" font-size="10" fill="#475569">List credential; the #&lt;index&gt; fragment names</text>
+    <text x="396" y="280" font-size="10" fill="#475569">the certificate's own bit.</text>
+    <text x="396" y="308" font-size="10" fill="#334155">Lists rotate quarterly; old quarters stay</text>
+    <text x="396" y="322" font-size="10" fill="#334155">served: a 2025 certificate verifies in 2028.</text>
+  </g>
+
+  <!-- THE VERIFIERS -->
+  <g>
+    <rect x="690" y="50" width="240" height="300" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="810" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">EVERY VERIFIER</text>
+    <text x="810" y="90" text-anchor="middle" font-size="10" fill="#475569">no account, no call back to us</text>
+    <text x="706" y="118" font-size="10" fill="#475569">a wallet holding the credential</text>
+    <text x="706" y="136" font-size="10" fill="#475569">a market-surveillance tool</text>
+    <text x="706" y="154" font-size="10" fill="#475569">a passport platform reading the anchors</text>
+    <text x="706" y="172" font-size="10" fill="#475569">an AAS consumer resolving the submodel</text>
+    <text x="706" y="190" font-size="10" fill="#475569">the instance's own verify page</text>
+    <line x1="706" y1="208" x2="914" y2="208" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="706" y="230" font-size="10" font-weight="600" fill="#334155">Each read:</text>
+    <text x="714" y="248" font-size="10" fill="#475569">fetch the list (public, short-cacheable)</text>
+    <text x="714" y="264" font-size="10" fill="#475569">verify its signature against the issuer's</text>
+    <text x="714" y="278" font-size="10" fill="#475569">did:web document</text>
+    <text x="714" y="294" font-size="10" fill="#475569">read the bit at the certificate's index</text>
+    <text x="706" y="322" font-size="10" fill="#334155">Provenance: the check time, the list id,</text>
+    <text x="706" y="336" font-size="10" fill="#334155">and the bit position, stated with the answer.</text>
+  </g>
+
+  <!-- FLOWS -->
+  <line x1="332" y1="200" x2="376" y2="200" stroke="#334155" stroke-width="1.5" marker-end="url(#sl-arrow)"/>
+  <text x="354" y="188" text-anchor="middle" font-size="9.5" fill="#334155">projected</text>
+  <line x1="642" y1="200" x2="686" y2="200" stroke="#334155" stroke-width="1.5" marker-end="url(#sl-arrow)"/>
+  <text x="664" y="188" text-anchor="middle" font-size="9.5" fill="#334155">read</text>
+
+  <!-- THE RULE -->
+  <rect x="30" y="378" width="900" height="44" rx="10" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="480" y="397" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">A suspended certificate becomes visibly suspended everywhere it is carried, within the list's one-minute cache.</text>
+  <text x="480" y="414" text-anchor="middle" font-size="10" fill="#475569">The credential, the submodel, and the passport reference all name the same two anchors; there is one status story.</text>
+</svg>

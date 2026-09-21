@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" width="960" height="470" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title>The Digital Product Passport chapter in one figure. Left: a DPP record carries the conformityAttestation member, the scheme, the certificate URN, the resolvable URL, and the two status anchors, and never the certificate content; the product data stays the passport's own. Center: the issuing instance's certificate URL answers content negotiation, the signed CNML payload for a machine asking with Accept application/json, a redirect to the public register entry for a person, and the reference object itself at the dpp suffix; a serialized GTIN resolves to the same URL through a GS1 Digital Link resolver, which is the passport side's own infrastructure. Right: the status anchors point into the signed W3C Bitstring Status Lists, so the passport's status reading is the register's own at the moment of reading, and a suspension becomes visible on the next read.</title>
+  <defs>
+    <marker id="dppc-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="470" fill="#ffffff"/>
+
+  <text x="20" y="26" font-size="11" font-weight="600" fill="#475569">THE PASSPORT CARRIER: the DPP names the certificate by reference; the register answers every read of it.</text>
+
+  <!-- THE PASSPORT -->
+  <g>
+    <rect x="30" y="50" width="280" height="330" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="170" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">THE DPP RECORD</text>
+    <text x="170" y="90" text-anchor="middle" font-size="10" fill="#475569">any passport platform's</text>
+    <text x="46" y="118" font-size="10" font-weight="600" fill="#334155">conformityAttestation:</text>
+    <text x="54" y="136" font-size="10" fill="#475569">schema: oiml-smart/dpp-conformity-</text>
+    <text x="54" y="150" font-size="10" fill="#475569">&#160;&#160;attestation/v1</text>
+    <text x="54" y="166" font-size="10" fill="#475569">scheme: "OIML-CS"</text>
+    <text x="54" y="182" font-size="10" fill="#475569">certificateUrn: urn:oiml:cs:cert:…</text>
+    <text x="54" y="198" font-size="10" fill="#475569">url: the content-negotiating read</text>
+    <text x="54" y="214" font-size="10" fill="#475569">statusUrl · suspensionUrl: the anchors</text>
+    <line x1="46" y1="232" x2="294" y2="232" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="46" y="254" font-size="10" fill="#334155">The product data is the passport's own;</text>
+    <text x="46" y="268" font-size="10" fill="#334155">the certificate content NEVER crosses.</text>
+    <text x="46" y="296" font-size="9.5" fill="#64748b">A passport assembler fetches the reference</text>
+    <text x="46" y="310" font-size="9.5" fill="#64748b">object from the instance; it is never built</text>
+    <text x="46" y="324" font-size="9.5" fill="#64748b">by hand.</text>
+  </g>
+
+  <!-- THE REGISTER'S URL -->
+  <g>
+    <rect x="360" y="50" width="280" height="330" rx="10" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+    <text x="500" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#1d4ed8">THE CERTIFICATE URL</text>
+    <text x="500" y="90" text-anchor="middle" font-size="10" fill="#475569">content negotiation on the register</text>
+    <text x="376" y="118" font-size="10" font-weight="600" fill="#334155">Accept application/json</text>
+    <text x="384" y="136" font-size="10" fill="#475569">the signed CNML payload, verbatim</text>
+    <text x="376" y="160" font-size="10" font-weight="600" fill="#334155">Accept text/html</text>
+    <text x="384" y="178" font-size="10" fill="#475569">303 to the public register entry</text>
+    <text x="376" y="202" font-size="10" font-weight="600" fill="#334155">GET &lt;url&gt;/dpp</text>
+    <text x="384" y="220" font-size="10" fill="#475569">the reference object itself</text>
+    <line x1="376" y1="238" x2="624" y2="238" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="376" y="260" font-size="10" fill="#334155">The GS1 Digital Link pattern: a serialized</text>
+    <text x="376" y="274" font-size="10" fill="#334155">GTIN resolves to this URL through a resolver</text>
+    <text x="376" y="288" font-size="10" fill="#334155">the passport side operates. We mint URLs in</text>
+    <text x="376" y="302" font-size="10" fill="#334155">the pattern; we run no resolver, issue no</text>
+    <text x="376" y="316" font-size="10" fill="#334155">GTIN, absorb no DPP service.</text>
+    <text x="376" y="344" font-size="9.5" fill="#64748b">The access tiers align: the DPP public tier is</text>
+    <text x="376" y="358" font-size="9.5" fill="#64748b">the public register; the authority tier is the</text>
+    <text x="376" y="372" font-size="9.5" fill="#64748b">Utilizer surface; the proprietary tier never publishes.</text>
+  </g>
+
+  <!-- LIVE STATUS -->
+  <g>
+    <rect x="690" y="50" width="240" height="330" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
+    <text x="810" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#334155">LIVE STATUS</text>
+    <text x="810" y="90" text-anchor="middle" font-size="10" fill="#475569">the anchors' target</text>
+    <text x="706" y="118" font-size="10" font-weight="600" fill="#334155">The status lists</text>
+    <text x="714" y="136" font-size="10" fill="#475569">revocation-&lt;cohort&gt; · suspension-&lt;cohort&gt;,</text>
+    <text x="714" y="150" font-size="10" fill="#475569">the #&lt;index&gt; naming the certificate's bit</text>
+    <text x="706" y="174" font-size="10" font-weight="600" fill="#334155">The signed status event, for platforms</text>
+    <text x="706" y="188" font-size="10" font-weight="600" fill="#334155">that poll:</text>
+    <text x="714" y="206" font-size="10" fill="#475569">/api/federation/status-events/&lt;id&gt;,</text>
+    <text x="714" y="220" font-size="10" fill="#475569">the same event the federation sends</text>
+    <line x1="706" y1="238" x2="914" y2="238" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="706" y="260" font-size="10" fill="#334155">The passport's status reading is the</text>
+    <text x="706" y="274" font-size="10" fill="#334155">register's own, at the moment of reading:</text>
+    <text x="706" y="288" font-size="10" fill="#334155">a suspended certificate shows suspended</text>
+    <text x="706" y="302" font-size="10" fill="#334155">on the next read.</text>
+  </g>
+
+  <!-- FLOWS -->
+  <line x1="312" y1="140" x2="356" y2="140" stroke="#334155" stroke-width="1.5" marker-end="url(#dppc-arrow)"/>
+  <text x="334" y="128" text-anchor="middle" font-size="9.5" fill="#334155">url</text>
+  <line x1="642" y1="140" x2="686" y2="140" stroke="#334155" stroke-width="1.5" marker-end="url(#dppc-arrow)"/>
+  <text x="664" y="128" text-anchor="middle" font-size="9.5" fill="#334155">anchors</text>
+  <path d="M 170 382 L 170 400 L 810 400 L 810 384" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#dppc-arrow)"/>
+  <text x="490" y="394" text-anchor="middle" font-size="9.5" fill="#64748b">the anchors: the direct, account-free status read from the passport's side</text>
+
+  <!-- THE RULE -->
+  <rect x="30" y="414" width="900" height="40" rx="10" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="480" y="431" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">Reference, never replicate: the anti-duplication answer.</text>
+  <text x="480" y="447" text-anchor="middle" font-size="10" fill="#475569">A certificate later suspended would otherwise keep circulating as a valid copy inside every passport that embedded it.</text>
+</svg>

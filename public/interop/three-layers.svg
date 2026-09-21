@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 500" width="960" height="500" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title>The three layers of the OIML SMART interoperability architecture. The payload is the signed CNML certificate JSON, one content model, held by the register. The proof layer carries the signatures: the platform-native CNML signature with its quorum attestation, and each carrier's own proof (the VC envelope's JWS, the status lists' signatures). The carrier layer holds the four supported modes: the W3C Verifiable Credential envelope, the AAS submodel, the DPP conformity-attestation reference, and the federation package that a data-space connector serves. Every carrier wraps or references the same payload; none re-formats it, and none copies it into the ecosystem's own stores.</title>
+  <defs>
+    <marker id="lyr-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="960" height="500" fill="#ffffff"/>
+
+  <text x="20" y="26" font-size="11" font-weight="600" fill="#475569">ONE PAYLOAD, THREE LAYERS: the register's signed certificate is the only content model; the ecosystems are carriers of it.</text>
+
+  <!-- CARRIER (outermost) -->
+  <rect x="30" y="44" width="680" height="406" rx="14" fill="#f8fafc" stroke="#334155" stroke-width="1.5"/>
+  <text x="52" y="72" font-size="12" font-weight="700" fill="#334155" letter-spacing="1.5">CARRIER</text>
+  <text x="52" y="88" font-size="10.5" fill="#475569">the ecosystem's own shape, wrapping or referencing the same signed bytes</text>
+
+  <!-- the four carriers -->
+  <rect x="52" y="104" width="322" height="62" rx="9" fill="#ffffff" stroke="#334155" stroke-width="1"/>
+  <text x="66" y="126" font-size="11.5" font-weight="600" fill="#0f172a">W3C Verifiable Credential</text>
+  <text x="66" y="142" font-size="10" fill="#475569">the envelope carries the payload verbatim; wallets</text>
+  <text x="66" y="156" font-size="10" fill="#475569">and stock verifiers read it with no account</text>
+
+  <rect x="386" y="104" width="302" height="62" rx="9" fill="#ffffff" stroke="#334155" stroke-width="1"/>
+  <text x="400" y="126" font-size="11.5" font-weight="600" fill="#0f172a">AAS submodel</text>
+  <text x="400" y="142" font-size="10" fill="#475569">Legal Metrology Conformity: the reference, the</text>
+  <text x="400" y="156" font-size="10" fill="#475569">scheme, the validity, the live status anchors</text>
+
+  <rect x="52" y="176" width="322" height="62" rx="9" fill="#ffffff" stroke="#334155" stroke-width="1"/>
+  <text x="66" y="198" font-size="11.5" font-weight="600" fill="#0f172a">DPP conformity attestation</text>
+  <text x="66" y="214" font-size="10" fill="#475569">the passport carries the reference (URN, URL,</text>
+  <text x="66" y="228" font-size="10" fill="#475569">status anchors), never the certificate content</text>
+
+  <rect x="386" y="176" width="302" height="62" rx="9" fill="#ffffff" stroke="#334155" stroke-width="1"/>
+  <text x="400" y="198" font-size="11.5" font-weight="600" fill="#0f172a">The federation package</text>
+  <text x="400" y="214" font-size="10" fill="#475569">the signed, receipted exchange a data-space</text>
+  <text x="400" y="228" font-size="10" fill="#475569">connector serves under a usage policy</text>
+
+  <!-- PROOF -->
+  <rect x="52" y="258" width="636" height="86" rx="12" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1.5"/>
+  <text x="70" y="284" font-size="12" font-weight="700" fill="#1d4ed8" letter-spacing="1.5">PROOF</text>
+  <rect x="68" y="296" width="300" height="36" rx="8" fill="#ffffff" stroke="#1d4ed8" stroke-width="1"/>
+  <text x="80" y="312" font-size="10.5" font-weight="600" fill="#0f172a">the carrier's proof</text>
+  <text x="80" y="325" font-size="9.5" fill="#475569">the envelope JWS; any stock verifier validates</text>
+  <rect x="380" y="296" width="294" height="36" rx="8" fill="#ffffff" stroke="#1d4ed8" stroke-width="1"/>
+  <text x="392" y="312" font-size="10.5" font-weight="600" fill="#0f172a">the platform-native chain</text>
+  <text x="392" y="325" font-size="9.5" fill="#475569">the CNML signature (+ the quorum attestation)</text>
+
+  <!-- PAYLOAD (innermost) -->
+  <rect x="52" y="356" width="636" height="78" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="70" y="382" font-size="12" font-weight="700" fill="#166534" letter-spacing="1.5">PAYLOAD</text>
+  <text x="70" y="402" font-size="12" font-weight="600" fill="#14532d">the signed CNML certificate: one content model</text>
+  <text x="70" y="420" font-size="10.5" fill="#166534">certificate · issuing authority · certified type · characteristics · recommendation · reports</text>
+
+  <!-- THE REGISTER (side) -->
+  <rect x="734" y="104" width="196" height="330" rx="12" fill="#ffffff" stroke="#64748b" stroke-width="1.2"/>
+  <text x="832" y="132" text-anchor="middle" font-size="12" font-weight="600" fill="#0f172a">THE REGISTER</text>
+  <text x="832" y="148" text-anchor="middle" font-size="9.5" fill="#475569">the issuing instance</text>
+  <line x1="750" y1="164" x2="914" y2="164" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="750" y="186" font-size="10" fill="#334155">holds the signed payload</text>
+  <text x="750" y="202" font-size="10" fill="#334155">and its lifecycle;</text>
+  <text x="750" y="230" font-size="10" fill="#334155">serves every carrier</text>
+  <text x="750" y="246" font-size="10" fill="#334155">account-free;</text>
+  <text x="750" y="274" font-size="10" fill="#334155">publishes the live</text>
+  <text x="750" y="290" font-size="10" fill="#334155">status lists.</text>
+  <line x1="750" y1="308" x2="914" y2="308" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="750" y="330" font-size="9.5" fill="#64748b">The register is the single</text>
+  <text x="750" y="344" font-size="9.5" fill="#64748b">source. Ecosystems hold</text>
+  <text x="750" y="358" font-size="9.5" fill="#64748b">references and read status;</text>
+  <text x="750" y="372" font-size="9.5" fill="#64748b">they never copy certificate</text>
+  <text x="750" y="386" font-size="9.5" fill="#64748b">content out of it, and the</text>
+  <text x="750" y="400" font-size="9.5" fill="#64748b">platform never copies their</text>
+  <text x="750" y="414" font-size="9.5" fill="#64748b">data in.</text>
+
+  <line x1="710" y1="240" x2="730" y2="240" stroke="#334155" stroke-width="1.5" marker-end="url(#lyr-arrow)"/>
+
+  <!-- THE RULE -->
+  <rect x="30" y="462" width="900" height="30" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="480" y="481" text-anchor="middle" font-size="10.5" font-weight="600" fill="#334155">Envelope, never re-format. Reference, never replicate. One certificate content model; every carrier provably carries that one.</text>
+</svg>
