@@ -11,16 +11,20 @@ accept = ["100", "200", "201", "202", "203", "204", "206", "207", "301", "302", 
 # hashed assets under `/_astro/*` (their hashes change per build).
 # Instead, sibling-Pages-site URLs (/vocab/, /resolutions/) are excluded
 # from the local-build check and verified separately against the live
-# site by the `live-sibling-pages` step in `.github/workflows/links.yml`.
+# site by the `Verify sibling GitHub Pages sites are live` step in
+# `.github/workflows/links.yml`.
 exclude = [
-  "localhost",
-  "127.0.0.1",
+  # The OIML parent organization's site predates the program's own link
+  # hygiene (attribution + prose links); excluded from the per-push sweep.
   "https://www.oiml.org",
   # The trust-registry page cites the registry's honest refusal as
   # evidence: the 404 IS the answer being demonstrated (an unregistered
   # organization is refused with a named error).
   "https://id.oimlsmart.org/op/keys/no-such-organization.json",
   # Sibling GitHub Pages sites on the same domain — checked live by CI.
+  # (The /resolutions pattern also covers /resolutions/en/, the language
+  # root the nav points at since the minisite's own root became a
+  # language-redirect stub.)
   "/vocab",
   "/vocab/",
   "/resolutions",
@@ -45,8 +49,9 @@ exclude = [
   # browser app, not deployable from here.
   "/concepts-management",
   "/concepts-management/",
-  # Source repo is private during the pilot — link is for reference, not public.
-  "https://github.com/oimlsmart/smart",
+  # Source repos are private during the pilot — links are for reference,
+  # not public, so an unauthenticated 404 proves nothing.
+  "https://github.com/oimlsmart/primmel-packages",
 ]
 
 # Don't check mailto links

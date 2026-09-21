@@ -2,18 +2,18 @@
 /**
  * The cross-host leg of the freshness sentinel: every host in the
  * canonical host registry must answer HTTP 200. The registry (the
- * footer's "The sites" set, vendor/site-shell/src/data/host-registry.mjs)
- * is imported rather than re-typed, so the probe list moves with the
- * footer and a host added there is probed here with no second list to
- * drift. The registry itself is Node-safe by design (the shell's own
- * gate imports it the same way), so this script runs under plain node
- * with no dependencies installed.
+ * footer's "The sites" set, src/data/host-registry.ts) is imported
+ * rather than re-typed, so the probe list moves with the footer and a
+ * host added there is probed here with no second list to drift. The
+ * registry is a pure data module (erasable TypeScript only), so this
+ * script runs under plain node's type stripping with no dependencies
+ * installed.
  *
  * The leg exits 0 when every registered host answers 200, and exits 1
  * listing the hosts that did not.
  */
 
-import { HOST_REGISTRY } from '../vendor/site-shell/src/data/host-registry.mjs'
+import { HOST_REGISTRY } from '../src/data/host-registry.ts'
 
 const TIMEOUT_MS = 30_000
 const failures = []

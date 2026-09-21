@@ -17,12 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Checkout the shell package (the chrome SSOT)
-        uses: actions/checkout@v6
-        with:
-          repository: oimlsmart/site-shell
-          path: vendor/site-shell
-
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
@@ -73,6 +67,7 @@ jobs:
           for url in \
             https://www.oimlsmart.org/vocab/ \
             https://www.oimlsmart.org/resolutions/ \
+            https://www.oimlsmart.org/resolutions/en/ \
             https://www.oimlsmart.org/publications/ \
             https://www.oimlsmart.org/certificates/ \
             https://www.oimlsmart.org/recs/ \
