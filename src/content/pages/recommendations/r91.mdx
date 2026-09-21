@@ -1,0 +1,82 @@
+---
+title: 'OIML R 91: Traffic speed meters'
+description: 'Traffic speed meters are the instruments behind speed enforcement, from roadside Doppler radar to average-speed section control. R 91 specifies the metrological and technical requirements that make a measured speed hold up as evidence.'
+eyebrow: 'Recommendation · R 91 · 2025 (preview)'
+---
+
+
+
+
+## Scope
+
+OIML R 91:2025 specifies requirements for **traffic speed meters**, the
+instruments that measure the speed of road vehicles for enforcement. It is
+published in four parts:
+
+- **R 91-1**, metrological and technical requirements.
+- **R 91-2**, test procedures.
+- **R 91-3**, test report format.
+- **R 91-4**, type evaluation report format.
+
+The Recommendation covers stationary and moving modes of use, fixed and
+mobile installations, and the measuring principles on the road: Doppler
+radar, range-finding, average-speed (section control), fixed-distance,
+image-based, and across-road technologies. One speed meter may belong to
+several categories at once.
+
+## What's modelled
+
+| Layer | Count |
+|---|---|
+| Requirements | 57 |
+| Conformance tests | 64 |
+| Report forms | 78 |
+| Terminology | ~70 |
+
+The package ships as a **preview edition** (2025): the model is complete
+against the four parts, and the published text supersedes the preview when
+the committee's final edition appears.
+
+## Headline tests
+
+- **Documentation and visual examination** (R 91-1 §8.1), the type documentation, markings, sealing, and manual against the construction clauses.
+- **Vehicle identification certainty** (R 91-1 §6.6), the measured speed cannot be attributed to the wrong vehicle, verified through scenario review and image-evidence checks.
+- **Speed linearity** (R 91-1 §6.5), ±1 km/h up to and including 100 km/h, ±1 % above, with influence quantities minimized.
+- **Dynamic performance** (R 91-2), the meter's response against a moving target across the measuring interval.
+- **Field tests**, moving-mode and ego-vehicle runs in real traffic, plus the moving-traffic simulation.
+- **Influence and disturbance battery**, the climatic, mechanical, and electromagnetic compatibility set (dry heat, cold, damp heat, vibration, bursts, surges, RF fields, and the road-vehicle supply disturbances).
+
+## Computation: the MPE lookup
+
+Traffic speed meters carry a two-regime MPE structure, and the moving mode
+splits further into accuracy classes:
+
+- **Stationary measurements** (R 91-1 §6.4), ±3 km/h at speeds up to and including 100 km/h, ±3 % above.
+- **Moving measurements** (R 91-1 §6.15.1), class A mirrors the stationary limits; class B widens to ±7 km/h and ±7 %. The OIML certificate indicates the class.
+
+The model encodes the regime transition as a table lookup keyed on the
+reference speed and the declared metrological class:
+
+```
+limit {
+  expression "ocl{abs(speed_error) <= lookupMPE(reference_speed, metrological_class, 1.0)}"
+  relative_to reference_speed
+  uses { speed_error reference_speed metrological_class }
+}
+```
+
+Relative units bind to the absolute value of the reference speed, never to
+the device under test (R 91-1 §3.5.2 NOTE), and the reference value is
+never rounded to integer values (R 91-1 §6.3).
+
+## Explore the model
+
+- [Read the source document in the Library](/library/r91)
+
+## Certification path
+
+Certification of traffic speed meters follows the standard
+[workflow](/docs/workflow/overview). The field-test parts of the
+evaluation run on the road or against the moving-traffic simulation, and
+the type evaluation report follows the R 91-4 format the model carries as
+forms.
