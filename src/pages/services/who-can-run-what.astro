@@ -9,12 +9,12 @@ import { UPSELL_NARRATIVES, SOFTWARE_REPOS } from '../../data/entitlement-matrix
 
 <Base
   title="Who can run what — the service-entitlement matrix"
-  description="Which OIML SMART services each member category can use on the hosted estate, and which they may run themselves — one authoritative matrix, per service, per member category."
+  description="Which OIML SMART services each member category can use on the hosted services, and which they may run themselves — one authoritative matrix, per service, per member category."
 >
   <PageHero
     eyebrow="Services · Entitlements"
     title="Who can run what"
-    lede="Every member gets an account and uses the hosted estate; running the software yourself is a Member State entitlement, and bodies operate under theirs. One matrix, per service, per member category — quoted by every page that answers the entitlement question."
+    lede="Every member gets an account and uses the hosted services; running the software yourself is a Member State entitlement, and bodies operate under theirs. One matrix, per service, per member category — quoted by every page that answers the entitlement question."
   />
 
   <section class="py-14 px-8">
@@ -22,7 +22,7 @@ import { UPSELL_NARRATIVES, SOFTWARE_REPOS } from '../../data/entitlement-matrix
       <div class="max-w-3xl mb-12">
         <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The short answer</h2>
         <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-          <strong class="text-ink font-semibold">Using is for everyone.</strong> Member States, Corresponding Members, their Issuing Authorities and Test Laboratories, Utilizers and Associates, applicants — everyone gets an account on the estate and everyone uses the hosted OIML-CS SMART Platform; the hosted path never requires running anything yourself.
+          <strong class="text-ink font-semibold">Using is for everyone.</strong> Member States, Corresponding Members, their Issuing Authorities and Test Laboratories, Utilizers and Associates, applicants — everyone gets an account and everyone uses the hosted OIML-CS SMART Platform; the hosted path never requires running anything yourself.
         </p>
         <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
           <strong class="text-ink font-semibold">Running is a Member State entitlement.</strong> Self-deploying the SMART Platform (on-prem or cloud, with streaming updates on the rolling channel) attaches to the Member State category — an Issuing Authority or Test Laboratory operates its own instance under its proposing Member State's entitlement. The identity service software is the one piece any member may run on its own domain.
@@ -30,7 +30,7 @@ import { UPSELL_NARRATIVES, SOFTWARE_REPOS } from '../../data/entitlement-matrix
         <FlowDiagram
           caption="FIG. USE VERSUS RUN"
           steps={[
-            { label: 'Every member category', sub: 'use the hosted estate', accent: 'brand' },
+            { label: 'Every member category', sub: 'use the hosted services', accent: 'brand' },
             { label: 'Member State', sub: 'the self-host entitlement', accent: 'teal' },
             { label: 'IA / TL', sub: 'operate under their Member State', accent: 'amber' },
             { label: 'Any member', sub: 'the identity software, config-only', accent: 'slate' },
@@ -54,7 +54,7 @@ import { UPSELL_NARRATIVES, SOFTWARE_REPOS } from '../../data/entitlement-matrix
         <div class="border border-rule rounded-md bg-paper-soft p-6 mb-4">
           <p class="font-mono text-xs tracking-[0.12em] text-ink-muted mb-2">SMART · LIVE TODAY</p>
           <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-            Every row of the matrix above the twin line is the live SMART estate: the account, the platform (hosted and self-host), the demo, the studio viewer, the vocabulary, the status service, the AI service, the Recommendations content, the trust registry, the SST pilot cells.
+            Every row of the matrix above the twin line is the live SMART program: the account, the platform (hosted and self-host), the demo, the studio viewer, the vocabulary, the status service, the AI service, the Recommendations content, the trust registry, the SST pilot cells.
           </p>
         </div>
         <div class="border border-dashed border-rule rounded-md p-6">
@@ -107,7 +107,7 @@ import { UPSELL_NARRATIVES, SOFTWARE_REPOS } from '../../data/entitlement-matrix
         <ActionBox
           href="https://demo.oimlsmart.org/"
           label="Try the demo"
-          description="The hosted estate in demo posture: one-click demo accounts on the login page, no request needed."
+          description="The hosted services in demo posture: one-click demo accounts on the login page, no request needed."
         />
         <ActionBox
           href="/services/identity"
