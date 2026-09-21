@@ -59,7 +59,7 @@ function issueBody() {
     '',
     'The failing step names itself in the run log, and each leg owns its own fix:',
     '',
-    '- packages-pin: the vendored shell pin trails the npm channel; run scripts/check-shell-pin.mjs locally for the two versions, then move the vendored checkout forward.',
+    '- packages-pin: the shell pin trails the npm channel; run scripts/check-shell-pin.mjs locally for the two versions, then review the release and move the exact pin forward.',
     '- provenance-probes: a live proof-map anchor no longer shows its claim, or a dated capture passed its TTL; the probe output prints the regeneration command.',
     '- demo-liveness: a walkthrough or tour deep link broke against demo.oimlsmart.org (the demo reseeds nightly); the run artifact carries the playwright report.',
     '- live-smoke: a key public route of the deployed site stopped answering 200; check the latest Pages deployment.',

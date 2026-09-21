@@ -2,21 +2,20 @@
 /**
  * The packages-pin leg of the freshness sentinel. The studio pin leg
  * asserts that a pinned npm package equals npm's latest release; this
- * repo consumes its one house package differently, so the invariant is
- * adapted rather than copied. The site's shell (@oimlsmart/site-shell)
- * is pinned as a vendored checkout (file:vendor/site-shell in
- * package.json, materialized by the workflow shell checkout), and the
- * shell repo is the publish source: its default branch routinely runs
- * ahead of its own npm channel, and that cadence belongs to the shell
- * repo, not to this site. The staleness this leg can honestly assert
- * is the other direction: npm's published channel must never carry a
- * release the vendored checkout lacks. A red here means the vendor pin
- * has fallen behind a real published release, or someone moved the
- * dependency off the file:vendor channel, and both are this repo's
- * rot to fix.
+ * repo now runs the same invariant for its one house package. The site
+ * shell (@oimlsmart/site-shell) rode a vendored checkout
+ * (file:vendor/site-shell) until TODO.public track 02 moved the site to
+ * the exact published pin — the vendored channel existed so the shell's
+ * default branch could run ahead of npm, and the pin flip closes that
+ * gap: package.json must carry an EXACT version (no range, no file:),
+ * and it must equal npm's latest published release. A red here means
+ * the pin has fallen behind a real published release and should move
+ * forward deliberately (a version bump review, then the release's
+ * content lands here), or someone moved the dependency off the exact
+ * pin, and both are this repo's rot to fix.
  *
- * The leg exits 0 when the pin is coherent and npm carries nothing the
- * vendor lacks, and exits 1 with the two versions printed otherwise.
+ * The leg exits 0 when the pin is exact and current, and exits 1 with
+ * the two versions printed otherwise.
  */
 
 import { readFileSync } from 'node:fs'
@@ -42,13 +41,10 @@ function isAhead(candidate, base) {
 
 const pkg = JSON.parse(readFileSync('package.json', 'utf8'))
 const spec = pkg.dependencies['@oimlsmart/site-shell']
-if (spec !== 'file:vendor/site-shell') {
-  fail(`the house shell moved off the vendored pin: package.json carries @oimlsmart/site-shell "${spec}", expected "file:vendor/site-shell"`)
+if (spec === undefined) fail('package.json carries no @oimlsmart/site-shell dependency at all')
+if (!/^\d+\.\d+\.\d+$/.test(spec)) {
+  fail(`the house shell moved off an exact npm pin: package.json carries @oimlsmart/site-shell "${spec}", expected an exact "major.minor.patch" version`)
 }
-
-const pinned = JSON.parse(readFileSync('vendor/site-shell/package.json', 'utf8')).version
-const pinnedTriple = parseVersion(pinned)
-if (!pinnedTriple) fail(`the vendored shell's package.json carries an unparseable version "${pinned}"`)
 
 let latest
 try {
@@ -59,8 +55,8 @@ try {
 const latestTriple = parseVersion(latest)
 if (!latestTriple) fail(`npm's published channel carries an unparseable version "${latest}"`)
 
-console.log(`vendored shell: ${pinned} · npm latest: ${latest}`)
-if (isAhead(latestTriple, pinnedTriple)) {
-  fail(`the vendored shell pin is behind the published channel: npm carries ${latest}, the vendor checkout declares ${pinned} — move vendor/site-shell forward to the published release`)
+console.log(`pinned shell: ${spec} · npm latest: ${latest}`)
+if (isAhead(latestTriple, parseVersion(spec))) {
+  fail(`the shell pin is behind the published channel: npm carries ${latest}, package.json pins ${spec} — review the release and move the pin forward`)
 }
-console.log('the vendored shell pin satisfies the published channel')
+console.log('the shell pin satisfies the published channel')
