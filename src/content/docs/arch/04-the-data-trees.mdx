@@ -1,0 +1,59 @@
+---
+title: 'The baked trees (`.cache/primmel/`)'
+shortTitle: 'The baked trees'
+description: 'The baked trees are the composed model trees the build actually reads, composed fresh on every bake and never committed.'
+eyebrow: 'Architecture · Chapter 04'
+order: 4
+---
+
+**What it is.** The composed model trees the build actually reads. One
+tree per standard (`r60`, `r91`, `r129`, `r144`), plus the layers they
+compose from (`core`, the `iso-iec-*` packages, `oiml-cs`,
+`oiml-cs-dataspace`, the `oiml-smart-module-*` packages), the program
+tree (`oiml-twin-cert`), the lab packages (`config/labs/lab-*`), and
+the sample data (`config/standards/<tree>/sample-data.yaml`). The
+trees live in the build cache (`browser/.cache/primmel/<tree>/`),
+composed fresh on every bake, never committed.
+
+**What it does.** It is the middle stage of the SSOT flow: packages →
+**these trees** → generated TypeScript → the app. The bake
+(`browser/build/bake.ts`) projects each package's PRL content into the
+tree shape and overlays the authored app config
+(`config/standards/<tree>/`), writing a per-tree `source-map.json`
+that answers "where did you come from" for every file.
+
+![The SSOT flow](/diagrams/shared/ssot-flow.svg)
+
+**What it owns.** Nothing. That is the point: these trees are
+**downstream baked artifacts** of the packages. Every convention about
+them exists to keep that true:
+
+- **Never hand-edit a baked file.** The drift guard
+  (`npm run test:ssot`) rebakes and byte-diffs; a hand edit fails the
+  build.
+- Author in Primmel in the content repo
+  ([oimlsmart/primmel-packages](https://github.com/oimlsmart/primmel-packages));
+  a content change lands here only by a deliberate bump of the pinned
+  `@oimlsmart/primmel-packages`.
+- Two classes of content stay authored app config *by doctrine*:
+  document prose modules (`documents/<doc>/document.yaml`, prose has
+  no PRL construct, the package ships them verbatim) and consumer-side
+  runtime bindings (`model/gateway.yaml`, `model/monitors.yaml`
+  deployments are runtime configuration, not normative content).
+  App-config residuals live under `config/standards/<tree>/`; the bake
+  carries them byte-clean.
+
+**How it proves it works.** `npm run test:ssot`, byte-clean, on every
+gate run.
+
+**Where it plugs in.** The build (`browser/build/standards-registry.ts`)
+reads each standard's baked tree (the REC-WINS layer overlays were
+composed and asserted at bake time), codegen projects it to
+`src/data/generated/`, and the app consumes that.
+
+**Peel deeper.** `AGENTS.d/05-data-conventions.md`,
+`AGENTS.d/07-linker-layering-and-pins.md` (the layer composition).
+
+---
+
+Back to the [index](/docs/arch/).

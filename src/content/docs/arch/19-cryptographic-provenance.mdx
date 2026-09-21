@@ -1,0 +1,231 @@
+---
+title: 'Cryptographic provenance'
+shortTitle: 'Cryptographic provenance'
+description: 'A twin''s served values carry signed proof-of-origin, and certificates carry the device''s cryptographic identity, the trust layer for multi-component devices and remote audits.'
+eyebrow: 'Architecture · Chapter 19'
+order: 19
+---
+
+TODO.integration/20 (TODO.v3/10) · Signed serves + device identity:
+a twin's served values carry proof-of-origin, and certificates carry the
+device's cryptographic identity, the trust layer for multi-component
+devices and remote audits. Slice 1 (a) lands the serve path (§5) with
+the device-key registry and the key lifecycle (§3): the twin signs its
+serves, the monitor verifies against the certificate register. Slice 2
+signs the CLAIM itself (§3's trust root — the registry verifies, never
+trusts, bare json_data) and arms the composite's serve path (§4): each
+component's signed serves verify against its own certificate-registered
+key at the same gateway seam.
+
+---
+
+## 1. What gets signed (and what deliberately does not)
+
+The probe channel remains **primary** (the doctrine stands: a served
+value paired with a physical reference is the evidence of record).
+Signing complements it, it answers a different question: not "is the
+value true?" but "**whose** value is this, and is it the same bytes
+the component produced?" That question is exactly what multi-component
+devices and remote audits need.
+
+| Signed | Why |
+|---|---|
+| **Served values on the monitor path** | the certified twin signs each serve (`{ endpoint, register, value, unit, servedAt }`); the monitor verifies against the device-key registry riding the certificate register — origin + integrity gate the value before it lands (§5) |
+| **Served values at the component boundary** | a component twin signs each served register value at capture (`{ register, value, unit, servedAt, component }`), the composite verifies the aggregate without re-proving every component at the device level |
+| **The twin certificate's composition record** | the component basis + the component-set revision signed into the record (`json_data.composition_signature`), a certificate's weakest-link basis is itself tamper-evident |
+| **Certificate chains** | the CNML sign of 09, with the composition signature riding as provenance |
+
+| Deliberately NOT signed (yet) | Why |
+|---|---|
+| The probe channel | it is the evidence-of-record; signing it would blur the physical/digital pairing doctrine, never strengthen it |
+| Whole registers/monitor streams | a served value is signed at the boundary that PRODUCED it; downstream transports (gateway, monitor) carry, never re-sign |
+| The full twin | only the governed projection's values are signed, the projection IS the certification surface |
+
+## 2. The canonical signed payload
+
+A served value is signed as a canonical JSON document (key order
+fixed, UTF-8, no whitespace):
+
+```json
+{
+  "component": "analyzer",
+  "register": "sample.indication_co",
+  "value": 101.4,
+  "unit": "ppm",
+  "servedAt": "2026-07-30T10:15:00.000Z"
+}
+```
+
+The signature covers exactly these bytes (ECDSA P-256 / SHA-256). A
+tampered value, register, timestamp, or component id fails
+verification loudly, each is covered, never contextual.
+
+The monitor-path envelope (§5) is the same document with `endpoint` in
+place of `component`, the twin attests its own endpoint id, and the
+register is the twin's DECLARED aspect spelling (the declaration/binding
+separation holds: the twin signs what it declared, the binding maps it).
+Both envelopes canonicalize through the one deep-sorted canonicalizer
+(`src/cnml/canonical-json.ts`, the CNML leaf); the wire member is
+snake_case per the data convention:
+
+```json
+{
+  "signature": {
+    "algorithm": "ECDSA-P256-SHA256",
+    "key_id": "lc500-unit-42-key-1",
+    "endpoint": "lc500_api",
+    "register": "d_min",
+    "public_key_spki": "MFkwEwYHKoZIzj0C…",
+    "signature": "MEUCIQD…"
+  }
+}
+```
+
+## 3. Key custody
+
+- **Leg 1 (this leg)**: the CNML custody pattern (09), ECDSA P-256
+  WebCrypto pairs, browser-held (IndexedDB, passphrase-wrapped), with
+  the component's public key (SPKI) published beside its serves. Each
+  component twin holds its own pair; the composite consumes only
+  public keys (the trust registry is deployment content).
+- **Production (the Confium modes)**: the CA-issued chain through a
+  Confium Mode 3 CA, the scheme operator's CA key exists as shares
+  across the authorities and component keys certify under it (the
+  CNML bridge's leg-2 path). The spec's shapes are custody-agnostic:
+  the payload, the signature container, and the verification consume
+  only `{ publicKey, keyId }`, the custody upgrades without a shape
+  change.
+
+**The key lifecycle rides the certificate machine.** The twin
+certificate's claim carries the device key (`device_key`: key id,
+algorithm, the SPKI public half), the issuing authority SIGNS the whole
+claim at issuance (`json_data.claim_signature` —
+`src/crypto-provenance/twin-claim-signature.ts`, the composition
+signature's sibling), and the register entry projects it. The registry
+verifies before it registers: a certificate whose claim signature does
+not verify (the claim is not what the issuer signed — a swapped device
+key above all) resolves NOTHING, and `rejections()` names the
+certificate + key; an unsigned claim registers honestly
+(`claim: 'unsigned'`, never an upgrade). The authority binding landed
+2026-09-08 (TODO.trust-registry/02's remainder — the leg-1 limit
+CLOSED): the attributed issuance act
+(`signCertificateTwinClaimOrgKey`, the CNML org-key act's twin) signs
+with the org's OP-published key, the signer block riding the record;
+the registry build resolves that attribution against the OP's
+published org-key set through the signer lattice — the three-way
+coordinate match (the embedded key ↔ the stated coordinates ↔ the OP
+row) plus the at-the-time validity (a key since revoked still reads
+valid at the signing time, naming the date). A lattice contradiction
+(the org unknown, the kid unpublished, the coordinates disagreeing,
+the key already revoked or not yet created at the signing time) fails
+CLOSED in `rejections()`; an unreachable OP, or a deployment supplying
+no resolver, lands the honest `authority: indeterminate` — never a
+decertification by outage, never a silent upgrade. A signed record
+without the attribution keeps the leg-1 posture: self-consistent, no
+authority mark. The CNML boundary: twin certificates do not
+project to CNML (v1 frozen, the cnml repo is the external revamp's, and
+the bridge leg pins the non-projection), so the claim signature is the
+twin certificate's signed carrier — a per-program CNML schema id plus
+the serializer section, or the VC carrier as the twin-cert document,
+are the named follow-ups. **Rotation** is
+a new key under a certificate revision, never an out-of-band swap; the
+registry resolves the CURRENT register's keys. **Revocation** rides the
+certificate's standing: the registry builds over the surveillance watch
+set (ACTIVE + UNDER_INVESTIGATION), a SUSPENDED or WITHDRAWN
+certificate resolves nothing, and two in-register certificates naming
+one endpoint with different keys fail CLOSED (the conflict is named,
+never resolved by recency). The honest limits are the point: a key
+certifies the twin's identity, never the instrument's honesty — a lying
+twin with a valid key still lies validly, which is exactly why the probe
+channel remains.
+
+## 4. The component-boundary protocol
+
+```text
+component twin                     composite
+──────────────                     ─────────
+sign {register, value,             for each component serve:
+  unit, servedAt, component}  ──►    verify against the component's
+  with its private key               published public key
+                                     any mismatch/tamper ⇒ the serve
+                                     is REJECTED loudly (never
+                                     degraded quietly)
+                                  then the projection pipeline as usual
+```
+
+The composite's verification consumes component signatures as a
+**connector-level facet** (OCP, a profile extension over the capture
+boundary, never a verdict-engine special case): the boundary verifier
+(`verifyCompositeCaptures`) consumes the optional `signature` facet per
+component capture and runs at the boundary, before the value lands; the
+capture path reading the facet off the wire (`captureCompositeRun`
+drops it today) is the named follow-up.
+
+The composite's SERVE path signs too (slice 2): declaring `signatures`
+on 06's `compositeIntegrations` arms every component's poll arm (the
+posture + the `servedAt` timestamp field + the signature-selecting
+document), so each component's serves verify at the gateway's one seam
+(§5) against ITS OWN certificate-registered key — the §3 registry is
+the trust root here, not the deployment-content registry above. A
+forged or registry-less component serve never lands in a composite
+register; the weakest-link calculus (§6's basis) computes over
+cryptographically floored evidence. The watch arm's scalar state
+selection carries no envelope (the named limit — the state register
+lands with the legacy inert face). The SST twin channel serving the
+envelope member (and a canonical-ISO `servedAt`) over graphql is the
+sibling-repo follow-up (oimlsmart/sst).
+
+## 5. The serve path (twin → monitor)
+
+The certified twin signs each serve at serve time; the monitor verifies
+at the ONE seam every transport rides, the gateway's apply()
+(poll/webhook/drop/subscribe). The signed content binds the twin's OWN
+serve time: `servedAt` is the exact `ServedValue.timestamp` string that
+lands in the register, so a signed serve needs a twin-stamped payload —
+rest_json/mqtt carry the stamp mandatorily, graphql declares it per
+operation (`timestamp_fields`), and the receipt-stamping profiles
+(twin_stream, file_drop, opc_ua) are signature-INCOHERENT by
+construction: their serve time is the deployment's clock, never the
+twin's. The `gateway-signature-coherent` rule fails those declarations
+at authoring time, never a silently dead feature.
+
+The posture is the deployment's declaration (`source.signatures`,
+opt-in per integration, undeclared is the legacy inert face: a
+signature member is ignored):
+
+| serve | `optional` | `required` |
+|---|---|---|
+| signed, verifies against the registry | lands, provenance `verified` | lands, `verified` |
+| signed, no registry key for the endpoint | lands `unverified` (key id + reason named) | REJECTED |
+| signed, verification false (tamper; endpoint, aspect, or key mismatch) | REJECTED | REJECTED |
+| unsigned | lands `unsigned` (unprovenanced, not invalid) | REJECTED |
+
+A rejection is an OUTAGE, never a reading: unavailable, health-logged,
+the register keeps its last good value, and the freshness gate degrades
+the verdict to indeterminate, silence is not evidence. A signature
+verifying false is positive evidence of non-origin: it never lands,
+under either declared posture. What lands carries the provenance facet
+into the fact stream (`MonitorFactRecord.provenance.signature`: the
+status, the key id, the certificate number ↔ endpoint the key resolved
+through, the algorithm), the monitor's evidence names WHOSE bytes each
+serve was.
+
+## 6. The certificate's signed basis
+
+The composite twin certificate (07) carries its composition block
+(strength + basis + revision). This leg signs THAT record: the
+component basis lines + the component-set revision, signed with the
+issuing key, persisted at `json_data.composition_signature`, the
+certificate's weakest-link declaration is tamper-evident end to end
+(the CNML sign of 09 embeds it in the document's provenance).
+
+## 7. Failure semantics
+
+| Failure | Surface |
+|---|---|
+| tampered value/register/timestamp/component | verification fails with the field's name, never a bare false |
+| tampered serve in flight (the wire value under a valid signature) | rejected at the gateway, health-logged; the register keeps the last good value — an outage, never a reading |
+| signed serve, no registry key for the endpoint | the declared posture governs: `required` rejects, `optional` lands `unverified` |
+| unknown component key | the serve is rejected (the trust registry is deployment content, never an assumed key) |
+| unsigned serve where signatures are required | rejected honestly (the deployment's posture is declared) |
+| sign/verify library fault | an honest error, never a silent pass |

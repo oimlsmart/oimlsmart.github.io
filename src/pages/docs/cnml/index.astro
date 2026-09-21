@@ -3,16 +3,12 @@ import { getCollection } from 'astro:content'
 import DocsLayout from '../../../layouts/DocsLayout.astro'
 import { byDocsOrder } from '../../../lib/docs-sort'
 const META: Record<string, {label:string,desc:string}> = {
-  guides: { label: 'Developer Guides', desc: 'Narrative walkthroughs for authoring a SMART Recommendation.' },
-  arch: { label: 'Architecture', desc: 'The six-layer entity model, design principles, and primitives.' },
-  workflow: { label: 'Workflow', desc: 'The end-to-end certification process.' },
+  arch: { label: 'Architecture', desc: 'The platform architecture in twenty-three chapters, from the mental model to the identity service.' },
   specifications: { label: 'Formal Specifications', desc: 'The SMART_REQS normative specification set.' },
   ref: { label: 'Reference', desc: 'Schemas, types, syntax, and identifiers.' },
   'oiml-core': { label: 'OIML Core', desc: 'The measuring-instrument metamodel: vocabulary, subject chain, the six modules, the invariants.' },
-  'oiml-rec': { label: 'Authoring', desc: 'From Recommendation text to a validated package, methodology, walkthroughs, the demo manual.' },
   'oiml-cs': { label: 'OIML-CS', desc: 'The certification system modelled on B 18:2025, scheme, runtimes, coverage machinery.' },
   cnml: { label: 'CNML', desc: 'The certificate format the verdict chain issues, schemas, sign/verify, the operator manuals.' },
-  nmi: { label: 'For NMIs', desc: 'The adoption program for legal-metrology authorities.' },
 }
 
 const section = 'cnml'

@@ -1,0 +1,236 @@
+---
+title: 'The SST interaction contract'
+shortTitle: 'SST interaction contract'
+description: 'The normative spec for how anything talks to a Primmel Simulated SMART Twin states the thesis the whole platform is built on: the digital twin''s GraphQL API is fully determined by the Recommendation''s Primmel instrument model.'
+eyebrow: 'Architecture · Chapter 12'
+order: 12
+---
+
+**What it is.** The normative spec for how anything talks to a **Primmel
+SST (Simulated SMART Twin)**, and, more than that, the statement of the
+thesis the whole platform is built on:
+
+> **The digital twin's GraphQL API is fully determined by the
+> Recommendation's Primmel instrument model.**
+
+The instrument model *is* the digital twin's definition. Its hierarchy
+(IS), its properties and registers (HAS), and its behavior (DOES) mirror
+exactly into the API. Nothing about the served surface is designed at the
+API layer, and nothing is hand-written anywhere along the chain.
+
+This page documents **how the model becomes the API**, and then how a
+consumer interacts (four verbs). It deliberately does **not** enumerate
+the served fields, a field list is a lie the day the model changes. The
+fields are whatever the Primmel model says; read the model, or ask the
+endpoint (introspection, below).
+
+![The SST interaction contract](/diagrams/shared/sst-interaction.svg)
+
+---
+
+## How the model becomes the API
+
+The chain, every arrow generated and drift-checked:
+
+1. **The Recommendation's Primmel instrument model** (the SSOT , 
+   `primmel-packages/oiml-r60` and siblings): the subject's IS (hierarchy,
+   identity), HAS (attributes, registers, state, environmental context),
+   and DOES (behaviors, processes with inputs, steps, outputs).
+2. **The governed projection declaration** (`model/twin.prl` in the rec
+   package): which of the model's registers the twin serves (with
+   `fresh_within`), which watches it offers, and which of the model's
+   behaviors are instrument-legal commands, with access scopes. This is
+   the rec saying: *a compliant twin of this instrument serves exactly
+   this, no more and no less.*
+3. **The product package's twin declaration** (`primmel-packages/acme-*`):
+   the manufacturer's instrument restates its twin surface consistently
+   with the rec's governed set (the layering rules: the rec governs).
+4. **The SST reads the package directly.** The sim repo consumes
+   `primmel-packages/` off disk (env-overridable paths), parses it with
+   its adapter, asserts fixture equality in handshake tests, and produces
+   the **TwinContract**, the normalized serve contract.
+5. **The GraphQL schema is generated from the contract** and
+   **startup-conformance-checked**: a served surface that drifts from the
+   package fails the boot, loudly.
+6. **The client driver is generated from the same contract** (the sim
+   repo's `specs/10-twin-driver.md`: TwinDriver/WorldDriver, typed
+   methods, never raw GraphQL strings). The SMART app's own graphql
+   connector is this driver's semantic counterpart on the consumer side.
+
+The mapping, facet by facet:
+
+| model facet (IS/HAS/DOES) | API face |
+|---|---|
+| HAS, a served register (`serve … via … fresh_within`) | a **query** field returning a served quantity `{ value, unit, kind, servedAt }` |
+| HAS, a served watch (`watch`-kind operation) | a **subscription** field (GraphQL-over-SSE), and a point query, because a real twin also answers polls |
+| DOES, an instrument-legal behavior (`operation … (command)`, `does:` the model behavior) | a **mutation** field returning `OpResult { state }` |
+| IS, hierarchy & identity | the contract's scoping (what this twin *is*), never a wire verb |
+
+Generation is total in both directions: a declared serve the instrument
+cannot answer fails generation; a field the model never declared cannot
+exist. **Drift is a build/boot failure, never a silent possibility.**
+
+## The two channels, and why only one is the contract
+
+Every SST serves two GraphQL endpoints (GraphQL Yoga; introspection
+enabled, consumers *discover*, never assume):
+
+| channel | what it is | who may call it |
+|---|---|---|
+| **`/twin`** | The **instrument-legal surface**, generated from the model as above. What a real, deployed SMART twin of this instrument would serve. | Any consumer. This is the **only** channel certification software may use (the epistemic wall, law 1). |
+| **`/world`** | The **simulated physical reality**, the physics, the environment, the clock, the scenarios. **Not part of the twin contract**, a real instrument offers none of it, which is exactly why it can never appear on `/twin`. | Harnesses (vitest, e2e, the pilot) and the app's **declared practice seam** (G18: segregated, marked, never certification evidence). Never certification logic. |
+
+The wire protocol is identical on both: `POST <url>` with
+`{"query": "…"}`; subscriptions ride GraphQL-over-SSE (the same POST with
+`accept: text/event-stream`, one GraphQL response per `data:` event).
+CORS is the Yoga default (origin echo), so a browser app calls an SST on
+another port directly. `/world` is guarded by an opt-in bearer token
+(`SIM_WORLD_TOKEN`); `/twin` is open in simulation (real deployments
+attach per-scope credentials, the gateway's `{ env: VAR }` doctrine in
+[06-the-twin-runtime](/docs/arch/06-the-twin-runtime)).
+
+**The streaming sibling (`GET {url}/stream`).** The SST also serves a
+plain-SSE stream of the twin channel: `GET /twin/stream?targets=…`
+answers `text/event-stream`, an immediate snapshot frame on connect,
+then one `event: twin` frame per clock advance carrying
+`{ timestamp, targets: [{ target, value }] }` (atomic, clock-aligned),
+`id:` = the instrument-clock timestamp (resumable via `Last-Event-ID`),
+and heartbeats every 5 s. The gateway's `twin_stream` connector profile
+binds it as the watch transport (operation → target by the `serves[0]`
+convention, receipt-stamped like every connector; a stream that ends is
+the feed going away, `unavailable`, never thrown). It is the same
+channel's streaming face, so the validator admits it against graphql and
+rest_json endpoints alike; a twin that does not stream (a real
+instrument twin, or a legacy sim) keeps the GraphQL subscription as the
+watch transport, the probe discovers which, never assumed.
+
+## The four verbs, sourced from the model
+
+Everything a consumer can do to an SST is one of four verbs, each one
+sourced from the model facet it mirrors:
+
+| verb | on `/twin` (instrument-legal, model-sourced) | on `/world` (simulated reality) |
+|---|---|---|
+| **perform action** | **DOES → mutation**: invoke a declared instrument-legal command (the model behavior runs; the answer is `OpResult`). | kind actuation (place a load, feed an object) + core (`setEnvironment`, `playProfile`, `advanceTime`). |
+| **trigger modes** |, *(absent by thesis: the model declares no mode knobs, so the twin has none)* | `setClockMode`, `scenario(name)` (swap the instrument definition), `injectFault` / `clearFault`, `reset`, the fidelity/physics knobs, the lying-twin levers. |
+| **probe condition** | **HAS → query/subscription**: the state register and the environmental-context register, as point queries and as the SSE watch. | `worldState`, `groundTruth` (the harness's reference channel), `clock`, `scenarios`, `profiles`. |
+| **read results** | **HAS → query**: the served indication registers, the evidence channel. | `groundTruth`, what the physical value *actually* is. Harness-only: a reference, never evidence. |
+
+Notice what the asymmetry teaches: *trigger modes* exists only on
+`/world`, a real instrument offers no way to swap its own physics, so
+the twin channel doesn't either. The contract's shape *is* the lesson.
+
+## Reading the served surface (never from this page)
+
+The served fields are whatever the model declares, so the only honest
+way to know them is to read the model or to ask the endpoint:
+
+- **The model**: `primmel-packages/oiml-r60/model/twin.prl` (the rec's
+  governed declaration) and `primmel-packages/acme-*/model/*.prl` (the
+  product's). These are the contract; everything else is commentary.
+- **The endpoint**: GraphQL introspection. The Twin Lab's connect flow
+  does exactly this, it introspects the endpoint, intersects the
+  discovery with the rec's declared interface, and shows the binding it
+  derived. Because the schema is generated, discovery is always true.
+
+*One illustrative example, generated from the R 60 model at time of
+writing, read the model, not this page:* a query of
+`{ indication { value unit kind servedAt } }`, a watch of
+`subscription { state }`, and the command `mutation { runSelfTest { state } }`
+,  the R 60 model's indication register, state register, and `self_test`
+behavior, mirrored.
+
+## Served values, timestamps, freshness
+
+- A served quantity is `{ value, unit, kind, servedAt }`. `servedAt` is
+  the instrument clock: boot-seconds in `manual` clock mode, epoch
+  seconds in `wall` mode.
+- The SMART graphql connector stamps the serve at **receipt** with the
+  deployment clock by default (the serve event *is* the round trip); a
+  wall-clocked twin can be consumed with the `timestamp_fields`
+  extension so freshness judges the served epoch instead. Both are
+  declared deployment behavior, never invented evidence times.
+- Freshness windows (`fresh_within`) come from the model's serve
+  declarations and are carried verbatim into every binding; a stale twin
+  degrades verdicts to `indeterminate`, never to `fail`.
+- Any transport failure is `unavailable`: the value stays absent, the
+  reason goes to the health log, and **no connector call ever throws
+  into evidence**.
+
+## A worked sequence (the Twin Lab's guided run, one leg)
+
+1. **perform action** *(harness, /world)*, place the reference load,
+   advance the clock (settle).
+2. **probe condition** *(harness, /world)*, `worldState` confirms the
+   pan and the clock. *(In a human run this is the tester looking at the
+   bench; the app never does this step for evidence.)*
+3. **read results** *(app, /twin)*, the served indication, auto-recorded
+   with the pair skew against the capture time.
+4. **attest** *(human, into the app)*, the physical display reading,
+   typed into the run's box. The attestation is the evidence of record;
+   the twin's serve is the recorded cross-check.
+
+Steps 1–2 are the *simulated reality*; steps 3–4 are the *legal
+interaction*. The wall runs between them, and the evidence only ever
+comes from the legal side plus the human.
+
+## The operator flows (testing a real instrument, or an SST in practice)
+
+The guided run serves both postures, the connect flow discovers which:
+
+- **A real Primmel SMART Instrument Twin** (any host, any port): the
+  operator has physical access to the instrument. The app drives the
+  test procedure as instruction cards (the test's declared steps,
+  verbatim, with resolved setpoints), the operator performs each action
+  physically, records the conditions (setpoint chips/attestations) and
+  the physical display's readings (the attestation boxes), and the app
+  auto-records the twin's served values and any instrument commands
+  (the invoke face). The compiled evidence lands in the rec's own
+  report forms, judged by the verdict chain.
+- **An SST standing in for the instrument** (practice, G18): the same
+  cards, but the endpoint carries a `/world` sibling (discovered by
+  introspection, never assumed). The cards gain "perform on the SST"
+  buttons (set the chamber, place the load) that drive the world
+  mutations through the declared practice seam. The run and its
+  evidence are practice-segregated (`practice-` ids), never
+  certification evidence; the twin channel and the attestations remain
+  the only evidence sources. A real twin has no `/world` sibling, the
+  probe reports honestly and the instructions stay manual.
+
+## How the SMART app consumes the contract
+
+| consumer | channels used | how |
+|---|---|---|
+| **Twin Lab** (`/app/twin-lab`) | `/twin` only | introspect → proposed binding → compliance cycles → guided-run capture + command issuance (`twin-lab/*` modules) |
+| **monitor + gateway** | `/twin` only | the graphql connector (poll + GraphQL-over-SSE subscribe + invoke), per the derived `GatewayIntegration`s |
+| **practice flows** (`/app/sim`) | `/world` + `/twin` | the **declared practice seam** (G18): practice entities are marked and segregated; the seam is declared in code, never an accident |
+| **vitest / e2e / pilot** | both | the harness *is* the physics: it drives `/world` (loads, environments, scenarios) and asserts on `/twin` + the app's verdicts |
+| **the SST bench / console** |, | the SST's own human faces. The SMART app does not embed them to interact, this contract replaces any need to. |
+
+## Composite twins (the thesis holds at every level of the graph)
+
+A composite instrument (a gas analytical *system*, analyzer + sampling +
+conditioning) is modelled as a hierarchy of twins: the composite's
+Primmel instrument model declares its components, and the composite's
+twin API is generated from **that** model exactly as a single
+instrument's is, the composite's serves decompose to component
+registers, its commands to component behaviors. The rec governs at every
+level. (TODO.v3/03 lands the exemplar; the composition calculus, which
+component certificate statuses compose into the composite's, is the
+program's concern, never the wire's.)
+
+## Stability across the SST migration
+
+The sibling repo is renaming (`@sim/*` → `@primmel/sst-*`), factoring
+packages into base / kind / instance tiers, and gaining the generic
+`primmel-sst run <instance>` boot and the `sst-shell` host (its
+`TODO.complete/` workstreams; the normative server-side API spec is its
+`specs/12-external-graphql-api.md`). **This contract is the stable
+surface through that migration**: the model-driven chain, the two
+endpoints, the four verbs, the served shapes, and the epistemic wall do
+not change. Legacy family bins delegate to the new runtime during the
+window, so every consumer written against this page keeps working.
+
+---
+
+Back to the [index](/docs/arch/).

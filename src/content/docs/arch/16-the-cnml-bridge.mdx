@@ -1,0 +1,217 @@
+---
+title: 'The CNML bridge (sign + verify in the app)'
+shortTitle: 'The CNML bridge'
+description: 'An issued OIML certificate becomes a signed CNML document in the app, and anyone can verify it without leaving the app.'
+eyebrow: 'Architecture · Chapter 16'
+order: 16
+---
+
+TODO.integration/09 · How an issued OIML certificate becomes a signed
+CNML document, and how anyone verifies it, without leaving the app.
+
+---
+
+## 1. What CNML is to this program
+
+CNML (Certificat Numérique de Métrologie Légale) is the OIML SMART
+program's name for its machine-readable certificate format: an XML
+document per Recommendation, signed with XMLDSig (ECDSA P-256) and
+verifiable through a fixed check pipeline. It is implemented by the
+sibling **cnml** repo (renamed from digital-certificates) (`integration.yaml` repo `cnml`),
+which ships the format as TypeScript packages:
+
+| Package | What it owns |
+|---|---|
+| `@oimlsmart/cnml-xml` | cert JSON → CNML XML and back (browser-native DOMParser/XMLSerializer) |
+| `@oimlsmart/cnml-schemas` | the per-Recommendation JSON Schemas (`R60.yaml`, `R129.yaml`, …) + `_core.yaml` |
+| `@oimlsmart/cnml-crypto` | key custody (WebCrypto), `signCnmlXml`, `verifyCnmlXml`, the check pipeline (`runChecks`) |
+
+**The bridge consumes these as dependencies, never copies.** The app's
+Vite config aliases the package ids at the repo's TS sources (the
+packages ship `src/` via their `exports`); when the CNML repo changes,
+the bridge re-resolves, never re-vendors.
+
+## 2. The flow, end to end
+
+```
+our Certificate (data/types.ts)
+        │  ① project (the per-rec field map, §3)
+        ▼
+CNML cert JSON ──② validate──► per-rec JSON Schema (@oimlsmart/cnml-schemas)
+        │                        (a schema rejection never signs)
+        ▼  ③ serialize (@oimlsmart/cnml-xml)
+CNML XML document
+        │  ④ sign (@oimlsmart/cnml-crypto: signCnmlXml, the browser-held key, §4)
+        ▼
+signed CNML XML (XMLDSig enveloped)
+        │  ⑤ attest (the OTS relay: POST /api/cnml/timestamp — the pending
+        │    proof embeds inside the signature container; required, §4)
+        ▼
+signed + time-attested CNML XML
+        │  ⑥ verify (@oimlsmart/cnml-crypto: runChecks, §5) — anyone, any time
+        ▼
+the check panel (per-check pass/fail/warn/skip/pending with reasons)
+```
+
+Every step is honest: a failure at any step is surfaced with its
+reason, never silently skipped, never an invented success.
+
+## 3. The per-rec field map (model-driven)
+
+The projection from our `Certificate` to the CNML cert object is **data
+per rec, not code**. The CNML per-rec schema IS the map's target: the
+bridge ships one projection module (`browser/src/cnml/field-map.ts`)
+whose entries name, for each CNML top-level section, the source on our
+certificate:
+
+| CNML section | From our certificate |
+|---|---|
+| `certificate` | `certificate_number`, `issue_date`, `expiry_date`, `status`, `scheme` |
+| `issuing_authority` | `issuing_authority_id` (the participant registry resolves the party) |
+| `applicants` / `manufacturers` | `applicant`, `manufacturer` |
+| `certified_type` | `type_designation`, `type_description`, `model_family_id`, `classifications` |
+| `characteristics` | `json_data.characteristics` (the per-rec template rows, the R 60 e_max/d_min/…; already structured) |
+| `recommendation` | the rec id + `edition_year` + `scheme` (per-rec `const` checked by the schema) |
+| `test_reports` | `test_reports[]` (`report_number`, `date`) |
+
+A new rec registers its CNML schema in the CNML repo and nothing in the
+bridge changes (OCP): the projection is section-shaped, the schema
+validates what it knows.
+
+## 4. Signing and key custody
+
+- The signing key is an **ECDSA P-256 WebCrypto pair**, generated and
+  held **in the browser** (`@oimlsmart/cnml-crypto`'s key store, IndexedDB,
+  the private key non-extractable, optionally passphrase-wrapped by
+  their `encryptPrivateKey`). This is the CNML pattern: the signer is a
+  person at a browser, not a server.
+- `signCnmlXml(xml, privateKey, x509CertPem?)` embeds an enveloped
+  XMLDSig signature; the optional X.509 PEM rides for the PKI chain
+  checks (scope/CRL).
+- **The quorum path (TODO.ops/14):** `signCnmlXmlExternal(xml, signer,
+  groupChainPem)` is the two-phase assembly for keys that never exist
+  locally, the SignedInfo is built and canonicalized HERE (byte-
+  identical to what xmldsigjs re-canonicalizes at verify, the
+  namespace-injection trap is documented in the module), the signature
+  comes from the CA's `/api/sign` threshold endpoint (the group key
+  never assembles). The emitted document is one shape with the locally
+  signed path; the KeyInfo carries the GROUP certificate chain (never a
+  self-issued placeholder), and the ceremony's attestation (provider,
+  N-of-M, session) persists on the signing record.
+- **The evaluation-report binding (TODO.ops/15):** at sign time the
+  bridge binds the certificate's ER into the signed payload , 
+  `evaluation_report: { id, date?, digest }`, the digest a sha256 over
+  the ER entity's canonical JSON (`canonicalJson` is exported so any
+  verifier holding the same ER recomputes with THE SAME
+  canonicalization). A certificate naming a missing ER signs nothing.
+- **The issuance gate's final step is "signed".** A certificate detail
+  page offers *Sign as CNML*: the projection validates against the
+  per-rec schema FIRST (a schema rejection lists every violation and
+  signs nothing), then serializes, then signs with the operator's
+  unlocked key, then **attests the signing time** (required, never
+  optional): the signed document's SHA-256 goes to the instance's
+  timestamp relay (`POST /api/cnml/timestamp`), the server submits the
+  digest to the public OpenTimestamps calendars (a digest submission is
+  never a custody event), and the pending proof embeds inside the
+  signature container — a `ds:Object` child of `ds:Signature`, the XAdES
+  unsigned-property posture, so the embed and every later upgrade leave
+  the signed bytes (and the signature) untouched. The proof commits to
+  the document with the timestamp element stripped. A relay failure
+  fails the signing honestly. The signed XML + the signing record (key
+  id, at, by) persist on the certificate's `json_data.cnml` (evidence
+  accrues, never rewrites, a re-sign appends), with the attestation's
+  provenance (`ots`: digest, calendars, submitted_at).
+- **The attributed act (TODO.trust-registry/02):** the officer may sign
+  with the ORGANIZATION's published key instead of a browser-local
+  officer key. The org's signing keys are the org account's property on
+  the identity service (the OP — oimlsmart/identity, trust-registry/01);
+  the picker lists the org's CURRENT keys from the OP's public
+  key-resolution endpoint (`GET <issuer>/op/keys/<org-id>.json`,
+  anonymous, cacheable, CORS-open), and the officer supplies the picked
+  key's private half (the org's custody — used for the signing, never
+  persisted). The guards: the session's org binding must BE the signing
+  org; the key must be current on the published set; the private half
+  must match the published coordinates. The artifact carries the
+  reference in the frozen v1 format's own carrier — the KeyInfo
+  certificate's subject DN (`O=<org name>, OU=org:<org-id>,
+  CN=<officer>, C=XX`; the key id is the OP's content-derived kid of
+  exactly those coordinates, never a new field) — and the platform
+  record (`json_data.cnml.signer`) + the audit chain carry
+  who/org/kid/when with the authorization context.
+- Key custody failure modes are honest: no key unlocked ⇒ the panel
+  says so; the wrong key ⇒ the signature check fails on verify, with
+  the reason.
+
+## 5. The verify embed
+
+The check pipeline (`runChecks`) runs in order, each check named with
+its reason; a hard failure short-circuits (the pipeline's own rule):
+
+1. **xml-well-formed**, the document parses;
+2. **schema-valid**, it validates against its per-rec schema (the rec
+   id is read from the document);
+3. **signature**, the XMLDSig signature verifies against the trusted
+   keys (the verifier's trust store);
+4. **scope**, the issuer's certified scope covers the recommendation;
+5. **crl**, the signing key is not revoked;
+6. **er-binding**, the certificate binds its evaluation report (the
+   digest inside the signed payload; pre-leg certificates skip
+   honestly);
+7. **timestamp**, the required OpenTimestamps time attestation: an
+   attested proof passes (the Bitcoin block height + time + calendar
+   named); a pending proof reads `pending` — the attestation is in
+   flight, the calendar named, and the relay's upgrade query
+   (`POST /api/cnml/timestamp/verify`) can mature it at verify time
+   (the app persists the matured proof — the lazy upgrade-on-read);
+   a proof-less document FAILS — unless its record predates the
+   mandate, which reads as the honest legacy mark;
+8. **transparency**, an embedded transparency-log proof (when present).
+
+The certificate detail page embeds the panel for its signed document;
+the same panel verifies a dropped foreign CNML file (the verifier
+needs no account). `skip` is a first-class status — the er-binding and
+transparency legs skip honestly when the document carries no proof,
+never fake a pass — and `pending` is first-class too (the timestamp
+leg's in-flight state, neither a pass nor a fail).
+
+**The signer-chain resolution (TODO.trust-registry/02)** rides alongside
+the pipeline on the register's verify page and on the API
+(`GET /api/verify/attribution?number=…`): the platform record's
+attribution (kid + org id + the resolution URL) is resolved against the
+OP's published org-key document — the key's validity AT THE SIGNING TIME
+(the OTS anchor), the org's standing NOW, the rotation/revocation
+stamps. The state lattice answers each question distinctly, never one
+blended verdict: the artifact's own signature (the pipeline's verdict),
+the key (current / since-rotated / revoked-after-signing — "valid at the
+time, the key since revoked on DATE" — / revoked-before-signing /
+created-after-signing / unknown-key), the org (the standing now vs the
+recorded standing then), the anchor. The resolution is replayable: the
+key-set fetch honors the endpoint's own max-age in a verifier-local
+cache (every answer says hit or freshly fetched, and the page shows the
+endpoint URL, the fetch stamp, and the OP's key row verbatim so an
+auditor recomputes by hand); the panel's re-resolve act bypasses the
+cache. Both sides compute through the ONE lattice module
+(`src/services/signer-lattice.ts`) — the client service and the server
+route never diverge.
+
+## 6. Failure semantics (the card catalogue)
+
+| Failure | Surface |
+|---|---|
+| Projection has no value for a mandatory section | the projection says which section, signing never starts |
+| Schema rejection | every ajv violation listed (path + message), nothing signed |
+| No key / locked key | the panel states the custody state |
+| Sign throws | the error is recorded on the signing record, the page shows it |
+| Verify: any check fails | the check's own reason, pipeline order preserved, short-circuit visible |
+| Tamper after signing | the signature check fails (`sig mismatch`), proven by test |
+
+## 7. What this leg deliberately is NOT
+
+- Not the CA: the PKI CA server (the CNML repo's `oiml-pki-server`)
+  issues real X.509 chains; this leg signs with browser-held keys
+  (self-signed where no chain exists, the scope/CRL checks then skip
+  honestly). The CA-issued chain is leg 2 (TODO.integration/20).
+- Not transparency-log onboarding: the tlog proof embeds when the log
+  infrastructure answers; the transparency check warns honestly until
+  then. (The OTS time attestation IS wired — §4 signs through the
+  instance's timestamp relay, §5 verdicts it.)

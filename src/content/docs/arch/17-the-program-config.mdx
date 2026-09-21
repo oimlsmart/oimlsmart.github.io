@@ -1,0 +1,95 @@
+---
+title: 'The program config seam (OIML SMART as instance #1)'
+shortTitle: 'Program config seam'
+description: 'Everything program-flavored the shell says lives in one manifest the framework reads at boot, so a second program is a second manifest, never a fork.'
+eyebrow: 'Architecture · Chapter 17'
+order: 17
+---
+
+TODO.integration/10 · Everything program-flavored the SHELL says lives in
+ONE manifest the framework reads at boot. A second program is a second
+manifest, never a fork.
+
+---
+
+## 1. What belongs to the seam (MECE)
+
+The shell is the framework: layouts, header/footer, splash, landing,
+login. What it says falls into exactly three buckets, and each bucket
+has exactly one home:
+
+| Bucket | Home | Examples |
+|---|---|---|
+| **Program literals** (the shell's copy about the program) | `browser/src/program/manifest.ts` | product name, hero copy, footer line, splash quotes, demo role accounts, library section label |
+| **Program data** (the domain trees) | `primmel-packages/` (SSOT) + `config/standards/<tree>/` (app-config overlays) | the rec registry, requirements, forms, seed/demo narratives |
+| **Program documentation** (long-form content) | the docs federation (`docs/`, `~/src/oimlsmart/primmel-smart-docs`) | about pages, guides, architecture |
+
+A literal that is none of these is platform-generic (it names no
+program, e.g. "Sign in") and stays in the framework.
+
+## 2. The manifest schema
+
+```ts
+interface ProgramManifest {
+  id: string                        // 'oiml-smart'
+  name: string                      // 'OIML SMART' — titles, header context
+  nameLong: string                  // 'OIML SMART System' — landing hero
+  description: string               // the hero tagline
+  logos: Logos                      // re-exported from config/brand (one source)
+  libraryLabel: string              // 'OIML Recommendations' — the landing's rec section
+  footer: {
+    programLabel: string            // 'OIML SMART.'
+    poweredBy: { name: string; url: string; logoAlt: string }
+  }
+  splashQuotes: Array<{ text: string; author: string }>
+  roles: Array<{ email: string; name: string; role: string; icon: string }>
+  loginTitle: string                // 'Sign in — OIML SMART'
+}
+```
+
+The manifest is **static at build time**, no runtime cost, no fetch.
+
+## 3. The seam
+
+`browser/src/program/program.ts` exposes exactly one typed read:
+
+```ts
+programManifest(): ProgramManifest   // the ACTIVE instance
+```
+
+- Default instance: the OIML manifest (`program/manifest.ts`).
+- `setProgramManifestForTest(m)` swaps the instance (tests only, a
+  second manifest proves the seam; the framework code never branches on
+  program id).
+- Consumers import `programManifest()`, never the manifest file
+  directly (the convention this page documents). The boundary gate
+  (TODO.integration/02) carries the hard guarantee at the other end:
+  `browser/src/program` is a forbidden root for the platform machinery
+  (gateway/monitor/twin-lab/twin-cert/services/engine/composables/astro
+  import no program copy, ever).
+
+## 4. Consumers (migrated from scattered literals)
+
+| Consumer | Reads |
+|---|---|
+| `layouts/Base.astro`, `App.astro`, `Public.astro` | `name` (title default) |
+| `components/AppHeader.vue` | `name` (context label) |
+| `components/PublicHeader.vue` | `name` (logo alt), the about-link label |
+| `components/SiteFooter.vue` | `footer.*` |
+| `components/SplashScreen.vue` | `splashQuotes` |
+| `vue-pages/index.vue` (landing) | `nameLong`, `description`, `libraryLabel` |
+| `vue-pages/public/login.vue` | `roles` (demo accounts) |
+| `pages/index.astro`, `pages/app/login.astro` | `name`, `loginTitle` |
+
+Every migration is copy-identical for the OIML instance, the e2e
+suite is the byte-level proof.
+
+## 5. What the seam deliberately is NOT
+
+- Not the data layer: the rec registry (the standards the program
+  ships) is generated from the data trees, a second program ships
+  different trees, and nothing in the manifest needs to change.
+- Not theming: the palette is a framework concern (the house style
+  codex); the manifest names no colors.
+- Not the docs: long-form program content rides the docs federation
+  (bucket 3), never the shell config.

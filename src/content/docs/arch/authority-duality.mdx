@@ -1,0 +1,153 @@
+---
+title: 'The Authority Duality: the committee publishes both forms'
+shortTitle: 'Authority duality'
+description: 'The committee in charge of a Recommendation publishes its decisions in two co-authoritative forms, the text and the SMART model, and the platform audits the duality in both directions at build time.'
+eyebrow: 'Architecture · Companion'
+order: 23
+---
+
+**Version 1.0 · 2026-08-18 · Doctrine (TODO.standards/14).** This
+statement is normative for the program: a feature that treats the model
+as subordinate to the text, or the text as subordinate to the model, is
+a defect, not a direction.
+
+## The concern this retires
+
+The program's August 2026 external review carried an unnamed premise:
+that the published text is the sole authority of a Recommendation, and
+that a machine-readable model of it is a derivative risk to be managed.
+That premise is wrong, and the program does not concede it. The
+authority of a Recommendation is the COMMITTEE's decision. The
+committee in charge, a 62-member-body governance, publishes its
+decisions in two co-authoritative forms: the text and the SMART model.
+Neither form outranks the other, because both are the same decisions
+published by the same body. No single member body, no administration,
+and no external ecosystem holds a special seat in that authority, and
+authority never flows from them.
+
+## The two forms, made auditable: the congruence matrix
+
+A claim of co-authority is only as good as its audit surface. The
+platform generates, at build time and per Recommendation, the
+**congruence matrix**: the duality checked in both directions.
+
+- **Forward, the committee's reading order.** Every clause of the
+  published text, in the document's own numbering, maps to the model
+  nodes that carry it. Where the committee has not yet resolved a
+  clause into the model, the row records the committee-pending decision
+  with its reason and date (the named gaps of
+  `config/sources-prd/<rec>/congruence.yaml`), never a silent absence.
+- **Reverse, the engineer's reading order.** Every model node maps to
+  its clause anchors in the published text, so any behavior of the
+  model can be traced to the exact clause that authorizes it.
+
+The matrix is published per Recommendation on the platform's reference
+surface (for R 60: `/app/standards/r60/congruence`, likewise for R 91,
+R 129 and R 144), rendered from the build artifact
+(`browser/src/data/generated/congruence-matrix.ts`, produced by
+`browser/build/congruence-matrix-plugin.ts`). The committee-facing view
+reads the text's own clause order; the engineering view reads the
+model's nodes.
+
+The gate is `npm run test:congruence-matrix`
+(`browser/scripts/congruence-matrix-gate.ts`, wired into `bin/check`).
+It fails the build when a clause loses its mapping, and it fails the
+build when a model node cites a clause the text does not have. Duality
+drift is a build error, never a review surprise. Both failure
+directions are mutation-proven in
+`browser/src/__tests__/congruence-matrix.test.ts`.
+
+The matrix rides the existing provenance machinery: every model node
+already carries clause-level provenance
+(`source: { doc: urn:oiml:pub:r:60-1:2021, clause: "…" }`), and the
+extraction pipeline (`sources/` + `scripts/extract-prd.py`) already
+decomposes the compiled text into addressed, normativity-marked
+fragments (the `.prd` extracts, TODO.roadmap/24). The matrix adds no
+new authoring burden; it makes the existing provenance auditable in the
+two directions the doctrine requires. Its scope is the extracted source
+parts of each Recommendation. Citations of documents outside the
+extracted set (the VIM, the VIML, other Recommendations) are
+references, not duality anchors; the
+`docs/standards/alignment-register.md`
+owns their disposition.
+
+## Interpretation decisions land in both forms
+
+Where the text underdetermines a value or a behavior, the committee's
+resolution is recorded once, in the Recommendation's modelling-decisions
+register, and lands in both forms with the same decision id. The model
+does not defer to the text, and the text does not defer to the model:
+both forms carry the committee's decision. The running instance of this
+practice is the
+`docs/standards/r60-modelling-decisions.md`,
+which records the interpretation decisions, the source-text
+contradictions the model forced into the open, and the named gaps that
+remain; the edition-drift comparison it draws on is
+`analysis/clause-drift-r60-2017-2021.txt`, and the R 60 congruence
+matrix links the register from the page's provenance line.
+
+## The model-normative publication mode, supported today
+
+The forward direction of the doctrine, stated plainly: a committee may
+publish the SMART model as the sole normative form of a
+Recommendation, with the text as guidance. That is a legitimate and
+supported evolution of this platform, not a risk to be guarded against.
+The platform already runs Recommendation models as executable truth;
+dual-form publication is the current publication practice, not an
+architectural ceiling.
+
+Concretely, a committee publishes a model-normative Recommendation
+today by declaring it in the Recommendation's manifest
+(`config/standards/<tree>/standard.yaml`):
+
+```yaml
+publication:
+  mode: model-normative
+```
+
+Under this declaration the model package carries the normative core;
+the loader and the evaluator consume the model exactly as they do for
+every Recommendation (there is no code path that evaluates the text),
+and the text attaches as guidance: the declaration lands in the
+standard's generated meta, and the reference surface marks the mode
+(the congruence page carries the publication-mode badge and, under
+`model-normative`, the banner stating that the model is the normative
+form and the text is guidance). The
+congruence matrix still audits both directions under this mode, because
+even a guidance text must not drift from the normative model. The mode
+is exercised by a fixture Recommendation in the unit suite
+(`browser/src/__tests__/congruence-matrix.test.ts`, the model-first
+describe block). The undeclared default is `dual`, the co-authoritative
+publication practice described above.
+
+## The figure
+
+![The committee publishes two co-authoritative forms, audited in both
+directions](/diagrams/shared/authority-duality.svg)
+
+The figure reads from the top. The committee in charge of the
+Recommendation sits at the top as the sole source of authority. Two
+arrows descend from it to the two co-authoritative forms it publishes:
+the text (the published PDF, and its addressed clause fragments in the
+`.prd` extracts) on the left, and the SMART model (the Primmel package
+and its generated data tree) on the right. Neither arrow is primary;
+both carry the committee's decisions. Beneath the two forms, the
+congruence matrix spans them with two arrows in opposite directions:
+the forward mapping (every clause to its model nodes, or to a recorded
+committee-pending decision) and the reverse mapping (every model node
+to its clause anchors). At the base, the build gate
+(`npm run test:congruence-matrix`) watches both arrows: drift in either
+direction fails the build.
+
+## What this doctrine is not
+
+- It does not renumber, reword, or restructure any published text. The
+  extraction is verbatim, and the text-identity axis of the
+  reconstruction congruence gate (`npm run validate`, section 1g)
+  proves it.
+- It offers committees no governance advice beyond documenting the two
+  publication modes. The choice of mode belongs to the committee.
+- It does not make the model supreme. The `dual` mode is the default
+  and the current practice; `model-normative` is a supported
+  publication mode a committee may choose, and the duality gate guards
+  both equally.

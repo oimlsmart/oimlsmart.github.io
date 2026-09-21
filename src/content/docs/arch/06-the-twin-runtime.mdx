@@ -1,0 +1,78 @@
+---
+title: 'The twin runtime (gateway + monitor)'
+shortTitle: 'The twin runtime'
+description: 'The twin runtime is the pair of modules, the API gateway and the compliance-engine monitor, that connect the platform to live twins.'
+eyebrow: 'Architecture · Chapter 06'
+order: 6
+---
+
+**What it is.** The two modules that connect the platform to live
+twins: `browser/src/gateway/` (the API gateway) and
+`browser/src/monitor/` (the compliance engine).
+
+![The twin runtime](/diagrams/shared/twin-runtime.svg)
+
+**What the gateway does.** Fetches served values from twins and lands
+them in the entity registers:
+
+- **Connectors** are a registry (`registerConnector(profile, factory)`):
+  `rest_json` (poll GET + webhook), `graphql` (the sim's `/twin` is the
+  reference server, with GraphQL-over-SSE for subscriptions), `mqtt`,
+  `file_drop` (batch ingestion), and `opc_ua` as a declared stub.
+- **Freshness is judged against the twin's own served timestamp**
+  (`timestamp_fields`), a stale twin degrades to `indeterminate`,
+  never fails and never silently passes. A declared-but-absent
+  timestamp is `unavailable`, never invented.
+- **Failures are `unavailable`, never exceptions.** A dead connector
+  leaves the register untouched and writes the health log; the
+  freshness gate owns the degradation.
+- **No secrets in models.** Credentials are `{ env: VAR_NAME }`
+  references resolved at runtime; literals under secret-looking keys
+  are rejected by validation.
+
+**What the monitor does.** Watches the certified fleet continuously:
+
+- **A scheduler + the existing verdict engine** (never a second
+  dialect): timer / signal / change triggers → gateway fetch →
+  freshness gate → verdicts per requirement per twin.
+- **Evidence streams**, facts, verdicts, escalations: append-only,
+  window-queryable, version-pinned (every record carries
+  `definition: { monitor, version, standard_id }`). A transport failure
+  never lands as evidence.
+- **Re-judgment (INV-5)**: re-run a stored window against new limits
+  with **zero twin queries**, the stored snapshots are the judgment
+  basis; re-judged verdicts append marked, never rewrite.
+- **Escalation closure**: a certificate clear | reinstate closes the
+  flags it judged (the record accrues closure metadata), so a fresh
+  fail cycle opens a fresh record and a stale flag never re-investigates.
+
+**What it owns.** The runtime semantics: connectors, cycles, the
+streams, the deployment bindings (`model/gateway.yaml` and
+`model/monitors.yaml` are app config, not normative content).
+
+**How it proves it works.** The acceptance suites:
+`sim-twin-acceptance` (the real wire against a live sim: pass ⇒ drift
+fail + escalation ⇒ outage indeterminate ⇒ restart recover),
+`monitor-acceptance` (24 cycles + zero-call re-judgment),
+`gateway-verdict-e2e`, and the twin-cert surveillance walks.
+
+**Where it plugs in.** The packages declare the twin *interfaces*
+(`model/twin.prl`); deployments bind them live. The twin-cert program
+adds its fleet monitor (five continuously-judgeable requirements , 
+campaign-shaped requirements like creep-envelope are judged by probe
+campaigns, never per cycle). The **twin lab** (`browser/src/twin-lab/`,
+page `/app/twin-lab`) is the generic operator face of exactly this
+runtime: it derives a deployment binding from the rec's declared
+interface ∩ a live endpoint's introspected surface, runs monitor
+cycles over it, and compiles guided conformance-test runs into the
+rec's own evidence forms, the deployment *is* the lab session. The
+streaming leg of the same runtime, following a twin instead of
+polling it, has its own page:
+[14, the twin stream](/docs/arch/14-the-twin-stream).
+
+**Peel deeper.** `AGENTS.d/12-twin-integration.md` (the complete runtime
+doctrine), `AGENTS.d/14-twin-certification-program.md`.
+
+---
+
+Back to the [index](/docs/arch/).

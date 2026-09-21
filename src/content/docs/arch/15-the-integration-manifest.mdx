@@ -1,0 +1,78 @@
+---
+title: 'The integration manifest (spec)'
+shortTitle: 'Integration manifest'
+description: 'The integration manifest is the normative reference for integration.yaml and its gate, the one home of every cross-repo link and the semantics by which the gate proves each link.'
+eyebrow: 'Architecture · Chapter 15'
+order: 15
+---
+
+**What it is.** The normative reference for `integration.yaml` (repo
+root) and its gate (`npm run test:integration`,
+`browser/scripts/integration-gate.ts`): ONE HOME of every cross-repo
+link, repo entries, contract entries, and the semantics by which the
+gate proves them. The gate is a generic interpreter of the manifest;
+a new link is a manifest entry, never gate code (OCP).
+
+## Why it exists
+
+The program spans several repos (the kernel, the SST, the classroom,
+CNML, Confium, the docs). Individual links were each tested somewhere,
+but nothing proved **the whole is integrated** on every commit. The
+manifest names every link and the check that proves it; the gate runs
+them all and prints the link table. When a link breaks, the gate is
+red where it matters, never vague about which link.
+
+## Schema
+
+```yaml
+repos:                        # required: a map of repo key → entry
+  <key>:
+    path: <string>            # required — repo-relative to integration.yaml
+    env: <string>             # optional — env var overriding `path`
+    role: <string>            # required — one line of what this repo is
+
+contracts:                    # required: a list of contract entries
+  - id: <string, unique>      # required
+    repo: <repo key>          # required — the repo this contract links
+    title: <string>           # required — the link, in one line
+    run:                      # exactly one of run | pending
+      cwd: <repo key | self | browser>
+      cmd: <string>           # the check command (shell, from cwd)
+    pending: <todo-id>        # a contract whose leg lands later
+    requires: <precondition>  # optional — 'devstack' today
+```
+
+## Semantics
+
+- **Repo resolution**, the `env` override wins when set; otherwise
+  `path` (relative to the manifest's directory). A repo not present on
+  disk **SKIPS its contracts honestly**, a missing sibling is a
+  fact of the machine, never a silent failure and never a fake pass.
+- **Contract shape**, every contract needs `id`, `repo`, `title`, and
+  exactly one of `run` / `pending`. Duplicates, unknown repos, and
+  run-and-pending-both are **manifest errors**, the gate refuses to
+  start and says which line is wrong.
+- **`pending: <todo-id>`**, a contract whose leg lands in a later
+  TODO file reports `PENDING` with the id (the series' burn-down is
+  visible in the gate output), never a failure.
+- **`requires: devstack`**, probes `http://localhost:5190/app`;
+  absent, the contract SKIPS with the fix ("start it with npm run dev").
+- **Outcomes**, `PASS` / `FAIL` (the check ran), `SKIP` (a missing
+  repo or precondition, honest), `PENDING` (a later leg). Any FAIL
+  fails the gate; SKIPs and PENDINGs do not.
+- **Execution**, contracts run sequentially (memory discipline);
+  each carries its duration. The check commands are the EXISTING
+  suites, the gate orchestrates and never re-implements a check
+  (DRY).
+
+## The contract list
+
+The live list is the manifest itself, read it. Today's contracts:
+kernel-lint, ssot-flow, validate, unit-suite, sst-handshake,
+sst-boot-stream, twin-lab-live (requires devstack), classroom-unit,
+docs-build, and the pending legs (twin-lab-families → 04/05,
+composite-basis → 07, cnml-verify → 09).
+
+---
+
+Back to the [index](/docs/arch/).

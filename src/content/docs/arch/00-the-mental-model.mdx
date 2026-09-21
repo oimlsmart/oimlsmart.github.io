@@ -1,0 +1,82 @@
+---
+title: 'The mental model (five minutes)'
+shortTitle: 'The mental model'
+description: 'Everything in this system is built from eight words and three layers, and this page shows where every detail belongs.'
+eyebrow: 'Architecture · Chapter 00'
+order: 0
+---
+
+Everything in this system is built from eight words and three layers.
+If you understand this page, you can find your way to any detail and
+know where it belongs.
+
+## The eight words
+
+The modelling system underneath everything (formally proved closed,
+complete, and extensible in the IS–HAS–DOES document) uses exactly
+eight terms:
+
+- Three **relations**: **IS** (identity, what a thing is, the truths
+  that individuate it), **HAS** (possession, what a thing holds), and
+  **DOES** (behavior, what a thing does).
+- Five **sorts of thing**: **object** (anything that can be
+  individuated, a load cell, a kind, a process run), **property** (a
+  slot an object can vary along, mass, color), **value** (what fills
+  the slot today), **process** (a transformation treated as an object),
+  **transition** (input → transform → output; transitions compose, and
+  a process is a transition reified as an object).
+
+That is all. Every model in this repository, a load cell, a
+Recommendation, a certification program, is a **subject** described by
+what it **IS** (identity, metadata, design parameters, promises), what
+it **HAS** (attributes, dimensions, state, characteristics,
+environmental context), and what it **DOES** (behaviors, processes with
+steps, inputs and outputs).
+
+Requirements are **constraints on a subject's IS/HAS/DOES**. Tests are
+**processes that probe a subject's IS/HAS/DOES** to produce evidence.
+Forms are **interfaces for recording that evidence**. They are
+secondary models, derived from the subject, never peers of it.
+
+## The three layers
+
+The system's central subject is the measuring instrument, and its
+digital twin lives in three layers:
+
+```
+Physical device
+   ⇕  representation (any shape)
+FULL DIGITAL TWIN   — the manufacturer's complete representation,
+                      arbitrarily rich (physics, telemetry, history)
+   ⇕  PROJECTION — declared by the standard's governed aspect set
+PRIMMEL TWIN      — only what the standard governs: declared
+                    registers + freshness + provenance
+   ⇕  fidelity proof (served ≡ physical within δ + freshness)
+TWIN CERTIFICATION — certifies the projection, never the full
+                     twin's completeness
+```
+
+The decisive idea: the Primmel twin is **not a command interface** (not
+a Siemens-style "admin shell" of verbs). It is a **governed state
+projection**, the standard itself declares which aspects it governs
+(the governed register set in `primmel-packages/oiml-r60/model/twin.prl`),
+the product's twin interface is *derived* from that declaration, and
+machinery proves conformance. The manufacturer's internal richness
+stays private; interoperability comes from the standard, not from
+vendor goodwill.
+
+## The one rule that keeps the system honest
+
+The **Primmel packages are the single source of truth (SSOT)**. Every
+normative model lives as a `.prl` package under `primmel-packages/`.
+Everything downstream, the YAML data trees in `data/`, the generated
+TypeScript in `browser/src/data/generated/`, the screens you click , 
+is a **generated artifact**. You never edit a generated artifact by
+hand: you edit the package and regenerate. A drift guard
+(`npm run test:ssot`) proves, byte for byte, that packages ≡ data
+trees ≡ app projections, in both directions, on every gate run.
+
+## Where to go next
+
+- The five repositories and the data flow: [01, the system map](/docs/arch/01-the-system-map).
+- Or straight to a component from the [index](/docs/arch/).

@@ -4,16 +4,12 @@ import DocsLayout from '../../layouts/DocsLayout.astro'
 import { FEDERATION } from '../../data/platform-facts'
 
 const sections = [
-  { key: 'guides', label: 'Developer Guides', desc: 'Narrative walkthroughs for authoring a SMART Recommendation.' },
-  { key: 'arch', label: 'Architecture', desc: 'The six-layer entity model, design principles, and primitives.' },
-  { key: 'workflow', label: 'Workflow', desc: 'The end-to-end certification process from application to certificate.' },
+  { key: 'arch', label: 'Architecture', desc: 'The platform architecture in twenty-three chapters, from the mental model to the identity service.' },
   { key: 'specifications', label: 'Formal Specifications', desc: 'The 11-document SMART_REQS normative specification set.' },
   { key: 'ref', label: 'Reference', desc: 'Schemas, types, syntax, and identifiers.' },
   { key: 'oiml-core', label: 'OIML Core', desc: 'The OIML Core metamodel, the 4-layer architecture, the six modules, the invariants.' },
-  { key: 'oiml-rec', label: 'Authoring Recommendations', desc: 'The methodology, the R 60 / R 91 / R 144 walkthroughs, the demo manual.' },
   { key: 'oiml-cs', label: 'The OIML-CS Scheme', desc: 'The B 18:2025 constitution, the runtimes, the coverage machinery.' },
   { key: 'cnml', label: 'CNML Certificates', desc: 'The certificate format the verdict chain issues, schemas, sign/verify, the operator manuals.' },
-  { key: 'nmi', label: 'For NMIs', desc: 'The position pack and the authority quickstart for legal-metrology authorities.' },
 ]
 
 const allDocs = await getCollection('docs')

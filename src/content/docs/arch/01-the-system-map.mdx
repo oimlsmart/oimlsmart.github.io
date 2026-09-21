@@ -1,0 +1,115 @@
+---
+title: 'The system map (fifteen minutes)'
+shortTitle: 'The system map'
+description: 'The platform lives in five repositories, of which smart is the system and the other four are its language, its instruments, its documentation, and its history.'
+eyebrow: 'Architecture · Chapter 01'
+order: 1
+---
+
+The platform lives in five repositories. One of them, `smart`, is the
+system; the other four are its language, its instruments, its
+documentation, and its history.
+
+![The five repositories](/diagrams/shared/repo-map.svg)
+
+## `smart`, the platform (this repository)
+
+Everything the system *is* lives here:
+
+- `primmel-packages/`, **the single source of truth**: every
+  Recommendation (R 60, R 91, R 129, R 144), the OIML-CS framework, the
+  OIML-CS dataspace definition, the
+  CASCO foundations, the core metamodel, the shared modules, the
+  product reference packages (the fictional ACME products), and the
+  twin-certification program. 29 packages, all `.prl`.
+- `data/`, the **generated** YAML trees the app consumes. Never
+  hand-edited; regenerated from the packages by `npm run gen:data` and
+  proven byte-clean by the SSOT guard.
+- `browser/`, the application: an Astro 7 shell with Vue 3 islands
+  that runs the entire certification workflow in the browser , 
+  applications, laboratories, test runs, evaluations, certificates, the
+  participant registry, the twin console, and the live monitor.
+- `scripts/`, the pipelines: the `.prd` extractor (compiled OIML XML →
+  clause fragments), the package builder, the validation runner.
+- `sources/`, the compiled OIML source documents the extractor reads.
+- `analysis/`, the working notes: audits, coverage summaries, design
+  records (the honest record of how the models got here).
+- `AGENTS.d/` + `AGENTS.md`, the operating manual for AI agents (and
+  the conventions humans follow too).
+- `docs/`, documents about the system, including this architecture
+  site and the `docs/future/README.md`.
+- `TODO.roadmap/`, `TODO.v2/`, `TODO.v3/`, the work ledger: 63 done,
+  16 done, and the wave ahead.
+
+## `primmel-ts`, the kernel (the language)
+
+The Primmel language toolchain: the `.prl` parser and serializer, the
+linter (`primmel check`, 99+ rules), the map-profile coverage
+calculus, the model diff, and the package registry tests (1062 of
+them). The smart repo consumes it through a symlink (`PRIMMEL_TS`), so
+the platform's gates always run against the live kernel. Primmel v3 is
+a strict superset of Primmel v2 (the predecessor at `primmel/`).
+
+## `sim-instruments`, the instruments
+
+Four standalone simulated instruments, the load cell (LC-500), the gas
+analyzer (CGM-200), the radar speed meter (RS-180), and the optical
+dimensioner (MD-350), each serving a governed `/twin` interface and a
+physical `/world` interface. They exist so that everything in the
+platform that touches a twin can be exercised, tested, and taught
+without hardware: the practice flows, the probe channel, the monitor
+acceptance, the twin-certification walks, and the demo.
+
+## `primmel-smart-docs`, the documentation site
+
+The published volumes (Primmel kernel concepts, the OIML core, the
+per-Recommendation modeling guide, the demo manual) with 100+ diagrams,
+built with Astro and deployed to GitHub Pages. This architecture site
+lives in the smart repo instead, it documents the *code*, so it
+travels with the code.
+
+## `primmel`, the predecessor (v2)
+
+The earlier language (MMEL v2) and its reference models. Primmel v3 is
+a strict superset; the v2 tree is kept for provenance.
+
+## `primmel/editor`, the Studio (the authoring boundary)
+
+The authoring tool (`primmel-editor`): the canvas where an expert
+models a Recommendation (reference model) or an organization's own
+process (implementation model, mapped onto references). The boundary
+with the platform is one-way and total:
+
+- **The editor produces packages.** Its output is `.prl` content —
+  the same SSOT the platform reads. `primmel check` validates on the
+  authoring side, exactly as the platform's gates validate on the
+  consumption side.
+- **The platform consumes packages, never the editor.** Nothing in
+  `smart` imports `primmel-editor` (verified: no dependency). The
+  certification runtime reads the packages alone; the editor never
+  ships to or embeds in the runtime.
+- **The packages are the hand-off.** Authoring in Studio lands in
+  `primmel-packages/`; the platform's build discovers it there. The
+  editor's own development (features, UI, mappings) changes nothing in
+  the platform until a package changes.
+
+The public surface of this boundary today: the `/studio` minisite
+documents the editor, and the published Recommendations are its
+products. A public Studio build embeds this page when one exists;
+until then the minisite says so plainly rather than faking an embed.
+
+## The data flow in one paragraph
+
+Authors edit `.prl` packages in `smart`. `npm run gen:data` regenerates
+the `data/` trees from them through the kernel's codecs. The app's
+build turns the trees into generated TypeScript (`browser/src/data/
+generated/`). The app renders screens and computes verdicts from that.
+The SSOT guard proves, on every gate, that packages ≡ data trees ≡
+generated code, byte for byte, in both directions. Anything you see in
+the app traces back to a package, and through the package's own
+`source:` provenance to a clause of a published OIML document.
+
+## Where to go next
+
+Pick a component from the [index](/docs/arch/), each page tells you what
+it is, what it owns, how it proves it works, and where it plugs in.
