@@ -3,8 +3,8 @@ import { STANDARDS, getStandardById, getStandardBySlug, getStandardByNumber, STA
 
 describe('standards registry', () => {
   describe('STANDARDS shape', () => {
-    it('contains 3 standards (R 60, R 129, R 144)', () => {
-      expect(STANDARDS.length).toBe(3)
+    it('contains 4 standards (R 60, R 91, R 129, R 144)', () => {
+      expect(STANDARDS.length).toBe(4)
     })
 
     it('every standard declares all required fields', () => {

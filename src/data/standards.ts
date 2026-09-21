@@ -57,6 +57,18 @@ export const STANDARDS: readonly StandardRef[] = [
     oimlPdfUrl: 'https://www.oiml.org/en/files/pdf_r/r060-e21.pdf',
   },
   {
+    id: 'OIML-R-91',
+    slug: 'r91',
+    recommendationNumber: 'R 91',
+    title: 'Traffic Speed Meters',
+    scope:
+      'Traffic speed meters for speed enforcement, from Doppler radar to average-speed section control. Preview edition of the 2025 four-part text.',
+    year: 2025,
+    counts: { requirements: 57, tests: 64, forms: 78 },
+    recommendationsPath: '/recommendations/r91',
+    libraryPath: '/library/r91',
+  },
+  {
     id: 'OIML-R-129',
     slug: 'r129',
     recommendationNumber: 'R 129',

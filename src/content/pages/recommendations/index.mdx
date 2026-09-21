@@ -23,6 +23,19 @@ eyebrow: 'Catalogue · SMART International Recommendations'
       <span><strong>12</strong> forms</span>
     </div>
   </a>
+  <a class="rec-card" href="/recommendations/r91">
+    <div class="rec-num">R 91 · 2025 (preview)</div>
+    <h3>Traffic speed meters</h3>
+    <p class="scope">
+      Speed enforcement instruments, from Doppler radar to average-speed
+      section control. Preview edition of the 2025 four-part text.
+    </p>
+    <div class="meta">
+      <span><strong>57</strong> reqs</span>
+      <span><strong>64</strong> tests</span>
+      <span><strong>78</strong> forms</span>
+    </div>
+  </a>
   <a class="rec-card" href="/recommendations/r129">
     <div class="rec-num">R 129 · 2000</div>
     <h3>Mass of road vehicles</h3>
@@ -62,16 +75,16 @@ the `oimlsmart/smart` application repository (private during the pilot, the publ
 
 ## How a SMART Recommendation is structured
 
-Each modelled Recommendation is organized as a directory under
-`data/<recommendation>/` containing:
+Each modelled Recommendation is a Primmel package in the
+`oimlsmart/primmel-packages` repository, the single source of truth:
 
-- `standard.yaml`, identity, value model (calculations, tables), terminology.
-- `dimensions.yaml`, classification axes (accuracy class, load range, etc.).
-- `requirements/`, requirements classes with structured acceptance criteria.
-- `conformance/`, conformance test procedures.
-- `forms/`, test report form schemas with embedded calculations.
+- `package.primmel`, identity, editions, and the layer composition.
+- `specification/`, requirement classes with structured acceptance criteria, conformance tests, calculations, and tables.
+- `model/`, the instrument, its attributes, characteristics, and state model.
+- `execution/forms/`, the test report and evaluation report schemas with embedded calculations.
+- `terminology.prl`, the Recommendation's terms with their clause provenance.
 
-The build pipeline validates every cross-reference, generates TypeScript
-modules, and the interactive application loads them at runtime. Adding a new
-Recommendation is a YAML-only task, see the
+The build composes the packages, validates every cross-reference, and
+generates the modules the interactive application loads at runtime.
+Adding a new Recommendation is Primmel authoring, see the
 [Adding a Standard](/docs/workflow/adding-a-standard) guide.
