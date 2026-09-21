@@ -1,7 +1,12 @@
 # 20 — Document smart/browser archive playbook
 
-**Status:** ready to write (documentation only)
+**Status:** decided — removed (2026-09-21)
 **Depends on:** nothing — can land independently of code migration
+
+## Decision
+
+The playbook is moot: the replica it would have archived is deleted rather
+than archived, and the smart repo's own history is the record.
 
 ## What to do
 

@@ -84,7 +84,7 @@ export const FEDERATION = [
 
 /** The three live entry points from the home page. */
 export const ENTRY_POINTS = [
-  { label: 'The app', href: '/app/', desc: 'the certification workflow, in your browser' },
+  { label: 'The app', href: 'https://platform.oimlsmart.org/', desc: 'the certification workflow, in your browser' },
   { label: 'The docs', href: '/docs/', desc: 'the volumes — methodology to operator guides' },
   { label: 'The demo', href: 'https://www.oimlsmart.org/recs/docs/oiml-rec/13-running-the-demo', desc: 'certify a simulated load cell end to end' },
 ] as const
