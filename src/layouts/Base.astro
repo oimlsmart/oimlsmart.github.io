@@ -1,21 +1,27 @@
 ---
 /**
  * The top site's base layout — the house shell from the package
- * (TODO.FULL/02: one chrome SSOT). The top site is the internal face:
- * the draft banner rides (`internal`), the brand/meta are the package
- * defaults.
+ * (TODO.FULL/02: one chrome SSOT), fed the site's OWN injected config
+ * (TODO.public track 02): the package went machinery-only at 0.2.0, so
+ * the nav model, brand, services, and footer content come from
+ * src/data/ and thread down through the shell's typed contract. The
+ * top site is the internal face: the draft banner rides (`internal`,
+ * linking the pilot page through the nav model's origin).
  */
-import Shell from '@oimlsmart/site-shell/components/Base.astro'
-import SITE from '../data/site-meta'
+import Shell from '@oimlsmart/site-shell/chrome/astro/Base.astro'
+import { BRAND } from '../data/brand'
+import { NAV_MODEL } from '../data/nav-config'
+import { SERVICES } from '../data/site-meta'
+import { FOOTER } from '../data/footer'
 import '../styles/app.css'
 
 /** The AI assistant bubble (TODO.ai-platform/01) — the shared chrome's
- *  ONE component (site-shell#35, vendor/site-shell riding main), never
- *  a per-app copy. This const is the property's config flag: flip to
- *  false to retract the surface without touching the layout. The
- *  service origin defaults to https://ai.oimlsmart.org; anonymous
- *  visitors get the public corpus tier honestly marked, member sign-in
- *  rides the rag service's bubble bridge (rag#68). */
+ *  ONE component (site-shell#35), never a per-app copy. This const is
+ *  the property's config flag: flip to false to retract the surface
+ *  without touching the layout. With no explicit origin the bubble
+ *  reads the services registry's `ai` (https://ai.oimlsmart.org);
+ *  anonymous visitors get the public corpus tier honestly marked,
+ *  member sign-in rides the rag service's bubble bridge (rag#68). */
 const aiAssistant = true
 
 interface Props {
@@ -25,6 +31,6 @@ interface Props {
 const { title, description } = Astro.props
 ---
 
-<Shell title={title} description={description} siteTitle={SITE.title} signInHref="https://id.oimlsmart.org/" internal aiAssistant={aiAssistant}>
+<Shell title={title} description={description} brand={BRAND} nav={NAV_MODEL} services={SERVICES} footer={FOOTER} internal={{ href: '/pilot' }} aiAssistant={aiAssistant}>
   <slot />
 </Shell>

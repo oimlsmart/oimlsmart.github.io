@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import { readdirSync, existsSync, statSync } from 'node:fs'
 import { join } from 'node:path'
-import { NAV_DROPDOWNS, NAV_STANDALONE, NAV_ITEMS, type NavItem } from './nav-config'
+import { NAV_MODEL, type NavItem } from './nav-config'
 
 const ROOT = join(import.meta.dirname, '..', '..')
 const PAGES_DIR = join(ROOT, 'src', 'pages')
 const CONTENT_PAGES_DIR = join(ROOT, 'src', 'content', 'pages')
 
-const EXTERNAL_HREFS = new Set(['/vocab/', '/resolutions/', '/publications/', '/vocab', '/publications', '/resolutions', '/recs', '/studio', '/smi', '/sst', '/cnml', '/concepts-management/', '/vocabularies/', '/certificates/'])
+const EXTERNAL_HREFS = new Set(['/vocab/', '/resolutions/', '/resolutions/en', '/resolutions/en/', '/publications/', '/vocab', '/publications', '/recs', '/studio', '/smi', '/sst', '/cnml', '/concepts-management/', '/vocabularies/', '/certificates/'])
 
 function collectRoutes(dir: string, base = ''): Set<string> {
   const routes = new Set<string>()
@@ -61,14 +61,15 @@ describe('nav-config ↔ pages contract', () => {
   const pageRoutes = collectRoutes(PAGES_DIR)
   const contentSlugs = collectContentSlugs(CONTENT_PAGES_DIR)
 
-  // Dropdown links + the NAV_STANDALONE register + the standalone links
-  // sitting directly in NAV_ITEMS (News, the TODO.promotion/01 section
-  // entries): every surface renders from these, so every one must resolve.
-  const allNavLinks = [
-    ...NAV_DROPDOWNS.flatMap(d => d.links),
-    ...NAV_STANDALONE,
-    ...NAV_ITEMS.filter((i): i is Extract<NavItem, { type: 'link' }> => i.type === 'link'),
-  ]
+  // Dropdown links + the standalone links sitting directly in NAV_MODEL's
+  // items: every surface renders from these, so every one must resolve.
+  const allNavLinks = NAV_MODEL.items.flatMap((item: NavItem) =>
+    item.type === 'dropdown' ? [...item.config.links] : [item]
+  )
+
+  it('carries at most five top-level entries (the nav width directive)', () => {
+    expect(NAV_MODEL.items.length).toBeLessThanOrEqual(5)
+  })
 
   it('every nav link resolves to a page or is whitelisted as external', () => {
     const unresolved: string[] = []
@@ -80,24 +81,26 @@ describe('nav-config ↔ pages contract', () => {
     expect(unresolved).toEqual([])
   })
 
-  it('no two nav links within the same dropdown share the same href', () => {
-    // Cross-dropdown sharing is allowed for tier-paired routes (e.g. the
-    // SMART-tier CNML and SMART+-tier CNML both live at /cnml, distinguished
-    // by a tier toggle on the destination page). Within a single dropdown,
-    // hrefs must still be unique.
+  it('no two nav links within the same dropdown share href and label', () => {
+    // Tier-paired routes share an href deliberately (the SMART-tier CNML
+    // and SMART+-tier CNML both live at /cnml, distinguished by a tier
+    // toggle on the destination page — and since track 02 they share the
+    // ONE Components dropdown, so the pair rule is href + label). A
+    // repeated href under the SAME label is still a copy-paste bug.
     const unresolved: string[] = []
-    for (const dropdown of NAV_DROPDOWNS) {
-      const hrefs = dropdown.links.map(l => l.href)
-      const dupes = hrefs.filter((h, i) => hrefs.indexOf(h) !== i)
+    for (const item of NAV_MODEL.items) {
+      if (item.type !== 'dropdown') continue
+      const entries = item.config.links.map(l => `${l.href} :: ${l.label}`)
+      const dupes = entries.filter((h, i) => entries.indexOf(h) !== i)
       for (const dupe of new Set(dupes)) {
-        unresolved.push(`${dropdown.id}: duplicate href ${dupe}`)
+        unresolved.push(`${item.config.id}: duplicate link ${dupe}`)
       }
     }
     expect(unresolved).toEqual([])
   })
 
   it('every dropdown has a unique id', () => {
-    const ids = NAV_DROPDOWNS.map(d => d.id)
+    const ids = NAV_MODEL.items.filter((i): i is Extract<NavItem, { type: 'dropdown' }> => i.type === 'dropdown').map(i => i.config.id)
     expect(new Set(ids).size).toBe(ids.length)
   })
 })

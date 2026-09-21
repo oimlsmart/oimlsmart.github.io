@@ -1,7 +1,11 @@
 ---
 /** Wrapper — the component lives in @oimlsmart/site-shell (one chrome
- *  SSOT, TODO.FULL/02); this file forwards props + slots. */
-import Pkg from '@oimlsmart/site-shell/components/ComponentLogo.astro'
+ *  SSOT, TODO.FULL/02); this file forwards props + slots. The logo
+ *  asset base is injected here (the package ships none since 0.2.0):
+ *  www's canonical copy at https://www.oimlsmart.org/img/components/,
+ *  unless a caller overrides it for staging. */
+import Pkg from '@oimlsmart/site-shell/chrome/astro/ComponentLogo.astro'
+import { COMPONENT_ASSET_BASE } from '../data/site-meta'
 ---
 
-<Pkg {...Astro.props}><slot /></Pkg>
+<Pkg {...Astro.props} base={Astro.props.base ?? COMPONENT_ASSET_BASE}><slot /></Pkg>
