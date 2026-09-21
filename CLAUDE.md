@@ -33,6 +33,7 @@ npm install
 npm run dev      # http://localhost:4321
 npm run build    # output to dist/ (+ pagefind index)
 npm test         # vitest — includes the SSOT gates below
+npm run check:nav # nav completeness gate (after a build; every nav href served)
 npm run test:e2e # playwright
 ```
 
@@ -144,8 +145,13 @@ uploads `dist/` as a GitHub Pages artifact, and deploys.
 - **Vue islands are real.** `ThemeToggle`, `MobileNav`, `NavDropdown`, `SearchBox` (public) plus the
   app-subpath workflow islands are Vue SFCs hydrated with `client:*` directives — see
   `TODO.astro/index.md` for the authoritative inventory. The rest is `.astro`.
-- **Nav is data.** `src/data/nav-config.ts` is the single nav source for desktop + mobile;
-  a contract test (`nav-config.contract.test.ts`) proves every link resolves and no href repeats.
+- **Nav is data.** `src/data/nav-config.ts` is the single nav source — the `NavModel`
+  injected into the shell's `Base` for the header menu, the mobile overlay, and the
+  footer's Explore column (the shell package went machinery-only at 0.2.0; the site
+  injects brand/nav/services/footer from `src/data/`). The top level carries at most
+  five entries; a contract test (`nav-config.contract.test.ts`) proves every link
+  resolves, and `npm run check:nav` proves every href is served (dist or a declared
+  sibling deployment) before each deploy.
 - **Dark mode** is handled by an inline `<script>` in `Base.astro` — not by a composable or component lifecycle.
 - **`APP_URL`** is read via `import.meta.env.APP_URL` (Vite statically replaces it at build time).
 - **Content Collections** — adding a new page means adding a `.md`/`.mdx` file under `src/content/` with the right frontmatter schema. The routing page automatically picks it up.

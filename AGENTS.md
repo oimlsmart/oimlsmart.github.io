@@ -121,6 +121,7 @@ DEMO_BASE=http://localhost:3000 npx playwright test -c playwright.demo.config.ts
 | live anchor content probes | nightly (`freshness-sentinel`) | `npx tsx scripts/check-proof-map.ts --live` |
 | screenshot staleness vs TTL | nightly (`freshness-sentinel`) | `npx tsx scripts/check-shot-freshness.ts` |
 | demo-link liveness smoke | nightly (`freshness-sentinel`) | `npx playwright test -c playwright.demo.config.ts` |
-| vendored shell pin vs the npm channel | nightly (`freshness-sentinel`) | `node scripts/check-shell-pin.mjs` |
+| nav completeness (every nav href served) | per-push (`check:nav` in the build workflow) | `npm run check:nav` |
+| the shell npm pin vs the npm channel | nightly (`freshness-sentinel`) | `node scripts/check-shell-pin.mjs` |
 | key public routes answer 200 | nightly (`freshness-sentinel`) | automatic (curl against www.oimlsmart.org) |
 | canonical hosts + the built site's links | nightly (`freshness-sentinel`; the per-push lychee stays in `links.yml`) | `node scripts/check-host-registry.mjs` |
