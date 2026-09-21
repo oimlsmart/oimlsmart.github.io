@@ -14,8 +14,8 @@ release gate run, and what each proves.
 
 | Command | Proves |
 |---|---|
-| `cd browser && npx vitest run` | 6225 unit/service tests across 428 files (the file count is freshness-gated; totals re-pinned per wave), the app's logic, services, codecs, engines |
-| `npm test` in `oimlsmart/platform-server` | the server kernel's own suite (78 tests, its repo's CI) — the modules the extraction moved out of `browser/server/` (TODO.identity-extract/01), consumed here as the npm package (TODO.repos/01) |
+| `cd browser && npx vitest run` | the unit/service suite (the file count is freshness-gated; totals re-pinned per wave), the app's logic, services, codecs, engines |
+| `npm test` in `oimlsmart/platform-server` | the server kernel's own suite (its repo's CI) — the modules the extraction moved out of `browser/server/` (TODO.identity-extract/01), consumed here as the npm package (TODO.repos/01) |
 | `cd browser && npx vue-tsc --noEmit` | type safety of the Vue islands and services |
 | `cd browser && npx astro check` | the Astro route shells and layouts |
 | `cd browser && npm run validate` | every data file against its schema + the semantic rules (R-series), 0 errors; 109 documented warnings (named gaps) |

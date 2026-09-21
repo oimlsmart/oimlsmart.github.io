@@ -40,15 +40,17 @@ environment, not you.
 ```bash
 cd smart/browser
 export PRIMMEL_TS=/Users/<you>/src/primmel/primmel-ts/packages/primmel
-npx vitest run            # expect: Test Files 216 passed, Tests 3856 passed
-npm run validate          # expect: ALL CHECKS PASSED — 0 errors, 488 warnings
-npm run test:ssot         # expect: SSOT GUARD PASSED — byte-clean both directions
+npx vitest run            # expect: every test file passed, zero failed
+npm run validate          # expect: ALL CHECKS PASSED, 0 errors
+npm run test:ssot         # expect: SSOT GUARD PASSED, byte-clean both directions
 ```
 
-The 488 warnings are the documented named-gap class (not errors). If
-everything is green, your environment is right. If not, the
-[troubleshooting section of the demo manual](https://www.primmel.org/primmel-smart-docs/oiml-rec/13-running-the-demo/)
-covers the common cases (ports, stale caches, missing sibling repos).
+The warning count is the documented named-gap class (not errors), and
+the suite totals move as the platform grows; the chapter on knowing it
+works explains what each gate proves. If everything is green, your
+environment is right. If a gate is red on a fresh checkout, the common
+causes are a busy port, a stale build cache, or a missing sibling
+checkout; the gate's own output names what it could not find.
 
 ## Step 3, Make one tiny real change (15 minutes)
 
