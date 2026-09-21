@@ -15,9 +15,9 @@
   <text x="130" y="184" text-anchor="middle" font-size="12" fill="#475569">modules, CASCO, products, programs</text>
 
   <rect x="280" y="90" width="180" height="120" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
-  <text x="370" y="120" text-anchor="middle" font-size="14" font-weight="600" fill="#1e293b">data/ trees</text>
-  <text x="370" y="144" text-anchor="middle" font-size="12" fill="#475569">GENERATED artifacts</text>
-  <text x="370" y="164" text-anchor="middle" font-size="12" fill="#475569">(npm run gen:data)</text>
+  <text x="370" y="120" text-anchor="middle" font-size="14" font-weight="600" fill="#1e293b">baked trees</text>
+  <text x="370" y="144" text-anchor="middle" font-size="12" fill="#475569">browser/.cache/primmel/</text>
+  <text x="370" y="164" text-anchor="middle" font-size="12" fill="#475569">(the bake, packages + config)</text>
   <text x="370" y="184" text-anchor="middle" font-size="12" fill="#475569">never hand-edited</text>
 
   <rect x="510" y="90" width="180" height="120" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>

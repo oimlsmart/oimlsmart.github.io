@@ -1,0 +1,83 @@
+---
+title: 'Multi-standard projection'
+shortTitle: 'Multi-standard projection'
+description: 'One implementation model, composed from several Primmel models, is read through several reference standards, each an independent lens with its own coverage and its own verdicts.'
+eyebrow: 'Architecture · Chapter 13'
+order: 13
+---
+
+**What it is.** One **implementation model**, a tailor-designed model
+of a real device, composed from several Primmel models, read through
+**several reference standards**, each an independent lens with its own
+coverage and its own verdicts. The auditor always views through a
+single standard (or an approved set), **never a merged claim**.
+
+![Multi-standard projection](/diagrams/shared/multi-standard-projection.svg)
+
+The worked example ships in the repo: the **ACME LC-500** is governed
+by TWO standards, OIML R 60 (the instrument Recommendation) and the
+twin-fidelity certification program (`oiml-twin-cert`). Its package
+carries two map_profiles (`model/r60-map.prl`, `model/twin-cert-map.prl`)
+and its manifest declares `maps_to { oiml-r60 oiml-twin-cert }`.
+
+**The four pieces.**
+
+1. **The worked implementation model.** Each projection is explicit:
+   the product's twin surface maps node-to-node to each standard's
+   requirement set (the twin-cert map covers all six
+   `/req/twin-fidelity/*` requirements, endpoint → static-conformance,
+   indication → indication-band, serves' freshness/timestamp facets,
+   state watch → state-fidelity, creep behavior → creep-envelope). The
+   chain rule derives the multi-standard reality for free: a consumer's
+   live indication flows compliance to BOTH standards.
+
+2. **The auditor lenses** (`/app/lenses`). The same implementation
+   reads through each reference, the twin-cert lens (six requirements,
+   full) side by side with the R 60 lens (ten, full), the composed
+   fold's per-standard summaries, and the shared source honestly
+   visible: the endpoint serves BOTH standards ("write once, comply
+   twice", with both fulfilments shown, never collapsed). The union
+   view says plainly: *N separate standards, never one merged claim*.
+
+3. **The collision doctrine** (`browser/src/lenses/collisions.ts`).
+   A register named by two governed sets is COMPUTED, never silent.
+   Today the LC-500's two standards govern disjoint registers, the
+   detector proves it. If a future standard names a register another
+   already serves: each standard keeps its own lens and verdicts; for
+   any single-view merge the stricter limit wins unless the standards'
+   own provisions say otherwise, and that resolution must be declared
+   in the implementation model (see the twin-cert map's doctrine
+   block), never assumed by the platform.
+
+4. **The integrated reference** (`primmel-packages/oiml-integrated-ref`).
+   The shared verification/traceability processes authored ONCE:
+   `probe_pairing` (served ⇄ reference admitted within the declared
+   window; an out-of-window pair is INADMISSIBLE, INVALID, never a
+   fail) and `reference_traceability_gate` (the U:MPE ≤ 1:3
+   reference-quality rule). It is `kind module`, composed from
+   `oiml-r60@2021` and `oiml-twin-cert@2027`, an authoring convenience
+   that DRYs the shared processes, **never** a verdict-merging device.
+
+**How it proves it works.** The lens pins (`lenses-page.test.ts`: the
+twin-cert lens's six requirements at full, the fold's side-by-side
+summaries, the shared endpoint), the collision pins
+(`lens-collisions.test.ts`: disjoint-today + the synthetic shared
+case), the chain-rule pin (the quarry consumer's indication chain
+resolves into twin-fidelity/indication-band), the mutation proofs
+(dropping BOTH projections uncovers the creep characteristic), and the
+linters: `primmel check` 0 errors on all 29 packages, ssot byte-clean.
+
+**Where it plugs in.** The view/lens runtime (TODO.v2/02–03) supplies
+the projection machinery; the twin-cert program supplies the second
+standard; the integrated reference is consumed by future probe/test
+authoring (the program's probe schedule reusing `probe_pairing` is the
+named follow-up).
+
+**Peel deeper.** `AGENTS.d/12-twin-integration.md` (the twin runtime
+doctrine), `AGENTS.d/14-twin-certification-program.md`, and the
+packages themselves, `acme-lc500/model/{r60-map,twin-cert-map}.prl`,
+`oiml-integrated-ref/`.
+
+---
+
+Back to the [index](/docs/arch/).

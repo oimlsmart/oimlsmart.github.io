@@ -1,0 +1,87 @@
+---
+title: 'The application (`browser/`)'
+shortTitle: 'The application'
+description: 'The application is an Astro 7 shell with Vue 3 islands that runs the entire OIML SMART certification workflow in the browser.'
+eyebrow: 'Architecture · Chapter 05'
+order: 5
+---
+
+**What it is.** The OIML SMART application: an Astro 7 shell with Vue 3
+islands that runs the entire certification workflow in the browser.
+All workflow logic executes client-side against the generated data; a
+small auth server (`browser/server/`) handles the Gate's logins.
+
+**What it does.** Every surface of the chain, for every role:
+
+- **Applicant portal**, apply for certification, upload documentation,
+  track the application.
+- **Lab workbench** (test laboratories), the test-request inbox, test
+  runs against the Recommendation's real form schemas, computed verdicts
+  per row and overall, report compilation.
+- **IA console** (issuing authorities), dispatch to laboratories,
+  evaluation reports (per-provision determinations), certificate
+  signing and issuance (the issuance gate fails closed without the
+  complete chain).
+- **CS admin console**, the OIML-CS participant registry:
+  organizations, declarations (sign/suspend state machine), applications,
+  competence evidence, approval votes, category schemes.
+- **Twin console**, the live monitor: provision the demo twin, run
+  cycles, watch verdicts and escalations, re-judge stored windows; and
+  the twin-certification section (the ACTIVE demo certificate + the D2
+  probe evidence).
+- **Twin lab** (`/app/twin-lab`), the generic twin workbench: pick a
+  Recommendation, point at a live Primmel SMART twin endpoint, and the
+  lab proposes the binding (introspection ∩ the rec's declared
+  interface, validated); then read compliance (monitor cycles over the
+  rec's own requirements) and run a guided conformance test, the
+  test's declared steps as the tester script, attestations as the
+  evidence of record, the twin's serves auto-recorded, compiling into
+  the rec's own report form with requirement verdicts.
+- **Sim bench** (`/app/sim`), the embedded sim-instrument bench with
+  the practice flows: user-driven play against the physical world,
+  landing in real (practice-segregated) form instances, including the
+  analogue-dial observation path.
+- **Certification library + docs**, the standards themselves, browsable
+  (requirements, tests, forms, terminology) with their clause provenance.
+
+**What it owns.** The screens, the services (verdict engine, certificate
+lifecycle, workflow runtimes), the gateway + monitor code, the build
+pipeline (data trees → generated TS), and the end-to-end test suites.
+
+**How it proves it works.**
+
+- `npx vitest run`, **4266 tests / 274 files** (unit + service level).
+- `npx vue-tsc --noEmit` + `npx astro check`, type safety, both layers.
+- `npm run validate`, schema + semantic validation of all data (0
+  errors; 488 documented warnings).
+- `npm run test:e2e`, **82/83** puppeteer flows against a real boot
+  (login, the CS chains, the twin-lab workbench against a live sim, the
+  render baseline byte-identical).
+- `npm run pilot`, the 6-step live-twin pilot, asserted.
+
+**Where it plugs in.** Up: the data trees (and through them, the
+packages). Sideways: the sim instruments (over HTTP, the epistemic
+wall: the app never calls `/world` outside the practice seam). Down:
+the auth server.
+
+**The navigation model (`TODO.cs-e2e/13.5`).** Inside the app shell, route
+changes are true client-side navigations: the island router shim
+(`browser/src/astro/app-entrypoint.ts`) decides per `router.push` — an
+in-app target (same App layout, guard passing) pushStates and
+`AppPage.vue` swaps the page component by key (setup/onMounted re-run,
+exactly the per-page-island semantics); the entity stream recycles on
+every swap (the 13.11 socket discipline in a surviving JS context), and
+the top progress bar (`navigation-progress.ts` + a self-contained block
+in `AppShell.vue`) runs until the page mounts. Only real boundaries
+still full-reload: public-layout pages (login, marketing, docs), unknown
+URLs, a failed navigation-time guard, and any route named in
+`SPA_NAVIGATION_OPT_OUT` (`spa-navigation.ts` — the 13.5 audit found
+none; the hook is there for the first one that does).
+
+**Peel deeper.** `AGENTS.d/03-frontend-astro-shell.md` (the shell and
+routing), `AGENTS.d/04-styling-dark-mode.md` (the house style),
+`AGENTS.d/06-model-conventions.md` (how the app reads the models).
+
+---
+
+Back to the [index](/docs/arch/).

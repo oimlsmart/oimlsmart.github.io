@@ -1,0 +1,73 @@
+---
+title: 'The sim instruments (`sim-instruments`)'
+shortTitle: 'The sim instruments'
+description: 'The sim instruments are a separate repository of four standalone simulated instruments, each bootable alone with zero SMART checkout.'
+eyebrow: 'Architecture · Chapter 07'
+order: 7
+---
+
+**What it is.** A separate repository of four standalone simulated
+instruments, each bootable alone with zero SMART checkout:
+
+| Instrument | Rec | Physics |
+|---|---|---|
+| `sim-lc500` (load cell) | R 60 | strain → bridge → conditioning; creep, thermal hysteresis, configurable post-cycle residual |
+| `sim-gas-analyzer` (CGM-200) | R 144 | CO by NDIR, NOx by chemiluminescence; drift classes, cross-sensitivity, calibration |
+| `sim-r91` (RS-180) | R 91 | K-band Doppler, 20–180 km/h; cosine error, rain fade (missed readings, never wrong ones) |
+| `sim-md` (MD-350) | R 129 | optical light-section dimensioning; along-track sampling, reflectance and ambient-light noise, protrusion resolution |
+
+**What it does.** Each instrument serves two channels and a bench:
+
+- **`/twin`**, the governed projection, **generated from the product
+  reference package** (the serve declarations become the GraphQL
+  schema; a startup conformance check fails the process if the schema
+  drifts from the package).
+- **`/world`**, the physical world: place a load, sweep the
+  environment (D 11 vocabulary: temperature, humidity, pressure, supply
+  variations, EMC events), inject a fault, swap a scenario, advance the
+  virtual clock, reset. Guarded for non-local boots by one env var
+  (`SIM_WORLD_TOKEN`, opt-in; unset means open local posture).
+- **A console and a bench**, the LC-500's bench app shows the physical
+  scene and the paired **analogue dial** (a ground-truth rendering, so
+  a human can read a needle and catch what the API can't: the
+  lying-twin lesson).
+
+Scenarios are the teaching cases: `good-cell` (class-honest
+coefficients, recalibrated to be R 60 class-C creep-honest),
+`creep-cell` (the deliberate behavioral fail), `temp-cell`, and their
+per-family equivalents.
+
+**What it owns.** The multi-technology physics framework (transduction +
+conditioning stages per construction), the D 11 environmental layer,
+the twin-schema generation, the world schemas, the consoles, the bench.
+
+**How it proves it works.** `npm test`, **254 tests** across five
+workspaces (physics pinned per stage, contract conformance to the real
+packages, server and channel behavior, boot smoke) + typecheck + CI on
+GitHub Actions.
+
+**Where it plugs in.** The smart app consumes its `/twin` through the
+graphql connector (the real out-of-process acceptance path) and embeds
+its bench in `/app/sim` *as a human face*, interaction never needs the
+iframe: the contract is two endpoints and four verbs, specified in
+[12, the SST interaction contract](/docs/arch/12-the-sst-interaction-contract).
+The epistemic wall: the SMART app never calls `/world` outside the
+declared practice seam, certification logic reads only the served
+channel.
+
+**The rebrand (in flight).** The repo is becoming the **Primmel SST
+(Simulated SMART Twin)** platform: packages factor into base / kind /
+instance tiers (`package.sst.yaml` manifests), a generic `sst-runtime`
+boots any instance (`primmel-sst run acme-lc500`), an `sst-shell` hosts
+sessions, and the namespace renames to `@primmel/sst-*` (the repo's
+`TODO.complete/` workstreams). The interaction contract above is the
+stable surface through the migration, the legacy family bins delegate
+during the window.
+
+**Peel deeper.** The repo's own `README.md`, its design doc
+(`docs/2026-07-26-simulated-instruments-design.md`), and the product
+packages it mirrors (`primmel-packages/acme-*`).
+
+---
+
+Back to the [index](/docs/arch/).

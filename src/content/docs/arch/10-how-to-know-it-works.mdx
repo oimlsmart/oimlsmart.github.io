@@ -1,0 +1,82 @@
+---
+title: 'How to know it works (the gates map)'
+shortTitle: 'The gates map'
+description: 'The gates map lists, layer by layer, the commands the CI and the release gate run and what each proves, so that every claim in the architecture has a command that proves it.'
+eyebrow: 'Architecture · Chapter 10'
+order: 10
+---
+
+Every claim in this architecture has a command that proves it. This is
+the complete table, layer by layer, the commands the CI and the
+release gate run, and what each proves.
+
+## The command gates (all must stay green)
+
+| Command | Proves |
+|---|---|
+| `cd browser && npx vitest run` | 6225 unit/service tests across 428 files (the file count is freshness-gated; totals re-pinned per wave), the app's logic, services, codecs, engines |
+| `npm test` in `oimlsmart/platform-server` | the server kernel's own suite (78 tests, its repo's CI) — the modules the extraction moved out of `browser/server/` (TODO.identity-extract/01), consumed here as the npm package (TODO.repos/01) |
+| `cd browser && npx vue-tsc --noEmit` | type safety of the Vue islands and services |
+| `cd browser && npx astro check` | the Astro route shells and layouts |
+| `cd browser && npm run validate` | every data file against its schema + the semantic rules (R-series), 0 errors; 109 documented warnings (named gaps) |
+| `cd browser && npm run build` | gen:data + the production build (incl. codegen), the pipeline regenerates cleanly |
+| `cd browser && npm run test:ssot` | **the SSOT drift guard**, 4 legs byte-clean: packages → bake → committed generated TS snapshots; bake determinism; model-plane bundles; the OIML-CS reference copy |
+| `cd browser && npm run test:from-packages` | **the release proof**, the whole platform builds from `primmel-packages/` alone (lint, ssot, cache, build, vitest, validate, coverage, e2e, mutation) |
+| `cd browser && npm run test:e2e` | 347/360 puppeteer-driven flow tests against a real boot, login, the CS chains, the render baseline (13 skip-honest legs: the live-sim class without the SST declared + the IndexedDB-profile legs). Boot the dev stack as `ENTITY_BACKEND=server npm run dev` — the suite is written against the server persistence profile (the shell's profile chip renders "Connected workspace" only then; a bare `npm run dev` answers `entityBackend: indexeddb` and the render-baseline leg diffs the local-profile chrome). The pin is the LOCAL full-checkout number; CI runs the same set — the e2e job declares the SST positions AND `CNML_REPO` (the pinned `oimlsmart/cnml` checkout), so the CNML signing/registration family (cs-e2e-13c, vc-envelope, cnml-issue, fed-06, fed-07, aas-submodel, biml-portal, submission, cs-e2e-10, cs-e2e-12, trust-02, cs-e2e-13g, the interop CNML legs) no longer skips there |
+| `cd browser && npm run pilot` | the 6-step live-twin pilot (ACME LC-500 → quarry), asserted |
+| `cd primmel-ts && yarn test` | 1132 kernel tests incl. the corpus legs (all 30 packages lint clean) |
+| `cd sim-instruments && npm test` | 254 sim tests across five workspaces + typecheck + CI |
+| `primmel check --strict --audit` per package | 0 errors on all 30 packages (budgets pinned where warnings exist) |
+
+## The acceptance proofs (what to read when a number looks surprising)
+
+- **The sims are honest**: `sim-twin-acceptance` (pass ⇒ drift fail ⇒
+  outage indeterminate ⇒ restart recover, over the real wire).
+- **The monitor never confuses silence with failure**: outage degrades
+  to `indeterminate`, health-logged, no exception in evidence.
+- **Re-judgment is honest**: `monitor-acceptance`, zero gateway calls,
+  stored snapshots only, records append marked.
+- **Twin certification has teeth**: `twin-cert-acceptance`, the lie
+  walk goes flag ⇒ investigate ⇒ suspend ⇒ reinstate ⇒ recur ⇒ suspend
+  ⇒ withdraw, against the live sim.
+- **The behavioral probe is honest**: `behavior-probe`, GOOD inside
+  0.021 kg, creep-cell fails, drifting reference invalidates.
+- **The OIML-CS chain holds end to end** (TODO.cs-e2e/12):
+  `e2e/cs-e2e-12-full-flow.e2e.ts` drives the whole certification flow in
+  one leg — the application wizard to the BIML-registered certificate in
+  the applicant portal, with the draft-first test-report linkage asserted
+  per run and the IA examinations, the verdict re-execution, the CNML
+  signing and the registration act in between.
+- **The extractor is faithful**: `scripts/extract-prd.py --rec all
+  --check`, all 14 extracts byte-identical to a fresh extraction; the
+  R 129 numbering divergences were verified against the published PDFs.
+- **The serial identity propagates** (TODO.register/04):
+  `e2e/register-04-serial-identity.e2e.ts` registers a serial through
+  the register's own interface, resolves its public identity
+  (`/i/<serial-identity>` — exactly the public fields, the as-of
+  anchor), suspends the certificate through the BIML console, and the
+  SAME resolution answers the suspended standing — the
+  living-certificate doctrine at the instrument level; the unknown
+  serial is a plain 404 and the withdrawn instrument says so. The
+  grammar's round-trip runs the oiml-pubid shared corpus
+  (`instrument-identity.test.ts`), the cone is pinned key-exact
+  (`serial-resolver.test.ts`), and the chain's append-only posture is
+  structural (`instrument-chain.test.ts`).
+- **The demo works**: `docs/oiml-rec/13-running-the-demo`, every link
+  has a health-check line.
+
+## The doctrine that makes it trustworthy
+
+- **SSOT**: one authoring home (the packages); drift is a build error.
+- **Provenance**: every normative node carries `source: { doc, clause }`
+  to a published OIML clause.
+- **Evidence accrues, never rewrites**: re-judgments and closures append.
+- **Silence is not evidence**: unprovable ⇒ indeterminate, never a
+  silent pass.
+- **Budgets are asserted, not vibes**: coverage budgets (R 129's 233,
+  R 91's 98+2) are kernel-asserted exact, a silent improvement or
+  regression both fail.
+
+---
+
+Back to the [index](/docs/arch/).

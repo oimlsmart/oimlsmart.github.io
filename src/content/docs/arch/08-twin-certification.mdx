@@ -1,0 +1,75 @@
+---
+title: 'The twin-certification program (`oiml-twin-cert`)'
+shortTitle: 'Twin certification'
+description: 'The twin-certification program is the first kind certification_program package: the scheme that certifies a digital twin''s fidelity, the claim that the twin accurately reflects the physical instrument, plus its governing document TW-1 and the surveillance regime.'
+eyebrow: 'Architecture · Chapter 08'
+order: 8
+---
+
+**What it is.** The first `kind certification_program` package: the
+scheme that certifies a digital twin's **fidelity**, the claim that
+the twin accurately reflects the physical instrument, plus its
+governing document **TW-1** (`urn:oiml:pub:cs:twin-1:2027`) and the
+surveillance regime.
+
+![The three layers of the digital twin](/diagrams/shared/three-layer-twin.svg)
+
+**What it does.** Six requirements, judged per served register:
+
+- **Static conformance** (admission): the twin serves exactly the
+  interface its certified product package declares.
+- **Indication band** (value fidelity): |served − reference| ≤ δ at
+  every probe point.
+- **Freshness** and **timestamp provenance**: declared freshness
+  windows, served-timestamp sources, inherited, never re-declared.
+- **State fidelity**: the served operational state equals the physical
+  state, a served fault truthfully reporting a fault is *not*
+  infidelity; it passes and triggers service.
+- **Creep envelope** (behavioral fidelity, the newest): the twin's
+  *dynamics* track the physical's, a constant-load dwell where drift
+  stays within the accuracy-class allowance computed from the
+  Recommendation's own tables (`lookupMPE(load, class, p_lc)`).
+
+And the machinery around them:
+
+- **The probe channel** closes the two-channel relation the monitor
+  cannot (the epistemic wall): three declared sources , 
+  `reference_instrument` (PREFERRED), `observer_attestation` (with the
+  DECLARED limitation "twin ≡ display, not twin ≡ mass" riding the
+  evidence), `sim_ground_truth` (acceptance only). A pairing skew
+  beyond the window invalidates the setup, never a fail.
+- **The verdict chain**: per-probe → per-register → certification
+  decision (all registers pass + admission + provenance + the type
+  certificate ⇒ certify; unprovable ⇒ inconclusive, never a silent
+  certify).
+- **The twin certificate**: issued on the decision; validity
+  CONDITIONAL on continuous surveillance.
+- **Surveillance**: the fleet monitor re-judges the five
+  continuously-judgeable requirements hourly; a fail flags the
+  certificate (investigate ⇒ suspend ⇒ reinstate | withdraw);
+  campaign-shaped requirements (creep) are re-judged from stored
+  campaign snapshots (INV-5).
+
+**What it owns.** The program's normative content: TW-1, the
+requirements, the probe schedule, the forms (admission, probe,
+probe-creep), the validity policy, the monitor declaration.
+
+**How it proves it works.** The acceptance suite: `twin-cert-acceptance`
+(four scenarios against the live sim: the fault leg, the lie walk to
+withdrawal, the stale-flip pin, re-certification), `twin-cert-surveillance`
+(24 cycles + the fault-state service rule), `behavior-probe` (GOOD passes
+inside 0.021 kg; creep-cell fails; a drifting reference invalidates),
+`twin-1-cite-integrity` (every citation resolves, both directions).
+
+**Where it plugs in.** It maps to the Recommendation (currently R 60),
+rides the core certificate machine (one machine, no second dialect),
+and consumes the twin runtime. The demo seed + console section make it
+visible in the app.
+
+**Peel deeper.** `AGENTS.d/14-twin-certification-program.md` (the
+complete doctrine), the TW-1 document itself
+(`primmel-packages/oiml-twin-cert/documents/tw-1/document.yaml`).
+
+---
+
+Back to the [index](/docs/arch/).

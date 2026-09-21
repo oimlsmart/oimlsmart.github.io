@@ -1,0 +1,135 @@
+---
+title: 'Your first change (the developer quickstart)'
+shortTitle: 'Your first change'
+description: 'The developer quickstart is a 30–60 minute path from a fresh clone to one small, real, gate-green change, and every step says what to run and what to expect.'
+eyebrow: 'Architecture · Chapter 11'
+order: 11
+---
+
+A 30–60 minute path from a fresh clone to one small, real, gate-green
+change. Follow it in order; every step says what to run and what to
+expect. By the end you will have seen the whole loop: edit → prove →
+commit conventions → where to go next.
+
+## Step 1, Clone and install (5 minutes)
+
+```bash
+git clone git@github.com:oimlsmart/smart.git && cd smart/browser
+npm install
+```
+
+You also want the kernel and the sims beside the smart repo (the gates
+and the sim-backed suites use them):
+
+```bash
+cd .. && git clone git@github.com:primmel/primmel-ts.git ../primmel/primmel-ts
+git clone git@github.com:oimlsmart/sim-instruments.git ../sim-instruments
+cd ../sim-instruments && npm install
+```
+
+(Adjust the clone paths so the three repos sit side by side:
+`src/oimlsmart/smart`, `src/primmel/primmel-ts`,
+`src/oimlsmart/sim-instruments`.)
+
+## Step 2, Prove the system works before you touch it (10 minutes)
+
+Point the app at the kernel and run the core gates. Every one of these
+must be green **before** you change anything, a red gate now means the
+environment, not you.
+
+```bash
+cd smart/browser
+export PRIMMEL_TS=/Users/<you>/src/primmel/primmel-ts/packages/primmel
+npx vitest run            # expect: Test Files 216 passed, Tests 3856 passed
+npm run validate          # expect: ALL CHECKS PASSED — 0 errors, 488 warnings
+npm run test:ssot         # expect: SSOT GUARD PASSED — byte-clean both directions
+```
+
+The 488 warnings are the documented named-gap class (not errors). If
+everything is green, your environment is right. If not, the
+[troubleshooting section of the demo manual](https://www.primmel.org/primmel-smart-docs/oiml-rec/13-running-the-demo/)
+covers the common cases (ports, stale caches, missing sibling repos).
+
+## Step 3, Make one tiny real change (15 minutes)
+
+The change: make the good load cell's thermal-hysteresis memory a
+little stronger, and move its pinned test expectation with it. It is
+small enough to see the whole loop and real enough that a gate would
+fail if you got it wrong.
+
+1. Open `sim-instruments/packages/core/src/physics/families/construction.ts`
+   and read the `COMPRESSION` profile, every number carries a comment
+   saying where it comes from (read them; that is the house style).
+2. In `sim-instruments/packages/core/src/scenario.ts`, find the
+   `temp-cell` scenario: it sets `thermalHysteresisPerDegC: 0.0002`.
+   Change it to `0.00025`, a 25% stronger memory, still inside a
+   plausible class range (the comment explains why).
+3. Run the sim's tests from the sim repo root:
+
+   ```bash
+   npm test
+   ```
+
+   The thermal-hysteresis legs compute their expectations from the
+   parameter, so most still pass, but if any pinned literal
+   expectation moved, the test tells you the exact number it expected.
+   Move the pin with the physics (never to silence it): the pin exists
+   to say *this* much memory, on purpose.
+4. Run `npm run typecheck`, must stay clean.
+
+What you just did is the system's innermost loop: a physical parameter
+changed, the honest tests either computed through it or pinned it
+loudly, and the suite told you which.
+
+## Step 4, Prove the platform side is untouched (5 minutes)
+
+The smart repo's sim-backed suites read the sim through its channels.
+Run them to prove your change didn't disturb the contract:
+
+```bash
+cd smart/browser
+npx vitest run src/__tests__/sim-twin-acceptance.test.ts
+npx vitest run src/__tests__/twin-fidelity-probe.test.ts
+```
+
+Both must pass (they boot the real sim). The `temp-cell` knob you
+changed is not in the acceptance paths, but the habit is the point:
+**every change runs the gates that could see it.**
+
+## Step 5, Commit conventions (5 minutes)
+
+- Stage exact paths only (`git add <file>`, never `git add -A`).
+- The message says what changed and why, with the evidence:
+  `scenario: temp-cell thermal memory 0.0002 → 0.00025 (class-plausible; suite 254/254 green, typecheck clean)`.
+- Do not commit generated files (`browser/src/data/generated/**`,
+  `data/` trees are generated, the SSOT guard will catch you anyway).
+- Do not push or merge unless the task asked for it.
+
+## The five rules you can't break (one line each)
+
+1. **SSOT**, author in `primmel-packages/`; `data/` and
+   `browser/src/data/generated/` are generated, guarded byte-clean.
+2. **Gates before merge**, vitest, validate, ssot, and the
+   repo-relevant suites green, every time.
+3. **Honesty**, silence is not evidence (unprovable ⇒ indeterminate);
+   failures are `unavailable`, never exceptions.
+4. **One dialect**, verdict engine, certificate machine, OCL
+   evaluator: one each, reused, never write a second one.
+5. **Epistemic wall**, the app never calls a sim's `/world` outside
+   the declared practice seam; certification reads only `/twin`.
+
+## Where to go next
+
+- **The map of everything**: `docs/architecture/for-agents.md`, every
+  component, what it owns, its proof command.
+- **The conventions for your area**: `AGENTS.d/`, the topic index is
+  in `AGENTS.md`; read the topic file before you change that area.
+- **The roadmap**: `docs/future/README.md`, the
+  TODO.v3 wave; ask before starting an item so work isn't duplicated.
+- **The demo**: `npm run reset-db && npm run dev` →
+  `http://localhost:5190/app` (any password), see the system as a
+  user sees it before you change it.
+
+---
+
+Back to the [index](/docs/arch/).

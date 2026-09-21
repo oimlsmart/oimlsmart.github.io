@@ -1,0 +1,218 @@
+---
+title: 'The twin stream (the model-API for continuous twin interaction)'
+shortTitle: 'The twin stream'
+description: 'The twin stream is the real-time face of the twin channel, a plain-SSE stream that serves the twin''s governed registers as they change, an immediate snapshot on connect, then one atomic frame per clock advance.'
+eyebrow: 'Architecture · Chapter 14'
+order: 14
+---
+
+**What it is.** The real-time face of the twin channel: a plain-SSE
+stream, `GET /twin/stream?targets=…`, that serves the twin's governed
+registers **as they change**, an immediate snapshot on connect, then
+one atomic frame per clock advance. It is how the platform stops
+*polling* a twin and starts *following* it: continuous conformance
+monitoring, live state watches, instant fault annunciation.
+
+![The twin stream](/diagrams/shared/twin-stream.svg)
+
+Like everything on the twin channel, the stream is **determined by the
+Primmel model**, this page documents how the model becomes the
+stream, the wire contract, the time doctrine, and the failure
+semantics. It deliberately does not enumerate targets: the targets are
+whatever the Recommendation's model declares (read the model, or
+introspect the endpoint).
+
+---
+
+## How the model becomes the stream
+
+The same chain as the query/subscription faces ([12, the SST
+interaction contract](/docs/arch/12-the-sst-interaction-contract)), with the
+stream as a third face of the same governed projection:
+
+1. **The Recommendation's twin declaration** (`model/twin.prl`): which
+   registers the twin serves (`serve … via … fresh_within …`) and
+   which operations are watches. The `fresh_within` is the model's own
+   freshness contract, it travels with the data, everywhere.
+2. **The TwinContract** (the normalized serve contract the SST parses
+   from the package): each serve becomes a *target reader*, a
+   register the instrument can answer. A declared serve the instrument
+   cannot answer fails generation loudly (law 2).
+3. **The stream endpoint** (generated, never hand-written): one target
+   per declared serve, answerable together in one frame.
+4. **The consumer's connector** (the SMART app's `twin_stream`
+   profile): maps each operation to its stream target by the same
+   `serves[0]` convention the GraphQL documents use, unwraps frames
+   into served values, and lands them in the register layer.
+
+Nothing in the stream exists that the model did not declare; nothing
+the model declared is silently dropped. The stream's target list IS
+the model's serve list, probing it is introspection, reading it is
+the contract.
+
+## The wire contract
+
+**Request.** `GET {twin-url}/stream?targets=<csv>` with
+`accept: text/event-stream`. The `targets` filter is optional and
+honest: the endpoint serves what was asked, from its declared set , 
+an unknown target is an error, not a silent omission. One HTTP
+connection, held open. CORS is the Yoga default (origin echo), so a
+browser app on another port connects directly.
+
+**Frames.** Server-Sent Events, three kinds of line:
+
+- `id: <instrument-clock>`, the frame's identity AND the resumption
+  token: reconnect with `Last-Event-ID: <id>` to resume after the last
+  frame seen. The id is the instrument's own clock value.
+- `event: twin` + `data: {…}`, the payload:
+  `{ "timestamp": <instrument-clock>, "targets": [{ "target": <id>, "value": <served> }] }`.
+  Every requested target, **at one clock instant**, the atomic,
+  clock-aligned sample a poll can never give you.
+- `: keepalive` (a comment, every 5 s), keeps proxies and load
+  balancers from dropping the idle connection. Carries no data;
+  consumers skip it.
+
+**Lifecycle.** On connect, the endpoint emits the **current state
+immediately** (the snapshot, a consumer never needs a bootstrap
+poll). After that, it emits **one frame per clock advance**, the
+stream ticks when the instrument's clock ticks. A state change alone
+does not emit; it rides the next advance. When the stream ends or
+breaks, that IS the feed going away.
+
+## The three clocks (the freshness doctrine)
+
+Three times, never conflated:
+
+1. **The instrument clock**, the frame's `id` and `timestamp`.
+   `manual` mode: seconds since boot. `wall` mode: epoch seconds.
+   Never assumed to be epoch by the consumer.
+2. **The receipt clock**, the SMART connector stamps each served
+   value at **serve-receipt** with the deployment clock (the serve
+   event *is* the arrival). This is the documented default for every
+   connector; a wall-clocked twin's frame timestamp can instead be
+   consumed via the `timestamp_fields` extension (a declared opt-in , 
+   evidence times are never invented).
+3. **`fresh_within`**, the MODEL's freshness window, declared on the
+   serve and carried verbatim into every binding. The verdict service's
+   freshness gate judges the landed value's age against it: a stale
+   value degrades verdicts to `indeterminate`, never a fail, never a
+   silent pass.
+
+The pairing discipline for attestation rides on top: when a human
+attests a physical reading and the twin's streamed value is recorded
+alongside, the **pair skew** (|capture − served|) is recorded, and the
+window it is judged against is the serve's `fresh_within`.
+
+## The consumer connector (`twin_stream`)
+
+The SMART gateway binds the stream as one of its connector profiles , 
+a builtin, like `graphql` or `rest_json`:
+
+| aspect | the contract |
+|---|---|
+| subscription | one SSE stream per bound operation (per-operation, mirrors the GraphQL subscribe face; the single-stream fan-out is a named optimization) |
+| target mapping | `stream_targets` on the source: operation → stream target (the `serves[0]` convention, `watch_state` → `state`) |
+| snapshot | the first frame lands immediately (the current state, the monitor's watch starts warm) |
+| advances | each frame unwraps to a served value, receipt-stamped, and lands in the twin's register via the entity register writer, the same production sink as every connector |
+| fetch face | the latest frame's value per target (a point read); an honest absence when no frame has arrived |
+| validator | `twin_stream` sources are admitted against `graphql` and `rest_json` endpoints, the stream is the same channel's streaming face (like `file_drop`'s out-of-band rule) |
+| fallback | a twin that does not stream (a real instrument twin, a legacy sim) keeps the GraphQL subscription as the watch transport, the connect flow probes the stream and binds honestly (`probeTwinStream`, headers only) |
+
+The monitor consumes the pushed values unchanged: a streamed state
+change lands in the register and fires the `on_change` trigger; the
+next cycle judges it. Continuous conformance is a *wiring* fact, not a
+new verdict engine.
+
+## The failure taxonomy (every failure honest, never thrown into evidence)
+
+| failure | the connector's answer |
+|---|---|
+| connect refused / DNS / TLS | `unavailable` (transport, the value stays absent, the health log carries the reason) |
+| HTTP ≠ 200 | `unavailable`, "the endpoint does not stream (a legacy twin?)" |
+| malformed frame | `unavailable` with the offending bytes (truncated) |
+| frame missing the target | `unavailable`, "silence is not evidence" |
+| stream ends / breaks | `unavailable`, "the feed is gone"; the last-served value stands in the register and the freshness gate owns its aging |
+| no frame yet (fetch face) | an honest absence, never an invented zero |
+| reconnect | resume with `Last-Event-ID`, the stream's own resumability; the register never sees a gap as a value |
+
+## What the stream is NOT
+
+- **Not evidence by itself.** A streamed value is evidence only once
+  landed in the register with its time, the same doctrine as every
+  served channel. The wall holds: certification reads the register,
+  never the wire.
+- **Not on legacy bins.** The legacy family sims do not stream yet
+  (their migration to the SST runtime is in flight); the sst-runtime
+  session (`primmel-sst run <instance>`) serves it. The probe says
+  which, per endpoint.
+- **Not a physics guarantee.** The stream transports what the
+  instrument serves; the sst-runtime's indication rewire is in flight
+  (it serves 0 under load today). The transport contract is pinned by
+  our tests; the physics is the sim repo's work.
+- **Not multi-target atomic per operation, yet.** The connector opens
+  one stream per bound operation today. The single-stream fan-out
+  (one connection, targets distributed per frame) is the named
+  follow-up, the wire already carries atomic multi-target frames.
+
+## How it proves it works
+
+- **Unit** (`gateway-connectors.test.ts`): snapshot + advance frames,
+  heartbeat skipped, missing target, stream end, legacy 404, honest
+  absence, each pinned.
+- **Binding** (`twin-lab.test.ts`): the probed stream binds the watch
+  arm as `twin_stream` (the GraphQL subscription fallback), validated
+  clean by the real gateway validator.
+- **Live** (`twin-lab-monitor.test.ts`): against the sst-runtime
+  session, the snapshot lands `ready` in the register by push; a
+  world `injectFault` plus a clock advance streams `fault` in, no
+  poll. (The leg documents the tick rule: the stream emits per clock
+  advance, so a state change rides the next advance.)
+
+**Peel deeper.** `AGENTS.d/12-twin-integration.md` (the runtime
+doctrine), [06, the twin runtime](/docs/arch/06-the-twin-runtime) (gateway +
+monitor), [12, the SST interaction contract](/docs/arch/12-the-sst-interaction-contract)
+(the two channels and the four verbs).
+
+---
+
+Back to the [index](/docs/arch/).
+
+---
+
+## The stream × the twin-cert program (TODO.v3/12)
+
+The SMART Twin certification program consumes the stream in three legs
+,  with four doctrines explicitly unchanged: the reference channel
+(ground truth / observer attestation with the declared "twin ≡
+display, not twin ≡ mass" limitation), the pairing window and the
+U:MPE ≤ 1:3 reference-quality rule, the epistemic wall (the stream is
+delivery, not evidence), and the certificate chain (verdicts →
+certificate → suspension).
+
+1. **The streamed probe channel** (`twin-cert/streamed-probe.ts`):
+   state-fidelity's acceptance becomes construction-complete , 
+   `collectStateLog` records EVERY transition (snapshot + every
+   advance, frame ids attached) instead of sampled probes;
+   `transitionsInOrder` checks the sequence exactly; the pairing
+   machinery consumes streamed values unchanged.
+2. **Event-driven surveillance, as a deployment posture**: a pushed
+   register value that DIFFERS fires a chained monitor cycle within
+   the advance (`fireChange` + `changeChain`, bursts stay sequential).
+   The MonitorDecl's `on_change` trigger DECLARES the intent; the
+   deployment BINDS the firing (`fireOnChange`, default inert) , 
+   because an instant cycle can outrun the reference channel's
+   cadence, producing a transient false fail (served fault truthful,
+   reference pre-fault). Only a deployment that understands its
+   reference cadence opts in.
+3. **Admission + continuity + parked**: `admitStreamSurface` checks
+   the first frame's target set against the pinned contract (the
+   admission's consumer-side check); the continuity span (from/to
+   frame ids + resumptions) is the watch-continuity attestation; a
+   silent-but-alive stream reports `parked` (a heartbeat is not an
+   advance), distinct from a dead feed.
+
+Proof: `twin-cert-streaming.test.ts` (S2's cycle semantics with the
+verdict + escalation chain, S1's live transition log against the
+sst-runtime, S3's admission and parked legs).
+
+Back to the [index](/docs/arch/).

@@ -1,0 +1,66 @@
+---
+title: 'The workflow chain (the OIML-CS)'
+shortTitle: 'Workflow chain'
+description: 'The workflow chain is the certification workflow of the OIML-CS (B 18:2025), executed as data: the applicant, the issuing authority, the test laboratories, the evaluation, and the certificate, with every step a model in the packages and every transition a declared state machine.'
+eyebrow: 'Architecture · Chapter 09'
+order: 9
+---
+
+**What it is.** The certification workflow of the OIML-CS (B 18:2025),
+executed as data: the applicant, the issuing authority, the test
+laboratories, the evaluation, and the certificate, every step a model
+in the packages, every transition a declared state machine.
+
+![The OIML-CS certification chain](/diagrams/shared/workflow-chain.svg)
+
+**What it does, step by step.**
+
+1. **Application**, the applicant submits with the type documentation;
+  the application model tracks status (submitted → accepted → ...).
+2. **Review and dispatch**, the issuing authority reviews and creates
+  test requests, dispatched to eligible Test Laboratories (the
+  capability-matched selection: the laboratory must be eligible for the
+  tests it is assigned).
+3. **Testing**, the laboratory runs the Recommendation's tests and
+  records evidence **in the Recommendation's own report forms**: every
+  field a declared schema, computed fields evaluating live, per-row and
+  overall verdicts. Forms are evidence, never decoration.
+4. **Test report**, the form instances compile into the OIML test
+  report (the 18-element checklist of PD-05 enforced at compilation).
+5. **Evaluation**, the authority evaluates every test report against
+  the applicable requirements: full coverage, a determination
+  (pass / fail / indeterminate) per provision, and a conclusion on the
+  type.
+6. **Certificate**, issuance gates **hard**: no certificate without
+  the complete chain (the pre-signature gate fails closed). Then
+  registration (the BIML register flow) and surveillance: suspension,
+  reinstatement, withdrawal on the certificate machine.
+
+The participant side runs in parallel: the **registry** of
+organizations and their declarations (competence evidence, approval
+votes, category schemes), who is allowed to play which role, proven
+and signed.
+
+**What it owns.** The workflow's models: entities (applications,
+reports, certificates, declarations), the lifecycle state machines, the
+evaluation skeleton, the participant registry content, all in
+`oiml-smart-core`, `oiml-cs`, and the rec packages.
+
+**How it proves it works.** The e2e flows (login → apply → test →
+evaluate → certify), the cs-operations suite (declarations sign when
+complete, fail closed otherwise), the seeded demo flows (14 full
+storylines you can walk today), and the validate gate's semantic rules
+(R-series: every reference resolves, every form links to its test,
+every state machine's transitions exist).
+
+**Where it plugs in.** The rec packages supply the requirements/tests/
+forms per instrument; the CASCO packages supply the conformity-
+assessment vocabulary; the app executes it; the twin world extends it
+(the certificate's instrument becomes a watched twin).
+
+**Peel deeper.** `docs/oiml-cs-cert-workflow.md`,
+`AGENTS.d/09-oiml-cs-scheme-package.md`, the demo manual's §4–§5.
+
+---
+
+Back to the [index](/docs/arch/).

@@ -1,0 +1,151 @@
+---
+title: 'The OIML-CS flow, end to end'
+shortTitle: 'The OIML-CS flow'
+description: 'The complete OIML-CS certification flow runs as one executable chain, from application and sample handling through test runs, evaluation, CNML-signed issuance, and BIML registration, in both the shared-platform and IA-operated deployment modes.'
+eyebrow: 'Architecture · Chapter 20'
+order: 20
+---
+
+**What it is.** The complete OIML-CS certification flow as one
+executable chain: application → sample request → shipment →
+registration → review and acceptance → dispatch → test runs → test
+reports → evaluation (per-run marks, per-form determinations, per-model
+synthesis) → issuance (CNML-signed) → BIML registration, and both
+deployment modes (the shared platform, and the IA-operated instance
+that submits to the BIML by package or by API).
+
+Every step is a model in the packages, every transition a declared
+state machine, every actor a role with its own console. The chain is
+drivable end to end, the e2e suite walks it, from the wizard to the
+public register, against the simulated instrument.
+
+![The OIML-CS flow across the four roles](/diagrams/shared/cs-flow.svg)
+
+## The cast
+
+| Role | Console | Acts |
+|---|---|---|
+| Applicant (manufacturer) | `/app/portal` | submits the application, ships the requested samples, tracks progress, downloads the certificate |
+| Test laboratory (TL) | `/app/lab` | accepts test requests, registers received samples, runs tests (guided by the SST), completes and issues test reports |
+| Issuing Authority (IA) | `/app/ia` | reviews, requests samples, registers receipt, dispatches test work, evaluates per run and per form, finalizes, issues |
+| BIML | `/app/cs/registration` | registers certificates (the public register's operator side) |
+
+The scheme's organs (Executive Secretary, MC/RC, the participant
+registry) are their own chapter, the PD-08 Declaration signing gate
+discharges there, and the flow here consumes it (no issuance without a
+signed Declaration).
+
+## The chain, stage by stage
+
+**1. Application.** The portal wizard builds the application with its
+subject chain (family → groups → models) and the declared samples.
+Status: `SUBMITTED`. The IA's review actions stay gated, no decision
+before the samples exist.
+
+**2. Sample request (PD-05 §4.3).** The IA issues the request:
+models × count, the routing (`to_ia` or `to_each_tl`), the receiving
+laboratories, particulars. Stub samples spawn in `REQUESTED` (serials
+`PENDING-*` until registration); the request persists on the
+Application (`sample_request`); the machine walks
+`SUBMITTED → SAMPLES_REQUESTED`. The applicant's portal shows the
+request card.
+
+**3. Shipment.** The applicant records it: every requested stub hops
+`manufacturer_ships` → `IN_TRANSIT` with a `SHIPPED` custody event
+(from the manufacturer to the IA or the named laboratories).
+
+**4. Registration on receipt.** Whoever receives, the IA or a TL , 
+registers each sample: the real serial replaces the stub's, condition,
+markings, the custody `RECEIVED` event. The IA then dispatches samples
+onward (`ia_dispatches_to_lab`) and, when every requested sample was
+received at least once (`wasReceivedOnce`, an onward dispatch does
+not un-register), logs `ia_logs_samples` → `SAMPLES_RECEIVED`. Only
+now do the decision actions open. Registered samples, never stubs , 
+are selectable for dispatch.
+
+**5. Dispatch.** The dispatch builder assigns (form × sample) tuples
+to laboratories (the capability-ranked suggestion; multi-lab splits
+per form and per model). Each laboratory receives a TestRequest.
+
+**6. Test runs.** The TL accepts, starts testing, and opens each
+assignment's run. Runs are team-operated (`operators[]`, per-entry
+`signed_by_account`) and may be **SST-guided**: the stepper walks the
+test's declared procedure against the simulated instrument, driving
+`/world` one step at a time, recording `/twin`-served readings as real
+evidence with `sim_served_at` in the conditions log. The epistemic
+wall holds: verdicts consult `/twin` and the evidence service only.
+The TL may also add tests of its own initiative (`origin: lab_added`
+,  flagged, never merged silently).
+
+**7. Test report.** Drafted once testing starts (it accumulates form
+instances as runs complete); every required form is either evidenced
+or omitted with justification; then issued (`SUBMITTED`).
+
+**8. Evaluation.** The IA marks **every run** Evaluated
+(approve/reject, the rejection with its mandatory reason), decides
+each TR's admissibility, and reviews the per-form determinations; the
+aggregator rolls all three levels up, a rejected run's form instance
+leaves the pass basis (recorded, never dropped), and finalization
+requires every run marked, every TR determined, every model complete.
+
+**9. Issuance (CNML-signed).** On issue the certificate signs as CNML
+(project → validate against the per-rec schema → serialize → XMLDSig
+with the X.509 in KeyInfo, the officer's browser key) and walks
+`DRAFT → PENDING_REGISTRATION`. Unsigned issuance stays DRAFT,
+honestly.
+
+**10. Registration.** The §5.6.3 ANR validation letter gates Scheme-A
+registration; then the BIML console (or the IA's register action)
+registers: the number derives, the certificate walks `ACTIVE`, the
+registered copy joins the BIML's validity source. The applicant's
+portal shows the certificate with the signed-CNML download; the
+public register lists it.
+
+## The entity graph
+
+![The entity graph with the state machines](/diagrams/shared/cs-entity-graph.svg)
+
+The spine: Application → (sample_request, samples) → TestRequests →
+TestAssignments → TestRuns → FormInstances → TestReports →
+EvaluationReport (run_evaluations, form_determinations,
+model_evaluations) → Certificate (cnml record) → BimlRegistration.
+Every entity class is authored in the Primmel packages and composed
+into every Recommendation's data model, the layering gate proves the
+composition semantics-preserving (the D-series deltas).
+
+## The two deployment modes
+
+- **Mode A, the shared platform.** BIML-operated: applicant, TLs,
+  IAs, and the BIML all work on one instance. Everything above is
+  in-process.
+- **Mode B, the IA-operated instance.** The IA runs its own instance;
+  "Submit to the BIML" delivers the finalized chain as the v2 export
+  package: the download fallback (email workflow) or
+  `POST /api/submissions` (schema + signature + idempotency validated;
+  a repeat POST returns the same registration reference, never a
+  duplicate). The import side rides the package machinery with its
+  FK-integrity report.
+
+## How to prove it works
+
+- The chain e2e specs, one per wave: `sample-request.e2e.ts` (G2/G3),
+  `operator-team.e2e.ts` (G4), `add-test.e2e.ts` (G5),
+  `guided-run.e2e.ts` (G6, against the booted sst-runtime),
+  `run-marks.e2e.ts` (G7), `cnml-issue.e2e.ts` (G8),
+  `biml-portal.e2e.ts` (G9), `submission.e2e.ts` (G10).
+- The service-level suites: `sample-request.test.ts`,
+  `test-run.service.test.ts`, `evaluation-synthesis.test.ts`,
+  `run-evaluation.test.ts`, `cnml-bridge.test.ts`,
+  `submissions.test.ts`, `export-chain.test.ts`.
+- The layering gate's deltas D44–D48 pin every model addition with
+  its facets.
+
+## Where it plugs in
+
+- The workflow engine: `docs/architecture/09-the-workflow-chain.md`
+  (the scheme frame; this chapter is the executable reality).
+- The CNML bridge: `docs/architecture/16-the-cnml-bridge.md`.
+- The simulated instruments: `docs/architecture/07-the-sim-instruments.md`
+  and the interaction contract `12-the-sst-interaction-contract.md`.
+- The export package: the validator in `browser/src/services/export-schema.ts`
+  (shared with the submissions route).

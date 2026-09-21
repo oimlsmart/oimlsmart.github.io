@@ -1,0 +1,107 @@
+---
+title: 'The longitudinal evidence store'
+shortTitle: 'The evidence store'
+description: 'Probe data persists as modeled records through time, so behavior is confirmed over time, evidence re-analyzes under new models, and an auditor walks one traceable chain.'
+eyebrow: 'Architecture · Chapter 18'
+order: 18
+---
+
+TODO.integration/18 (TODO.v3/11) · Probe data persists as MODELED records
+through time: behavior is confirmed over time, evidence re-analyzes
+under new models, and an auditor walks one traceable chain.
+
+---
+
+## 1. Why a store
+
+The monitor's evidence streams (facts, verdicts, escalations, the
+doctrine's "values seen, rule results, verdicts, appended to the
+workspace") were declared append-only and in-memory with a persistence
+seam, deliberately unbound. A compliance engine that forgets on reload
+cannot confirm behavior *over time*: drift is a property of a series,
+not a cycle. The store is the seam bound, records persist across
+sessions, and three new record kinds land beside the streams' own:
+continuity spans, trend verdicts, analysis records.
+
+## 2. The record model
+
+Every record is **typed, timestamped, and never mutated**:
+
+| Kind | What it is | Written by |
+|---|---|---|
+| `fact` | every served value that landed in a register (the monitor's fact stream, persisted) | the monitor cycle / push deliveries |
+| `verdict` | one judgment per requirement × twin, with the resolved-input snapshot (the re-judgment basis, INV-5) | the verdict engine |
+| `escalation` | the actions (flag / service case), accruing closure metadata | the surveillance wiring |
+| `span` | one watch-continuity attestation: a twin's served-state transitions in order + the continuous flag (the v3/12 attestations' promised home) | the streamed probe |
+| `trend` | a drift-over-N-cycles verdict, computed from the STORED facts, behavior confirmed over time | the trend computation (§5) |
+| `analysis` | one re-analysis of stored evidence, naming every input record by id, append-only | the re-analysis entry (§6) |
+
+Two honesty invariants ride every record: the **definition version pin**
+(INV-8, which monitor definition judged is never ambiguous at audit
+time), and **accrual by new id** (appending an existing id is an error,
+not an overwrite).
+
+## 3. The storage-adapter seam
+
+Persistence is a **registration**, not a decision (OCP):
+
+```text
+monitor streams ──persist──► EvidenceStoreAdapter ──► storage
+  (the seam, bound)          append / query / getByIds / counts
+                              ├── IndexedDB (today — the app's own db)
+                              ├── server (planned: the API gateway's)
+                              └── object store (planned: S3-class)
+```
+
+`browser/src/evidence-store/adapter.ts` is the contract; the IndexedDB
+adapter is today's deployment (one `records` store, indexed by
+`twin_id`, `monitor_id`, `at`, `kind`, the auditor's (twin, time)
+walk is index-assisted). A server or object-store adapter is a
+registration, never a fork of the monitor.
+
+## 4. The writers
+
+- **The monitor's persist seam, bound** (`persist.ts`): every fact /
+  verdict / escalation append writes through to the adapter. A
+  persistence fault is recorded in `persistErrors()`, never thrown
+  into the loop (compliance evaluation must not break on storage).
+- **The continuity spans** (`spans.ts`): the streamed probe's state
+  log persists as ONE span record per watch, transitions in order,
+  the continuous attestation, the honest note.
+
+## 5. The trend verdict (behavior confirmed over time)
+
+`computeDriftTrend` (trend.ts): the last N stored facts of one
+register, drift = last − first (signed), judged against the declared
+limit, pass / fail / indeterminate (no limit, no verdict). **The
+computation reads ONLY the store**, never a live twin (the
+re-analysis doctrine: after the fact lands, the twin is never
+re-queried). The verdict appends with its basis: the facts read, by
+id, and the limit judged against.
+
+## 6. The re-analysis semantics (append-only)
+
+`reanalyzeEvidence` (timeline.ts): a window of stored records is read
+and ONE analysis record appends, `basis.record_ids` naming every
+input, `basis.note` declaring the analysis's premise (a new limit, a
+model revision, an audit question). The inputs are returned so the
+caller can prove them **byte-unchanged**, evidence accrues, never
+rewrites (the platform's core doctrine, mechanized).
+
+## 7. The auditor's walk
+
+`evidenceTimeline`: one twin's chain, probe data → verdicts →
+escalations → spans → trend verdicts → analyses, ordered by time,
+window-bounded. This is the traceable chain an auditor walks: any
+verdict unwinds to its resolved inputs, any analysis to the exact
+records it read.
+
+## 8. Failure semantics
+
+| Failure | Surface |
+|---|---|
+| append of an existing id | thrown at the adapter (accrual violation, never silent) |
+| persistence fault during a cycle | `persistErrors()`, never thrown into the loop |
+| a trend over fewer than 2 facts | `indeterminate` (never a fabricated drift) |
+| a trend with no declared limit | `indeterminate` (no limit, no verdict) |
+| re-analysis over an empty window | an analysis record with an empty basis, honestly empty |

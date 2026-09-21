@@ -1,0 +1,69 @@
+---
+title: 'The packages (`primmel-packages/`)'
+shortTitle: 'The packages'
+description: 'The primmel-packages directory is the single source of truth of the whole system, holding every normative model as a .prl package from which everything downstream regenerates.'
+eyebrow: 'Architecture · Chapter 03'
+order: 3
+---
+
+**What it is.** The single source of truth of the whole system. Every
+normative model, standards, instruments, products, programs, is a
+`.prl` package in this directory. Everything downstream regenerates
+from these files. **You never edit a generated artifact; you edit a
+package and regenerate.**
+
+**What it does.** It holds 29 packages in six families:
+
+- **The Recommendations** (`oiml-r60`, `oiml-r91`, `oiml-r129`,
+  `oiml-r144`): the instruments, their metrological and technical
+  requirements, the conformance tests, the report forms, the
+  terminology, each with clause-URN provenance to the published OIML
+  document (`source: { doc, clause }`) and, for R 144 and R 91-3/-4,
+  complete sentence-level coverage of the source text.
+- **The core** (`oiml-smart-core`): the shared metamodel, entities
+  (the certification workflow's objects), state machines, the process
+  skeletons.
+- **The modules** (`oiml-smart-module-*`): shared test/form skeletons
+  (EMC disturbances, IEC 60068 environments, software, reference
+  materials, specimen governance, report headers, examination docs)
+  that recs consume with `with:` slots.
+- **The CASCO foundations** (`iso-iec-17000/17025/17065/17067`): the
+  conformity-assessment vocabulary the OIML-CS relies on.
+- **The OIML-CS** (`oiml-cs`): the B 18:2025 framework, the scheme's
+  processes, the participant registry's content, the twelve-document
+  corpus — and (`oiml-cs-dataspace`, TODO.dataspace/01) the scheme's
+  dataspace definition: the participant classes, the exchanged artifact
+  classes, the standing usage policies (the three access tiers in
+  Primmel's own policy grammar) and the trust anchors, composed into
+  nothing.
+- **Products and programs** (`acme-*` fictional product reference
+  packages, `quarry-belt-scale` the consumer, `oiml-twin-cert` the
+  certification program, `ims-demo`/`qms-ref`/`isms-ref` the view/lens
+  fixtures, `oiml-integrated-ref` the multi-standard integrated
+  reference, DRY shared processes, never merged verdicts).
+
+**What it owns.** Every claim the platform can make. If a fact is not
+in a package, it does not exist for the system.
+
+**How it proves it works.** Three gates, always green:
+
+- `primmel check --strict --audit` on every package, 0 errors (R 129's
+  233 and R 91's 100 warnings are the kernel-asserted pinned coverage
+  budgets, not issues).
+- `npm run test:ssot`, packages ≡ data trees ≡ app projections,
+  byte-clean both directions.
+- The from-packages proof, the release gate that builds the entire
+  platform from this directory alone.
+
+**Where it plugs in.** Down: into `data/` (generated trees), into
+`sim-instruments` (the sims' twin contracts mirror the product
+packages), into the docs site (the volumes cite the packages). Up: the
+published OIML documents, through each model's `source:` provenance.
+
+**Peel deeper.** `AGENTS.d/05-data-conventions.md` (the SSOT doctrine),
+`AGENTS.d/10-primmel-prl-packages.md` (the packaging rules), each
+package's own header comments.
+
+---
+
+Back to the [index](/docs/arch/).

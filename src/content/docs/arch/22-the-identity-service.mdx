@@ -1,0 +1,185 @@
+---
+title: 'The identity service (one account, every instance)'
+shortTitle: 'The identity service'
+description: 'One Worker with its own database at id.oimlsmart.org serves the OIDC Provider contract for the federation, and every other instance signs in through it as a relying party.'
+eyebrow: 'Architecture · Chapter 22'
+order: 22
+---
+
+TODO.identity · The federation's own OpenID Connect Provider, and every
+instance a relying party trusting it. Since TODO.identity-extract/04
+(2026-08-24) the provider builds and deploys from
+`oimlsmart/identity` — it was
+extracted from this repository, where it ran as a deployment profile of
+the same build. This chapter is the merged whole; the operator's
+reference is
+`docs/deployment/identity.md` (a pointer to
+the identity repository's canonical copy).
+
+---
+
+**What it is.** One Worker with its own database,
+`id.oimlsmart.org`, serving the OIDC Provider contract that the
+instances already consume: discovery, JWKS, authorize with consent,
+token, userinfo. It holds the federation's account list (invite-only
+password accounts), the client registry (one row per instance), the
+upstream sign-in providers (GitHub and friends, linked to accounts,
+never the list itself), the per-client role claims, and the delegated
+organization administration. Every other instance (the platform hub,
+an NMI's or a laboratory's own instance, the demo) signs in through it
+with the generic OIDC relying-party configuration; sign-in becomes
+single sign-on across the federation.
+
+![The identity service: one account, every instance](/diagrams/shared/identity-service.svg)
+
+The diagram, in prose: the upstream providers sit above the provider
+and feed it linked sign-in methods, matched by provider and account
+id, never by email. The provider itself carries four registries: the
+account registry, the client registry, the OIDC endpoints, and the
+delegated administration ladder (BIML manages organizations, each
+organization manages its own people). Below it, every instance is a
+relying party with its own client id, its own claim mapping, and its
+own approval queue. The flow is one invite and per-client assignment
+at the provider, then a sign-in at any instance that ends in the
+console the claims mapping decides; deactivation at the provider ends
+sign-in everywhere, and reactivation restores it with the history
+intact.
+
+## Why this shape
+
+- The account list is central by design: per-instance lists drift, and
+  the scheme's people move across instances. One registry, maintained
+  once.
+- The relying-party side predates the provider (TODO.federation/10):
+  discovery, PKCE, ID-token validation, claim mapping, and the
+  approval queue were already built and tested against external IdPs.
+  The provider is the bounded new half.
+- No external identity stack: the platform already carries users,
+  sessions, RBAC, the login page, and the crypto, so the provider adds
+  exactly the OIDC surface and nothing else.
+- The upstream providers are login methods, never the source of
+  truth: revoking a GitHub app never touches an account.
+
+## The account model
+
+Accounts are real password accounts, invited by an administrator,
+never self-registered. The credential lives apart from the account row
+(PBKDF2-HMAC-SHA256 at 600 000 iterations over WebCrypto, the same
+code on node and the Worker). Enrollment is a one-time 24 h setup
+link, emailed when the mailer is configured and handed over out of
+band when it is not; one-time means one-time, and an expired link is
+burned on presentation. The first administrator on a fresh deployment
+arrives by declaration (`OP_ACCOUNT_SEED`), with the setup link logged
+at boot until the password is set.
+
+The account holder's self-service console (`/app/account`) covers the
+profile, the sign-in methods (password and linked upstreams as equal
+citizens, with the at-least-one-method guard), the password (a change
+evicts the other sessions), the sessions (per-device revocation), and
+the account's own activity feed read back from the audit chain. The
+user-facing walkthrough is
+`docs/guides/your-oimlsmart-account.md`.
+
+## The linking rules
+
+One rule governs every upstream sign-in, and the program calls it THE
+MATCH RULE: an upstream identity resolves by `(provider,
+provider_account_id)` against the link table, never by email alone,
+even when the upstream vouches for the address. An unlinked identity
+is refused honestly, with the provider named and the way out explained.
+One upstream account links to exactly one OIML SMART account; one
+account holds at most one link per provider. Unlinking never touches
+the account, and the guard keeps at least one way in.
+
+The providers themselves are rows in a registry (GitHub's OAuth web
+flow, or generic OIDC with discovery and PKCE; Google, Apple, and
+Microsoft Entra are the same rows with their quirks documented).
+Adding a provider is a row, never a code fork.
+
+## The per-client role claims
+
+Access to an instance is the meeting of three declarations, none of
+which can widen another:
+
+1. **The client's claims policy** (the provider's registry row): which
+   claim families the ID token may carry for that instance, and the
+   closed allowlist of roles it may ever name.
+2. **The account's per-client assignment**: the roles the registry
+   assigns that account for that instance. No row means the account's
+   default carries; an explicitly empty row means no role claims at
+   all, which is the honest "no access here yet".
+3. **The instance's claim mapping** (its own configuration): the
+   emitted values mapped one-to-one onto the roles that instance
+   serves. Nothing unmapped is granted; with no default role
+   configured, the unmapped sign-in waits in the instance's approval
+   queue, where the administrator sees the claims the provider sent
+   and decides.
+
+The consent page names the effective set before anything is released
+("On ⟨client⟩ you hold: …"), so the account holder sees exactly what
+each instance receives. A linked or provisioned account keeps its
+locally decided role; the claims never re-apply over it.
+
+## Delegated administration
+
+The scheme operator (BIML) never manages hundreds of member-state
+people by hand. The ladder: BIML manages the organizations (the
+participants register is the source of truth; an account is created
+only for a registered participant), each registered organization gets
+one organization administrator created by BIML after verification, and
+the organization administrator manages its own people's slice:
+approving join requests, inviting colleagues, never reaching another
+organization's accounts. The self-service "Request an account" page
+feeds the ladder; a request naming an unlisted organization lands with
+BIML and is answered with the participation pointer.
+
+## The migration story
+
+The instances signed in directly with GitHub before the provider
+existed. The cutover is per user and lossless: the account of record
+is the provider's account, GitHub becomes a linked sign-in method at
+the provider, and each user's existing local account on an instance is
+adopted at their first single-sign-on (the provider vouches for the
+verified email; the locally assigned role and organization stand,
+untouched by the claims). A direct-GitHub retry afterwards gets the
+plain-language "this account now signs in with oimlsmart" page, never
+a duplicate account. When no direct-GitHub accounts remain, the
+instance's GitHub pair retires and the button disappears. The full
+runbook is the operator's reference,
+`docs/deployment/identity.md#migrating-the-direct-github-accounts`.
+
+## How to prove it works
+
+TODO.identity-extract/04 (2026-08-24): the identity service builds and
+deploys from `oimlsmart/identity`
+now. Its e2e legs (the id-01…id-10 series, the op-surface contract, the
+key rotation) and the OP-side unit suites run there against its own
+spawned stacks; the deployment reference linked below names them.
+
+What still proves itself HERE (the relying-party half, which every
+instance of this platform runs):
+
+- The SSO round trip against the stub IdP (no external provider):
+  `browser/e2e/fed-10-oidc.e2e.ts` — the login posture, the claim
+  mapping, the approval queue, the RP-initiated logout.
+- The instance wiring + the GitHub cutover:
+  `browser/e2e/id-04-wiring.e2e.ts` (rewritten in the split to drive a
+  fixture instance over the stub IdP + the stub GitHub) and the
+  committed-wiring drift guard
+  `browser/src/__tests__/id-04-wiring.test.ts`.
+- The real cross-repo round trip: oimlsmart/identity's deploy gate probes
+  the preview deployment before production (the declared-env doctrine;
+  no stub dresses as the OP here).
+
+## Where it plugs in
+
+- The relying-party side (discovery, PKCE, claim mapping, the approval
+  queue): `@oimlsmart/platform-server/oidc` + `browser/server/routes/auth.ts`,
+  documented in `docs/deployment/identity.md`.
+- The provider: moved to oimlsmart/identity with TODO.identity-extract/04
+  (its `browser/server/routes/op.ts` + `browser/server/auth/op/`; this
+  repository's copies are retired, and its build answers the provider
+  paths with a plain 404 on every instance).
+- The deployment and the secrets: oimlsmart/identity's `wrangler.toml`
+  (the same worker names and database ids) and the operator's reference
+  there.

@@ -1,0 +1,53 @@
+---
+title: 'The Primmel kernel (`primmel-ts`)'
+shortTitle: 'The Primmel kernel'
+description: 'The Primmel kernel is the toolchain of the modelling language every model in this system is written in, housed in its own repository as a strict superset of Primmel v2.'
+eyebrow: 'Architecture · Chapter 02'
+order: 2
+---
+
+**What it is.** The Primmel modelling language's toolchain, in its own
+repository (`primmel/primmel-ts`). Primmel is the language every model
+in this system is written in, a strict superset of Primmel v2.
+
+**What it does.** Four things, each with a gate of its own:
+
+- **Parse and serialize** `.prl` packages (the ser-des codecs), the
+  round-trip gate proves load → dump → load is a fixpoint.
+- **Lint** packages (`primmel check`): 99+ rules (C1–C99), from
+  structural checks (every id resolves, every citation resolves) to
+  domain doctrine (a block-form promise unmapped is a brochure claim , 
+  C82; a certification program must self-classify its scheme type , 
+  C98; a probe channel resolves against the register vocabulary, C99).
+- **The coverage calculus**: map profiles (A ⇒ B, "fulfilling A fulfils
+  B") compute per-component coverage, full / minimal / partial / none
+ , with inheritance down, aggregation up, and transitivity only as
+  flagged discovery. Authored coverage assertions are checked against
+  the computed ones (C23).
+- **The model diff** (`primmel diff`): what changed between two
+  package trees, the release changelog's engine.
+
+**What it owns.** The language definition: the `.prl` grammar, the
+construct set (subjects, requirements, conformance tests, forms,
+processes, state machines, characteristics, verdicts, map profiles,
+view profiles, monitors, passports), and the rule set.
+
+**How it proves it works.** `cd primmel-ts && yarn test`, **1062
+tests**, including corpus legs that lint every package of the smart
+repo (26 of them) at `--strict --audit` with zero errors expected.
+
+**Where it plugs in.** The smart repo consumes it through the
+`PRIMMEL_TS` symlink (the kernel's `packages/primmel` directory
+symlinked into the app's `node_modules/@primmel/primmel`). Every smart
+gate, validate, ssot, vitest, the build, runs against the live
+kernel, so a kernel change is felt immediately. After any kernel
+merge, rebuild its dist (`yarn workspace @primmel/primmel run build`)
+before running the smart gates.
+
+**Peel deeper.** `primmel-ts/packages/primmel/src/` (the code, with
+long doctrine headers per module), the primmel volume of the published
+docs site.
+
+---
+
+Back to the [index](/docs/arch/).

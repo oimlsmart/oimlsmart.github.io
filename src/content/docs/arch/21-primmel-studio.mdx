@@ -1,0 +1,117 @@
+---
+title: 'Primmel Studio'
+shortTitle: 'Primmel Studio'
+description: 'Primmel Studio is the editing and review environment for Primmel packages, the full port of the Paneron MMEL Editor/Viewer/Mapper lineage onto the Primmel v3 kernel.'
+eyebrow: 'Architecture · Chapter 21'
+order: 21
+---
+
+**Component:** `editor` (the `primmel/editor` repo) · **One line:** the
+premier Primmel authoring tool, canvas, mapper, diff, simulation , 
+with the AST as truth, the kernel as semantics, and plugins as the
+program seam.
+
+## What it is
+
+Primmel Studio is the editing and review environment for `.prl`
+packages: the full port of the Paneron MMEL Editor/Viewer/Mapper
+lineage onto the Primmel v3 kernel. Where the app ([05, the
+app](/docs/arch/05-the-app)) RUNS the certification workflow, the Studio
+AUTHORS the models the workflow runs on: recommendations, reference
+models, implementation models, and the mappings between them.
+
+It is a separate repo and a separate deployable (`npm run dev` →
+localhost:5173), a Vue 3 + Vite single-page app, no server-side
+state (the dev server optionally exposes a constrained write API for
+saving back into a package directory).
+
+## The three laws it is built on
+
+1. **The AST is the single source of truth.** Every edit is a typed
+   Command (apply + revert) through the model store; undo/redo is
+   exact, never a re-derive. Tree, canvas, code, inspector, mapper,
+   diff are projections of one store.
+2. **The kernel owns the semantics.** Parsing, serialization, the
+   coverage calculus, model-diff, the type vocabulary come from
+   `@primmel/primmel` (the local `primmel-ts` package). The Studio
+   bridges (`src/lib/`), never reimplements.
+3. **Programs plug in, they don't branch the kernel.** The OIML
+   SMART layer (requirement/test/form palettes, the certificate
+   preview) is a plugin registered at boot; the Studio kernel never
+   names a program. A second 〈scope〉 SMART plugs the same way.
+
+## What it does, by wave
+
+- **Model workspace**, canvas drag/connect with the connection
+  discipline (no self-loops, no duplicates, no cross-page edges , 
+  refused out loud), the element palette, per-type inspectors
+  (process, approval, event, gateway, dataclass, registry, enum),
+  subprocess pages with breadcrumbs and a page tree, comment threads
+  on any element, the measurement harness (validate_measurement facet
+  as editable run rows), and the process simulation (a token walk
+  with registers, ephemeral, never model content).
+- **The mapper**, reference⇄implementation mapping over the v3
+  MapProfile: click-pair, the description/justification/coverage meta
+  dialog, multi-target pairs, the KERNEL's coverage calculus as
+  canvas tints with the C23 conflict marker, the multi-reference lens
+  (view one implementation through several standards, with the seed
+  command's review list), document mapping (Metanorma XML →
+  clauses/paragraphs/statements with clause URNs), and automap
+  (ranked suggestions with provenance; the kernel's closure proposals
+  flagged, never asserted).
+- **Review**, the model-diff view (the kernel's diffStandards with
+  facet-level before/after and a status-tinted canvas), and the save
+  panel: review-before-commit against the loaded original, then
+  download or write-to-file with a `.bak` backup; dirty discipline
+  (Ctrl+S, beforeunload) throughout.
+- **Migration**, the legacy .mmel import: the v1/v2 corpus (PAS2060,
+  ISO 27001) parses natively (Primmel v3 is the descendant) with the
+  honest report (constructs converted, the two canonical renames,
+  anything with no v3 home, named, never silently dropped).
+
+## What it owns
+
+- The command layer discipline (the only write path into the AST).
+- The four projections (tree / canvas / code / inspector) and the
+  mapper's overlay geometry.
+- The plugin registry (`src/plugins/`), the seam every program layer
+  uses.
+- The dev/e2e hook (`window.__stores` in dev builds), the probes
+  read the AST directly.
+
+## How it proves it works
+
+```bash
+cd ~/src/primmel/editor
+npx vue-tsc --noEmit   # types
+npx vitest run         # 103 unit tests (every lib + the command layer)
+npm run build          # the production build
+./e2e/run-all.sh       # 17 puppeteer legs against npm run dev
+```
+
+The e2e legs walk the real workflows: create→edit→serialize, the
+mapper with coverage, multi-reference seeding, document mapping,
+automap confirm/reject, the diff view, simulation, comments,
+measurements, the legacy import, the plugin layer, and the save.
+
+## Where it plugs in
+
+- **Upstream:** the kernel (`primmel-ts`), the Studio pins the local
+  package; upstream rebuilds (`yarn build && yarn build:browser`)
+  refresh it.
+- **The packages:** the Studio edits `.prl` packages; the SSOT
+  discipline applies, after saving into `primmel-packages/`,
+  regenerate the downstream trees (`npm run gen:data` in the app;
+  the save panel says so on those paths).
+- **The app:** the Studio authors what the app runs. Shared models
+  move as files (download/upload) or through the package directory.
+- **The MMEL lineage:** the legacy corpus imports through the import
+  panel; the two canonical renames are reported, never hidden.
+
+## Read next
+
+- [02, primmel-kernel](/docs/arch/02-primmel-kernel), the semantics the
+  Studio bridges.
+- [03, the packages](/docs/arch/03-the-packages), what gets edited.
+- [17, the program-config](/docs/arch/17-the-program-config), the same
+  plugin doctrine at the app layer.
