@@ -57,8 +57,8 @@ describe.skipIf(!HAS_DOC)('the content-freshness gate (site claims ≡ SSOT)', (
   })
 
   it('the vitest numbers match (N tests / M files)', () => {
-    const m = needDoc().match(/\((\d+) tests \/ (\d+) files\)/)
-    expect(m, 'for-agents.md states "(N tests / M files)"').toBeTruthy()
+    const m = needDoc().match(/vitest (\d+)\/(\d+) files/)
+    expect(m, 'for-agents.md states "vitest N/M files"').toBeTruthy()
     expect(GATE_NUMBERS.vitestTests).toBe(Number(m![1]))
     expect(GATE_NUMBERS.vitestFiles).toBe(Number(m![2]))
   })
@@ -84,8 +84,9 @@ describe.skipIf(!HAS_DOC)('the content-freshness gate (site claims ≡ SSOT)', (
   })
 
   it('every claimed Recommendation has a package in the SSOT tree', () => {
+    const PACKAGES = process.env.PRIMMEL_PACKAGES_ROOT ?? resolve(SMART, '..', 'primmel-packages')
     for (const { id } of PROGRAM_RECS) {
-      const pkg = join(SMART, 'primmel-packages', `oiml-r${id.replace('R ', '')}`, 'package.primmel')
+      const pkg = join(PACKAGES, `oiml-r${id.replace('R ', '')}`, 'package.primmel')
       expect(existsSync(pkg), `${id} → ${pkg}`).toBe(true)
     }
   })

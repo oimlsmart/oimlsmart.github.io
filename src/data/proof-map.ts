@@ -130,7 +130,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
         says: 'verify any certificate your regime relies on, in seconds, reading the BIML-registered copy (B 18:2025 §14.8)',
         anchors: [
           { kind: 'live', url: `${DEMO}/app/verify/`, skip: APP_SHELL },
-          { kind: 'smart', path: 'data/oiml-b018-e25/document.presentation.xml', probe: 'registered and published on the OIML-CS pages' },
+          { kind: 'smart', path: 'reference-docs/corpus/oiml-b018-e25/document.presentation.xml', probe: 'registered and published on the OIML-CS pages' },
         ],
       },
       {
@@ -182,7 +182,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
         id: 'issuing-authorities-samples',
         says: 'type evaluation needs physical samples (PD-05 §4.2.5) and the decision acts stay closed until they are received',
         anchors: [
-          { kind: 'smart', path: 'data/oiml-cs-pd-05/document.presentation.xml', probe: 'number of samples of the type that are required' },
+          { kind: 'smart', path: 'reference-docs/corpus/oiml-cs-pd-05/document.presentation.xml', probe: 'number of samples of the type that are required' },
         ],
       },
     ],
@@ -448,7 +448,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
         id: 'smart-recommendations-provenance',
         says: 'every content element carries its source clause (urn:oiml:pub:r:60-1:2021, clause 5.2)',
         anchors: [
-          { kind: 'smart', path: 'data/r60/sources-prd/r60-1.prd.yaml', probe: 'clause: "5.2"' },
+          { kind: 'smart', path: 'browser/src/data/generated/standards-oiml-r60-data.ts', probe: 'urn:oiml:pub:r:60-1:2021#clause-5.2' },
           {
             kind: 'live',
             url: 'https://www.oimlsmart.org/recs/',
@@ -587,7 +587,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
         says: 'the Utilizer declares ANRs, moderation keeps only APPROVED live, and the certificate covers the declared set',
         anchors: [
           { kind: 'live', url: `${DEMO}/app/cs/anr/`, skip: GATED },
-          { kind: 'smart', path: 'data/r60/anr/DE/anr.yaml', probe: 'MessEG' },
+          { kind: 'smart', path: 'config/standards/r60/anr/DE/anr.yaml', probe: 'MessEG' },
         ],
       },
     ],
@@ -792,7 +792,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
         says: 'the wizard’s instrument step is authored by the R 60 model (the R 60-3 §4.5 declaration), never designed by a programmer',
         anchors: [
           { kind: 'smart', path: 'DEMO_FLOWS/01-application.md', probe: 'Select Recommendation' },
-          { kind: 'smart', path: 'data/r60/sources-prd/r60-3.prd.yaml', probe: 'clause: "4.5"' },
+          { kind: 'smart', path: 'browser/src/data/generated/standards-oiml-r60-forms.ts', probe: 'urn:oiml:pub:r:60-3:2021#clause-4.5' },
           { kind: 'live', url: `${DEMO}/app/portal/applications/new`, skip: GATED },
         ],
       },
@@ -808,7 +808,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
         says: 'rejection requires the reason (PD-05 §4.2.2/§4.2.4) and acceptance waits for the physical samples (PD-05 §4.2.5)',
         anchors: [
           { kind: 'smart', path: 'DEMO_FLOWS/02-ia-intake.md', probe: 'ia_officer' },
-          { kind: 'smart', path: 'data/oiml-cs-pd-05/document.presentation.xml', probe: 'other clearly identified reasons' },
+          { kind: 'smart', path: 'reference-docs/corpus/oiml-cs-pd-05/document.presentation.xml', probe: 'other clearly identified reasons' },
           { kind: 'live', url: `${DEMO}/app/ia`, skip: GATED },
         ],
       },
@@ -839,7 +839,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
         says: 'evaluation to certificate to BIML registration (PD-05 §5.1) to the public register, readable by anyone (B 18:2025 §14.8)',
         anchors: [
           { kind: 'smart', path: 'DEMO_FLOWS/04-ia-evaluation.md', probe: 'certification_officer' },
-          { kind: 'smart', path: 'data/oiml-cs-pd-05/document.presentation.xml', probe: 'send a copy of each OIML certificate it issues to the BIML' },
+          { kind: 'smart', path: 'reference-docs/corpus/oiml-cs-pd-05/document.presentation.xml', probe: 'send a copy of each OIML certificate it issues to the BIML' },
           { kind: 'live', url: `${DEMO}/app/register/`, skip: APP_SHELL },
         ],
       },

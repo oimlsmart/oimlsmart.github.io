@@ -53,11 +53,12 @@ export interface ModelContentEntry {
  *  the commit message. */
 export const MODEL_CONTENT_CEILING = 26
 
-const B018 = 'data/oiml-b018-e25/document.presentation.xml'
-const PD05 = 'data/oiml-cs-pd-05/document.presentation.xml'
-const R60_1 = 'data/r60/sources-prd/r60-1.prd.yaml'
-const R60_2 = 'data/r60/sources-prd/r60-2.prd.yaml'
-const R60_3 = 'data/r60/sources-prd/r60-3.prd.yaml'
+const B018 = 'reference-docs/corpus/oiml-b018-e25/document.presentation.xml'
+const PD05 = 'reference-docs/corpus/oiml-cs-pd-05/document.presentation.xml'
+const R60_1 = 'browser/src/data/generated/standards-oiml-r60-data.ts'
+const R60_2 = 'browser/src/data/generated/standards-oiml-r60-data.ts'
+const R60_3 = 'browser/src/data/generated/standards-oiml-r60-data.ts'
+const R60_2_ADOC = 'sources/r060/2/sections/02-type-evaluation.adoc'
 
 /** B 18:2025's registered-copy clause: the 2025 edition carries it as
  *  14.8 (section 15 is the OIML-CS's finances). */
@@ -126,14 +127,14 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
     literal: '§4.7',
     fact: 'the sample selection for the evaluation follows R 60-3 §4.7',
     added: ADDED,
-    verify: [{ kind: 'ssot', path: R60_3, needle: 'clause: "4.7"' }],
+    verify: [{ kind: 'ssot', path: R60_3, needle: 'urn:oiml:pub:r:60-3:2021#clause-4.7"' }],
   },
   {
     file: 'src/content/pages/about/audiences/issuing-authorities.mdx',
     literal: '§4.7.2',
     fact: 'the selection note rides R 60-3 §4.7.2',
     added: ADDED,
-    verify: [{ kind: 'ssot', path: R60_3, needle: 'clause: "4.7.2"' }],
+    verify: [{ kind: 'ssot', path: R60_3, needle: 'urn:oiml:pub:r:60-3:2021#clause-4.7.2"' }],
   },
   {
     file: 'src/content/pages/about/audiences/member-states.mdx',
@@ -161,7 +162,7 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
     literal: 'clause 5.2',
     fact: 'the provenance example is R 60-1:2021 clause 5.2',
     added: ADDED,
-    verify: [{ kind: 'ssot', path: R60_1, needle: 'clause: "5.2"' }],
+    verify: [{ kind: 'ssot', path: R60_1, needle: 'urn:oiml:pub:r:60-1:2021#clause-5.2"' }],
   },
   {
     file: 'src/content/pages/technologies/smart-recommendations.mdx',
@@ -175,7 +176,7 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
     literal: '§4.5',
     fact: 'the wizard’s instrument step renders the declaration R 60-3 §4.5 asks for',
     added: ADDED,
-    verify: [{ kind: 'ssot', path: R60_3, needle: 'clause: "4.5"' }],
+    verify: [{ kind: 'ssot', path: R60_3, needle: 'urn:oiml:pub:r:60-3:2021#clause-4.5"' }],
   },
   {
     file: 'src/data/tour-slides.ts',
@@ -189,14 +190,14 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
     literal: '§2.5',
     fact: 'the documentation checklist is the one R 60-2 §2.5 declares',
     added: ADDED,
-    verify: [{ kind: 'ssot', path: R60_2, needle: 'clause: "2.5"' }],
+    verify: [{ kind: 'ssot', path: R60_2, needle: 'urn:oiml:pub:r:60-2:2021#clause-2.5"' }],
   },
   {
     file: 'src/pages/demo/application.astro',
     literal: '§4.5',
     fact: 'the instrument step renders the applicant declaration R 60-3 §4.5 asks for',
     added: ADDED,
-    verify: [{ kind: 'ssot', path: R60_3, needle: 'clause: "4.5"' }],
+    verify: [{ kind: 'ssot', path: R60_3, needle: 'urn:oiml:pub:r:60-3:2021#clause-4.5"' }],
   },
   {
     file: 'src/pages/demo/ia-evaluation.astro',
@@ -255,7 +256,7 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
     literal: '§4.7',
     fact: 'the dispatch crosses the model’s test forms with the samples selected per R 60-3 §4.7',
     added: ADDED,
-    verify: [{ kind: 'ssot', path: R60_3, needle: 'clause: "4.7"' }],
+    verify: [{ kind: 'ssot', path: R60_3, needle: 'urn:oiml:pub:r:60-3:2021#clause-4.7"' }],
   },
   {
     file: 'src/pages/demo/tl-work.astro',
@@ -263,8 +264,8 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
     fact: 'the MDLO-first sequence is the model’s own gate (R 60-2 clauses 2.10 and 2.11)',
     added: ADDED,
     verify: [
-      { kind: 'ssot', path: R60_2, needle: 'clause: "2.10"' },
-      { kind: 'ssot', path: R60_2, needle: 'clause: "2.11"' },
+      { kind: 'ssot', path: R60_2, needle: 'urn:oiml:pub:r:60-2:2021#clause-2.10"' },
+      { kind: 'ssot', path: R60_2_ADOC, needle: '[[sec-2.11]]' },
     ],
   },
   {
