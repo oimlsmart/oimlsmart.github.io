@@ -1,7 +1,13 @@
 # 16 — App subpath routing
 
-**Status:** pending
+**Status:** decided — removed (2026-09-21)
 **Depends on:** 14 (first workflow page)
+
+## Decision
+
+There is no `/app` subpath on the public site to route: the application
+lives at platform.oimlsmart.org, and the replica pages under
+`src/pages/app/` are deleted.
 
 ## Why
 

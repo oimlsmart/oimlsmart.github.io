@@ -28,12 +28,4 @@ test.describe('Visual regression — key pages', () => {
       fullPage: false,
     })
   })
-
-  test('login page', async ({ page }) => {
-    await page.goto('/login/')
-    await expect(page).toHaveScreenshot('login.png', {
-      maxDiffPixelRatio: 0.02,
-      fullPage: false,
-    })
-  })
 })

@@ -1,7 +1,15 @@
 # 13 — Migrate auth flow + server routes
 
-**Status:** pending
+**Status:** decided — removed (2026-09-21)
 **Depends on:** 10 (useAuth composable)
+
+## Decision
+
+The in-browser application replica this item was porting is retired: the
+platform at platform.oimlsmart.org is the application, and sign-in is the
+identity service's job (id.oimlsmart.org), never the public site's. The
+`/api/auth/*` routes, the `/login/` page, and the `useAuth` composable are
+deleted with the replica.
 
 ## Why
 

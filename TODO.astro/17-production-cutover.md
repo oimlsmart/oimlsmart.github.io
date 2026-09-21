@@ -1,7 +1,13 @@
 # 17 — Production deployment cutover
 
-**Status:** pending
+**Status:** decided — removed (2026-09-21)
 **Depends on:** 13 (SSR/auth), 16 (routing)
+
+## Decision
+
+There is nothing to cut over: the public site is a static build, and the
+application deploys from the smart repo to platform.oimlsmart.org on its
+own pipeline.
 
 ## Why
 
