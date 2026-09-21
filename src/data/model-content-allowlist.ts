@@ -157,13 +157,6 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
     verify: [R60_COUNTS],
   },
   {
-    file: 'src/content/pages/technologies/primmel.mdx',
-    literal: 'clause 5.2',
-    fact: 'the worked conformance example is R 60-1:2021 clause 5.2',
-    added: ADDED,
-    verify: [{ kind: 'ssot', path: R60_1, needle: 'clause: "5.2"' }],
-  },
-  {
     file: 'src/content/pages/technologies/smart-recommendations.mdx',
     literal: 'clause 5.2',
     fact: 'the provenance example is R 60-1:2021 clause 5.2',

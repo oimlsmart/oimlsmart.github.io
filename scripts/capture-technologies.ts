@@ -60,10 +60,6 @@ const SHOTS: Record<string, Shot[]> = {
     { stem: 'studio-viewer', url: 'https://www.oimlsmart.org/studio/view/', settle: 6000, clickText: 'submit_application' },
     { stem: 'r60-page', url: 'https://www.oimlsmart.org/recommendations/r60/', settle: 4000 },
   ],
-  primmel: [
-    { stem: 'studio-viewer', url: 'https://www.oimlsmart.org/studio/view/', settle: 6000, clickText: 'submit_application' },
-    { stem: 'language-volume', url: 'https://www.primmel.org/primmel-smart-docs/primmel/', settle: 4000 },
-  ],
   'smart-twin': [
     { stem: 'twin-console', url: 'https://demo.oimlsmart.org/app/twin', demoRole: 'Admin', settle: 8000, clickText: 'Provision the demo twin', postClickSettle: 15000 },
     { stem: 'twin-lab', url: 'https://demo.oimlsmart.org/app/twin-lab', demoRole: 'Admin', settle: 8000 },

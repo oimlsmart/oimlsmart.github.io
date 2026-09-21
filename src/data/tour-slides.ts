@@ -284,7 +284,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
     ],
     links: [
       { href: '/technologies/smart-recommendations', label: 'SMART Recommendations', desc: 'the technology page' },
-      { href: '/technologies/primmel', label: 'Primmel', desc: 'the language page' },
+      { href: 'https://www.primmel.org', label: 'Primmel', desc: 'the language site' },
     ],
     note: 'The foundation claim: the model is not a copy of the Recommendation, it is derived with clause-level provenance and the text stays the gate. The numbers on this slide come from the model itself. Two section pages carry the depth; link them, do not summarize past them.',
     twentyMin: '11:00',

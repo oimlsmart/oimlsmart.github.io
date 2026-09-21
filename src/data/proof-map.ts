@@ -364,11 +364,11 @@ export const PROOF_MAP: readonly ProofPage[] = [
     source: 'src/pages/technologies/index.astro',
     claims: [
       {
-        id: 'technologies-eight-pages',
-        says: 'the eight technology pages, each answering what-it-is, who-it-is-for, how-it-works, try-it',
+        id: 'technologies-seven-pages',
+        says: 'the seven technology pages, each answering what-it-is, who-it-is-for, how-it-works, try-it',
         anchors: [
           { kind: 'site', route: '/technologies/cnml', probe: 'What you can do today' },
-          { kind: 'site', route: '/technologies/primmel', probe: 'What you can do today' },
+          { kind: 'site', route: '/technologies/smart-twin', probe: 'How it works' },
         ],
       },
     ],
@@ -435,27 +435,6 @@ export const PROOF_MAP: readonly ProofPage[] = [
         says: 'members may run their own provider from the same software',
         anchors: [
           { kind: 'live', url: 'https://github.com/oimlsmart/identity/blob/main/docs/deployment/identity-self-host.md', probe: 'identity-self-host' },
-        ],
-      },
-    ],
-  },
-  {
-    route: '/technologies/primmel',
-    source: 'src/content/pages/technologies/primmel.mdx',
-    shots: { ttlDays: 60, regenerate: 'npx tsx scripts/capture-technologies.ts --only primmel' },
-    claims: [
-      {
-        id: 'primmel-conformance-suite',
-        says: 'the public conformance suite pairs a versioned clause map with a corpus of valid and invalid documents',
-        anchors: [
-          { kind: 'live', url: 'https://github.com/primmel/primmel-ts/tree/v1/conformance', probe: 'conformance' },
-        ],
-      },
-      {
-        id: 'primmel-studio-viewer',
-        says: 'any package renders in the browser, no install',
-        anchors: [
-          { kind: 'live', url: 'https://www.oimlsmart.org/studio/view/', probe: 'Studio' },
         ],
       },
     ],
