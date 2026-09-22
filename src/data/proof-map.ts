@@ -884,6 +884,33 @@ export const PROOF_MAP: readonly ProofPage[] = [
       },
     ],
   },
+  {
+    route: '/demo/licensing',
+    source: 'src/pages/demo/licensing.astro',
+    shots: {
+      ttlDays: 30,
+      regenerate: 'npx tsx scripts/capture-walkthroughs.ts --only=licensing (add --drive for the confirm and unlock arc)',
+    },
+    claims: [
+      {
+        id: 'licensing-due-process',
+        says: 'a declaration alone opens nothing: the scheme operator’s confirmation opens the tier, the revoke closes it with a mandatory note, and the per-key history reads the whole arc',
+        anchors: [
+          { kind: 'smart', path: 'DEMO_FLOWS/07-licensing.md', probe: 'a declaration opens nothing' },
+          { kind: 'live', url: `${DEMO}/app/cs/standards-licenses`, skip: GATED },
+        ],
+      },
+      {
+        id: 'licensing-both-tiers',
+        says: 'the same run renders the citation tier without the confirmed license and the interactive stepper with it, per the organization’s ACTIVE entitlement set',
+        anchors: [
+          { kind: 'smart', path: 'DEMO_FLOWS/03-tl-work.md', probe: 'citation tier' },
+          { kind: 'smart', path: 'browser/src/vue-pages/lab/run-view.vue', probe: 'citation-banner' },
+          { kind: 'live', url: `${DEMO}/app/lab/run/asg-acme-lc-surge-001`, skip: GATED },
+        ],
+      },
+    ],
+  },
   // ── The CIML tour ─────────────────────────────────────────────────
   {
     route: '/tour',

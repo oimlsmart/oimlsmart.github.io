@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-01T12:13:52.315Z",
-  "date": "2026-09-01",
+  "generatedAt": "2026-09-22T08:06:23.632Z",
+  "date": "2026-09-22",
   "regenerate": "npx tsx scripts/capture-walkthroughs.ts (the read-only passes, both themes); add --drive for the state-changing arc first; per-page subsets ride src/data/proof-map.ts (TODO.promotion/08)",
   "captures": [
     {
@@ -452,6 +452,69 @@
       "theme": "dark",
       "performed": "opened the worked example's test report as the IA: the sections with their provenance, the per-section review acts, the verdicts the model computed",
       "capturedAt": "2026-09-01T05:02:51.292Z"
+    },
+    {
+      "flow": "licensing",
+      "name": "licensing-history",
+      "file": "licensing/licensing-history-light.png",
+      "url": "https://demo.oimlsmart.org/app/cs/standards-licenses/",
+      "theme": "light",
+      "performed": "the per-key history reading the row's whole life: the declaration (the attesting actor, the evidence reference), the confirmation (its verification note), and the drive's revoke closing the demonstration with its mandatory note; append-only, nothing removed",
+      "capturedAt": "2026-09-22T08:06:23.573Z"
+    },
+    {
+      "flow": "licensing",
+      "name": "licensing-citation-run",
+      "file": "licensing/licensing-citation-run-light.png",
+      "url": "https://demo.oimlsmart.org/app/lab/run/asg-acme-lc-surge-001",
+      "theme": "light",
+      "performed": "the citation tier on the surge run: the behavior's citation and the license hint naming the two acts that open the tier, the plain REC-declared form beneath, no licensed request made",
+      "capturedAt": "2026-09-22T08:05:46.800Z"
+    },
+    {
+      "flow": "licensing",
+      "name": "licensing-queue",
+      "file": "licensing/licensing-queue-light.png",
+      "url": "https://demo.oimlsmart.org/app/cs/standards-licenses/",
+      "theme": "light",
+      "performed": "the scheme operator's Standards licenses queue: the declared surge row awaiting confirmation with its evidence reference and its declaring actor named",
+      "capturedAt": "2026-09-22T08:05:52.393Z"
+    },
+    {
+      "flow": "licensing",
+      "name": "licensing-citation-run",
+      "file": "licensing/licensing-citation-run-dark.png",
+      "url": "https://demo.oimlsmart.org/app/lab/run/asg-acme-lc-surge-001",
+      "theme": "dark",
+      "performed": "the citation tier on the surge run: the behavior's citation and the license hint naming the two acts that open the tier, the plain REC-declared form beneath, no licensed request made",
+      "capturedAt": "2026-09-22T08:05:56.680Z"
+    },
+    {
+      "flow": "licensing",
+      "name": "licensing-queue",
+      "file": "licensing/licensing-queue-dark.png",
+      "url": "https://demo.oimlsmart.org/app/cs/standards-licenses/",
+      "theme": "dark",
+      "performed": "the scheme operator's Standards licenses queue: the declared surge row awaiting confirmation with its evidence reference and its declaring actor named",
+      "capturedAt": "2026-09-22T08:06:03.432Z"
+    },
+    {
+      "flow": "licensing",
+      "name": "licensing-confirm",
+      "file": "licensing/licensing-confirm-light.png",
+      "url": "https://demo.oimlsmart.org/app/cs/standards-licenses/",
+      "theme": "light",
+      "performed": "the confirm act on the scheme operator's queue: the verification note typed against the declared surge row (the confirmation lands through the platform administrator's unbound seat on this build, the demo's CS binding being org-scoped; the row moved declared to active)",
+      "capturedAt": "2026-09-22T08:06:10.418Z"
+    },
+    {
+      "flow": "licensing",
+      "name": "licensing-stepper",
+      "file": "licensing/licensing-stepper-light.png",
+      "url": "https://demo.oimlsmart.org/app/lab/run/asg-acme-lc-surge-001",
+      "theme": "light",
+      "performed": "the unlocked interactive tier on the same surge run: the licensed procedure's phases walk as the stepper in the model's own order, the citation banner gone",
+      "capturedAt": "2026-09-22T08:06:17.605Z"
     }
   ]
 }
