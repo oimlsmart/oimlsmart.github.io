@@ -67,6 +67,15 @@ const flows = [
     console: 'DEMO_FLOWS/',
     steps: '4 gap clusters',
   },
+  {
+    href: '/demo/licensing',
+    n: '07',
+    title: 'The standards licenses',
+    desc: 'The due process behind the licensed tiers: the citation tier on the unlicensed run, the scheme operator\u2019s confirmation, the unlocked interactive stepper, and the per-key history.',
+    account: 'OIML-CS Administrator · Test Laboratory',
+    console: '/app/cs · /app/lab',
+    steps: '5 steps',
+  },
 ]
 
 const cast = [
@@ -74,6 +83,7 @@ const cast = [
   { account: 'Issuing Authority', who: 'Ms. Emily Irving', org: 'Example Issuing Authority (EX1)', console: '/app/ia' },
   { account: 'Test Laboratory', who: 'Ms. Petra Horvat · Mr. Martin Berger', org: 'Example Test Laboratory (ETL)', console: '/app/lab' },
   { account: 'BIML Officer', who: 'The BIML registration officer (a role, not an invented person)', org: 'the BIML register', console: '/app/biml' },
+  { account: 'OIML-CS Administrator', who: 'The scheme operator (a role, not an invented person)', org: 'the OIML-CS console', console: '/app/cs' },
 ]
 ---
 
@@ -84,7 +94,7 @@ const cast = [
   <PageHero
     eyebrow="The demo flows"
     title="The demo, walked"
-    lede="Six guided walkthroughs of the live demo: the whole OIML-CS certification chain told as five flows, from the manufacturer's application to the registered certificate, plus the audit record behind them. Every step names its console, shows the live surface, and tells you exactly how to try it yourself."
+    lede="Seven guided walkthroughs of the live demo: the OIML-CS certification chain told as five flows, from the manufacturer's application to the registered certificate, the standards-license due process that seats the licensed tiers at the bench, and the audit record behind them. Every step names its console, shows the live surface, and tells you exactly how to try it yourself."
   />
 
   <section class="px-8 pb-20 max-w-5xl walkthrough-body">
@@ -114,7 +124,7 @@ const cast = [
         ]}
       />
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft">
-        Flow 05 is the same chain from the applicant's seat: the notifications, the progress, the certificate, the public verification. The Evaluation Project is the shared dataspace the three parties work in: the authority owns it, the applicant views it, the laboratory joins it on the accepted assignment.
+        Flow 05 is the same chain from the applicant's seat: the notifications, the progress, the certificate, the public verification. The Evaluation Project is the shared dataspace the three parties work in: the authority owns it, the applicant views it, the laboratory joins it on the accepted assignment. Flow 07 steps beside the chain: the standards-license due process that decides which tier the laboratory's own runs render, and the record the decision leaves behind.
       </p>
     </div>
 
@@ -138,7 +148,7 @@ const cast = [
     <div class="max-w-3xl mb-12">
       <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The cast, plainly fictional</h2>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
-        Four demo accounts carry the five flows. Each is a one-click button on the demo's login page; the shared demo password is printed there too. Every person and organization is invented for the demonstration; the instrument is ACME's fictional LC-500 load-cell line evaluated against OIML R 60.
+        Five demo accounts carry the flows. Each is a one-click button on the demo's login page; the shared demo password is printed there too. Every person and organization is invented for the demonstration; the instrument is ACME's fictional LC-500 load-cell line evaluated against OIML R 60.
       </p>
       <div class="grid gap-3 mb-8">
         {cast.map(c => (
@@ -206,7 +216,7 @@ const cast = [
 
     <div class="border-t border-rule pt-8 max-w-3xl">
       <p class="text-sm text-ink-muted">
-        Verified {captured}: the login page, the guided-demo entry, and every step surface on the six walkthroughs was performed headlessly against the live demo by scripts/capture-walkthroughs.ts; each capture carries its assertion record in public/img/walkthroughs/manifest.json.
+        Verified {captured}: the login page, the guided-demo entry, and every step surface on the seven walkthroughs was performed headlessly against the live demo by scripts/capture-walkthroughs.ts; each capture carries its assertion record in public/img/walkthroughs/manifest.json.
       </p>
     </div>
   </section>

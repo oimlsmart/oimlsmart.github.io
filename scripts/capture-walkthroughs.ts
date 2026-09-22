@@ -12,7 +12,7 @@
  * then captures. An act the script cannot perform produces no capture,
  * and per the anatomy contract does not list on a page.
  *
- * The two passes:
+ * The three passes:
  *
  *   --drive   the state-changing arc, run ONCE in light mode (the house
  *             convention for drive captures): one fresh application from
@@ -21,7 +21,11 @@
  *             drive STOPS before any IA review, evaluation finalization,
  *             or issuance: the register story stays the seeded one. The
  *             drive's ids land in node_modules/.cache/walkthrough-captures/
- *             state.json so interrupted runs resume (--resume).
+ *             state.json so interrupted runs resume (--resume). Under an
+ *             --only subset that names no application-chain capture the
+ *             chain is skipped (a subset drive of another flow must not
+ *             file a new application); the licensing set carries its own
+ *             state-changing arc under the same flag (below).
  *
  *   (default) the read-only passes in BOTH themes: the seeded worked
  *             example's surfaces (the IA evaluation workspace, the TR
@@ -29,6 +33,17 @@
  *             public register, the applicant's journey and certificate)
  *             plus the wizard surfaces (fill, never submit) and the
  *             login page.
+ *
+ *   licensing the standards-license due process (the smart repo's
+ *             DEMO_FLOWS/07): the citation tier on the surge run, the
+ *             scheme operator's queue, the confirm act, the unlocked
+ *             interactive tier on the same run, the per-key history.
+ *             The read-only surfaces take BOTH themes; the confirm →
+ *             unlock → history arc runs under --drive (light only) and
+ *             ALWAYS restores: the revoke with its mandatory note closes
+ *             the tier again, so a presenter before the nightly reset
+ *             meets the documented declared posture (the history keeps
+ *             the extra rows; append-only is the point).
  *
  * Captures land in public/img/walkthroughs/<flow>/<stem>-<theme>.png
  * (stable names: re-runs overwrite in place, so a freshness regeneration
@@ -43,6 +58,7 @@
  *   npx tsx scripts/capture-walkthroughs.ts --drive          # the state-changing arc first, then read-only
  *   npx tsx scripts/capture-walkthroughs.ts --drive --resume # resume an interrupted drive from state.json
  *   npx tsx scripts/capture-walkthroughs.ts --only=tl,login  # filter by name substring (comma-separated)
+ *   npx tsx scripts/capture-walkthroughs.ts --only=licensing --drive  # the licensing set with its confirm arc
  *   npx tsx scripts/capture-walkthroughs.ts --light          # one theme only
  *
  * Env: DEMO_BASE (default https://demo.oimlsmart.org), CAPTURE_DATE
@@ -1962,6 +1978,285 @@ async function captureEvaluation(browser: Browser) {
   }
 }
 
+// ── The standards-licensing flow (the smart repo's DEMO_FLOWS/07) ─────
+// The due-process arc over the license catalog, on the seeded worked
+// example's own ids (they survive the nightly reset: the seed recreates
+// them): org 21's surge run (the test whose procedure invokes the
+// declared-but-unconfirmed surge standard) and the scheme operator's
+// Standards licenses queue. The read-only surfaces assert the tier
+// posture from the page itself before capturing; the drive performs the
+// confirmation and captures the unlocked tier and the per-key history,
+// then restores the documented declared posture with the revoke whose
+// mandatory note says what it is.
+
+const LICENSING_SURGE_ASSIGNMENT = 'asg-acme-lc-surge-001' // the worked example's surge run (org 21)
+const LICENSING_SURGE_ORG = '21'
+const LICENSING_SURGE_KEY = 'std:iec-61000-4-5'
+// The queue rows carry the key (colon included) in their testids.
+const LIC_ROW = `cs-license-queue-${LICENSING_SURGE_ORG}-${LICENSING_SURGE_KEY}`
+const LIC_NOTE = `cs-license-note-${LICENSING_SURGE_ORG}-${LICENSING_SURGE_KEY}`
+const LIC_ORG_ROW = `cs-license-row-${LICENSING_SURGE_ORG}-${LICENSING_SURGE_KEY}`
+const LIC_HISTORY_TOGGLE = `cs-license-history-toggle-${LICENSING_SURGE_ORG}-${LICENSING_SURGE_KEY}`
+const LIC_HISTORY = `cs-license-history-${LICENSING_SURGE_ORG}-${LICENSING_SURGE_KEY}`
+const LIC_RESTORE_NOTE = 'restoring the declared posture for the demonstration (the walkthrough drive confirms and captures, then closes the tier again)'
+
+/** The surge entitlement's live row, read through the operator's own
+ *  queue API (cs_admin only) from a signed-in page. */
+async function licensingSurgeRow(page: Page): Promise<{ status: string } | null> {
+  return page.evaluate(async (key) => {
+    const res = await fetch('/api/orgs/entitlements', { credentials: 'include' })
+    if (!res.ok) return null
+    const body = await res.json() as { entitlements?: Array<{ orgId: string; key: string; status: string }> }
+    const row = (body.entitlements ?? []).find(r => r.orgId === '21' && r.key === key)
+    return row ? { status: row.status } : null
+  }, LICENSING_SURGE_KEY)
+}
+
+async function captureLicensing(browser: Browser) {
+  if (!['licensing-citation-run', 'licensing-queue', 'licensing-confirm', 'licensing-stepper', 'licensing-history'].some(wants)) return
+
+  // ── the read-only pass: both themes ────────────────────────────────
+  for (const theme of THEMES) {
+    currentTheme = theme
+    if (wants('licensing-citation-run')) {
+      const context = await themedContext(browser, theme)
+      const page = await context.newPage()
+      try {
+        await loginAs(context, page, 'Test Laboratory', '/app/lab')
+        await gotoApp(page, `/app/lab/run/${encodeURIComponent(LICENSING_SURGE_ASSIGNMENT)}`)
+        await waitTestIdReload(page, 'lab-run-view')
+        const banner = await page.waitForSelector('[data-testid="citation-banner"]', { timeout: SETTLE })
+          .then(() => true).catch(() => false)
+        const stepper = await page.$('[data-testid="procedure-stepper"]')
+        const text = banner ? await page.evaluate(() => ({
+          citation: document.querySelector('[data-testid="citation-text"]')?.textContent ?? '',
+          hint: document.querySelector('[data-testid="license-hint"]')?.textContent ?? '',
+        })) : { citation: '', hint: '' }
+        if (banner && !stepper
+          && text.citation.includes('applying IEC 61000-4-5')
+          && text.hint.includes('Standards licenses')) {
+          await waitSkeletonGone(page)
+          // The banner renders below the run's header cards; the capture
+          // must show it: bring it to the top of the frame, the plain
+          // declared form carrying on beneath it.
+          await page.evaluate(() => {
+            (document.querySelector('[data-testid="citation-banner"]') as HTMLElement | null)?.scrollIntoView({ block: 'start' })
+          })
+          await page.waitForTimeout(800)
+          await shoot(page, 'licensing', 'licensing-citation-run', theme, 'the citation tier on the surge run: the behavior\u0027s citation and the license hint naming the two acts that open the tier, the plain REC-declared form beneath, no licensed request made')
+        } else {
+          console.log('  · licensing-citation-run: the surge run did not render the citation banner (the surge row is not declared-unconfirmed) — not captured')
+        }
+      } finally { await context.close() }
+    }
+    if (wants('licensing-queue')) {
+      const context = await themedContext(browser, theme)
+      const page = await context.newPage()
+      try {
+        await loginAs(context, page, 'OIML-CS Administrator', '/app/cs')
+        await gotoApp(page, '/app/cs/standards-licenses')
+        await waitTestIdReload(page, 'cs-standards-licenses')
+        await waitSkeletonGone(page)
+        const row = await page.waitForSelector(`[data-testid="${LIC_ROW}"]`, { timeout: SETTLE })
+          .then(() => true).catch(() => false)
+        if (row) {
+          await page.waitForTimeout(800)
+          await shoot(page, 'licensing', 'licensing-queue', theme, 'the scheme operator\u0027s Standards licenses queue: the declared surge row awaiting confirmation with its evidence reference and its declaring actor named', { fullPage: true })
+        } else {
+          console.log('  · licensing-queue: no declared surge row in the queue (posture moved) — not captured')
+        }
+      } finally { await context.close() }
+    }
+  }
+
+  // ── the drive: confirm → unlock → restore → history ────────────────
+  // The demo's account binding shapes the seats on this build: the
+  // CS Administrator's session is bound to its own organization, so the
+  // kernel answers the cross-org entitlement reads and mutations with
+  // the honest 404 (the cone refusal). The platform administrator (the
+  // org-unbound seat, the smart repo's own e2e account for this exact
+  // arc) performs the confirmation and the restore and reads the
+  // per-key history, in the same console; the typed-note capture rides
+  // the CS Administrator's queue while the row stands declared. The
+  // posture itself is always read through the unbound session.
+  if (!DRIVE || !['licensing-confirm', 'licensing-stepper', 'licensing-history'].some(wants)) return
+  currentTheme = 'light'
+  const LIC_CONFIRM_NOTE = 'verified against the declared license evidence (the demonstration confirmation)'
+
+  /** The platform administrator's session: the demo sign-in POST sets
+   *  the context's cookie; the pages and the in-page fetches then ride
+   *  it like any session. */
+  async function licensingAdminSession(context: BrowserContext) {
+    const res = await context.request.post(`${DEMO}/api/auth/demo`, {
+      data: { email: 'admin@oiml.org', password: 'demo2026' },
+    })
+    if (!res.ok()) throw new Error('the platform administrator sign-in failed (the drive cannot reach the due-process acts)')
+  }
+
+  let confirmed = false
+  let posture: { status: string } | null = null
+  {
+    // The posture, through the unbound seat.
+    const context = await themedContext(browser, 'light')
+    const page = await context.newPage()
+    try {
+      await licensingAdminSession(context)
+      await gotoCommit(page, `${DEMO}/app/cs/standards-licenses`)
+      await waitIslandSettled(page)
+      posture = await licensingSurgeRow(page)
+    } finally { await context.close() }
+
+    if (posture?.status === 'declared') {
+      // The typed-note capture on the CS Administrator's queue (the
+      // act's face), then the confirmation itself through the unbound
+      // seat's session: the same POST the console's button fires.
+      if (wants('licensing-confirm')) {
+        const context = await themedContext(browser, 'light')
+        const page = await context.newPage()
+        try {
+          await loginAs(context, page, 'OIML-CS Administrator', '/app/cs')
+          await gotoApp(page, '/app/cs/standards-licenses')
+          await waitTestIdReload(page, 'cs-standards-licenses')
+          await waitSkeletonGone(page)
+          await page.waitForSelector(`[data-testid="${LIC_ROW}"]`, { timeout: SETTLE })
+          await typeTestId(page, LIC_NOTE, LIC_CONFIRM_NOTE)
+          await page.waitForTimeout(600)
+          await shoot(page, 'licensing', 'licensing-confirm', 'light', 'the confirm act on the scheme operator\u0027s queue: the verification note typed against the declared surge row (the confirmation lands through the platform administrator\u0027s unbound seat on this build, the demo\u0027s CS binding being org-scoped; the row moved declared to active)')
+        } finally { await context.close() }
+      }
+      const context = await themedContext(browser, 'light')
+      const page = await context.newPage()
+      try {
+        await licensingAdminSession(context)
+        await gotoCommit(page, `${DEMO}/app/cs/standards-licenses`)
+        await waitIslandSettled(page)
+        const landed = await page.evaluate(async ({ key, note }) => {
+          const res = await fetch(`/api/orgs/21/entitlements/${encodeURIComponent(key)}/confirm`, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ note }),
+          })
+          return res.ok
+        }, { key: LICENSING_SURGE_KEY, note: LIC_CONFIRM_NOTE })
+        const after = await licensingSurgeRow(page)
+        if (landed && after?.status === 'active') {
+          confirmed = true
+        } else {
+          console.log(`  · licensing drive: the confirmation did not land (the row reads ${after?.status ?? 'unknown'}) — no drive capture`)
+        }
+      } finally { await context.close() }
+    } else if (posture?.status === 'active') {
+      console.log('  · licensing drive: the surge row already stands active (a resumed run) — the confirm act is skipped, the arc continues on the standing license')
+      confirmed = true
+    } else {
+      console.log(`  · licensing drive: the surge row is ${posture?.status ?? 'absent'} — the confirm act is not performable today, the tier cannot be reached, no drive capture`)
+    }
+  }
+
+  // The unlocked tier: the TL re-opens the same surge run. The
+  // entitlement echo is private-cached for the config TTL, so the first
+  // reload after the confirmation may still show the citation banner;
+  // the documented posture is to poll across it.
+  if (confirmed && wants('licensing-stepper')) {
+    const context = await themedContext(browser, 'light')
+    const page = await context.newPage()
+    try {
+      await loginAs(context, page, 'Test Laboratory', '/app/lab')
+      let stepperVisible = false
+      for (let attempt = 0; attempt < 10 && !stepperVisible; attempt++) {
+        await gotoApp(page, `/app/lab/run/${encodeURIComponent(LICENSING_SURGE_ASSIGNMENT)}`)
+        stepperVisible = await page.waitForSelector('[data-testid="procedure-stepper"]', { timeout: 20_000 })
+          .then(() => true).catch(() => false)
+      }
+      if (stepperVisible) {
+        const railReady = await page.waitForSelector('[data-testid^="procedure-phase-"]', { timeout: SETTLE })
+          .then(() => true).catch(() => false)
+        const bannerGone = await page.evaluate(() => !document.querySelector('[data-testid="citation-banner"]'))
+        if (railReady && bannerGone) {
+          await waitSkeletonGone(page)
+          await page.evaluate(() => {
+            (document.querySelector('[data-testid="procedure-stepper"]') as HTMLElement | null)?.scrollIntoView({ block: 'start' })
+          })
+          await page.waitForTimeout(800)
+          await shoot(page, 'licensing', 'licensing-stepper', 'light', 'the unlocked interactive tier on the same surge run: the licensed procedure\u0027s phases walk as the stepper in the model\u0027s own order, the citation banner gone')
+        } else {
+          console.log('  · licensing-stepper: the stepper mounted but the citation banner still stands — not captured')
+        }
+      } else {
+        console.log('  · licensing-stepper: the stepper never opened across the config TTL — not captured')
+      }
+    } finally { await context.close() }
+  }
+
+  // The restore: the revoke with its mandatory note closes the tier
+  // again. It runs BEFORE the history capture, so the capture reads the
+  // row's whole life: the demonstration opens the tier and closes it,
+  // and the append-only history keeps every row. The documented
+  // declared posture returns with the nightly reset.
+  if (confirmed) {
+    const context = await themedContext(browser, 'light')
+    const page = await context.newPage()
+    try {
+      await licensingAdminSession(context)
+      await gotoCommit(page, `${DEMO}/app/cs/standards-licenses`)
+      await waitIslandSettled(page)
+      const restored = await page.evaluate(async ({ key, note }) => {
+        const res = await fetch(`/api/orgs/21/entitlements/${encodeURIComponent(key)}/revoke`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ note }),
+        })
+        return res.ok
+      }, { key: LICENSING_SURGE_KEY, note: LIC_RESTORE_NOTE })
+      const after = await licensingSurgeRow(page)
+      if (restored && after?.status === 'revoked') {
+        console.log('  · restore: the surge row revoked; the nightly reset returns the documented declared posture')
+      } else {
+        console.log(`  · restore: the revoke answered ${restored ? 'ok' : 'not ok'} with the row ${after?.status ?? 'unknown'} — check org 21's surge license before presenting`)
+      }
+    } finally { await context.close() }
+  }
+
+  // The per-key history reading the whole arc: the declaration (the
+  // attesting actor, the evidence reference), the confirmation (its
+  // verification note), and the restore's revoke with its mandatory
+  // note. Append-only: nothing is ever removed. The leg runs whenever
+  // the row exists — a resumed run against an already-restored row
+  // captures the same finished arc.
+  if (DRIVE && posture && wants('licensing-history')) {
+    const context = await themedContext(browser, 'light')
+    const page = await context.newPage()
+    try {
+      await licensingAdminSession(context)
+      await gotoApp(page, '/app/cs/standards-licenses')
+      await waitTestIdReload(page, 'cs-standards-licenses')
+      await waitSkeletonGone(page)
+      await clickTestId(page, `cs-licenses-org-${LICENSING_SURGE_ORG}`)
+      await waitTestId(page, 'cs-licenses-org-drilldown')
+      await page.waitForSelector(`[data-testid="${LIC_ORG_ROW}"]`, { timeout: SETTLE })
+      await clickTestId(page, LIC_HISTORY_TOGGLE)
+      await waitTestId(page, LIC_HISTORY)
+      const rows = await page.evaluate((id) =>
+        Array.from(document.querySelectorAll(`[data-testid="${id}"] li`)).map(li => li.textContent ?? ''), LIC_HISTORY)
+      const arc = rows.length >= 3
+        && rows[0]!.includes('declared')
+        && rows.some(r => r.includes('active'))
+        && rows[rows.length - 1]!.includes('revoked')
+      if (arc) {
+        await page.evaluate((id) => {
+          (document.querySelector(`[data-testid="${id}"]`) as HTMLElement | null)?.scrollIntoView({ block: 'center' })
+        }, LIC_ORG_ROW)
+        await page.waitForTimeout(600)
+        await shoot(page, 'licensing', 'licensing-history', 'light', 'the per-key history reading the row\u0027s whole life: the declaration (the attesting actor, the evidence reference), the confirmation (its verification note), and the drive\u0027s revoke closing the demonstration with its mandatory note; append-only, nothing removed')
+      } else {
+        console.log('  · licensing-history: the history rows do not read declared → active → revoked — not captured')
+      }
+    } finally { await context.close() }
+  }
+}
+
 // ── Main ──────────────────────────────────────────────────────────────
 
 // --rebuild-manifest: re-register every capture on disk. The drive's
@@ -2006,8 +2301,21 @@ if (REBUILD_MANIFEST) {
 }
 
 const browser = await chromium.launch()
+// A --drive with an --only subset that names no application-chain
+// capture skips the chain: a subset drive of another flow must not file
+// a fresh application on the demo. The licensing set's own state
+// changing arc also rides --drive and runs inside captureLicensing.
+const DRIVE_CHAIN_NAMES = [
+  'wizard-recommendation', 'wizard-instrument', 'wizard-scheme-ia', 'wizard-stepper-jump',
+  'application-submitted', 'review-queue', 'review-whole-file', 'reject-requires-reason',
+  'sample-request-form', 'accept-tep-hub', 'tep-samples-selected', 'dispatch-builder',
+  'custody-shipped', 'lab-inbox-incoming', 'request-open', 'request-accepted',
+  'project-view-cone', 'samples-received', 'report-draft-completeness', 'run-wizard',
+  'run-completed', 'report-composer-gate', 'report-submitted',
+]
+const DRIVE_CHAIN_WANTED = !ONLY_LIST || ONLY_LIST.some(o => DRIVE_CHAIN_NAMES.some(n => n.includes(o)))
 try {
-  if (DRIVE || FRESH_INTAKE) {
+  if (FRESH_INTAKE || (DRIVE && DRIVE_CHAIN_WANTED)) {
     currentTheme = 'light'
     await driveChain(browser)
   }
@@ -2015,6 +2323,7 @@ try {
   await captureWizard(browser)
   await captureApplicantJourney(browser)
   await captureEvaluation(browser)
+  await captureLicensing(browser)
 } finally {
   await browser.close()
 }

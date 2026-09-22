@@ -1,0 +1,241 @@
+---
+import Base from '../../layouts/Base.astro'
+import PageHero from '../../components/PageHero.astro'
+import ActionBox from '../../components/ActionBox.astro'
+import FlowDiagram from '../../components/diagrams/FlowDiagram.astro'
+import SimulatedNote from '../../components/demo-flows/SimulatedNote.astro'
+import FlowStep from '../../components/demo-flows/FlowStep.astro'
+import PresenterScript from '../../components/demo-flows/PresenterScript.astro'
+import WalkthroughPrintStyle from '../../components/demo-flows/WalkthroughPrintStyle.astro'
+
+// Flow 07 of the demo-flow walkthroughs: the standards-licensing due
+// process, per the smart repo's DEMO_FLOWS/07-licensing.md (with the
+// both-tier run story of DEMO_FLOWS/03). The captures are produced by
+// scripts/capture-walkthroughs.ts (the licensing set; the confirm arc
+// under --drive, which restores the documented posture afterwards).
+const captured = '2026-09-22'
+---
+
+<Base
+  title="The standards licenses: the due process behind the licensed tiers"
+  description="Demo-flow walkthrough 07: the standards-license due process. A declaration opens nothing; the scheme operator's confirmation opens the licensed procedure's interactive tier in the test run; the per-key history reads the whole arc. The citation tier, the confirmation queue, the unlocked stepper, and the history, with the exact demo accounts to try it and the presenter scripts."
+>
+  <WalkthroughPrintStyle />
+  <PageHero
+    eyebrow="The demo flows · 07"
+    title="The standards licenses"
+    lede="A certification procedure sometimes applies a standard the platform does not publish itself, because another publisher holds its text. The platform answers with a due process, not an upgrade screen: the organization's declaration opens nothing by itself, the scheme operator's confirmation opens the licensed procedure's interactive tier in the test run, and a per-key history keeps every row of the arc. This walkthrough performs the whole process on the live demo, from the citation tier to the unlocked stepper and back."
+  />
+
+  <section class="px-8 pb-20 max-w-5xl walkthrough-body">
+    <div class="max-w-3xl mb-12">
+      <SimulatedNote />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow now"
+        description="Sign in with the one-click Test Laboratory account and open the surge run below to see the citation tier; the OIML-CS Administrator account holds the scheme operator's confirmation queue. The instance resets nightly and the license posture resets with it."
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The flow at a glance</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The actors are two roles. The laboratory's operator (the Test Laboratory seat of the Example Test Laboratory, ETL, a fictional laboratory) works the test runs; the scheme operator (the OIML-CS Administrator seat of the OIML-CS console) works the confirmation queue. The demo seeds the Example Laboratory with two confirmed licenses and one declaration awaiting confirmation, so a single laboratory sign-in shows both tiers side by side: the confirmed standards walk the interactive stepper, the declared one renders the citation tier.
+      </p>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
+        The doctrine the flow demonstrates is that a declaration alone opens nothing. An attestation that opens nothing is the point: the organization's administrator declares the license it holds, with the evidence reference written on the record, and the tier opens only when the scheme operator confirms that declaration. Only the operator's revoke closes the tier again, and a revoke carries a mandatory reason. The whole arc stays readable afterwards in the per-key history.
+      </p>
+      <FlowDiagram
+        caption="FIG. THE LICENSE DUE PROCESS"
+        steps={[
+          { label: 'The run, unlicensed', sub: 'the citation tier', accent: 'slate' },
+          { label: 'The declaration', sub: 'the attestation + evidence', accent: 'amber' },
+          { label: 'The confirmation', sub: 'the scheme operator\u0027s act', accent: 'brand' },
+          { label: 'The run, licensed', sub: 'the interactive stepper', accent: 'teal' },
+        ]}
+        arrows={[
+          { label: 'opens nothing', detail: 'the declaration alone' },
+          { label: 'opens the tier', detail: 'declared to active' },
+          { label: 'closes the tier', detail: 'the revoke, note mandatory' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The walkthrough</h2>
+
+      <FlowStep
+        sid="S1"
+        title="The citation tier: the run that applies an unlicensed standard"
+        account="Test Laboratory"
+        console="/app/lab/run/…"
+        live="https://demo.oimlsmart.org/app/lab/run/asg-acme-lc-surge-001"
+        page="licensing"
+        stem="licensing-citation-run"
+        captured={captured}
+        alt="The surge run at the laboratory rendering the citation tier: the behavior's citation, the license hint naming the two acts that open the interactive tier, and the plain procedure form beneath."
+      >
+        <p>
+          The laboratory's operator opens the surge test on the worked example's load cell, the test whose procedure applies IEC 61000-4-5. The Example Laboratory holds no confirmed license for that standard, so the run renders the citation tier: the Recommendation's own declared form exactly as it renders without the licensed tier, plus the behavior's citation naming the applied standard and a license hint naming the two acts that open the interactive tier, the organization's declaration and the scheme operator's confirmation. The page makes no licensed request at all; nothing of the other publisher's text arrives, and nothing is teased, blurred, or gated mid-form.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S2"
+        title="The queue: the declaration awaiting its answer"
+        account="OIML-CS Administrator"
+        console="/app/cs/standards-licenses"
+        live="https://demo.oimlsmart.org/app/cs/standards-licenses"
+        page="licensing"
+        stem="licensing-queue"
+        captured={captured}
+        alt="The scheme operator's Standards licenses queue with the laboratory's declared surge row awaiting confirmation, its evidence reference and declaring actor named."
+      >
+        <p>
+          The declaration half of the process has already happened on the demo: the Example Laboratory's declaration for the surge standard stands in the queue at status declared, recorded through the same kernel verbs a live declaration uses. The evidence reference rides the row (the IEC Webstore order number), and the declaring actor is named. On a production deployment the declaration is the organization administrator's act, made in the organization settings' Standards licenses tab, and nothing about it is pre-provisioned; the demo provisions it through the seed because the demonstration cast carries no organization administrator to walk that tab live.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S3"
+        title="The confirm act: the scheme operator answers the declaration"
+        account="OIML-CS Administrator"
+        console="/app/cs/standards-licenses"
+        live="https://demo.oimlsmart.org/app/cs/standards-licenses"
+        page="licensing"
+        stem="licensing-confirm"
+        dark={false}
+        captured={captured}
+        alt="The confirm act on the scheme operator's console: the verification note typed against the declared surge row, the confirmation button ready."
+      >
+        <p>
+          The scheme operator opens the queue, reads the attestation's evidence reference, adds a verification note recording what was checked, and confirms. The row moves from declared to active, the record stamps the confirming seat's name beside the note, and the row leaves the pending list. The act is deliberately a scheme seat's and no one else's: the organization cannot confirm its own declaration, and the queue is seated by role, so the confirmation is the scheme's answer, not a self-service switch. The demo names its built shape honestly: this build scopes the CS administrator's session to its own organization, so the demonstration's confirmation rides the platform administrator's organization-unbound seat, the same account the platform's own end-to-end suite drives for this arc.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S4"
+        title="The tier unlocks: the same run, now interactive"
+        account="Test Laboratory"
+        console="/app/lab/run/…"
+        live="https://demo.oimlsmart.org/app/lab/run/asg-acme-lc-surge-001"
+        page="licensing"
+        stem="licensing-stepper"
+        dark={false}
+        captured={captured}
+        alt="The same surge run after the confirmation: the licensed procedure's phases walking as the stepper in the model's order, the citation banner gone."
+      >
+        <p>
+          The laboratory's operator re-opens the same surge run. The run re-resolves the organization's active entitlement set on every document load, and the citation tier gives way to the interactive tier: the licensed procedure's phases walk as a stepper in the order the model declares, each phase carrying its clause anchor and its declared record fields, and the phase readings evaluate against the declared tolerances as the operator works. The entitlement state is cached at the edge for a short window, so the first reload after a confirmation can still show the citation banner; the next one carries the stepper, which is the honest cost of the cache and nothing more.
+        </p>
+      </FlowStep>
+
+      <FlowStep
+        sid="S5"
+        title="The history: the arc, readable after the fact"
+        account="OIML-CS Administrator"
+        console="/app/cs/standards-licenses"
+        live="https://demo.oimlsmart.org/app/cs/standards-licenses"
+        page="licensing"
+        stem="licensing-history"
+        dark={false}
+        captured={captured}
+        alt="The per-key history reading the surge row's whole life: the declaration with its attesting actor and evidence reference, the confirmation with its verification note, and the revoke with its mandatory note."
+      >
+        <p>
+          Every status change appends to the per-key history, so the row's whole life reads in one place: who attested and on what evidence, who confirmed and why, and any revoke with its mandatory reason. Nothing is ever removed. The capture reads the demonstration's own row end to end: the seed's declaration, the capture drive's confirmation, and the drive's revoke restoring the demonstration posture; the nightly reset returns the row to its documented starting posture, and the history keeps every row it passed through.
+        </p>
+      </FlowStep>
+    </div>
+
+    <div class="max-w-3xl mb-12 presenter-scripts">
+      <div class="print-only">
+        <h1>The standards licenses (demo flow 07): the presenter scripts</h1>
+        <p>OIML SMART demo walkthrough, printed from www.oimlsmart.org/demo/licensing. Everything the scripts present is simulated: the demo instance resets nightly and the cast is fictional.</p>
+      </div>
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The presenter scripts</h2>
+      <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
+        Two lengths, keyed to the steps above (S1 to S5). Print this page for a clean copy of the scripts.
+      </p>
+      <PresenterScript
+        minutes={5}
+        audience="the committee slot"
+        beats={[
+          { at: '0:00', text: 'The gate question: when a procedure applies a standard another publisher holds, what does the software do? The answer is not an upgrade screen; it is a due process. Simulated cast, nightly reset.' },
+          { at: '0:30', steps: 'S1', text: 'The citation tier: the surge run renders the plain declared form, the citation naming the applied standard, and the hint naming the two acts that open the tier. The page makes no licensed request; the wire carries nothing of the other publisher\u0027s text.' },
+          { at: '1:30', steps: 'S2', text: 'The queue: the scheme operator\u0027s console lists every declared row across the registered organizations with its evidence reference. The surge row stands at declared; a declaration alone opens nothing.' },
+          { at: '2:30', steps: 'S3', text: 'The confirm act: the operator reads the evidence, adds the verification note, and confirms. Declared becomes active, the record stamps the operator\u0027s name, and the queue row leaves the pending list.' },
+          { at: '3:30', steps: 'S4-S5', text: 'The same run re-opened walks the licensed procedure as a stepper, phases in the model\u0027s order with clause anchors. The per-key history reads the arc: who attested, on what evidence, who confirmed and why. Only the operator\u0027s revoke closes the tier, and the revoke carries a mandatory reason.' },
+          { at: '4:30', text: 'Try it: the Test Laboratory account for the runs, the OIML-CS Administrator account for the queue, on demo.oimlsmart.org.' },
+        ]}
+      />
+      <PresenterScript
+        minutes={20}
+        audience="the working visit"
+        beats={[
+          { at: '0:00', text: 'Frame: certification workflows cite standards the platform does not publish. The platform\u0027s answer is an entitlement lifecycle with a due process on it, and the demo seeds one laboratory mid-process so both tiers show under one sign-in. Simulated cast, nightly reset.' },
+          { at: '1:00', steps: 'S1', text: 'The citation tier in depth: open the surge run and read the banner aloud. The plain form is the same surface the Recommendation always rendered; nothing is hidden, nothing blurred, no licensed chunk crosses the wire. The honest refusal is the server-side gate answering any unlicensed request.' },
+          { at: '3:00', steps: 'S1', text: 'The contrast: the same laboratory\u0027s humidity and burst runs, whose licenses stand confirmed, render the interactive stepper today. One login, both tiers; the tier never branches on a standard id, it derives from the model\u0027s reference, the license catalog, and the organization\u0027s entitlement set.' },
+          { at: '5:00', steps: 'S2', text: 'The declaration: on a production deployment the organization administrator declares in the settings\u0027 Standards licenses tab, ticking the attestation and entering the evidence reference; the tab is seated by the registry\u0027s organization type, so an applicant organization never sees it. The demo pre-provisions the row with the same kernel verb, the same history row, and the same queue entry the tab would produce, because the demo cast carries no organization administrator.' },
+          { at: '8:00', steps: 'S3', text: 'The confirmation as governance: the queue is the scheme\u0027s answer to declarations, seated by role. Read what the record keeps: the operator\u0027s name beside the note recording what was verified. The organization cannot confirm itself in.' },
+          { at: '10:00', steps: 'S4', text: 'The unlock, live: re-open the surge run. The first reload may still show the citation banner because the entitlement echo is cached for a short window at the edge; say so before the room sees it, then reload again and the stepper stands. The phases walk in the model\u0027s declared order with their clause anchors; the phase records land on the run\u0027s evidence as model-keyed fields.' },
+          { at: '13:00', steps: 'S4', text: 'The records question: the evaluation project and the test report derive from the stepper\u0027s evidence exactly as they do from manual entries, so a licensed procedure changes what the operator walks, never what the scheme receives.' },
+          { at: '15:00', steps: 'S5', text: 'The history and the revoke: every row appends. Perform the revoke on any active row and show the mandatory-note refusal first, then the revoke with its reason, and the tier closing on the run\u0027s next document load. The history never forgets a row, which is what makes the operator\u0027s power accountable.' },
+          { at: '18:00', text: 'The catalog question: the license keys exist in the generated catalog and nowhere else; a declaration validates against it, so a newly licensed standard gates with zero code change. Close on the try-it path: Test Laboratory for the runs, OIML-CS Administrator for the queue.' },
+        ]}
+      />
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The honest questions</h2>
+      <div class="grid gap-4">
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Is this a paywall inside a conformance scheme?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No: what the license gates is the text of a standard another publisher holds, not the certification workflow. The unlicensed run renders the Recommendation's own declared form and proceeds; the evidence, the report, and the evaluation all work unchanged. What the confirmation adds is the licensed procedure walked interactively, the phases, the clause anchors, and the tolerance-bearing records, in place of the plain form.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">Who can declare, and who can confirm?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The declaration belongs to the organization's own administrator, in the organization settings' Standards licenses tab, with the attestation ticked and the evidence reference entered; the tab is seated by the registry's organization type, so an applicant organization never sees it. The confirmation belongs to the scheme operator alone, in the OIML-CS console's queue, and so does the revoke, whose note is mandatory. No seat can perform another seat's act.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">What does the unlicensed surface hide?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Nothing that was there before it. The citation tier is the same plain declared form the run rendered before the licensed tier existed, with the citation and the license hint added; there is no teased content, no blurred text, and no request for licensed material leaves the browser. The server-side gate holds independently, answering an unlicensed request for licensed content with a named refusal.</p>
+        </div>
+        <div class="border border-rule rounded-md bg-paper-soft p-6">
+          <h3 class="font-serif text-[1.125rem] mb-2">What happens when a license is revoked or expires?</h3>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The tier closes on the run's next document load, and the citation tier stands in its place again; the entitlement cache bounds the switch by its short lifetime, never by a redeploy. The revoke's reason lands on the per-key history beside the declaration and the confirmation, and the history is append-only, so the row's whole life stays readable to the scheme operator and the organization alike.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mb-12">
+      <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Where to go next</h2>
+      <ActionBox
+        href="/demo/tl-work"
+        label="Flow 03: the laboratory's work"
+        description="The bench the tiers live on: the model-driven runs, the evidence captured as the work happens, and the report that accounts for every required form."
+      />
+      <ActionBox
+        href="/technologies/smart-recommendations"
+        label="How the licensed tiers derive"
+        description="The Recommendations page carries the licensed-standards claim and its proof anchors: the tier derives from the model's reference and the catalog, never a standard id in a branch."
+      />
+      <ActionBox
+        href="https://demo.oimlsmart.org/app/login"
+        label="Try this flow on the demo"
+        description="The Test Laboratory account for the runs, the OIML-CS Administrator account for the confirmation queue. The license posture resets nightly with the instance."
+      />
+      <ActionBox
+        href="mailto:info@oimlsmart.org"
+        label="Talk to us"
+        description="info@oimlsmart.org for a working visit with your scheme's operators in the room."
+      />
+    </div>
+
+    <div class="border-t border-rule pt-8 max-w-3xl">
+      <p class="text-sm text-ink-muted">
+        Verified {captured}: every step above was performed headlessly against the live demo by scripts/capture-walkthroughs.ts (the citation tier and the queue in both themes; the confirm act, the unlocked stepper, and the history under the drive flag, which restored the documented license posture with a revoked-and-noted row after capturing) and each capture carries its assertion record in public/img/walkthroughs/manifest.json. The step names and machine states match the engineering record (DEMO_FLOWS/07) in the smart repository.
+      </p>
+    </div>
+  </section>
+</Base>
