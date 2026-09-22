@@ -463,6 +463,15 @@ export const PROOF_MAP: readonly ProofPage[] = [
           { kind: 'live', url: 'https://www.oimlsmart.org/recs/', probe: 'SMART Recommendations' },
         ],
       },
+      {
+        id: 'smart-recommendations-licensed-standards',
+        says: 'licensed reference standards gate per organization: the licensed org walks the guided procedure in the test run, the unlicensed one gets the citation tier and the plain form',
+        anchors: [
+          { kind: 'smart', path: 'DEMO_FLOWS/03-tl-work.md', probe: 'citation tier' },
+          { kind: 'smart', path: 'DEMO_FLOWS/07-licensing.md', probe: 'declared' },
+          { kind: 'smart', path: 'browser/src/vue-pages/lab/run-view.vue', probe: 'citation-banner' },
+        ],
+      },
     ],
   },
   {
