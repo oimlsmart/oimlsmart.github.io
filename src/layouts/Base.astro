@@ -32,5 +32,9 @@ const { title, description } = Astro.props
 ---
 
 <Shell title={title} description={description} brand={BRAND} nav={NAV_MODEL} services={SERVICES} footer={FOOTER} internal={{ href: '/pilot' }} aiAssistant={aiAssistant}>
+  <!-- No OIML SMART site is indexed: the noindex rides the meta tag on
+       every page through the shell's head slot; robots.txt keeps the
+       crawl open so the de-index propagates. -->
+  <meta slot="head" name="robots" content="noindex, nofollow" />
   <slot />
 </Shell>
