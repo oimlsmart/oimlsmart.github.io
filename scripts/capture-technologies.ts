@@ -16,15 +16,21 @@
  * older Nodes need the tsx shim. Requires the chromium browser once:
  * `npx playwright install chromium`.
  *
- * The demo captures sign in with the demo's one-click role accounts (the
- * login page's public demo-account grid). No credentials leave the
- * machine; the session lives only inside the Playwright context and a
- * state file under the OS temp dir (never inside the repo).
+ * The demo instance is OIDC-configured (smart#378): the one-click local
+ * demo cast is dead there, and the signed-in captures ride the
+ * provider's grant-based persona assumption — the shared round-trip in
+ * scripts/demo-sso.ts (a grantee account signs in at id.oimlsmart.org;
+ * the account chooser continues the flow AS the persona). Without
+ * DEMO_SSO_EMAIL/DEMO_SSO_PASSWORD every signed-in shot skips loudly
+ * with the reason, never a stale capture silently. No credentials leave
+ * the machine; the session lives only inside the Playwright context and
+ * a state file under the OS temp dir (never inside the repo).
  */
 import { chromium, type Browser, type Page } from 'playwright'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
+import { SSO_REASON, loginAsPersona, ssoCredentialsDeclared } from './demo-sso'
 
 const OUT = resolve(process.cwd(), 'public/img/technologies')
 const ONLY = (() => {
@@ -40,7 +46,8 @@ interface Shot {
   /** File stem: <page>/<stem>-light.png + -dark.png (or -light only when dark === false). */
   stem: string
   url: string
-  /** Sign in to the demo first with this role-button name (the login page's one-click grid). */
+  /** Sign in to the demo first as this persona (the login page's SSO
+   *  persona strip; the account chooser assumes the persona). */
   demoRole?: string
   /** Capture the dark variant too (default true). */
   dark?: boolean
@@ -166,13 +173,13 @@ interface Manifest {
   pages: Record<string, { files: ManifestFile[]; probes: Record<string, number> }>
 }
 
+/** Sign in AS a demonstration persona through the SSO grant round-trip
+ *  (scripts/demo-sso.ts, ONE shared implementation): the login page's
+ *  persona card starts the provider flow, the account chooser continues
+ *  it AS the persona, and the callback lands on the persona's role
+ *  home. */
 async function demoSignIn(page: Page, role: string): Promise<void> {
-  await page.goto('https://demo.oimlsmart.org/app/login/', { waitUntil: 'networkidle', timeout: 60000 })
-  // The login page's demo grid lists the one-click role accounts.
-  const button = page.getByRole('button', { name: new RegExp(`^${role}\\b`) }).first()
-  await button.waitFor({ state: 'visible', timeout: 30000 })
-  await button.click()
-  await page.waitForURL((url) => !url.pathname.startsWith('/app/login'), { timeout: 60000 })
+  await loginAsPersona({ demo: 'https://demo.oimlsmart.org', context: page.context(), page, name: role })
   await page.waitForLoadState('networkidle', { timeout: 60000 }).catch(() => {})
 }
 
@@ -240,7 +247,10 @@ async function main() {
   const manifest: Manifest = { captured: CAPTURED, pages: {} }
   let failures = 0
 
-  // One demo session per role, reused across that role's captures.
+  // One demo session per persona, reused across that persona's
+  // captures. Without the grantee pair every signed-in shot skips
+  // loudly (the sentinel's doctrine), never a false capture.
+  const SSO_OK = ssoCredentialsDeclared()
   const roleStates = new Map<string, string>()
   async function stateFor(role: string): Promise<string | undefined> {
     const cached = roleStates.get(role)
@@ -266,6 +276,10 @@ async function main() {
     console.log(`\n== ${pageName} ==`)
     manifest.pages[pageName] = { files: [], probes: {} }
     for (const shot of shots) {
+      if (shot.demoRole && !SSO_OK) {
+        console.log(`  SKIP ${shot.stem} — ${SSO_REASON}`)
+        continue
+      }
       const storageState = shot.demoRole ? await stateFor(shot.demoRole) : undefined
       if (shot.demoRole && !storageState) {
         console.error(`  SKIP ${shot.stem}: no demo session`)

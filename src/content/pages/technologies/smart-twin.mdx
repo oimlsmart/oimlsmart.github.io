@@ -36,7 +36,7 @@ member deployments).
 
 ## What it does today
 
-- **Judges a live twin in the demo.** The [twin console](https://demo.oimlsmart.org/app/twin) wires the real monitor and gateway runtimes against the simulated feed, judging the modelled R 60 requirement `measuring-range-min` on every poll; sign in as Admin (one click) and provision the demo twin (the capture above).
+- **Judges a live twin in the demo.** The [twin console](https://demo.oimlsmart.org/app/twin) wires the real monitor and gateway runtimes against the simulated feed, judging the modelled R 60 requirement `measuring-range-min` on every poll; assume the Admin persona through the identity service's account chooser and provision the demo twin (the capture above).
 - **Degrades honestly.** A stale served value degrades the requirement's verdict to indeterminate rather than failing or passing silently; the freshness gate reads the twin's own timestamps.
 - **Introspects instead of assuming.** The [twin lab](https://demo.oimlsmart.org/app/twin-lab) connects to a served interface and reads its declared registers and operations, never a hard-coded shape.
 - **Keeps the evidence.** Facts, verdicts, and escalations accrue in append-only, version-pinned evidence streams; a stored window can be re-judged under new limits without querying the twin again (in the demo the store is in-memory and resets with the page, as the console itself states).
@@ -129,7 +129,7 @@ reports an outage as a failure it cannot distinguish.
 <ActionBox
   href="https://demo.oimlsmart.org/"
   label="Try the demo"
-  description="Sign in as Admin (one click, no password), open the twin console, and provision the demo twin: the monitor judges the simulated feed within seconds. Accounts reset nightly."
+  description="Assume the Admin persona through the identity service, open the twin console, and provision the demo twin: the monitor judges the simulated feed within seconds. The instance resets nightly."
 />
 <ActionBox
   href="https://www.primmel.org/primmel-smart-docs/platform/"

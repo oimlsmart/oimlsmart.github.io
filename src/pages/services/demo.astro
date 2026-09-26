@@ -15,7 +15,7 @@ const captured = '2026-08-29'
 
 <Base
   title="The demo instance"
-  description="The always-on OIML SMART sandbox: the full platform pre-loaded with the fictional demo cast, one-click demo accounts, the nightly reset, and the worked-example certificate as the canonical try-it path."
+  description="The always-on OIML SMART sandbox: the full platform pre-loaded with the fictional demo cast, persona sign-in through the identity service, the nightly reset, and the worked-example certificate as the canonical try-it path."
 >
   <PageHero
     eyebrow="Services"
@@ -28,13 +28,13 @@ const captured = '2026-08-29'
       <ActionBox
         href="https://demo.oimlsmart.org/"
         label="Open the demo instance"
-        description="Enter the app and click a demo account on the login page. No request, no approval; the shared demo password is printed there too."
+        description="Enter the app and pick a persona card on the login page; the sign-in continues at the identity service, whose account chooser assumes the persona."
       />
       <ServiceShot
         service="demo"
         id="demo-portal-applicant"
-        alt="The applicant portal on the demo instance: ACME Measurement GmbH's five applications and three certificates, signed in with the one-click Applicant demo account"
-        caption="The applicant portal, one click after the login page: the pilot's applications and certificates already on the record"
+        alt="The applicant portal on the demo instance: ACME Measurement GmbH's five applications and three certificates, signed in as the Applicant persona"
+        caption="The applicant portal, one persona after the login page: the pilot's applications and certificates already on the record"
         date={captured}
       />
     </div>
@@ -47,13 +47,13 @@ const captured = '2026-08-29'
       <ol class="grid gap-10 list-none pl-0">
         <li>
           <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-3">
-            <strong class="text-ink font-semibold">1. Sign in with one click.</strong> The login page carries the demo cast as buttons: Applicant, Issuing Authority, Test Laboratory, the laboratory's named operators, BIML Officer, and more. The click signs you in and lands you on that role's console; the shared demo password is printed on the page for the manual form.
+            <strong class="text-ink font-semibold">1. Sign in as a persona.</strong> The login page carries the demo cast as cards under their organizations: Applicant, Issuing Authority, Test Laboratory, BIML Officer, and more. A card starts the sign-in at the OIML SMART identity service, and the provider's account chooser continues the flow as the chosen persona, the grant-based persona assumption, which lands you on that role's console without any cast password being published.
           </p>
           <ServiceShot
             service="demo"
             id="demo-login-accounts"
-            alt="The demo login page listing the one-click demo accounts: Applicant, Issuing Authority, Test Laboratory, BIML Officer, and the rest of the fictional cast"
-            caption="The login page: the whole demo cast as one-click accounts"
+            alt="The demo login page listing the cast as persona cards: Applicant, Issuing Authority, Test Laboratory, BIML Officer, and the rest of the fictional cast, each signed in through the identity service"
+            caption="The login page: the whole demo cast as persona cards"
             date={captured}
           />
         </li>
@@ -148,8 +148,8 @@ const captured = '2026-08-29'
           <ServiceShot
             service="demo"
             id="demo-guided-demo"
-            alt="The guided demo presenter script on the login page: the full certification flow, step 1 of 24, Submit the application"
-            caption="The presenter script: the full flow in 24 steps"
+            alt="The guided demo presenter script on the login page: the full certification flow, step 1 of 22, Submit the application"
+            caption="The presenter script: the full flow in 22 steps"
             date={captured}
           />
         </li>
@@ -164,13 +164,13 @@ const captured = '2026-08-29'
       <FlowDiagram
         caption="FIG. THE DEMO LOOP"
         steps={[
-          { label: 'Pick a demo account', sub: 'one click, no approval', accent: 'amber' },
+          { label: 'Pick a persona', sub: 'the cast as cards', accent: 'amber' },
           { label: 'Work the role console', sub: 'the real workflow', accent: 'brand' },
           { label: 'Share one record', sub: 'every role sees the same file', accent: 'teal' },
           { label: 'Nightly reset', sub: 're-seeded, self-healing', accent: 'slate' },
         ]}
         arrows={[
-          { label: 'sign in', detail: 'the demo cast as buttons' },
+          { label: 'sign in', detail: 'through the identity service' },
           { label: 'act', detail: 'apply, review, test, register' },
           { label: 'observe', detail: 'verdicts and certificates arrive' },
         ]}
@@ -219,7 +219,7 @@ const captured = '2026-08-29'
         </div>
         <div class="border border-rule rounded-md bg-paper-soft p-6">
           <h3 class="font-serif text-[1.125rem] mb-2">Do I need anyone's approval to look?</h3>
-          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">No. The one-click demo accounts exist so a committee member, an authority officer, or a laboratory can see the whole workflow before asking for anything. A production account is a different path, through <a href="/services/identity" class="text-accent underline underline-offset-2">the identity service</a>, and approval there comes from your own organization.</p>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">The public surfaces, the certificate register and the verification page, need no account at all, and the walkthroughs' dated captures show every console act, re-performed against the live instance on a schedule. The role consoles run under the fictional personas, and persona sign-in is granted rather than self-service: no cast password is published, which is how the demo keeps real accounts and fictional data apart. A production account is a different path, through <a href="/services/identity" class="text-accent underline underline-offset-2">the identity service</a>, and approval there comes from your own organization.</p>
         </div>
         <div class="border border-rule rounded-md bg-paper-soft p-6">
           <h3 class="font-serif text-[1.125rem] mb-2">Is the demo the same software as production?</h3>
@@ -233,12 +233,12 @@ const captured = '2026-08-29'
       <ActionBox
         href="/demo/"
         label="Walk the demo flows"
-        description="The five certification flows as guided walkthroughs: every step narrated with its live capture, the exact demo account and console to try it, and the presenter scripts in two lengths."
+        description="The five certification flows as guided walkthroughs: every step narrated with its live capture, the persona and console each step is performed with, and the presenter scripts in two lengths."
       />
       <ActionBox
         href="https://demo.oimlsmart.org/"
         label="Try the demo"
-        description="demo.oimlsmart.org, then Enter App: the demo accounts are one-click buttons on the login page. The applicant portal and the IA console are the two consoles to see first."
+        description="demo.oimlsmart.org, then Enter App: the login page lists the cast as persona cards, signed in through the identity service. The applicant portal and the IA console are the two consoles to see first."
       />
       <ActionBox
         href="/docs/"
@@ -254,7 +254,7 @@ const captured = '2026-08-29'
 
     <div class="border-t border-rule pt-8 max-w-3xl">
       <p class="text-sm text-ink-muted">
-        Verified {captured}: every act in the inventory was performed headlessly against the live demo by scripts/capture-services.ts (the one-click sign-ins, the application and certificate pages, all four role consoles, the guided-demo overlay) and each capture carries its assertions in public/img/services/manifest.json.
+        Verified {captured}: every act in the inventory was performed headlessly against the live demo by scripts/capture-services.ts (the persona sign-ins through the identity service, the application and certificate pages, all four role consoles, the guided-demo overlay) and each capture carries its assertions in public/img/services/manifest.json.
       </p>
     </div>
   </section>

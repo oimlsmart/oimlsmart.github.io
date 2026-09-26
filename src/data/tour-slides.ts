@@ -25,7 +25,7 @@ export interface TourLink {
 export interface TourLiveStep {
   /** The exact live URL of the demo moment (the walkthrough vocabulary). */
   readonly href: string
-  /** The demo account the moment is performed with ("no account" for the
+  /** The persona the moment is performed with ("no account" for the
    *  public surfaces). */
   readonly account: string
   /** The console path the account works in. */
@@ -91,7 +91,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
     links: [
       { href: '/tour/notes', label: 'The presenter notes', desc: 'the two cuts, the per-slide talk track, the rehearsal record' },
       { href: '/about/audiences/one-pagers/', label: 'The leave-behind', desc: 'seven per-audience one-pagers, printable' },
-      { href: 'https://demo.oimlsmart.org/app/login', label: 'The live demo', desc: 'one-click demo accounts, no registration' },
+      { href: 'https://demo.oimlsmart.org/app/login', label: 'The live demo', desc: 'the cast assumed as personas through the identity service' },
     ],
     note: 'Frame it in one breath: the OIML-CS certification chain, running as software, with the committee\'s text still the source. Say the honesty rules up front: the demo is simulated, the futures are labeled, and every claim on every slide links its proof. If the room has no network, every demo moment below shows its dated capture instead.',
     fiveMin: '0:00',
@@ -439,7 +439,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
     chip: 'SMART',
     bullets: [
       'Read: the audience pages, the use cases, the walkthroughs; the public surfaces need no account.',
-      'Reproduce: the demo\'s guided tour walks the whole chain in 24 steps; the instance resets nightly.',
+      'Reproduce: the demo\'s guided tour walks the whole chain in 22 steps; the instance resets nightly.',
       'Pilot: one Recommendation, one authority, one laboratory, the TL-only posture running in the pilot today.',
       'Self-host: the entitlement matrix quotes who may use what and who may run what, per member category.',
     ],
@@ -459,7 +459,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
       'Pilot members: one Recommendation, one issuing authority, one laboratory. The pilot postures are running; the onboarding starts with a conversation.',
       'Feedback: info@oimlsmart.org. Guided walkthroughs for committees and working visits are the commonest request.',
       'The leave-behind: seven per-audience one-pagers, one printable page each, for the members who were not in the room.',
-      'The demo stays up: demo.oimlsmart.org, one-click accounts, the guided demo built in.',
+      'The demo stays up: demo.oimlsmart.org, the cast assumed as personas through the identity service, the guided demo built in.',
     ],
     links: [
       { href: '/about/audiences/one-pagers/', label: 'The seven one-pagers', desc: 'the leave-behind, printable' },
