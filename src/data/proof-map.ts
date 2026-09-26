@@ -496,7 +496,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
     claims: [
       {
         id: 'sst-bench',
-        says: 'simulated SMART Twins with realistic physics behind the governed twin interface',
+        says: 'Simulated SMART Measuring Instrument Twins with realistic physics behind the governed twin interface',
         anchors: [
           { kind: 'live', url: 'https://www.oimlsmart.org/sst/', probe: 'simulation' },
           { kind: 'live', url: 'https://github.com/primmel/sst', probe: 'primmel/sst' },

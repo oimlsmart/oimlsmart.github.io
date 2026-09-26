@@ -62,7 +62,7 @@ This is the tier's gate: you will catch a twin lying, and learn why a
 served value is a claim, not a fact.
 
 1. **Reboot as the creeping cell.** Physics variants are boot-time
-   samples (one boot, one chain of custody): stop the sim, then
+   samples (one boot, one chain of custody): stop the SST, then
    `... run ../sst-instruments/packages/instances/acme-lc500 5290 creep-fail`.
 2. Place 450 kg and advance **900 s** of virtual time
    (`advanceTime(seconds: 900)`, simulated, so no waiting).

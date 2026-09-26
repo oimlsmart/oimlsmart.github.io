@@ -1,19 +1,21 @@
 ---
 /**
- * SstRehearsal — training on the SST in one diagram: the laboratory
- * rehearses the full test program against the simulated instrument's
- * governed twin channel, the platform driving the simulation directly;
- * the operator's world channel and the bench hold the ground truth
- * behind the epistemic wall; the same workflow then runs the physical
- * instrument. House style; dark-mode correct via the TechFigure
- * palette. (TODO.promotion/10: one diagram per page.)
+ * SstRehearsal — training on the SMI Simulation in one diagram: the
+ * laboratory rehearses the full test program against an SST's governed
+ * twin channel, the platform driving the twin directly; the operator's
+ * world channel and the bench hold the ground truth behind the
+ * epistemic wall; the same workflow then runs the physical instrument.
+ * (The page's prose spells out the Simulated SMART Measuring
+ * Instrument Twin (SST) before the figure.) House style; dark-mode
+ * correct via the TechFigure palette. (TODO.promotion/10: one diagram
+ * per page.)
  */
 import TechFigure from '../TechFigure.astro'
 ---
 
-<TechFigure caption="The rehearsal space where failing is free: the platform cannot tell the simulation from the served side, and the bench keeps the truth visible.">
+<TechFigure caption="The rehearsal space where failing is free: from the served side the platform cannot tell the twin from a physical instrument, and the bench keeps the truth visible.">
   <svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="uc-sst-title">
-    <title id="uc-sst-title">Training on the SST: the platform drives the full certification workflow against the simulated instrument's twin channel; the operator's world channel (loads, chamber, faults, clock) and the bench sit behind the epistemic wall as the ground truth; the rehearsed workflow then runs unchanged against the physical instrument</title>
+    <title id="uc-sst-title">Training on the SMI Simulation: the platform drives the full certification workflow against the SST's twin channel; the operator's world channel (loads, chamber, faults, clock) and the bench sit behind the epistemic wall as the ground truth; the rehearsed workflow then runs unchanged against the physical instrument</title>
 
     <defs>
       <marker id="uc-sarr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
