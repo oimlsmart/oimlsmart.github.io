@@ -298,7 +298,7 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
     bullets: [
       'Labeled honestly: this is the SMART+ vision, anchored to the roadmap, not a shipped surface.',
       'The twin serves the instrument\'s governed aspects; compliance becomes monitorable between assessments, not only at them.',
-      'The simulation below (the SST) is how the program rehearses that future today.',
+      'The SMI Simulation below is how the program rehearses that future today.',
     ],
     links: [
       { href: '/technologies/smart-twin', label: 'The SMART Twin', desc: 'the technology page, with the roadmap anchors' },
@@ -309,8 +309,8 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
   {
     id: 's11',
     kicker: 'The technologies · 3 of 7',
-    title: 'The SST simulation',
-    lede: 'Simulated SMART Twins with realistic physics behind the governed twin interface: the full certification workflow rehearsed and taught without hardware.',
+    title: 'The SMI Simulation',
+    lede: 'Simulated SMART Measuring Instrument Twins (SSTs) with realistic physics behind the governed twin interface: the full certification workflow rehearsed and taught without hardware.',
     chip: 'SMART',
     bullets: [
       'The classroom runs on it: certify a simulated load cell end to end before touching a real instrument.',
@@ -318,10 +318,10 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
       'Its production role (twins serving live evidence into certification) rides the SMART+ roadmap.',
     ],
     links: [
-      { href: '/technologies/sst', label: 'The SST simulation', desc: 'the technology page' },
-      { href: '/use-cases/training-on-the-sst', label: 'Training on the SST', desc: 'the use-case story' },
+      { href: '/technologies/sst', label: 'The SMI Simulation', desc: 'the technology page' },
+      { href: '/use-cases/training-on-the-sst', label: 'Training on the SMI Simulation', desc: 'the use-case story' },
     ],
-    note: 'The bridge between present and future: the simulation is live and carries the classroom and the demo, while its production role is roadmap. Say both halves exactly that way.',
+    note: 'The bridge between present and future: the SMI Simulation is live and carries the classroom and the demo, while its production role is roadmap. Say both halves exactly that way.',
     twentyMin: '13:30',
   },
   {

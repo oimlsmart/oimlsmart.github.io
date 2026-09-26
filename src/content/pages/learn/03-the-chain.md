@@ -55,11 +55,11 @@ a fresh timestamp judges nothing).
 
 ## Hands-on, drive the whole chain in the Twin Lab (half a day)
 
-Setup: the app (`cd browser && npm run dev`) and a sim
+Setup: the app (`cd browser && npm run dev`) and an SST
 (`cd sst && npx tsx packages/runtime/sst-runtime/src/bin.ts run
 ../sst-instruments/packages/instances/acme-lc500 5290`).
 
-1. **Bind** (`/app/twin-lab`): pick R 60, enter the sim's `/twin` URL,
+1. **Bind** (`/app/twin-lab`): pick R 60, enter the SST's `/twin` URL,
    Discover, read the proposed binding (the serves, the freshness
    windows, the command face). Bind.
 2. **One cycle** (the compliance monitor): the verdict stream fills , 

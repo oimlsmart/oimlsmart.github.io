@@ -87,20 +87,20 @@ const demoManual = FEDERATION.find(f => f.volume === 'The demo manual')!
       </div>
     </section>
 
-    {/* § 03, the instrument SST + demo */}
+    {/* § 03, the SMI Simulation + demo */}
     <section class="mb-16 bp-reveal">
       <div class="bp-section-anchor mb-4">
         <span class="bp-section-anchor__num">§ 03</span>
-        <span>The simulator</span>
+        <span>The SMI Simulation</span>
         <span class="bp-section-anchor__line"></span>
         <span class="bp-coord">SST · no hardware needed</span>
       </div>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft max-w-3xl mb-6">
-        The program ships simulated SMART twins of real instrument families, analog and digital load
-        cells, belt scales, gas meters, with configurable physics: temperature cycles leave realistic
-        residuals, creep and hysteresis behave the way the Recommendation says they should. The demo
-        manual walks the full chain against a simulator: certify a load cell from application to
-        certificate without touching hardware.
+        The program ships Simulated SMART Measuring Instrument Twins (SSTs) of real instrument
+        families, analog and digital load cells, belt scales, gas meters, with configurable physics:
+        temperature cycles leave realistic residuals, creep and hysteresis behave the way the
+        Recommendation says they should. The demo manual walks the full chain against an SST: certify
+        a load cell from application to certificate without touching hardware.
       </p>
       <div class="flex flex-wrap gap-3">
         <a class="btn btn-primary bp-focus-ring" href={demoManual.href} target="_blank" rel="noopener">Run the demo →</a>

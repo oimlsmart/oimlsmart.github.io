@@ -131,7 +131,7 @@ export const COMPONENTS: readonly SmartComponent[] = [
   {
     name: 'SMI Simulation',
     href: '/sst',
-    desc: 'The simulated SMART twins — no hardware needed',
+    desc: 'Simulated SMART Measuring Instrument Twins — no hardware needed',
     detail: 'The SMI Simulation: an SST (Simulated SMART Measuring Instrument Twin) booted on the Primmel SST framework. The ACME LC-500 family and its siblings simulate metrologically real physics, so test programs run without hardware.',
     logo: 'sst',
     alt: 'The SMI Simulation logo.',
