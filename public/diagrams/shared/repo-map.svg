@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="ui-sans-serif, system-ui, sans-serif">
   <rect width="900" height="460" fill="#ffffff"/>
-  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="#1e293b">The five repositories</text>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="#1e293b">The six repositories</text>
 
   <defs>
     <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
@@ -13,10 +13,17 @@
   <text x="450" y="122" text-anchor="middle" font-size="12" fill="#475569">the kernel: parser, linter,</text>
   <text x="450" y="142" text-anchor="middle" font-size="12" fill="#475569">coverage calculus, diff (yarn test)</text>
 
-  <rect x="40" y="210" width="220" height="92" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
-  <text x="150" y="240" text-anchor="middle" font-size="14" font-weight="600" fill="#1e293b">sim-instruments</text>
-  <text x="150" y="262" text-anchor="middle" font-size="12" fill="#475569">4 simulated instruments</text>
-  <text x="150" y="282" text-anchor="middle" font-size="12" fill="#475569">/twin + /world (npm test)</text>
+  <rect x="40" y="158" width="220" height="76" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="150" y="186" text-anchor="middle" font-size="14" font-weight="600" fill="#1e293b">primmel/sst</text>
+  <text x="150" y="206" text-anchor="middle" font-size="12" fill="#475569">the SST framework: the kind-agnostic</text>
+  <text x="150" y="224" text-anchor="middle" font-size="12" fill="#475569">runtime, the shell, the bench, the specs</text>
+
+  <rect x="40" y="250" width="220" height="76" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="150" y="278" text-anchor="middle" font-size="14" font-weight="600" fill="#1e293b">oimlsmart/sst</text>
+  <text x="150" y="298" text-anchor="middle" font-size="12" fill="#475569">the OIML instrument library: the D 11</text>
+  <text x="150" y="316" text-anchor="middle" font-size="12" fill="#475569">base, the kinds, the ACME instances</text>
+
+  <line x1="150" y1="234" x2="150" y2="242" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
 
   <rect x="340" y="210" width="220" height="92" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
   <text x="450" y="240" text-anchor="middle" font-size="14" font-weight="600" fill="#1d4ed8">smart</text>
@@ -35,8 +42,8 @@
   <line x1="450" y1="162" x2="450" y2="202" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
   <text x="530" y="186" font-size="11" fill="#64748b">consumed via PRIMMEL_TS (symlink)</text>
 
-  <line x1="260" y1="256" x2="332" y2="256" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
-  <text x="296" y="245" text-anchor="middle" font-size="11" fill="#64748b">serves twins</text>
+  <line x1="260" y1="288" x2="332" y2="272" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="296" y="266" text-anchor="middle" font-size="11" fill="#64748b">serves twins</text>
 
   <line x1="560" y1="256" x2="632" y2="256" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
   <text x="596" y="245" text-anchor="middle" font-size="11" fill="#64748b">documents</text>

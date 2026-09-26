@@ -12,7 +12,7 @@
   </defs>
 
   <!-- org: primmel -->
-  <rect x="30" y="60" width="250" height="200" rx="12" fill="#f0fdf4" stroke="#86efac"/>
+  <rect x="30" y="60" width="250" height="216" rx="12" fill="#f0fdf4" stroke="#86efac"/>
   <text x="155" y="84" text-anchor="middle" font-size="13" font-weight="700" fill="#166534">github.com/primmel</text>
   <text x="155" y="100" text-anchor="middle" font-size="9" fill="#15803d">the language org</text>
   <rect x="46" y="112" width="218" height="34" rx="6" fill="#ffffff" stroke="#86efac"/>
@@ -24,6 +24,9 @@
   <rect x="46" y="192" width="218" height="34" rx="6" fill="#ffffff" stroke="#86efac"/>
   <text x="155" y="207" text-anchor="middle" font-size="10" font-weight="600" fill="#166534">primmel-oiml-smart</text>
   <text x="155" y="220" text-anchor="middle" font-size="8.5" fill="#b91c1c">the docs site — volumes lag the program</text>
+  <rect x="46" y="232" width="218" height="34" rx="6" fill="#ffffff" stroke="#86efac"/>
+  <text x="155" y="247" text-anchor="middle" font-size="10" font-weight="600" fill="#166534">sst</text>
+  <text x="155" y="260" text-anchor="middle" font-size="8.5" fill="#15803d">the SST framework (runtime, shell, bench)</text>
 
   <!-- org: confium -->
   <rect x="30" y="310" width="250" height="170" rx="12" fill="#f5f3ff" stroke="#c4b5fd"/>
@@ -44,8 +47,8 @@
   <text x="725" y="128" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">smart</text>
   <text x="725" y="141" text-anchor="middle" font-size="8.5" fill="#3b82f6">the SSOT packages + the app (the center)</text>
   <rect x="616" y="162" width="218" height="44" rx="6" fill="#ffffff" stroke="#93c5fd"/>
-  <text x="725" y="178" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">sim-instruments</text>
-  <text x="725" y="191" text-anchor="middle" font-size="8.5" fill="#b91c1c">the SST — a PLATFORM component mis-homed here</text>
+  <text x="725" y="178" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">sst</text>
+  <text x="725" y="191" text-anchor="middle" font-size="8.5" fill="#3b82f6">the OIML instrument library (framework: primmel/sst)</text>
   <rect x="616" y="212" width="218" height="44" rx="6" fill="#ffffff" stroke="#93c5fd"/>
   <text x="725" y="228" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">smart-classroom-r60</text>
   <text x="725" y="241" text-anchor="middle" font-size="8.5" fill="#3b82f6">the educational viewer (sync-on-load)</text>

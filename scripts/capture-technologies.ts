@@ -122,7 +122,7 @@ const PROBES: Record<string, string[]> = {
     'https://www.oimlsmart.org/sst/',
     'https://demo.oimlsmart.org/',
     'https://github.com/primmel/sst',
-    'https://github.com/oimlsmart/sst-instruments',
+    'https://github.com/oimlsmart/sst',
   ],
   cnml: [
     'https://www.oimlsmart.org/cnml/',

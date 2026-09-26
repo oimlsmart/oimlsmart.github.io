@@ -11,11 +11,15 @@ a compliance engine judge it, and then catch it lying. Every step
 tells you the command and what to expect.
 
 **Setup** (2 minutes): from clones of
-[`primmel/sst`](https://github.com/primmel/sst) and
-[`oimlsmart/sst-instruments`](https://github.com/oimlsmart/sst-instruments),
-side by side:
+[`primmel/sst`](https://github.com/primmel/sst) (the framework) and
+[`oimlsmart/sst`](https://github.com/oimlsmart/sst) (the OIML
+instrument library), side by side (the library's directory keeps the
+`sst-instruments` name below, which is where the runtime's sibling
+resolution looks for it):
 
 ```bash
+git clone https://github.com/primmel/sst
+git clone https://github.com/oimlsmart/sst sst-instruments
 cd sst && npm ci
 npx tsx packages/runtime/sst-runtime/src/bin.ts run   ../sst-instruments/packages/instances/acme-lc500 5290
 ```

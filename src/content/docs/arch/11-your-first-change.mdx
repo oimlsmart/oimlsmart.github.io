@@ -18,18 +18,24 @@ git clone git@github.com:oimlsmart/smart.git && cd smart/browser
 npm install
 ```
 
-You also want the kernel and the sims beside the smart repo (the gates
-and the sim-backed suites use them):
+You also want the kernel and the SST checkouts beside the smart repo
+(the gates and the sim-backed suites use them): `primmel/sst`, the SST
+framework, and `oimlsmart/sst`, the OIML instrument library (the
+pre-split `sim-instruments` repository was archived on 2026-08-01).
 
 ```bash
 cd .. && git clone git@github.com:primmel/primmel-ts.git ../primmel/primmel-ts
-git clone git@github.com:oimlsmart/sim-instruments.git ../sim-instruments
-cd ../sim-instruments && npm install
+git clone git@github.com:primmel/sst.git ../primmel/sst
+git clone git@github.com:oimlsmart/sst.git ../oimlsmart/sst
+cd ../oimlsmart/sst && npm install
 ```
 
-(Adjust the clone paths so the three repos sit side by side:
-`src/oimlsmart/smart`, `src/primmel/primmel-ts`,
-`src/oimlsmart/sim-instruments`.)
+(Adjust the clone paths so the four repos sit in this layout:
+`src/oimlsmart/smart`, `src/primmel/primmel-ts`, `src/primmel/sst`,
+`src/oimlsmart/sst`. The library's declared `file:` dependency finds
+the framework at `../../primmel/sst`, and the smart repo's live-sim
+legs resolve the two from the declared envs `SST_REPO` and
+`SST_LIBRARY_PATH`.)
 
 ## Step 2, Prove the system works before you touch it (10 minutes)
 
@@ -54,34 +60,50 @@ checkout; the gate's own output names what it could not find.
 
 ## Step 3, Make one tiny real change (15 minutes)
 
-The change: make the good load cell's thermal-hysteresis memory a
-little stronger, and move its pinned test expectation with it. It is
-small enough to see the whole loop and real enough that a gate would
-fail if you got it wrong.
+The change: make the temperature-failure sample's thermal-hysteresis
+memory a little stronger. It is small enough to see the whole loop and
+real enough that the gates which can see it must answer.
 
-1. Open `sim-instruments/packages/core/src/physics/families/construction.ts`
-   and read the `COMPRESSION` profile, every number carries a comment
-   saying where it comes from (read them; that is the house style).
-2. In `sim-instruments/packages/core/src/scenario.ts`, find the
-   `temp-cell` scenario: it sets `thermalHysteresisPerDegC: 0.0002`.
+1. Open `oimlsmart/sst/packages/kinds/sst-r60/physics-chain.yaml` and
+   read the compression stages: the physics is data, three stages per
+   construction, and every stage declares what it consumes and
+   produces (read the header comment; that is the house style).
+2. In `oimlsmart/sst/packages/kinds/sst-r60/scenarios.yaml`, find the
+   `temp-fail` scenario: it sets `thermalHysteresisPerDegC: 0.0002`.
    Change it to `0.00025`, a 25% stronger memory, still inside a
-   plausible class range (the comment explains why).
-3. Run the sim's tests from the sim repo root:
+   plausible class range. The instance sample pins its own value as
+   the boot-time chain of custody, so make the same change in
+   `oimlsmart/sst/packages/instances/acme-lc500/samples/temp-fail.yaml`
+   (`thermal_hysteresis_per_degC`).
+3. Run the library's gate from the library root:
 
    ```bash
-   npm test
+   npm run validate
    ```
 
-   The thermal-hysteresis legs compute their expectations from the
-   parameter, so most still pass, but if any pinned literal
-   expectation moved, the test tells you the exact number it expected.
-   Move the pin with the physics (never to silence it): the pin exists
-   to say *this* much memory, on purpose.
-4. Run `npm run typecheck`, must stay clean.
+   Every package (12) must validate against the real runtime. Then
+   boot the changed sample and see the physics you moved:
+
+   ```bash
+   npm start -- temp-fail   # the LC-500, temp-fail sample, on :5290
+   ```
+
+   Place a load and sweep the temperature on the world channel; the
+   memory you strengthened is exactly the reading that does not come
+   back.
+4. Run the framework's suite with the library declared, it proves the
+   machinery your change rides on:
+
+   ```bash
+   cd ../../primmel/sst
+   SST_LIBRARY_PATH=../../oimlsmart/sst npm test
+   npm run typecheck
+   ```
 
 What you just did is the system's innermost loop: a physical parameter
-changed, the honest tests either computed through it or pinned it
-loudly, and the suite told you which.
+changed as data, the library's gate proved the packages still hold
+against the real runtime, and the framework's suite proved the
+machinery the parameter drives.
 
 ## Step 4, Prove the platform side is untouched (5 minutes)
 
@@ -90,11 +112,14 @@ Run them to prove your change didn't disturb the contract:
 
 ```bash
 cd smart/browser
+export SST_REPO=/Users/<you>/src/primmel/sst
+export SST_LIBRARY_PATH=/Users/<you>/src/oimlsmart/sst
 npx vitest run src/__tests__/sim-twin-acceptance.test.ts
 npx vitest run src/__tests__/twin-fidelity-probe.test.ts
 ```
 
-Both must pass (they boot the real sim). The `temp-cell` knob you
+Both must pass (they boot the real sim from the declared positions;
+undeclared, the live-sim legs skip honestly). The `temp-fail` knob you
 changed is not in the acceptance paths, but the habit is the point:
 **every change runs the gates that could see it.**
 
@@ -102,7 +127,7 @@ changed is not in the acceptance paths, but the habit is the point:
 
 - Stage exact paths only (`git add <file>`, never `git add -A`).
 - The message says what changed and why, with the evidence:
-  `scenario: temp-cell thermal memory 0.0002 → 0.00025 (class-plausible; suite 254/254 green, typecheck clean)`.
+  `scenario: temp-fail thermal memory 0.0002 → 0.00025 (class-plausible; validate clean, framework suite 255/259 with 4 skip-honest)`.
 - Do not commit generated files (`browser/src/data/generated/**`,
   `data/` trees are generated, the SSOT guard will catch you anyway).
 - Do not push or merge unless the task asked for it.
