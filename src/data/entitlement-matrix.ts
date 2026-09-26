@@ -181,7 +181,7 @@ export const ENTITLEMENT_MATRIX: readonly EntitlementService[] = [
   },
   {
     id: 'ai-service',
-    name: 'The AI service',
+    name: 'Ommisa, the AI service',
     href: 'https://ai.oimlsmart.org',
     hrefLabel: 'live',
     cells: {

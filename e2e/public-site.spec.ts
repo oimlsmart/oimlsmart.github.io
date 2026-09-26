@@ -127,7 +127,7 @@ test.describe('Public site — critical paths', () => {
       ['/services/studio-viewer', 'The Studio viewer'],
       ['/services/vocab', 'The Vocabulary'],
       ['/services/status', 'The status service'],
-      ['/services/ai', 'The AI service'],
+      ['/services/ai', 'Ommisa'],
     ] as const) {
       await page.goto(path)
       await expect(page.locator('h1')).toContainText(heading)

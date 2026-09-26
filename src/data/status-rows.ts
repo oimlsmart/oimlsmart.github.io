@@ -67,8 +67,8 @@ export const STATUS_ROWS: readonly StatusProbeRow[] = [
   },
   {
     id: 'ai-service',
-    name: 'OIML SMART AI',
-    desc: "The program's AI assistant over the OIML library, at ai.oimlsmart.org.",
+    name: 'Ommisa',
+    desc: "The program's assistant over the OIML library, at ai.oimlsmart.org.",
     availability: '99.5% / 30d',
     latency: 'p95 ≤ 3 s',
   },

@@ -50,6 +50,12 @@ export const HOST_REGISTRY: readonly HostEntry[] = [
     desc: 'The status page',
   },
   {
+    key: 'ommisa',
+    url: 'https://www.ommisa.org',
+    label: 'Ommisa',
+    desc: 'The OIML SMART assistant',
+  },
+  {
     key: 'primmel',
     url: 'https://www.primmel.org',
     label: 'Primmel',

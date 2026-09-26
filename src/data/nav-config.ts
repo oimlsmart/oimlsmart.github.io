@@ -74,6 +74,7 @@ export const DISCOVER_DROPDOWN: NavDropdownConfig = {
     { label: 'Technologies', href: '/technologies/', desc: 'The technologies behind SMART' },
     { label: 'Use Cases', href: '/use-cases/', desc: 'The stories, walked end to end' },
     { label: 'Services', href: '/services/', desc: 'The services the program runs' },
+    { label: 'Ommisa', href: 'https://www.ommisa.org/', desc: 'The OIML SMART assistant', external: true },
     { label: 'News', href: '/news/', desc: 'Pilot updates and working notes' },
   ],
 }
