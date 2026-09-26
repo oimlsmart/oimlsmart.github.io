@@ -220,7 +220,7 @@ export const ENTITLEMENT_MATRIX: readonly EntitlementService[] = [
   },
   {
     id: 'sst-simulation',
-    name: 'The SST simulation',
+    name: 'The SMI Simulation',
     href: '/sst',
     hrefLabel: 'live',
     cells: {
