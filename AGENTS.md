@@ -54,6 +54,15 @@ regeneration command in its proof-map entry (`shots.ttlDays` /
 `shots.regenerate`); the nightly fails a page whose oldest capture is
 past its TTL and prints the command.
 
+The demo-driving scripts sign in through the SSO persona assumption
+(`scripts/demo-sso.ts` — the same grant-based round-trip the
+demo-liveness smoke rides): they need `DEMO_SSO_EMAIL` /
+`DEMO_SSO_PASSWORD` (the grantee pair, held as this repo's secrets) for
+every signed-in leg, and they skip those legs loudly with the reason
+when the pair is undeclared — a skipped run never overwrites a capture,
+so the TTL gate stays the staleness tripwire. The anonymous legs (the
+sign-in cone, the public register, the verify page) run regardless.
+
 - Walkthrough captures (`/demo/*`, the tour's fallbacks):
   `npx tsx scripts/capture-walkthroughs.ts` — `--drive` for the
   state-changing arc, `--only=<name-substring,…>` for a subset,

@@ -30,22 +30,33 @@
  *
  * Env: DEMO_BASE (default https://demo.oimlsmart.org), ID_BASE
  * (https://id.oimlsmart.org), AI_BASE (https://ai.oimlsmart.org),
- * CAPTURE_DATE (default: today, YYYY-MM-DD).
+ * CAPTURE_DATE (default: today, YYYY-MM-DD),
+ * DEMO_SSO_EMAIL/DEMO_SSO_PASSWORD (the grantee account the signed-in
+ * legs ride — below).
  *
  * The demo is the nightly-reset fictional instance: the --drive chain
  * files one clearly-marked demonstration application (the ACME cast)
  * and stops before any certificate issuance — the register story stays
  * the seeded one.
  *
- * The demo-account sign-in pattern mirrors the platform e2e harness
- * (the smart repo's browser/e2e/helpers.ts), ported to Playwright — the
- * www repo's browser convention. Selenium of the house rules: the demo
- * banner stays in frame (the screenshots are honest about being the
- * demo); the viewport is 1440x900 (the documentation rule).
+ * The demo instance is OIDC-configured (smart#378): the one-click
+ * local demo cast is dead there, and the signed-in legs ride the
+ * provider's grant-based persona assumption — the shared round-trip in
+ * scripts/demo-sso.ts (a grantee account signs in at id.oimlsmart.org;
+ * the account chooser continues the flow AS the persona). The doctrine
+ * is the sentinel's: without DEMO_SSO_EMAIL/DEMO_SSO_PASSWORD every
+ * signed-in leg skips LOUDLY with the reason (no capture is produced,
+ * the manifest's dated entries stand for the TTL gate to catch), never
+ * a stale capture silently. The public legs (the register, the verify
+ * page, the identity join flow, the AI service) run regardless. The
+ * house rules hold: the demo banner stays in frame (the screenshots
+ * are honest about being the demo); the viewport is 1440x900 (the
+ * documentation rule).
  */
 import { chromium, type Browser, type BrowserContext, type Page } from '@playwright/test'
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { SSO_REASON, loginAsPersona, signOutDemo, ssoCredentialsDeclared } from './demo-sso'
 
 const DEMO = (process.env.DEMO_BASE ?? 'https://demo.oimlsmart.org').replace(/\/$/, '')
 const ID = (process.env.ID_BASE ?? 'https://id.oimlsmart.org').replace(/\/$/, '')
@@ -72,7 +83,15 @@ const SETTLE = 240_000
 // on a cold context (2026-08-30); give the redirect wait real headroom.
 const LOGIN_SETTLE = 300_000
 
-// ── Harness (the smart repo's e2e pattern, ported to Playwright) ──────
+// ── Harness (the SSO persona round-trip, shared via scripts/demo-sso.ts) ──
+
+// The signed-in legs ride the SSO persona assumption (the module
+// header): without the grantee pair every signed-in section skips
+// loudly, and no capture is produced or overwritten.
+const SSO_OK = ssoCredentialsDeclared()
+function skipSignedIn(section: string) {
+  console.log(`  ⏭ ${section}: SKIPPED — ${SSO_REASON}`)
+}
 
 async function gotoCommit(page: Page, url: string) {
   await page.goto(url, { waitUntil: 'commit', timeout: NAV_TIMEOUT })
@@ -102,39 +121,16 @@ async function gotoApp(page: Page, path: string) {
 }
 
 async function signOut(context: BrowserContext) {
-  // Via the context's own request client — an in-page fetch races the
-  // login page's signed-in redirect and dies with "Failed to fetch".
-  await context.request.post(`${DEMO}/api/auth/signout`).catch(() => {})
+  await signOutDemo(DEMO, context)
 }
 
+/** Sign in AS a demonstration persona through the SSO grant round-trip
+ *  (scripts/demo-sso.ts, ONE shared implementation), then wait for the
+ *  persona's role home and the island settle. The callback lands the
+ *  session on the role home; the prefix wait keeps the old harness's
+ *  "signed in as the right role" proof. */
 async function loginAs(context: BrowserContext, page: Page, name: string, prefix: string) {
-  // The login page bounces a signed-in session to its console, so sign
-  // out first and tolerate the stale-session round-trip.
-  for (let attempt = 0; attempt < 3; attempt++) {
-    await signOut(context)
-    await gotoCommit(page, `${DEMO}/app/login`)
-    const landed = await page.waitForFunction(
-      (wanted) => {
-        if (!window.location.pathname.startsWith('/app/login')) return 'redirected'
-        return Array.from(document.querySelectorAll('button'))
-          .some(b => b.querySelector('span')?.textContent?.trim() === wanted) ? 'ready' : false
-      },
-      name,
-      { timeout: SETTLE, polling: 500 },
-    ).then(h => h.jsonValue()).catch(() => 'timeout')
-    if (landed === 'ready') break
-    // A stale session survived — the in-page signout (same-origin now)
-    // clears it before the next attempt.
-    await page.evaluate(async () => {
-      await fetch('/api/auth/signout', { method: 'POST', credentials: 'include' })
-    }).catch(() => {})
-    if (attempt === 2) throw new Error(`login page never offered the "${name}" demo account`)
-  }
-  await page.evaluate((wanted) => {
-    const btn = Array.from(document.querySelectorAll('button'))
-      .find(b => b.querySelector('span')?.textContent?.trim() === wanted)
-    ;(btn as HTMLElement).click()
-  }, name)
+  await loginAsPersona({ demo: DEMO, context, page, name })
   await page.waitForFunction(
     (p) => window.location.pathname.startsWith(p) && window.location.pathname !== '/app/login',
     prefix,
@@ -691,12 +687,17 @@ async function capturePublic(browser: Browser, vcJson: string | null) {
 
 async function captureViewer(browser: Browser) {
   if (!['standards-catalog', 'r60-requirements', 'library'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the reader captures'); return }
 
   for (const theme of THEMES) {
     currentTheme = theme
     const context = await themedContext(browser, theme)
     const page = await context.newPage()
-    await loginAs(context, page, 'Viewer', '/app')
+    // The Viewer persona left the manifest's offer (2026-09-23: the
+    // register needs no account, and the Utilizer already covers
+    // authenticated read access to the non-public evidence — the same
+    // account the model-content allowlist's live pins ride).
+    await loginAs(context, page, 'Utilizer Officer (NL)', '/app')
 
     if (wants('standards-catalog')) {
       await gotoApp(page, '/app/')
@@ -725,12 +726,15 @@ async function captureViewer(browser: Browser) {
 
 async function captureCSAdmin(browser: Browser) {
   if (!['cs-ia-registry'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the CS console captures'); return }
 
   for (const theme of THEMES) {
     currentTheme = theme
     const context = await themedContext(browser, theme)
     const page = await context.newPage()
-    await loginAs(context, page, 'CS Admin', '/app/cs')
+    // The kept cast's scheme-administration persona (the manifest's
+    // name; the old "CS Admin" caption left with the trim).
+    await loginAs(context, page, 'OIML-CS Administrator', '/app/cs')
 
     if (wants('cs-ia-registry')) {
       await gotoApp(page, '/app/cs/issuing-authorities')
@@ -742,8 +746,9 @@ async function captureCSAdmin(browser: Browser) {
   }
 }
 
-async function captureApplicant(browser: Browser, appId: string | null) {
-  if (!['portal-dashboard', 'application-detail', 'certificate-detail', 'notifications'].some(wants)) return
+async function captureApplicant(browser: Browser, appId: string | null): Promise<string | null> {
+  if (!['portal-dashboard', 'application-detail', 'certificate-detail', 'notifications'].some(wants)) return null
+  if (!SSO_OK) { skipSignedIn('the applicant captures'); return null }
 
   let vcJson: string | null = null
   for (const theme of THEMES) {
@@ -834,6 +839,7 @@ async function captureApplicant(browser: Browser, appId: string | null) {
 
 async function captureIA(browser: Browser, appId: string | null) {
   if (!['ia-dashboard', 'review-queue', 'ia-project', 'ia-certificates', 'ia-issue-form', 'ia-cert-lifecycle'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the IA captures'); return }
 
   for (const theme of THEMES) {
     currentTheme = theme
@@ -926,6 +932,7 @@ async function captureIA(browser: Browser, appId: string | null) {
 
 async function captureLab(browser: Browser) {
   if (!['lab-inbox', 'lab-test-reports', 'lab-register-offline', 'twin-lab'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the laboratory captures'); return }
 
   for (const theme of THEMES) {
     currentTheme = theme
@@ -979,6 +986,7 @@ async function captureLab(browser: Browser) {
 
 async function captureUtilizer(browser: Browser) {
   if (!['anr'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the utilizer captures'); return }
 
   for (const theme of THEMES) {
     currentTheme = theme
@@ -1006,8 +1014,10 @@ const browser = await chromium.launch()
 try {
   let drivenAppId: string | null = null
   if (DRIVE) {
-    currentTheme = 'light'
-    drivenAppId = await driveChain(browser)
+    if (SSO_OK) {
+      currentTheme = 'light'
+      drivenAppId = await driveChain(browser)
+    } else skipSignedIn('the drive')
   }
 
   // The applicant captures first — they produce the VC file the public

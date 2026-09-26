@@ -29,17 +29,27 @@
  *
  * Env: DEMO_BASE (default https://demo.oimlsmart.org), NMI_BASE
  * (https://nmi.oimlsmart.org), TL_BASE (https://tl.oimlsmart.org),
- * ID_BASE (https://id.oimlsmart.org), CAPTURE_DATE (default: today).
+ * ID_BASE (https://id.oimlsmart.org), CAPTURE_DATE (default: today),
+ * DEMO_SSO_EMAIL/DEMO_SSO_PASSWORD (the grantee account the signed-in
+ * legs ride — below).
  *
  * The demo is the nightly-reset fictional instance; every leg here is
  * READ-ONLY against it (the register story stays the seeded one). The
- * sign-in pattern mirrors the platform e2e harness ported to Playwright
- * (see capture-audiences.ts for the drive-chain variant). The house
- * rules hold: the demo banner stays in frame, the viewport is 1440x900.
+ * demo instance is OIDC-configured (smart#378): the one-click local
+ * demo cast is dead there, and the signed-in legs ride the provider's
+ * grant-based persona assumption — the shared round-trip in
+ * scripts/demo-sso.ts (a grantee account signs in at id.oimlsmart.org;
+ * the account chooser continues the flow AS the persona). Without
+ * DEMO_SSO_EMAIL/DEMO_SSO_PASSWORD every signed-in leg skips LOUDLY
+ * with the reason, never a stale capture silently; the public legs
+ * (the register, the verify page, the pilot instances, the SST site,
+ * the identity join flow) run regardless. The house rules hold: the
+ * demo banner stays in frame, the viewport is 1440x900.
  */
 import { chromium, type Browser, type BrowserContext, type Page } from '@playwright/test'
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { SSO_REASON, loginAsPersona, signOutDemo, ssoCredentialsDeclared } from './demo-sso'
 
 const DEMO = (process.env.DEMO_BASE ?? 'https://demo.oimlsmart.org').replace(/\/$/, '')
 const NMI = (process.env.NMI_BASE ?? 'https://nmi.oimlsmart.org').replace(/\/$/, '')
@@ -61,7 +71,15 @@ const NAV_TIMEOUT = 60_000
 const SETTLE = 240_000
 const LOGIN_SETTLE = 300_000
 
-// ── Harness (the same ported pattern as capture-audiences.ts) ────────
+// ── Harness (the SSO persona round-trip, shared via scripts/demo-sso.ts) ──
+
+// The signed-in legs ride the SSO persona assumption (the module
+// header): without the grantee pair every signed-in section skips
+// loudly, and no capture is produced or overwritten.
+const SSO_OK = ssoCredentialsDeclared()
+function skipSignedIn(section: string) {
+  console.log(`  ⏭ ${section}: SKIPPED — ${SSO_REASON}`)
+}
 
 async function gotoCommit(page: Page, url: string) {
   await page.goto(url, { waitUntil: 'commit', timeout: NAV_TIMEOUT })
@@ -95,35 +113,16 @@ async function gotoApp(page: Page, path: string) {
 }
 
 async function signOut(context: BrowserContext) {
-  await context.request.post(`${DEMO}/api/auth/signout`).catch(() => {})
+  await signOutDemo(DEMO, context)
 }
 
+/** Sign in AS a demonstration persona through the SSO grant round-trip
+ *  (scripts/demo-sso.ts, ONE shared implementation), then wait for the
+ *  persona's role home and the island settle. */
 async function loginAs(context: BrowserContext, page: Page, name: string, prefix: string) {
-  for (let attempt = 0; attempt < 3; attempt++) {
-    await signOut(context)
-    await gotoCommit(page, `${DEMO}/app/login`)
-    const landed = await page.waitForFunction(
-      (wanted) => {
-        if (!window.location.pathname.startsWith('/app/login')) return 'redirected'
-        return Array.from(document.querySelectorAll('button'))
-          .some(b => b.querySelector('span')?.textContent?.trim() === wanted) ? 'ready' : false
-      },
-      name,
-      { timeout: SETTLE, polling: 500 },
-    ).then(h => h.jsonValue()).catch(() => 'timeout')
-    if (landed === 'ready') break
-    await page.evaluate(async () => {
-      await fetch('/api/auth/signout', { method: 'POST', credentials: 'include' })
-    }).catch(() => {})
-    if (attempt === 2) throw new Error(`login page never offered the "${name}" demo account`)
-  }
-  await page.evaluate((wanted) => {
-    const btn = Array.from(document.querySelectorAll('button'))
-      .find(b => b.querySelector('span')?.textContent?.trim() === wanted)
-    ;(btn as HTMLElement).click()
-  }, name)
-  // The redirect trails bootstrap({force: true}); a wedged bootstrap
-  // (the demo under load) is retried once from a clean sign-out.
+  await loginAsPersona({ demo: DEMO, context, page, name })
+  // The redirect trails the profile bootstrap; a wedged bootstrap (the
+  // demo under load) is retried once from a clean sign-out.
   for (let attempt = 0; attempt < 2; attempt++) {
     const landed = await page.waitForFunction(
       (p) => window.location.pathname.startsWith(p) && window.location.pathname !== '/app/login',
@@ -133,19 +132,7 @@ async function loginAs(context: BrowserContext, page: Page, name: string, prefix
     if (landed) break
     if (attempt === 1) throw new Error(`login as "${name}" never redirected`)
     console.log(`  · login as "${name}" wedged before the redirect; retrying once`)
-    await signOut(context)
-    await gotoCommit(page, `${DEMO}/app/login`)
-    await page.waitForFunction(
-      (wanted) => Array.from(document.querySelectorAll('button'))
-        .some(b => b.querySelector('span')?.textContent?.trim() === wanted),
-      name,
-      { timeout: SETTLE, polling: 500 },
-    )
-    await page.evaluate((wanted) => {
-      const btn = Array.from(document.querySelectorAll('button'))
-        .find(b => b.querySelector('span')?.textContent?.trim() === wanted)
-      ;(btn as HTMLElement).click()
-    }, name)
+    await loginAsPersona({ demo: DEMO, context, page, name })
   }
   await waitIslandSettled(page)
 }
@@ -293,13 +280,13 @@ async function capturePublic(browser: Browser) {
     if (wants('hub-login')) {
       await signOut(context)
       await gotoCommit(page, `${DEMO}/app/login`)
-      await page.waitForFunction(
-        () => Array.from(document.querySelectorAll('button'))
-          .some(b => b.querySelector('span')?.textContent?.trim() === 'Applicant'),
-        undefined,
-        { timeout: SETTLE, polling: 500 },
-      )
-      await shoot(page, 'deployment-modes', 'hub-login', theme, 'the CS-operated hub posture: the demo instance\u2019s login with the one-click demo accounts, every role on one deployment', { fullPage: true })
+      // The sign-in cone (smart#378): the SSO persona strip — one card
+      // per kept persona, each entering the provider flow with the
+      // persona's login_hint. The one-click local cast never renders on
+      // an OIDC-configured instance.
+      await page.waitForSelector('[data-testid="sso-persona-strip"]', { timeout: SETTLE })
+      await page.waitForSelector('[data-testid="sso-persona-applicant"]', { timeout: SETTLE })
+      await shoot(page, 'deployment-modes', 'hub-login', theme, 'the CS-operated hub posture: the demo instance\u2019s sign-in cone with the SSO persona strip, every role entering through the provider on one deployment', { fullPage: true })
     }
 
     if (wants('nmi-instance')) {
@@ -334,6 +321,7 @@ async function capturePublic(browser: Browser) {
 
 async function captureApplicant(browser: Browser) {
   if (!['wizard-recommendation', 'application-journey', 'certificate-issued', 'wizard-anr-step'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the applicant legs'); return }
 
   for (const theme of THEMES) {
     currentTheme = theme
@@ -441,6 +429,7 @@ async function captureApplicant(browser: Browser) {
 
 async function captureIA(browser: Browser) {
   if (!['review-queue', 'review-file', 'project-hub', 'certificates-desk', 'certificate-lifecycle', 'anr-capability'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the IA legs'); return }
 
   for (const theme of THEMES) {
     currentTheme = theme
@@ -539,6 +528,7 @@ async function captureIA(browser: Browser) {
 
 async function captureLab(browser: Browser) {
   if (!['lab-inbox', 'twin-lab'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the laboratory legs'); return }
 
   for (const theme of THEMES) {
     currentTheme = theme
@@ -577,6 +567,7 @@ async function captureLab(browser: Browser) {
 
 async function captureAdmin(browser: Browser) {
   if (!['twin-console', 'sim-bench'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the admin legs'); return }
 
   for (const theme of THEMES) {
     currentTheme = theme
@@ -617,12 +608,15 @@ async function captureAdmin(browser: Browser) {
 
 async function captureCSAdmin(browser: Browser) {
   if (!['cs-ia-registry', 'cs-participants'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the CS console legs'); return }
 
   for (const theme of THEMES) {
     currentTheme = theme
     const context = await themedContext(browser, theme)
     const page = await context.newPage()
-    await loginAs(context, page, 'CS Admin', '/app/cs')
+    // The kept cast's scheme-administration persona (the manifest's
+    // name; the old "CS Admin" caption left with the trim).
+    await loginAs(context, page, 'OIML-CS Administrator', '/app/cs')
 
     if (wants('cs-ia-registry')) {
       await gotoApp(page, '/app/cs/issuing-authorities')
@@ -648,6 +642,7 @@ async function captureCSAdmin(browser: Browser) {
 
 async function captureUtilizer(browser: Browser) {
   if (!['anr-registry', 'anr-declare-form'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the utilizer legs'); return }
 
   for (const theme of THEMES) {
     currentTheme = theme

@@ -62,20 +62,30 @@
  *   npx tsx scripts/capture-walkthroughs.ts --light          # one theme only
  *
  * Env: DEMO_BASE (default https://demo.oimlsmart.org), CAPTURE_DATE
- * (default: today, YYYY-MM-DD).
+ * (default: today, YYYY-MM-DD), DEMO_SSO_EMAIL/DEMO_SSO_PASSWORD (the
+ * grantee account the signed-in legs ride — below).
  *
  * The demo is the nightly-reset fictional instance: the drive files one
  * clearly-marked demonstration application (the ACME cast) and takes it
- * as far as the laboratory's submitted report, never further. The
- * demo-account sign-in pattern mirrors the platform e2e harness (the
- * smart repo's browser/e2e/helpers.ts), ported to Playwright, matching
- * scripts/capture-audiences.ts. The demo banner stays in frame (the
- * screenshots are honest about being the demo); the viewport is
- * 1440x900 (the documentation rule).
+ * as far as the laboratory's submitted report, never further. The demo
+ * instance is OIDC-configured (smart#378): the one-click local demo
+ * cast is dead there, and the signed-in legs ride the provider's
+ * grant-based persona assumption — the shared round-trip in
+ * scripts/demo-sso.ts (a grantee account signs in at id.oimlsmart.org;
+ * the account chooser continues the flow AS the persona). The doctrine
+ * is the sentinel's: without DEMO_SSO_EMAIL/DEMO_SSO_PASSWORD every
+ * signed-in leg skips LOUDLY with the reason (no capture is produced,
+ * the manifest's dated entries stand for the TTL gate to catch), never
+ * a stale capture silently. The anonymous legs (the sign-in cone, the
+ * guided-demo entry, the public register, the verify page) run
+ * regardless. The demo banner stays in frame (the screenshots are
+ * honest about being the demo); the viewport is 1440x900 (the
+ * documentation rule).
  */
 import { chromium, type Browser, type BrowserContext, type Page } from '@playwright/test'
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { SSO_REASON, loginAsPersona, signOutDemo, ssoCredentialsDeclared } from './demo-sso'
 
 const DEMO = (process.env.DEMO_BASE ?? 'https://demo.oimlsmart.org').replace(/\/$/, '')
 const DATE = process.env.CAPTURE_DATE ?? new Date().toISOString().slice(0, 10)
@@ -148,38 +158,25 @@ async function gotoApp(page: Page, path: string) {
   throw new Error(`gotoApp: the island never settled at ${path}`)
 }
 
-async function signOut(context: BrowserContext) {
-  // Via the context's own request client — an in-page fetch races the
-  // login page's signed-in redirect and dies with "Failed to fetch".
-  await context.request.post(`${DEMO}/api/auth/signout`).catch(() => {})
+// The signed-in legs ride the SSO persona assumption (the module
+// header): without the grantee pair every signed-in section skips
+// loudly, and no capture is produced or overwritten.
+const SSO_OK = ssoCredentialsDeclared()
+function skipSignedIn(section: string) {
+  console.log(`  ⏭ ${section}: SKIPPED — ${SSO_REASON}`)
 }
 
+async function signOut(context: BrowserContext) {
+  await signOutDemo(DEMO, context)
+}
+
+/** Sign in AS a demonstration persona through the SSO grant round-trip
+ *  (scripts/demo-sso.ts, ONE shared implementation), then wait for the
+ *  persona's role home and the island settle. The callback lands the
+ *  session on the role home; the prefix wait keeps the old harness's
+ *  "signed in as the right role" proof. */
 async function loginAs(context: BrowserContext, page: Page, name: string, prefix: string) {
-  // The login page bounces a signed-in session to its console, so sign
-  // out first and tolerate the stale-session round-trip.
-  for (let attempt = 0; attempt < 3; attempt++) {
-    await signOut(context)
-    await gotoCommit(page, `${DEMO}/app/login`)
-    const landed = await page.waitForFunction(
-      (wanted) => {
-        if (!window.location.pathname.startsWith('/app/login')) return 'redirected'
-        return Array.from(document.querySelectorAll('button'))
-          .some(b => b.querySelector('span')?.textContent?.trim() === wanted) ? 'ready' : false
-      },
-      name,
-      { timeout: SETTLE, polling: 500 },
-    ).then(h => h.jsonValue()).catch(() => 'timeout')
-    if (landed === 'ready') break
-    await page.evaluate(async () => {
-      await fetch('/api/auth/signout', { method: 'POST', credentials: 'include' })
-    }).catch(() => {})
-    if (attempt === 2) throw new Error(`login page never offered the "${name}" demo account`)
-  }
-  await page.evaluate((wanted) => {
-    const btn = Array.from(document.querySelectorAll('button'))
-      .find(b => b.querySelector('span')?.textContent?.trim() === wanted)
-    ;(btn as HTMLElement).click()
-  }, name)
+  await loginAsPersona({ demo: DEMO, context, page, name })
   await page.waitForFunction(
     (p) => window.location.pathname.startsWith(p) && window.location.pathname !== '/app/login',
     prefix,
@@ -1553,15 +1550,15 @@ async function captureLoginAndGuided(browser: Browser) {
     if (wants('login-accounts')) {
       await signOut(context)
       await gotoCommit(page, `${DEMO}/app/login`)
-      // The account buttons mount with the island; wait for a cast member.
-      await page.waitForFunction(
-        () => Array.from(document.querySelectorAll('button'))
-          .some(b => b.querySelector('span')?.textContent?.trim() === 'BIML Officer'),
-        undefined,
-        { timeout: SETTLE, polling: 500 },
-      )
+      // The sign-in cone (smart#378, the 2026-09-26 front-door wave):
+      // the SSO persona strip — one card per kept persona, each
+      // entering the provider flow with the persona's login_hint. The
+      // one-click local cast never renders on an OIDC-configured
+      // instance; the strip mounts with the island.
+      await page.waitForSelector('[data-testid="sso-persona-strip"]', { timeout: SETTLE })
+      await page.waitForSelector('[data-testid="sso-persona-applicant"]', { timeout: SETTLE })
       await page.waitForTimeout(1200)
-      await shoot(page, 'shared', 'login-accounts', theme, 'the demo login page: the fictional cast as one-click accounts, the shared demo password, the guided-demo entry', { fullPage: true })
+      await shoot(page, 'shared', 'login-accounts', theme, 'the demo\u2019s sign-in cone: the kept cast as the SSO persona strip (each card enters the provider flow with the persona\u2019s login_hint), the guided-demo entry', { fullPage: true })
     }
     if (wants('guided-demo')) {
       await signOut(context)
@@ -1578,8 +1575,14 @@ async function captureLoginAndGuided(browser: Browser) {
         ;(btn as HTMLElement | undefined)?.click()
       })
       await page.waitForTimeout(2500)
-      await waitText(page, 'Step 1 of 24')
-      await shoot(page, 'shared', 'guided-demo', theme, 'started the guided demo: the presenter script walks the full certification flow, step 1 of 24, from the login page', { fullPage: true })
+      // The presenter panel counts its own steps ("step 1 of N") — the
+      // script's length is its own fact, never pinned here.
+      await page.waitForFunction(
+        () => /step 1 of \d+/i.test(document.body.innerText),
+        undefined,
+        { timeout: SETTLE, polling: 500 },
+      )
+      await shoot(page, 'shared', 'guided-demo', theme, 'started the guided demo: the presenter script walks the full certification flow from the login page, step 1', { fullPage: true })
     }
     await context.close()
   }
@@ -1590,6 +1593,7 @@ async function captureLoginAndGuided(browser: Browser) {
  *  lands on any queue until the submit the drive performs. */
 async function captureWizard(browser: Browser) {
   if (!['wizard-recommendation', 'wizard-instrument', 'wizard-scheme-ia', 'wizard-stepper-jump', 'portal-draft'].some(wants)) return
+  if (!SSO_OK) { skipSignedIn('the wizard captures'); return }
   for (const theme of THEMES) {
     // One retry per theme: the wizard rides the same wedged stream as
     // every island page, and the draft store resumes a reload mid-fill.
@@ -1717,34 +1721,36 @@ async function captureApplicantJourney(browser: Browser) {
   if (!['notifications', 'application-journey', 'certificate-view', 'verify-number'].some(wants)) return
   for (const theme of THEMES) {
     currentTheme = theme
-    const context = await themedContext(browser, theme)
-    const page = await context.newPage()
-    await loginAs(context, page, 'Applicant', '/app/portal')
-    if (wants('notifications')) {
-      await gotoApp(page, '/app/portal/')
-      await waitText(page, 'My applications')
-      await clickTestId(page, 'notification-bell')
-      await waitText(page, 'Notifications')
-      await page.waitForTimeout(800)
-      await shoot(page, 'applicant-journey', 'notifications', theme, 'opened the notifications inbox: the stage events of the applicant\'s own applications, each with its reason')
-    }
-    if (wants('application-journey')) {
-      await gotoApp(page, '/app/portal/applications/app-acme-lc')
-      await waitTestId(page, 'portal-application-detail')
-      await waitText(page, 'Promise set')
-      await waitSkeletonGone(page)
-      await shoot(page, 'applicant-journey', 'application-journey', theme, 'opened the worked-example application: the six-stage journey and the promise set with the per-claim verification status, never leaking the in-flight stores', { fullPage: true })
-    }
-    if (wants('certificate-view')) {
-      await gotoApp(page, '/app/portal/certificates/crt-acme-lc')
-      await page.waitForFunction(
-        () => document.body.innerText.includes('OIML CERTIFICATE NO.'),
-        undefined,
-        { timeout: SETTLE, polling: 500 },
-      )
-      await shoot(page, 'applicant-journey', 'certificate-view', theme, 'opened the issued certificate R60/2021-A-EX1-26.01: the full OIML document with its serials, the dates, the ACTIVE state, and the downloads', { fullPage: true })
-    }
-    await context.close()
+    if (SSO_OK) {
+      const context = await themedContext(browser, theme)
+      const page = await context.newPage()
+      await loginAs(context, page, 'Applicant', '/app/portal')
+      if (wants('notifications')) {
+        await gotoApp(page, '/app/portal/')
+        await waitText(page, 'My applications')
+        await clickTestId(page, 'notification-bell')
+        await waitText(page, 'Notifications')
+        await page.waitForTimeout(800)
+        await shoot(page, 'applicant-journey', 'notifications', theme, 'opened the notifications inbox: the stage events of the applicant\'s own applications, each with its reason')
+      }
+      if (wants('application-journey')) {
+        await gotoApp(page, '/app/portal/applications/app-acme-lc')
+        await waitTestId(page, 'portal-application-detail')
+        await waitText(page, 'Promise set')
+        await waitSkeletonGone(page)
+        await shoot(page, 'applicant-journey', 'application-journey', theme, 'opened the worked-example application: the six-stage journey and the promise set with the per-claim verification status, never leaking the in-flight stores', { fullPage: true })
+      }
+      if (wants('certificate-view')) {
+        await gotoApp(page, '/app/portal/certificates/crt-acme-lc')
+        await page.waitForFunction(
+          () => document.body.innerText.includes('OIML CERTIFICATE NO.'),
+          undefined,
+          { timeout: SETTLE, polling: 500 },
+        )
+        await shoot(page, 'applicant-journey', 'certificate-view', theme, 'opened the issued certificate R60/2021-A-EX1-26.01: the full OIML document with its serials, the dates, the ACTIVE state, and the downloads', { fullPage: true })
+      }
+      await context.close()
+    } else skipSignedIn('the applicant-journey captures')
     // The verify page needs no account; capture it in a fresh context.
     if (wants('verify-number')) {
       const pub = await themedContext(browser, theme)
@@ -1769,7 +1775,9 @@ async function captureEvaluation(browser: Browser) {
   for (const theme of THEMES) {
     currentTheme = theme
 
-    if (['tr-review', 'review-period', 'examinations', 'er-synopsis', 'issuance-form', 'tep-test-reports', 'certificate-card'].some(wants)) {
+    const iaWanted = ['tr-review', 'review-period', 'examinations', 'er-synopsis', 'issuance-form', 'tep-test-reports', 'certificate-card'].some(wants)
+    if (iaWanted && !SSO_OK) skipSignedIn('the IA evaluation captures')
+    if (iaWanted && SSO_OK) {
       const context = await themedContext(browser, theme)
       const page = await context.newPage()
       await loginAs(context, page, 'Issuing Authority', '/app/ia')
@@ -1953,10 +1961,17 @@ async function captureEvaluation(browser: Browser) {
       await context.close()
     }
 
-    if (wants('biml-inbox')) {
+    if (wants('biml-inbox') && !SSO_OK) skipSignedIn('the BIML inbox capture')
+    if (wants('biml-inbox') && SSO_OK) {
       const context = await themedContext(browser, theme)
       const page = await context.newPage()
-      await loginAs(context, page, 'BIML Officer', '/app/biml')
+      // The BIML registration function folds into the OIML-CS
+      // organization (smart#378 — the trimmed biml@ account stays only
+      // in the kernel seed's store vocabulary): the OIML-CS
+      // Administrator's session reaches the same registration inbox the
+      // guided demo's BIML stop presents (src/demo/full-flow-script.ts).
+      await loginAs(context, page, 'OIML-CS Administrator', '/app/cs')
+      await gotoApp(page, '/app/cs/registration')
       await waitText(page, 'Registration inbox')
       await waitSkeletonGone(page)
       await shoot(page, 'ia-evaluation', 'biml-inbox', theme, 'the BIML console: the registration inbox and the recently registered worked-example certificate (the register act as a first-class act)', { fullPage: true })
@@ -2014,6 +2029,9 @@ async function licensingSurgeRow(page: Page): Promise<{ status: string } | null>
 
 async function captureLicensing(browser: Browser) {
   if (!['licensing-citation-run', 'licensing-queue', 'licensing-confirm', 'licensing-stepper', 'licensing-history'].some(wants)) return
+  // Every licensing leg is signed-in (the TL's run, the operator's
+  // queue, the administrator's due-process acts): no grantee, no pass.
+  if (!SSO_OK) { skipSignedIn('the licensing captures'); return }
 
   // ── the read-only pass: both themes ────────────────────────────────
   for (const theme of THEMES) {
@@ -2083,14 +2101,13 @@ async function captureLicensing(browser: Browser) {
   currentTheme = 'light'
   const LIC_CONFIRM_NOTE = 'verified against the declared license evidence (the demonstration confirmation)'
 
-  /** The platform administrator's session: the demo sign-in POST sets
-   *  the context's cookie; the pages and the in-page fetches then ride
-   *  it like any session. */
-  async function licensingAdminSession(context: BrowserContext) {
-    const res = await context.request.post(`${DEMO}/api/auth/demo`, {
-      data: { email: 'admin@oiml.org', password: 'demo2026' },
-    })
-    if (!res.ok()) throw new Error('the platform administrator sign-in failed (the drive cannot reach the due-process acts)')
+  /** The platform administrator's session: the SSO persona round-trip
+   *  (scripts/demo-sso.ts — the retired /api/auth/demo POST answers
+   *  demoAccountsEnabled:false on the OIDC-configured demo) lands the
+   *  Admin session's cookie on the context; the pages and the in-page
+   *  fetches then ride it like any session. */
+  async function licensingAdminSession(context: BrowserContext, page: Page) {
+    await loginAs(context, page, 'Admin', '/app')
   }
 
   let confirmed = false
@@ -2100,7 +2117,7 @@ async function captureLicensing(browser: Browser) {
     const context = await themedContext(browser, 'light')
     const page = await context.newPage()
     try {
-      await licensingAdminSession(context)
+      await licensingAdminSession(context, page)
       await gotoCommit(page, `${DEMO}/app/cs/standards-licenses`)
       await waitIslandSettled(page)
       posture = await licensingSurgeRow(page)
@@ -2127,7 +2144,7 @@ async function captureLicensing(browser: Browser) {
       const context = await themedContext(browser, 'light')
       const page = await context.newPage()
       try {
-        await licensingAdminSession(context)
+        await licensingAdminSession(context, page)
         await gotoCommit(page, `${DEMO}/app/cs/standards-licenses`)
         await waitIslandSettled(page)
         const landed = await page.evaluate(async ({ key, note }) => {
@@ -2198,7 +2215,7 @@ async function captureLicensing(browser: Browser) {
     const context = await themedContext(browser, 'light')
     const page = await context.newPage()
     try {
-      await licensingAdminSession(context)
+      await licensingAdminSession(context, page)
       await gotoCommit(page, `${DEMO}/app/cs/standards-licenses`)
       await waitIslandSettled(page)
       const restored = await page.evaluate(async ({ key, note }) => {
@@ -2229,7 +2246,7 @@ async function captureLicensing(browser: Browser) {
     const context = await themedContext(browser, 'light')
     const page = await context.newPage()
     try {
-      await licensingAdminSession(context)
+      await licensingAdminSession(context, page)
       await gotoApp(page, '/app/cs/standards-licenses')
       await waitTestIdReload(page, 'cs-standards-licenses')
       await waitSkeletonGone(page)
@@ -2316,8 +2333,10 @@ const DRIVE_CHAIN_NAMES = [
 const DRIVE_CHAIN_WANTED = !ONLY_LIST || ONLY_LIST.some(o => DRIVE_CHAIN_NAMES.some(n => n.includes(o)))
 try {
   if (FRESH_INTAKE || (DRIVE && DRIVE_CHAIN_WANTED)) {
-    currentTheme = 'light'
-    await driveChain(browser)
+    if (SSO_OK) {
+      currentTheme = 'light'
+      await driveChain(browser)
+    } else skipSignedIn('the drive')
   }
   await captureLoginAndGuided(browser)
   await captureWizard(browser)
