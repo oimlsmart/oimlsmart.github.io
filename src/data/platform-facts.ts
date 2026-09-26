@@ -14,9 +14,38 @@ export const GATE_NUMBERS = {
   vitestFiles: 453,
   e2e: '387/400',
   validateErrors: 0,
-  kernel: '1132/1132',
-  sim: '254/254',
 } as const
+
+/** A number the freshness gate CANNOT pin: no declared source states it in
+ *  a parseable form (for-agents.md does not carry the kernel/simulator suite
+ *  counts, and running those suites inside a per-push gate is far too
+ *  heavy), so it is re-counted by hand against the source repo and rendered
+ *  with its count date — never presented as pinned. The freshness suite
+ *  (src/platform-freshness.test.ts) asserts the shape and the staleness
+ *  budget, so an ungated number cannot silently go ancient either. */
+export interface UngatedNumber {
+  readonly value: string
+  /** ISO date of the last manual count. */
+  readonly countedOn: string
+  /** Where the count comes from — the repo and the exact command. */
+  readonly source: string
+  readonly gated: false
+}
+
+export const UNGATED_NUMBERS = {
+  kernel: {
+    value: '1591/1611',
+    countedOn: '2026-09-27',
+    source: 'primmel/primmel-ts · yarn workspace @primmel/primmel run test (20 of 1611 specs skipped)',
+    gated: false,
+  },
+  sim: {
+    value: '255/259',
+    countedOn: '2026-09-27',
+    source: 'primmel/sst · SST_LIBRARY_PATH=<oimlsmart/sst checkout> npm test (4 of 259 specs skipped)',
+    gated: false,
+  },
+} as const satisfies Record<string, UngatedNumber>
 
 /** The repositories the platform spans (for-agents.md "The repositories"). */
 export interface PlatformRepo {
