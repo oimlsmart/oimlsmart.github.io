@@ -17,7 +17,7 @@ import { describe, it, expect } from 'vitest'
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { GATE_NUMBERS, PLATFORM_REPOS, PROGRAM_RECS } from './data/platform-facts'
+import { GATE_NUMBERS, UNGATED_NUMBERS, PLATFORM_REPOS, PROGRAM_RECS } from './data/platform-facts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const SMART = process.env.SMART_REPO ?? resolve(ROOT, '..', 'oimlsmart', 'smart')
@@ -87,6 +87,39 @@ describe.skipIf(!HAS_DOC)('the content-freshness gate (site claims ≡ SSOT)', (
     for (const { id } of PROGRAM_RECS) {
       const pkg = join(PACKAGES, `oiml-r${id.replace('R ', '')}`, 'package.primmel')
       expect(existsSync(pkg), `${id} → ${pkg}`).toBe(true)
+    }
+  })
+})
+
+// The ungated numbers (the kernel and simulator suite counts) have no
+// parseable source: for-agents.md does not state them, their own repos do
+// not state them, and running those suites inside this gate is far too
+// heavy. They are re-counted by hand against the source repos and rendered
+// with their count date. What the gate CAN enforce is the shape and the
+// staleness budget: an ungated number past its TTL fails the build naming
+// the re-count command, so the page never presents an ancient count as
+// current. This block needs no SSOT checkout — it runs on every clone.
+const UNGATED_TTL_DAYS = 90
+
+describe('the ungated numbers (hand-counted, honestly marked)', () => {
+  it('every ungated number carries the gated:false mark, a passing/total count, an ISO count date, and its source command', () => {
+    for (const [name, n] of Object.entries(UNGATED_NUMBERS)) {
+      expect(n.gated, name).toBe(false)
+      expect(n.value, `${name} carries a passing/total count`).toMatch(/^\d+\/\d+$/)
+      expect(n.countedOn, `${name} carries an ISO date`).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+      expect(Number.isNaN(Date.parse(n.countedOn)), `${name} date parses`).toBe(false)
+      expect(n.source, `${name} names its re-count command`).toMatch(/\S+ · \S+/)
+    }
+  })
+
+  it(`no ungated number is older than ${UNGATED_TTL_DAYS} days`, () => {
+    const now = Date.now()
+    for (const [name, n] of Object.entries(UNGATED_NUMBERS)) {
+      const ageDays = (now - Date.parse(n.countedOn)) / 86_400_000
+      expect(
+        ageDays,
+        `${name} was last counted ${n.countedOn} — re-count with \`${n.source}\` and re-date`,
+      ).toBeLessThan(UNGATED_TTL_DAYS)
     }
   })
 })
