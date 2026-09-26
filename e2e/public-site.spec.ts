@@ -219,7 +219,7 @@ test.describe('Public site — critical paths', () => {
       ['/use-cases/type-evaluation-end-to-end', 'Type evaluation, end to end', 'The story, chapter by chapter'],
       ['/use-cases/deployment-modes', 'The deployment-mode matrix', 'The four postures, rendered plain'],
       ['/use-cases/continuous-compliance', 'Continuous compliance via the twin', 'What you can do today'],
-      ['/use-cases/training-on-the-sst', 'Training on the SST', 'What you can do today'],
+      ['/use-cases/training-on-the-sst', 'Training on the SMI Simulation', 'What you can do today'],
       ['/use-cases/member-state-view', 'The member-state view', 'What you can do today'],
       ['/use-cases/additional-national-requirements', 'The additional-national-requirements flow', 'What you can do today'],
     ] as const) {
