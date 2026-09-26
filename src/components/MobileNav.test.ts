@@ -53,8 +53,9 @@ describe('MobileNav', () => {
     const wrapper = mountNav()
     await wrapper.find('button[aria-label="Open menu"]').trigger('click')
     const text = wrapper.text()
-    // The five consolidated top-level entries.
+    // The six consolidated top-level entries.
     expect(text).toContain('Components')
+    expect(text).toContain('Experimental')
     expect(text).toContain('Discover')
     expect(text).toContain('Resources')
     expect(text).toContain('About')
@@ -62,7 +63,7 @@ describe('MobileNav', () => {
     expect(text).toContain('Sign in')
   })
 
-  it('expands the components section into both tiers, R 60 first', async () => {
+  it('expands the components section into the SMART tier, R 60 first', async () => {
     const wrapper = mountNav()
     await wrapper.find('button[aria-label="Open menu"]').trigger('click')
     const section = wrapper.findAll('button').find(b => b.text().includes('Components'))
@@ -70,6 +71,15 @@ describe('MobileNav', () => {
     await section!.trigger('click')
     const text = wrapper.text()
     expect(text).toContain('SMART Recommendations')
-    expect(text).toContain('SST for Measuring Instruments')
+  })
+
+  it('expands the experimental section into the SMART+ tier', async () => {
+    const wrapper = mountNav()
+    await wrapper.find('button[aria-label="Open menu"]').trigger('click')
+    const section = wrapper.findAll('button').find(b => b.text().includes('Experimental'))
+    expect(section).toBeDefined()
+    await section!.trigger('click')
+    const text = wrapper.text()
+    expect(text).toContain('SMI Simulation')
   })
 })
