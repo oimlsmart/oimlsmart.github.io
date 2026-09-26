@@ -5,15 +5,14 @@ name: freshness-sentinel
 # rot accumulates, because a push validates a build and never the week
 # that follows it: captures age past their TTLs, the demo reseeds under
 # a published tour, a host leaves the registry, a deployed route dies,
-# or the vendored shell falls behind its published channel. The studio
-# repo's freshness-sentinel is the model; this workflow adapts it to
-# the public site. The legs, one job each so a red leg cannot mask the
-# others:
+# or the house-shell npm pin falls behind the published channel. The
+# studio repo's freshness-sentinel is the model; this workflow adapts
+# it to the public site. The legs, one job each so a red leg cannot
+# mask the others:
 #
-#   1. PACKAGES PIN       the vendored house shell (@oimlsmart/
-#                         site-shell, file:vendor/site-shell) is not
-#                         behind npm's published channel, and the pin
-#                         still rides the vendored channel at all.
+#   1. PACKAGES PIN       the house shell (@oimlsmart/site-shell) rides
+#                         an exact npm pin in package.json, and that
+#                         pin is not behind npm's published channel.
 #   2. PROVENANCE PROBES  the proof-map's live anchors still show what
 #                         the promotion pages claim, and every dated
 #                         capture sits inside its declared TTL (the
@@ -57,12 +56,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Checkout the shell package (the chrome SSOT)
-        uses: actions/checkout@v6
-        with:
-          repository: oimlsmart/site-shell
-          path: vendor/site-shell
-
       - uses: actions/setup-node@v6
         with:
           node-version: 24
@@ -70,7 +63,7 @@ jobs:
 
       - run: npm ci
 
-      - name: The vendored shell is not behind npm's published channel
+      - name: The shell pin is exact and not behind npm's published channel
         run: node scripts/check-shell-pin.mjs
 
   provenance-probes:
@@ -78,12 +71,6 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
-
-      - name: Checkout the shell package (the chrome SSOT)
-        uses: actions/checkout@v6
-        with:
-          repository: oimlsmart/site-shell
-          path: vendor/site-shell
 
       - uses: actions/setup-node@v6
         with:
@@ -103,12 +90,6 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
-
-      - name: Checkout the shell package (the chrome SSOT)
-        uses: actions/checkout@v6
-        with:
-          repository: oimlsmart/site-shell
-          path: vendor/site-shell
 
       - uses: actions/setup-node@v6
         with:
@@ -165,12 +146,6 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v6
-
-      - name: Checkout the shell package (the chrome SSOT)
-        uses: actions/checkout@v6
-        with:
-          repository: oimlsmart/site-shell
-          path: vendor/site-shell
 
       - uses: actions/setup-node@v6
         with:
