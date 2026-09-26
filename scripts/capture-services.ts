@@ -16,8 +16,16 @@
  * Outputs land in public/img/services/<service>/<shot>.<light|dark>.png
  * plus public/img/services/manifest.json (the dated audit record; 08's
  * freshness gate re-runs this script). Dark and light are real captures:
- * the estate honors prefers-color-scheme, so each shot runs in both
+ * the federation honors prefers-color-scheme, so each shot runs in both
  * emulated schemes.
+ *
+ * The demo instance is OIDC-configured (smart#378): the one-click local
+ * demo cast is dead there, and the signed-in shots ride the provider's
+ * grant-based persona assumption — the shared round-trip in
+ * scripts/demo-sso.ts. Without DEMO_SSO_EMAIL/DEMO_SSO_PASSWORD every
+ * signed-in shot skips loudly with the reason (no capture is produced
+ * or overwritten, so the manifest's dated entries stand for the TTL
+ * gate to catch), never a stale capture silently.
  *
  * Frugality: the AI service's anonymous tier is rate-limited per day, so
  * the two asks below (the cited answer, the off-corpus refusal) are the
@@ -26,6 +34,7 @@
 import { chromium, type Page } from '@playwright/test'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { SSO_REASON, loginAsPersona, ssoCredentialsDeclared } from './demo-sso'
 
 const ROOT = resolve(process.cwd())
 const OUT = join(ROOT, 'public/img/services')
@@ -52,16 +61,23 @@ interface Shot {
   check?: (page: Page) => Promise<void>
   /** Settle time after the act before the assertion + capture. */
   settleMs?: number
+  /** The act signs in to the demo: it rides the SSO persona assumption
+   *  (scripts/demo-sso.ts) and skips loudly when the grantee pair is
+   *  undeclared, never a false capture. */
+  signedIn?: boolean
 }
 
 // ── Shared acts ──────────────────────────────────────────────────────
 
-async function demoSignIn(page: Page, account: RegExp | string, landOn: string) {
-  await page.goto('https://demo.oimlsmart.org/app/login', { waitUntil: 'networkidle', timeout: 60000 })
-  await page.locator('button', { hasText: account }).first().click()
-  await page.waitForURL((u) => !u.pathname.startsWith('/app/login'), { timeout: 45000 })
+/** Sign in AS a demonstration persona through the SSO grant round-trip
+ *  (scripts/demo-sso.ts, ONE shared implementation): the login page's
+ *  persona card starts the provider flow, the account chooser continues
+ *  it AS the persona, and the callback lands on the persona's role
+ *  home. */
+async function demoSignIn(page: Page, account: string, landOn: string) {
+  await loginAsPersona({ demo: 'https://demo.oimlsmart.org', context: page.context(), page, name: account })
   await page.waitForLoadState('networkidle', { timeout: 60000 }).catch(() => {})
-  if (!page.url().includes(landOn)) throw new Error(`demo sign-in (${String(account)}) landed at ${page.url()}, expected ${landOn}`)
+  if (!page.url().includes(landOn)) throw new Error(`demo sign-in (${account}) landed at ${page.url()}, expected ${landOn}`)
   await page.waitForTimeout(1500)
 }
 
@@ -88,19 +104,20 @@ const SHOTS: Shot[] = [
   {
     id: 'demo-login-accounts',
     service: 'demo',
-    caption: 'The demo login page: the one-click demo accounts, the shared demo password, and the guided-demo entry.',
+    caption: 'The demo login page: the cast as persona cards under their organizations, signed in through the identity service, and the guided-demo entry.',
     act: async (page) => {
       await page.goto('https://demo.oimlsmart.org/app/login', { waitUntil: 'networkidle', timeout: 60000 })
     },
-    expect: ['demo accounts', 'Applicant', 'Issuing Authority', 'Test Laboratory', 'BIML Officer', 'Demo password:'],
+    expect: ['Applicant', 'Issuing Authority', 'Test Laboratory', 'OIML-CS Administrator', 'via oimlsmart'],
     settleMs: 1500,
   },
   {
     id: 'demo-portal-applicant',
     service: 'demo',
-    caption: 'The applicant portal after the one-click sign-in: ACME\'s five applications and three certificates.',
+    caption: 'The applicant portal after the persona sign-in: ACME\'s five applications and three certificates.',
     act: (page) => demoSignIn(page, 'Applicant', '/app/portal'),
     expect: ['ACME Measurement GmbH', 'My applications', 'My certificates', 'R60/2021-A-EX1-26.01'],
+    signedIn: true,
   },
   {
     id: 'demo-application-detail',
@@ -112,6 +129,7 @@ const SHOTS: Shot[] = [
       await page.waitForTimeout(2500)
     },
     expect: ['XX-ACME-2026-0001', 'ACCEPTED', 'LC-500i'],
+    signedIn: true,
   },
   {
     id: 'demo-certificate',
@@ -124,6 +142,7 @@ const SHOTS: Shot[] = [
       await page.locator('text=OIML CERTIFICATE HISTORY').first().waitFor({ timeout: 30000 })
     },
     expect: ['R60/2021-A-EX1-26.01', 'ACTIVE', 'Print certificate', 'OIML CERTIFICATE HISTORY'],
+    signedIn: true,
   },
   {
     id: 'demo-verify',
@@ -141,6 +160,7 @@ const SHOTS: Shot[] = [
     caption: 'The Issuing Authority console: the review queue, the twelve type-evaluation projects, the dispatch and issuance work.',
     act: (page) => demoSignIn(page, 'Issuing Authority', '/app/ia'),
     expect: ['Review queue', 'Type evaluation projects', 'Ready to issue'],
+    signedIn: true,
   },
   {
     id: 'demo-tl-workbench',
@@ -148,31 +168,38 @@ const SHOTS: Shot[] = [
     caption: 'The Test Laboratory workbench: the dispatch inbox and the ANR test-capability declaration.',
     act: (page) => demoSignIn(page, 'Test Laboratory', '/app/lab'),
     expect: ['Inbox', 'ANR test capability', 'OIML R 60'],
+    signedIn: true,
   },
   {
     id: 'demo-biml-console',
     service: 'demo',
     caption: 'The BIML console: the registration inbox and the recently registered worked-example certificate.',
-    act: (page) => demoSignIn(page, 'BIML Officer', '/app/biml'),
+    act: async (page) => {
+      // The BIML registration desk presents through the OIML-CS
+      // Administrator account (the kept manifest offer, smart#378).
+      await demoSignIn(page, 'OIML-CS Administrator', '/app/cs')
+      await page.goto('https://demo.oimlsmart.org/app/biml', { waitUntil: 'networkidle', timeout: 60000 })
+    },
     expect: ['Registration inbox', 'R60/2021-A-EX1-26.01', 'ACTIVE'],
+    signedIn: true,
   },
   {
     id: 'demo-guided-demo',
     service: 'demo',
-    caption: 'The guided demo\'s presenter script: the full certification flow, step 1 of 24, from the login page.',
+    caption: 'The guided demo\'s presenter script: the full certification flow, step 1 of 22, from the login page.',
     act: async (page) => {
       await page.goto('https://demo.oimlsmart.org/app/login', { waitUntil: 'networkidle', timeout: 60000 })
       await page.locator('button', { hasText: 'Start the guided demo' }).first().click()
       await page.waitForTimeout(2500)
     },
-    expect: ['Guided demo', 'Step 1 of 24', 'Submit the application'],
+    expect: ['Guided demo', 'Step 1 of 22', 'Submit the application'],
   },
 
   // ── The identity service ─────────────────────────────────────────
   {
     id: 'id-sign-in',
     service: 'identity',
-    caption: 'The estate sign-in: GitHub, Google, passkey, or password, and the Request an account link.',
+    caption: 'The federation sign-in: GitHub, Google, passkey, or password, and the Request an account link.',
     act: async (page) => {
       await page.goto('https://id.oimlsmart.org/', { waitUntil: 'networkidle', timeout: 60000 })
     },
@@ -195,7 +222,7 @@ const SHOTS: Shot[] = [
   {
     id: 'id-discovery',
     service: 'identity',
-    caption: 'The OpenID discovery document every relying party in the estate resolves sign-in through.',
+    caption: 'The OpenID discovery document every relying party in the federation resolves sign-in through.',
     act: async (page) => {
       await page.goto('https://id.oimlsmart.org/.well-known/openid-configuration', { timeout: 60000 })
     },
@@ -460,7 +487,16 @@ const prior: ManifestEntry[] = existsSync(manifestPath)
 const manifest = { capturedAt: DATE, shots: [] as ManifestEntry[] }
 let failures = 0
 
+const SSO_OK = ssoCredentialsDeclared()
+
 for (const shot of selected) {
+  if (shot.signedIn && !SSO_OK) {
+    // The sentinel's doctrine: undeclared grantee credentials skip the
+    // signed-in legs loudly — no capture produced or overwritten, so
+    // the manifest's dated entries stand for the TTL gate to catch.
+    console.log(`SKIP ${shot.id} — ${SSO_REASON}`)
+    continue
+  }
   const passedModes: string[] = []
   for (const mode of MODES) {
     const ctx = await browser.newContext({ viewport: VIEWPORT, deviceScaleFactor: 2, colorScheme: mode })

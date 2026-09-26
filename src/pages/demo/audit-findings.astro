@@ -95,7 +95,7 @@ const shapeNotes = [
         The demo-flows program began with an audit, not with a demo: on 2026-08-28 the engineering record pinned the platform's state (origin/v2 at 4be01f98) and walked every storyline step of the five flows against it. The honest total at that pin: <strong>about 24 of about 33 storyline steps fully existed (about 72%)</strong>. The whole workflow spine was built, cone-gated, and e2e-proven; the gaps were a named cluster, and the build answered the cluster, item by item.
       </p>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        Two disciplines keep the record honest. First, every flow is proven by its own end-to-end leg that boots the demo stack and drives the full arc, asserting the user-visible steps (the cards, the queue rows, the tooltips' content against the model), never the API alone. Second, the demo carries its own presenter script (the guided demo's 24 steps) as a single machine-readable definition that the demo presents and the e2e consumes, so the walkthrough can never silently drift from the proof.
+        Two disciplines keep the record honest. First, every flow is proven by its own end-to-end leg that boots the demo stack and drives the full arc, asserting the user-visible steps (the cards, the queue rows, the tooltips' content against the model), never the API alone. Second, the demo carries its own presenter script (the guided demo's 22 steps) as a single machine-readable definition that the demo presents and the e2e consumes, so the walkthrough can never silently drift from the proof.
       </p>
       <ShotFigure
         section="walkthroughs"
@@ -177,7 +177,7 @@ const shapeNotes = [
           { at: '1:45', text: 'The four gaps and their answers: the review-period comments, the authority cards, the model-fed tooltips, all live; the completion gate\'s doctrine decided with its surface in review. We publish the in-review items as in review.' },
           { at: '2:45', text: 'The doctrine decision: the register\'s auto-publish was a genuine conflict between the flow text and the build. It was decided by the program owner, dated, and recorded verbatim, and the pages carry both the decision and today\'s posture.' },
           { at: '3:45', text: 'The proof: each flow has its own e2e leg that drives the real arc; the guided demo is one machine-readable script the demo presents and the tests assert; and this site re-performs every walkthrough step before it may show a screenshot.' },
-          { at: '4:30', text: 'The invitation: read the gaps, then open the demo and check us. The accounts are one click, the register needs none.' },
+          { at: '4:30', text: 'The invitation: read the gaps, then open the demo and check us. The personas sign in through the identity service, the register needs no account at all.' },
         ]}
       />
       <PresenterScript
@@ -230,7 +230,7 @@ const shapeNotes = [
         </div>
         <div class="border border-rule rounded-md bg-paper-soft p-6">
           <h3 class="font-serif text-[1.125rem] mb-2">How do I check any of this myself?</h3>
-          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Three ways: walk the demo (the accounts are one click), read the captures' manifest on this site (every published act with its assertion and timestamp), or run the proof (the e2e legs in the platform repository, the capture script in the site repository). The walkthrough pages never ask to be taken on faith.</p>
+          <p class="text-[0.9375rem] leading-relaxed text-ink-soft">Three ways: walk the demo (the cast signs in through the identity service, each seat assumed as a persona), read the captures' manifest on this site (every published act with its assertion and timestamp), or run the proof (the e2e legs in the platform repository, the capture script in the site repository). The walkthrough pages never ask to be taken on faith.</p>
         </div>
       </div>
     </div>
@@ -245,7 +245,7 @@ const shapeNotes = [
       <ActionBox
         href="https://demo.oimlsmart.org/"
         label="Open the live demo"
-        description="Check the audit's claims yourself: the one-click accounts, the guided demo, the public register."
+        description="Check the audit's claims yourself: the personas through the identity service, the guided demo, the public register."
       />
       <ActionBox
         href="mailto:info@oimlsmart.org"

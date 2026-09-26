@@ -4,7 +4,7 @@
  * (TODO.promotion/06): the keyed step chip the presenter scripts
  * reference (S1, S2, ...), the plain-language narration (slot), the
  * scripted capture or the live link (never a stale hand snap), and the
- * "try it yourself" line naming the exact demo account and console.
+ * "try it yourself" line naming the persona and console.
  */
 import ShotFigure from '../ShotFigure.astro'
 
@@ -12,7 +12,7 @@ interface Props {
   /** The step key the presenter scripts cite ("S1"). */
   sid: string
   title: string
-  /** The demo account the step is performed with ("Applicant"). */
+  /** The persona the step is performed with ("Applicant"). */
   account: string
   /** The console the account lands in ("/app/portal"). */
   console: string

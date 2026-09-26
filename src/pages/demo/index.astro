@@ -89,7 +89,7 @@ const cast = [
 
 <Base
   title="The demo flows, walked"
-  description="Guided walkthroughs of the OIML SMART demo: the five canonical certification flows plus the audit findings, each step narrated in plain language with scripted captures of the live demo, the exact demo account and console to try it yourself, and the presenter scripts in two lengths."
+  description="Guided walkthroughs of the OIML SMART demo: the five canonical certification flows plus the audit findings, each step narrated in plain language with scripted captures of the live demo, the persona and console each step is performed with, and the presenter scripts in two lengths."
 >
   <PageHero
     eyebrow="The demo flows"
@@ -101,7 +101,7 @@ const cast = [
     <div class="max-w-3xl mb-12">
       <SimulatedNote />
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        The walkthroughs below are the readable companion to the demo instance: each flow is narrated step by step in plain language, every step carries a scripted capture of the live demo taken this wave (never a stale screenshot), and every step ends with the exact demo account and console to reproduce it. Each flow also carries its presenter script in two lengths, the 5-minute committee slot and the 20-minute working visit, printable from the page.
+        The walkthroughs below are the readable companion to the demo instance: each flow is narrated step by step in plain language, every step carries a scripted capture of the live demo taken this wave (never a stale screenshot), and every step ends with the persona and console that reproduce it. Each flow also carries its presenter script in two lengths, the 5-minute committee slot and the 20-minute working visit, printable from the page.
       </p>
     </div>
 
@@ -148,7 +148,7 @@ const cast = [
     <div class="max-w-3xl mb-12">
       <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The cast, plainly fictional</h2>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
-        Five demo accounts carry the flows. Each is a one-click button on the demo's login page; the shared demo password is printed there too. Every person and organization is invented for the demonstration; the instrument is ACME's fictional LC-500 load-cell line evaluated against OIML R 60.
+        Five personas carry the flows. Sign-in runs through the OIML SMART identity service: the login page lists the cast as persona cards, and the identity service's account chooser continues the sign-in as the persona, so no cast password is ever published. Every person and organization is invented for the demonstration; the instrument is ACME's fictional LC-500 load-cell line evaluated against OIML R 60.
       </p>
       <div class="grid gap-3 mb-8">
         {cast.map(c => (
@@ -164,7 +164,7 @@ const cast = [
         section="walkthroughs"
         page="shared"
         stem="login-accounts"
-        alt="The demo login page: the fictional cast as one-click accounts with their roles, the shared demo password, and the guided-demo entry."
+        alt="The demo login page: the fictional cast as persona cards with their roles, signed in through the identity service, and the guided-demo entry."
         source="https://demo.oimlsmart.org/app/login"
         captured={captured}
       />
@@ -173,16 +173,16 @@ const cast = [
     <div class="max-w-3xl mb-12">
       <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Two ways to walk it</h2>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        <strong class="text-ink font-semibold">Walk it yourself, freehand.</strong> Pick a walkthrough below, sign in with the account each step names, and work the consoles at your own pace. The instance resets nightly, so nothing you enter survives: try the reject, type the odd value, watch the gates refuse.
+        <strong class="text-ink font-semibold">Walk it yourself, freehand.</strong> Pick a walkthrough below, assume the persona each step names, and work the consoles at your own pace. The instance resets nightly, so nothing you enter survives: try the reject, type the odd value, watch the gates refuse.
       </p>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-4">
-        <strong class="text-ink font-semibold">Or let the demo present itself.</strong> The login page's <em>Start the guided demo</em> button (or <span class="font-mono text-sm">?demo=full-flow</span> on any app page) opens the built-in presenter script: the whole chain in 24 steps, each naming its account, its page, and what to do. The walkthroughs on this site are the same chain, narrated for reading.
+        <strong class="text-ink font-semibold">Or let the demo present itself.</strong> The login page's <em>Start the guided demo</em> button (or <span class="font-mono text-sm">?demo=full-flow</span> on any app page) opens the built-in presenter script: the whole chain in 22 steps, each naming its persona, its page, and what to do. The walkthroughs on this site are the same chain, narrated for reading.
       </p>
       <ShotFigure
         section="walkthroughs"
         page="shared"
         stem="guided-demo"
-        alt="The guided demo panel on the demo login page: the full certification flow in 24 steps, step 1 presented by the applicant persona."
+        alt="The guided demo panel on the demo login page: the full certification flow in 22 steps, step 1 presented by the applicant persona."
         source="https://demo.oimlsmart.org/app/login"
         captured={captured}
       />
@@ -200,7 +200,7 @@ const cast = [
       <ActionBox
         href="https://demo.oimlsmart.org/"
         label="Open the live demo"
-        description="Enter the app and click a demo account on the login page. The Applicant and the Issuing Authority are the two seats to take first."
+        description="Enter the app and assume a persona from the login page's cast cards. The Applicant and the Issuing Authority are the two seats to take first."
       />
       <ActionBox
         href="https://www.oimlsmart.org/recs/docs/oiml-rec/13-running-the-demo"

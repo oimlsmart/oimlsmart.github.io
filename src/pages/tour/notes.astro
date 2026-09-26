@@ -36,7 +36,7 @@ const five = FIVE_MINUTE_CUT.map(id => slides.find(s => s.id === id)!)
       <ul class="notes-list">
         <li><strong>The deck is at <a href="/tour">/tour</a>.</strong> Nineteen slides. Arrow keys, the on-screen buttons, PageUp/PageDown, space, Home/End all navigate; a clicker presents as arrow keys and works untouched.</li>
         <li><strong>Every slide has a stable address.</strong> <span class="font-mono text-sm">/tour#s07</span> opens the seventh slide directly; send a committee member to an exact slide with that URL. The slide's own footer shows its address.</li>
-        <li><strong>The demo moments are links, never recordings.</strong> Each flow slide's <em>Open the live step</em> button opens demo.oimlsmart.org at the exact console and step, in a new tab, so the deck waits where you left it. Sign in with the one-click account the slide names.</li>
+        <li><strong>The demo moments are links, never recordings.</strong> Each flow slide's <em>Open the live step</em> button opens demo.oimlsmart.org at the exact console and step, in a new tab, so the deck waits where you left it. Assume the persona the slide names through the identity service's account chooser.</li>
         <li><strong>The no-network room is covered.</strong> Every demo moment carries its dated capture ({TOUR_REHEARSED}) on the same slide; the chip at the top of the deck says honestly which mode you are in.</li>
         <li><strong>Say the honesty rules once, up front.</strong> The demo is simulated (the cast is fictional, the instance resets nightly), and the futures are labeled SMART+ on their slides (the twin is the one future slide; say so when you land on it).</li>
         <li><strong>The demo never stalls on the other role.</strong> The five flows' waiting cards on the demo instance carry an <em>Advance</em> control — demo instances only, a production instance never renders it — that performs the other role's real act through the platform, in seconds; the audit trail names you with the role you advanced, and a refusal names its blocker honestly. The per-slide notes name each beat.</li>
@@ -147,7 +147,7 @@ const five = FIVE_MINUTE_CUT.map(id => slides.find(s => s.id === id)!)
           <tbody>
             {[
               ['https://demo.oimlsmart.org/', 'the demo instance (s19)', '200 · 429ms', '200 · 94ms'],
-              ['https://demo.oimlsmart.org/app/login', 'the one-click accounts (s01)', '200 · 346ms*', '200 · 44ms'],
+              ['https://demo.oimlsmart.org/app/login', 'the persona cards (s01)', '200 · 346ms*', '200 · 44ms'],
               ['https://demo.oimlsmart.org/app/portal/applications/new', 'the wizard (s04)', '200 · 176ms', '200 · 41ms'],
               ['https://demo.oimlsmart.org/app/ia', 'the authority console (s05)', '200 · 171ms', '200 · 80ms'],
               ['https://demo.oimlsmart.org/app/lab', 'the laboratory console (s06)', '200 · 170ms', '200 · 52ms'],
