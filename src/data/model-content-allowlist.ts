@@ -70,12 +70,15 @@ const B018_REGISTER = {
 } as const
 
 /** The demo's R 60 requirements surface renders "14 classes containing
- *  180 requirements" (Viewer account); the demo-liveness leg asserts it
- *  nightly. */
+ *  180 requirements"; the demo-liveness leg asserts it nightly, signed
+ *  in as the Utilizer officer (the Viewer persona was dropped
+ *  2026-09-23 — certificates are public, and the Utilizer covers
+ *  authenticated non-public reads; /app/standards/* stays open to
+ *  every authenticated role). */
 const R60_COUNTS = {
   kind: 'live',
   url: 'https://demo.oimlsmart.org/app/standards/r60/requirements',
-  account: 'Viewer',
+  account: 'Utilizer Officer (NL)',
   probe: '14 classes containing 180 requirements',
 } as const
 

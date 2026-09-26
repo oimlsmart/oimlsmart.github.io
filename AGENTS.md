@@ -101,11 +101,16 @@ by a playwright leg with its OWN config (`playwright.demo.config.ts` —
 the default config never matches it, so the per-push e2e suite stays
 hermetic). Declared cadence: NIGHTLY (the freshness workflow), because
 the demo reseeds nightly and the tour must never silently break on that
-reset. The legs: the public surfaces anonymously (the login grid, the
-register, the verify page), every published deep link answering 200 at
-the HTTP layer (the demo 404s unknown app routes — a moved route is a
-broken tour), the cheap signed-in console smokes, and the model-content
-allowlist's `live` pins asserted on their surfaces.
+reset. The legs: the public surfaces anonymously (the instance front
+door, the sign-in cone's SSO persona strip, the register, the verify
+page), every published deep link answering 200 at the HTTP layer (the
+demo 404s unknown app routes — a moved route is a broken tour), the
+cheap signed-in console smokes, and the model-content allowlist's
+`live` pins asserted on their surfaces. The demo instance is
+OIDC-configured (smart#378), so the signed-in legs ride the provider's
+grant-based persona assumption with a grantee account held as the
+repo's `DEMO_SSO_EMAIL`/`DEMO_SSO_PASSWORD` secrets; undeclared secrets
+skip those legs loudly, never a false green.
 
 Run it locally:
 
