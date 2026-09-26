@@ -67,8 +67,13 @@ describe('nav-config ↔ pages contract', () => {
     item.type === 'dropdown' ? [...item.config.links] : [item]
   )
 
-  it('carries at most five top-level entries (the nav width directive)', () => {
-    expect(NAV_MODEL.items.length).toBeLessThanOrEqual(5)
+  it('carries at most six top-level entries (the nav width directive + the Experimental grouping)', () => {
+    // Five consolidated sections was the 0.2.0 directive; the maturity
+    // axis (TODO.ia/05, the owner 2026-09-26) adds the sixth: the SMART+
+    // tier gathers under one labeled Experimental dropdown, because the
+    // shell's npm-pinned dropdown renders a flat link list and a
+    // mid-menu group label is not in its contract.
+    expect(NAV_MODEL.items.length).toBeLessThanOrEqual(6)
   })
 
   it('every nav link resolves to a page or is whitelisted as external', () => {

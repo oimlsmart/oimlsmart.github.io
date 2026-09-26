@@ -4,6 +4,7 @@ import NavDropdown from './NavDropdown.vue'
 import {
   NAV_MODEL,
   RESOURCES_DROPDOWN,
+  EXPERIMENTAL_DROPDOWN,
   INTERNAL_DROPDOWN,
 } from '../data/nav-config'
 import { isLinkActive, isDropdownActive } from '@oimlsmart/site-shell/config'
@@ -15,12 +16,12 @@ const expectedHref = (link: { href: string; external?: boolean }) =>
   link.external ? link.href : `${ORIGIN}${link.href}`
 
 describe('nav model', () => {
-  it('carries exactly the five consolidated dropdowns', () => {
+  it('carries exactly the six consolidated dropdowns', () => {
     const ids = NAV_MODEL.items.map(i => (i.type === 'dropdown' ? i.config.id : i.label))
-    expect(ids).toEqual(['components', 'discover', 'resources', 'about', 'internal'])
+    expect(ids).toEqual(['components', 'experimental', 'discover', 'resources', 'about', 'internal'])
   })
 
-  it('components dropdown carries the SMART tier then the SMART+ tier (R 60 first)', () => {
+  it('components dropdown carries the SMART tier only (R 60 first)', () => {
     const components = NAV_MODEL.items.find(i => i.type === 'dropdown' && i.config.id === 'components')!
     if (components.type !== 'dropdown') throw new Error('unreachable')
     const hrefs = components.config.links.map(l => l.href)
@@ -33,21 +34,46 @@ describe('nav model', () => {
       '/cnml',
       '/smart',
       '/platform',
-      // SMART+ tier: the full Type-instance + measurement lifecycle.
-      '/cnml',
-      '/smi',
-      '/sst',
-      '/smart',
-      '/platform',
     ])
     // R 60's primacy: the pilot reference Recommendation is the first
     // link the dropdown offers.
     expect(components.config.links[0].label).toBe('SMART Recommendations')
   })
 
+  it('experimental dropdown gathers the whole SMART+ tier under one label', () => {
+    // The maturity axis (TODO.ia/05): every SMART+ entry under ONE
+    // Experimental grouping, fed from the same ONE component registry,
+    // never interleaved into the Components menu.
+    const hrefs = EXPERIMENTAL_DROPDOWN.links.map(l => l.href)
+    expect(hrefs).toEqual(['/cnml', '/smi', '/sst', '/smart', '/platform'])
+    expect(EXPERIMENTAL_DROPDOWN.label).toBe('Experimental')
+  })
+
+  it('components and experimental dropdowns partition the registry by tier', () => {
+    const components = NAV_MODEL.items.find(i => i.type === 'dropdown' && i.config.id === 'components')!
+    if (components.type !== 'dropdown') throw new Error('unreachable')
+    const componentLabels = components.config.links.map(l => l.label)
+    const experimentalLabels = EXPERIMENTAL_DROPDOWN.links.map(l => l.label)
+    for (const label of experimentalLabels) {
+      expect(componentLabels).not.toContain(label)
+    }
+  })
+
   it('resources dropdown contains expected links in correct order', () => {
     const labels = RESOURCES_DROPDOWN.links.map(l => l.label)
-    expect(labels).toEqual(['Document Library', 'Publications', 'Resolutions', 'Certificate Corpus', 'Ontology', 'Learn', 'Developer Docs', 'The OIML SMART Program', 'Component Architecture', 'The Docs Federation'])
+    expect(labels).toEqual(['Document Library', 'Publications', 'Resolutions', 'Certificate Corpus', 'Ontology', 'Learn', 'Developer Docs', 'The OIML SMART Program', 'Component Architecture'])
+  })
+
+  it('no nav dropdown holds an external vendor link', () => {
+    // Mandate 4 (TODO.ia/00): vendor tooling gets footer-class
+    // attribution, not a nav position. The Resources menu's "The Docs
+    // Federation" primmel.org entry left the nav under this rule; the
+    // only external link left in the model is Ommisa, the program's own
+    // assistant property.
+    const external = NAV_MODEL.items.flatMap(i =>
+      i.type === 'dropdown' ? i.config.links.filter(l => l.external).map(l => l.href) : [],
+    )
+    expect(external).toEqual(['https://www.ommisa.org/'])
   })
 
   it('internal dropdown has variant "internal"', () => {

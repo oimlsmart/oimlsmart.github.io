@@ -13,19 +13,33 @@
  * was too wide). The pre-0.2.0 header carried ten top-level entries —
  * the SMART and SMART+ tier dropdowns, the four first-class section
  * links, Resources, News, About, and Internal. They consolidate to
- * five without losing a destination:
+ * six without losing a destination:
  *
- *   1. Components  — the SMART tier's entries followed by the SMART+
- *                    tier's, straight from the ONE component registry
- *                    (components.ts). SMART Recommendations stays the
- *                    first link — R 60's primacy in any standards
- *                    listing is doctrine.
- *   2. Discover    — the four first-class sections in their original
+ *   1. Components  — the SMART tier's entries, straight from the ONE
+ *                    component registry (components.ts). SMART
+ *                    Recommendations stays the first link — R 60's
+ *                    primacy in any standards listing is doctrine.
+ *   2. Experimental — the SMART+ tier's entries from the same registry
+ *                    (filtered tier === 'smartplus'). The maturity axis
+ *                    (the smart repo's TODO.ia/00, the owner
+ *                    2026-09-26): the nav gathers every unfinished
+ *                    implementation under ONE clearly labeled grouping,
+ *                    never interleaved with the proven entries as if
+ *                    equal, and never per-item badges. The grouping is
+ *                    a top-level dropdown because the shell's dropdown
+ *                    machinery (npm-pinned) renders a flat link list —
+ *                    a mid-menu group label is not in its contract.
+ *   3. Discover    — the four first-class sections in their original
  *                    order, joined by News (moved up from its spot
  *                    between Resources and About).
- *   3. Resources   — unchanged.
- *   4. About       — unchanged.
- *   5. Internal    — unchanged, still the amber member-only variant.
+ *   4. Resources   — internal routes only; "The Docs Federation"
+ *                    external primmel.org link left the nav under
+ *                    TODO.public mandate 4 (vendor tooling gets
+ *                    footer-class attribution, not a nav position — the
+ *                    same link inside a developer-docs page is a
+ *                    citation and stays).
+ *   5. About       — unchanged.
+ *   6. Internal    — unchanged, still the amber member-only variant.
  *
  * Every href of the old model remains reachable from the nav; the
  * contract test pins that against the page routes.
@@ -53,15 +67,24 @@ import { SITE } from './site-meta.ts'
 
 const componentLink = (c: SmartComponent): NavLink => ({ label: c.name, href: c.href, desc: c.desc })
 
-/** The components of both tiers, SMART first (R 60's primacy). */
+/** The SMART tier, plainly listed (R 60's primacy: the pilot reference
+ *  Recommendation is the first link). The SMART+ tier does not
+ *  interleave here — it gathers under EXPERIMENTAL_DROPDOWN. */
 export const COMPONENTS_DROPDOWN: NavDropdownConfig = {
   id: 'components',
   label: 'Components',
   variant: 'default',
-  links: [
-    ...SMART_COMPONENTS.map(componentLink),
-    ...SMARTPLUS_COMPONENTS.map(componentLink),
-  ],
+  links: SMART_COMPONENTS.map(componentLink),
+}
+
+/** The SMART+ tier under one labeled grouping (the maturity axis): real
+ *  pages, unfinished implementations — visible, never presented as if
+ *  equal to the proven entries. Fed from the same ONE registry. */
+export const EXPERIMENTAL_DROPDOWN: NavDropdownConfig = {
+  id: 'experimental',
+  label: 'Experimental',
+  variant: 'default',
+  links: SMARTPLUS_COMPONENTS.map(componentLink),
 }
 
 /** The public story's role-first sections, News alongside them. */
@@ -99,7 +122,6 @@ export const RESOURCES_DROPDOWN: NavDropdownConfig = {
     { label: 'Developer Docs', href: '/docs/', desc: 'Guides, architecture, specifications' },
     { label: 'The OIML SMART Program', href: '/programs/oiml-smart', desc: 'The program overview' },
     { label: 'Component Architecture', href: '/architecture', desc: 'The repos, the SSOT flow, the gates' },
-    { label: 'The Docs Federation', href: 'https://www.primmel.org/primmel-smart-docs/', desc: 'The platform volumes — foundation to classroom', external: true },
   ],
 }
 
@@ -134,6 +156,7 @@ export const NAV_MODEL: NavModel = {
   origin: SITE.url,
   items: [
     { type: 'dropdown', config: COMPONENTS_DROPDOWN },
+    { type: 'dropdown', config: EXPERIMENTAL_DROPDOWN },
     { type: 'dropdown', config: DISCOVER_DROPDOWN },
     { type: 'dropdown', config: RESOURCES_DROPDOWN },
     { type: 'dropdown', config: ABOUT_DROPDOWN },

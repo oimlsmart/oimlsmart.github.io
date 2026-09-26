@@ -73,8 +73,8 @@ export const COMPONENTS: readonly SmartComponent[] = [
   {
     name: 'SMART Studio',
     href: '/studio',
-    desc: 'View and author SMART Recommendations',
-    detail: 'The canvas for viewing and authoring SMART Recommendations. An expert models a Recommendation graphically and the model is the published artifact.',
+    desc: 'The interactive reader for the SMART Recommendations',
+    detail: 'The interactive, read-only reader over the SMART Recommendations. The viewer renders a Recommendation’s model for reading — the requirement tree, the tests, the forms, and the clause-level provenance — mounted at /studio/view, public and account-free.',
     logo: 'smart-studio',
     alt: 'The SMART Studio logo.',
     tier: 'smart',
@@ -129,12 +129,12 @@ export const COMPONENTS: readonly SmartComponent[] = [
     tier: 'smartplus',
   },
   {
-    name: 'SST for Measuring Instruments',
+    name: 'SMI Simulation',
     href: '/sst',
-    desc: 'The simulated SMART twin — no hardware needed',
-    detail: 'The Simulated SMART Twin. The ACME LC-500 family and its siblings simulate metrologically real physics, so test programs run without hardware.',
+    desc: 'The simulated SMART twins — no hardware needed',
+    detail: 'The SMI Simulation: an SST (Simulated SMART Measuring Instrument Twin) booted on the Primmel SST framework. The ACME LC-500 family and its siblings simulate metrologically real physics, so test programs run without hardware.',
     logo: 'sst',
-    alt: 'The SST for Measuring Instruments logo.',
+    alt: 'The SMI Simulation logo.',
     tier: 'smartplus',
   },
   {

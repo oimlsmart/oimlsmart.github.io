@@ -149,7 +149,9 @@ uploads `dist/` as a GitHub Pages artifact, and deploys.
   injected into the shell's `Base` for the header menu, the mobile overlay, and the
   footer's Explore column (the shell package went machinery-only at 0.2.0; the site
   injects brand/nav/services/footer from `src/data/`). The top level carries at most
-  five entries; a contract test (`nav-config.contract.test.ts`) proves every link
+  six entries — the five consolidated sections plus the Experimental dropdown that
+  gathers the SMART+ tier (the maturity axis, smart repo TODO.ia/05); a contract test
+  (`nav-config.contract.test.ts`) proves every link
   resolves, and `npm run check:nav` proves every href is served (dist or a declared
   sibling deployment) before each deploy.
 - **Dark mode** is handled by an inline `<script>` in `Base.astro` — not by a composable or component lifecycle.
