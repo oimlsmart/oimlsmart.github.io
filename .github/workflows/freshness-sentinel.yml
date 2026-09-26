@@ -102,6 +102,13 @@ jobs:
 
       - name: The walkthrough/tour deep links into the live demo
         run: npx playwright test -c playwright.demo.config.ts
+        env:
+          # The signed-in legs' grantee account at the identity
+          # provider (the personas' own credentials are never
+          # published; the chooser's grant-based assumption is the
+          # only way in). Unprovisioned ⇒ the legs skip loudly.
+          DEMO_SSO_EMAIL: ${{ secrets.DEMO_SSO_EMAIL }}
+          DEMO_SSO_PASSWORD: ${{ secrets.DEMO_SSO_PASSWORD }}
 
       - uses: actions/upload-artifact@v4
         if: failure()
