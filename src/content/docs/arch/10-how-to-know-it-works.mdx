@@ -18,15 +18,15 @@ release gate run, and what each proves.
 | `npm test` in `oimlsmart/platform-server` | the server kernel's own suite (its repo's CI) — the modules the extraction moved out of `browser/server/` (TODO.identity-extract/01), consumed here as the npm package (TODO.repos/01) |
 | `cd browser && npx vue-tsc --noEmit` | type safety of the Vue islands and services |
 | `cd browser && npx astro check` | the Astro route shells and layouts |
-| `cd browser && npm run validate` | every data file against its schema + the semantic rules (R-series), 0 errors; 109 documented warnings (named gaps) |
+| `cd browser && npm run validate` | every data file against its schema + the semantic rules (R-series), 0 errors |
 | `cd browser && npm run build` | gen:data + the production build (incl. codegen), the pipeline regenerates cleanly |
-| `cd browser && npm run test:ssot` | **the SSOT drift guard**, 4 legs byte-clean: packages → bake → committed generated TS snapshots; bake determinism; model-plane bundles; the OIML-CS reference copy |
+| `cd browser && npm run test:ssot` | **the SSOT drift guard**, 5 legs byte-clean: packages → bake → committed generated files; bake determinism; model-plane bundles; the OIML-CS reference copy; the OpenAPI-plane bundles |
 | `cd browser && npm run test:from-packages` | **the release proof**, the whole platform builds from `primmel-packages/` alone (lint, ssot, cache, build, vitest, validate, coverage, e2e, mutation) |
-| `cd browser && npm run test:e2e` | 347/360 puppeteer-driven flow tests against a real boot, login, the CS chains, the render baseline (13 skip-honest legs: the live-sim class without the SST declared + the IndexedDB-profile legs). Boot the dev stack as `ENTITY_BACKEND=server npm run dev` — the suite is written against the server persistence profile (the shell's profile chip renders "Connected workspace" only then; a bare `npm run dev` answers `entityBackend: indexeddb` and the render-baseline leg diffs the local-profile chrome). The pin is the LOCAL full-checkout number; CI runs the same set — the e2e job declares the SST positions AND `CNML_REPO` (the pinned `oimlsmart/cnml` checkout), so the CNML signing/registration family (cs-e2e-13c, vc-envelope, cnml-issue, fed-06, fed-07, aas-submodel, biml-portal, submission, cs-e2e-10, cs-e2e-12, trust-02, cs-e2e-13g, the interop CNML legs) no longer skips there |
+| `cd browser && npm run test:e2e` | 387/400 puppeteer-driven flow tests against a real boot, login, the CS chains, the render baseline (13 skip-honest legs: the live-sim class without the SST declared + the IndexedDB-profile legs). Boot the dev stack as `ENTITY_BACKEND=server npm run dev` — the suite is written against the server persistence profile (the shell's profile chip renders "Connected workspace" only then; a bare `npm run dev` answers `entityBackend: indexeddb` and the render-baseline leg diffs the local-profile chrome). The pin is the LOCAL full-checkout number; CI runs the same set — the e2e job declares the SST positions AND `CNML_REPO` (the pinned `oimlsmart/cnml` checkout), so the CNML signing/registration family (cs-e2e-13c, vc-envelope, cnml-issue, fed-06, fed-07, aas-submodel, biml-portal, submission, cs-e2e-10, cs-e2e-12, trust-02, cs-e2e-13g, the interop CNML legs) no longer skips there |
 | `cd browser && npm run pilot` | the 6-step live-twin pilot (ACME LC-500 → quarry), asserted |
-| `cd primmel-ts && yarn test` | 1132 kernel tests incl. the corpus legs (all 30 packages lint clean) |
+| `cd primmel-ts && yarn test` | 1132 kernel tests incl. the corpus legs (all 41 packages lint clean) |
 | `cd sim-instruments && npm test` | 254 sim tests across five workspaces + typecheck + CI |
-| `primmel check --strict --audit` per package | 0 errors on all 30 packages (budgets pinned where warnings exist) |
+| `primmel check --strict --audit` per package | 0 lint errors on all 41 packages (the content repo's own gate) |
 
 ## The acceptance proofs (what to read when a number looks surprising)
 

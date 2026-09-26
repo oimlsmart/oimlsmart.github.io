@@ -50,9 +50,9 @@ describe.skipIf(!HAS_DOC)('the content-freshness gate (site claims ≡ SSOT)', (
     expect(needDoc().length).toBeGreaterThan(0)
   })
 
-  it('the package count matches (primmel check → 0 errors ×N)', () => {
-    const m = needDoc().match(/0 errors ×(\d+)/)
-    expect(m, 'for-agents.md states "0 errors ×N"').toBeTruthy()
+  it('the package count matches (primmel check → N packages, 0 lint errors)', () => {
+    const m = needDoc().match(/(\d+) packages, 0 lint errors/)
+    expect(m, 'for-agents.md states "N packages, 0 lint errors"').toBeTruthy()
     expect(GATE_NUMBERS.packages).toBe(Number(m![1]))
   })
 
@@ -69,11 +69,10 @@ describe.skipIf(!HAS_DOC)('the content-freshness gate (site claims ≡ SSOT)', (
     expect(GATE_NUMBERS.e2e).toBe(m![1])
   })
 
-  it('the validate numbers match (validate E/W)', () => {
-    const m = needDoc().match(/validate (\d+)\/(\d+)/)
-    expect(m, 'for-agents.md states "validate E/W"').toBeTruthy()
+  it('the validate number matches (npm run validate → E errors)', () => {
+    const m = needDoc().match(/npm run validate`? → (\d+) errors?/)
+    expect(m, 'for-agents.md states "npm run validate → E errors"').toBeTruthy()
     expect(GATE_NUMBERS.validateErrors).toBe(Number(m![1]))
-    expect(GATE_NUMBERS.validateWarnings).toBe(Number(m![2]))
   })
 
   it('every claimed repo is a row in the SSOT repo table', () => {

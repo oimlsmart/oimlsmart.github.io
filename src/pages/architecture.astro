@@ -7,7 +7,7 @@ const gates = [
   { label: 'Primmel packages (SSOT)', value: `${GATE_NUMBERS.packages}`, note: '0 lint errors' },
   { label: 'App unit tests', value: GATE_NUMBERS.vitestTests.toLocaleString('en-US'), note: `${GATE_NUMBERS.vitestFiles} files` },
   { label: 'End-to-end', value: GATE_NUMBERS.e2e, note: 'puppeteer, live app' },
-  { label: 'Data validation', value: `${GATE_NUMBERS.validateErrors} errors`, note: `${GATE_NUMBERS.validateWarnings} warnings tracked` },
+  { label: 'Data validation', value: `${GATE_NUMBERS.validateErrors} errors`, note: 'schema + semantic rules over all data' },
   { label: 'Kernel suite', value: GATE_NUMBERS.kernel, note: 'primmel-ts' },
   { label: 'Simulator suite', value: GATE_NUMBERS.sim, note: 'sim-instruments' },
 ]

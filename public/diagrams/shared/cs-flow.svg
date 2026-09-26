@@ -31,11 +31,11 @@
 
   <!-- IA steps -->
   <rect x="280" y="110" width="180" height="52" rx="8" fill="#ffffff" stroke="#3b82f6"/>
-  <text x="370" y="132" text-anchor="middle" font-size="12" font-weight="600" fill="#1e293b">2. Sample request</text>
-  <text x="370" y="150" text-anchor="middle" font-size="10.5" fill="#64748b">models × count, routing → SAMPLES_REQUESTED</text>
+  <text x="370" y="132" text-anchor="middle" font-size="12" font-weight="600" fill="#1e293b">2. Accept</text>
+  <text x="370" y="150" text-anchor="middle" font-size="10.5" fill="#64748b">the written decision (PD-05 4.2.4) → the TEP opens</text>
   <rect x="280" y="210" width="180" height="52" rx="8" fill="#ffffff" stroke="#3b82f6"/>
-  <text x="370" y="232" text-anchor="middle" font-size="12" font-weight="600" fill="#1e293b">4. Register + accept</text>
-  <text x="370" y="250" text-anchor="middle" font-size="10.5" fill="#64748b">register receipts → SAMPLES_RECEIVED → accept</text>
+  <text x="370" y="232" text-anchor="middle" font-size="12" font-weight="600" fill="#1e293b">4. Samples</text>
+  <text x="370" y="250" text-anchor="middle" font-size="10.5" fill="#64748b">request (post-acceptance, 4.2.5) → ship → register receipts</text>
   <rect x="280" y="310" width="180" height="52" rx="8" fill="#ffffff" stroke="#3b82f6"/>
   <text x="370" y="332" text-anchor="middle" font-size="12" font-weight="600" fill="#1e293b">5. Dispatch</text>
   <text x="370" y="350" text-anchor="middle" font-size="10.5" fill="#64748b">form × sample tuples per lab</text>
