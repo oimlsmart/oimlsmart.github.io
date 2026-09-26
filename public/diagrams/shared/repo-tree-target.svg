@@ -45,7 +45,7 @@
   <text x="135" y="398" text-anchor="middle" font-size="8.5" fill="#3b82f6">program SSOT + app instance</text>
   <text x="135" y="410" text-anchor="middle" font-size="8.5" fill="#3b82f6">oiml-* · acme-* packages · data trees</text>
   <rect x="240" y="364" width="178" height="52" rx="6" fill="#ffffff" stroke="#93c5fd"/>
-  <text x="329" y="384" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">sst-instruments (R3 split)</text>
+  <text x="329" y="384" text-anchor="middle" font-size="10" font-weight="700" fill="#1e40af">sst (the R3 split's library)</text>
   <text x="329" y="398" text-anchor="middle" font-size="8.5" fill="#3b82f6">the OIML instrument library:</text>
   <text x="329" y="410" text-anchor="middle" font-size="8.5" fill="#3b82f6">D 11 base · 4 kinds · ACME instances</text>
   <rect x="46" y="428" width="178" height="52" rx="6" fill="#ffffff" stroke="#93c5fd"/>

@@ -55,9 +55,12 @@ a fresh timestamp judges nothing).
 
 ## Hands-on, drive the whole chain in the Twin Lab (half a day)
 
-Setup: the app (`cd browser && npm run dev`) and an SST
-(`cd sst && npx tsx packages/runtime/sst-runtime/src/bin.ts run
-../sst-instruments/packages/instances/acme-lc500 5290`).
+Setup: the app (`cd browser && npm run dev`) and an SST from the two
+split checkouts ([`primmel/sst`](https://github.com/primmel/sst), the
+framework, next to [`oimlsmart/sst`](https://github.com/oimlsmart/sst),
+the instrument library, cloned as `sst-instruments`): `cd sst && npx
+tsx packages/runtime/sst-runtime/src/bin.ts run
+../sst-instruments/packages/instances/acme-lc500 5290`.
 
 1. **Bind** (`/app/twin-lab`): pick R 60, enter the SST's `/twin` URL,
    Discover, read the proposed binding (the serves, the freshness

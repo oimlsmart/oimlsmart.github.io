@@ -1,20 +1,28 @@
 ---
-title: 'The sim instruments (`sim-instruments`)'
+title: 'The simulated instruments (the SST split)'
 shortTitle: 'The sim instruments'
-description: 'The sim instruments are a separate repository of four standalone simulated instruments, each bootable alone with zero SMART checkout.'
+description: 'The simulated instruments live in two repositories: primmel/sst, the kind-agnostic SST framework, and oimlsmart/sst, the OIML instrument library, each bootable with zero SMART checkout.'
 eyebrow: 'Architecture · Chapter 07'
 order: 7
 ---
 
-**What it is.** A separate repository of four standalone simulated
-instruments, each bootable alone with zero SMART checkout:
+**What it is.** Two repositories, split on 2026-08-01 when the pre-split
+`sim-instruments` repository was archived:
+
+| Repository | Role |
+|---|---|
+| [`primmel/sst`](https://github.com/primmel/sst) | the SST framework: the kind-agnostic runtime (`/twin`, `/world`, the bench), the shell, the specifications |
+| [`oimlsmart/sst`](https://github.com/oimlsmart/sst) | the OIML instrument library: the D 11 environmental base, the kind packages, the ACME instances including the composite |
+
+The library's instruments, each bootable alone with zero SMART checkout:
 
 | Instrument | Rec | Physics |
 |---|---|---|
-| `sim-lc500` (load cell) | R 60 | strain → bridge → conditioning; creep, thermal hysteresis, configurable post-cycle residual |
-| `sim-gas-analyzer` (CGM-200) | R 144 | CO by NDIR, NOx by chemiluminescence; drift classes, cross-sensitivity, calibration |
-| `sim-r91` (RS-180) | R 91 | K-band Doppler, 20–180 km/h; cosine error, rain fade (missed readings, never wrong ones) |
-| `sim-md` (MD-350) | R 129 | optical light-section dimensioning; along-track sampling, reflectance and ambient-light noise, protrusion resolution |
+| `acme-lc500` (load cell) | R 60 | strain → bridge → conditioning; creep, thermal hysteresis, configurable post-cycle residual |
+| `acme-cgm-200` (gas analyzer) | R 144 | CO by NDIR, NOx by chemiluminescence; drift classes, cross-sensitivity, calibration |
+| `acme-rs180` (speed meter) | R 91 | K-band Doppler, 20–180 km/h; cosine error, rain fade (missed readings, never wrong ones) |
+| `acme-md3xx` (dimensioner) | R 129 | optical light-section dimensioning; along-track sampling, reflectance and ambient-light noise, protrusion resolution |
+| `acme-cgm-system` (composite) | R 144 | the gas analyzer plus its sampling line, one boot, two components |
 
 **What it does.** Each instrument serves two channels and a bench:
 
@@ -32,41 +40,55 @@ instruments, each bootable alone with zero SMART checkout:
   a human can read a needle and catch what the API can't: the
   lying-twin lesson).
 
-Scenarios are the teaching cases: `good-cell` (class-honest
-coefficients, recalibrated to be R 60 class-C creep-honest),
-`creep-cell` (the deliberate behavioral fail), `temp-cell`, and their
-per-family equivalents.
+The physics are data, not code: each kind package declares its stage
+chain (`physics-chain.yaml`, three stages per construction), its MPE
+tables, and its damage scenarios (`scenarios.yaml`: `fresh`,
+`creep-fail`, `temp-fail`, `drift-fail`, `lying-twin`, and their
+per-kind equivalents), and each instance pins its samples as boot-time
+chains of custody (`samples/<name>.yaml`; one boot, one sample). The
+`fresh` sample is the teaching case (class-honest coefficients,
+recalibrated to be R 60 class-C creep-honest), `creep-fail` the
+deliberate behavioral fail.
 
-**What it owns.** The multi-technology physics framework (transduction +
-conditioning stages per construction), the D 11 environmental layer,
-the twin-schema generation, the world schemas, the consoles, the bench.
+**What it owns.** The framework owns the stage registry the
+data-driven physics composes on, the twin-schema generation, the world
+schemas, the console, the bench, and the interaction specifications.
+The library owns the OIML content: the D 11 environmental base
+(`sst-oiml-base`, Edition 13), the kinds (`sst-r60`, `sst-r91`,
+`sst-r129`, `sst-r144`, `sst-sampling-line`), and the ACME instances
+with their coefficients and samples. The boundary is mechanical: the
+framework never imports instrument content, and the library resolves
+the framework through a declared `file:` link in development (the npm
+tag at release).
 
-**How it proves it works.** `npm test`, **254 tests** across five
-workspaces (physics pinned per stage, contract conformance to the real
-packages, server and channel behavior, boot smoke) + typecheck + CI on
-GitHub Actions.
+**How it proves it works.** The framework runs the suites: `npm test`
+in `primmel/sst` with the library declared
+(`SST_LIBRARY_PATH=<oimlsmart/sst checkout>`), **255 of 259 tests**
+across four vitest workspaces (4 skip-honest; hand-counted 2026-09-27
+and rendered as an ungated number on [the architecture
+page](/architecture), physics pinned per stage, contract conformance
+to the real packages, server and channel behavior, boot smoke) plus
+typecheck and CI on GitHub Actions. The library validates rather than
+tests, by design: `npm run validate` checks every package (12) against
+the real runtime, and the instance-parameter guard compares each
+instance's typed parameters against the product package it maps to.
 
-**Where it plugs in.** The smart app consumes its `/twin` through the
-graphql connector (the real out-of-process acceptance path) and embeds
-its bench in `/app/sim` *as a human face*, interaction never needs the
-iframe: the contract is two endpoints and four verbs, specified in
-[12, the SST interaction contract](/docs/arch/12-the-sst-interaction-contract).
-The epistemic wall: the SMART app never calls `/world` outside the
-declared practice seam, certification logic reads only the served
-channel.
+**Where it plugs in.** The smart app consumes an instrument's `/twin`
+through the graphql connector (the real out-of-process acceptance
+path) and embeds its bench in `/app/sim` *as a human face*, interaction
+never needs the iframe: the contract is two endpoints and four verbs,
+specified in [12, the SST interaction
+contract](/docs/arch/12-the-sst-interaction-contract). The smart
+repo's live-sim legs resolve the two checkouts from declared envs
+(`SST_REPO` for the framework, `SST_LIBRARY_PATH` for the library) and
+skip honestly when they are undeclared. The epistemic wall stands: the
+SMART app never calls `/world` outside the declared practice seam,
+certification logic reads only the served channel.
 
-**The rebrand (in flight).** The repo is becoming the **Primmel SST
-(Simulated SMART Twin)** platform: packages factor into base / kind /
-instance tiers (`package.sst.yaml` manifests), a generic `sst-runtime`
-boots any instance (`primmel-sst run acme-lc500`), an `sst-shell` hosts
-sessions, and the namespace renames to `@primmel/sst-*` (the repo's
-`TODO.complete/` workstreams). The interaction contract above is the
-stable surface through the migration, the legacy family bins delegate
-during the window.
-
-**Peel deeper.** The repo's own `README.md`, its design doc
-(`docs/2026-07-26-simulated-instruments-design.md`), and the product
-packages it mirrors (`primmel-packages/acme-*`).
+**Peel deeper.** Each repo's own `README.md` (the library's quickstart
+boots every instrument with one npm script), the framework's
+specifications (`specs/`), and the product packages the instances
+mirror (`maps_to:` in each `package.sst.yaml`).
 
 ---
 

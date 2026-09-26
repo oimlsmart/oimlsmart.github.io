@@ -50,15 +50,22 @@ them). The smart repo consumes it through a symlink (`PRIMMEL_TS`), so
 the platform's gates always run against the live kernel. Primmel v3 is
 a strict superset of Primmel v2 (the predecessor at `primmel/`).
 
-## `sim-instruments`, the instruments
+## `primmel/sst` + `oimlsmart/sst`, the instruments
 
-Four standalone simulated instruments, the load cell (LC-500), the gas
-analyzer (CGM-200), the radar speed meter (RS-180), and the optical
-dimensioner (MD-350), each serving a governed `/twin` interface and a
-physical `/world` interface. They exist so that everything in the
-platform that touches a twin can be exercised, tested, and taught
-without hardware: the practice flows, the probe channel, the monitor
-acceptance, the twin-certification walks, and the demo.
+The Simulated SMART Measuring Instrument Twins (SSTs), in two
+repositories since the pre-split `sim-instruments` repository was
+archived (2026-08-01): `primmel/sst` is the framework, the
+kind-agnostic runtime, the shell, the bench, and the specifications,
+and `oimlsmart/sst` is the OIML instrument library, the D 11 base,
+the kind packages (R 60, R 91, R 129, R 144, and the sampling line),
+and the ACME instances including the composite. A strain-gauge load
+cell (LC-500), a continuous gas monitor (CGM-200), a Doppler speed
+meter (RS-180), and an optical dimensioner (MD-3xx), each serving a
+governed `/twin` interface and a physical `/world` interface. They
+exist so that everything in the platform that touches a twin can be
+exercised, tested, and taught without hardware: the practice flows,
+the probe channel, the monitor acceptance, the twin-certification
+walks, and the demo.
 
 ## `primmel-smart-docs`, the documentation site
 
