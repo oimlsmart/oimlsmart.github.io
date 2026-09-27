@@ -114,21 +114,21 @@ const SHOTS: Shot[] = [
   {
     id: 'demo-portal-applicant',
     service: 'demo',
-    caption: 'The applicant portal after the persona sign-in: ACME\'s five applications and three certificates.',
+    caption: 'The applicant portal after the persona sign-in: Steelyard\'s five applications and three certificates.',
     act: (page) => demoSignIn(page, 'Applicant', '/app/portal'),
-    expect: ['ACME Measurement GmbH', 'My applications', 'My certificates', 'R60/2021-A-EX1-26.01'],
+    expect: ['Steelyard Instruments Ltd.', 'My applications', 'My certificates', 'R60/2021-A-EX1-26.01'],
     signedIn: true,
   },
   {
     id: 'demo-application-detail',
     service: 'demo',
-    caption: 'One application opened: XX-ACME-2026-0001, ACCEPTED, with the link into the evaluation project.',
+    caption: 'One application opened: XX-STE-2026-0001, ACCEPTED, with the link into the evaluation project.',
     act: async (page) => {
       await demoSignIn(page, 'Applicant', '/app/portal')
-      await page.locator('text=XX-ACME-2026-0001').first().click()
+      await page.locator('text=XX-STE-2026-0001').first().click()
       await page.waitForTimeout(2500)
     },
-    expect: ['XX-ACME-2026-0001', 'ACCEPTED', 'LC-500i'],
+    expect: ['XX-STE-2026-0001', 'ACCEPTED', 'LC-500i'],
     signedIn: true,
   },
   {

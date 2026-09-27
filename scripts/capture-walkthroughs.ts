@@ -66,7 +66,7 @@
  * grantee account the signed-in legs ride — below).
  *
  * The demo is the nightly-reset fictional instance: the drive files one
- * clearly-marked demonstration application (the ACME cast) and takes it
+ * clearly-marked demonstration application (the Gulliver cast) and takes it
  * as far as the laboratory's submitted report, never further. The demo
  * instance is OIDC-configured (smart#378): the one-click local demo
  * cast is dead there, and the signed-in legs ride the provider's
@@ -644,7 +644,7 @@ async function tepSelectSamplesAndDispatch(page: Page, appId: string) {
   await shoot(page, 'ia-intake', 'tep-samples-selected', currentTheme, 'registered the receipts and selected the samples for the evaluation with the recorded justification: only the selected enter the dispatch pool')
 
   // The dispatch builder: the test-forms × samples matrix, one request
-  // to the Example Test Laboratory (org 21).
+  // to the Blefuscu Central Laboratory (org 21).
   await clickTestId(page, 'tep-new-request')
   await page.waitForFunction(
     () => window.location.pathname.startsWith('/app/ia/dispatch/'),
@@ -665,7 +665,7 @@ async function tepSelectSamplesAndDispatch(page: Page, appId: string) {
     input?.click()
   }, formId)
   await waitTestId(page, 'ia-plan-21')
-  await shoot(page, 'ia-intake', 'dispatch-builder', currentTheme, 'composed the dispatch: the test-forms by samples matrix, one TestRequest to the Example Test Laboratory', { fullPage: true })
+  await shoot(page, 'ia-intake', 'dispatch-builder', currentTheme, 'composed the dispatch: the test-forms by samples matrix, one TestRequest to the Blefuscu Central Laboratory', { fullPage: true })
   await clickTestId(page, 'ia-issue-requests')
   await page.waitForFunction(
     () => window.location.pathname.startsWith('/app/ia/projects/'),
