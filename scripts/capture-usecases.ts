@@ -648,7 +648,7 @@ async function captureUtilizer(browser: Browser) {
     currentTheme = theme
     const context = await themedContext(browser, theme)
     const page = await context.newPage()
-    await loginAs(context, page, 'Utilizer Officer (NL)', '/app')
+    await loginAs(context, page, 'Utilizer Officer (XG)', '/app')
 
     if (wants('anr-registry') || wants('anr-declare-form')) {
       await gotoApp(page, '/app/cs/anr/')

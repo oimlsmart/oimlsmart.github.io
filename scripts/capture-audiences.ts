@@ -35,7 +35,7 @@
  * legs ride — below).
  *
  * The demo is the nightly-reset fictional instance: the --drive chain
- * files one clearly-marked demonstration application (the ACME cast)
+ * files one clearly-marked demonstration application (the Gulliver cast)
  * and stops before any certificate issuance — the register story stays
  * the seeded one.
  *
@@ -538,7 +538,7 @@ async function driveChain(browser: Browser) {
     input?.click()
   }, formId)
   await waitTestId(page, 'ia-plan-21')
-  await shoot(page, 'issuing-authorities', 'dispatch-builder', currentTheme, 'composed the dispatch: the test-forms × samples matrix, one TestRequest to laboratory 21 (ETL)', { fullPage: true })
+  await shoot(page, 'issuing-authorities', 'dispatch-builder', currentTheme, 'composed the dispatch: the test-forms × samples matrix, one TestRequest to laboratory 21 (BCL)', { fullPage: true })
   await clickTestId(page, 'ia-issue-requests')
   await page.waitForFunction(
     () => window.location.pathname.startsWith('/app/ia/projects/'),
@@ -697,7 +697,7 @@ async function captureViewer(browser: Browser) {
     // register needs no account, and the Utilizer already covers
     // authenticated read access to the non-public evidence — the same
     // account the model-content allowlist's live pins ride).
-    await loginAs(context, page, 'Utilizer Officer (NL)', '/app')
+    await loginAs(context, page, 'Utilizer Officer (XG)', '/app')
 
     if (wants('standards-catalog')) {
       await gotoApp(page, '/app/')
@@ -992,7 +992,7 @@ async function captureUtilizer(browser: Browser) {
     currentTheme = theme
     const context = await themedContext(browser, theme)
     const page = await context.newPage()
-    await loginAs(context, page, 'Utilizer Officer (NL)', '/app')
+    await loginAs(context, page, 'Utilizer Officer (XG)', '/app')
 
     if (wants('anr')) {
       await gotoApp(page, '/app/cs/anr/')

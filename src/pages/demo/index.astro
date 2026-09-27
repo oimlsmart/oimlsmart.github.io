@@ -79,9 +79,9 @@ const flows = [
 ]
 
 const cast = [
-  { account: 'Applicant', who: 'Dr. Anna Meyer', org: 'ACME Measurement GmbH (the manufacturer)', console: '/app/portal' },
-  { account: 'Issuing Authority', who: 'Ms. Emily Irving', org: 'Example Issuing Authority (EX1)', console: '/app/ia' },
-  { account: 'Test Laboratory', who: 'Ms. Petra Horvat · Mr. Martin Berger', org: 'Example Test Laboratory (ETL)', console: '/app/lab' },
+  { account: 'Applicant', who: 'Dr. Anna Meyer', org: 'Steelyard Instruments Ltd. (the manufacturer)', console: '/app/portal' },
+  { account: 'Issuing Authority', who: 'Ms. Emily Irving', org: 'Brobdingnag Legal Metrology Authority (EX1)', console: '/app/ia' },
+  { account: 'Test Laboratory', who: 'Ms. Petra Horvat · Mr. Martin Berger', org: 'Blefuscu Central Laboratory (BCL)', console: '/app/lab' },
   { account: 'BIML Officer', who: 'The BIML registration officer (a role, not an invented person)', org: 'the BIML register', console: '/app/biml' },
   { account: 'OIML-CS Administrator', who: 'The scheme operator (a role, not an invented person)', org: 'the OIML-CS console', console: '/app/cs' },
 ]
@@ -110,9 +110,9 @@ const cast = [
       <FlowDiagram
         caption="FIG. THE FIVE FLOWS, ONE CHAIN"
         steps={[
-          { label: 'Applicant', sub: 'the manufacturer (ACME)', accent: 'amber' },
+          { label: 'Applicant', sub: 'the manufacturer (Steelyard)', accent: 'amber' },
           { label: 'Issuing Authority', sub: 'review + dispatch (EX1)', accent: 'brand' },
-          { label: 'Test Laboratory', sub: 'the bench work (ETL)', accent: 'teal' },
+          { label: 'Test Laboratory', sub: 'the bench work (BCL)', accent: 'teal' },
           { label: 'Issuing Authority', sub: 'evaluation + issuance', accent: 'brand' },
           { label: 'BIML + public', sub: 'registration + verification', accent: 'slate' },
         ]}
@@ -148,7 +148,7 @@ const cast = [
     <div class="max-w-3xl mb-12">
       <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">The cast, plainly fictional</h2>
       <p class="text-[1.0625rem] leading-relaxed text-ink-soft mb-6">
-        Five personas carry the flows. Sign-in runs through the OIML SMART identity service: the login page lists the cast as persona cards, and the identity service's account chooser continues the sign-in as the persona, so no cast password is ever published. Every person and organization is invented for the demonstration; the instrument is ACME's fictional LC-500 load-cell line evaluated against OIML R 60.
+        Five personas carry the flows. Sign-in runs through the OIML SMART identity service: the login page lists the cast as persona cards, and the identity service's account chooser continues the sign-in as the persona, so no cast password is ever published. Every person and organization is invented for the demonstration; the instrument is Steelyard's fictional LC-500 load-cell line evaluated against OIML R 60.
       </p>
       <div class="grid gap-3 mb-8">
         {cast.map(c => (

@@ -30,7 +30,7 @@ quality system shall do), the twin-fidelity program TW-1 (what a twin
 shall prove). It is complete in itself and answers to no one.
 
 An **implementation model** is authored by someone with a reality to
-account for: a manufacturer's product (the ACME LC-500), an
+account for: a manufacturer's product (the Steelyard LC-500), an
 organization's management system, a laboratory's equipment set. It is
 *complete in itself too*, and it declares its relationship to the
 references by **mapping**, never by import:

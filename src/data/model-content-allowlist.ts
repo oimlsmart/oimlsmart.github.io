@@ -78,7 +78,7 @@ const B018_REGISTER = {
 const R60_COUNTS = {
   kind: 'live',
   url: 'https://demo.oimlsmart.org/app/standards/r60/requirements',
-  account: 'Utilizer Officer (NL)',
+  account: 'Utilizer Officer (XG)',
   probe: '14 classes containing 180 requirements',
 } as const
 
