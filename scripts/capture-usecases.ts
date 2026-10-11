@@ -9,7 +9,7 @@
  *
  * Every screenshot the use-case pages publish is captured HERE, never
  * hand-snapped: the script drives the LIVE demo (demo.oimlsmart.org),
- * the pilot instances (nmi.oimlsmart.org, tl.oimlsmart.org), the
+ * the pilot instances (ia.oimlsmart.org, tl.oimlsmart.org), the
  * identity service (id.oimlsmart.org) and the SST site headlessly,
  * performs each act the pages list, and saves the artifact under
  * public/img/usecases/<page>/ as `<stem>-<theme>.png` (stable names:
@@ -27,8 +27,8 @@
  *   npx tsx scripts/capture-usecases.ts --only=twin,anr
  *   npx tsx scripts/capture-usecases.ts --light      # one theme only
  *
- * Env: DEMO_BASE (default https://demo.oimlsmart.org), NMI_BASE
- * (https://nmi.oimlsmart.org), TL_BASE (https://tl.oimlsmart.org),
+ * Env: DEMO_BASE (default https://demo.oimlsmart.org), IA_BASE
+ * (https://ia.oimlsmart.org), TL_BASE (https://tl.oimlsmart.org),
  * ID_BASE (https://id.oimlsmart.org), CAPTURE_DATE (default: today),
  * DEMO_SSO_EMAIL/DEMO_SSO_PASSWORD (the grantee account the signed-in
  * legs ride — below).
@@ -52,7 +52,7 @@ import { join, resolve } from 'node:path'
 import { SSO_REASON, loginAsPersona, signOutDemo, ssoCredentialsDeclared } from './demo-sso'
 
 const DEMO = (process.env.DEMO_BASE ?? 'https://demo.oimlsmart.org').replace(/\/$/, '')
-const NMI = (process.env.NMI_BASE ?? 'https://nmi.oimlsmart.org').replace(/\/$/, '')
+const NMI = (process.env.IA_BASE ?? 'https://ia.oimlsmart.org').replace(/\/$/, '')
 const TL = (process.env.TL_BASE ?? 'https://tl.oimlsmart.org').replace(/\/$/, '')
 const ID = (process.env.ID_BASE ?? 'https://id.oimlsmart.org').replace(/\/$/, '')
 const SST = (process.env.SST_BASE ?? 'https://www.oimlsmart.org/sst/').replace(/\/$/, '') + '/'
@@ -244,7 +244,7 @@ let currentTheme = 'light'
 // ── The public legs (no account) ──────────────────────────────────────
 
 async function capturePublic(browser: Browser) {
-  if (!['register', 'verify', 'hub-login', 'nmi-instance', 'tl-instance', 'sst-site', 'identity-join'].some(wants)) return
+  if (!['register', 'verify', 'hub-login', 'ia-instance', 'tl-instance', 'sst-site', 'identity-join'].some(wants)) return
 
   for (const theme of THEMES) {
     currentTheme = theme
@@ -289,10 +289,10 @@ async function capturePublic(browser: Browser) {
       await shoot(page, 'deployment-modes', 'hub-login', theme, 'the CS-operated hub posture: the demo instance\u2019s sign-in cone with the SSO persona strip, every role entering through the provider on one deployment', { fullPage: true })
     }
 
-    if (wants('nmi-instance')) {
+    if (wants('ia-instance')) {
       await page.goto(`${NMI}/`, { waitUntil: 'networkidle', timeout: NAV_TIMEOUT }).catch(() => {})
       await page.waitForTimeout(2500)
-      await shoot(page, 'deployment-modes', 'nmi-instance', theme, 'opened the IA+TL pilot instance at nmi.oimlsmart.org — the same software booted under the member deployment profile', { fullPage: true })
+      await shoot(page, 'deployment-modes', 'ia-instance', theme, 'opened the IA+TL pilot instance at ia.oimlsmart.org — the same software booted under the member deployment profile', { fullPage: true })
     }
 
     if (wants('tl-instance')) {

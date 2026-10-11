@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-31T23:30:57.198Z",
-  "captureDate": "2026-08-31",
+  "generatedAt": "2026-10-11T04:33:19.053Z",
+  "captureDate": "2026-10-11",
   "records": [
     {
       "page": "type-evaluation-end-to-end",
@@ -46,15 +46,6 @@
       "theme": "light",
       "performed": "the CS-operated hub posture: the demo instance’s login with the one-click demo accounts, every role on one deployment",
       "capturedAt": "2026-08-31T21:09:20.767Z"
-    },
-    {
-      "page": "deployment-modes",
-      "name": "nmi-instance",
-      "file": "deployment-modes/nmi-instance-light.png",
-      "url": "https://nmi.oimlsmart.org/",
-      "theme": "light",
-      "performed": "opened the IA+TL pilot instance at nmi.oimlsmart.org — the same software booted under the member deployment profile",
-      "capturedAt": "2026-08-31T21:09:24.445Z"
     },
     {
       "page": "deployment-modes",
@@ -127,15 +118,6 @@
       "theme": "dark",
       "performed": "the CS-operated hub posture: the demo instance’s login with the one-click demo accounts, every role on one deployment",
       "capturedAt": "2026-08-31T21:09:51.059Z"
-    },
-    {
-      "page": "deployment-modes",
-      "name": "nmi-instance",
-      "file": "deployment-modes/nmi-instance-dark.png",
-      "url": "https://nmi.oimlsmart.org/",
-      "theme": "dark",
-      "performed": "opened the IA+TL pilot instance at nmi.oimlsmart.org — the same software booted under the member deployment profile",
-      "capturedAt": "2026-08-31T21:09:54.678Z"
     },
     {
       "page": "deployment-modes",
@@ -487,6 +469,24 @@
       "theme": "dark",
       "performed": "the declare form on the registry page: the acting utilizer, the market, the content-tier radios (tier 2 declared-simple / tier 1 Primmel-defined), the procedure as text, the reference document; the draft files for moderation",
       "capturedAt": "2026-08-31T23:30:57.151Z"
+    },
+    {
+      "page": "deployment-modes",
+      "name": "ia-instance",
+      "file": "deployment-modes/ia-instance-light.png",
+      "url": "https://ia.oimlsmart.org/",
+      "theme": "light",
+      "performed": "opened the IA+TL pilot instance at ia.oimlsmart.org — the same software booted under the member deployment profile",
+      "capturedAt": "2026-10-11T04:33:15.219Z"
+    },
+    {
+      "page": "deployment-modes",
+      "name": "ia-instance",
+      "file": "deployment-modes/ia-instance-dark.png",
+      "url": "https://ia.oimlsmart.org/",
+      "theme": "dark",
+      "performed": "opened the IA+TL pilot instance at ia.oimlsmart.org — the same software booted under the member deployment profile",
+      "capturedAt": "2026-10-11T04:33:19.053Z"
     }
   ]
 }

@@ -52,9 +52,9 @@ export const STATUS_ROWS: readonly StatusProbeRow[] = [
     latency: 'p95 ≤ 2.5 s',
   },
   {
-    id: 'nmi-instance',
-    name: 'NMI instance',
-    desc: 'The ia+tl profile instance at nmi.oimlsmart.org.',
+    id: 'ia-instance',
+    name: 'IA instance',
+    desc: 'The ia+tl profile instance at ia.oimlsmart.org.',
     availability: '99.5% / 30d',
     latency: 'p95 ≤ 2.5 s',
   },

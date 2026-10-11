@@ -415,8 +415,8 @@
     },
     {
       "service": "platform",
-      "id": "platform-nmi-instance",
-      "caption": "The IA+TL pilot instance at nmi.oimlsmart.org: the same software, booted under the member-state deployment profile.",
+      "id": "platform-ia-instance",
+      "caption": "The IA+TL pilot instance at ia.oimlsmart.org: the same software, booted under the member-state deployment profile.",
       "modes": [
         "light",
         "dark"
