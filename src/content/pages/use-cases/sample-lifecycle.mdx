@@ -1,0 +1,93 @@
+---
+title: 'The sample lifecycle — every hand-off on the record'
+description: 'How a physical sample travels through an OIML-CS type evaluation: registered by the applicant, shipped with tracking, received and held, tested, and returned, retained or disposed — with the branch flows for the damaged, the lost and the replaced.'
+eyebrow: 'Use Cases · 08'
+---
+
+import ActionBox from '../../../components/ActionBox.astro'
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/login"
+  label="Open the demonstration"
+  description="Sign in and open Samples from any role's sidebar."
+/>
+
+## One sample, one story
+
+A type evaluation certifies a design, but it tests physical units. The
+platform therefore treats every sample as a first-class record with its
+own lifecycle: **registered → in transit → received → held → under test
+→ returned, retained or disposed.** No step is implied — every movement
+is an explicit act by a named party, because a custody chain that
+silently updates itself is not a custody chain.
+
+The invariants are simple and the routing is free:
+
+- The applicant registers the samples and ships them where the
+  authority directs — to the Issuing Authority, or straight to a test
+  laboratory.
+- Whoever holds a sample can see it, and everyone in the evaluation can
+  see who holds it and where it is.
+- A testing laboratory tests the samples assigned to it; the authority
+  evaluates against them; and at the end the samples go home to the
+  applicant — or are retained for reference, or disposed of, each with
+  its reason on the record.
+
+## What each party sees
+
+Every console carries a **Samples** view, scoped to what that party may
+see:
+
+| Party | The samples view answers |
+|---|---|
+| **Applicant** | What to ship, where, and when. Every sample across all applications, its current holder, its tracking link, the returns in transit, and the receipt confirmation when it arrives home. |
+| **Issuing Authority** | The requests it issued, the receipts it registered, the samples it holds, the ones forwarded to laboratories, and the closure decisions — return, retain, dispose. |
+| **Test Laboratory** | The consignments arriving at the bench, the samples under test, and the return acts when testing completes. |
+
+Open any sample for its **detail page**: the declared particulars, the
+photographs and dimensions recorded at receipt, the condition notes,
+and the complete custody timeline — every shipment with its carrier and
+tracking number, every receipt, every hold, every return, in order.
+
+Every shipment records a carrier and a tracking number, and the number
+renders as a link to the platform's public tracking page — the same
+parcel-tracking experience a consumer knows, standing on an audited
+chain of custody.
+
+## When reality intrudes
+
+The lifecycle has branches, and each branch is a real workflow rather
+than an apology:
+
+**A result comes back wrong.** The authority flags the specific result
+with a question; the laboratory answers in place, or corrects the value
+and resubmits, or re-runs the test — and the report's revision history
+preserves the whole exchange.
+
+**A laboratory declines or stalls.** The authority re-dispatches the
+same tests to another laboratory with one click; the new request is
+linked to the one it replaces, and the coverage view shows what is
+complete, running, and not yet dispatched.
+
+**A sample arrives damaged — or vanishes.** The receiving party records
+the condition and marks the unit unfit; the authority requests a
+replacement; the applicant ships it; and the replacement carries
+*replaces* the original while the original carries *replaced by* — the
+linkage survives for the audit. A sample lost in transit or in custody,
+or a serial that does not match the declaration, follows the same
+discipline.
+
+**The samples go home.** Testing done, the laboratory returns the
+samples to the authority or directly to the applicant; the authority
+returns them to the applicant, retains them with a reason, or disposes
+of them with the method recorded; the applicant confirms the arrival —
+and the custody chain reads as one continuous story from the first
+shipment to the last receipt.
+
+## Why it ends in a gate
+
+An evaluation project cannot be marked complete while any sample's
+custody stands open. The samples are accounted for — returned, retained
+or disposed, each with its record — or the project is not finished.
+That is the doctrine: closure is earned by the record, never
+ceremonial.
