@@ -1,0 +1,207 @@
+---
+title: 'The certification walkthrough — every role, every step'
+description: 'A step-by-step guide to the OIML-CS type evaluation flow: the applicant files, the IA reviews, the laboratory tests, the certificate issues. With role switching, stage jumping, and the sample custody chain.'
+eyebrow: 'Use Cases · 07'
+---
+
+import ActionBox from '../../../components/ActionBox.astro'
+
+<ActionBox
+  href="https://demo.oimlsmart.org/app/login"
+  label="Open the demonstration"
+  description="Sign in to the live instance and follow along."
+/>
+
+## The three participants
+
+Every OIML-CS certification involves three parties, each with their own
+console on the platform. On the demonstration the cast is invented —
+every person and organization is fictional:
+
+| Role | Who they are | The demo cast | What they do |
+|---|---|---|---|
+| **Applicant** | The instrument manufacturer | Steelyard Instruments Ltd. (Dr. Anna Meyer) | Files the application, ships samples, receives the certificate |
+| **Issuing Authority (IA)** | The national metrology authority | Brobdingnag Legal Metrology Authority, EX1 (Ms. Emily Irving) | Reviews the application, manages the evaluation, issues the certificate |
+| **Test Laboratory (TL)** | The accredited testing laboratory | Blefuscu Central Laboratory, BCL (Ms. Petra Horvat, Mr. Martin Berger) | Receives samples, runs the tests, submits the test report |
+
+## Switching roles on demand
+
+Sign in through the OIML SMART identity service, then click your **name
+in the top-right** of any page. A menu opens with a **"Demo accounts"**
+section listing every role. Click any role — the identity service's
+account chooser continues the sign-in as that persona, so no cast
+password is ever published and no second sign-in is asked. Click another
+to switch again.
+
+This is how you experience the flow from each participant's perspective
+without anyone else's help.
+
+## Starting from any stage
+
+On every console, find the yellow **"Jump to any stage"** button. Click
+it to open the stage picker, which drives the certification to any
+point in its lifecycle:
+
+| Stage | What you can show |
+|---|---|
+| Application submitted | The applicant's submission, the IA's review queue |
+| Accepted | The Evaluation Project open, the TEP hub |
+| Samples requested | The sample request, the applicant's shipping interface |
+| Samples shipped | Tracking numbers, custody chain |
+| Samples received | Receipt registration, condition recording |
+| Test request issued | The dispatch, the TL's inbox |
+| In the laboratory | The TL accepting, receiving samples |
+| Testing | The test run wizard (model-driven steps) |
+| Test report submitted | The report, the IA's review surface |
+| Evaluation report approved | The IA's assessment, the decision |
+| **Certified** | **The certificate — issued, signed, in the public register** |
+
+---
+
+## The Applicant's walkthrough
+
+### 1. File the application
+
+Sign in as the **Applicant**. Open the portal and click
+**New application**. The wizard walks you through six steps:
+
+1. **Recommendation** — pick the OIML Recommendation (e.g., R 60 for load cells)
+2. **Applicant** — your organization's details (prefilled from your profile)
+3. **Instrument** — pick the model family and models (the LC-500 family
+   with the LC-500i load cell, 2.2 t, class C3)
+4. **Samples** — declare the sample serial numbers you'll ship
+5. **Documentation** — complete the R 60-2 §2.5 checklist
+6. **Scheme & review** — choose Scheme A or B, pick the Issuing Authority
+
+Submit — the application detail page opens.
+
+### 2. Ship the samples
+
+When the IA requests samples, you'll see the request on your portal:
+- **What to ship** (which samples, how many)
+- **Where to ship** (to the IA, or directly to the test laboratory)
+- **The request's particulars** (deadline, conditions)
+
+Ship the samples and record the carrier and tracking number. The
+platform tracks the shipment — everyone sees where the samples are.
+
+### 3. Track the evaluation
+
+Open the **Samples** page from the sidebar. You see:
+- Every sample across all your applications
+- The custody chain (who shipped to whom, when)
+- The current holder and location
+- Tracking links for in-transit samples
+
+### 4. Receive the certificate
+
+When the evaluation is approved and the certificate is issued:
+- You get a notification
+- The certificate appears on your portal
+- You can download the certificate (the CNML digital format)
+
+---
+
+## The Issuing Authority's walkthrough
+
+### 1. Review the application
+
+Sign in as the **Issuing Authority**. The review queue lists submitted
+applications. Open one to see the full declaration (the instrument's
+promise set, the documentation, the samples).
+
+You can:
+- **Accept** — opens the Evaluation Project (TEP)
+- **Request changes** — sends the application back to the applicant
+- **Reject** — closes the application
+
+### 2. Manage the samples
+
+On the Evaluation Project:
+- **Request samples** — pick the models, the count, the routing
+- **Register receipts** — when samples arrive, record their condition,
+  dimensions, and photographs
+- **Select for evaluation** — pick which samples to test (with
+  justification per R 60-3 §4.7)
+
+### 3. Dispatch the tests
+
+The dispatch builder lets you:
+- See every test the Recommendation requires
+- Assign each test to a laboratory
+- Verify the laboratory's capability
+- Issue the test requests
+
+### 4. Review the test reports
+
+When the TL submits a test report:
+- Review each test result
+- See the readings, the evidence, the verdicts
+- Accept or reject the report
+
+### 5. Issue the evaluation report and certificate
+
+- Record the evaluation decision (approve, conditionally approve, reject)
+- Issue the evaluation report (signed)
+- Issue the certificate (CNML-signed)
+- The BIML registers it — the certificate goes public
+
+---
+
+## The Test Laboratory's walkthrough
+
+### 1. Accept the test request
+
+Sign in as the **Test Laboratory**. Your inbox lists assigned work.
+Open a test request to see:
+- What tests are requested
+- Which samples they run on
+- The special instructions
+
+Accept the request — the project opens.
+
+### 2. Receive the samples
+
+When samples arrive, register the receipt:
+- Record the serial number
+- Note the condition (new, used, damaged)
+- Take photographs
+- Measure the physical dimensions
+
+### 3. Run the tests
+
+Each test assignment opens a **test run wizard** — a step-by-step
+procedure derived from the R 60-3 test report forms. The wizard:
+- Shows each step in the procedure
+- Records readings with their declared units
+- Captures boolean checks (markings, inscriptions)
+- Collects environmental conditions (temperature, humidity)
+
+### 4. Compile and submit the test report
+
+When all tests are complete:
+- The report composer assembles the results
+- You sign the report (the signature acknowledgment)
+- Submit — the IA is notified
+
+---
+
+## The sample custody chain
+
+Every sample carries a complete custody history — an append-only log of
+every hand-off:
+
+```
+Manufacturer (Applicant)
+  └─ shipped via DHL (tracking: 1234567890) → IA
+       └─ received 2026-10-10 (condition: NEW)
+            └─ forwarded via FedEx (tracking: FDX001) → TL
+                 └─ received 2026-10-11 (condition: NEW)
+                      └─ [testing in progress]
+                           └─ returned via DHL → Applicant
+                                └─ received 2026-11-15
+```
+
+Open **Samples** from any role's sidebar to see the full chain. Click
+any sample for its detail page — photographs, dimensions, condition
+notes, test context, and the complete custody timeline.

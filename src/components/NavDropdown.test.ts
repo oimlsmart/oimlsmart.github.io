@@ -73,7 +73,7 @@ describe('nav model', () => {
     const external = NAV_MODEL.items.flatMap(i =>
       i.type === 'dropdown' ? i.config.links.filter(l => l.external).map(l => l.href) : [],
     )
-    expect(external).toEqual(['https://www.ommisa.org/'])
+    expect(external).toEqual(['https://www.ommisa.org/how-it-works/'])
   })
 
   it('internal dropdown has variant "internal"', () => {

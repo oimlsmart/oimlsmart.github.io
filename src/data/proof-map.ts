@@ -448,7 +448,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
         id: 'smart-recommendations-provenance',
         says: 'every content element carries its source clause (urn:oiml:pub:r:60-1:2021, clause 5.2)',
         anchors: [
-          { kind: 'smart', path: 'browser/src/data/generated/standards-oiml-r60-data.ts', probe: 'urn:oiml:pub:r:60-1:2021#clause-5.2' },
+          { kind: 'smart', path: 'browser/src/data/generated/standards-oiml-r60-lml-data.ts', probe: 'urn:oiml:pub:r:60-1:2021#clause-5.2' },
           {
             kind: 'live',
             url: 'https://www.oimlsmart.org/recs/',
@@ -532,10 +532,11 @@ export const PROOF_MAP: readonly ProofPage[] = [
     source: 'src/pages/use-cases/index.astro',
     claims: [
       {
-        id: 'use-cases-six-stories',
-        says: 'the canonical stories in plain language: the end-to-end arc, the deployment matrix, the member-state view, the ANR flow, the SST training, the twin story',
+        id: 'use-cases-seven-stories',
+        says: 'the canonical stories in plain language: the end-to-end arc, the hands-on walkthrough, the deployment matrix, the member-state view, the ANR flow, the SST training, the twin story',
         anchors: [
           { kind: 'site', route: '/use-cases/type-evaluation-end-to-end', probe: 'Type evaluation' },
+          { kind: 'site', route: '/use-cases/certification-walkthrough', probe: 'certification walkthrough' },
           { kind: 'site', route: '/use-cases/deployment-modes', probe: 'deployment' },
         ],
       },
@@ -552,6 +553,20 @@ export const PROOF_MAP: readonly ProofPage[] = [
         anchors: [
           { kind: 'site', route: '/demo/application', probe: 'the manufacturer applies' },
           { kind: 'live', url: `${DEMO}/app/ia/applications/app-acme-lc`, skip: GATED },
+        ],
+      },
+    ],
+  },
+  {
+    route: '/use-cases/certification-walkthrough',
+    source: 'src/content/pages/use-cases/certification-walkthrough.mdx',
+    claims: [
+      {
+        id: 'walkthrough-every-role',
+        says: 'the hands-on companion: every role’s console walked step by step, roles switched on demand through the identity service’s account chooser, the demo drivable from any stage',
+        anchors: [
+          { kind: 'site', route: '/use-cases/certification-walkthrough', probe: 'Jump to any stage' },
+          { kind: 'live', url: `${DEMO}/app/login`, skip: APP_SHELL },
         ],
       },
     ],
@@ -801,7 +816,7 @@ export const PROOF_MAP: readonly ProofPage[] = [
         says: 'the wizard’s instrument step is authored by the R 60 model (the R 60-3 §4.5 declaration), never designed by a programmer',
         anchors: [
           { kind: 'smart', path: 'DEMO_FLOWS/01-application.md', probe: 'Select Recommendation' },
-          { kind: 'smart', path: 'browser/src/data/generated/standards-oiml-r60-forms.ts', probe: 'urn:oiml:pub:r:60-3:2021#clause-4.5' },
+          { kind: 'smart', path: 'browser/src/data/generated/standards-oiml-r60-lml-forms.ts', probe: 'urn:oiml:pub:r:60-3:2021#clause-4.5' },
           { kind: 'live', url: `${DEMO}/app/portal/applications/new`, skip: GATED },
         ],
       },

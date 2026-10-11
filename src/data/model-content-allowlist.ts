@@ -51,13 +51,13 @@ export interface ModelContentEntry {
 /** The only-shrinks pin: entries.length must stay at or below this.
  *  Bump it only in the commit that adds the entry, with the reason in
  *  the commit message. */
-export const MODEL_CONTENT_CEILING = 26
+export const MODEL_CONTENT_CEILING = 28
 
 const B018 = 'reference-docs/corpus/oiml-b018-e25/document.presentation.xml'
 const PD05 = 'reference-docs/corpus/oiml-cs-pd-05/document.presentation.xml'
-const R60_1 = 'browser/src/data/generated/standards-oiml-r60-data.ts'
-const R60_2 = 'browser/src/data/generated/standards-oiml-r60-data.ts'
-const R60_3 = 'browser/src/data/generated/standards-oiml-r60-data.ts'
+const R60_1 = 'browser/src/data/generated/standards-oiml-r60-lml-data.ts'
+const R60_2 = 'browser/src/data/generated/standards-oiml-r60-lml-data.ts'
+const R60_3 = 'browser/src/data/generated/standards-oiml-r60-lml-data.ts'
 const R60_2_ADOC = 'sources/r060/2/sections/02-type-evaluation.adoc'
 
 /** B 18:2025's registered-copy clause: the 2025 edition carries it as
@@ -284,5 +284,19 @@ export const MODEL_CONTENT_ALLOWLIST: readonly ModelContentEntry[] = [
     fact: 'R 60 as data: 180 requirements',
     added: ADDED,
     verify: [R60_COUNTS],
+  },
+  {
+    file: 'src/content/pages/use-cases/certification-walkthrough.mdx',
+    literal: '§2.5',
+    fact: 'the wizard’s documentation step completes the checklist R 60-2 §2.5 declares',
+    added: '2026-10-11',
+    verify: [{ kind: 'ssot', path: R60_2, needle: 'urn:oiml:pub:r:60-2:2021#clause-2.5"' }],
+  },
+  {
+    file: 'src/content/pages/use-cases/certification-walkthrough.mdx',
+    literal: '§4.7',
+    fact: 'the IA’s sample selection for evaluation carries the justification per R 60-3 §4.7',
+    added: '2026-10-11',
+    verify: [{ kind: 'ssot', path: R60_3, needle: 'urn:oiml:pub:r:60-3:2021#clause-4.7"' }],
   },
 ]

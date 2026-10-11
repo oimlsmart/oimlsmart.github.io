@@ -64,7 +64,7 @@ describe.skipIf(!HAS_DOC)('the content-freshness gate (site claims ≡ SSOT)', (
   })
 
   it('the e2e number matches', () => {
-    const m = needDoc().match(/test:e2e`? \((\d+\/\d+)\)/) ?? needDoc().match(/e2e (\d+\/\d+)/)
+    const m = needDoc().match(/test:e2e`? \((\d+) flow files\)/) ?? needDoc().match(/e2e (\d+) flow files/)
     expect(m, 'for-agents.md states the e2e count').toBeTruthy()
     expect(GATE_NUMBERS.e2e).toBe(m![1])
   })

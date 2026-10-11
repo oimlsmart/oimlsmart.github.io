@@ -9,7 +9,7 @@ const ungatedNote = (n: { countedOn: string; source: string }) =>
 const gates = [
   { label: 'Primmel packages (SSOT)', value: `${GATE_NUMBERS.packages}`, note: '0 lint errors' },
   { label: 'App unit tests', value: GATE_NUMBERS.vitestTests.toLocaleString('en-US'), note: `${GATE_NUMBERS.vitestFiles} files` },
-  { label: 'End-to-end', value: GATE_NUMBERS.e2e, note: 'puppeteer, live app' },
+  { label: 'End-to-end', value: GATE_NUMBERS.e2e, note: 'flow files, puppeteer' },
   { label: 'Data validation', value: `${GATE_NUMBERS.validateErrors} errors`, note: 'schema + semantic rules over all data' },
   { label: 'Kernel suite', value: UNGATED_NUMBERS.kernel.value, note: ungatedNote(UNGATED_NUMBERS.kernel) },
   { label: 'Simulator suite', value: UNGATED_NUMBERS.sim.value, note: ungatedNote(UNGATED_NUMBERS.sim) },
