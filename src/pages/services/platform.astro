@@ -125,8 +125,8 @@ const captured = '2026-08-29'
           <div class="grid grid-cols-2 gap-4 max-[720px]:grid-cols-1">
             <ServiceShot
               service="platform"
-              id="platform-nmi-instance"
-              alt="The IA+TL pilot instance at nmi.oimlsmart.org"
+              id="platform-ia-instance"
+              alt="The IA+TL pilot instance at ia.oimlsmart.org"
               caption="The IA+TL posture (pilot)"
               date={captured}
             />
@@ -197,7 +197,7 @@ const captured = '2026-08-29'
     <div class="max-w-3xl mb-12">
       <h2 class="font-serif text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-[-0.01em] mb-4">Status</h2>
       <StatusRow
-        rows={['platform-hub', 'nmi-instance', 'tl-instance']}
+        rows={['platform-hub', 'ia-instance', 'tl-instance']}
         note="The demo hub is probed separately as its own row; see the demo instance page."
       />
     </div>
@@ -256,7 +256,7 @@ const captured = '2026-08-29'
 
     <div class="border-t border-rule pt-8 max-w-3xl">
       <p class="text-sm text-ink-muted">
-        Verified {captured}: platform.oimlsmart.org, nmi.oimlsmart.org, and tl.oimlsmart.org all answered live; the console acts were performed on the demo instance (the same software) by scripts/capture-services.ts; the sign-in path walked to the identity service's join flow. The captures and their assertions are in public/img/services/manifest.json.
+        Verified {captured}: platform.oimlsmart.org, ia.oimlsmart.org, and tl.oimlsmart.org all answered live; the console acts were performed on the demo instance (the same software) by scripts/capture-services.ts; the sign-in path walked to the identity service's join flow. The captures and their assertions are in public/img/services/manifest.json.
       </p>
     </div>
   </section>

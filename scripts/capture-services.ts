@@ -445,11 +445,11 @@ const SHOTS: Shot[] = [
     expect: ['OIML SMART', 'R 60', 'R 144'],
   },
   {
-    id: 'platform-nmi-instance',
+    id: 'platform-ia-instance',
     service: 'platform',
-    caption: 'The IA+TL pilot instance at nmi.oimlsmart.org: the same software, booted under the member-state deployment profile.',
+    caption: 'The IA+TL pilot instance at ia.oimlsmart.org: the same software, booted under the member-state deployment profile.',
     act: async (page) => {
-      await page.goto('https://nmi.oimlsmart.org/', { waitUntil: 'networkidle', timeout: 60000 })
+      await page.goto('https://ia.oimlsmart.org/', { waitUntil: 'networkidle', timeout: 60000 })
       await page.waitForTimeout(2000)
     },
     expect: ['OIML SMART', 'Recommendations'],

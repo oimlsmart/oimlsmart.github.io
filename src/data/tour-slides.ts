@@ -400,14 +400,14 @@ export const TOUR_SLIDES: readonly TourSlideDef[] = [
     chip: 'SMART',
     bullets: [
       'The demo is the hub posture: every role on one deployment.',
-      'Two member instances run in the pilot today: tl.oimlsmart.org (TL-only, the start-small posture) and nmi.oimlsmart.org (IA+TL, the institute shape).',
+      'Two member instances run in the pilot today: tl.oimlsmart.org (TL-only, the start-small posture) and ia.oimlsmart.org (IA+TL, the issuing-authority shape).',
       'Member instances submit signed evaluation chains to the CS platform; the register validates and imports them, idempotently.',
       'Start small, grow: the same codebase grows from a laboratory\'s instance to a member state\'s.',
     ],
     links: [
       { href: '/use-cases/deployment-modes', label: 'The deployment-mode matrix', desc: 'what each posture runs, who signs in, what federates where' },
       { href: 'https://tl.oimlsmart.org/', label: 'tl.oimlsmart.org', desc: 'the live TL-only pilot' },
-      { href: 'https://nmi.oimlsmart.org/', label: 'nmi.oimlsmart.org', desc: 'the live IA+TL pilot' },
+      { href: 'https://ia.oimlsmart.org/', label: 'ia.oimlsmart.org', desc: 'the live IA+TL pilot' },
     ],
     note: 'The sovereignty and cost answers land here: custody never has to move, and the minimal posture is one service-class deployment. The two pilots are live; the links are on the slide for the room to try later. The matrix page is the quotable reference.',
     twentyMin: '17:30',

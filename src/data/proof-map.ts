@@ -574,13 +574,13 @@ export const PROOF_MAP: readonly ProofPage[] = [
   {
     route: '/use-cases/deployment-modes',
     source: 'src/content/pages/use-cases/deployment-modes.mdx',
-    shots: { ttlDays: 60, regenerate: 'npx tsx scripts/capture-usecases.ts --only=hub-login,nmi-instance,tl-instance' },
+    shots: { ttlDays: 60, regenerate: 'npx tsx scripts/capture-usecases.ts --only=hub-login,ia-instance,tl-instance' },
     claims: [
       {
         id: 'deployment-modes-four-postures',
         says: 'one codebase, four postures: the CS-operated platform, IA-only, TL-only, the combined instance',
         anchors: [
-          { kind: 'live', url: 'https://nmi.oimlsmart.org/', probe: 'OIML' },
+          { kind: 'live', url: 'https://ia.oimlsmart.org/', probe: 'OIML' },
           { kind: 'live', url: 'https://tl.oimlsmart.org/', probe: 'OIML' },
         ],
       },
