@@ -1,0 +1,105 @@
+---
+/**
+ * WalkthroughArc — the certification walkthrough as one diagram: the
+ * stage sequence of the presenter's quest book, each act colored by the
+ * participant who performs it (the applicant, the issuing authority,
+ * the laboratory), closing on the public register; the notification
+ * ribbon and the stage-jump note. House style; dark-mode correct via
+ * the TechFigure palette. (TODO.promotion/10: one diagram per page.)
+ */
+import TechFigure from '../TechFigure.astro'
+---
+
+<TechFigure caption="The walkthrough at a glance: each act carries its actor's color; the applicant is notified at every stage, and every stage is jump-to-able from any console.">
+  <svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="wl-arc-title">
+    <title id="wl-arc-title">The certification walkthrough: the applicant files, the authority reviews and requests the samples, the applicant ships them, the laboratory receives and tests, the authority dispatches, evaluates and issues, the applicant downloads, the register publishes; acts colored by actor</title>
+
+    <defs>
+      <marker id="wl-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"/>
+      </marker>
+    </defs>
+
+    <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="var(--dg-text)">The walkthrough, end to end</text>
+
+    <!-- row 1: left to right -->
+    <rect x="30" y="66" width="250" height="86" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="155" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">1 &#183; File the application</text>
+    <text x="155" y="112" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the six-step wizard; the declaration</text>
+    <text x="155" y="128" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">derives from the Recommendation</text>
+    <text x="155" y="146" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">the applicant&#8217;s act</text>
+
+    <rect x="325" y="66" width="250" height="86" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="450" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">2 &#183; Review and accept</text>
+    <text x="450" y="112" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">accept, request changes, or reject</text>
+    <text x="450" y="128" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">with reason: the project opens</text>
+    <text x="450" y="146" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">the authority&#8217;s act</text>
+
+    <rect x="620" y="66" width="250" height="86" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="745" y="92" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">3 &#183; Request the samples</text>
+    <text x="745" y="112" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the count, the routing &#8212; to the</text>
+    <text x="745" y="128" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">authority or straight to the lab</text>
+    <text x="745" y="146" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">the authority&#8217;s act</text>
+
+    <line x1="280" y1="109" x2="317" y2="109" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#wl-arr)"/>
+    <line x1="575" y1="109" x2="612" y2="109" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#wl-arr)"/>
+    <line x1="745" y1="152" x2="745" y2="196" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#wl-arr)"/>
+
+    <!-- row 2: right to left -->
+    <rect x="620" y="204" width="250" height="86" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="745" y="230" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">4 &#183; Ship the samples</text>
+    <text x="745" y="250" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">carrier and tracking, refused</text>
+    <text x="745" y="266" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">without both; the chain starts</text>
+    <text x="745" y="284" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">the applicant&#8217;s act</text>
+
+    <rect x="325" y="204" width="250" height="86" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="450" y="230" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gen-text)">5 &#183; Receive the samples</text>
+    <text x="450" y="250" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">condition, photographs and</text>
+    <text x="450" y="266" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">dimensions recorded at receipt</text>
+    <text x="450" y="284" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">the laboratory&#8217;s (or authority&#8217;s) act</text>
+
+    <rect x="30" y="204" width="250" height="86" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="155" y="230" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">6 &#183; Dispatch the tests</text>
+    <text x="155" y="250" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">tests &#215; samples assigned per</text>
+    <text x="155" y="266" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">laboratory, against capability</text>
+    <text x="155" y="284" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">the authority&#8217;s act</text>
+
+    <line x1="620" y1="247" x2="583" y2="247" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#wl-arr)"/>
+    <line x1="325" y1="247" x2="288" y2="247" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#wl-arr)"/>
+    <line x1="155" y1="290" x2="155" y2="334" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#wl-arr)"/>
+
+    <!-- row 3: left to right -->
+    <rect x="30" y="342" width="250" height="86" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="155" y="368" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gen-text)">7 &#183; Test and report</text>
+    <text x="155" y="388" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the model-declared runs; the report</text>
+    <text x="155" y="404" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">submitted as data and signed</text>
+    <text x="155" y="422" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">the laboratory&#8217;s act</text>
+
+    <rect x="325" y="342" width="250" height="86" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="450" y="368" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">8 &#183; Evaluate and issue</text>
+    <text x="450" y="388" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">verdicts computed; the evaluation</text>
+    <text x="450" y="404" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">report and certificate signed</text>
+    <text x="450" y="422" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">the authority&#8217;s act</text>
+
+    <rect x="620" y="342" width="250" height="86" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="745" y="368" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">9 &#183; The certificate, home</text>
+    <text x="745" y="388" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">notified; downloaded; verifiable</text>
+    <text x="745" y="404" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">by anyone, no account needed</text>
+    <text x="745" y="422" text-anchor="middle" font-size="10" font-style="italic" fill="var(--dg-text-muted)">the applicant&#8217;s moment</text>
+
+    <line x1="280" y1="385" x2="317" y2="385" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#wl-arr)"/>
+    <line x1="575" y1="385" x2="612" y2="385" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#wl-arr)"/>
+
+    <!-- the register band -->
+    <rect x="30" y="452" width="840" height="64" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="450" y="478" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gen-text)">10 &#183; The public register</text>
+    <text x="450" y="498" text-anchor="middle" font-size="11" fill="var(--dg-text-soft)">the registered copy is the validity reference &#8212; browsable by anyone, verifiable anywhere</text>
+    <line x1="745" y1="428" x2="745" y2="448" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#wl-arr)"/>
+
+    <!-- the notification ribbon -->
+    <path d="M 450 428 L 450 444 L 14 444 L 14 109 L 28 109" fill="none" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#wl-arr)"/>
+    <text x="230" y="440" text-anchor="middle" font-size="11" fill="var(--dg-text-muted)">the applicant is notified at every stage</text>
+
+    <text x="450" y="584" text-anchor="middle" font-size="12" fill="var(--dg-text-muted)">Every stage above is one pick in the stage-jump menu, on every console: start anywhere, show any chapter.</text>
+  </svg>
+</TechFigure>
