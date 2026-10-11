@@ -532,8 +532,8 @@ export const PROOF_MAP: readonly ProofPage[] = [
     source: 'src/pages/use-cases/index.astro',
     claims: [
       {
-        id: 'use-cases-seven-stories',
-        says: 'the canonical stories in plain language: the end-to-end arc, the hands-on walkthrough, the deployment matrix, the member-state view, the ANR flow, the SST training, the twin story',
+        id: 'use-cases-eight-stories',
+        says: 'the canonical stories in plain language: the end-to-end arc, the hands-on walkthrough, the sample lifecycle, the deployment matrix, the member-state view, the ANR flow, the SST training, the twin story',
         anchors: [
           { kind: 'site', route: '/use-cases/type-evaluation-end-to-end', probe: 'Type evaluation' },
           { kind: 'site', route: '/use-cases/certification-walkthrough', probe: 'certification walkthrough' },
@@ -567,6 +567,20 @@ export const PROOF_MAP: readonly ProofPage[] = [
         anchors: [
           { kind: 'site', route: '/use-cases/certification-walkthrough', probe: 'Jump to any stage' },
           { kind: 'live', url: `${DEMO}/app/login`, skip: APP_SHELL },
+        ],
+      },
+    ],
+  },
+  {
+    route: '/use-cases/sample-lifecycle',
+    source: 'src/content/pages/use-cases/sample-lifecycle.mdx',
+    claims: [
+      {
+        id: 'sample-lifecycle-custody',
+        says: 'every sample is a first-class record: explicit hand-offs, per-party custody views, a detail page with the full timeline, and closure (returned, retained, disposed) the completion gate demands',
+        anchors: [
+          { kind: 'site', route: '/use-cases/sample-lifecycle', probe: 'returned, retained or disposed' },
+          { kind: 'live', url: `${DEMO}/app/samples`, skip: GATED },
         ],
       },
     ],

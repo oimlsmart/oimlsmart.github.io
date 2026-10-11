@@ -1,0 +1,117 @@
+---
+/**
+ * SampleLifecycleArc — the sample lifecycle as one diagram: the custody
+ * spine (registered → in transit → received → held/under test →
+ * testing complete) in solid arrows, the closure fan (returned,
+ * retained, disposed) fed by a right-side trunk, and the exception
+ * layer (lost, damaged, wrong serial, custody loss → linked
+ * replacement re-entering transit) in dashed arrows routed clear of
+ * the fan. House style; dark-mode correct via the TechFigure palette.
+ * (TODO.promotion/10: one diagram per page.)
+ */
+import TechFigure from '../TechFigure.astro'
+---
+
+<TechFigure caption="The custody spine in solid arrows; the exception paths in dashed: every branch is an explicit, attributed act, and every sample ends returned, retained or disposed.">
+  <svg viewBox="0 0 960 690" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sl-arc-title">
+    <title id="sl-arc-title">The sample lifecycle: registered, in transit, received, held and under test, testing complete; then returned with receipt confirmed, retained with reason, or disposed with method; the exception paths — lost in transit, damaged at receipt, wrong serial, lost or damaged in custody — lead to a linked replacement that re-enters transit</title>
+
+    <defs>
+      <marker id="sl-arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="var(--dg-arrow)"/>
+      </marker>
+    </defs>
+
+    <text x="480" y="34" text-anchor="middle" font-size="20" font-weight="600" fill="var(--dg-text)">One sample, one story</text>
+
+    <!-- the custody spine -->
+    <rect x="45" y="70" width="150" height="76" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="120" y="96" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">Registered</text>
+    <text x="120" y="116" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">serials and particulars</text>
+    <text x="120" y="131" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">declared by the applicant</text>
+
+    <rect x="245" y="70" width="150" height="76" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="320" y="96" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">In transit</text>
+    <text x="320" y="116" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">carrier + tracking, always</text>
+    <text x="320" y="131" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">both, or the ship refuses</text>
+
+    <rect x="445" y="70" width="150" height="76" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="520" y="96" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Received</text>
+    <text x="520" y="116" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">condition, photographs,</text>
+    <text x="520" y="131" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">dimensions recorded</text>
+
+    <rect x="645" y="70" width="150" height="76" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="720" y="96" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gen-text)">Held &#183; under test</text>
+    <text x="720" y="116" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">the holder is named;</text>
+    <text x="720" y="131" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">the runs are model-declared</text>
+
+    <rect x="825" y="70" width="130" height="76" rx="10" fill="var(--dg-gen-fill)" stroke="var(--dg-gen-stroke)" stroke-width="1.5"/>
+    <text x="890" y="96" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-gen-text)">Testing done</text>
+    <text x="890" y="116" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">the report carries</text>
+    <text x="890" y="131" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">the results</text>
+
+    <line x1="195" y1="108" x2="237" y2="108" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#sl-arr)"/>
+    <line x1="395" y1="108" x2="437" y2="108" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#sl-arr)"/>
+    <line x1="595" y1="108" x2="637" y2="108" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#sl-arr)"/>
+    <line x1="795" y1="108" x2="817" y2="108" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#sl-arr)"/>
+
+    <!-- the closure fan, right, fed by a trunk from Testing done -->
+    <rect x="640" y="212" width="230" height="66" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="755" y="236" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-source-text)">Returned &#183; receipt confirmed</text>
+    <text x="755" y="256" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">to the authority then home, or straight</text>
+    <text x="755" y="270" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">to the applicant; the arrival confirmed</text>
+
+    <rect x="640" y="296" width="230" height="58" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="755" y="320" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Retained</text>
+    <text x="755" y="340" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">for reference, with the reason recorded</text>
+
+    <rect x="640" y="372" width="230" height="58" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5"/>
+    <text x="755" y="396" text-anchor="middle" font-size="13" font-weight="600" fill="var(--dg-text)">Disposed</text>
+    <text x="755" y="416" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">with the method recorded</text>
+
+    <line x1="890" y1="146" x2="890" y2="401" stroke="var(--dg-arrow)" stroke-width="1.5"/>
+    <line x1="890" y1="245" x2="876" y2="245" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#sl-arr)"/>
+    <line x1="890" y1="325" x2="876" y2="325" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#sl-arr)"/>
+    <line x1="890" y1="401" x2="876" y2="401" stroke="var(--dg-arrow)" stroke-width="1.5" marker-end="url(#sl-arr)"/>
+    <text x="755" y="452" text-anchor="middle" font-size="10.5" font-style="italic" fill="var(--dg-text-muted)">the closure the completion gate demands</text>
+
+    <!-- the exception layer -->
+    <rect x="45" y="500" width="180" height="58" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="135" y="522" text-anchor="middle" font-size="12" font-weight="600" fill="var(--dg-text)">Lost in transit</text>
+    <text x="135" y="540" text-anchor="middle" font-size="10" fill="var(--dg-text-soft)">either party declares; claim recorded</text>
+
+    <rect x="255" y="500" width="180" height="58" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="345" y="522" text-anchor="middle" font-size="12" font-weight="600" fill="var(--dg-text)">Damaged at receipt</text>
+    <text x="345" y="540" text-anchor="middle" font-size="10" fill="var(--dg-text-soft)">condition recorded; marked unfit</text>
+
+    <rect x="465" y="500" width="180" height="58" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="555" y="522" text-anchor="middle" font-size="12" font-weight="600" fill="var(--dg-text)">Wrong serial</text>
+    <text x="555" y="540" text-anchor="middle" font-size="10" fill="var(--dg-text-soft)">mismatch detected at receipt</text>
+
+    <rect x="675" y="500" width="180" height="58" rx="10" fill="var(--dg-panel)" stroke="var(--dg-panel-stroke)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="765" y="518" text-anchor="middle" font-size="12" font-weight="600" fill="var(--dg-text)">Lost or damaged in custody</text>
+    <text x="765" y="533" text-anchor="middle" font-size="9.5" fill="var(--dg-text-soft)">the holder reports;</text>
+    <text x="765" y="546" text-anchor="middle" font-size="9.5" fill="var(--dg-text-soft)">the authority decides</text>
+
+    <path d="M 320 146 L 320 460 L 152 496" fill="none" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sl-arr)"/>
+    <path d="M 500 146 C 435 260, 375 400, 345 496" fill="none" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sl-arr)"/>
+    <path d="M 545 146 L 552 496" fill="none" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sl-arr)"/>
+    <path d="M 652 146 L 605 200 L 605 462 L 752 496" fill="none" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sl-arr)"/>
+
+    <!-- the replacement node and the re-entry -->
+    <rect x="250" y="590" width="460" height="64" rx="10" fill="var(--dg-source-fill)" stroke="var(--dg-source-stroke)" stroke-width="1.5"/>
+    <text x="480" y="612" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--dg-source-text)">The linked replacement</text>
+    <text x="480" y="630" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">replaces &#183; replaced by &#8212; the linkage survives for the audit;</text>
+    <text x="480" y="644" text-anchor="middle" font-size="10.5" fill="var(--dg-text-soft)">the replacement ships like any sample</text>
+
+    <line x1="135" y1="558" x2="330" y2="590" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sl-arr)"/>
+    <line x1="345" y1="558" x2="400" y2="590" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sl-arr)"/>
+    <line x1="555" y1="558" x2="540" y2="590" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sl-arr)"/>
+    <line x1="765" y1="558" x2="650" y2="590" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sl-arr)"/>
+
+    <path d="M 250 622 L 32 622 L 32 160 L 212 160 L 258 144" fill="none" stroke="var(--dg-arrow)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#sl-arr)"/>
+    <text x="24" y="395" text-anchor="middle" font-size="10.5" fill="var(--dg-text-muted)" transform="rotate(-90 24 395)">the replacement re-enters transit</text>
+
+    <text x="480" y="682" text-anchor="middle" font-size="12" fill="var(--dg-text-muted)">Solid: the custody hand-off. Dashed: the exception path. Every act is named and attributed; the completion gate refuses open custody.</text>
+  </svg>
+</TechFigure>
